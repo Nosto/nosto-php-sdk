@@ -1,9 +1,5 @@
 <?php
 
-require_once(dirname(__FILE__).'/NostoHttpRequestAdapter.php');
-require_once(dirname(__FILE__).'/NostoHttpRequestAdapterSocket.php');
-require_once(dirname(__FILE__).'/NostoHttpRequestAdapterCurl.php');
-
 /**
  * Helper class for doing http requests and returning unified response including header info.
  */

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Nosto account class for handling account related actions like, creation, OAuth2 syncing and SSO to Nosto.
+ */
 class NostoAccount implements NostoAccountInterface
 {
 	const IFRAME_URI = '/hub/prestashop/{m}';
@@ -119,10 +122,7 @@ class NostoAccount implements NostoAccountInterface
 	}
 
 	/**
-	 * Gets an api token associated with this account by it's name , e.g. "sso".
-	 *
-	 * @param string $name the api token name.
-	 * @return NostoApiToken|null
+	 * @inheritdoc
 	 */
 	public function getApiToken($name)
 	{
@@ -135,8 +135,7 @@ class NostoAccount implements NostoAccountInterface
 	}
 
 	/**
-	 * @param NostoAccountMetaDataIframeInterface $meta
-	 * @return bool|string
+	 * @inheritdoc
 	 */
 	public function getIframeUrl(NostoAccountMetaDataIframeInterface $meta)
 	{
@@ -177,9 +176,7 @@ class NostoAccount implements NostoAccountInterface
 	}
 
 	/**
-	 * @param NostoAccountMetaDataIframeInterface $meta
-	 * @return bool
-	 * @throws NostoException
+	 * @inheritdoc
 	 */
 	public function ssoLogin(NostoAccountMetaDataIframeInterface $meta)
 	{

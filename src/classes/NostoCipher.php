@@ -10,7 +10,7 @@ require_once(dirname(__FILE__).'/../libs/phpseclib/crypt/NostoCryptAES.php');
 class NostoCipher
 {
 	/**
-	 * @var NostoCryptBase
+	 * @var NostoCryptBase the crypt library instance.
 	 */
 	private $_crypt;
 

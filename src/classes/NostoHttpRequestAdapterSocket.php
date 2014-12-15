@@ -58,8 +58,9 @@ class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
 		$http_response_header = array();
 		$result = file_get_contents($url, false, $context);
 		$response = new NostoHttpResponse();
-		if (!empty($http_response_header))
+		if (!empty($http_response_header)) {
 			$response->setHeaders($http_response_header);
+		}
 		$response->setResult($result);
 		return $response;
 	}

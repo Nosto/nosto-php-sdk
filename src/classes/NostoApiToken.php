@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class representing an API token for the Nosto API's.
+ */
 class NostoApiToken
 {
 	/**
@@ -13,7 +16,7 @@ class NostoApiToken
 	public $value;
 
 	/**
-	 * @var array list of api tokens to request from Nosto.
+	 * @var array list of valid api tokens to request from Nosto.
 	 */
 	public static $tokenNames = array(
 		'sso',
@@ -21,10 +24,12 @@ class NostoApiToken
 	);
 
 	/**
-	 * @param array $tokens
-	 * @param string $prefix
-	 * @param string $postfix
-	 * @return NostoApiToken[]
+	 * Parses a list of token name=>value pairs and creates token instances of them.
+	 *
+	 * @param array $tokens the list of token name=>value pairs.
+	 * @param string $prefix optional prefix for the token name in the list.
+	 * @param string $postfix optional postfix for the token name in the list.
+	 * @return NostoApiToken[] a list of token instances.
 	 */
 	public static function parseTokens(array $tokens, $prefix = '', $postfix = '')
 	{

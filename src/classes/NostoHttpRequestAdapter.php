@@ -18,30 +18,32 @@ abstract class NostoHttpRequestAdapter
 	/**
 	 * Initializes the request options.
 	 *
-	 * @param array $options
+	 * @param array $options the options.
 	 */
 	protected function init(array $options = array())
 	{
-		foreach ($options as $key => $value)
-			if (property_exists($this, $key))
+		foreach ($options as $key => $value) {
+			if (property_exists($this, $key)) {
 				$this->{$key} = $value;
+			}
+		}
 	}
 
 	/**
 	 * Does a GET request and returns the http response object.
 	 *
-	 * @param string $url
-	 * @param array $options
-	 * @return NostoHttpResponse
+	 * @param string $url the URL to request.
+	 * @param array $options the request options.
+	 * @return NostoHttpResponse the response object.
 	 */
 	abstract public function get($url, array $options = array());
 
 	/**
 	 * Does a POST request and returns the http response object.
 	 *
-	 * @param string $url
-	 * @param array $options
-	 * @return NostoHttpResponse
+	 * @param string $url the URL to request.
+	 * @param array $options the request options.
+	 * @return NostoHttpResponse the response object.
 	 */
 	abstract public function post($url, array $options = array());
 }

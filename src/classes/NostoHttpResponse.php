@@ -21,7 +21,9 @@ class NostoHttpResponse
 	protected $message;
 
 	/**
-	 * @param mixed $result
+	 * Setter for the request response data.
+	 *
+	 * @param mixed $result the response data of the request.
 	 */
 	public function setResult($result)
 	{
@@ -29,7 +31,9 @@ class NostoHttpResponse
 	}
 
 	/**
-	 * @return mixed
+	 * Getter for the request response data.
+	 *
+	 * @return mixed the request response data.
 	 */
 	public function getResult()
 	{
@@ -37,7 +41,9 @@ class NostoHttpResponse
 	}
 
 	/**
-	 * @param string $message
+	 * Setter for the error message of the request.
+	 *
+	 * @param string $message the message.
 	 */
 	public function setMessage($message)
 	{
@@ -45,7 +51,9 @@ class NostoHttpResponse
 	}
 
 	/**
-	 * @return string
+	 * Getter for the error message of the request.
+	 *
+	 * @return string the message.
 	 */
 	public function getMessage()
 	{
@@ -53,8 +61,10 @@ class NostoHttpResponse
 	}
 
 	/**
-	 * @param bool $assoc
-	 * @return mixed
+	 * Getter for the request response as JSON.
+	 *
+	 * @param bool $assoc if the returned JSON should be formatted as an associative array or an stdClass instance.
+	 * @return array|stdClass
 	 */
 	public function getJsonResult($assoc = false)
 	{
@@ -62,7 +72,9 @@ class NostoHttpResponse
 	}
 
 	/**
-	 * @param array $headers
+	 * Setter for the request response headers.
+	 *
+	 * @param array $headers the headers,
 	 */
 	public function setHeaders($headers)
 	{
@@ -70,9 +82,9 @@ class NostoHttpResponse
 	}
 
 	/**
-	 * Returns the http response code.
+	 * Returns the http request response code.
 	 *
-	 * @return int
+	 * @return int the http code or 0 if not set.
 	 */
 	public function getCode()
 	{
@@ -83,7 +95,7 @@ class NostoHttpResponse
 	}
 
 	/**
-	 * Returns the raw http status string.
+	 * Returns the raw http request response status string.
 	 *
 	 * @return string the status string or empty if not set.
 	 */

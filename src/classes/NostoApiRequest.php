@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * API request class for making API requests to Nosto.
+ */
 class NostoApiRequest extends NostoHttpRequest
 {
 	const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
