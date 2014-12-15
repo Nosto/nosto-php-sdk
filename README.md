@@ -43,15 +43,19 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 A Nosto account is needed for every shop and every language within each shop.
 
 ```php
+    .....
     try {
         /** @var NostoAccountMetaDataInterface $meta */
         $meta = new MetaData();
         /** @var NostoAccount $account */
         $account = NostoAccount::create($meta);
         // save newly created account according to the platforms requirements
+        .....
     } catch (NostoException $e) {
         // handle failure
+        .....
     }
+    .....
 ```
 
 ### Connecting with an existing Nosto account
@@ -61,6 +65,7 @@ This should be done in the shops back end when the admin user wants to connect a
 First redirect to the Nosto OAuth2 server.
 
 ```php
+    .....
     /** @var NostoOAuthClientMetaDataInterface $meta */
     $meta = new MetaData();
     $client = new NostoOAuthClient($meta);
@@ -71,22 +76,25 @@ Then have a public endpoint ready to handle the return request.
 
 ```php
     if (isset($_GET['code'])) {
-			try {
-			    /** @var NostoOAuthClientMetaDataInterface $meta */
-                $meta = new MetaData();
-				$account = NostoAccount::syncFromNosto($meta, $_GET['code']);
-				// save the synced account according to the platforms requirements
-			} catch (NostoException $e) {
-				// handle failures
-			}
-			// redirect to the admin page where the user can see the account configuration iframe
-		} elseif (isset($_GET['error'])) {
-			// handle errors; 3 parameter will  be sent, 'error', 'error_reason' and 'error_description'
-			// redirect to the admin page where the user can see an error message
-		} else {
-			// 404
-		}
-	}
+        try {
+            /** @var NostoOAuthClientMetaDataInterface $meta */
+            $meta = new MetaData();
+            $account = NostoAccount::syncFromNosto($meta, $_GET['code']);
+            // save the synced account according to the platforms requirements
+        } catch (NostoException $e) {
+            // handle failures
+        }
+        // redirect to the admin page where the user can see the account configuration iframe
+        .....
+    }
+    } elseif (isset($_GET['error'])) {
+        // handle errors; 3 parameter will be sent, 'error', 'error_reason' and 'error_description'
+        // redirect to the admin page where the user can see an error message
+        .....
+    } else {
+        // 404
+        .....
+    }
 ```
 
 ### Get authenticated iframe URL for the Nosto account configuration
@@ -95,11 +103,13 @@ The Nosto account can be managed through an iframe that should be accessible to 
 This iframe will load only content from nosto.com.
 
 ```php
+    .....
     // load a nosto account object with at least the 'sso' API token associated with it
     /** @var NostoAccount $account */
     $account = $this->loadNostoAccount();
     $url = $account->getIframeUrl();
     // show the iframe to the user with given url
+    .....
 ```
 
 ### Sending order confirmations using the Nosto API

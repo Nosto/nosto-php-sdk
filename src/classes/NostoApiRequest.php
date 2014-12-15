@@ -13,7 +13,7 @@ class NostoApiRequest extends NostoHttpRequest
 	/**
 	 * @var string base url for the nosto api.
 	 */
-	public static $baseUrl = 'https://staging.nosto.com/api';
+	public static $baseUrl = 'https://api.nosto.com';
 
 	/**
 	 * Setter for the end point path, e.g. one of the PATH_ constants.

@@ -76,7 +76,7 @@ class NostoAccount implements NostoAccountInterface
 		$request = new NostoHttpRequest();
 		// The request is currently not made according the the OAuth2 spec with the access token in the
 		// Authorization header. This is due to the authentication server not implementing the full OAuth2 spec yet.
-		$request->setUrl(NostoOAuthClient::$base_url.'/exchange');
+		$request->setUrl(NostoOAuthClient::$baseUrl.'/exchange');
 		$request->setQueryParams(array('access_token' => $token->accessToken));
 		$response = $request->get();
 		$result = $response->getJsonResult(true);

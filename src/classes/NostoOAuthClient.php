@@ -12,7 +12,7 @@ class NostoOAuthClient
 	/**
 	 * @var string the nosto oauth endpoint base url.
 	 */
-	public static $base_url = 'https://staging.nosto.com/oauth';
+	public static $baseUrl = 'https://my.nosto.com/oauth';
 
 	/**
 	 * @var string the client id the identify this application to the oauth2 server.
@@ -59,7 +59,7 @@ class NostoOAuthClient
 	public function getAuthorizationUrl()
 	{
 		return NostoHttpRequest::buildUri(
-			self::$base_url.self::PATH_AUTH,
+			self::$baseUrl.self::PATH_AUTH,
 			array(
 				'{cid}' => $this->clientId,
 				'{uri}' => urlencode($this->redirectUrl),
@@ -83,7 +83,7 @@ class NostoOAuthClient
 		}
 
 		$request = new NostoHttpRequest();
-		$request->setUrl(self::$base_url.self::PATH_TOKEN);
+		$request->setUrl(self::$baseUrl.self::PATH_TOKEN);
 		$request->setReplaceParams(array(
 			'{cid}' => $this->clientId,
 			'{sec}' => $this->clientSecret,
