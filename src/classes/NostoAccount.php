@@ -103,6 +103,14 @@ class NostoAccount implements NostoAccountInterface
 	/**
 	 * @inheritdoc
 	 */
+	public function getName()
+	{
+		return $this->name;
+	}
+
+	/**
+	 * @inheritdoc
+	 */
 	public function isConnectedToNosto()
 	{
 		if (empty($this->tokens)) {

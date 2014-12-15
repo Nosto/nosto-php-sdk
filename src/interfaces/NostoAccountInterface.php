@@ -26,6 +26,13 @@ interface NostoAccountInterface
 	public static function syncFromNosto(NostoOAuthClientMetaDataInterface $meta, $code);
 
 	/**
+	 * Gets the account name.
+	 *
+	 * @return string the account name.
+	 */
+	public function getName();
+
+	/**
 	 * Checks if this account has been connected to Nosto, i.e. all API tokens exist.
 	 *
 	 * @return bool true if it is connected, false otherwise.

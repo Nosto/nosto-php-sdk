@@ -46,7 +46,6 @@ A Nosto account is needed for every shop and every language within each shop.
     .....
     try {
         /** @var NostoAccountMetaDataInterface $meta */
-        $meta = new MetaData();
         /** @var NostoAccount $account */
         $account = NostoAccount::create($meta);
         // save newly created account according to the platforms requirements
@@ -67,7 +66,6 @@ First redirect to the Nosto OAuth2 server.
 ```php
     .....
     /** @var NostoOAuthClientMetaDataInterface $meta */
-    $meta = new MetaData();
     $client = new NostoOAuthClient($meta);
   	header('Location: ' . $client->getAuthorizationUrl());
 ```
@@ -78,7 +76,6 @@ Then have a public endpoint ready to handle the return request.
     if (isset($_GET['code'])) {
         try {
             /** @var NostoOAuthClientMetaDataInterface $meta */
-            $meta = new MetaData();
             $account = NostoAccount::syncFromNosto($meta, $_GET['code']);
             // save the synced account according to the platforms requirements
         } catch (NostoException $e) {
@@ -114,7 +111,35 @@ This iframe will load only content from nosto.com.
 
 ### Sending order confirmations using the Nosto API
 
-todo
+Sending order confirmations to Nosto is a vital part of the functionality. Order confirmations should be sent when an
+order has been completed in the shop. It is NOT recommended to do this when the "thank you" page is shown to the user,
+as payment gateways work differently and you cannot rely on the user always being redirected back to the shop after a
+payment has been made. Therefore, it is recommended to send the order conformation when the order is marked as payed
+in the shop.
+
+Order confirmations can be sent two different ways:
+
+* matched orders; where we know the Nosto customer ID of the user who placed the order
+* un-matched orders: where we do not know the Nosto customer ID of the user who placed the order
+
+The Nosto customer ID is set in a cookie "2c.cId" by Nosto and it is up to the platform to keep a link between users
+and the Nosto customer ID. It is recommended to tie the Nosto customer ID to the order or shopping cart instead of an
+user ID, as the platform may support guest checkouts.
+
+```php
+    .....
+    try {
+        /**
+         * @var NostoOrderInterface $order
+         * @var NostoAccountInterface $account
+         * @var string $customerId
+         */
+        NostoOrderConfirmation::send($order, $account, $customerId);
+    } catch (NostoException $e) {
+        // handle error
+    }
+    .....
+```
 
 ### Sending product re-crawl requests using the Nosto API
 
