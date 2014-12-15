@@ -23,9 +23,7 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoHttpResponse** class that represents a response for an http request made through the NostoHttpRequest class
 * **NostoOAuthClient** class for authorizing the module to act on the Nosto account owners behalf using OAuth2 Authorization Code method
 * **NostoOAuthToken** class that represents a token granted using the OAuth client
-* **NostoCryptAES** class for aes encryption that uses mcrypt if available and an internal implementation otherwise
-* **NostoCryptBase** base class for creating encryption classes
-* **NostoCryptRijndael** class for rijndael encryption that uses mcrypt if available and an internal implementation otherwise
+* **NostoOrderConfirmation** class for sending order confirmations through the API
 
 ### Interfaces
 
@@ -35,6 +33,15 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoAccountMetaDataInterface** interface defining getters for information needed during Nosto account creation over the API
 * **NostoAccountMetaDataOwnerInterface** interface defining getters for account owner information needed during Nosto account creation over the API
 * **NostoOauthMetaDataInterface** interface defining getters for information needed during OAuth2 requests
+* **NostoOrderBuyerInterface** interface defining getters for buyer information needed during order confirmation requests
+* **NostoOrderInterface** interface defining getters for information needed during order confirmation requests
+* **NostoOrderPurchasedItemInterface** interface defining getters for purchased item information needed during order confirmation requests
+
+### Libs
+
+* **NostoCryptAES** class for aes encryption that uses mcrypt if available and an internal implementation otherwise
+* **NostoCryptBase** base class for creating encryption classes
+* **NostoCryptRijndael** class for rijndael encryption that uses mcrypt if available and an internal implementation otherwise
 
 ## Getting started
 
