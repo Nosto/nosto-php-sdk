@@ -7,6 +7,9 @@ require_once(dirname(__FILE__).'/interfaces/NostoAccountMetaDataIframeInterface.
 require_once(dirname(__FILE__).'/interfaces/NostoAccountMetaDataInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoAccountMetaDataOwnerInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoOAuthClientMetaDataInterface.php');
+require_once(dirname(__FILE__).'/interfaces/NostoOrderBuyerInterface.php');
+require_once(dirname(__FILE__).'/interfaces/NostoOrderInterface.php');
+require_once(dirname(__FILE__).'/interfaces/NostoOrderPurchasedItemInterface.php');
 
 // Classes
 require_once(dirname(__FILE__).'/classes/NostoAccount.php');
@@ -22,6 +25,7 @@ require_once(dirname(__FILE__).'/classes/NostoHttpRequestAdapterSocket.php');
 require_once(dirname(__FILE__).'/classes/NostoHttpResponse.php');
 require_once(dirname(__FILE__).'/classes/NostoOAuthClient.php');
 require_once(dirname(__FILE__).'/classes/NostoOAuthToken.php');
+require_once(dirname(__FILE__).'/classes/NostoOrderConfirmation.php');
 
 // Parse .env if exists and assign configured environment variables.
 NostoDotEnv::getInstance()->init(__DIR__);
