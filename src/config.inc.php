@@ -1,33 +1,37 @@
 <?php
 
 // Interfaces
-require_once(dirname(__FILE__).'/interfaces/NostoAccountInterface.php');
-require_once(dirname(__FILE__).'/interfaces/NostoAccountMetaDataBillingDetailsInterface.php');
-require_once(dirname(__FILE__).'/interfaces/NostoAccountMetaDataIframeInterface.php');
-require_once(dirname(__FILE__).'/interfaces/NostoAccountMetaDataInterface.php');
-require_once(dirname(__FILE__).'/interfaces/NostoAccountMetaDataOwnerInterface.php');
+require_once(dirname(__FILE__).'/interfaces/account/NostoAccountInterface.php');
+require_once(dirname(__FILE__).'/interfaces/account/NostoAccountMetaDataBillingDetailsInterface.php');
+require_once(dirname(__FILE__).'/interfaces/account/NostoAccountMetaDataIframeInterface.php');
+require_once(dirname(__FILE__).'/interfaces/account/NostoAccountMetaDataInterface.php');
+require_once(dirname(__FILE__).'/interfaces/account/NostoAccountMetaDataOwnerInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoOAuthClientMetaDataInterface.php');
-require_once(dirname(__FILE__).'/interfaces/NostoOrderBuyerInterface.php');
-require_once(dirname(__FILE__).'/interfaces/NostoOrderInterface.php');
-require_once(dirname(__FILE__).'/interfaces/NostoOrderPurchasedItemInterface.php');
+require_once(dirname(__FILE__).'/interfaces/order/NostoOrderBuyerInterface.php');
+require_once(dirname(__FILE__).'/interfaces/order/NostoOrderInterface.php');
+require_once(dirname(__FILE__).'/interfaces/order/NostoOrderPurchasedItemInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoProductInterface.php');
 
 // Classes
 require_once(dirname(__FILE__).'/classes/NostoAccount.php');
-require_once(dirname(__FILE__).'/classes/NostoHttpRequest.php');
-require_once(dirname(__FILE__).'/classes/NostoApiRequest.php');
-require_once(dirname(__FILE__).'/classes/NostoApiToken.php');
+require_once(dirname(__FILE__).'/classes/http/NostoHttpRequest.php');
+require_once(dirname(__FILE__).'/classes/api/NostoApiRequest.php');
+require_once(dirname(__FILE__).'/classes/api/NostoApiToken.php');
 require_once(dirname(__FILE__).'/classes/NostoCipher.php');
 require_once(dirname(__FILE__).'/classes/NostoDotEnv.php');
 require_once(dirname(__FILE__).'/classes/NostoException.php');
-require_once(dirname(__FILE__).'/classes/NostoHttpRequestAdapter.php');
-require_once(dirname(__FILE__).'/classes/NostoHttpRequestAdapterCurl.php');
-require_once(dirname(__FILE__).'/classes/NostoHttpRequestAdapterSocket.php');
-require_once(dirname(__FILE__).'/classes/NostoHttpResponse.php');
-require_once(dirname(__FILE__).'/classes/NostoOAuthClient.php');
-require_once(dirname(__FILE__).'/classes/NostoOAuthToken.php');
+require_once(dirname(__FILE__).'/classes/http/NostoHttpRequestAdapter.php');
+require_once(dirname(__FILE__).'/classes/http/NostoHttpRequestAdapterCurl.php');
+require_once(dirname(__FILE__).'/classes/http/NostoHttpRequestAdapterSocket.php');
+require_once(dirname(__FILE__).'/classes/http/NostoHttpResponse.php');
+require_once(dirname(__FILE__).'/classes/oauth/NostoOAuthClient.php');
+require_once(dirname(__FILE__).'/classes/oauth/NostoOAuthToken.php');
 require_once(dirname(__FILE__).'/classes/NostoOrderConfirmation.php');
 require_once(dirname(__FILE__).'/classes/NostoProductReCrawl.php');
+
+require_once(dirname(__FILE__).'/classes/export/NostoExporter.php');
+require_once(dirname(__FILE__).'/classes/export/NostoExportCollection.php');
+require_once(dirname(__FILE__).'/classes/export/NostoExportProductCollection.php');
 
 // Libs
 require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptBase.php');

@@ -25,6 +25,10 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoOAuthToken** class that represents a token granted using the OAuth client
 * **NostoOrderConfirmation** class for sending order confirmations through the API
 * **NostoProductReCrawl** class for sending product re-crawl requests to Nosto over the API
+* **NostoExporter** class for exporting encrypted historical data from the shop
+* **NostoExportCollection** base class for creating exportable data collections for the historical data
+* **NostoExportProductCollection** class for exporting historical product data
+* **NostoExportOrderCollection** class for exporting historical order data
 
 ### Interfaces
 
@@ -171,6 +175,49 @@ so that the newest information can be shown to the users on the site.
     .....
 ```
 
-### Exporting encrypted product/order information that Nosto can request publicly
+### Exporting encrypted product/order information that Nosto can request
 
-todo
+When new Nosto accounts are created for a shop, Nosto will try to fetch historical data about products and orders.
+This information is used to bootstrap recommendations and decreases the time needed to get accurate recommendations
+showing in the shop.
+
+For this to work, Nosto requires 2 public endpoints that can be called once a new account has been created through
+the API. These endpoints should serve the history data encrypted with AES. The SDK comes bundled with the ability to
+encrypt the data with a pure PHP solution (http://phpseclib.sourceforge.net/), It is recommended, but not required, to
+have mcrypt installed on the server.
+
+Additionally, the endpoints need to support the ability to limit the amount of products/orders to export and an offset
+for fetching batches of data. These must be implemented as GET parameters "limit" and "offset" which will be sent as
+integer values and expected to be applied to the data set being exported.
+
+```php
+    .....
+    /**
+     * @var NostoProductInterface[] $products
+     * @var NostoAccountInterface $account
+     */
+    $collection = new NostoExportProductCollection();
+    foreach ($products as $product) {
+        $collection[] = $product;
+    }
+    // The exported will encrypt the collection and output the result.
+    NostoExporter::export($account, $collection);
+    // It is important to stop the script execution after the export, in order to avoid any additional data being outputted.
+    die();
+```
+
+```php
+    .....
+    /**
+     * @var NostoOrderInterface[] $orders
+     * @var NostoAccountInterface $account
+     */
+    $collection = new NostoExportOrderCollection();
+    foreach ($orders as $order) {
+        $collection[] = $order;
+    }
+    // The exported will encrypt the collection and output the result.
+    NostoExporter::export($account, $collection);
+    // It is important to stop the script execution after the export, in order to avoid any additional data being outputted.
+    die();
+```
