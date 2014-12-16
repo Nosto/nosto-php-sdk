@@ -188,8 +188,8 @@ class NostoAccount implements NostoAccountInterface
 	 */
 	public function ssoLogin(NostoAccountMetaDataIframeInterface $meta)
 	{
-		$ssoToken = $this->getApiToken('sso');
-		if ($ssoToken === null) {
+		$token = $this->getApiToken('sso');
+		if ($token === null) {
 			return false;
 		}
 
@@ -197,7 +197,7 @@ class NostoAccount implements NostoAccountInterface
 		$request->setPath(NostoApiRequest::PATH_SSO_AUTH);
 		$request->setReplaceParams(array('{email}' => $meta->getEmail()));
 		$request->setContentType('application/json');
-		$request->setAuthBasic('', $ssoToken->value);
+		$request->setAuthBasic('', $token->value);
 		$response = $request->post(json_encode(array(
 			'first_name' => $meta->getFirstName(),
 			'last_name' => $meta->getLastName(),

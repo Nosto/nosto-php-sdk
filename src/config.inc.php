@@ -10,6 +10,7 @@ require_once(dirname(__FILE__).'/interfaces/NostoOAuthClientMetaDataInterface.ph
 require_once(dirname(__FILE__).'/interfaces/NostoOrderBuyerInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoOrderInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoOrderPurchasedItemInterface.php');
+require_once(dirname(__FILE__).'/interfaces/NostoProductInterface.php');
 
 // Classes
 require_once(dirname(__FILE__).'/classes/NostoAccount.php');
@@ -26,6 +27,7 @@ require_once(dirname(__FILE__).'/classes/NostoHttpResponse.php');
 require_once(dirname(__FILE__).'/classes/NostoOAuthClient.php');
 require_once(dirname(__FILE__).'/classes/NostoOAuthToken.php');
 require_once(dirname(__FILE__).'/classes/NostoOrderConfirmation.php');
+require_once(dirname(__FILE__).'/classes/NostoProductReCrawl.php');
 
 // Libs
 require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptBase.php');

@@ -24,6 +24,7 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoOAuthClient** class for authorizing the module to act on the Nosto account owners behalf using OAuth2 Authorization Code method
 * **NostoOAuthToken** class that represents a token granted using the OAuth client
 * **NostoOrderConfirmation** class for sending order confirmations through the API
+* **NostoProductReCrawl** class for sending product re-crawl requests to Nosto over the API
 
 ### Interfaces
 
@@ -36,12 +37,14 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoOrderBuyerInterface** interface defining getters for buyer information needed during order confirmation requests
 * **NostoOrderInterface** interface defining getters for information needed during order confirmation requests
 * **NostoOrderPurchasedItemInterface** interface defining getters for purchased item information needed during order confirmation requests
+* **NostoProductInterface** interface defining getters for product information needed during product re-crawl requests to Nosto over the API
 
 ### Libs
 
 * **NostoCryptAES** class for aes encryption that uses mcrypt if available and an internal implementation otherwise
 * **NostoCryptBase** base class for creating encryption classes
 * **NostoCryptRijndael** class for rijndael encryption that uses mcrypt if available and an internal implementation otherwise
+* **NostoCryptRandom** class for generating random strings
 
 ## Getting started
 
@@ -150,7 +153,23 @@ user ID, as the platform may support guest checkouts.
 
 ### Sending product re-crawl requests using the Nosto API
 
-todo
+When a product changes in the store, stock is reduced, price is updated etc. it is recommended to send an API request
+to Nosto that initiates a product "re-crawl" event. This is done to update the recommendations including that product
+so that the newest information can be shown to the users on the site.
+
+```php
+    .....
+    try {
+        /**
+         * @var NostoProductInterface $product
+         * @var NostoAccountInterface $account
+         */
+        NostoProductReCrawl::send($product, $account);
+    } catch (NostoException $e) {
+        // handle error
+    }
+    .....
+```
 
 ### Exporting encrypted product/order information that Nosto can request publicly
 
