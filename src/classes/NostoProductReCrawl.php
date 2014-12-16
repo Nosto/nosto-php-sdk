@@ -23,7 +23,7 @@ class NostoProductReCrawl
 		$request->setPath(NostoApiRequest::PATH_PRODUCT_RE_CRAWL);
 		$request->setContentType('application/json');
 		$request->setAuthBasic('', $token);
-		$response = $request->post(json_encode(array('product_ids' => array($product->getId()))));
+		$response = $request->post(json_encode(array('product_ids' => array($product->getProductId()))));
 		if ($response->getCode() !== 200) {
 			throw new NostoException('Failed to send product re-crawl to Nosto');
 		}
