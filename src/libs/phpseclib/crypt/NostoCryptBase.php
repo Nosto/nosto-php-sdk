@@ -1,6 +1,6 @@
 <?php
 /**
- * Base Class for all Crypt* cipher classes
+ * Base Class for all NostoCrypt* cipher classes
  *
  * PHP versions 5
  *

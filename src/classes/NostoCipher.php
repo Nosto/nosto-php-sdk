@@ -1,9 +1,5 @@
 <?php
 
-require_once(dirname(__FILE__).'/../libs/phpseclib/crypt/NostoCryptBase.php');
-require_once(dirname(__FILE__).'/../libs/phpseclib/crypt/NostoCryptRijndael.php');
-require_once(dirname(__FILE__).'/../libs/phpseclib/crypt/NostoCryptAES.php');
-
 /**
  * Helper class for encrypting/decrypting strings.
  */
