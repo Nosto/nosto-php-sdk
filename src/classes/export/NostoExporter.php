@@ -16,6 +16,7 @@ class NostoExporter
 	 */
 	public static function export(NostoAccountInterface $account, NostoExportCollection $collection)
 	{
+		$data = '';
 		// Use the first 16 chars of the SSO token as secret for encryption.
 		$token = $account->getApiToken('sso');
 		if (!empty($token)) {
@@ -28,9 +29,9 @@ class NostoExporter
 				$cipher_text = $cipher->encrypt($collection->getJson());
 				// Prepend the IV to the cipher string so that nosto can parse and use it.
 				// There is no security concern with sending the IV as plain text.
-				return $iv.$cipher_text;
+				$data = $iv.$cipher_text;
 			}
 		}
-		return '';
+		return $data;
 	}
 }
