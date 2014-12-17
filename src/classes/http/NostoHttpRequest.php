@@ -35,14 +35,21 @@ class NostoHttpRequest
 
 	/**
 	 * Constructor.
-	 * Chooses request adapter based on what available in the environment.
+	 * Creates the http request adapter which is chosen automatically by default based on environment.
+	 * Curl is preferred if available.
+	 *
+	 * @param NostoHttpRequestAdapter|null $adapter the http request adapter to use
+	 * @throws NostoException
 	 */
-	public function __construct()
+	public function __construct(NostoHttpRequestAdapter $adapter = null)
 	{
-		if (function_exists('curl_exec'))
+		if ($adapter !== null) {
+			$this->_adapter = $adapter;
+		} elseif (function_exists('curl_exec')) {
 			$this->_adapter = new NostoHttpRequestAdapterCurl();
-		else
+		} else {
 			$this->_adapter = new NostoHttpRequestAdapterSocket();
+		}
 	}
 
 	/**
@@ -138,7 +145,7 @@ class NostoHttpRequest
 				break;
 
 			default:
-				throw new Exception('Unsupported auth type.');
+				throw new NostoException('Unsupported auth type.');
 		}
 	}
 

@@ -56,7 +56,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
     public function testOrderHistoryExport()
     {
 		$collection = new NostoExportOrderCollection();
-		$collection[] = new NostoOrder();
+		$collection->append(new NostoOrder());
 		$cipher_text = NostoExporter::export($this->account, $collection);
 
 		$this->specify('verify encrypted order export', function() use ($collection, $cipher_text) {

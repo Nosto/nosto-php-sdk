@@ -101,8 +101,6 @@ class NostoHttpResponse
 	 */
 	public function getRawStatus()
 	{
-		if (isset($this->headers) && isset($this->headers[0]))
-			return $this->headers[0];
-		return '';
+		return (isset($this->headers) && isset($this->headers[0])) ? $this->headers[0] : '';
 	}
 }

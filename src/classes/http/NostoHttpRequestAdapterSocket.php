@@ -56,7 +56,7 @@ class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
 		// populated into $headers, which is only available in the local scope where file_get_contents()
 		// is executed (http://php.net/manual/en/reserved.variables.httpresponseheader.php).
 		$http_response_header = array();
-		$result = file_get_contents($url, false, $context);
+		$result = @file_get_contents($url, false, $context);
 		$response = new NostoHttpResponse();
 		if (!empty($http_response_header)) {
 			$response->setHeaders($http_response_header);
