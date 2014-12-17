@@ -1,0 +1,197 @@
+FORMAT: 1A
+HOST: http://localhost:3000
+
+# nosto/php-sdk
+
+# Group Account
+Account related resources
+
+## Create Account [/accounts/create/{lang}]
+
++ Parameters
+
+    + lang (string) ... the 3-letter language ISO ((ISO 639-2)) code for the account language
+
+### New account [POST]
+
++ Request (application/json)
+
+        {
+            "title": "My Shop",
+            "name": "00000000",
+            "platform": "platform name",
+            "front_page_url": "http://my.shop.com",
+            "currency_code": "USD",
+            "language_code": "en",
+            "owner": {
+                "first_name": "James",
+                "last_name": "Kirk",
+                "email": "james.kirk@example.com"
+            },
+            "billing_details": {
+                "country": "us"
+            },
+            "api_tokens": ["sso", "products"]
+        }
+
++ Response 200 (application/json)
+
+        {
+            "sso_token": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783",
+            "products_token": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783"
+        }
+
+## OAuth Access Token [/token{?code,client_id,client_secret,redirect_uri,grant_type}]
+
++ Parameters
+
+    + code (string) ... the authorization code that was received in the redirect url from the oauth server
+    + client_id (string) ... the oauth client id
+    + client_secret (string) ... the oauth client secret
+    + grant_type (string) ... must be "authorization_code"
+
+### Get the OAuth access token [GET]
+
++ Response 200 (application/json)
+
+        {
+            "access_token": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783",
+            "merchant_name": "platform-00000000"
+        }
+
+## Sync Account [/exchange{?access_token}]
+
++ Parameters
+
+    + access_token (string) ... the access token received in the oauth token request (above)
+
+### Sync existing account details [GET]
+
++ Response 200 (application/json)
+
+        {
+            "api_sso": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783",
+            "api_products": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783"
+        }
+
+## Single Sign On  [/users/sso/{email}]
+
++ Parameters
+
+    + email (string) ... the email address of the user who is doing the SSO
+
+### SSO login [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
+    + Body
+
+            {
+                "first_name": "James",
+                "last_name": "Kirk"
+            }
+
++ Response 200 (application/json)
+
+        {
+            "login_url": "https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg"
+        }
+
+# Group Order
+Order related resources
+
+## Matched Order Confirmation [/visits/order/confirm/{m}/{cid}]
+
++ Parameters
+
+    + m (string) ... the account name for which this order was placed
+    + cid (string) ... the nosto customer id that placed the order
+
+### New account [POST]
+
++ Request (application/json)
+
+        {
+            "order_number": 1,
+            "buyer": {
+                "first_name": "James",
+                "last_name": "Kirk",
+                "email": "james.kirk@example.com"
+            },
+            "created_at": "2014-12-12",
+            "payment_provider": "test-gateway [1.0.0]",
+            "purchased_items": [
+                {
+                    "product_id": 1,
+                    "quantity": 2,
+                    "name": "Test Product",
+                    "unit_price": "99.99",
+                    "price_currency_code": "USD"
+                }
+            ]
+        }
+
++ Response 200 (application/json)
+
+        {}
+
+## Un-matched Order Confirmation [/visits/order/unmatched/{m}]
+
++ Parameters
+
+    + m (string) ... the account name for which this order was placed
+
+### New account [POST]
+
++ Request (application/json)
+
+        {
+            "order_number": 1,
+            "buyer": {
+                "first_name": "James",
+                "last_name": "Kirk",
+                "email": "james.kirk@example.com"
+            },
+            "created_at": "2014-12-12",
+            "payment_provider": "test-gateway [1.0.0]",
+            "purchased_items": [
+                {
+                    "product_id": 1,
+                    "quantity": 2,
+                    "name": "Test Product",
+                    "unit_price": "99.99",
+                    "price_currency_code": "USD"
+                }
+            ]
+        }
+
++ Response 200 (application/json)
+
+        {}
+
+# Group Product
+Product related resources
+
+## Product Re-crawl [/products/recrawl]
+
+### Send product re-crawl request [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
+    + Body
+
+            {
+                "product_ids": [1]
+            }
+
++ Response 200 (application/json)
+
+        {}

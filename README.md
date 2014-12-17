@@ -115,10 +115,13 @@ This iframe will load only content from nosto.com.
 
 ```php
     .....
+    /**
+     * @var NostoAccount $account
+     * @var NostoAccountMetaDataIframeInterface $meta
+     */
     // load a nosto account object with at least the 'sso' API token associated with it
-    /** @var NostoAccount $account */
     $account = $this->loadNostoAccount();
-    $url = $account->getIframeUrl();
+    $url = $account->getIframeUrl($meta);
     // show the iframe to the user with given url
     .....
 ```
@@ -201,7 +204,8 @@ integer values and expected to be applied to the data set being exported.
         $collection[] = $product;
     }
     // The exported will encrypt the collection and output the result.
-    NostoExporter::export($account, $collection);
+    $cipher_text = NostoExporter::export($account, $collection);
+    echo $cipher_text;
     // It is important to stop the script execution after the export, in order to avoid any additional data being outputted.
     die();
 ```
@@ -217,7 +221,45 @@ integer values and expected to be applied to the data set being exported.
         $collection[] = $order;
     }
     // The exported will encrypt the collection and output the result.
-    NostoExporter::export($account, $collection);
+    $cipher_text = NostoExporter::export($account, $collection);
+    echo $cipher_text;
     // It is important to stop the script execution after the export, in order to avoid any additional data being outputted.
     die();
+```
+
+## Testing
+
+The SDK is unit tested with Codeception (http://codeception.com/).
+API and OAuth2 requests are tested using api-mock server (https://www.npmjs.com/package/api-mock) running on Node.
+
+### Install Codeception & api-mock
+
+First cd into the root directory.
+
+Then install Codeception via composer:
+
+```bash
+    php composer.phar install
+```
+
+And then install Node (http://nodejs.org/) and the npm package manager (https://www.npmjs.com/). After that you can install the api-mock server via npm:
+
+```bash
+    npm install -g api-mock
+```
+
+### Running tests
+
+First cd into the root directory.
+
+Then start the api-mock server with the API blueprint:
+
+```bash
+    api-mock tests/api-blueprint.md
+```
+
+Then in another window run the tests:
+
+```bash
+    vendor/bin/codecept run
 ```

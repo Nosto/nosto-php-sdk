@@ -8,10 +8,11 @@
 class NostoExporter
 {
 	/**
-	 * Encrypts and outputs the given data.
+	 * Encrypts and returns the data.
 	 *
 	 * @param NostoAccountInterface $account the account to export the data for.
 	 * @param NostoExportCollection $collection the data collection to export.
+	 * @return string the encrypted data.
 	 */
 	public static function export(NostoAccountInterface $account, NostoExportCollection $collection)
 	{
@@ -27,8 +28,9 @@ class NostoExporter
 				$cipher_text = $cipher->encrypt($collection->getJson());
 				// Prepend the IV to the cipher string so that nosto can parse and use it.
 				// There is no security concern with sending the IV as plain text.
-				echo $iv.$cipher_text;
+				return $iv.$cipher_text;
 			}
 		}
+		return '';
 	}
 }

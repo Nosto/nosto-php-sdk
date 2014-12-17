@@ -1,10 +1,8 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataBilling.php');
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataOwner.php');
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaData.php');
+require_once(dirname(__FILE__) . '/../_support/NostoOAuthClientMetaData.php');
 
-class AccountCreateTest extends \Codeception\TestCase\Test
+class AccountSyncTest extends \Codeception\TestCase\Test
 {
 	use \Codeception\Specify;
 
@@ -14,18 +12,24 @@ class AccountCreateTest extends \Codeception\TestCase\Test
     protected $tester;
 
 	/**
-	 * Tests that new accounts can be created successfully.
+	 * Tests that existing accounts can be synced from Nosto.
+	 * Accounts are synced using OAuth2 Authorization Code method.
+	 * We are only testing that we can start and act on the steps in the OAuth request cycle.
 	 */
-	public function testCreatingNewAccount()
+	public function testSyncingExistingAccount()
     {
-		/** @var NostoAccount $account */
-		/** @var NostoAccountMetaData $meta */
-		$meta = new NostoAccountMetaData();
-		$account = NostoAccount::create($meta);
+		$meta = new NostoOAuthClientMetaData();
+		$client = new NostoOAuthClient($meta);
+
+		$this->specify('oauth authorize url can be created', function() use ($client) {
+			$this->assertEquals('http://localhost:3000?client_id=client-id&redirect_uri=http%3A%2F%2Fmy.shop.com%2Fnosto%2Foauth&response_type=code&scope=sso products&lang=en', $client->getAuthorizationUrl());
+		});
+
+		$account = NostoAccount::syncFromNosto($meta, 'test123');
 
 		$this->specify('account was created', function() use ($account, $meta) {
 			$this->assertInstanceOf('NostoAccount', $account);
-			$this->assertEquals($meta->getPlatform() . '-' . $meta->getName(), $account->name);
+			$this->assertEquals('platform-00000000', $account->name);
 		});
 
 		$this->specify('account has api token sso', function() use ($account, $meta) {

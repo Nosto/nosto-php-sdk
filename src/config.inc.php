@@ -32,6 +32,7 @@ require_once(dirname(__FILE__).'/classes/NostoProductReCrawl.php');
 require_once(dirname(__FILE__).'/classes/export/NostoExporter.php');
 require_once(dirname(__FILE__).'/classes/export/NostoExportCollection.php');
 require_once(dirname(__FILE__).'/classes/export/NostoExportProductCollection.php');
+require_once(dirname(__FILE__).'/classes/export/NostoExportOrderCollection.php');
 
 // Libs
 require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptBase.php');
