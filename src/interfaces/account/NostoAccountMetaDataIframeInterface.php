@@ -27,14 +27,14 @@ interface NostoAccountMetaDataIframeInterface
 	public function getEmail();
 
 	/**
-	 * The 3-letter ISO code (ISO 639-2) for the language of the user who is loading the config iframe.
+	 * The 2-letter ISO code (ISO 639-1) for the language of the user who is loading the config iframe.
 	 *
 	 * @return string the language ISO code.
 	 */
 	public function getLanguageIsoCode();
 
 	/**
-	 * The 3-letter ISO code (ISO 639-2) for the language of the shop the account belongs to.
+	 * The 2-letter ISO code (ISO 639-1) for the language of the shop the account belongs to.
 	 *
 	 * @return string the language ISO code.
 	 */

@@ -10,7 +10,7 @@ Account related resources
 
 + Parameters
 
-    + lang (string) ... the 3-letter language ISO ((ISO 639-2)) code for the account language
+    + lang (string) ... the 2-letter language ISO ((ISO 639-1)) code for the account language
 
 ### New account [POST]
 

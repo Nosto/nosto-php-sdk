@@ -7,7 +7,7 @@
 interface NostoAccountMetaDataBillingDetailsInterface
 {
 	/**
-	 * The 3-letter ISO code (ISO 3166-1 alpha-3) for the country used in account's billing details.
+	 * The 2-letter ISO code (ISO 3166-1 alpha-2) for the country used in account's billing details.
 	 *
 	 * @return string the country ISO code.
 	 */

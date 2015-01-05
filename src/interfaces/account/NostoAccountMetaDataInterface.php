@@ -43,14 +43,14 @@ interface NostoAccountMetaDataInterface
 	public function getCurrencyCode();
 
 	/**
-	 * The 3-letter ISO code (ISO 639-2) for the language used by the shop for which the account is created for.
+	 * The 2-letter ISO code (ISO 639-1) for the language used by the shop for which the account is created for.
 	 *
 	 * @return string the language ISO code.
 	 */
 	public function getLanguageCode();
 
 	/**
-	 * The 3-letter ISO code (ISO 639-2) for the language of the account owner who is creating the account.
+	 * The 2-letter ISO code (ISO 639-1) for the language of the account owner who is creating the account.
 	 *
 	 * @return string the language ISO code.
 	 */

@@ -40,7 +40,7 @@ interface NostoOAuthClientMetaDataInterface
 	public function getScopes();
 
 	/**
-	 * The 3-letter ISO code (ISO 639-2) for the language the OAuth2 server uses for UI localization.
+	 * The 2-letter ISO code (ISO 639-1) for the language the OAuth2 server uses for UI localization.
 	 *
 	 * @return string the ISO code.
 	 */
