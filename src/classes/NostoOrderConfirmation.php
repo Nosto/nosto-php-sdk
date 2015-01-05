@@ -24,15 +24,18 @@ class NostoOrderConfirmation
 	{
 		if (!empty($customerId)) {
 			$path = NostoApiRequest::PATH_ORDER_TAGGING;
-			$replace_params = array('{m}' => $account->getName(), '{cid}' => $customerId);
+			$replaceParams = array('{m}' => $account->getName(), '{cid}' => $customerId);
 		} else {
 			$path = NostoApiRequest::PATH_UNMATCHED_ORDER_TAGGING;
-			$replace_params = array('{m}' => $account->getName());
+			$replaceParams = array('{m}' => $account->getName());
 		}
 		$request = new NostoApiRequest();
 		$request->setPath($path);
 		$request->setContentType('application/json');
-		$request->setReplaceParams($replace_params);
+		$request->setReplaceParams($replaceParams);
+
+		// todo: format date/price.
+
 		$orderData = array(
 			'order_number' => $order->getOrderNumber(),
 			'buyer' => array(
