@@ -45,4 +45,8 @@ class NostoAccountMetaData implements NostoAccountMetaDataInterface
 	{
 		return $this->billing;
 	}
+	public function getSignUpApiToken()
+	{
+		return 'abc123';
+	}
 }

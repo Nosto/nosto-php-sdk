@@ -48,7 +48,7 @@ class NostoAccount implements NostoAccountInterface
 		$request->setPath(NostoApiRequest::PATH_SIGN_UP);
 		$request->setReplaceParams(array('{lang}' => $meta->getLanguageCode()));
 		$request->setContentType('application/json');
-		$request->setAuthBasic('', NostoApiRequest::TOKEN_SIGN_UP);
+		$request->setAuthBasic('', $meta->getSignUpApiToken());
 		$response = $request->post(json_encode($params));
 
 		if ($response->getCode() !== 200) {

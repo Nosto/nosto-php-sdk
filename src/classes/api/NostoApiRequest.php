@@ -11,8 +11,6 @@ class NostoApiRequest extends NostoHttpRequest
 	const PATH_SSO_AUTH = '/users/sso/{email}';
 	const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
 
-	const TOKEN_SIGN_UP = 'JRtgvoZLMl4NPqO9XWhRdvxkTMtN82ITTJij8U7necieJPCvjtZjm5C4fpNrYJ81';
-
 	/**
 	 * @var string base url for the nosto api.
 	 */

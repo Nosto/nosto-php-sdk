@@ -69,4 +69,12 @@ interface NostoAccountMetaDataInterface
 	 * @return NostoAccountMetaDataBillingDetailsInterface the meta data model.
 	 */
 	public function getBillingDetails();
+
+	/**
+	 * The API token used to identify an account creation.
+	 * This token is platform specific and issued by Nosto.
+	 *
+	 * @return string the API token.
+	 */
+	public function getSignUpApiToken();
 }
