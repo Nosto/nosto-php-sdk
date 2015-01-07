@@ -34,8 +34,6 @@ class NostoOrderConfirmation
 		$request->setContentType('application/json');
 		$request->setReplaceParams($replaceParams);
 
-		// todo: format date/price.
-
 		$orderData = array(
 			'order_number' => $order->getOrderNumber(),
 			'buyer' => array(
@@ -43,16 +41,16 @@ class NostoOrderConfirmation
 				'last_name' => $order->getBuyerInfo()->getLastName(),
 				'email' => $order->getBuyerInfo()->getEmail(),
 			),
-			'created_at' => $order->getCreatedDate(),
+			'created_at' => Nosto::helper('date')->format($order->getCreatedDate()),
 			'payment_provider' => $order->getPaymentProvider(),
 			'purchased_items' => array(),
 		);
 		foreach ($order->getPurchasedItems() as $item) {
 			$orderData['purchased_items'][] = array(
 				'product_id' => $item->getProductId(),
-				'quantity' => $item->getQuantity(),
+				'quantity' => (int)$item->getQuantity(),
 				'name' => $item->getName(),
-				'unit_price' => $item->getUnitPrice(),
+				'unit_price' => Nosto::helper('price')->format($item->getUnitPrice()),
 				'price_currency_code' => $item->getCurrencyCode(),
 			);
 		}

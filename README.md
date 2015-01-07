@@ -29,6 +29,10 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoExportCollection** base class for creating exportable data collections for the historical data
 * **NostoExportProductCollection** class for exporting historical product data
 * **NostoExportOrderCollection** class for exporting historical order data
+* **Nosto** main sdk class for common functionality
+* **NostoHelper** base class for all nosto helpers
+* **NostoHelperDate** helper class for date related operations
+* **NostoHelperPrice** helper class for price related operations
 
 ### Interfaces
 
