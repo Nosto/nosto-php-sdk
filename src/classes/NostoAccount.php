@@ -5,7 +5,7 @@
  */
 class NostoAccount implements NostoAccountInterface
 {
-	const IFRAME_URI = '/hub/prestashop/{m}';
+	const IFRAME_URI = '/hub/{p}/{m}';
 
 	/**
 	 * @var string the name of the Nosto account.
@@ -175,7 +175,8 @@ class NostoAccount implements NostoAccountInterface
 //						'preview_front' => $meta->getPreviewUrlFront(),
 					)),
 					array(
-						'{m}' => $this->name
+						'{p}' => $meta->getPlatform(),
+						'{m}' => $this->name,
 					)
 				));
 		} else {

@@ -6,6 +6,14 @@
 interface NostoAccountMetaDataIframeInterface
 {
 	/**
+	 * The name of the platform the iframe is used on.
+	 * A list of valid platform names is issued by Nosto.
+	 *
+	 * @return string the platform name.
+	 */
+	public function getPlatform();
+
+	/**
 	 * The first name of the user who is loading the config iframe.
 	 *
 	 * @return string the first name.
