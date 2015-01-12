@@ -21,7 +21,7 @@ class NostoExportOrderCollection extends NostoExportCollection
 		foreach ($this->getArrayCopy() as $item) {
 			$data = array(
 				'order_number' => $item->getOrderNumber(),
-				'created_at' => $item->getCreatedDate(),
+				'created_at' => Nosto::helper('date')->format($item->getCreatedDate()),
 				'buyer' => array(
 					'first_name' => $item->getBuyerInfo()->getFirstName(),
 					'last_name' => $item->getBuyerInfo()->getLastName(),
@@ -32,9 +32,9 @@ class NostoExportOrderCollection extends NostoExportCollection
 			foreach ($item->getPurchasedItems() as $orderItem) {
 				$data['purchased_items'][] = array(
 					'product_id' => $orderItem->getProductId(),
-					'quantity' => $orderItem->getQuantity(),
+					'quantity' => (int)$orderItem->getQuantity(),
 					'name' => $orderItem->getName(),
-					'unit_price' => $orderItem->getUnitPrice(),
+					'unit_price' => Nosto::helper('price')->format($orderItem->getUnitPrice()),
 					'price_currency_code' => $orderItem->getCurrencyCode(),
 				);
 			}

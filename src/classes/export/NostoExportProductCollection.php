@@ -24,15 +24,15 @@ class NostoExportProductCollection extends NostoExportCollection
 				'product_id' => $item->getProductId(),
 				'name' => $item->getName(),
 				'image_url' => $item->getImageUrl(),
-				'price' => $item->getPrice(),
-				'list_price' => $item->getListPrice(),
+				'price' => Nosto::helper('price')->format($item->getPrice()),
+				'list_price' => Nosto::helper('price')->format($item->getListPrice()),
 				'price_currency_code' => $item->getCurrencyCode(),
 				'availability' => $item->getAvailability(),
 				'tags' => $item->getTags(),
 				'categories' => $item->getCategories(),
 				'description' => $item->getDescription(),
 				'brand' => $item->getBrand(),
-				'date_published' => $item->getDatePublished(),
+				'date_published' => Nosto::helper('date')->format($item->getDatePublished()),
 			);
 		}
 		return json_encode($array);
