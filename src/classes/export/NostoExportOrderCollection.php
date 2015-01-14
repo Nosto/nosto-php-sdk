@@ -35,7 +35,7 @@ class NostoExportOrderCollection extends NostoExportCollection
 					'quantity' => (int)$orderItem->getQuantity(),
 					'name' => $orderItem->getName(),
 					'unit_price' => Nosto::helper('price')->format($orderItem->getUnitPrice()),
-					'price_currency_code' => $orderItem->getCurrencyCode(),
+					'price_currency_code' => strtoupper($orderItem->getCurrencyCode()),
 				);
 			}
 			$array[] = $data;

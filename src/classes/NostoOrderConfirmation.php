@@ -51,7 +51,7 @@ class NostoOrderConfirmation
 				'quantity' => (int)$item->getQuantity(),
 				'name' => $item->getName(),
 				'unit_price' => Nosto::helper('price')->format($item->getUnitPrice()),
-				'price_currency_code' => $item->getCurrencyCode(),
+				'price_currency_code' => strtoupper($item->getCurrencyCode()),
 			);
 		}
 		$response = $request->post(json_encode($orderData));

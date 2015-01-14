@@ -27,15 +27,15 @@ class NostoAccount implements NostoAccountInterface
 			'name' => $meta->getName(),
 			'platform' => $meta->getPlatform(),
 			'front_page_url' => $meta->getFrontPageUrl(),
-			'currency_code' => $meta->getCurrencyCode(),
-			'language_code' => $meta->getOwnerLanguageCode(),
+			'currency_code' => strtoupper($meta->getCurrencyCode()),
+			'language_code' => strtolower($meta->getOwnerLanguageCode()),
 			'owner' => array(
 				'first_name' => $meta->getOwner()->getFirstName(),
 				'last_name' => $meta->getOwner()->getLastName(),
 				'email' => $meta->getOwner()->getEmail(),
 			),
 			'billing_details' => array(
-				'country' => $meta->getBillingDetails()->getCountry(),
+				'country' => strtoupper($meta->getBillingDetails()->getCountry()),
 			),
 			'api_tokens' => array(),
 		);
@@ -151,8 +151,7 @@ class NostoAccount implements NostoAccountInterface
 		if (!empty($url)) {
 			return $url.'?r='.urlencode(NostoHttpRequest::buildUri(
 					self::IFRAME_URI.'?'.http_build_query(array(
-						// Params copied from PS
-						'lang' => $meta->getLanguageIsoCode(),
+						'lang' => strtolower($meta->getLanguageIsoCode()),
 						'ps_version' => $meta->getVersionPlatform(),
 						'nt_version' => $meta->getVersionModule(),
 						'product_pu' => $meta->getPreviewUrlProduct(),
@@ -160,19 +159,8 @@ class NostoAccount implements NostoAccountInterface
 						'search_pu' => $meta->getPreviewUrlSearch(),
 						'cart_pu' => $meta->getPreviewUrlCart(),
 						'front_pu' => $meta->getPreviewUrlFront(),
-						'shop_lang' => $meta->getLanguageIsoCodeShop(),
+						'shop_lang' => strtolower($meta->getLanguageIsoCodeShop()),
 						'unique_id' => $meta->getUniqueId(),
-						// Params we would like for them all...
-//						'lang' => $meta->getLanguageIsoCode(),
-//						'lang_shop' => $meta->getLanguageIsoCodeShop(),
-//						'unique_id' => $meta->getUniqueId(),
-//						'version_platform' => $meta->getVersionPlatform(),
-//						'version_module' => $meta->getVersionModule(),
-//						'preview_product' => $meta->getPreviewUrlProduct(),
-//						'preview_category' => $meta->getPreviewUrlCategory(),
-//						'preview_search' => $meta->getPreviewUrlSearch(),
-//						'preview_cart' => $meta->getPreviewUrlCart(),
-//						'preview_front' => $meta->getPreviewUrlFront(),
 					)),
 					array(
 						'{p}' => $meta->getPlatform(),

@@ -64,7 +64,7 @@ class NostoOAuthClient
 				'{cid}' => $this->clientId,
 				'{uri}' => urlencode($this->redirectUrl),
 				'{sco}' => implode(' ', $this->scopes),
-				'{iso}' => $this->languageIsoCode,
+				'{iso}' => strtolower($this->languageIsoCode),
 			)
 		);
 	}

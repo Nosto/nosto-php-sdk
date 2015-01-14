@@ -26,7 +26,7 @@ class NostoExportProductCollection extends NostoExportCollection
 				'image_url' => $item->getImageUrl(),
 				'price' => Nosto::helper('price')->format($item->getPrice()),
 				'list_price' => Nosto::helper('price')->format($item->getListPrice()),
-				'price_currency_code' => $item->getCurrencyCode(),
+				'price_currency_code' => strtoupper($item->getCurrencyCode()),
 				'availability' => $item->getAvailability(),
 				'tags' => $item->getTags(),
 				'categories' => $item->getCategories(),
