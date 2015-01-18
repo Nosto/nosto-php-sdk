@@ -26,6 +26,10 @@ class NostoAccountMetaDataIframe implements NostoAccountMetaDataIframeInterface
 	{
 		return '123';
 	}
+	public function getPlatform()
+	{
+		return 'platform';
+	}
 	public function getVersionPlatform()
 	{
 		return '1.0.0';
