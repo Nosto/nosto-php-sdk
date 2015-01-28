@@ -161,6 +161,9 @@ class NostoAccount implements NostoAccountInterface
 						'front_pu' => $meta->getPreviewUrlFront(),
 						'shop_lang' => strtolower($meta->getLanguageIsoCodeShop()),
 						'unique_id' => $meta->getUniqueId(),
+                        'fname' => $meta->getFirstName(),
+                        'lname' => $meta->getLastName(),
+                        'email' => $meta->getEmail(),
 					)),
 					array(
 						'{p}' => $meta->getPlatform(),
