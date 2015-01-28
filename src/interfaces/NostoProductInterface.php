@@ -76,6 +76,13 @@ interface NostoProductInterface
 	 */
 	public function getCategories();
 
+    /**
+     * Returns the product short description.
+     *
+     * @return string the short description.
+     */
+    public function getShortDescription();
+
 	/**
 	 * Returns the product description.
 	 *
