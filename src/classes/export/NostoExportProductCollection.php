@@ -30,7 +30,7 @@ class NostoExportProductCollection extends NostoExportCollection
 				'availability' => $item->getAvailability(),
 				'tags' => $item->getTags(),
 				'categories' => $item->getCategories(),
-				'description' => $item->getDescription(),
+				'description' => $item->getShortDescription() . '<br/>' . $item->getDescription(),
 				'brand' => $item->getBrand(),
 				'date_published' => Nosto::helper('date')->format($item->getDatePublished()),
 			);
