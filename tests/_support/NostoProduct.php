@@ -42,6 +42,10 @@ class NostoProduct implements NostoProductInterface
 	{
 		return array('/a/b', '/a/b/c');
 	}
+    public function getShortDescription()
+    {
+        return 'Lorem ipsum dolor sit amet';
+    }
 	public function getDescription()
 	{
 		return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris imperdiet ligula eu facilisis dignissim.';
