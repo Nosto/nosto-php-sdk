@@ -112,6 +112,19 @@ Then have a public endpoint ready to handle the return request.
     }
 ```
 
+### Deleting a Nosto account
+
+This should be used when you delete a Nosto account for a shop. It will notify Nosto that this account is no longer used.
+
+```php
+    try {
+        /** @var NostoAccount $account */
+        $account->delete();
+    } catch (NostoException $e) {
+        // handle failure
+    }
+```
+
 ### Get authenticated iframe URL for the Nosto account configuration
 
 The Nosto account can be managed through an iframe that should be accessible to the admin user in the shops back end.

@@ -25,6 +25,13 @@ interface NostoAccountInterface
 	 */
 	public static function syncFromNosto(NostoOAuthClientMetaDataInterface $meta, $code);
 
+    /**
+     * Notifies Nosto that an account has been deleted.
+     *
+     * @throws NostoException if the API request to Nosto fails.
+     */
+    public function delete();
+
 	/**
 	 * Gets the account name.
 	 *

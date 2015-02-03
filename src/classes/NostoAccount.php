@@ -100,6 +100,26 @@ class NostoAccount implements NostoAccountInterface
 		return $account;
 	}
 
+    /**
+     * @inheritdoc
+     */
+    public function delete()
+    {
+        $token = $this->getApiToken('sso');
+        if ($token === null) {
+            throw new NostoException('Failed to notify Nosto about deleted account, no "sso" token');
+        }
+
+        $request = new NostoHttpRequest();
+        $request->setUrl(NostoHttpRequest::$baseUrl.NostoHttpRequest::PATH_ACCOUNT_DELETED);
+        $request->setAuthBasic('', $token->value);
+        $response = $request->post('');
+
+        if ($response->getCode() !== 200) {
+            throw new NostoException('Failed to notify Nosto about deleted account', $response->getCode());
+        }
+    }
+
 	/**
 	 * @inheritdoc
 	 */

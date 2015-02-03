@@ -101,6 +101,18 @@ Account related resources
             "login_url": "https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg"
         }
 
+## Deleting Account [/hub/uninstall]
+
+### Notify nosto about deleted account [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
++ Response 200
+
 # Group Order
 Order related resources
 
