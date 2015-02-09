@@ -264,9 +264,9 @@ class NostoHttpRequest
 	{
 		$parsedUrl = self::parseUrl($url);
 		$queryString = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
-		$queryString = NostoHttpRequest::replaceQueryParam($param, $value, $queryString);
+		$queryString = self::replaceQueryParam($param, $value, $queryString);
 		$parsedUrl['query'] = $queryString;
-		return NostoHttpRequest::buildUrl($parsedUrl);
+		return self::buildUrl($parsedUrl);
 	}
 
 	/**
@@ -283,9 +283,9 @@ class NostoHttpRequest
 		$parsedUrl = self::parseUrl($url);
 		$queryString = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
 		foreach ($queryParams as $param => $value)
-			$queryString = NostoTaggingHttpRequest::replaceQueryParam($param, $value, $queryString);
+			$queryString = self::replaceQueryParam($param, $value, $queryString);
 		$parsedUrl['query'] = $queryString;
-		return NostoTaggingHttpRequest::buildUrl($parsedUrl);
+		return self::buildUrl($parsedUrl);
 	}
 
 	/**
