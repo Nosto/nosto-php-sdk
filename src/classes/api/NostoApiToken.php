@@ -45,4 +45,14 @@ class NostoApiToken
 		}
 		return $parsedTokens;
 	}
+
+	/**
+	 * Returns all available API token names.
+	 *
+	 * @return array the token names.
+	 */
+	public static function getApiTokenNames()
+	{
+		return self::$tokenNames;
+	}
 }
