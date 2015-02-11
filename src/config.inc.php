@@ -87,10 +87,10 @@ require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptRandom.php');
 // Parse .env if exists and assign configured environment variables.
 NostoDotEnv::getInstance()->init(__DIR__);
 if (isset($_ENV['NOSTO_API_BASE_URL'])) {
-	NostoApiRequest::$baseUrl = $_ENV['NOSTO_API_BASE_URL'];
+    NostoApiRequest::$baseUrl = $_ENV['NOSTO_API_BASE_URL'];
 }
 if (isset($_ENV['NOSTO_OAUTH_BASE_URL'])) {
-	NostoOAuthClient::$baseUrl = $_ENV['NOSTO_OAUTH_BASE_URL'];
+    NostoOAuthClient::$baseUrl = $_ENV['NOSTO_OAUTH_BASE_URL'];
 }
 if (isset($_ENV['NOSTO_WEB_HOOK_BASE_URL'])) {
     NostoHttpRequest::$baseUrl = $_ENV['NOSTO_WEB_HOOK_BASE_URL'];
