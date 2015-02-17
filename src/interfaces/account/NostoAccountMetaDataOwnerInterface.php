@@ -39,24 +39,24 @@
  */
 interface NostoAccountMetaDataOwnerInterface
 {
-	/**
-	 * The first name of the account owner.
-	 *
-	 * @return string the first name.
-	 */
-	public function getFirstName();
+    /**
+     * The first name of the account owner.
+     *
+     * @return string the first name.
+     */
+    public function getFirstName();
 
-	/**
-	 * The last name of the account owner.
-	 *
-	 * @return string the last name.
-	 */
-	public function getLastName();
+    /**
+     * The last name of the account owner.
+     *
+     * @return string the last name.
+     */
+    public function getLastName();
 
-	/**
-	 * The email address of the account owner.
-	 *
-	 * @return string the email address.
-	 */
-	public function getEmail();
+    /**
+     * The email address of the account owner.
+     *
+     * @return string the email address.
+     */
+    public function getEmail();
 }
