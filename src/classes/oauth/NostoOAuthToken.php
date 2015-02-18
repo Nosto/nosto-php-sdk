@@ -91,7 +91,7 @@ class NostoOAuthToken
         // Remove all spaces.
         $str = str_replace(" ", "", $str);
         // Lowercase the first character of the result.
-        $str = lcfirst($str);
+        $str[0] = strtolower($str[0]);
 
         return $str;
     }
