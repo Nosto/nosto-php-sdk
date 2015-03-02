@@ -38,30 +38,33 @@
  */
 class NostoHelperIframe extends NostoHelper
 {
-	const IFRAME_URI = '/hub/{p}/{m}';
+    const IFRAME_URI = '/hub/{p}/{m}';
 
-	/**
-	 * Returns the url for the account administration iframe.
-	 * If the passed account is null, then the url will point to the start page where a new account can be created.
-	 *
-	 * @param NostoAccount|null $account the account to return the url for.
-	 * @param NostoAccountMetaDataIframeInterface $meta the iframe meta data.
-	 * @param array $params additional parameters to add to the iframe url.
-	 * @return string the iframe url.
-	 * @throws NostoException if the url cannot be created.
-	 */
-	public function getUrl(NostoAccount $account = null, NostoAccountMetaDataIframeInterface $meta = null, array $params = array())
-	{
-		if ($account !== null && $account->isConnectedToNosto()) {
-			$url = $account->ssoLogin($meta);
-			if (empty($url)) {
-				throw new NostoException('Unable to login employee to Nosto with SSO token', 400);
-			}
+    /**
+     * Returns the url for the account administration iframe.
+     * If the passed account is null, then the url will point to the start page where a new account can be created.
+     *
+     * @param NostoAccount|null $account the account to return the url for.
+     * @param NostoAccountMetaDataIframeInterface $meta the iframe meta data.
+     * @param array $params additional parameters to add to the iframe url.
+     * @return string the iframe url.
+     * @throws NostoException if the url cannot be created.
+     */
+    public function getUrl(
+        NostoAccount $account = null,
+        NostoAccountMetaDataIframeInterface $meta = null,
+        array $params = array()
+    ) {
+        if ($account !== null && $account->isConnectedToNosto()) {
+            $url = $account->ssoLogin($meta);
+            if (empty($url)) {
+                throw new NostoException('Unable to login employee to Nosto with SSO token', 400);
+            }
 
-			// todo: remove when iframe is implemented.
-			$url = '/iframe.php?account_name='.$account->name;
-			/*
-			$url .= '?r='.urlencode(
+            // todo: remove when iframe is implemented.
+            $url = '/iframe.php?account_name='.$account->name;
+            /*
+            $url .= '?r='.urlencode(
                 NostoHttpRequest::buildUri(
                     self::IFRAME_URI.'?'.http_build_query(
                         array(
@@ -86,13 +89,13 @@ class NostoHelperIframe extends NostoHelper
                     )
                 )
             );
-			*/
-		} else {
-			// todo: iframe url when no account exists.
-			$url = '/iframe.php?email='.$meta->getEmail();
-		}
+            */
+        } else {
+            // todo: iframe url when no account exists.
+            $url = '/iframe.php?email='.$meta->getEmail();
+        }
 
-		$url = NostoHttpRequest::replaceQueryParamsInUrl($params, $url);
-		return $url;
-	}
+        $url = NostoHttpRequest::replaceQueryParamsInUrl($params, $url);
+        return $url;
+    }
 }

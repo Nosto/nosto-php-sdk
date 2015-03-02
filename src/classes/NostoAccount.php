@@ -193,13 +193,13 @@ class NostoAccount implements NostoAccountInterface
         return null;
     }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getIframeUrl(NostoAccountMetaDataIframeInterface $meta)
-	{
-		return Nosto::helper('iframe')->getUrl($this, $meta);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getIframeUrl(NostoAccountMetaDataIframeInterface $meta)
+    {
+        return Nosto::helper('iframe')->getUrl($this, $meta);
+    }
 
     /**
      * @inheritdoc
