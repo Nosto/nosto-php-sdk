@@ -32,6 +32,7 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **Nosto** main sdk class for common functionality
 * **NostoHelper** base class for all nosto helpers
 * **NostoHelperDate** helper class for date related operations
+* **NostoHelperIframe** helper class for iframe related operations
 * **NostoHelperPrice** helper class for price related operations
 
 ### Interfaces
@@ -125,20 +126,27 @@ This should be used when you delete a Nosto account for a shop. It will notify N
     }
 ```
 
-### Get authenticated iframe URL for the Nosto account configuration
+### Get authenticated iframe URL for Nosto account configuration
 
-The Nosto account can be managed through an iframe that should be accessible to the admin user in the shops back end.
+The Nosto account can be created and managed through an iframe that should be accessible to the admin user in the shops
+backend.
 This iframe will load only content from nosto.com.
 
 ```php
     .....
     /**
-     * @var NostoAccount $account
-     * @var NostoAccountMetaDataIframeInterface $meta
+     * @var NostoAccount|null $account account with at least the 'SSO' token loaded or null if no account exists yet
+     * @var NostoAccountMetaDataIframeInterface|null $meta
+     * @var array $params (optional) extra params to add to the iframe url
      */
-    // load a nosto account object with at least the 'sso' API token associated with it
-    $account = $this->loadNostoAccount();
-    $url = $account->getIframeUrl($meta);
+    try
+    {
+        $url = Nosto::helper('iframe')->getUrl($account, $meta, $params);
+    }
+    catch (NostoException $e)
+    {
+        // handle failure
+    }
     // show the iframe to the user with given url
     .....
 ```
