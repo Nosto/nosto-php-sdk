@@ -151,6 +151,32 @@ This iframe will load only content from nosto.com.
     .....
 ```
 
+The iframe can communicate with your module through window.postMessage
+(https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage). In order to set this up you can include the JS
+file `src/js/NostoIframe.min.js` on the page where you show the iframe and just init the API.
+
+```js
+    ...
+    Nosto.iframe({
+        iframeId: "nosto_iframe",
+        urls: {
+            createAccount: "url_to_the_create_account_endpoint_for_current_shop",
+            connectAccount: "url_to_the_connect_account_endpoint_for_current_shop",
+            deleteAccount: "url_to_the_delete_account_endpoint_for_current_shop"
+        },
+        xhrParams: {} // additional xhr params to include in the requests
+    });
+```
+
+The iframe API makes POST requests to the specified endpoints with content-type `application/x-www-form-urlencoded`.
+The response for these requests should always be JSON and include a `redirect_url` key. This url will be used to
+redirect the iframe after the action has been performed. In case of the connect account, the url will be used to
+redirect your browser to the Nosto OAuth server.
+The redirect url also needs to include error/success message keys, if you want to show messages to the user after the
+actions, e.g. when a new account has been created a success message can be shown with instructions. These messages are
+hard-coded in Nosto.
+You do NOT need to use this JS API, but instead set up your own postMessage handler in your application.
+
 ### Sending order confirmations using the Nosto API
 
 Sending order confirmations to Nosto is a vital part of the functionality. Order confirmations should be sent when an
