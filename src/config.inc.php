@@ -76,6 +76,7 @@ require_once(dirname(__FILE__).'/classes/NostoAccount.php');
 require_once(dirname(__FILE__).'/classes/NostoCipher.php');
 require_once(dirname(__FILE__).'/classes/NostoDotEnv.php');
 require_once(dirname(__FILE__).'/classes/NostoException.php');
+require_once(dirname(__FILE__).'/classes/NostoMessage.php');
 require_once(dirname(__FILE__).'/classes/NostoOrderConfirmation.php');
 require_once(dirname(__FILE__).'/classes/NostoProductReCrawl.php');
 require_once(dirname(__FILE__).'/classes/NostoXhrResponse.php');

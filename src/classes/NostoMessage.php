@@ -34,70 +34,17 @@
  */
 
 /**
- * Util class for representing a XHR response object used when responding to
- * account administration iframe API calls.
+ * Util class for providing message types and codes that are used for forwarding
+ * information to the account administration iframe so we can show feedback to
+ * the user.
  */
-class NostoXhrResponse
+class NostoMessage
 {
-    /**
-     * @var string the `Content-Type` of the response.
-     */
-    public $contentType = 'application/json';
+    const TYPE_SUCCESS = 'success';
+    const TYPE_ERROR = 'error';
 
-    /**
-     * @var bool the response success flag.
-     */
-    protected $success = false;
-
-    /**
-     * @var string the response redirect url.
-     */
-    protected $redirectUrl;
-
-    /**
-     * Sets the response success state.
-     *
-     * @param boolean $success the state.
-     * @return NostoXhrResponse the response instance.
-     */
-    public function setSuccess($success)
-    {
-        $this->success = $success;
-        return $this;
-    }
-
-    /**
-     * Sets the response redirect url.
-     *
-     * @param string $url the url.
-     * @return NostoXhrResponse the response instance.
-     */
-    public function setRedirectUrl($url)
-    {
-        $this->redirectUrl = $url;
-        return $this;
-    }
-
-    /**
-     * Sends the response, i.e. sends it to the browser.
-     * This method also sends the `Content-Type` header for the response data.
-     */
-    public function send()
-    {
-        header('Content-Type: '.$this->contentType);
-        echo $this;
-    }
-
-    /**
-     * Converts the response to a string and returns it.
-     *
-     * @return string the string representation of the response.
-     */
-    public function __toString()
-    {
-        return (string)json_encode(array(
-            'success' => (bool)$this->success,
-            'redirect_url' => (string)$this->redirectUrl,
-        ));
-    }
+    const CODE_ACCOUNT_CREATE = 'account_create';
+    const CODE_ACCOUNT_CONNECT = 'account_connect';
+    const CODE_ACCOUNT_DELETE = 'account_delete';
+    const CODE_ACCOUNT_CONNECT_REJECT = 'account_connect_reject';
 }
