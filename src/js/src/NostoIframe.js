@@ -74,7 +74,7 @@ Nosto.iframe = function(options) {
     function receiveMessage(event)
     {
         // Check the origin to prevent cross-site scripting.
-        if (event.origin !== settings.origin) {
+        if (event.origin !== decodeURIComponent(settings.origin)) {
             return;
         }
 
@@ -162,7 +162,7 @@ Nosto.iframe = function(options) {
         if (typeof options.error === "function") {
             oReq.addEventListener("error", options.error, false);
         }
-        oReq.open(options.method, url, options.async);
+        oReq.open(options.method, decodeURIComponent(url), options.async);
         oReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         oReq.send(payload);
     }
