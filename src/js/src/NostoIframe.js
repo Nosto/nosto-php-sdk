@@ -102,7 +102,11 @@ Nosto.iframe = function(options) {
                             /** @type {{success: Boolean}, {redirect_url: String}} response */
                             var response = JSON.parse(e.target.response);
                             if (response.redirect_url) {
-                                window.location.href = response.redirect_url;
+                                if (response.success && response.success === true) {
+                                    window.location.href = response.redirect_url;
+                                } else {
+                                    getIframeElement().src = response.redirect_url;
+                                }
                             } else {
                                 throw new Error("Nosto: failed to handle account connection.");
                             }

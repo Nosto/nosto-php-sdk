@@ -92,7 +92,7 @@ class NostoHelperIframe extends NostoHelper
             */
         } else {
             // todo: iframe url when no account exists.
-            $url = '/iframe.php?email='.$meta->getEmail();
+            $url = '/iframe.php?email='.(($meta !== null) ? $meta->getEmail() : '');
         }
 
         $url = NostoHttpRequest::replaceQueryParamsInUrl($params, $url);
