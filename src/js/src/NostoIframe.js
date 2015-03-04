@@ -167,6 +167,7 @@ Nosto.iframe = function(options) {
             oReq.addEventListener("error", options.error, false);
         }
         oReq.open(options.method, decodeURIComponent(url), options.async);
+        oReq.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         oReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         oReq.send(payload);
     }
