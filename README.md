@@ -138,12 +138,12 @@ This iframe will load only content from nosto.com.
     .....
     /**
      * @var NostoAccount|null $account account with at least the 'SSO' token loaded or null if no account exists yet
-     * @var NostoAccountMetaDataIframeInterface|null $meta
+     * @var NostoAccountMetaDataIframeInterface $meta
      * @var array $params (optional) extra params to add to the iframe url
      */
     try
     {
-        $url = Nosto::helper('iframe')->getUrl($account, $meta, $params);
+        $url = Nosto::helper('iframe')->getUrl($meta, $account, $params);
     }
     catch (NostoException $e)
     {

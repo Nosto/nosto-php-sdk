@@ -38,64 +38,69 @@
  */
 class NostoHelperIframe extends NostoHelper
 {
-    const IFRAME_URI = '/hub/{p}/{m}';
+    const IFRAME_URI_UNINSTALL = '/hub/{merchant}/{platform}/uninstall';
+    const IFRAME_URI_INSTALL = '/hub/{platform}/install';
 
     /**
      * Returns the url for the account administration iframe.
      * If the passed account is null, then the url will point to the start page where a new account can be created.
      *
-     * @param NostoAccount|null $account the account to return the url for.
      * @param NostoAccountMetaDataIframeInterface $meta the iframe meta data.
+     * @param NostoAccount|null $account the account to return the url for.
      * @param array $params additional parameters to add to the iframe url.
      * @return string the iframe url.
      * @throws NostoException if the url cannot be created.
      */
     public function getUrl(
+        NostoAccountMetaDataIframeInterface $meta,
         NostoAccount $account = null,
-        NostoAccountMetaDataIframeInterface $meta = null,
         array $params = array()
     ) {
+        $queryParams = http_build_query(
+            array_merge(
+                array(
+                    'lang' => strtolower($meta->getLanguageIsoCode()),
+                    'ps_version' => $meta->getVersionPlatform(),
+                    'nt_version' => $meta->getVersionModule(),
+                    'product_pu' => $meta->getPreviewUrlProduct(),
+                    'category_pu' => $meta->getPreviewUrlCategory(),
+                    'search_pu' => $meta->getPreviewUrlSearch(),
+                    'cart_pu' => $meta->getPreviewUrlCart(),
+                    'front_pu' => $meta->getPreviewUrlFront(),
+                    'shop_lang' => strtolower($meta->getLanguageIsoCodeShop()),
+                    'unique_id' => $meta->getUniqueId(),
+                    'fname' => $meta->getFirstName(),
+                    'lname' => $meta->getLastName(),
+                    'email' => $meta->getEmail(),
+                ),
+                $params
+            )
+        );
+
         if ($account !== null && $account->isConnectedToNosto()) {
             $url = $account->ssoLogin($meta);
             if (empty($url)) {
                 throw new NostoException('Unable to login employee to Nosto with SSO token', 400);
             }
-
-            // todo: remove when iframe is implemented.
-            $url = '/iframe.php?account_name='.$account->name;
-            /*
             $url .= '?r='.urlencode(
-                NostoHttpRequest::buildUri(
-                    self::IFRAME_URI.'?'.http_build_query(
+                    NostoHttpRequest::buildUri(
+                        self::IFRAME_URI_UNINSTALL.'?'.$queryParams,
                         array(
-                            'lang' => strtolower($meta->getLanguageIsoCode()),
-                            'ps_version' => $meta->getVersionPlatform(),
-                            'nt_version' => $meta->getVersionModule(),
-                            'product_pu' => $meta->getPreviewUrlProduct(),
-                            'category_pu' => $meta->getPreviewUrlCategory(),
-                            'search_pu' => $meta->getPreviewUrlSearch(),
-                            'cart_pu' => $meta->getPreviewUrlCart(),
-                            'front_pu' => $meta->getPreviewUrlFront(),
-                            'shop_lang' => strtolower($meta->getLanguageIsoCodeShop()),
-                            'unique_id' => $meta->getUniqueId(),
-                            'fname' => $meta->getFirstName(),
-                            'lname' => $meta->getLastName(),
-                            'email' => $meta->getEmail(),
+                            '{platform}' => $meta->getPlatform(),
+                            '{merchant}' => $account->name,
                         )
-                    ),
-                    array(
-                        '{p}' => $meta->getPlatform(),
-                        '{m}' => $account->name,
                     )
+                );
+        } else {
+            $baseUrl = Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', NostoHttpRequest::$baseUrl);
+            $url = NostoHttpRequest::buildUri(
+                $baseUrl.self::IFRAME_URI_INSTALL.'?'.$queryParams,
+                array(
+                    '{platform}' => $meta->getPlatform(),
                 )
             );
-            */
-        } else {
-            // todo: iframe url when no account exists.
-            $url = '/iframe.php?email='.(($meta !== null) ? $meta->getEmail() : '');
         }
 
-        $url = NostoHttpRequest::replaceQueryParamsInUrl($params, $url);
         return $url;
     }
 }
