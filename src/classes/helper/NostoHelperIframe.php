@@ -38,7 +38,7 @@
  */
 class NostoHelperIframe extends NostoHelper
 {
-    const IFRAME_URI_UNINSTALL = '/hub/{merchant}/{platform}/uninstall';
+    const IFRAME_URI_UNINSTALL = '/hub/{platform}/{merchant}/uninstall';
     const IFRAME_URI_INSTALL = '/hub/{platform}/install';
 
     /**
