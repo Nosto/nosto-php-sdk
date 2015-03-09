@@ -38,8 +38,6 @@
  */
 class NostoAccount implements NostoAccountInterface
 {
-    const IFRAME_URI = '/hub/{p}/{m}';
-
     /**
      * @var string the name of the Nosto account.
      */
@@ -198,38 +196,9 @@ class NostoAccount implements NostoAccountInterface
     /**
      * @inheritdoc
      */
-    public function getIframeUrl(NostoAccountMetaDataIframeInterface $meta)
+    public function getIframeUrl(NostoAccountMetaDataIframeInterface $meta, array $params = array())
     {
-        $url = $this->ssoLogin($meta);
-        if (!empty($url)) {
-            return $url.'?r='.urlencode(
-                NostoHttpRequest::buildUri(
-                    self::IFRAME_URI.'?'.http_build_query(
-                        array(
-                            'lang' => strtolower($meta->getLanguageIsoCode()),
-                            'ps_version' => $meta->getVersionPlatform(),
-                            'nt_version' => $meta->getVersionModule(),
-                            'product_pu' => $meta->getPreviewUrlProduct(),
-                            'category_pu' => $meta->getPreviewUrlCategory(),
-                            'search_pu' => $meta->getPreviewUrlSearch(),
-                            'cart_pu' => $meta->getPreviewUrlCart(),
-                            'front_pu' => $meta->getPreviewUrlFront(),
-                            'shop_lang' => strtolower($meta->getLanguageIsoCodeShop()),
-                            'unique_id' => $meta->getUniqueId(),
-                            'fname' => $meta->getFirstName(),
-                            'lname' => $meta->getLastName(),
-                            'email' => $meta->getEmail(),
-                        )
-                    ),
-                    array(
-                        '{p}' => $meta->getPlatform(),
-                        '{m}' => $this->name,
-                    )
-                )
-            );
-        } else {
-            return false;
-        }
+        return Nosto::helper('iframe')->getUrl($meta, $this, $params);
     }
 
     /**
