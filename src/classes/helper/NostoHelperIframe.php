@@ -68,6 +68,7 @@ class NostoHelperIframe extends NostoHelper
                     'cart_pu' => $meta->getPreviewUrlCart(),
                     'front_pu' => $meta->getPreviewUrlFront(),
                     'shop_lang' => strtolower($meta->getLanguageIsoCodeShop()),
+                    'shop_name' => $meta->getShopName(),
                     'unique_id' => $meta->getUniqueId(),
                     'fname' => $meta->getFirstName(),
                     'lname' => $meta->getLastName(),
