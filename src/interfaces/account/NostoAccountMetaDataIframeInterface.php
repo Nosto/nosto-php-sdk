@@ -147,4 +147,11 @@ interface NostoAccountMetaDataIframeInterface
      * @return string the url.
      */
     public function getPreviewUrlFront();
+
+    /**
+     * Returns the name of the shop context where Nosto is installed or about to be installed in.
+     *
+     * @return string the name.
+     */
+    public function getShopName();
 }

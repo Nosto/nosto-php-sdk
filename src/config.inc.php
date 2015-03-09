@@ -60,6 +60,7 @@ require_once(dirname(__FILE__).'/classes/export/NostoExportOrderCollection.php')
 
 require_once(dirname(__FILE__).'/classes/helper/NostoHelper.php');
 require_once(dirname(__FILE__).'/classes/helper/NostoHelperDate.php');
+require_once(dirname(__FILE__).'/classes/helper/NostoHelperIframe.php');
 require_once(dirname(__FILE__).'/classes/helper/NostoHelperPrice.php');
 
 require_once(dirname(__FILE__).'/classes/http/NostoHttpRequestAdapter.php');
@@ -75,8 +76,10 @@ require_once(dirname(__FILE__).'/classes/NostoAccount.php');
 require_once(dirname(__FILE__).'/classes/NostoCipher.php');
 require_once(dirname(__FILE__).'/classes/NostoDotEnv.php');
 require_once(dirname(__FILE__).'/classes/NostoException.php');
+require_once(dirname(__FILE__).'/classes/NostoMessage.php');
 require_once(dirname(__FILE__).'/classes/NostoOrderConfirmation.php');
 require_once(dirname(__FILE__).'/classes/NostoProductReCrawl.php');
+require_once(dirname(__FILE__).'/classes/NostoXhrResponse.php');
 
 // Libs
 require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptBase.php');

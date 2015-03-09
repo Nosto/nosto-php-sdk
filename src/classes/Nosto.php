@@ -45,6 +45,18 @@ class Nosto
     private static $registry = array();
 
     /**
+     * Return environment variable.
+     *
+     * @param string $name the name of the variable.
+     * @param null $default the default value to return if the env variable cannot be found.
+     * @return mixed the env variable or null.
+     */
+    public static function getEnvVariable($name, $default = null)
+    {
+        return isset($_ENV[$name]) ? $_ENV[$name] : $default;
+    }
+
+    /**
      * Gets a helper class instance by name.
      *
      * @param string $helper the name of the helper class to get.
