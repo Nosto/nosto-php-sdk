@@ -67,7 +67,7 @@ Nosto.iframe = function(options) {
      * Supported messages must come from nosto.com and be formatted according
      * to the following example:
      *
-     * { "type": "the message action", "params": {} }
+     * '[Nosto]{ "type": "the message action", "params": {} }'
      *
      * @param {Object} event
      */
@@ -77,8 +77,13 @@ Nosto.iframe = function(options) {
         if (event.origin !== decodeURIComponent(settings.origin)) {
             return;
         }
+        // If the message does not start with "[Nosto]", then it is not for us.
+        if ((""+event.data).substr(0, 7) !== "[Nosto]") {
+            return;
+        }
 
-        var data = event.data ? JSON.parse(event.data) : null;
+        var json = (""+event.data).substr(7);
+        var data = JSON.parse(json);
         if (typeof data === "object" && data.type) {
             switch (data.type) {
                 case TYPE_NEW_ACCOUNT:
