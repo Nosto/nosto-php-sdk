@@ -38,8 +38,9 @@
  */
 class NostoHelperIframe extends NostoHelper
 {
-    const IFRAME_URI_UNINSTALL = '/hub/{platform}/{merchant}/uninstall';
+    const IFRAME_URI_MANAGE = '/hub/{platform}/{merchant}';
     const IFRAME_URI_INSTALL = '/hub/{platform}/install';
+    const IFRAME_URI_UNINSTALL = '/hub/{platform}/uninstall';
 
     /**
      * Returns the url for the account administration iframe.
@@ -79,23 +80,32 @@ class NostoHelperIframe extends NostoHelper
         );
 
         if ($account !== null && $account->isConnectedToNosto()) {
-            $url = $account->ssoLogin($meta);
-            if (empty($url)) {
-                throw new NostoException('Unable to login employee to Nosto with SSO token', 400);
-            }
-            $url .= '?r='.urlencode(
-                    NostoHttpRequest::buildUri(
-                        self::IFRAME_URI_UNINSTALL.'?'.$queryParams,
-                        array(
-                            '{platform}' => $meta->getPlatform(),
-                            '{merchant}' => $account->name,
+            try {
+                $url = $account->ssoLogin($meta);
+                $url .= '?r='.urlencode(
+                        NostoHttpRequest::buildUri(
+                            self::IFRAME_URI_MANAGE.'?'.$queryParams,
+                            array(
+                                '{platform}' => $meta->getPlatform(),
+                                '{merchant}' => $account->name,
+                            )
                         )
+                    );
+            } catch (NostoException $e) {
+                // If the SSO fails, we show a "remove account" page to the user in order to
+                // allow to remove Nosto and start over.
+                // The only case when this should happen is when the api token for some
+                // reason is invalid, which is the case when switching between environments.
+                $url = NostoHttpRequest::buildUri(
+                    $this->getBaseUrl().self::IFRAME_URI_UNINSTALL.'?'.$queryParams,
+                    array(
+                        '{platform}' => $meta->getPlatform(),
                     )
                 );
+            }
         } else {
-            $baseUrl = Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', NostoHttpRequest::$baseUrl);
             $url = NostoHttpRequest::buildUri(
-                $baseUrl.self::IFRAME_URI_INSTALL.'?'.$queryParams,
+                $this->getBaseUrl().self::IFRAME_URI_INSTALL.'?'.$queryParams,
                 array(
                     '{platform}' => $meta->getPlatform(),
                 )
@@ -103,5 +113,15 @@ class NostoHelperIframe extends NostoHelper
         }
 
         return $url;
+    }
+
+    /**
+     * Returns the base url for the Nosto iframe.
+     *
+     * @return string the url.
+     */
+    protected function getBaseUrl()
+    {
+        return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', NostoHttpRequest::$baseUrl);
     }
 }
