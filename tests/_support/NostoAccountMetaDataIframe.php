@@ -58,4 +58,8 @@ class NostoAccountMetaDataIframe implements NostoAccountMetaDataIframeInterface
 	{
 		return 'http://my.shop.com?nostodebug=true';
 	}
+	public function getShopName()
+	{
+		return 'Shop Name';
+	}
 }
