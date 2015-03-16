@@ -131,7 +131,7 @@ class NostoCryptAES extends NostoCryptRijndael
      * @see NostoCryptBase::const_namespace
      * @var String
      */
-    protected $constNamespace = 'AES';
+    public $constNamespace = 'AES';
 
     /**
      * Default Constructor.
