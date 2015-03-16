@@ -164,14 +164,14 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::NostoCryptBase()
      * @var Integer
      */
-    protected $mode;
+    public $mode;
 
     /**
      * The Block Length of the block cipher
      *
      * @var Integer
      */
-    protected $blockSize = 16;
+    public $blockSize = 16;
 
     /**
      * The Key
@@ -179,7 +179,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::setKey()
      * @var String
      */
-    protected $key = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
+    public $key = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
 
     /**
      * The Initialization Vector
@@ -187,7 +187,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::setIV()
      * @var String
      */
-    protected $iv;
+    public $iv;
 
     /**
      * A "sliding" Initialization Vector
@@ -196,7 +196,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::clearBuffers()
      * @var String
      */
-    protected $encryptIV;
+    public $encryptIV;
 
     /**
      * A "sliding" Initialization Vector
@@ -205,7 +205,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::clearBuffers()
      * @var String
      */
-    protected $decryptIV;
+    public $decryptIV;
 
     /**
      * Continuous Buffer status
@@ -213,7 +213,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::enableContinuousBuffer()
      * @var Boolean
      */
-    protected $continuousBuffer = false;
+    public $continuousBuffer = false;
 
     /**
      * Encryption buffer for CTR, OFB and CFB modes
@@ -222,7 +222,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::clearBuffers()
      * @var Array
      */
-    protected $enBuffer;
+    public $enBuffer;
 
     /**
      * Decryption buffer for CTR, OFB and CFB modes
@@ -231,7 +231,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::clearBuffers()
      * @var Array
      */
-    protected $deBuffer;
+    public $deBuffer;
 
     /**
      * mcrypt resource for encryption
@@ -242,7 +242,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::encrypt()
      * @var Resource
      */
-    protected $enMcrypt;
+    public $enMcrypt;
 
     /**
      * mcrypt resource for decryption
@@ -253,7 +253,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::decrypt()
      * @var Resource
      */
-    protected $deMcrypt;
+    public $deMcrypt;
 
     /**
      * Does the enMcrypt resource need to be (re)initialized?
@@ -262,7 +262,7 @@ abstract class NostoCryptBase
      * @see CryptTwofish::setIV()
      * @var Boolean
      */
-    protected $enChanged = true;
+    public $enChanged = true;
 
     /**
      * Does the deMcrypt resource need to be (re)initialized?
@@ -271,7 +271,7 @@ abstract class NostoCryptBase
      * @see CryptTwofish::setIV()
      * @var Boolean
      */
-    protected $deChanged = true;
+    public $deChanged = true;
 
     /**
      * mcrypt resource for CFB mode
@@ -289,7 +289,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::setupMcrypt()
      * @var Resource
      */
-    protected $ecb;
+    public $ecb;
 
     /**
      * Optimizing value while CFB-encrypting
@@ -310,7 +310,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::encrypt()
      * @var Integer
      */
-    protected $cfbInitLen = 600;
+    public $cfbInitLen = 600;
 
     /**
      * Does internal cipher state need to be (re)initialized?
@@ -320,7 +320,7 @@ abstract class NostoCryptBase
      * @see disableContinuousBuffer()
      * @var Boolean
      */
-    protected $changed = true;
+    public $changed = true;
 
     /**
      * Padding status
@@ -328,7 +328,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::enablePadding()
      * @var Boolean
      */
-    protected $padding = true;
+    public $padding = true;
 
     /**
      * Is the mode one that is paddable?
@@ -336,7 +336,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::NostoCryptBase()
      * @var Boolean
      */
-    protected $paddable = false;
+    public $paddable = false;
 
     /**
      * Holds which crypt engine internaly should be use,
@@ -356,7 +356,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::decrypt()
      * @var Integer
      */
-    protected $engine;
+    public $engine;
 
     /**
      * The mcrypt specific name of the cipher
@@ -368,7 +368,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::setupMcrypt()
      * @var String
      */
-    protected $cipherNameMcrypt;
+    public $cipherNameMcrypt;
 
     /**
      * The default password keySize used by setPassword()
@@ -376,7 +376,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::setPassword()
      * @var Integer
      */
-    protected $passwordKeySize = 32;
+    public $passwordKeySize = 32;
 
     /**
      * The default salt used by setPassword()
@@ -384,7 +384,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::setPassword()
      * @var String
      */
-    protected $passwordDefaultSalt = 'phpseclib/salt';
+    public $passwordDefaultSalt = 'phpseclib/salt';
 
     /**
      * The namespace used by the cipher for its constants.
@@ -406,7 +406,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::NostoCryptBase()
      * @var String
      */
-    protected $constNamespace;
+    public $constNamespace;
 
     /**
      * The name of the performance-optimized callback function
@@ -420,7 +420,7 @@ abstract class NostoCryptBase
      * @see useInlineCrypt::$use_inline_crypt
      * @var Callback
      */
-    protected $inlineCrypt;
+    public $inlineCrypt;
 
     /**
      * Holds whether performance-optimized $inlineCrypt() can/should be used.
@@ -430,7 +430,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::inlineCrypt
      * @var mixed
      */
-    protected $useInlineCrypt;
+    public $useInlineCrypt;
 
     /**
      * Default Constructor.
@@ -1198,7 +1198,7 @@ abstract class NostoCryptBase
      * @return String
      * @throws NostoUndefinedMethodException
      */
-    protected function encryptBlock($in)
+    public function encryptBlock($in)
     {
         throw new NostoUndefinedMethodException(__METHOD__.'() must extend by class '.get_class($this));
     }
@@ -1212,7 +1212,7 @@ abstract class NostoCryptBase
      * @return String
      * @throws NostoUndefinedMethodException
      */
-    protected function decryptBlock($in)
+    public function decryptBlock($in)
     {
         throw new NostoUndefinedMethodException(__METHOD__.'() must extend by class '.get_class($this));
     }
@@ -1227,7 +1227,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::setup()
      * @throws NostoUndefinedMethodException
      */
-    protected function setupKey()
+    public function setupKey()
     {
         throw new NostoUndefinedMethodException(__METHOD__.'() must extend by class '.get_class($this));
     }
@@ -1257,7 +1257,7 @@ abstract class NostoCryptBase
      * @see setIV()
      * @see disableContinuousBuffer()
      */
-    protected function setup()
+    public function setup()
     {
         $this->clearBuffers();
         $this->setupKey();
@@ -1291,7 +1291,7 @@ abstract class NostoCryptBase
      * @see setIV()
      * @see disableContinuousBuffer()
      */
-    protected function setupMcrypt()
+    public function setupMcrypt()
     {
         $this->clearBuffers();
         $this->enChanged = $this->deChanged = true;
@@ -1338,7 +1338,7 @@ abstract class NostoCryptBase
      * @return String
      * @throws NostoInvalidLengthException
      */
-    protected function pad($text)
+    public function pad($text)
     {
         $length = strlen($text);
 
@@ -1368,7 +1368,7 @@ abstract class NostoCryptBase
      * @return String
      * @throws NostoInvalidPaddingException
      */
-    protected function unpad($text)
+    public function unpad($text)
     {
         if (!$this->padding) {
             return $text;
@@ -1392,7 +1392,7 @@ abstract class NostoCryptBase
      *
      * Note: Could, but not must, extend by the child Crypt* class
      */
-    protected function clearBuffers()
+    public function clearBuffers()
     {
         $this->enBuffer = array('encrypted' => '', 'xor' => '', 'pos' => 0, 'enmcrypt_init' => true);
         $this->deBuffer = array('ciphertext' => '', 'xor' => '', 'pos' => 0, 'demcrypt_init' => true);
@@ -1412,7 +1412,7 @@ abstract class NostoCryptBase
      * @param optional Integer $index
      * @return String
      */
-    protected function stringShift(&$string, $index = 1)
+    public function stringShift(&$string, $index = 1)
     {
         $substr = substr($string, 0, $index);
         $string = substr($string, $index);
@@ -1431,7 +1431,7 @@ abstract class NostoCryptBase
      * @param Integer $length
      * @return String $xor
      */
-    protected function generateXor(&$iv, $length)
+    public function generateXor(&$iv, $length)
     {
         $xor = '';
         $count = 0;
@@ -1517,7 +1517,7 @@ abstract class NostoCryptBase
      * @see NostoCryptBase::encrypt()
      * @see NostoCryptBase::decrypt()
      */
-    protected function setupInlineCrypt()
+    public function setupInlineCrypt()
     {
         // If a Crypt* class providing inline crypting it must extend _setupInlineCrypt()
 
@@ -1640,7 +1640,7 @@ abstract class NostoCryptBase
      * @param Array $cipher_code
      * @return String (the name of the created callback function)
      */
-    protected function createInlineCryptFunction($cipher_code)
+    public function createInlineCryptFunction($cipher_code)
     {
         $block_size = $this->blockSize;
 
@@ -2008,7 +2008,7 @@ abstract class NostoCryptBase
      *
      * @return &Array
      */
-    protected function &getLambdaFunctions()
+    public function &getLambdaFunctions()
     {
         static $functions = array();
         return $functions;

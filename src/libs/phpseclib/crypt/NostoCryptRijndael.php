@@ -139,7 +139,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptBase::setPassword()
      * @var Integer
      */
-    protected $passwordKeySize = 16;
+    public $passwordKeySize = 16;
 
     /**
      * The namespace used by the cipher for its constants.
@@ -147,7 +147,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptBase::constNamespace
      * @var String
      */
-    protected $constNamespace = 'RIJNDAEL';
+    public $constNamespace = 'RIJNDAEL';
 
     /**
      * The mcrypt specific name of the cipher
@@ -162,7 +162,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see setupEngine()
      * @var String
      */
-    protected $cipherNameMcrypt = 'rijndael-128';
+    public $cipherNameMcrypt = 'rijndael-128';
 
     /**
      * The default salt used by setPassword()
@@ -171,7 +171,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptBase::setPassword()
      * @var String
      */
-    protected $passwordDefaultSalt = 'phpseclib';
+    public $passwordDefaultSalt = 'phpseclib';
 
     /**
      * Has the key length explicitly been set or should it be derived from the key, itself?
@@ -179,7 +179,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see setKeyLength()
      * @var Boolean
      */
-    protected $explicitKeyLength = false;
+    public $explicitKeyLength = false;
 
     /**
      * The Key Schedule
@@ -187,7 +187,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see setup()
      * @var Array
      */
-    protected $w;
+    public $w;
 
     /**
      * The Inverse Key Schedule
@@ -195,7 +195,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see setup()
      * @var Array
      */
-    protected $dw;
+    public $dw;
 
     /**
      * The Block Length divided by 32
@@ -208,7 +208,7 @@ class NostoCryptRijndael extends NostoCryptBase
      *    lieu of that, we'll just pre-compute it once.
      *
      */
-    protected $nb = 4;
+    public $nb = 4;
 
     /**
      * The Key Length
@@ -220,7 +220,7 @@ class NostoCryptRijndael extends NostoCryptBase
      *    derive this from $keySize or vice versa, but that'd mean we'd have to do multiple shift operations, so in lieu
      *    of that, we'll just pre-compute it once.
      */
-    protected $keySize = 16;
+    public $keySize = 16;
 
     /**
      * The Key Length divided by 32
@@ -229,7 +229,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @var Integer
      * @internal The max value is 256 / 32 = 8, the min value is 128 / 32 = 4
      */
-    protected $nk = 4;
+    public $nk = 4;
 
     /**
      * The Number of Rounds
@@ -237,21 +237,21 @@ class NostoCryptRijndael extends NostoCryptBase
      * @var Integer
      * @internal The max value is 14, the min value is 10.
      */
-    protected $nr;
+    public $nr;
 
     /**
      * Shift offsets
      *
      * @var Array
      */
-    protected $c;
+    public $c;
 
     /**
      * Holds the last used key- and blockSize information
      *
      * @var Array
      */
-    protected $kl;
+    public $kl;
 
     /**
      * Precomputed mixColumns table
@@ -264,7 +264,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-    protected $t0 = array(
+    public $t0 = array(
         0xC66363A5,
         0xF87C7C84,
         0xEE777799,
@@ -530,7 +530,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-    protected $t1 = array(
+    public $t1 = array(
         0xA5C66363,
         0x84F87C7C,
         0x99EE7777,
@@ -796,7 +796,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-    protected $t2 = array(
+	public $t2 = array(
         0x63A5C663,
         0x7C84F87C,
         0x7799EE77,
@@ -1062,7 +1062,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-    protected $t3 = array(
+	public $t3 = array(
         0x6363A5C6,
         0x7C7C84F8,
         0x777799EE,
@@ -1328,7 +1328,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-    protected $dt0 = array(
+	public $dt0 = array(
         0x51F4A750,
         0x7E416553,
         0x1A17A4C3,
@@ -1594,7 +1594,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-    protected $dt1 = array(
+	public $dt1 = array(
         0x5051F4A7,
         0x537E4165,
         0xC31A17A4,
@@ -1860,7 +1860,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-    protected $dt2 = array(
+	public $dt2 = array(
         0xA75051F4,
         0x65537E41,
         0xA4C31A17,
@@ -2126,7 +2126,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-    protected $dt3 = array(
+	public $dt3 = array(
         0xF4A75051,
         0x4165537E,
         0x17A4C31A,
@@ -2391,7 +2391,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael::encryptBlock()
      * @var Array
      */
-    protected $sbox = array(
+	public $sbox = array(
         0x63,
         0x7C,
         0x77,
@@ -2656,7 +2656,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael::decryptBlock()
      * @var Array
      */
-    protected $isbox = array(
+	public $isbox = array(
         0x52,
         0x09,
         0x6A,
@@ -3056,7 +3056,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see setKeyLength()
      * @see setBlockLength()
      */
-    protected function setupEngine()
+    public function setupEngine()
     {
         if (constant('CRYPT_'.$this->constNamespace.'_MODE') == CRYPT_MODE_INTERNAL) {
             // No mcrypt support at all for rijndael
@@ -3108,7 +3108,7 @@ class NostoCryptRijndael extends NostoCryptBase
      *
      * @see NostoCryptBase::setupMcrypt()
      */
-    protected function setupMcrypt()
+    public function setupMcrypt()
     {
         $this->key = str_pad(substr($this->key, 0, $this->keySize), $this->keySize, "\0");
         parent::setupMcrypt();
@@ -3120,7 +3120,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @param String $in
      * @return String
      */
-    protected function encryptBlock($in)
+    public function encryptBlock($in)
     {
         static $t0, $t1, $t2, $t3, $sbox;
         if (!$t0) {
@@ -3221,7 +3221,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @param String $in
      * @return String
      */
-    protected function decryptBlock($in)
+    public function decryptBlock($in)
     {
         static $dt0, $dt1, $dt2, $dt3, $isbox;
         if (!$dt0) {
@@ -3310,7 +3310,7 @@ class NostoCryptRijndael extends NostoCryptBase
      *
      * @see NostoCryptBase::setupKey()
      */
-    protected function setupKey()
+    public function setupKey()
     {
         // Each number in $rcon is equal to the previous number multiplied by two in Rijndael's finite field.
         // See http://en.wikipedia.org/wiki/Finite_field_arithmetic#Multiplicative_inverse
@@ -3456,7 +3456,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @param Integer $word
      * @return Integer
      */
-    protected function subWord($word)
+    public function subWord($word)
     {
         $sbox = $this->sbox;
 
@@ -3471,7 +3471,7 @@ class NostoCryptRijndael extends NostoCryptBase
      *
      * @see NostoCryptBase::setupInlineCrypt()
      */
-    protected function setupInlineCrypt()
+    public function setupInlineCrypt()
     {
         // Note: _setupInlineCrypt() will be called only if $this->changed === true
         // So here we are not under the same heavy timing-stress as we are in _de/encryptBlock() or de/encrypt().
