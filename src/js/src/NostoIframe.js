@@ -88,7 +88,7 @@ Nosto.iframe = function(options) {
             switch (data.type) {
                 case TYPE_NEW_ACCOUNT:
                     xhr(settings.urls.createAccount, {
-                        data: {email: data.email},
+                        data: {email: data.params.email},
                         success: function (e) {
                             /** @type {{success: Boolean}, {redirect_url: String}} response */
                             var response = JSON.parse(e.target.response);
