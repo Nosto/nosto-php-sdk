@@ -48,18 +48,53 @@ class NostoProductReCrawl
      */
     public static function send(NostoProductInterface $product, NostoAccountInterface $account)
     {
-        $token = $account->getApiToken('products');
-        if ($token === null) {
-            return false;
-        }
-        $request = new NostoApiRequest();
-        $request->setPath(NostoApiRequest::PATH_PRODUCT_RE_CRAWL);
-        $request->setContentType('application/json');
-        $request->setAuthBasic('', $token->value);
-        $response = $request->post(json_encode(array('product_ids' => array($product->getProductId()))));
-        if ($response->getCode() !== 200) {
-            throw new NostoException('Failed to send product re-crawl to Nosto');
-        }
-        return true;
+		$productIds = array($product->getProductId());
+		return self::sendRequest($account, array('product_ids' => $productIds));
     }
+
+	/**
+	 * Sends a batch product re-crawl request to nosto.
+	 *
+	 * @param NostoExportProductCollection $collection the product collection to re-crawl.
+	 * @param NostoAccountInterface $account the account to re-crawl the products for.
+	 * @return bool true on success, false otherwise.
+	 * @throws NostoException if the request fails.
+	 */
+	public static function sendBatch(NostoExportProductCollection $collection, NostoAccountInterface $account)
+	{
+		if ($collection->count() === 0) {
+			return false;
+		}
+		$productIds = array();
+		foreach ($collection->getArrayCopy() as $item) {
+			/** @var NostoProductInterface $item */
+			$productIds[] = $item->getProductId();
+		}
+		return self::sendRequest($account, array('product_ids' => $productIds));
+	}
+
+	/**
+	 * Sends the re-crawl API request to Nosto.
+	 *
+	 * @param NostoAccountInterface $account the account to re-crawl the product(s) for.
+	 * @param array $payload the request payload as an array that will be json encoded.
+	 * @return bool true on success, false otherwise.
+	 * @throws NostoException if the request fails.
+	 */
+	protected static function sendRequest(NostoAccountInterface $account, array $payload)
+	{
+		$token = $account->getApiToken('products');
+		if ($token === null) {
+			return false;
+		}
+		$request = new NostoApiRequest();
+		$request->setPath(NostoApiRequest::PATH_PRODUCT_RE_CRAWL);
+		$request->setContentType('application/json');
+		$request->setAuthBasic('', $token->value);
+		$response = $request->post(json_encode($payload));
+		if ($response->getCode() !== 200) {
+			throw new NostoException('Failed to send product re-crawl to Nosto');
+		}
+		return true;
+	}
 }
