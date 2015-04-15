@@ -201,7 +201,12 @@ Product related resources
     + Body
 
             {
-                "product_ids": [1]
+                "products": [
+                    {
+                        "product_id": 1,
+                        "url": "http://my.shop.com/products/test_product.html"
+                    }
+                ]
             }
 
 + Response 200 (application/json)
