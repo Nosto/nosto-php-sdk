@@ -217,6 +217,8 @@ When a product changes in the store, stock is reduced, price is updated etc. it 
 to Nosto that initiates a product "re-crawl" event. This is done to update the recommendations including that product
 so that the newest information can be shown to the users on the site.
 
+Note: the $product model needs to include only `productId` and `url` properties, all others can be omitted.
+
 ```php
     .....
     try {
@@ -225,6 +227,24 @@ so that the newest information can be shown to the users on the site.
          * @var NostoAccountInterface $account
          */
         NostoProductReCrawl::send($product, $account);
+    } catch (NostoException $e) {
+        // handle error
+    }
+    .....
+```
+
+Batch re-crawling is also possible by creating a collection of product models:
+
+```php
+    .....
+    try {
+        /**
+         * @var NostoExportProductCollection $collection
+         * @var NostoProductInterface $product
+         * @var NostoAccountInterface $account
+         */
+        $collection[] = $product;
+        NostoProductReCrawl::sendBatch($collection, $account);
     } catch (NostoException $e) {
         // handle error
     }

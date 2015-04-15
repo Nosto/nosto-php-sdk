@@ -1,6 +1,8 @@
 <?php
 // This is global bootstrap for autoloading
 
+date_default_timezone_set('Europe/Helsinki');
+
 // Pre-load all sdk classes.
 require_once(dirname(__FILE__) . '/../src/config.inc.php');
 

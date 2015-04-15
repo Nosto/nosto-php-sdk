@@ -44,21 +44,67 @@ class NostoProductReCrawl
      * @param NostoProductInterface $product the product to re-crawl.
      * @param NostoAccountInterface $account the account to re-crawl the product for.
      * @return bool true on success, false otherwise.
-     * @throws NostoException if the request fails.
+     * @throws NostoException if the request fails or cannot be made.
      */
     public static function send(NostoProductInterface $product, NostoAccountInterface $account)
     {
+        return self::sendRequest($account, array(
+            'products' => array(
+                array(
+                    'product_id' => $product->getProductId(),
+                    'url' => $product->getUrl(),
+                )
+            ),
+        ));
+    }
+
+    /**
+     * Sends a batch product re-crawl request to nosto.
+     *
+     * @param NostoExportProductCollection $collection the product collection to re-crawl.
+     * @param NostoAccountInterface $account the account to re-crawl the products for.
+     * @return bool true on success, false otherwise.
+     * @throws NostoException if the request fails or cannot be made.
+     */
+    public static function sendBatch(NostoExportProductCollection $collection, NostoAccountInterface $account)
+    {
+        if ($collection->count() === 0) {
+            throw new NostoException('Failed to send product re-crawl to Nosto. No products in collection (Error 400).', 400);
+        }
+        $payload = array(
+            'products' => array()
+        );
+        foreach ($collection->getArrayCopy() as $product) {
+            /** @var NostoProductInterface $product */
+            $payload['products'][] = array(
+                'product_id' => $product->getProductId(),
+                'url' => $product->getUrl(),
+            );
+        }
+        return self::sendRequest($account, $payload);
+    }
+
+    /**
+     * Sends the re-crawl API request to Nosto.
+     *
+     * @param NostoAccountInterface $account the account to re-crawl the product(s) for.
+     * @param array $payload the request payload as an array that will be json encoded.
+     * @return bool true on success.
+     * @throws NostoException if the request fails or cannot be made.
+     */
+    protected static function sendRequest(NostoAccountInterface $account, array $payload)
+    {
         $token = $account->getApiToken('products');
         if ($token === null) {
-            return false;
+            throw new NostoException('Failed to send product re-crawl to Nosto. No `products` API token found for account (Error 400).', 400);
         }
         $request = new NostoApiRequest();
         $request->setPath(NostoApiRequest::PATH_PRODUCT_RE_CRAWL);
         $request->setContentType('application/json');
         $request->setAuthBasic('', $token->value);
-        $response = $request->post(json_encode(array('product_ids' => array($product->getProductId()))));
+        $response = $request->post(json_encode($payload));
         if ($response->getCode() !== 200) {
-            throw new NostoException('Failed to send product re-crawl to Nosto');
+            throw new NostoException('Failed to send product re-crawl to Nosto (Error '.$response->getCode().').', $response->getCode());
         }
         return true;
     }
