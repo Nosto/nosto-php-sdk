@@ -60,6 +60,8 @@ class NostoExportOrderCollection extends NostoExportCollection
                     'last_name' => $item->getBuyerInfo()->getLastName(),
                     'email' => $item->getBuyerInfo()->getEmail(),
                 ),
+				'payment_provider' => $item->getPaymentProvider(),
+				'payment_status' => $item->getPaymentStatus(),
                 'purchased_items' => array(),
             );
             foreach ($item->getPurchasedItems() as $orderItem) {

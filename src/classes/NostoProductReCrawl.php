@@ -69,7 +69,7 @@ class NostoProductReCrawl
     public static function sendBatch(NostoExportProductCollection $collection, NostoAccountInterface $account)
     {
         if ($collection->count() === 0) {
-            throw new NostoException('Failed to send product re-crawl to Nosto. No products in collection (Error 400).', 400);
+            throw new NostoException('Failed to send product re-crawl to Nosto. No products in collection.');
         }
         $payload = array(
             'products' => array()
@@ -96,7 +96,7 @@ class NostoProductReCrawl
     {
         $token = $account->getApiToken('products');
         if ($token === null) {
-            throw new NostoException('Failed to send product re-crawl to Nosto. No `products` API token found for account (Error 400).', 400);
+            throw new NostoException('Failed to send product re-crawl to Nosto. No `products` API token found for account.');
         }
         $request = new NostoApiRequest();
         $request->setPath(NostoApiRequest::PATH_PRODUCT_RE_CRAWL);

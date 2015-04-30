@@ -76,6 +76,7 @@ class NostoOrderConfirmation
             ),
             'created_at' => Nosto::helper('date')->format($order->getCreatedDate()),
             'payment_provider' => $order->getPaymentProvider(),
+			'payment_status' => $order->getPaymentStatus(),
             'purchased_items' => array(),
         );
         foreach ($order->getPurchasedItems() as $item) {
@@ -89,7 +90,7 @@ class NostoOrderConfirmation
         }
         $response = $request->post(json_encode($orderData));
         if ($response->getCode() !== 200) {
-            throw new NostoException('Failed to send order confirmation to Nosto');
+            throw new NostoException('Failed to send order confirmation to Nosto (Error '.$response->getCode().').', $response->getCode());
         }
         return true;
     }
