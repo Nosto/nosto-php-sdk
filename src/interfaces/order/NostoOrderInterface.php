@@ -60,6 +60,13 @@ interface NostoOrderInterface
      */
     public function getPaymentProvider();
 
+	/**
+	 * The orders payment status.
+	 *
+	 * @return string the status.
+	 */
+	public function getPaymentStatus();
+
     /**
      * The buyer info of the user who placed the order.
      *
