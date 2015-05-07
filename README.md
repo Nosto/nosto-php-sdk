@@ -34,7 +34,6 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoHelperDate** helper class for date related operations
 * **NostoHelperIframe** helper class for iframe related operations
 * **NostoHelperPrice** helper class for price related operations
-* **NostoXhrResponse** util class for representing a XHR response that is used when responding to account administration iframe API calls
 * **NostoMessage** util class for holding info about messages that can be forwarded to the account administration iframe to show to the user
 
 ### Interfaces
