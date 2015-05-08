@@ -26,7 +26,6 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoOrderConfirmation** class for sending order confirmations through the API
 * **NostoProductReCrawl** class for sending product re-crawl requests to Nosto over the API
 * **NostoExporter** class for exporting encrypted historical data from the shop
-* **NostoExportCollection** base class for creating exportable data collections for the historical data
 * **NostoExportProductCollection** class for exporting historical product data
 * **NostoExportOrderCollection** class for exporting historical order data
 * **Nosto** main sdk class for common functionality
@@ -35,6 +34,10 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoHelperIframe** helper class for iframe related operations
 * **NostoHelperPrice** helper class for price related operations
 * **NostoMessage** util class for holding info about messages that can be forwarded to the account administration iframe to show to the user
+* **NostoCollection** collection base class
+* **NostoProductCollection** collection class for nosto product objects
+* **NostoOrderCollection** collection class for nosto order objects
+* **NostoOperationProduct** class for performing create/update/delete operations on product object
 
 ### Interfaces
 
@@ -48,6 +51,7 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoOrderInterface** interface defining getters for information needed during order confirmation requests
 * **NostoOrderPurchasedItemInterface** interface defining getters for purchased item information needed during order confirmation requests
 * **NostoProductInterface** interface defining getters for product information needed during product re-crawl requests to Nosto over the API
+* **NostoExportCollectionInterface** interface defining getters exportable data collections for the historical data
 
 ### Libs
 

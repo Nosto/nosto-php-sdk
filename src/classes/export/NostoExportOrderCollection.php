@@ -37,13 +37,8 @@
  * Order collection for historical data exports.
  * Supports only items implementing "NostoOrderInterface".
  */
-class NostoExportOrderCollection extends NostoExportCollection
+class NostoExportOrderCollection extends NostoOrderCollection implements NostoExportCollectionInterface
 {
-    /**
-     * @inheritdoc
-     */
-    protected $validItemType = 'NostoOrderInterface';
-
     /**
      * @inheritdoc
      */

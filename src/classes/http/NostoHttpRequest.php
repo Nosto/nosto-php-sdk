@@ -345,6 +345,27 @@ class NostoHttpRequest
     }
 
     /**
+     * Sends a PUT request.
+     *
+     * @param string $content
+     * @return NostoHttpResponse
+     */
+    public function put($content)
+    {
+        $url = $this->url;
+        if (!empty($this->replaceParams)) {
+            $url = self::buildUri($url, $this->replaceParams);
+        }
+        return $this->adapter->put(
+            $url,
+            array(
+                'headers' => $this->headers,
+                'content' => $content,
+            )
+        );
+    }
+
+    /**
      * Sends a GET request.
      *
      * @return NostoHttpResponse
@@ -359,6 +380,25 @@ class NostoHttpRequest
             $url .= '?'.http_build_query($this->queryParams);
         }
         return $this->adapter->get(
+            $url,
+            array(
+                'headers' => $this->headers,
+            )
+        );
+    }
+
+    /**
+     * Sends a DELETE request.
+     *
+     * @return NostoHttpResponse
+     */
+    public function delete()
+    {
+        $url = $this->url;
+        if (!empty($this->replaceParams)) {
+            $url = self::buildUri($url, $this->replaceParams);
+        }
+        return $this->adapter->delete(
             $url,
             array(
                 'headers' => $this->headers,

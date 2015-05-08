@@ -82,6 +82,45 @@ class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
     }
 
     /**
+     * @inheritdoc
+     */
+    public function put($url, array $options = array())
+    {
+        $this->init($options);
+        return $this->send(
+            $url,
+            array(
+                'http' => array(
+                    'method' => 'PUT',
+                    'header' => implode("\r\n", $this->headers),
+                    'content' => $this->content,
+                    // Fetch the content even on failure status codes.
+                    'ignore_errors' => true,
+                ),
+            )
+        );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function delete($url, array $options = array())
+    {
+        $this->init($options);
+        return $this->send(
+            $url,
+            array(
+                'http' => array(
+                    'method' => 'DELETE',
+                    'header' => implode("\r\n", $this->headers),
+                    // Fetch the content even on failure status codes.
+                    'ignore_errors' => true,
+                ),
+            )
+        );
+    }
+
+    /**
      * Sends the request and creates a NostoHttpResponse instance containing the response headers and body.
      *
      * @param string $url the url for the request.

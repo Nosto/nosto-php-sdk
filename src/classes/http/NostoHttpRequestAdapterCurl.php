@@ -78,6 +78,45 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
     }
 
     /**
+     * @inheritdoc
+     */
+    public function put($url, array $options = array())
+    {
+        $this->init($options);
+        return $this->send(
+            array(
+                CURLOPT_URL => $url,
+                CURLOPT_POSTFIELDS => $this->content,
+                CURLOPT_CUSTOMREQUEST => 'PUT',
+                CURLOPT_HEADER => 1,
+                CURLOPT_FRESH_CONNECT => 1,
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_FORBID_REUSE => 1,
+                CURLOPT_TIMEOUT => 60,
+            )
+        );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function delete($url, array $options = array())
+    {
+        $this->init($options);
+        return $this->send(
+            array(
+                CURLOPT_URL => $url,
+                CURLOPT_CUSTOMREQUEST => 'DELETE',
+                CURLOPT_HEADER => 1,
+                CURLOPT_FRESH_CONNECT => 1,
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_FORBID_REUSE => 1,
+                CURLOPT_TIMEOUT => 60,
+            )
+        );
+    }
+
+    /**
      * Sends the request and creates a NostoHttpResponse instance containing the response headers and body.
      *
      * @param array $curlOptions options for curl_setopt_array().

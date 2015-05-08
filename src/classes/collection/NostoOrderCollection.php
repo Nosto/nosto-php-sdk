@@ -34,31 +34,13 @@
  */
 
 /**
- * API request class for making API requests to Nosto.
+ * Order object collection.
+ * Supports only items implementing "NostoOrderInterface".
  */
-class NostoApiRequest extends NostoHttpRequest
+class NostoOrderCollection extends NostoCollection
 {
-    const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
-    const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
-    const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_SSO_AUTH = '/users/sso/{email}';
-    const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
-    const PATH_PRODUCTS_UPSERT = '/products/upsert';
-    const PATH_PRODUCTS_DISCONTINUE = '/products/discontinue';
-
     /**
-     * @var string base url for the nosto api.
+     * @inheritdoc
      */
-    public static $baseUrl = 'https://api.nosto.com';
-
-    /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
-     *
-     * @param string $path the endpoint path (use PATH_ constants).
-     */
-    public function setPath($path)
-    {
-        $this->setUrl(self::$baseUrl.$path);
-    }
+    protected $validItemType = 'NostoOrderInterface';
 }

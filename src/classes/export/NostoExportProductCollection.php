@@ -37,13 +37,8 @@
  * Product collection for historical data exports.
  * Supports only items implementing "NostoProductInterface".
  */
-class NostoExportProductCollection extends NostoExportCollection
+class NostoExportProductCollection extends NostoProductCollection implements NostoExportCollectionInterface
 {
-    /**
-     * @inheritdoc
-     */
-    protected $validItemType = 'NostoProductInterface';
-
     /**
      * @inheritdoc
      */

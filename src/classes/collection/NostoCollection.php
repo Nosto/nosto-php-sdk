@@ -34,67 +34,54 @@
  */
 
 /**
- * Base class for all http request adapters.
+ * Base class for all Nosto object collection classes.
+ * The base class provides the functionality to validate the items added to the collection.
+ * The collection behaves like an array. making it easy to add items to it and iterate over it.
  */
-abstract class NostoHttpRequestAdapter
+abstract class NostoCollection extends ArrayObject
 {
     /**
-     * @var array the request headers.
+     * @var string the type of items this collection can contain.
      */
-    protected $headers = array();
+    protected $validItemType = '';
 
     /**
-     * @var mixed the request content.
+     * @inheritdoc
      */
-    protected $content = null;
-
-    /**
-     * Initializes the request options.
-     *
-     * @param array $options the options.
-     */
-    protected function init(array $options = array())
+    public function offsetSet($index, $newval)
     {
-        foreach ($options as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->{$key} = $value;
-            }
-        }
+        $this->validate($newval);
+        parent::offsetSet($index, $newval);
     }
 
     /**
-     * Does a GET request and returns the http response object.
-     *
-     * @param string $url the URL to request.
-     * @param array $options the request options.
-     * @return NostoHttpResponse the response object.
+     * @inheritdoc
      */
-    abstract public function get($url, array $options = array());
+    public function append($value)
+    {
+        $this->validate($value);
+        parent::append($value);
+    }
 
     /**
-     * Does a POST request and returns the http response object.
+     * Validates that the given value is of correct type.
      *
-     * @param string $url the URL to request.
-     * @param array $options the request options.
-     * @return NostoHttpResponse the response object.
+     * @see NostoCollection::$validItemType
+     * @param mixed $value the value.
+     * @throws NostoException if the value is of invalid type.
      */
-    abstract public function post($url, array $options = array());
-
-    /**
-     * Does a PUT request and returns the http response object.
-     *
-     * @param string $url the URL to request.
-     * @param array $options the request options.
-     * @return NostoHttpResponse the response object.
-     */
-    abstract public function put($url, array $options = array());
-
-    /**
-     * Does a DELETE request and returns the http response object.
-     *
-     * @param string $url the URL to request.
-     * @param array $options the request options.
-     * @return NostoHttpResponse the response object.
-     */
-    abstract public function delete($url, array $options = array());
+    protected function validate($value)
+    {
+        if (!is_a($value, $this->validItemType)) {
+            $valueType = gettype($value);
+            if ($valueType === 'object') {
+                $valueType = get_class($value);
+            }
+            throw new NostoException(sprintf(
+                'Collection supports items of type "%s" (type "%s" given)',
+                $this->validItemType,
+                $valueType
+            ));
+        }
+    }
 }
