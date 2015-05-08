@@ -197,7 +197,7 @@ class NostoOperationProduct
         $data = array();
         foreach ($this->collection->getArrayCopy() as $item) {
             /** @var NostoProductInterface $item */
-            $data[] = $item->getProductId();
+            $data[] = (int)$item->getProductId();
         }
         if (empty($data)) {
             throw new NostoException('No products found in collection.');
