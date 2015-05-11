@@ -34,70 +34,54 @@
  */
 
 /**
- * Util class for representing a XHR response object used when responding to
- * account administration iframe API calls.
+ * Base class for all Nosto object collection classes.
+ * The base class provides the functionality to validate the items added to the collection.
+ * The collection behaves like an array. making it easy to add items to it and iterate over it.
  */
-class NostoXhrResponse
+abstract class NostoCollection extends ArrayObject
 {
     /**
-     * @var string the `Content-Type` of the response.
+     * @var string the type of items this collection can contain.
      */
-    public $contentType = 'application/json';
+    protected $validItemType = '';
 
     /**
-     * @var bool the response success flag.
+     * @inheritdoc
      */
-    protected $success = false;
-
-    /**
-     * @var string the response redirect url.
-     */
-    protected $redirectUrl;
-
-    /**
-     * Sets the response success state.
-     *
-     * @param boolean $success the state.
-     * @return NostoXhrResponse the response instance.
-     */
-    public function setSuccess($success)
+    public function offsetSet($index, $newval)
     {
-        $this->success = $success;
-        return $this;
+        $this->validate($newval);
+        parent::offsetSet($index, $newval);
     }
 
     /**
-     * Sets the response redirect url.
-     *
-     * @param string $url the url.
-     * @return NostoXhrResponse the response instance.
+     * @inheritdoc
      */
-    public function setRedirectUrl($url)
+    public function append($value)
     {
-        $this->redirectUrl = $url;
-        return $this;
+        $this->validate($value);
+        parent::append($value);
     }
 
     /**
-     * Sends the response, i.e. sends it to the browser.
-     * This method also sends the `Content-Type` header for the response data.
-     */
-    public function send()
-    {
-        header('Content-Type: '.$this->contentType);
-        echo $this;
-    }
-
-    /**
-     * Converts the response to a string and returns it.
+     * Validates that the given value is of correct type.
      *
-     * @return string the string representation of the response.
+     * @see NostoCollection::$validItemType
+     * @param mixed $value the value.
+     * @throws NostoException if the value is of invalid type.
      */
-    public function __toString()
+    protected function validate($value)
     {
-        return (string)json_encode(array(
-            'success' => (bool)$this->success,
-            'redirect_url' => (string)$this->redirectUrl,
-        ));
+        if (!is_a($value, $this->validItemType)) {
+            $valueType = gettype($value);
+            if ($valueType === 'object') {
+                $valueType = get_class($value);
+            }
+            throw new NostoException(sprintf(
+                'Collection supports items of type "%s" (type "%s" given)',
+                $this->validItemType,
+                $valueType
+            ));
+        }
     }
 }

@@ -26,7 +26,6 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoOrderConfirmation** class for sending order confirmations through the API
 * **NostoProductReCrawl** class for sending product re-crawl requests to Nosto over the API
 * **NostoExporter** class for exporting encrypted historical data from the shop
-* **NostoExportCollection** base class for creating exportable data collections for the historical data
 * **NostoExportProductCollection** class for exporting historical product data
 * **NostoExportOrderCollection** class for exporting historical order data
 * **Nosto** main sdk class for common functionality
@@ -34,8 +33,11 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoHelperDate** helper class for date related operations
 * **NostoHelperIframe** helper class for iframe related operations
 * **NostoHelperPrice** helper class for price related operations
-* **NostoXhrResponse** util class for representing a XHR response that is used when responding to account administration iframe API calls
 * **NostoMessage** util class for holding info about messages that can be forwarded to the account administration iframe to show to the user
+* **NostoCollection** collection base class
+* **NostoProductCollection** collection class for nosto product objects
+* **NostoOrderCollection** collection class for nosto order objects
+* **NostoOperationProduct** class for performing create/update/delete operations on product object
 
 ### Interfaces
 
@@ -49,6 +51,7 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoOrderInterface** interface defining getters for information needed during order confirmation requests
 * **NostoOrderPurchasedItemInterface** interface defining getters for purchased item information needed during order confirmation requests
 * **NostoProductInterface** interface defining getters for product information needed during product re-crawl requests to Nosto over the API
+* **NostoExportCollectionInterface** interface defining getters exportable data collections for the historical data
 
 ### Libs
 
@@ -213,6 +216,8 @@ user ID, as the platform may support guest checkouts.
 
 ### Sending product re-crawl requests using the Nosto API
 
+Note: this feature has been deprecated in favor of the create/update/delete method below.
+
 When a product changes in the store, stock is reduced, price is updated etc. it is recommended to send an API request
 to Nosto that initiates a product "re-crawl" event. This is done to update the recommendations including that product
 so that the newest information can be shown to the users on the site.
@@ -250,6 +255,73 @@ Batch re-crawling is also possible by creating a collection of product models:
     }
     .....
 ```
+
+### Sending product create/update/delete requests using the Nosto API
+
+When a product changes in the store, stock is reduced, price is updated etc. it is recommended to send an API request
+to Nosto to handle the updated product info. This is also true when adding new products as well as deleting existing ones.
+This is done to update the recommendations including that product so that the newest information can be shown to the users
+on the site.
+
+Creating new products:
+
+```php
+    .....
+    try {
+        /**
+         * @var NostoProductInterface $product
+         * @var NostoAccountInterface $account
+         */
+        $op = new NostoOperationProduct($account);
+        $op->addProduct($product);
+        $op->create();
+    } catch (NostoException $e) {
+        // handle error
+    }
+    .....
+```
+
+Note: you can call `addProduct` multiple times to add more products to the request. This way you can batch create products.
+
+Updating existing products:
+
+```php
+    .....
+    try {
+        /**
+         * @var NostoProductInterface $product
+         * @var NostoAccountInterface $account
+         */
+        $op = new NostoOperationProduct($account);
+        $op->addProduct($product);
+        $op->update();
+    } catch (NostoException $e) {
+        // handle error
+    }
+    .....
+```
+
+Note: you can call `addProduct` multiple times to add more products to the request. This way you can batch update products.
+
+Deleting existing products:
+
+```php
+    .....
+    try {
+        /**
+         * @var NostoProductInterface $product
+         * @var NostoAccountInterface $account
+         */
+        $op = new NostoOperationProduct($account);
+        $op->addProduct($product);
+        $op->delete();
+    } catch (NostoException $e) {
+        // handle error
+    }
+    .....
+```
+
+Note: you can call `addProduct` multiple times to add more products to the request. This way you can batch delete products.
 
 ### Exporting encrypted product/order information that Nosto can request
 

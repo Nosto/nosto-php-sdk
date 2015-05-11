@@ -46,6 +46,7 @@ require_once(dirname(__FILE__).'/interfaces/order/NostoOrderPurchasedItemInterfa
 
 require_once(dirname(__FILE__).'/interfaces/NostoOAuthClientMetaDataInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoProductInterface.php');
+require_once(dirname(__FILE__).'/interfaces/NostoExportCollectionInterface.php');
 
 // Classes
 require_once(dirname(__FILE__).'/classes/http/NostoHttpRequest.php'); // Must be loaded before `NostoApiRequest`
@@ -53,8 +54,11 @@ require_once(dirname(__FILE__).'/classes/http/NostoHttpRequest.php'); // Must be
 require_once(dirname(__FILE__).'/classes/api/NostoApiRequest.php');
 require_once(dirname(__FILE__).'/classes/api/NostoApiToken.php');
 
+require_once(dirname(__FILE__).'/classes/collection/NostoCollection.php');
+require_once(dirname(__FILE__).'/classes/collection/NostoProductCollection.php');
+require_once(dirname(__FILE__).'/classes/collection/NostoOrderCollection.php');
+
 require_once(dirname(__FILE__).'/classes/export/NostoExporter.php');
-require_once(dirname(__FILE__).'/classes/export/NostoExportCollection.php');
 require_once(dirname(__FILE__).'/classes/export/NostoExportProductCollection.php');
 require_once(dirname(__FILE__).'/classes/export/NostoExportOrderCollection.php');
 
@@ -71,6 +75,8 @@ require_once(dirname(__FILE__).'/classes/http/NostoHttpResponse.php');
 require_once(dirname(__FILE__).'/classes/oauth/NostoOAuthClient.php');
 require_once(dirname(__FILE__).'/classes/oauth/NostoOAuthToken.php');
 
+require_once(dirname(__FILE__).'/classes/operation/NostoOperationProduct.php');
+
 require_once(dirname(__FILE__).'/classes/Nosto.php');
 require_once(dirname(__FILE__).'/classes/NostoAccount.php');
 require_once(dirname(__FILE__).'/classes/NostoCipher.php');
@@ -79,7 +85,6 @@ require_once(dirname(__FILE__).'/classes/NostoException.php');
 require_once(dirname(__FILE__).'/classes/NostoMessage.php');
 require_once(dirname(__FILE__).'/classes/NostoOrderConfirmation.php');
 require_once(dirname(__FILE__).'/classes/NostoProductReCrawl.php');
-require_once(dirname(__FILE__).'/classes/NostoXhrResponse.php');
 
 // Libs
 require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptBase.php');

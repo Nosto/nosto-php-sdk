@@ -214,3 +214,89 @@ Product related resources
 + Response 200 (application/json)
 
         {}
+
+## Product upsert [/v1/products/upsert]
+
+### Send product create request [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
+    + Body
+
+            [
+                {
+                    "url": "http://my.shop.com/products/test_product.html",
+                    "product_id": 1,
+                    "name": "Test Product",
+                    "image_url": "http://my.shop.com/images/test_product.jpg",
+                    "price": "99.99",
+                    "list_price": "110.99",
+                    "price_currency_code": "USD",
+                    "availability": "InStock",
+                    "tag1": ["tag1", "tag2"],
+                    "categories": ["/a/b", "/a/b/c"],
+                    "description": "Lorem ipsum dolor sit amet",
+                    "brand": "Super Brand",
+                    "date_published": "2013-01-05"
+                }
+            ]
+
++ Response 200 (application/json)
+
+        {}
+
+### Send product update request [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
+    + Body
+
+            [
+                {
+                    "url": "http://my.shop.com/products/test_product.html",
+                    "product_id": 1,
+                    "name": "Test Product",
+                    "image_url": "http://my.shop.com/images/test_product.jpg",
+                    "price": "99.99",
+                    "list_price": "110.99",
+                    "price_currency_code": "USD",
+                    "availability": "InStock",
+                    "tag1": ["tag1", "tag2"],
+                    "categories": ["/a/b", "/a/b/c"],
+                    "description": "Lorem ipsum dolor sit amet",
+                    "brand": "Super Brand",
+                    "date_published": "2013-01-05"
+                }
+            ]
+
++ Response 200 (application/json)
+
+        {}
+
+## Product delete [/v1/products/discontinue]
+
+### Send product delete request [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
+    + Body
+
+            [
+                1
+            ]
+
++ Response 200 (application/json)
+
+        {}
