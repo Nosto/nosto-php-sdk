@@ -139,18 +139,6 @@ class NostoHttpRequest
     }
 
     /**
-     * Returns the request body content.
-     *
-     * Will only be set on POST and PUT requests.
-     *
-     * @return string the request content.
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
      * Setter for the request url query params.
      *
      * @param array $queryParams the query params.
@@ -423,5 +411,22 @@ class NostoHttpRequest
                 'headers' => $this->headers,
             )
         );
+    }
+
+    /**
+     * Converts the request to a string and returns it.
+     * Used when logging http request errors.
+     */
+    public function __toString()
+    {
+        $url = $this->url;
+        if (!empty($this->replaceParams)) {
+            $url = self::buildUri($url, $this->replaceParams);
+        }
+        return serialize(array(
+            'url' => $url,
+            'headers' => $this->headers,
+            'body' => $this->content,
+        ));
     }
 }

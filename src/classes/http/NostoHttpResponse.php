@@ -137,4 +137,16 @@ class NostoHttpResponse
     {
         return (isset($this->headers) && isset($this->headers[0])) ? $this->headers[0] : '';
     }
+
+    /**
+     * Converts the response to a string and returns it.
+     * Used when logging http request errors.
+     */
+    public function __toString()
+    {
+        return serialize(array(
+            'headers' => $this->headers,
+            'body' => $this->result,
+        ));
+    }
 }

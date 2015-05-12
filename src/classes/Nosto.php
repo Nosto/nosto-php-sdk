@@ -117,8 +117,8 @@ class Nosto
     public static function throwHttpException($message, NostoHttpRequest $request, NostoHttpResponse $response)
     {
         $message .= sprintf(' Error: %s.', $response->getCode());
-        $message .= sprintf(' Request: %s.', $request->getContent());
-        $message .= sprintf(' Response: %s.', $response->getResult());
+        $message .= sprintf(' Request: %s.', $request);
+        $message .= sprintf(' Response: %s.', $response);
         throw new NostoHttpException($message, $response->getCode());
     }
 
