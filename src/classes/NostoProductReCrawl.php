@@ -104,7 +104,7 @@ class NostoProductReCrawl
         $request->setAuthBasic('', $token->value);
         $response = $request->post(json_encode($payload));
         if ($response->getCode() !== 200) {
-            throw new NostoException('Failed to send product re-crawl to Nosto (Error '.$response->getCode().').', $response->getCode());
+            Nosto::throwHttpException('Failed to send product re-crawl to Nosto.', $request, $response);
         }
         return true;
     }

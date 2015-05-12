@@ -83,7 +83,7 @@ class NostoOperationProduct
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPSERT);
         $response = $request->post($this->getCollectionAsJson());
         if ($response->getCode() !== 200) {
-            throw new NostoException(sprintf('Failed to create Nosto product(s) (Error %s).', $response->getCode()), $response->getCode());
+            Nosto::throwHttpException('Failed to create Nosto product(s).', $request, $response);
         }
         return true;
     }
@@ -100,7 +100,7 @@ class NostoOperationProduct
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPSERT);
         $response = $request->post($this->getCollectionAsJson());
         if ($response->getCode() !== 200) {
-            throw new NostoException(sprintf('Failed to update Nosto product(s) (Error %s).', $response->getCode()), $response->getCode());
+            Nosto::throwHttpException('Failed to update Nosto product(s).', $request, $response);
         }
         return true;
     }
@@ -117,7 +117,7 @@ class NostoOperationProduct
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_DISCONTINUE);
         $response = $request->post($this->getCollectionIdsAsJson());
         if ($response->getCode() !== 200) {
-            throw new NostoException(sprintf('Failed to delete Nosto product(s) (Error %s).', $response->getCode()), $response->getCode());
+            Nosto::throwHttpException('Failed to delete Nosto product(s).', $request, $response);
         }
         return true;
     }
@@ -177,8 +177,12 @@ class NostoOperationProduct
     protected function getCollectionAsJson()
     {
         $data = array();
+        $validator = new NostoModelValidator();
         foreach ($this->collection->getArrayCopy() as $item) {
-            $data[] = $this->getProductAsArray($item);
+            /** @var NostoProductInterface|NostoValidatableModelInterface $item */
+            if ($validator->validate($item)) {
+                $data[] = $this->getProductAsArray($item);
+            }
         }
         if (empty($data)) {
             throw new NostoException('No products found in collection.');
@@ -197,7 +201,10 @@ class NostoOperationProduct
         $data = array();
         foreach ($this->collection->getArrayCopy() as $item) {
             /** @var NostoProductInterface $item */
-            $data[] = (int)$item->getProductId();
+            $productId = (int)$item->getProductId();
+            if ($productId > 0) {
+                $data[] = $productId;
+            }
         }
         if (empty($data)) {
             throw new NostoException('No products found in collection.');

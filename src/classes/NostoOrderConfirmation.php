@@ -90,7 +90,7 @@ class NostoOrderConfirmation
         }
         $response = $request->post(json_encode($orderData));
         if ($response->getCode() !== 200) {
-            throw new NostoException('Failed to send order confirmation to Nosto (Error '.$response->getCode().').', $response->getCode());
+            Nosto::throwHttpException('Failed to send order confirmation to Nosto.', $request, $response);
         }
         return true;
     }
