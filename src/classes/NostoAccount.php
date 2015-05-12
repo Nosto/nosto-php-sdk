@@ -83,7 +83,7 @@ class NostoAccount implements NostoAccountInterface
         $response = $request->post(json_encode($params));
 
         if ($response->getCode() !== 200) {
-            throw new NostoException('Nosto account could not be created (Error '.$response->getCode().').', $response->getCode());
+            Nosto::throwHttpException('Nosto account could not be created.', $request, $response);
         }
 
         $account = new self;
@@ -116,7 +116,7 @@ class NostoAccount implements NostoAccountInterface
         $result = $response->getJsonResult(true);
 
         if ($response->getCode() !== 200) {
-            throw new NostoException('Failed to sync account from Nosto (Error '.$response->getCode().').', $response->getCode());
+            Nosto::throwHttpException('Failed to sync account from Nosto.', $request, $response);
         }
         if (empty($result)) {
             throw new NostoException('Received invalid data from Nosto when trying to sync account');
@@ -147,7 +147,7 @@ class NostoAccount implements NostoAccountInterface
         $response = $request->post('');
 
         if ($response->getCode() !== 200) {
-            throw new NostoException('Failed to notify Nosto about deleted account (Error '.$response->getCode().').', $response->getCode());
+            Nosto::throwHttpException('Failed to notify Nosto about deleted account.', $request, $response);
         }
     }
 
@@ -227,7 +227,7 @@ class NostoAccount implements NostoAccountInterface
         $result = $response->getJsonResult();
 
         if ($response->getCode() !== 200) {
-            throw new NostoException('Unable to login employee to Nosto with SSO token (Error '.$response->getCode().').', $response->getCode());
+            Nosto::throwHttpException('Unable to login employee to Nosto with SSO token.', $request, $response);
         }
         if (empty($result->login_url)) {
             throw new NostoException('No "login_url" returned when logging in employee to Nosto');

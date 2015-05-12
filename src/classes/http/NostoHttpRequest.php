@@ -59,6 +59,11 @@ class NostoHttpRequest
     protected $headers = array();
 
     /**
+     * @var string the request content (populated in post() and put() methods).
+     */
+    protected $content = '';
+
+    /**
      * @var array list of optional query params that are added to the request url.
      */
     protected $queryParams = array();
@@ -131,6 +136,18 @@ class NostoHttpRequest
     public function getHeaders()
     {
         return $this->headers;
+    }
+
+    /**
+     * Returns the request body content.
+     *
+     * Will only be set on POST and PUT requests.
+     *
+     * @return string the request content.
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 
     /**
@@ -331,6 +348,7 @@ class NostoHttpRequest
      */
     public function post($content)
     {
+        $this->content = $content;
         $url = $this->url;
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);
@@ -352,6 +370,7 @@ class NostoHttpRequest
      */
     public function put($content)
     {
+        $this->content = $content;
         $url = $this->url;
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);

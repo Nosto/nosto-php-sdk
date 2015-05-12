@@ -129,7 +129,7 @@ class NostoOAuthClient
         $result = $response->getJsonResult(true);
 
         if ($response->getCode() !== 200) {
-            throw new NostoException('Failed to authenticate with code (Error '.$response->getCode().').', $response->getCode());
+            Nosto::throwHttpException('Failed to authenticate with code.', $request, $response);
         }
         if (empty($result['access_token'])) {
             throw new NostoException('No "access_token" returned after authenticating with code');
