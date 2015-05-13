@@ -43,6 +43,7 @@ require_once(dirname(__FILE__).'/interfaces/account/NostoAccountMetaDataOwnerInt
 require_once(dirname(__FILE__).'/interfaces/order/NostoOrderBuyerInterface.php');
 require_once(dirname(__FILE__).'/interfaces/order/NostoOrderInterface.php');
 require_once(dirname(__FILE__).'/interfaces/order/NostoOrderPurchasedItemInterface.php');
+require_once(dirname(__FILE__).'/interfaces/order/NostoOrderStatusInterface.php');
 
 require_once(dirname(__FILE__).'/interfaces/NostoOAuthClientMetaDataInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoProductInterface.php');
