@@ -142,6 +142,7 @@ class NostoHttpResponse
         return serialize(array(
             'headers' => $this->headers,
             'body' => $this->result,
+			'error' => $this->message,
         ));
     }
 }
