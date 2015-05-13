@@ -113,17 +113,6 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 	}
 
 	/**
-	 * Tests the http request response status code header.
-	 */
-	public function testHttpRequestResponseStatusCodeHeader()
-	{
-		$response = new NostoHttpResponse();
-		$response->setHeaders(array(0 => 'HTTP/1.1 404 Not Found'));
-		$this->assertEquals(404, $response->getCode());
-		$this->assertEquals('HTTP/1.1 404 Not Found', $response->getRawStatus());
-	}
-
-	/**
 	 * Tests the http request response result.
 	 */
 	public function testHttpRequestResponseResult()
