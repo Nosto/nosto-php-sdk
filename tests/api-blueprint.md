@@ -129,6 +129,8 @@ Order related resources
 
         {
             "order_number": 1,
+            "order_status_code": "complete",
+            "order_status_label": "Complete",
             "buyer": {
                 "first_name": "James",
                 "last_name": "Kirk",
@@ -136,7 +138,6 @@ Order related resources
             },
             "created_at": "2014-12-12",
             "payment_provider": "test-gateway [1.0.0]",
-            "payment_status": "complete",
             "purchased_items": [
                 {
                     "product_id": 1,
@@ -164,6 +165,8 @@ Order related resources
 
         {
             "order_number": 1,
+            "order_status_code": "complete",
+            "order_status_label": "Complete",
             "buyer": {
                 "first_name": "James",
                 "last_name": "Kirk",
@@ -171,7 +174,6 @@ Order related resources
             },
             "created_at": "2014-12-12",
             "payment_provider": "test-gateway [1.0.0]",
-            "payment_status": "complete",
             "purchased_items": [
                 {
                     "product_id": 1,

@@ -34,43 +34,22 @@
  */
 
 /**
- * Order collection for historical data exports.
- * Supports only items implementing "NostoOrderInterface".
+ * Interface for order status meta data.
+ * This is used by the NostoOrderInterface meta data model when sending order confirmation API requests.
  */
-class NostoExportOrderCollection extends NostoOrderCollection implements NostoExportCollectionInterface
+interface NostoOrderStatusInterface
 {
     /**
-     * @inheritdoc
+     * Returns the order status code.
+     *
+     * @return string the code.
      */
-    public function getJson()
-    {
-        $array = array();
-        /** @var NostoOrderInterface $item */
-        foreach ($this->getArrayCopy() as $item) {
-            $data = array(
-                'order_number' => $item->getOrderNumber(),
-                'order_status_code' => $item->getOrderStatus()->getCode(),
-                'order_status_label' => $item->getOrderStatus()->getLabel(),
-                'created_at' => Nosto::helper('date')->format($item->getCreatedDate()),
-                'buyer' => array(
-                    'first_name' => $item->getBuyerInfo()->getFirstName(),
-                    'last_name' => $item->getBuyerInfo()->getLastName(),
-                    'email' => $item->getBuyerInfo()->getEmail(),
-                ),
-				'payment_provider' => $item->getPaymentProvider(),
-                'purchased_items' => array(),
-            );
-            foreach ($item->getPurchasedItems() as $orderItem) {
-                $data['purchased_items'][] = array(
-                    'product_id' => $orderItem->getProductId(),
-                    'quantity' => (int)$orderItem->getQuantity(),
-                    'name' => $orderItem->getName(),
-                    'unit_price' => Nosto::helper('price')->format($orderItem->getUnitPrice()),
-                    'price_currency_code' => strtoupper($orderItem->getCurrencyCode()),
-                );
-            }
-            $array[] = $data;
-        }
-        return json_encode($array);
-    }
+    public function getCode();
+
+    /**
+     * Returns the order status label.
+     *
+     * @return string the label.
+     */
+    public function getLabel();
 }
