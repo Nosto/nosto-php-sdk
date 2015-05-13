@@ -2,6 +2,7 @@
 
 require_once(dirname(__FILE__) . '/../_support/NostoOrderBuyer.php');
 require_once(dirname(__FILE__) . '/../_support/NostoOrderPurchasedItem.php');
+require_once(dirname(__FILE__) . '/../_support/NostoOrderStatus.php');
 require_once(dirname(__FILE__) . '/../_support/NostoOrder.php');
 
 class OrderConfirmationTest extends \Codeception\TestCase\Test
