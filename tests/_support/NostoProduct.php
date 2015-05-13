@@ -1,6 +1,6 @@
 <?php
 
-class NostoProduct implements NostoProductInterface
+class NostoProduct implements NostoProductInterface, NostoValidatableModelInterface
 {
 	public function getUrl()
 	{
@@ -57,5 +57,11 @@ class NostoProduct implements NostoProductInterface
 	public function getDatePublished()
 	{
 		return '2013-01-05';
+	}
+	public function getValidationRules()
+	{
+		return array(
+			array(array('url', 'productId', 'name', 'imageUrl', 'price', 'listPrice', 'currencyCode', 'availability'), 'required')
+		);
 	}
 }

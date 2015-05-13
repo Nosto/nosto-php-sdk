@@ -14,10 +14,6 @@ class NostoOrder implements NostoOrderInterface
 	{
 		return 'test-gateway [1.0.0]';
 	}
-	public function getPaymentStatus()
-	{
-		return 'complete';
-	}
 	public function getBuyerInfo()
 	{
 		return new NostoOrderBuyer();
@@ -25,5 +21,9 @@ class NostoOrder implements NostoOrderInterface
 	public function getPurchasedItems()
 	{
 		return array(new NostoOrderPurchasedItem());
+	}
+	public function getOrderStatus()
+	{
+		return new NostoOrderStatus();
 	}
 }

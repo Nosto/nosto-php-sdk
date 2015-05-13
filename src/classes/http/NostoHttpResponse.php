@@ -53,15 +53,31 @@ class NostoHttpResponse
      */
     protected $message;
 
-    /**
-     * Setter for the request response data.
-     *
-     * @param mixed $result the response data of the request.
-     */
-    public function setResult($result)
-    {
-        $this->result = $result;
-    }
+	/**
+	 * @var int runtime cache for the http response code.
+	 */
+	private $_code;
+
+	/**
+	 * Constructor.
+	 * Creates and populates the response object.
+	 *
+	 * @param array $headers the response headers.
+	 * @param string $body the response body.
+	 * @param string $error optional error message.
+	 */
+	public function __construct($headers, $body, $error = null)
+	{
+		if (!empty($headers) && is_array($headers)) {
+			$this->headers = $headers;
+		}
+		if (!empty($body) && is_string($body)) {
+			$this->result = $body;
+		}
+		if (!empty($error) && is_string($error)) {
+			$this->message = $error;
+		}
+	}
 
     /**
      * Getter for the request response data.
@@ -71,26 +87,6 @@ class NostoHttpResponse
     public function getResult()
     {
         return $this->result;
-    }
-
-    /**
-     * Setter for the error message of the request.
-     *
-     * @param string $message the message.
-     */
-    public function setMessage($message)
-    {
-        $this->message = $message;
-    }
-
-    /**
-     * Getter for the error message of the request.
-     *
-     * @return string the message.
-     */
-    public function getMessage()
-    {
-        return $this->message;
     }
 
     /**
@@ -104,38 +100,37 @@ class NostoHttpResponse
         return json_decode($this->result, $assoc);
     }
 
-    /**
-     * Setter for the request response headers.
-     *
-     * @param array $headers the headers,
-     */
-    public function setHeaders($headers)
-    {
-        $this->headers = $headers;
-    }
+	/**
+	 * Getter for the error message of the request.
+	 *
+	 * @return string the message.
+	 */
+	public function getMessage()
+	{
+		return $this->message;
+	}
 
     /**
-     * Returns the http request response code.
+     * Returns the `last` http response code.
      *
      * @return int the http code or 0 if not set.
      */
     public function getCode()
     {
-        $matches = array();
-        if (isset($this->headers) && isset($this->headers[0])) {
-            preg_match('|HTTP/\d\.\d\s+(\d+)\s+.*|', $this->headers[0], $matches);
-        }
-        return isset($matches[1]) ? (int)$matches[1] : 0;
-    }
-
-    /**
-     * Returns the raw http request response status string.
-     *
-     * @return string the status string or empty if not set.
-     */
-    public function getRawStatus()
-    {
-        return (isset($this->headers) && isset($this->headers[0])) ? $this->headers[0] : '';
+		if (is_null($this->_code)) {
+			$code = 0;
+			if (!empty($this->headers)) {
+				foreach ($this->headers as $header) {
+					$matches = array();
+					preg_match('|HTTP/\d\.\d\s+(\d+)\s+.*|', $header, $matches);
+					if (isset($matches[1])) {
+						$code = (int)$matches[1];
+					}
+				}
+			}
+			$this->_code = $code;
+		}
+		return $this->_code;
     }
 
     /**
@@ -147,6 +142,7 @@ class NostoHttpResponse
         return serialize(array(
             'headers' => $this->headers,
             'body' => $this->result,
+			'error' => $this->message,
         ));
     }
 }

@@ -113,23 +113,11 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 	}
 
 	/**
-	 * Tests the http request response status code header.
-	 */
-	public function testHttpRequestResponseStatusCodeHeader()
-	{
-		$response = new NostoHttpResponse();
-		$response->setHeaders(array(0 => 'HTTP/1.1 404 Not Found'));
-		$this->assertEquals(404, $response->getCode());
-		$this->assertEquals('HTTP/1.1 404 Not Found', $response->getRawStatus());
-	}
-
-	/**
 	 * Tests the http request response result.
 	 */
 	public function testHttpRequestResponseResult()
 	{
-		$response = new NostoHttpResponse();
-		$response->setResult(json_encode(array('test' => true)));
+		$response = new NostoHttpResponse(array(), json_encode(array('test' => true)));
 		$this->assertEquals('{"test":true}', $response->getResult());
 		$result = $response->getJsonResult(true);
 		$this->assertArrayHasKey('test', $result);
@@ -141,8 +129,7 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 	 */
 	public function testHttpRequestResponseErrorMessage()
 	{
-		$response = new NostoHttpResponse();
-		$response->setMessage('error');
+		$response = new NostoHttpResponse(array(), '', 'error');
 		$this->assertEquals('error', $response->getMessage());
 	}
 
