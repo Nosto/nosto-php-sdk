@@ -117,8 +117,7 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 	 */
 	public function testHttpRequestResponseResult()
 	{
-		$response = new NostoHttpResponse();
-		$response->setResult(json_encode(array('test' => true)));
+		$response = new NostoHttpResponse(array(), json_encode(array('test' => true)));
 		$this->assertEquals('{"test":true}', $response->getResult());
 		$result = $response->getJsonResult(true);
 		$this->assertArrayHasKey('test', $result);
@@ -130,8 +129,7 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 	 */
 	public function testHttpRequestResponseErrorMessage()
 	{
-		$response = new NostoHttpResponse();
-		$response->setMessage('error');
+		$response = new NostoHttpResponse(array(), '', 'error');
 		$this->assertEquals('error', $response->getMessage());
 	}
 
