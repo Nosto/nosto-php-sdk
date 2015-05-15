@@ -64,4 +64,12 @@ class NostoProduct implements NostoProductInterface, NostoValidatableModelInterf
 			array(array('url', 'productId', 'name', 'imageUrl', 'price', 'listPrice', 'currencyCode', 'availability'), 'required')
 		);
 	}
+	public function __get($name)
+	{
+		$getter = 'get'.$name;
+		if (method_exists($this, $getter)) {
+			return $this->{$getter}();
+		}
+		throw new Exception(sprintf('Property `%s.%s` is not defined.', get_class($this), $name));
+	}
 }
