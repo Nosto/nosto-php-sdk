@@ -73,17 +73,10 @@ class NostoModelValidator
     protected function validateRequired(NostoValidatableModelInterface $model, array $properties)
     {
         foreach ($properties as $property) {
-            // Prefer property getter if available.
-            // Strip any "_" character at beginning of property name.
-            $getter = 'get'.trim($property, '_');
-            if (method_exists($model, $getter)) {
-                $value = $model->{$getter}();
-                if (empty($value)) {
-                    return false;
-                }
-            } elseif (empty($model->{$property})) {
-                return false;
-            }
+			$value = $model->{$property};
+			if (empty($value)) {
+				return false;
+			}
         }
         return true;
     }
