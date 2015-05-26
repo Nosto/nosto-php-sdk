@@ -153,7 +153,7 @@ class NostoOperationProduct
     {
         return array(
             'url' => $product->getUrl(),
-            'product_id' => (int)$product->getProductId(),
+            'product_id' => $product->getProductId(),
             'name' => $product->getName(),
             'image_url' => $product->getImageUrl(),
             'price' => Nosto::helper('price')->format($product->getPrice()),
@@ -201,10 +201,7 @@ class NostoOperationProduct
         $data = array();
         foreach ($this->collection->getArrayCopy() as $item) {
             /** @var NostoProductInterface $item */
-            $productId = (int)$item->getProductId();
-            if ($productId > 0) {
-                $data[] = $productId;
-            }
+			$data[] = $item->getProductId();
         }
         if (empty($data)) {
             throw new NostoException('No products found in collection.');
