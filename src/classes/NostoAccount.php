@@ -36,17 +36,39 @@
 /**
  * Nosto account class for handling account related actions like, creation, OAuth2 syncing and SSO to Nosto.
  */
-class NostoAccount implements NostoAccountInterface
+class NostoAccount extends NostoObject implements NostoAccountInterface, NostoValidatableInterface
 {
     /**
      * @var string the name of the Nosto account.
      */
-    public $name;
+    protected $name;
 
     /**
      * @var NostoApiToken[] the Nosto API tokens associated with this account.
      */
-    public $tokens = array();
+    protected $tokens = array();
+
+	/**
+	 * Constructor.
+	 * Create a new account object with given name.
+	 *
+	 * @param $name
+	 */
+	public function __construct($name)
+	{
+		$this->name = $name;
+		$this->validate();
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getValidationRules()
+	{
+		return array(
+			array(array('name'), 'required')
+		);
+	}
 
     /**
      * @inheritdoc
@@ -86,8 +108,7 @@ class NostoAccount implements NostoAccountInterface
             Nosto::throwHttpException('Nosto account could not be created.', $request, $response);
         }
 
-        $account = new self;
-        $account->name = $meta->getPlatform().'-'.$meta->getName();
+        $account = new self($meta->getPlatform().'-'.$meta->getName());
         $account->tokens = NostoApiToken::parseTokens($response->getJsonResult(true), '', '_token');
         return $account;
     }
@@ -122,8 +143,7 @@ class NostoAccount implements NostoAccountInterface
             throw new NostoException('Received invalid data from Nosto when trying to sync account');
         }
 
-        $account = new self;
-        $account->name = $token->merchantName;
+        $account = new self($token->merchantName);
         $account->tokens = NostoApiToken::parseTokens($result, 'api_');
         if (!$account->isConnectedToNosto()) {
             throw new NostoException('Failed to sync all account details from Nosto');
@@ -143,7 +163,7 @@ class NostoAccount implements NostoAccountInterface
 
         $request = new NostoHttpRequest();
         $request->setUrl(NostoHttpRequest::$baseUrl.NostoHttpRequest::PATH_ACCOUNT_DELETED);
-        $request->setAuthBasic('', $token->value);
+        $request->setAuthBasic('', $token->getValue());
         $response = $request->post('');
 
         if ($response->getCode() !== 200) {
@@ -151,13 +171,25 @@ class NostoAccount implements NostoAccountInterface
         }
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getName()
+	/**
+	 * Returns the account name.
+	 *
+	 * @return string the name.
+	 */
+	public function getName()
     {
         return $this->name;
     }
+
+	/**
+	 * Returns the account tokens.
+	 *
+	 * @return NostoApiToken[] the tokens.
+	 */
+	public function getTokens()
+	{
+		return $this->tokens;
+	}
 
     /**
      * @inheritdoc
@@ -169,7 +201,7 @@ class NostoAccount implements NostoAccountInterface
         }
         $countTokens = count($this->tokens);
         $foundTokens = 0;
-        foreach (NostoApiToken::$tokenNames as $name) {
+        foreach (NostoApiToken::getApiTokenNames() as $name) {
             foreach ($this->tokens as $token) {
                 if ($token->name === $name) {
                     $foundTokens++;
@@ -180,13 +212,23 @@ class NostoAccount implements NostoAccountInterface
         return ($countTokens === $foundTokens);
     }
 
+	/**
+	 * Adds an API token to the account.
+	 *
+	 * @param NostoApiToken $token the token.
+	 */
+	public function addApiToken(NostoApiToken $token)
+	{
+		$this->tokens[] = $token;
+	}
+
     /**
      * @inheritdoc
      */
     public function getApiToken($name)
     {
         foreach ($this->tokens as $token) {
-            if ($token->name === $name) {
+            if ($token->getName() === $name) {
                 return $token;
             }
         }
@@ -215,7 +257,7 @@ class NostoAccount implements NostoAccountInterface
         $request->setPath(NostoApiRequest::PATH_SSO_AUTH);
         $request->setReplaceParams(array('{email}' => $meta->getEmail()));
         $request->setContentType('application/json');
-        $request->setAuthBasic('', $token->value);
+        $request->setAuthBasic('', $token->getValue());
         $response = $request->post(
             json_encode(
                 array(
@@ -235,4 +277,19 @@ class NostoAccount implements NostoAccountInterface
 
         return $result->login_url;
     }
+
+	/**
+	 * Validates the account attributes.
+	 *
+	 * @throws NostoException if any attribute is invalid.
+	 */
+	protected function validate()
+	{
+		$validator = new NostoValidator($this);
+		if (!$validator->validate()) {
+			foreach ($validator->getErrors() as $errors) {
+				throw new NostoException(sprintf('Invalid Nosto account. %s', $errors[0]));
+			}
+		}
+	}
 }

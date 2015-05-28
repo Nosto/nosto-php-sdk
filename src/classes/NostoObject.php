@@ -34,18 +34,25 @@
  */
 
 /**
- * Interface for all models that support data validation.
+ * Base class for Nosto objects to share basic functionality.
  */
-interface NostoValidatableModelInterface
+abstract class NostoObject
 {
-    /**
-     * Returns an array of validator rules for the model properties.
-     *
-     * Example:
-     *
-     * return array(array('url', 'productId'), 'required');
-     *
-     * @return mixed
-     */
-    public function getValidationRules();
+	/**
+	 * Returns a protected/private property value by invoking it's public getter.
+	 *
+	 * The getter names are assumed to be the property name in camel case with preceding word "get".
+	 *
+	 * @param string $name the property name.
+	 * @return mixed the property value.
+	 * @throws NostoException if public getter does not exist.
+	 */
+	public function __get($name)
+	{
+		$getter = 'get'.str_replace('_', '', $name);
+		if (method_exists($this, $getter)) {
+			return $this->{$getter}();
+		}
+		throw new NostoException(sprintf('Property `%s.%s` is not defined.', get_class($this), $name));
+	}
 }

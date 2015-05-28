@@ -1,6 +1,6 @@
 <?php
 
-class NostoProduct implements NostoProductInterface, NostoValidatableModelInterface
+class NostoProduct implements NostoProductInterface, NostoValidatableInterface
 {
 	public function getUrl()
 	{

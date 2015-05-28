@@ -30,8 +30,7 @@ class OrderConfirmationTest extends \Codeception\TestCase\Test
 	protected function _before()
 	{
 		$this->order = new NostoOrder();
-		$this->account = new NostoAccount();
-		$this->account->name = 'platform-00000000';
+		$this->account = new NostoAccount('platform-00000000');
 	}
 
 	/**
