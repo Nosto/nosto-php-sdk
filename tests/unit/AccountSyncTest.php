@@ -29,21 +29,21 @@ class AccountSyncTest extends \Codeception\TestCase\Test
 
 		$this->specify('account was created', function() use ($account, $meta) {
 			$this->assertInstanceOf('NostoAccount', $account);
-			$this->assertEquals('platform-00000000', $account->name);
+			$this->assertEquals('platform-00000000', $account->getName());
 		});
 
 		$this->specify('account has api token sso', function() use ($account, $meta) {
 			$token = $account->getApiToken('sso');
 			$this->assertInstanceOf('NostoApiToken', $token);
-			$this->assertEquals('sso', $token->name);
-			$this->assertNotEmpty($token->value);
+			$this->assertEquals('sso', $token->getName());
+			$this->assertNotEmpty($token->getValue());
 		});
 
 		$this->specify('account has api token products', function() use ($account, $meta) {
 			$token = $account->getApiToken('products');
 			$this->assertInstanceOf('NostoApiToken', $token);
-			$this->assertEquals('products', $token->name);
-			$this->assertNotEmpty($token->value);
+			$this->assertEquals('products', $token->getName());
+			$this->assertNotEmpty($token->getValue());
 		});
 
 		$this->specify('account is connected to nosto', function() use ($account, $meta) {

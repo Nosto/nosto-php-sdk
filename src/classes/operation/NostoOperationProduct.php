@@ -71,6 +71,23 @@ class NostoOperationProduct
         $this->collection[] = $product;
     }
 
+	/**
+	 * Sends a POST request to create or update all the products currently in the collection.
+	 *
+	 * @return bool if the request was successful.
+	 * @throws NostoException on failure.
+	 */
+	public function upsert()
+	{
+		$request = $this->initApiRequest();
+		$request->setPath(NostoApiRequest::PATH_PRODUCTS_UPSERT);
+		$response = $request->post($this->getCollectionAsJson());
+		if ($response->getCode() !== 200) {
+			Nosto::throwHttpException('Failed to upsert Nosto product(s).', $request, $response);
+		}
+		return true;
+	}
+
     /**
      * Sends a POST request to create all the products currently in the collection.
      *
@@ -80,7 +97,7 @@ class NostoOperationProduct
     public function create()
     {
         $request = $this->initApiRequest();
-        $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPSERT);
+        $request->setPath(NostoApiRequest::PATH_PRODUCTS_CREATE);
         $response = $request->post($this->getCollectionAsJson());
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to create Nosto product(s).', $request, $response);
@@ -89,7 +106,7 @@ class NostoOperationProduct
     }
 
     /**
-     * Sends a POST request to update all the products currently in the collection.
+     * Sends a PUT request to update all the products currently in the collection.
      *
      * @return bool if the request was successful.
      * @throws NostoException on failure.
@@ -97,8 +114,8 @@ class NostoOperationProduct
     public function update()
     {
         $request = $this->initApiRequest();
-        $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPSERT);
-        $response = $request->post($this->getCollectionAsJson());
+        $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPDATE);
+        $response = $request->put($this->getCollectionAsJson());
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to update Nosto product(s).', $request, $response);
         }
@@ -139,7 +156,7 @@ class NostoOperationProduct
 
         $request = new NostoApiRequest();
         $request->setContentType('application/json');
-        $request->setAuthBasic('', $token->value);
+        $request->setAuthBasic('', $token->getValue());
         return $request;
     }
 
@@ -177,10 +194,10 @@ class NostoOperationProduct
     protected function getCollectionAsJson()
     {
         $data = array();
-        $validator = new NostoModelValidator();
         foreach ($this->collection->getArrayCopy() as $item) {
-            /** @var NostoProductInterface|NostoValidatableModelInterface $item */
-            if ($validator->validate($item)) {
+            /** @var NostoProductInterface|NostoValidatableInterface $item */
+			$validator = new NostoValidator($item);
+            if ($validator->validate()) {
                 $data[] = $this->getProductAsArray($item);
             }
         }

@@ -16,8 +16,7 @@ class ProductReCrawlTest extends \Codeception\TestCase\Test
      */
     public function testSendingProductReCrawlWithoutApiToken()
     {
-        $account = new NostoAccount();
-        $account->name = 'platform-00000000';
+		$account = new NostoAccount('platform-00000000');
         $product = new NostoProduct();
 
         $this->setExpectedException('NostoException');
@@ -29,13 +28,10 @@ class ProductReCrawlTest extends \Codeception\TestCase\Test
 	 */
 	public function testSendingProductReCrawl()
     {
-		$account = new NostoAccount();
-		$account->name = 'platform-00000000';
+		$account = new NostoAccount('platform-00000000');
 		$product = new NostoProduct();
-		$token = new NostoApiToken();
-		$token->name = 'products';
-		$token->value = '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783';
-		$account->tokens[] = $token;
+		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+		$account->addApiToken($token);
 
 		$result = NostoProductReCrawl::send($product, $account);
 
@@ -49,8 +45,7 @@ class ProductReCrawlTest extends \Codeception\TestCase\Test
      */
     public function testSendingBatchProductReCrawlWithoutApiToken()
     {
-        $account = new NostoAccount();
-        $account->name = 'platform-00000000';
+		$account = new NostoAccount('platform-00000000');
         $product = new NostoProduct();
         $collection = new NostoExportProductCollection();
         $collection[] = $product;
@@ -64,15 +59,12 @@ class ProductReCrawlTest extends \Codeception\TestCase\Test
      */
     public function testSendingBatchProductReCrawl()
     {
-        $account = new NostoAccount();
-        $account->name = 'platform-00000000';
+		$account = new NostoAccount('platform-00000000');
         $product = new NostoProduct();
         $collection = new NostoExportProductCollection();
         $collection[] = $product;
-        $token = new NostoApiToken();
-        $token->name = 'products';
-        $token->value = '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783';
-        $account->tokens[] = $token;
+		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+		$account->addApiToken($token);
 
         $result = NostoProductReCrawl::sendBatch($collection, $account);
 

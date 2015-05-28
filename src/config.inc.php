@@ -48,10 +48,11 @@ require_once(dirname(__FILE__).'/interfaces/order/NostoOrderStatusInterface.php'
 require_once(dirname(__FILE__).'/interfaces/NostoOAuthClientMetaDataInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoProductInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoExportCollectionInterface.php');
-require_once(dirname(__FILE__).'/interfaces/NostoValidatableModelInterface.php');
+require_once(dirname(__FILE__).'/interfaces/NostoValidatableInterface.php');
 
 // Classes
 require_once(dirname(__FILE__).'/classes/http/NostoHttpRequest.php'); // Must be loaded before `NostoApiRequest`
+require_once(dirname(__FILE__).'/classes/NostoObject.php');
 
 require_once(dirname(__FILE__).'/classes/api/NostoApiRequest.php');
 require_once(dirname(__FILE__).'/classes/api/NostoApiToken.php');
@@ -89,7 +90,7 @@ require_once(dirname(__FILE__).'/classes/NostoDotEnv.php');
 require_once(dirname(__FILE__).'/classes/NostoMessage.php');
 require_once(dirname(__FILE__).'/classes/NostoOrderConfirmation.php');
 require_once(dirname(__FILE__).'/classes/NostoProductReCrawl.php');
-require_once(dirname(__FILE__).'/classes/NostoModelValidator.php');
+require_once(dirname(__FILE__).'/classes/NostoValidator.php');
 
 // Libs
 require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptBase.php');

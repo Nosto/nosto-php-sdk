@@ -34,27 +34,48 @@
  */
 
 /**
- * Model validator util that is used to validate `validatable` models.
+ * Validator util that is used to validate `validatable` objects.
  */
-class NostoModelValidator
+class NostoValidator
 {
+	/**
+	 * @var NostoValidatableInterface the object to validate.
+	 */
+	private $object;
+
+	/**
+	 * @var array map of validation errors per attribute.
+	 */
+	private $_errors = array();
+
+	/**
+	 * Constructor.
+	 * Creates a new validator for the object to validate.
+	 *
+	 * @param NostoValidatableInterface $object the object to validate.
+	 */
+	public function __construct(NostoValidatableInterface $object)
+	{
+		$this->object = $object;
+	}
+
     /**
-     * Validates the `validatable` model based opn it's validation rules.
+     * Validates the `validatable` object based on it's validation rules.
      *
-     * @param NostoValidatableModelInterface $model the model to validate.
-     * @return bool true if the model is valid, false otherwise.
+     * @return bool true if the object is valid, false otherwise.
      * @throws NostoException if the rule validator is not found.
      */
-    public function validate(NostoValidatableModelInterface $model)
+    public function validate()
     {
-        foreach ($model->getValidationRules() as $rule) {
+        foreach ($this->object->getValidationRules() as $rule) {
             if (isset($rule[0], $rule[1])) {
                 $properties = $rule[0];
                 $validator = 'validate'.$rule[1];
                 if (!method_exists($this, $validator)) {
                     throw new NostoException(sprintf('Nosto validator "%s" does not exist.', $validator));
                 }
-                $isValid = call_user_func(array($this, $validator), $model, $properties);
+				$params = array_merge(array($properties), array_slice($rule, 2));
+                $isValid = call_user_func_array(array($this, $validator), $params);
                 if (!$isValid) {
                     return false;
                 }
@@ -63,21 +84,75 @@ class NostoModelValidator
         return true;
     }
 
+	/**
+	 * Returns if the object contains validation errors.
+	 *
+	 * @return bool true if contains errors, false otherwise.
+	 */
+	public function hasErrors()
+	{
+		return (bool)count($this->_errors);
+	}
+
+	/**
+	 * Returns the validations errors per attribute.
+	 *
+	 * @return array the list of error messages.
+	 */
+	public function getErrors()
+	{
+		return $this->_errors;
+	}
+
+	/**
+	 * Adds a new validation error message for the attribute.
+	 *
+	 * @param string $attribute the attribute name.
+	 * @param string $message the error message.
+	 */
+	protected function addError($attribute, $message)
+	{
+		if (!isset($this->_errors[$attribute])) {
+			$this->_errors[$attribute] = array();
+		}
+		$this->_errors[$attribute][] = $message;
+	}
+
     /**
      * Validates that all the given properties are NOT empty in this instance.
      *
-     * @param NostoValidatableModelInterface $model the model to validate the properties on.
      * @param array $properties the list of property names to validate.
      * @return bool true if all are valid, false otherwise.
      */
-    protected function validateRequired(NostoValidatableModelInterface $model, array $properties)
+    protected function validateRequired(array $properties)
     {
         foreach ($properties as $property) {
-			$value = $model->{$property};
+			$value = $this->object->{$property};
 			if (empty($value)) {
+				$this->addError($property, sprintf('Property "%s" must not be empty.', $property));
 				return false;
 			}
         }
         return true;
     }
+
+	/**
+	 * Validates that all given properties are IN the list of supplied values.
+	 *
+	 * @param array $properties the list of properties to validate.
+	 * @param array $values the list of valid values the properties must
+	 * @return bool true if all are valid, false otherwise.
+	 */
+	protected function validateIn(array $properties, array $values)
+	{
+		$supported = implode('", "', $values);
+		foreach ($properties as $property) {
+			$value = $this->object->{$property};
+			if (!in_array($value, $values)) {
+				$this->addError($property, sprintf('Property "%s" must be one of the following: "%s".', $property, $supported));
+				return false;
+			}
+		}
+		return true;
+	}
 }
