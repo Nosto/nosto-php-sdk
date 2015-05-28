@@ -423,10 +423,12 @@ class NostoHttpRequest
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);
         }
-        return serialize(array(
-            'url' => $url,
-            'headers' => $this->headers,
-            'body' => $this->content,
-        ));
+        return serialize(
+            array(
+                'url' => $url,
+                'headers' => $this->headers,
+                'body' => $this->content,
+            )
+        );
     }
 }

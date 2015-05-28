@@ -57,7 +57,7 @@ class NostoExportOrderCollection extends NostoOrderCollection implements NostoEx
                     'last_name' => $item->getBuyerInfo()->getLastName(),
                     'email' => $item->getBuyerInfo()->getEmail(),
                 ),
-				'payment_provider' => $item->getPaymentProvider(),
+                'payment_provider' => $item->getPaymentProvider(),
                 'purchased_items' => array(),
             );
             foreach ($item->getPurchasedItems() as $orderItem) {

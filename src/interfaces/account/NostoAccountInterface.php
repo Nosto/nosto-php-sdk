@@ -91,7 +91,7 @@ interface NostoAccountInterface
      * Gets the secured iframe url for the account configuration page.
      *
      * @param NostoAccountMetaDataIframeInterface $meta the iframe meta data to use for fetching the secured url.
-	 * @param array $params optional extra params to add to the iframe url.
+     * @param array $params optional extra params to add to the iframe url.
      * @return bool|string the url or false if could not be fetched.
      */
     public function getIframeUrl(NostoAccountMetaDataIframeInterface $meta, array $params = array());

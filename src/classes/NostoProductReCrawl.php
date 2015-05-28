@@ -48,14 +48,17 @@ class NostoProductReCrawl
      */
     public static function send(NostoProductInterface $product, NostoAccountInterface $account)
     {
-        return self::sendRequest($account, array(
-            'products' => array(
-                array(
-                    'product_id' => $product->getProductId(),
-                    'url' => $product->getUrl(),
-                )
-            ),
-        ));
+        return self::sendRequest(
+            $account,
+            array(
+                'products' => array(
+                    array(
+                        'product_id' => $product->getProductId(),
+                        'url' => $product->getUrl(),
+                    )
+                ),
+            )
+        );
     }
 
     /**

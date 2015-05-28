@@ -130,11 +130,11 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
         $ch = curl_init();
         curl_setopt_array($ch, $curlOptions);
         $result = curl_exec($ch);
-		$headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-		$headers = explode("\r\n", substr($result, 0, $headerSize));
-		$body = substr($result, $headerSize);
-		$message = curl_error($ch);
-		curl_close($ch);
+        $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $headers = explode("\r\n", substr($result, 0, $headerSize));
+        $body = substr($result, $headerSize);
+        $message = curl_error($ch);
+        curl_close($ch);
         return new NostoHttpResponse($headers, $body, $message);
     }
 }
