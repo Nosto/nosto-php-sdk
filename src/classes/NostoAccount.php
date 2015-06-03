@@ -253,16 +253,21 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
             return false;
         }
 
-        $request = new NostoApiRequest();
-        $request->setPath(NostoApiRequest::PATH_SSO_AUTH);
-        $request->setReplaceParams(array('{email}' => $meta->getEmail()));
-        $request->setContentType('application/json');
+        $request = new NostoHttpRequest();
+        $request->setUrl(NostoHttpRequest::$baseUrl.NostoHttpRequest::PATH_SSO_AUTH);
+        $request->setReplaceParams(
+            array(
+                '{platform}' => $meta->getPlatform(),
+                '{email}' => $meta->getEmail(),
+            )
+        );
+        $request->setContentType('application/x-www-form-urlencoded');
         $request->setAuthBasic('', $token->getValue());
         $response = $request->post(
-            json_encode(
+            http_build_query(
                 array(
-                    'first_name' => $meta->getFirstName(),
-                    'last_name' => $meta->getLastName(),
+                    'fname' => $meta->getFirstName(),
+                    'lname' => $meta->getLastName(),
                 )
             )
         );
