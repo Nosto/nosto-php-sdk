@@ -41,7 +41,6 @@ class NostoApiRequest extends NostoHttpRequest
     const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
     const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
     const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_SSO_AUTH = '/users/sso/{email}';
     const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
     const PATH_PRODUCTS_CREATE = '/v1/products/create';
     const PATH_PRODUCTS_UPDATE = '/v1/products/update';

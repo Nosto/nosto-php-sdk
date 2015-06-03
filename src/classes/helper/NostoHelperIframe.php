@@ -38,7 +38,6 @@
  */
 class NostoHelperIframe extends NostoHelper
 {
-    const IFRAME_URI_MANAGE = '/hub/{platform}/{merchant}';
     const IFRAME_URI_INSTALL = '/hub/{platform}/install';
     const IFRAME_URI_UNINSTALL = '/hub/{platform}/uninstall';
 
@@ -81,16 +80,7 @@ class NostoHelperIframe extends NostoHelper
 
         if ($account !== null && $account->isConnectedToNosto()) {
             try {
-                $url = $account->ssoLogin($meta);
-                $url .= '?r='.urlencode(
-                        NostoHttpRequest::buildUri(
-                            self::IFRAME_URI_MANAGE.'?'.$queryParams,
-                            array(
-                                '{platform}' => $meta->getPlatform(),
-                                '{merchant}' => $account->name,
-                            )
-                        )
-                    );
+                $url = $account->ssoLogin($meta).'?'.$queryParams;
             } catch (NostoException $e) {
                 // If the SSO fails, we show a "remove account" page to the user in order to
                 // allow to remove Nosto and start over.

@@ -53,31 +53,31 @@ class NostoHttpResponse
      */
     protected $message;
 
-	/**
-	 * @var int runtime cache for the http response code.
-	 */
-	private $_code;
+    /**
+     * @var int runtime cache for the http response code.
+     */
+    private $_code;
 
-	/**
-	 * Constructor.
-	 * Creates and populates the response object.
-	 *
-	 * @param array $headers the response headers.
-	 * @param string $body the response body.
-	 * @param string $error optional error message.
-	 */
-	public function __construct($headers, $body, $error = null)
-	{
-		if (!empty($headers) && is_array($headers)) {
-			$this->headers = $headers;
-		}
-		if (!empty($body) && is_string($body)) {
-			$this->result = $body;
-		}
-		if (!empty($error) && is_string($error)) {
-			$this->message = $error;
-		}
-	}
+    /**
+     * Constructor.
+     * Creates and populates the response object.
+     *
+     * @param array $headers the response headers.
+     * @param string $body the response body.
+     * @param string $error optional error message.
+     */
+    public function __construct($headers, $body, $error = null)
+    {
+        if (!empty($headers) && is_array($headers)) {
+            $this->headers = $headers;
+        }
+        if (!empty($body) && is_string($body)) {
+            $this->result = $body;
+        }
+        if (!empty($error) && is_string($error)) {
+            $this->message = $error;
+        }
+    }
 
     /**
      * Getter for the request response data.
@@ -100,15 +100,15 @@ class NostoHttpResponse
         return json_decode($this->result, $assoc);
     }
 
-	/**
-	 * Getter for the error message of the request.
-	 *
-	 * @return string the message.
-	 */
-	public function getMessage()
-	{
-		return $this->message;
-	}
+    /**
+     * Getter for the error message of the request.
+     *
+     * @return string the message.
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
 
     /**
      * Returns the `last` http response code.
@@ -117,20 +117,20 @@ class NostoHttpResponse
      */
     public function getCode()
     {
-		if (is_null($this->_code)) {
-			$code = 0;
-			if (!empty($this->headers)) {
-				foreach ($this->headers as $header) {
-					$matches = array();
-					preg_match('|HTTP/\d\.\d\s+(\d+)\s+.*|', $header, $matches);
-					if (isset($matches[1])) {
-						$code = (int)$matches[1];
-					}
-				}
-			}
-			$this->_code = $code;
-		}
-		return $this->_code;
+        if (is_null($this->_code)) {
+            $code = 0;
+            if (!empty($this->headers)) {
+                foreach ($this->headers as $header) {
+                    $matches = array();
+                    preg_match('|HTTP/\d\.\d\s+(\d+)\s+.*|', $header, $matches);
+                    if (isset($matches[1])) {
+                        $code = (int)$matches[1];
+                    }
+                }
+            }
+            $this->_code = $code;
+        }
+        return $this->_code;
     }
 
     /**
@@ -139,10 +139,12 @@ class NostoHttpResponse
      */
     public function __toString()
     {
-        return serialize(array(
-            'headers' => $this->headers,
-            'body' => $this->result,
-			'error' => $this->message,
-        ));
+        return serialize(
+            array(
+                'headers' => $this->headers,
+                'body' => $this->result,
+                'error' => $this->message,
+            )
+        );
     }
 }

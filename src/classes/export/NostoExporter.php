@@ -53,7 +53,7 @@ class NostoExporter
         // Use the first 16 chars of the SSO token as secret for encryption.
         $token = $account->getApiToken('sso');
         if (!empty($token)) {
-			$tokenValue = $token->getValue();
+            $tokenValue = $token->getValue();
             $secret = substr($tokenValue, 0, 16);
             if (!empty($secret)) {
                 $iv = NostoCryptRandom::getRandomString(16);

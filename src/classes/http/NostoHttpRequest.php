@@ -42,6 +42,7 @@ class NostoHttpRequest
     const AUTH_BEARER = 'bearer';
 
     const PATH_ACCOUNT_DELETED = '/hub/uninstall';
+    const PATH_SSO_AUTH = '/hub/{platform}/load/{email}';
 
     /**
      * @var string base url for the nosto web hook requests.
@@ -423,10 +424,12 @@ class NostoHttpRequest
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);
         }
-        return serialize(array(
-            'url' => $url,
-            'headers' => $this->headers,
-            'body' => $this->content,
-        ));
+        return serialize(
+            array(
+                'url' => $url,
+                'headers' => $this->headers,
+                'body' => $this->content,
+            )
+        );
     }
 }

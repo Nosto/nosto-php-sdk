@@ -48,27 +48,27 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
      */
     protected $tokens = array();
 
-	/**
-	 * Constructor.
-	 * Create a new account object with given name.
-	 *
-	 * @param $name
-	 */
-	public function __construct($name)
-	{
-		$this->name = $name;
-		$this->validate();
-	}
+    /**
+     * Constructor.
+     * Create a new account object with given name.
+     *
+     * @param $name
+     */
+    public function __construct($name)
+    {
+        $this->name = $name;
+        $this->validate();
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getValidationRules()
-	{
-		return array(
-			array(array('name'), 'required')
-		);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getValidationRules()
+    {
+        return array(
+            array(array('name'), 'required')
+        );
+    }
 
     /**
      * @inheritdoc
@@ -171,25 +171,25 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
         }
     }
 
-	/**
-	 * Returns the account name.
-	 *
-	 * @return string the name.
-	 */
-	public function getName()
+    /**
+     * Returns the account name.
+     *
+     * @return string the name.
+     */
+    public function getName()
     {
         return $this->name;
     }
 
-	/**
-	 * Returns the account tokens.
-	 *
-	 * @return NostoApiToken[] the tokens.
-	 */
-	public function getTokens()
-	{
-		return $this->tokens;
-	}
+    /**
+     * Returns the account tokens.
+     *
+     * @return NostoApiToken[] the tokens.
+     */
+    public function getTokens()
+    {
+        return $this->tokens;
+    }
 
     /**
      * @inheritdoc
@@ -212,15 +212,15 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
         return ($countTokens === $foundTokens);
     }
 
-	/**
-	 * Adds an API token to the account.
-	 *
-	 * @param NostoApiToken $token the token.
-	 */
-	public function addApiToken(NostoApiToken $token)
-	{
-		$this->tokens[] = $token;
-	}
+    /**
+     * Adds an API token to the account.
+     *
+     * @param NostoApiToken $token the token.
+     */
+    public function addApiToken(NostoApiToken $token)
+    {
+        $this->tokens[] = $token;
+    }
 
     /**
      * @inheritdoc
@@ -253,16 +253,21 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
             return false;
         }
 
-        $request = new NostoApiRequest();
-        $request->setPath(NostoApiRequest::PATH_SSO_AUTH);
-        $request->setReplaceParams(array('{email}' => $meta->getEmail()));
-        $request->setContentType('application/json');
+        $request = new NostoHttpRequest();
+        $request->setUrl(NostoHttpRequest::$baseUrl.NostoHttpRequest::PATH_SSO_AUTH);
+        $request->setReplaceParams(
+            array(
+                '{platform}' => $meta->getPlatform(),
+                '{email}' => $meta->getEmail(),
+            )
+        );
+        $request->setContentType('application/x-www-form-urlencoded');
         $request->setAuthBasic('', $token->getValue());
         $response = $request->post(
-            json_encode(
+            http_build_query(
                 array(
-                    'first_name' => $meta->getFirstName(),
-                    'last_name' => $meta->getLastName(),
+                    'fname' => $meta->getFirstName(),
+                    'lname' => $meta->getLastName(),
                 )
             )
         );
@@ -278,18 +283,18 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
         return $result->login_url;
     }
 
-	/**
-	 * Validates the account attributes.
-	 *
-	 * @throws NostoException if any attribute is invalid.
-	 */
-	protected function validate()
-	{
-		$validator = new NostoValidator($this);
-		if (!$validator->validate()) {
-			foreach ($validator->getErrors() as $errors) {
-				throw new NostoException(sprintf('Invalid Nosto account. %s', $errors[0]));
-			}
-		}
-	}
+    /**
+     * Validates the account attributes.
+     *
+     * @throws NostoException if any attribute is invalid.
+     */
+    protected function validate()
+    {
+        $validator = new NostoValidator($this);
+        if (!$validator->validate()) {
+            foreach ($validator->getErrors() as $errors) {
+                throw new NostoException(sprintf('Invalid Nosto account. %s', $errors[0]));
+            }
+        }
+    }
 }

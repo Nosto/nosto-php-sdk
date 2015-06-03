@@ -71,22 +71,22 @@ class NostoOperationProduct
         $this->collection[] = $product;
     }
 
-	/**
-	 * Sends a POST request to create or update all the products currently in the collection.
-	 *
-	 * @return bool if the request was successful.
-	 * @throws NostoException on failure.
-	 */
-	public function upsert()
-	{
-		$request = $this->initApiRequest();
-		$request->setPath(NostoApiRequest::PATH_PRODUCTS_UPSERT);
-		$response = $request->post($this->getCollectionAsJson());
-		if ($response->getCode() !== 200) {
-			Nosto::throwHttpException('Failed to upsert Nosto product(s).', $request, $response);
-		}
-		return true;
-	}
+    /**
+     * Sends a POST request to create or update all the products currently in the collection.
+     *
+     * @return bool if the request was successful.
+     * @throws NostoException on failure.
+     */
+    public function upsert()
+    {
+        $request = $this->initApiRequest();
+        $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPSERT);
+        $response = $request->post($this->getCollectionAsJson());
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to upsert Nosto product(s).', $request, $response);
+        }
+        return true;
+    }
 
     /**
      * Sends a POST request to create all the products currently in the collection.
@@ -196,7 +196,7 @@ class NostoOperationProduct
         $data = array();
         foreach ($this->collection->getArrayCopy() as $item) {
             /** @var NostoProductInterface|NostoValidatableInterface $item */
-			$validator = new NostoValidator($item);
+            $validator = new NostoValidator($item);
             if ($validator->validate()) {
                 $data[] = $this->getProductAsArray($item);
             }
@@ -218,7 +218,7 @@ class NostoOperationProduct
         $data = array();
         foreach ($this->collection->getArrayCopy() as $item) {
             /** @var NostoProductInterface $item */
-			$data[] = $item->getProductId();
+            $data[] = $item->getProductId();
         }
         if (empty($data)) {
             throw new NostoException('No products found in collection.');

@@ -56,30 +56,30 @@ class NostoApiToken extends NostoObject implements NostoValidatableInterface
         'products'
     );
 
-	/**
-	 * Constructor.
-	 * Create a new token with name and value.
-	 *
-	 * @param string $name the token name (must be one of self::$tokenNames).
-	 * @param string $value the token value string.
-	 */
-	public function __construct($name, $value)
-	{
-		$this->name = $name;
-		$this->value = $value;
-		$this->validate();
-	}
+    /**
+     * Constructor.
+     * Create a new token with name and value.
+     *
+     * @param string $name the token name (must be one of self::$tokenNames).
+     * @param string $value the token value string.
+     */
+    public function __construct($name, $value)
+    {
+        $this->name = $name;
+        $this->value = $value;
+        $this->validate();
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getValidationRules()
-	{
-		return array(
-			array(array('name', 'value'), 'required'),
-			array(array('name'), 'in', self::$tokenNames)
-		);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getValidationRules()
+    {
+        return array(
+            array(array('name', 'value'), 'required'),
+            array(array('name'), 'in', self::$tokenNames)
+        );
+    }
 
     /**
      * Parses a list of token name=>value pairs and creates token instances of them.
@@ -111,38 +111,38 @@ class NostoApiToken extends NostoObject implements NostoValidatableInterface
         return self::$tokenNames;
     }
 
-	/**
-	 * Returns the token name.
-	 *
-	 * @return string the token name.
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
+    /**
+     * Returns the token name.
+     *
+     * @return string the token name.
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	/**
-	 * Returns the tokens value.
-	 *
-	 * @return string the token value.
-	 */
-	public function getValue()
-	{
-		return $this->value;
-	}
+    /**
+     * Returns the tokens value.
+     *
+     * @return string the token value.
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
 
-	/**
-	 * Validates the token attributes.
-	 *
-	 * @throws NostoException if any attribute is invalid.
-	 */
-	protected function validate()
-	{
-		$validator = new NostoValidator($this);
-		if (!$validator->validate()) {
-			foreach ($validator->getErrors() as $errors) {
-				throw new NostoException(sprintf('Invalid Nosto API token. %s', $errors[0]));
-			}
-		}
-	}
+    /**
+     * Validates the token attributes.
+     *
+     * @throws NostoException if any attribute is invalid.
+     */
+    protected function validate()
+    {
+        $validator = new NostoValidator($this);
+        if (!$validator->validate()) {
+            foreach ($validator->getErrors() as $errors) {
+                throw new NostoException(sprintf('Invalid Nosto API token. %s', $errors[0]));
+            }
+        }
+    }
 }
