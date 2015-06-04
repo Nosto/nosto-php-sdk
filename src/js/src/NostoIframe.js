@@ -51,7 +51,7 @@ Nosto.iframe = function(options) {
      * @type {Object}
      */
     var settings = {
-        origin: "https://my.nosto.com",
+        origin: "",
         iframeId: "nosto_iframe",
         urls: {
             createAccount: "",
@@ -74,7 +74,8 @@ Nosto.iframe = function(options) {
     function receiveMessage(event)
     {
         // Check the origin to prevent cross-site scripting.
-        if (event.origin !== decodeURIComponent(settings.origin)) {
+        var originRegexp = new RegExp(settings.origin);
+        if (!originRegexp.test(event.origin)) {
             return;
         }
         // If the message does not start with "[Nosto]", then it is not for us.
