@@ -38,7 +38,7 @@ class OrderConfirmationTest extends \Codeception\TestCase\Test
 	 */
 	public function testMatchedOrderConfirmation()
     {
-		$result = NostoOrderConfirmation::send($this->order, $this->account, 'test123');
+		$result = NostoServiceConfirmOrder::send($this->order, $this->account, 'test123');
 
 		$this->specify('successful matched order confirmation', function() use ($result) {
 			$this->assertTrue($result);
@@ -50,7 +50,7 @@ class OrderConfirmationTest extends \Codeception\TestCase\Test
 	 */
 	public function testUnMatchedOrderConfirmation()
 	{
-		$result = NostoOrderConfirmation::send($this->order, $this->account);
+		$result = NostoServiceConfirmOrder::send($this->order, $this->account);
 
 		$this->specify('successful un-matched order confirmation', function() use ($result) {
 			$this->assertTrue($result);

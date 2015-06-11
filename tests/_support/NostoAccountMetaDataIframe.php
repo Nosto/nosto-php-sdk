@@ -1,6 +1,6 @@
 <?php
 
-class NostoAccountMetaDataIframe implements NostoAccountMetaDataIframeInterface
+class NostoAccountMetaDataIframe implements NostoAccountMetaIframeInterface
 {
 	public function getFirstName()
 	{

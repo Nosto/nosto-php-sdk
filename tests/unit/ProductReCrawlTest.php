@@ -20,7 +20,7 @@ class ProductReCrawlTest extends \Codeception\TestCase\Test
         $product = new NostoProduct();
 
         $this->setExpectedException('NostoException');
-        NostoProductReCrawl::send($product, $account);
+        NostoServiceReCrawlProduct::send($product, $account);
     }
 
 	/**
@@ -33,7 +33,7 @@ class ProductReCrawlTest extends \Codeception\TestCase\Test
 		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
 		$account->addApiToken($token);
 
-		$result = NostoProductReCrawl::send($product, $account);
+		$result = NostoServiceReCrawlProduct::send($product, $account);
 
 		$this->specify('successful product re-crawl', function() use ($result) {
 			$this->assertTrue($result);
@@ -47,11 +47,11 @@ class ProductReCrawlTest extends \Codeception\TestCase\Test
     {
 		$account = new NostoAccount('platform-00000000');
         $product = new NostoProduct();
-        $collection = new NostoExportProductCollection();
+        $collection = new NostoExportCollectionProduct();
         $collection[] = $product;
 
         $this->setExpectedException('NostoException');
-        NostoProductReCrawl::sendBatch($collection, $account);
+        NostoServiceReCrawlProduct::sendBatch($collection, $account);
     }
 
     /**
@@ -61,12 +61,12 @@ class ProductReCrawlTest extends \Codeception\TestCase\Test
     {
 		$account = new NostoAccount('platform-00000000');
         $product = new NostoProduct();
-        $collection = new NostoExportProductCollection();
+        $collection = new NostoExportCollectionProduct();
         $collection[] = $product;
 		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
 		$account->addApiToken($token);
 
-        $result = NostoProductReCrawl::sendBatch($collection, $account);
+        $result = NostoServiceReCrawlProduct::sendBatch($collection, $account);
 
         $this->specify('successful batch product re-crawl', function() use ($result) {
             $this->assertTrue($result);

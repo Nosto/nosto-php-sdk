@@ -1,6 +1,6 @@
 <?php
 
-class NostoAccountMetaData implements NostoAccountMetaDataInterface
+class NostoAccountMetaData implements NostoAccountMetaInterface
 {
 	protected $owner;
 	protected $billing;
@@ -49,4 +49,10 @@ class NostoAccountMetaData implements NostoAccountMetaDataInterface
 	{
 		return 'abc123';
 	}
+    public function getCurrencies()
+    {
+        return array(
+            new NostoCurrency('USD', '$', 'left', ',', '.', 3, 2)
+        );
+    }
 }

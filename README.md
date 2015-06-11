@@ -7,65 +7,6 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 
 * PHP 5.2+
 
-## What's included?
-
-### Classes
-
-* **NostoApiRequest** class for making API requests to the Nosto APIs
-* **NostoApiToken** class that represents an API token which can be used whn making authenticated requests to the Nosto APIs
-* **NostoCollection** collection base class
-* **NostoProductCollection** collection class for nosto product objects
-* **NostoOrderCollection** collection class for nosto order objects
-* **NostoException** main exception class for all exceptions thrown by the SDK
-* **NostoHttpException** HTTP request exceptions upon request failure
-* **NostoExporter** class for exporting encrypted historical data from the shop
-* **NostoExportOrderCollection** class for exporting historical order data
-* **NostoExportProductCollection** class for exporting historical product data
-* **NostoHelper** base class for all nosto helpers
-* **NostoHelperDate** helper class for date related operations
-* **NostoHelperIframe** helper class for iframe related operations
-* **NostoHelperPrice** helper class for price related operations
-* **NostoHttpRequest** class for making HTTP request, supports both curl and socket connections
-* **NostoHttpRequestAdapter** base class for creating http request adapters
-* **NostoHttpRequestAdapterCurl** http request adapter for making http requests using curl
-* **NostoHttpRequestAdapterSocket** http request adapter for making http requests using sockets
-* **NostoHttpResponse** class that represents a response for an http request made through the NostoHttpRequest class
-* **NostoOAuthClient** class for authorizing the module to act on the Nosto account owners behalf using OAuth2 Authorization Code method
-* **NostoOAuthToken** class that represents a token granted using the OAuth client
-* **NostoOperationProduct** class for performing create/update/delete operations on product object
-* **Nosto** main sdk class for common functionality
-* **NostoAccount** class that represents a Nosto account which can be used to create new accounts and connect to existing accounts using OAuth2
-* **NostoCipher** class for AES encrypting product/order information that can be exported for Nosto to improve recommendations from the get-go
-* **NostoDotEnv** class for handling environment variables used while developing and testing
-* **NostoMessage** util class for holding info about messages that can be forwarded to the account administration iframe to show to the user
-* **NostoObject** base class for Nosto objects that need to share functionality
-* **NostoOrderConfirmation** class for sending order confirmations through the API
-* **NostoProductReCrawl** class for sending product re-crawl requests to Nosto over the API
-* **NostoValidator** class for performing data validations on objects implementing NostoValidatableInterface
-
-### Interfaces
-
-* **NostoAccountInterface** interface defining methods needed to manage Nosto accounts
-* **NostoAccountMetaDataBillingDetailsInterface** interface defining getters for billing information needed during Nosto account creation over the API
-* **NostoAccountMetaDataIframeInterface** interface defining getters for information needed by the Nosto account configuration iframe
-* **NostoAccountMetaDataInterface** interface defining getters for information needed during Nosto account creation over the API
-* **NostoAccountMetaDataOwnerInterface** interface defining getters for account owner information needed during Nosto account creation over the API
-* **NostoOrderBuyerInterface** interface defining getters for buyer information needed during order confirmation requests
-* **NostoOrderInterface** interface defining getters for information needed during order confirmation requests
-* **NostoOrderPurchasedItemInterface** interface defining getters for purchased item information needed during order confirmation requests
-* **NostoOrderStatusInterface** interface defining getters for order status information needed during order confirmation requests
-* **NostoExportCollectionInterface** interface defining getters for exportable data collections for the historical data
-* **NostoOauthMetaDataInterface** interface defining getters for information needed during OAuth2 requests
-* **NostoProductInterface** interface defining getters for product information needed during product re-crawl requests to Nosto over the API
-* **NostoValidatableInterface** interface defining getters for validatable objects that can be used in conjunction with the NostoValidator class
-
-### Libs
-
-* **NostoCryptAES** class for aes encryption that uses mcrypt if available and an internal implementation otherwise
-* **NostoCryptBase** base class for creating encryption classes
-* **NostoCryptRijndael** class for rijndael encryption that uses mcrypt if available and an internal implementation otherwise
-* **NostoCryptRandom** class for generating random strings
-
 ## Getting started
 
 ### Creating a new Nosto account
@@ -75,7 +16,7 @@ A Nosto account is needed for every shop and every language within each shop.
 ```php
     .....
     try {
-        /** @var NostoAccountMetaDataInterface $meta */
+        /** @var NostoAccountMetaInterface $meta */
         /** @var NostoAccount $account */
         $account = NostoAccount::create($meta);
         // save newly created account according to the platforms requirements
@@ -95,7 +36,7 @@ First redirect to the Nosto OAuth2 server.
 
 ```php
     .....
-    /** @var NostoOAuthClientMetaDataInterface $meta */
+    /** @var NostoOauthClientMetaInterface $meta */
     $client = new NostoOAuthClient($meta);
   	header('Location: ' . $client->getAuthorizationUrl());
 ```
@@ -105,7 +46,7 @@ Then have a public endpoint ready to handle the return request.
 ```php
     if (isset($_GET['code'])) {
         try {
-            /** @var NostoOAuthClientMetaDataInterface $meta */
+            /** @var NostoOauthClientMetaInterface $meta */
             $account = NostoAccount::syncFromNosto($meta, $_GET['code']);
             // save the synced account according to the platforms requirements
         } catch (NostoException $e) {
@@ -147,7 +88,7 @@ This iframe will load only content from nosto.com.
     .....
     /**
      * @var NostoAccount|null $account account with at least the 'SSO' token loaded or null if no account exists yet
-     * @var NostoAccountMetaDataIframeInterface $meta
+     * @var NostoAccountMetaIframeInterface $meta
      * @var array $params (optional) extra params to add to the iframe url
      */
     try
@@ -213,7 +154,7 @@ user ID, as the platform may support guest checkouts.
          * @var NostoAccountInterface $account
          * @var string $customerId
          */
-        NostoOrderConfirmation::send($order, $account, $customerId);
+        NostoServiceConfirmOrder::send($order, $account, $customerId);
     } catch (NostoException $e) {
         // handle error
     }
@@ -237,7 +178,7 @@ Note: the $product model needs to include only `productId` and `url` properties,
          * @var NostoProductInterface $product
          * @var NostoAccountInterface $account
          */
-        NostoProductReCrawl::send($product, $account);
+        NostoServiceReCrawlProduct::send($product, $account);
     } catch (NostoException $e) {
         // handle error
     }
@@ -255,7 +196,7 @@ Batch re-crawling is also possible by creating a collection of product models:
          * @var NostoAccountInterface $account
          */
         $collection[] = $product;
-        NostoProductReCrawl::sendBatch($collection, $account);
+        NostoServiceReCrawlProduct::sendBatch($collection, $account);
     } catch (NostoException $e) {
         // handle error
     }
@@ -278,7 +219,7 @@ Creating new products:
          * @var NostoProductInterface $product
          * @var NostoAccountInterface $account
          */
-        $op = new NostoOperationProduct($account);
+        $op = new NostoServiceUpdateProduct($account);
         $op->addProduct($product);
         $op->create();
     } catch (NostoException $e) {
@@ -298,7 +239,7 @@ Updating existing products:
          * @var NostoProductInterface $product
          * @var NostoAccountInterface $account
          */
-        $op = new NostoOperationProduct($account);
+        $op = new NostoServiceUpdateProduct($account);
         $op->addProduct($product);
         $op->update();
     } catch (NostoException $e) {
@@ -318,7 +259,7 @@ Deleting existing products:
          * @var NostoProductInterface $product
          * @var NostoAccountInterface $account
          */
-        $op = new NostoOperationProduct($account);
+        $op = new NostoServiceUpdateProduct($account);
         $op->addProduct($product);
         $op->delete();
     } catch (NostoException $e) {
@@ -350,7 +291,7 @@ integer values and expected to be applied to the data set being exported.
      * @var NostoProductInterface[] $products
      * @var NostoAccountInterface $account
      */
-    $collection = new NostoExportProductCollection();
+    $collection = new NostoExportCollectionProduct();
     foreach ($products as $product) {
         $collection[] = $product;
     }
@@ -367,7 +308,7 @@ integer values and expected to be applied to the data set being exported.
      * @var NostoOrderInterface[] $orders
      * @var NostoAccountInterface $account
      */
-    $collection = new NostoExportOrderCollection();
+    $collection = new NostoExportCollectionOrder();
     foreach ($orders as $order) {
         $collection[] = $order;
     }

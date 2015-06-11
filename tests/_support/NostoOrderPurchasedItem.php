@@ -1,6 +1,6 @@
 <?php
 
-class NostoOrderPurchasedItem implements NostoOrderPurchasedItemInterface
+class NostoOrderPurchasedItem implements NostoOrderItemInterface
 {
 	public function getProductId()
 	{

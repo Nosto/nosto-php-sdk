@@ -30,6 +30,10 @@ class NostoProduct implements NostoProductInterface, NostoValidatableInterface
 	{
 		return 'USD';
 	}
+    public function getPriceVariationId()
+    {
+        return 'USD';
+    }
 	public function getAvailability()
 	{
 		return 'InStock';
@@ -64,6 +68,12 @@ class NostoProduct implements NostoProductInterface, NostoValidatableInterface
 			array(array('url', 'productId', 'name', 'imageUrl', 'price', 'listPrice', 'currencyCode', 'availability'), 'required')
 		);
 	}
+    public function getPriceVariations()
+    {
+        return array(
+            new NostoPriceVariation()
+        );
+    }
 	public function __get($name)
 	{
 		$getter = 'get'.$name;
