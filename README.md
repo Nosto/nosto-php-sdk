@@ -154,7 +154,8 @@ user ID, as the platform may support guest checkouts.
          * @var NostoAccountInterface $account
          * @var string $customerId
          */
-        NostoServiceConfirmOrder::send($order, $account, $customerId);
+        $service = new NostoServiceOrder($account);
+        $service->confirm($order, $customerId);
     } catch (NostoException $e) {
         // handle error
     }
@@ -170,6 +171,7 @@ to Nosto that initiates a product "re-crawl" event. This is done to update the r
 so that the newest information can be shown to the users on the site.
 
 Note: the $product model needs to include only `productId` and `url` properties, all others can be omitted.
+Note: you can call `addProduct` multiple times to add more products to the request. This way you can batch re-crawl products.
 
 ```php
     .....
@@ -178,25 +180,9 @@ Note: the $product model needs to include only `productId` and `url` properties,
          * @var NostoProductInterface $product
          * @var NostoAccountInterface $account
          */
-        NostoServiceReCrawlProduct::send($product, $account);
-    } catch (NostoException $e) {
-        // handle error
-    }
-    .....
-```
-
-Batch re-crawling is also possible by creating a collection of product models:
-
-```php
-    .....
-    try {
-        /**
-         * @var NostoExportProductCollection $collection
-         * @var NostoProductInterface $product
-         * @var NostoAccountInterface $account
-         */
-        $collection[] = $product;
-        NostoServiceReCrawlProduct::sendBatch($collection, $account);
+        $service = new NostoServiceRecrawl($account);
+        $service->addProduct($product);
+        $service->send();
     } catch (NostoException $e) {
         // handle error
     }
@@ -219,9 +205,9 @@ Creating new products:
          * @var NostoProductInterface $product
          * @var NostoAccountInterface $account
          */
-        $op = new NostoServiceUpdateProduct($account);
-        $op->addProduct($product);
-        $op->create();
+        $service = new NostoServiceProduct($account);
+        $service->addProduct($product);
+        $service->create();
     } catch (NostoException $e) {
         // handle error
     }
@@ -239,9 +225,9 @@ Updating existing products:
          * @var NostoProductInterface $product
          * @var NostoAccountInterface $account
          */
-        $op = new NostoServiceUpdateProduct($account);
-        $op->addProduct($product);
-        $op->update();
+        $service = new NostoServiceProduct($account);
+        $service->addProduct($product);
+        $service->update();
     } catch (NostoException $e) {
         // handle error
     }
@@ -259,9 +245,9 @@ Deleting existing products:
          * @var NostoProductInterface $product
          * @var NostoAccountInterface $account
          */
-        $op = new NostoServiceUpdateProduct($account);
-        $op->addProduct($product);
-        $op->delete();
+        $service = new NostoServiceProduct($account);
+        $service->addProduct($product);
+        $service->delete();
     } catch (NostoException $e) {
         // handle error
     }

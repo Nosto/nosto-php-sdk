@@ -81,15 +81,15 @@ class NostoHttpRequest
 
     /**
      * Constructor.
-     * Creates the http request adapter which is chosen automatically by default based on environment.
-     * Curl is preferred if available.
+     * Creates the http request adapter.
+     * The adapter is chosen automatically based on environment if none is provided (Curl is preferred if available).
+     * The adapter can be chosen explicitly by passing an adapter instance.
      *
      * @param NostoHttpRequestAdapter|null $adapter the http request adapter to use
-     * @throws NostoException
      */
     public function __construct(NostoHttpRequestAdapter $adapter = null)
     {
-        if ($adapter !== null) {
+        if (!is_null($adapter)) {
             $this->adapter = $adapter;
         } elseif (function_exists('curl_exec')) {
             $this->adapter = new NostoHttpRequestAdapterCurl();
@@ -269,9 +269,7 @@ class NostoHttpRequest
      */
     public static function parseQueryString($queryString)
     {
-        if (empty($queryString)) {
-            return array();
-        }
+        $parsedQueryString = array();
         parse_str($queryString, $parsedQueryString);
         return $parsedQueryString;
     }
@@ -302,7 +300,7 @@ class NostoHttpRequest
     public static function replaceQueryParamInUrl($param, $value, $url)
     {
         $parsedUrl = self::parseUrl($url);
-        $queryString = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
+        $queryString = isset($parsedUrl['query']) ? $parsedUrl['query'] : null;
         $queryString = self::replaceQueryParam($param, $value, $queryString);
         $parsedUrl['query'] = $queryString;
         return self::buildUrl($parsedUrl);
@@ -317,11 +315,8 @@ class NostoHttpRequest
      */
     public static function replaceQueryParamsInUrl(array $queryParams, $url)
     {
-        if (empty($queryParams)) {
-            return $url;
-        }
         $parsedUrl = self::parseUrl($url);
-        $queryString = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
+        $queryString = isset($parsedUrl['query']) ? $parsedUrl['query'] : null;
         foreach ($queryParams as $param => $value) {
             $queryString = self::replaceQueryParam($param, $value, $queryString);
         }
@@ -338,10 +333,7 @@ class NostoHttpRequest
     public function post($content)
     {
         $this->content = $content;
-        $url = $this->url;
-        if (!empty($this->replaceParams)) {
-            $url = self::buildUri($url, $this->replaceParams);
-        }
+        $url = $this->prepareUrl($this->url);
         return $this->adapter->post(
             $url,
             array(
@@ -359,11 +351,7 @@ class NostoHttpRequest
      */
     public function put($content)
     {
-        $this->content = $content;
-        $url = $this->url;
-        if (!empty($this->replaceParams)) {
-            $url = self::buildUri($url, $this->replaceParams);
-        }
+        $url = $this->prepareUrl($this->url);
         return $this->adapter->put(
             $url,
             array(
@@ -380,13 +368,7 @@ class NostoHttpRequest
      */
     public function get()
     {
-        $url = $this->url;
-        if (!empty($this->replaceParams)) {
-            $url = self::buildUri($url, $this->replaceParams);
-        }
-        if (!empty($this->queryParams)) {
-            $url .= '?'.http_build_query($this->queryParams);
-        }
+        $url = $this->prepareUrl($this->url);
         return $this->adapter->get(
             $url,
             array(
@@ -402,10 +384,7 @@ class NostoHttpRequest
      */
     public function delete()
     {
-        $url = $this->url;
-        if (!empty($this->replaceParams)) {
-            $url = self::buildUri($url, $this->replaceParams);
-        }
+        $url = $this->prepareUrl($this->url);
         return $this->adapter->delete(
             $url,
             array(
@@ -420,10 +399,7 @@ class NostoHttpRequest
      */
     public function __toString()
     {
-        $url = $this->url;
-        if (!empty($this->replaceParams)) {
-            $url = self::buildUri($url, $this->replaceParams);
-        }
+        $url = $this->prepareUrl($this->url);
         return serialize(
             array(
                 'url' => $url,
@@ -431,5 +407,18 @@ class NostoHttpRequest
                 'body' => $this->content,
             )
         );
+    }
+
+    /**
+     * Prepares the URL before doing the request, i.e. replaces any placeholder params and adds query params.
+     *
+     * @param string $url the url to prepare.
+     * @return string the prepared url.
+     */
+    public function prepareUrl($url)
+    {
+        $url = self::buildUri($url, $this->replaceParams);
+        $url = self::replaceQueryParamsInUrl($this->queryParams, $url);
+        return $url;
     }
 }

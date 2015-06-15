@@ -36,7 +36,7 @@
 /**
  * Handles create/update/delete of products through the Nosto API.
  */
-class NostoServiceUpdateProduct
+class NostoServiceProduct
 {
     /**
      * @var NostoAccountInterface the account to perform the operation on.
@@ -62,7 +62,7 @@ class NostoServiceUpdateProduct
     }
 
     /**
-     * Adds a product tho the collection on which the operation is the performed.
+     * Adds a product to the collection on which the operation is the performed.
      *
      * @param NostoProductInterface $product
      */

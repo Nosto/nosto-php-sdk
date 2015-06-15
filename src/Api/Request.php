@@ -46,7 +46,7 @@ class NostoApiRequest extends NostoHttpRequest
     const PATH_PRODUCTS_UPDATE = '/v1/products/update';
     const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
     const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
-    const PATH_CURRENCY_EXCHANGE_RATE = ''; // todo
+    const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
 
     /**
      * @var string base url for the nosto api.

@@ -57,7 +57,8 @@ class NostoApiToken extends NostoObject implements NostoValidatableInterface
      */
     public static $tokenNames = array(
         self::API_SSO,
-        self::API_PRODUCTS
+        self::API_PRODUCTS,
+        self::API_CURRENCY,
     );
 
     /**

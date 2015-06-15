@@ -42,21 +42,37 @@
  *
  * The second option is a fallback and should be avoided as much as possible.
  */
-class NostoServiceConfirmOrder
+class NostoServiceOrder
 {
     /**
-     * Sends the order confirmation to Nosto.
+     * @var NostoAccountInterface the Nosto account to confirm an order for.
+     */
+    protected $account;
+
+    /**
+     * Constructor.
      *
-     * @param NostoOrderInterface $order the placed order model.
-     * @param NostoAccountInterface $account the Nosto account for the shop where the order was placed.
+     * Accepts the Nosto account for which the service is to operate on.
+     *
+     * @param NostoAccountInterface $account the Nosto account object.
+     */
+    public function __construct(NostoAccountInterface $account)
+    {
+        $this->account = $account;
+    }
+
+    /**
+     * Sends an order confirmation to Nosto.
+     *
+     * @param NostoOrderInterface $order the order to confirm.
      * @param null $customerId the Nosto customer ID of the user who placed the order.
      * @throws NostoException on failure.
      * @return true on success.
      */
-    public static function send(NostoOrderInterface $order, NostoAccountInterface $account, $customerId = null)
+    public function confirm(NostoOrderInterface $order, $customerId = null)
     {
-        $request = self::initApiRequest($account, $customerId);
-        $response = $request->post(self::getOrderAsJson($order));
+        $request = $this->initApiRequest($customerId);
+        $response = $request->post($this->getOrderAsJson($order));
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to send order confirmation to Nosto.', $request, $response);
         }
@@ -66,20 +82,19 @@ class NostoServiceConfirmOrder
     /**
      * Builds the API request and returns it.
      *
-     * @param NostoAccountInterface $account the account to send the order to.
-     * @param string|null $customerId the Nosto customer that placed the order.
+     * @param string|null $customerId the Nosto customer ID of the user who placed the order.
      * @return NostoApiRequest the request object.
      */
-    protected static function initApiRequest(NostoAccountInterface $account, $customerId)
+    protected function initApiRequest($customerId)
     {
         $request = new NostoApiRequest();
         $request->setContentType('application/json');
         if (!empty($customerId)) {
             $request->setPath(NostoApiRequest::PATH_ORDER_TAGGING);
-            $request->setReplaceParams(array('{m}' => $account->getName(), '{cid}' => $customerId));
+            $request->setReplaceParams(array('{m}' => $this->account->getName(), '{cid}' => $customerId));
         } else {
             $request->setPath(NostoApiRequest::PATH_UNMATCHED_ORDER_TAGGING);
-            $request->setReplaceParams(array('{m}' => $account->getName()));
+            $request->setReplaceParams(array('{m}' => $this->account->getName()));
         }
         return $request;
     }
@@ -90,7 +105,7 @@ class NostoServiceConfirmOrder
      * @param NostoOrderInterface $order the order object.
      * @return string the JSON structure.
      */
-    protected static function getOrderAsJson(NostoOrderInterface $order)
+    protected function getOrderAsJson(NostoOrderInterface $order)
     {
         $data = array(
             'order_number' => $order->getOrderNumber(),

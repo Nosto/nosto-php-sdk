@@ -36,23 +36,39 @@
 /**
  * Handles sending currency exchange rates through the Nosto API.
  */
-class NostoServiceUpdateCurrencyExchangeRate
+class NostoServiceCurrencyExchangeRate
 {
+    /**
+     * @var NostoAccountInterface the Nosto account to update the rates for.
+     */
+    protected $account;
+
+    /**
+     * Constructor.
+     *
+     * Accepts the Nosto account for which the service is to operate on.
+     *
+     * @param NostoAccountInterface $account the Nosto account object.
+     */
+    public function __construct(NostoAccountInterface $account)
+    {
+        $this->account = $account;
+    }
+
     /**
      * Sends a currency exchange rate update request to Nosto via the API.
      *
-     * @param NostoAccountInterface $account the account to update the rates for.
      * @param NostoCurrencyExchangeRateCollection $collection the collection of rates to update.
      * @return bool if the update was successful.
      * @throws NostoException if the request cannot be created.
      * @throws NostoHttpException if the request was sent but failed.
      */
-    public static function send(NostoAccountInterface $account, NostoCurrencyExchangeRateCollection $collection)
+    public function update(NostoCurrencyExchangeRateCollection $collection)
     {
-        $request = self::initApiRequest($account);
-        $response = $request->post(self::getRatesAsJson($collection));
+        $request = $this->initApiRequest();
+        $response = $request->post($this->getCollectionAsJson($collection));
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to create Nosto product(s).', $request, $response);
+            Nosto::throwHttpException('Failed update currency exchange rates.', $request, $response);
         }
         return true;
     }
@@ -60,20 +76,19 @@ class NostoServiceUpdateCurrencyExchangeRate
     /**
      * Builds the API request and returns it.
      *
-     * @param NostoAccountInterface $account the account to get the auth token from.
      * @return NostoApiRequest the request object.
      * @throws NostoException if the request object cannot be built.
      */
-    protected static function initApiRequest(NostoAccountInterface $account)
+    protected function initApiRequest()
     {
-        $token = $account->getApiToken(NostoApiToken::API_CURRENCY);
+        $token = $this->account->getApiToken(NostoApiToken::API_CURRENCY);
         if (is_null($token)) {
-            throw new NostoException('No `products` API token found for account.');
+            throw new NostoException('No `currency` API token found for account.');
         }
         $request = new NostoApiRequest();
         $request->setContentType('application/json');
         $request->setAuthBasic('', $token->getValue());
-        $request->setPath(NostoApiRequest::PATH_CURRENCY_EXCHANGE_RATE); // todo: change this
+        $request->setPath(NostoApiRequest::PATH_CURRENCY_EXCHANGE_RATE);
         return $request;
     }
 
@@ -94,22 +109,29 @@ class NostoServiceUpdateCurrencyExchangeRate
      *
      * @param NostoCurrencyExchangeRateCollection $collection the rate collection.
      * @return string the JSON structure.
+     * @throws NostoException of the rate collection is empty.
      */
-    protected static function getRatesAsJson(NostoCurrencyExchangeRateCollection $collection)
+    protected function getCollectionAsJson(NostoCurrencyExchangeRateCollection $collection)
     {
-        $array = array(
+        $data = array(
             'rates' => array(),
-            'valid_until' => !is_null($collection->getValidUntil())
-                    ? date('Y-m-d\TH:i:s\Z', $collection->getValidUntil())
-                    : null,
+            'valid_until' => null,
         );
+        $validUntil = $collection->getValidUntil();
+        if (!is_null($validUntil)) {
+            // Date is formatted according to ISO 8601 standards (date+time).
+            $data['valid_until'] = date('Y-m-d\TH:i:s\Z', $validUntil);
+        }
         /** @var NostoCurrencyExchangeRate $item */
         foreach ($collection->getArrayCopy() as $item) {
-            $array['rates'][$item->getCurrencyCode()] = array(
+            $data['rates'][$item->getCurrencyCode()] = array(
                 'rate' => $item->getExchangeRate(),
                 'price_currency_code' => $item->getCurrencyCode(),
             );
         }
-        return json_encode($array);
+        if (empty($data['rates'])) {
+            throw new NostoException('No currency exchange rates found in collection.');
+        }
+        return json_encode($data);
     }
 }

@@ -33,7 +33,7 @@ class IframeAuthTest extends \Codeception\TestCase\Test
 		$url = $account->getIframeUrl($meta);
 
 		$this->specify('auth iframe url was created', function() use ($url) {
-			$this->assertEquals('https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg?r=%2Fhub%2Fplatform%2Fplatform-00000000%3Flang%3Den%26ps_version%3D1.0.0%26nt_version%3D1.0.0%26product_pu%3Dhttp%253A%252F%252Fmy.shop.com%252Fproducts%252Fproduct123%253Fnostodebug%253Dtrue%26category_pu%3Dhttp%253A%252F%252Fmy.shop.com%252Fproducts%252Fcategory123%253Fnostodebug%253Dtrue%26search_pu%3Dhttp%253A%252F%252Fmy.shop.com%252Fsearch%253Fquery%253Dred%253Fnostodebug%253Dtrue%26cart_pu%3Dhttp%253A%252F%252Fmy.shop.com%252Fcart%253Fnostodebug%253Dtrue%26front_pu%3Dhttp%253A%252F%252Fmy.shop.com%253Fnostodebug%253Dtrue%26shop_lang%3Den%26shop_name%3DShop%2BName%26unique_id%3D123%26fname%3DJames%26lname%3DKirk%26email%3Djames.kirk%2540example.com', $url);
+			$this->assertEquals('https://platform-00000000.hub.nosto.com/hub/platform-00000000/xAd1RXcmTMuLINVYaIZJJg?lang=en&ps_version=1.0.0&nt_version=1.0.0&product_pu=http%3A%2F%2Fmy.shop.com%2Fproducts%2Fproduct123%3Fnostodebug%3Dtrue&category_pu=http%3A%2F%2Fmy.shop.com%2Fproducts%2Fcategory123%3Fnostodebug%3Dtrue&search_pu=http%3A%2F%2Fmy.shop.com%2Fsearch%3Fquery%3Dred%3Fnostodebug%3Dtrue&cart_pu=http%3A%2F%2Fmy.shop.com%2Fcart%3Fnostodebug%3Dtrue&front_pu=http%3A%2F%2Fmy.shop.com%3Fnostodebug%3Dtrue&shop_lang=en&shop_name=Shop+Name&unique_id=123&fname=James&lname=Kirk&email=james.kirk%40example.com', $url);
 		});
     }
 }

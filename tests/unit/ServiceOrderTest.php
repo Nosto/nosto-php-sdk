@@ -5,7 +5,7 @@ require_once(dirname(__FILE__) . '/../_support/NostoOrderPurchasedItem.php');
 require_once(dirname(__FILE__) . '/../_support/NostoOrderStatus.php');
 require_once(dirname(__FILE__) . '/../_support/NostoOrder.php');
 
-class OrderConfirmationTest extends \Codeception\TestCase\Test
+class ServiceOrderTest extends \Codeception\TestCase\Test
 {
 	use \Codeception\Specify;
 
@@ -38,7 +38,8 @@ class OrderConfirmationTest extends \Codeception\TestCase\Test
 	 */
 	public function testMatchedOrderConfirmation()
     {
-		$result = NostoServiceConfirmOrder::send($this->order, $this->account, 'test123');
+        $service = new NostoServiceOrder($this->account);
+        $result = $service->confirm($this->order, 'test123');
 
 		$this->specify('successful matched order confirmation', function() use ($result) {
 			$this->assertTrue($result);
@@ -50,7 +51,8 @@ class OrderConfirmationTest extends \Codeception\TestCase\Test
 	 */
 	public function testUnMatchedOrderConfirmation()
 	{
-		$result = NostoServiceConfirmOrder::send($this->order, $this->account);
+        $service = new NostoServiceOrder($this->account);
+        $result = $service->confirm($this->order);
 
 		$this->specify('successful un-matched order confirmation', function() use ($result) {
 			$this->assertTrue($result);

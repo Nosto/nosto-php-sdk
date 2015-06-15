@@ -57,7 +57,7 @@ class NostoCurrencyExchangeRate extends NostoObject implements NostoValidatableI
      */
     public function __construct($currencyCode, $exchangeRate)
     {
-        $this->currencyCode = $currencyCode;
+        $this->currencyCode = strtoupper($currencyCode);
         $this->exchangeRate = $exchangeRate;
         $this->validate();
     }

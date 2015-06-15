@@ -101,6 +101,31 @@ Account related resources
             "login_url": "https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg"
         }
 
+## New Single Sign On [/hub/{platform}/load/{email}]
+
++ Parameters
+
+    + platform (string) ... the platform name
+    + email (string) ... the email address of the user who is doing the SSO
+
+### New SSO login [POST]
+
++ Request (application/x-www-form-urlencoded)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
+    + Body
+
+            fname=James&lname=Kirk
+
++ Response 200 (application/json)
+
+        {
+            "login_url": "https://platform-00000000.hub.nosto.com/hub/platform-00000000/xAd1RXcmTMuLINVYaIZJJg"
+        }
+
 ## Deleting Account [/hub/uninstall]
 
 ### Notify nosto about deleted account [POST]
@@ -366,6 +391,35 @@ Product related resources
             [
                 1
             ]
+
++ Response 200 (application/json)
+
+        {}
+
+# Group Currency
+Currency related resources
+
+## Exchange rates [/exchangerates]
+
+### Send exchange rate update request [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
+    + Body
+
+            {
+                "rates": {
+                    "EUR": {
+                        "rate": "0.706700000000",
+                        "price_currency_code": "EUR"
+                    }
+                },
+                "valid_until": "2015-02-27T12:00:00Z"
+            }
 
 + Response 200 (application/json)
 
