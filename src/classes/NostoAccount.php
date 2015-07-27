@@ -91,12 +91,10 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
         );
 
         // Add optional billing details if the required data is set.
-        $billingDetails = array();
-        $billingDetailsCountryCode = $meta->getBillingDetails()->getCountry();
-        if (!empty($billingDetailsCountryCode)) {
-            $billingDetails['country'] = strtoupper($billingDetailsCountryCode);
-        }
-        if (!empty($billingDetails)) {
+        $billingDetails = array(
+            'country' => strtoupper($meta->getBillingDetails()->getCountry())
+        );
+        if (!empty($billingDetails['country'])) {
             $params['billing_details'] = $billingDetails;
         }
 
