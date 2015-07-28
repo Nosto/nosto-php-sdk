@@ -58,7 +58,8 @@ class NostoExportProductCollection extends NostoProductCollection implements Nos
                 'categories' => $item->getCategories(),
             );
 
-            // Optional properties are added only if they are set.
+            // Optional properties.
+
             if ($item->getFullDescription()) {
                 $data['description'] = $item->getFullDescription();
             }

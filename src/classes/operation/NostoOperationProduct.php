@@ -199,7 +199,8 @@ class NostoOperationProduct
             'categories' => $product->getCategories(),
         );
 
-        // Optional properties are added only if they are set.
+        // Optional properties.
+
         if ($product->getFullDescription()) {
             $data['description'] = $product->getFullDescription();
         }
