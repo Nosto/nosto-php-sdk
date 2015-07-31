@@ -50,6 +50,10 @@ class NostoProduct implements NostoProductInterface, NostoValidatableInterface
 	{
 		return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris imperdiet ligula eu facilisis dignissim.';
 	}
+    public function getFullDescription()
+    {
+        return $this->getShortDescription().' '.$this->getDescription();
+    }
 	public function getBrand()
 	{
 		return 'Super Brand';

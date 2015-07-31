@@ -74,15 +74,16 @@ Account related resources
             "api_products": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783"
         }
 
-## Single Sign On  [/users/sso/{email}]
+## Single Sign On  [/hub/{platform}/load/{email}]
 
 + Parameters
 
+    + platform (string) ... the platform name to SSO into
     + email (string) ... the email address of the user who is doing the SSO
 
 ### SSO login [POST]
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
 
     + Headers
 
@@ -90,10 +91,7 @@ Account related resources
 
     + Body
 
-            {
-                "first_name": "James",
-                "last_name": "Kirk"
-            }
+            fname=James&lname=Kirk
 
 + Response 200 (application/json)
 
