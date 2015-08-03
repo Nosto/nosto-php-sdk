@@ -33,7 +33,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
 	 */
 	public function testProductHistoryExport()
 	{
-		$collection = new NostoExportProductCollection();
+		$collection = new NostoExportCollectionProduct();
 		$collection[] = new NostoProduct();
 		$cipher_text = NostoExporter::export($this->account, $collection);
 
@@ -52,7 +52,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
 	 */
     public function testOrderHistoryExport()
     {
-		$collection = new NostoExportOrderCollection();
+		$collection = new NostoExportCollectionOrder();
 		$collection->append(new NostoOrder());
 		$cipher_text = NostoExporter::export($this->account, $collection);
 

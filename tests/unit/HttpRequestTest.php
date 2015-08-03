@@ -103,6 +103,15 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 		$this->assertEquals('http://localhost:9000/tmp/?param1=replaced_first&param2=second', $url);
 	}
 
+    /**
+     * Tests the "replaceQueryParamsInUrl" helper method.
+     */
+    public function testHttpRequestReplaceQueryParamsInUrl()
+    {
+        $url = NostoHttpRequest::replaceQueryParamsInUrl(array('param1' => 'replaced_first', 'param2' => 'replaced_second'), 'http://localhost:9000/tmp/?param1=first&param2=second');
+        $this->assertEquals('http://localhost:9000/tmp/?param1=replaced_first&param2=replaced_second', $url);
+    }
+
 	/**
 	 * Tests the "replaceQueryParam" helper method.
 	 */
@@ -144,6 +153,10 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 		$this->assertEquals(404, $response->getCode());
 		$response = $request->post('test');
 		$this->assertEquals(404, $response->getCode());
+        $response = $request->put('test');
+        $this->assertEquals(404, $response->getCode());
+        $response = $request->delete();
+        $this->assertEquals(404, $response->getCode());
 		$request->setUrl('http://localhost:9000');
 		$response = $request->get();
 		$this->assertEquals('Failed to connect to localhost port 9000: Connection refused', $response->getMessage());
@@ -160,5 +173,30 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 		$this->assertEquals(404, $response->getCode());
 		$response = $request->post('test');
 		$this->assertEquals(404, $response->getCode());
+        $response = $request->put('test');
+        $this->assertEquals(404, $response->getCode());
+        $response = $request->delete();
+        $this->assertEquals(404, $response->getCode());
 	}
+
+    /**
+     * Tests the http request __toString method.
+     */
+    public function testHttpRequestToString()
+    {
+        $request = new NostoHttpRequest();
+        $request->setUrl('http://localhost:3000/{path}');
+        $request->setContentType('application/json');
+        $request->setReplaceParams(array('{path}' => 'test'));
+        $this->assertEquals('a:3:{s:3:"url";s:26:"http://localhost:3000/test";s:7:"headers";a:1:{i:0;s:30:"Content-type: application/json";}s:4:"body";s:0:"";}', $request->__toString());
+    }
+
+    /**
+     * Tests the http response __toString method.
+     */
+    public function testHttpResponseToString()
+    {
+        $response = new NostoHttpResponse(array('HTTP/1.1 404 Not Found', 'Content-type: application/json'), '{}');
+        $this->assertEquals('a:3:{s:7:"headers";a:2:{i:0;s:22:"HTTP/1.1 404 Not Found";i:1;s:30:"Content-type: application/json";}s:4:"body";s:2:"{}";s:5:"error";N;}', $response->__toString());
+    }
 }
