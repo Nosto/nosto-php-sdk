@@ -60,7 +60,11 @@ class NostoValidatorRange extends NostoValidator
             if (!in_array($value, $this->range)) {
                 $this->addError(
                     $property,
-                    sprintf('Property "%s" must be one of the following: "%s".', $property, implode('", "', $this->range))
+                    sprintf(
+                        'Property "%s" must be one of the following: "%s".',
+                        $property,
+                        implode('", "', $this->range)
+                    )
                 );
                 $isValid = false;
             }

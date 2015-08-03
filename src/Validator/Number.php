@@ -48,7 +48,7 @@ class NostoValidatorNumber extends NostoValidator
     /**
      * @var string the regexp pattern to use for validating integers.
      */
-    public $integerPattern='/^\s*[+-]?\d+\s*$/';
+    public $integerPattern = '/^\s*[+-]?\d+\s*$/';
 
     /**
      * @inheritdoc

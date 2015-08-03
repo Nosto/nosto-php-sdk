@@ -796,7 +796,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-	public $t2 = array(
+    public $t2 = array(
         0x63A5C663,
         0x7C84F87C,
         0x7799EE77,
@@ -1062,7 +1062,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-	public $t3 = array(
+    public $t3 = array(
         0x6363A5C6,
         0x7C7C84F8,
         0x777799EE,
@@ -1328,7 +1328,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-	public $dt0 = array(
+    public $dt0 = array(
         0x51F4A750,
         0x7E416553,
         0x1A17A4C3,
@@ -1594,7 +1594,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-	public $dt1 = array(
+    public $dt1 = array(
         0x5051F4A7,
         0x537E4165,
         0xC31A17A4,
@@ -1860,7 +1860,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-	public $dt2 = array(
+    public $dt2 = array(
         0xA75051F4,
         0x65537E41,
         0xA4C31A17,
@@ -2126,7 +2126,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-	public $dt3 = array(
+    public $dt3 = array(
         0xF4A75051,
         0x4165537E,
         0x17A4C31A,
@@ -2391,7 +2391,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael::encryptBlock()
      * @var Array
      */
-	public $sbox = array(
+    public $sbox = array(
         0x63,
         0x7C,
         0x77,
@@ -2656,7 +2656,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael::decryptBlock()
      * @var Array
      */
-	public $isbox = array(
+    public $isbox = array(
         0x52,
         0x09,
         0x6A,
