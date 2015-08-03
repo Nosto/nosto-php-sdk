@@ -56,7 +56,7 @@ class NostoExporter
             $tokenValue = $token->getValue();
             $secret = substr($tokenValue, 0, 16);
             if (!empty($secret)) {
-                $iv = NostoCryptRandom::getRandomString(16);
+                $iv = phpseclib_Crypt_Random::string(16);
                 $cipher = new NostoCipher();
                 $cipher->setSecret($secret);
                 $cipher->setIV($iv);

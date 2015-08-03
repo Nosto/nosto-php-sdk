@@ -61,10 +61,6 @@ require_once(dirname(__FILE__).'/src/Validator.php');
 require_once(dirname(__FILE__).'/src/Http/Request.php');
 require_once(dirname(__FILE__).'/src/Api/Request.php');
 require_once(dirname(__FILE__).'/src/Api/Token.php');
-require_once(dirname(__FILE__).'/src/Crypt/Base.php');
-require_once(dirname(__FILE__).'/src/Crypt/Rijndael.php');
-require_once(dirname(__FILE__).'/src/Crypt/AES.php');
-require_once(dirname(__FILE__).'/src/Crypt/Random.php');
 require_once(dirname(__FILE__).'/src/Order/Collection.php');
 require_once(dirname(__FILE__).'/src/Export/Collection/Order.php');
 require_once(dirname(__FILE__).'/src/Product/Collection.php');
@@ -85,6 +81,13 @@ require_once(dirname(__FILE__).'/src/Service/Recrawl.php');
 require_once(dirname(__FILE__).'/src/Validator/Number.php');
 require_once(dirname(__FILE__).'/src/Validator/Range.php');
 require_once(dirname(__FILE__).'/src/Validator/Required.php');
+
+require_once(dirname(__FILE__).'/libs/phpseclib/Crypt/Base.php');
+require_once(dirname(__FILE__).'/libs/phpseclib/Crypt/Rijndael.php');
+require_once(dirname(__FILE__).'/libs/phpseclib/Crypt/AES.php');
+require_once(dirname(__FILE__).'/libs/phpseclib/Crypt/Hash.php');
+require_once(dirname(__FILE__).'/libs/phpseclib/Crypt/Random.php');
+require_once(dirname(__FILE__).'/libs/phpseclib/Math/BigInteger.php');
 
 // Parse .env if exists and assign configured environment variables.
 NostoDotEnv::getInstance()->init(dirname(__FILE__));

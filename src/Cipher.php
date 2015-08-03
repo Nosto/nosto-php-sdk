@@ -39,7 +39,7 @@
 class NostoCipher
 {
     /**
-     * @var NostoCryptBase the crypt library instance.
+     * @var phpseclib_Crypt_Base the crypt library instance.
      */
     private $crypt;
 
@@ -48,7 +48,7 @@ class NostoCipher
      */
     public function __construct()
     {
-        $this->crypt = new NostoCryptAES(CRYPT_AES_MODE_CBC);
+        $this->crypt = new phpseclib_Crypt_AES();
     }
 
     /**
