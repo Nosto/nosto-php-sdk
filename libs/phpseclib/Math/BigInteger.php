@@ -61,27 +61,27 @@ class phpseclib_Math_BigInteger
      * Reduction constants
      *
      * @access private
-     * @see BigInteger::_reduce()
+     * @see phpseclib_Math_BigInteger::_reduce()
      */
     /**
-     * @see BigInteger::_montgomery()
-     * @see BigInteger::_prepMontgomery()
+     * @see phpseclib_Math_BigInteger::_montgomery()
+     * @see phpseclib_Math_BigInteger::_prepMontgomery()
      */
     const MONTGOMERY = 0;
     /**
-     * @see BigInteger::_barrett()
+     * @see phpseclib_Math_BigInteger::_barrett()
      */
     const BARRETT = 1;
     /**
-     * @see BigInteger::_mod2()
+     * @see phpseclib_Math_BigInteger::_mod2()
      */
     const POWEROF2 = 2;
     /**
-     * @see BigInteger::_remainder()
+     * @see phpseclib_Math_BigInteger::_remainder()
      */
     const CLASSIC = 3;
     /**
-     * @see BigInteger::__clone()
+     * @see phpseclib_Math_BigInteger::__clone()
      */
     const NONE = 4;
     /**#@-*/
@@ -106,8 +106,8 @@ class phpseclib_Math_BigInteger
 
     /**#@+
      * @access private
-     * @see BigInteger::_montgomery()
-     * @see BigInteger::_barrett()
+     * @see phpseclib_Math_BigInteger::_montgomery()
+     * @see phpseclib_Math_BigInteger::_barrett()
      */
     /**
      * Cache constants
@@ -125,7 +125,7 @@ class phpseclib_Math_BigInteger
      * Mode constants.
      *
      * @access private
-     * @see BigInteger::__construct()
+     * @see phpseclib_Math_BigInteger::__construct()
      */
     /**
      * To use the pure-PHP implementation
@@ -334,7 +334,7 @@ class phpseclib_Math_BigInteger
                 switch (true) {
                     case is_resource($x) && get_resource_type($x) == 'GMP integer':
                         // PHP 5.6 switched GMP from using resources to objects
-                    case $x instanceof \GMP:
+                    case (class_exists('GMP') && $x instanceof GMP):
                         $this->value = $x;
                         return;
                 }
@@ -756,10 +756,10 @@ class phpseclib_Math_BigInteger
     /**
      * __clone() magic method
      *
-     * Although you can call BigInteger::__toString() directly in PHP5, you cannot call BigInteger::__clone() directly
+     * Although you can call phpseclib_Math_BigInteger::__toString() directly in PHP5, you cannot call phpseclib_Math_BigInteger::__clone() directly
      * in PHP5.  You can in PHP4 since it's not a magic method, but in PHP5, you have to call it by using the PHP5
      * only syntax of $y = clone $x.  As such, if you're trying to write an application that works on both PHP4 and
-     * PHP5, call BigInteger::copy(), instead.
+     * PHP5, call phpseclib_Math_BigInteger::copy(), instead.
      *
      * @access public
      * @see copy()
@@ -2072,7 +2072,7 @@ class phpseclib_Math_BigInteger
     /**
      * (Regular) Barrett Modular Reduction
      *
-     * For numbers with more than four digits BigInteger::_barrett() is faster.  The difference between that and this
+     * For numbers with more than four digits phpseclib_Math_BigInteger::_barrett() is faster.  The difference between that and this
      * is that this function does not fold the denominator into a smaller form.
      *
      * @see _slidingWindow()
@@ -2700,7 +2700,7 @@ class phpseclib_Math_BigInteger
     /**
      * Tests the equality of two numbers.
      *
-     * If you need to see if one number is greater than or less than another number, use BigInteger::compare()
+     * If you need to see if one number is greater than or less than another number, use phpseclib_Math_BigInteger::compare()
      *
      * @param phpseclib_Math_BigInteger $x
      * @return Boolean
@@ -3278,7 +3278,7 @@ class phpseclib_Math_BigInteger
      * Checks a numer to see if it's prime
      *
      * Assuming the $t parameter is not set, this function has an error rate of 2**-80.  The main motivation for the
-     * $t parameter is distributability.  BigInteger::randomPrime() can be distributed across multiple pageloads
+     * $t parameter is distributability.  phpseclib_Math_BigInteger::randomPrime() can be distributed across multiple pageloads
      * on a website instead of just one.
      *
      * @param optional phpseclib_Math_BigInteger $t
