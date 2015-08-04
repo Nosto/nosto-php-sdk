@@ -34,33 +34,43 @@
  */
 
 /**
- * API request class for making API requests to Nosto.
+ * Interface for the meta data of a product price variation.
+ * This is used in product the tagging, when making product API requests and product history exports to Nosto.
  */
-class NostoApiRequest extends NostoHttpRequest
+interface NostoProductPriceVariationInterface
 {
-    const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
-    const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
-    const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
-    const PATH_PRODUCTS_CREATE = '/v1/products/create';
-    const PATH_PRODUCTS_UPDATE = '/v1/products/update';
-    const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
-    const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
-    const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
-
     /**
-     * @var string base url for the nosto api.
-     */
-    public static $baseUrl = 'https://api.nosto.com';
-
-    /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
+     * Returns the price variation ID.
      *
-     * @param string $path the endpoint path (use PATH_ constants).
+     * @return string the variation id.
      */
-    public function setPath($path)
-    {
-        $this->setUrl(self::$baseUrl.$path);
-    }
+    public function getId();
+
+    /**
+     * Returns the currency code (SIO 4217) for the price variation.
+     *
+     * @return string the price currency code.
+     */
+    public function getCurrencyCode();
+
+    /**
+     * Returns the price of the variation including possible discounts and taxes.
+     *
+     * @return float the price.
+     */
+    public function getPrice();
+
+    /**
+     * Returns the list price of the variation without discounts but incl taxes.
+     *
+     * @return float the price.
+     */
+    public function getListPrice();
+
+    /**
+     * Returns the availability of the price variation, i.e. if it is in stock or not.
+     *
+     * @return string the availability, either "InStock" or "OutOfStock".
+     */
+    public function getAvailability();
 }

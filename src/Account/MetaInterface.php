@@ -118,4 +118,11 @@ interface NostoAccountMetaInterface
      * @return string|null the partner code or null if none exist.
      */
     public function getPartnerCode();
+
+    /**
+     * Returns a list of currency objects supported by the store the account is to be created for.
+     *
+     * @return NostoCurrency[] the currencies.
+     */
+    public function getCurrencies();
 }

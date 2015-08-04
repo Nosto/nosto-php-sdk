@@ -60,6 +60,7 @@ class NostoValidator
         'required' => 'NostoValidatorRequired',
         'in' => 'NostoValidatorRange',
         'number' => 'NostoValidatorNumber',
+        'currency' => 'NostoValidatorCurrency',
     );
 
     /**

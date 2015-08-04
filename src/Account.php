@@ -88,6 +88,7 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
                 'email' => $meta->getOwner()->getEmail(),
             ),
             'api_tokens' => array(),
+            'currencies' => array(),
         );
 
         // Add optional billing details if the required data is set.
@@ -107,6 +108,17 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
         // Request all available API tokens for the account.
         foreach (NostoApiToken::$tokenNames as $name) {
             $params['api_tokens'][] = 'api_'.$name;
+        }
+
+        // Add all configured currency data.
+        foreach ($meta->getCurrencies() as $code => $currency) {
+            $params['currencies'][][strtoupper($code)] = array(
+                'currency_before_amount' => ($currency->getSymbolPosition() === NostoCurrency::SYMBOL_POS_LEFT),
+                'currency_token' => $currency->getSymbol(),
+                'decimal_character' => $currency->getDecimalSymbol(),
+                'grouping_separator' => $currency->getGroupSymbol(),
+                'decimal_places' => (int)$currency->getPrecision(),
+            );
         }
 
         $request = new NostoApiRequest();

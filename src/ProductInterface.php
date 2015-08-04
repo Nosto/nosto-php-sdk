@@ -89,6 +89,13 @@ interface NostoProductInterface
     public function getCurrencyCode();
 
     /**
+     * Returns the ID of the price variation that is currently in use.
+     *
+     * @return string the price variation ID.
+     */
+    public function getPriceVariationId();
+
+    /**
      * Returns the availability of the product, i.e. if it is in stock or not.
      *
      * @return string the availability, either "InStock" or "OutOfStock".
@@ -144,4 +151,11 @@ interface NostoProductInterface
      * @return string the date in format "Y-m-d".
      */
     public function getDatePublished();
+
+    /**
+     * Returns the product price variations if any exist.
+     *
+     * @return NostoProductPriceVariationInterface[] the price variations.
+     */
+    public function getPriceVariations();
 }

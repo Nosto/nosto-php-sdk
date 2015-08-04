@@ -34,33 +34,43 @@
  */
 
 /**
- * API request class for making API requests to Nosto.
+ * Currency exchange rate object collection.
+ * Supports only items extending "NostoCurrencyExchangeRate".
  */
-class NostoApiRequest extends NostoHttpRequest
+class NostoCurrencyExchangeRateCollection extends NostoCollection
 {
-    const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
-    const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
-    const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
-    const PATH_PRODUCTS_CREATE = '/v1/products/create';
-    const PATH_PRODUCTS_UPDATE = '/v1/products/update';
-    const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
-    const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
-    const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
-
     /**
-     * @var string base url for the nosto api.
+     * @inheritdoc
      */
-    public static $baseUrl = 'https://api.nosto.com';
+    protected $validItemType = 'NostoCurrencyExchangeRate';
 
     /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
+     * @var int the Unix timestamp for how long the exchange rates are valid.
+     */
+    protected $validUntil;
+
+    /**
+     * Setter for the Unix timestamp for how long the exchange rates are valid.
      *
-     * @param string $path the endpoint path (use PATH_ constants).
+     * @param int $validUntil the Unix timestamp.
+     *
+     * @throws NostoException if the value is not a Unix timestamp.
      */
-    public function setPath($path)
+    public function setValidUntil($validUntil)
     {
-        $this->setUrl(self::$baseUrl.$path);
+        if (!is_int($validUntil)) {
+            throw new NostoException('Exchange rate "validUntil" must be an Unix timestamp.');
+        }
+        $this->validUntil = $validUntil;
+    }
+
+    /**
+     * Getter for the Unix timestamp for how long the exchange rates are valid.
+     *
+     * @return int|null the Unix timestamp or null if not set.
+     */
+    public function getValidUntil()
+    {
+        return $this->validUntil;
     }
 }

@@ -212,4 +212,53 @@ class ValidatorTest extends \Codeception\TestCase\Test
         $validator = NostoValidator::forgeValidator('required', $object, array('unknown'));
         $validator->validate();
     }
+
+    /**
+     * Tests the currency validator.
+     */
+    public function testCurrencyValidator()
+    {
+        $object = new ValidatableObject();
+
+        $this->specify('valid ISO 4217 currency', function() use ($object) {
+                $validator = NostoValidator::forgeValidator('currency', $object, array('currency'), array('standard' => 'iso-4217'));
+                $result = $validator->validate();
+                $this->assertTrue($result);
+                $this->assertFalse($validator->hasErrors());
+                $this->assertEmpty($validator->getErrors());
+            });
+
+        $this->specify('invalid ISO 4217 currency', function() use ($object) {
+                $object->setCurrency('foo');
+                $validator = NostoValidator::forgeValidator('currency', $object, array('currency'), array('standard' => 'iso-4217'));
+                $result = $validator->validate();
+                $this->assertFalse($result);
+                $this->assertTrue($validator->hasErrors());
+                $this->assertNotEmpty($validator->getErrors());
+            });
+    }
+
+    /**
+     * Tests the currency validator with an invalid currency standard.
+     */
+    public function testCurrencyValidatorWithInvalidStandard()
+    {
+        $this->setExpectedException('NostoException');
+
+        $object = new ValidatableObject();
+        $validator = NostoValidator::forgeValidator('currency', $object, array('currency'), array('standard' => 'unknown'));
+        $validator->validate();
+    }
+
+    /**
+     * Tests the currency validator without the currency standard.
+     */
+    public function testCurrencyValidatorWithoutStandard()
+    {
+        $this->setExpectedException('NostoException');
+
+        $object = new ValidatableObject();
+        $validator = NostoValidator::forgeValidator('currency', $object, array('currency'));
+        $validator->validate();
+    }
 }

@@ -368,3 +368,32 @@ Product related resources
 + Response 200 (application/json)
 
         {}
+
+# Group Currency
+Currency related resources
+
+## Exchange rates [/exchangerates]
+
+### Send exchange rate update request [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
+    + Body
+
+            {
+                "rates": {
+                    "EUR": {
+                        "rate": "0.706700000000",
+                        "price_currency_code": "EUR"
+                    }
+                },
+                "valid_until": "2015-02-27T12:00:00Z"
+            }
+
++ Response 200 (application/json)
+
+        {}
