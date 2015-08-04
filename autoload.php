@@ -82,12 +82,12 @@ require_once(dirname(__FILE__).'/src/Validator/Number.php');
 require_once(dirname(__FILE__).'/src/Validator/Range.php');
 require_once(dirname(__FILE__).'/src/Validator/Required.php');
 
-require_once(dirname(__FILE__).'/libs/phpseclib/Crypt/Base.php');
-require_once(dirname(__FILE__).'/libs/phpseclib/Crypt/Rijndael.php');
-require_once(dirname(__FILE__).'/libs/phpseclib/Crypt/AES.php');
-require_once(dirname(__FILE__).'/libs/phpseclib/Crypt/Hash.php');
-require_once(dirname(__FILE__).'/libs/phpseclib/Crypt/Random.php');
-require_once(dirname(__FILE__).'/libs/phpseclib/Math/BigInteger.php');
+require_once(dirname(__FILE__).'/lib/phpseclib/Crypt/Base.php');
+require_once(dirname(__FILE__).'/lib/phpseclib/Crypt/Rijndael.php');
+require_once(dirname(__FILE__).'/lib/phpseclib/Crypt/AES.php');
+require_once(dirname(__FILE__).'/lib/phpseclib/Crypt/Hash.php');
+require_once(dirname(__FILE__).'/lib/phpseclib/Crypt/Random.php');
+require_once(dirname(__FILE__).'/lib/phpseclib/Math/BigInteger.php');
 
 // Parse .env if exists and assign configured environment variables.
 NostoDotEnv::getInstance()->init(dirname(__FILE__));
