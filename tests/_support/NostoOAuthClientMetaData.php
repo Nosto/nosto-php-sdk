@@ -1,6 +1,6 @@
 <?php
 
-class NostoOAuthClientMetaData implements NostoOAuthClientMetaDataInterface
+class NostoOAuthClientMetaData implements NostoOauthClientMetaInterface
 {
 	public function getClientId()
 	{

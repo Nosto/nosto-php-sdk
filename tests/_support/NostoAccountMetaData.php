@@ -1,6 +1,6 @@
 <?php
 
-class NostoAccountMetaData implements NostoAccountMetaDataInterface
+class NostoAccountMetaData implements NostoAccountMetaInterface
 {
 	protected $owner;
 	protected $billing;

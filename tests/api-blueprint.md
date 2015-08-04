@@ -74,11 +74,11 @@ Account related resources
             "api_products": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783"
         }
 
-## Single Sign On  [/hub/{platform}/load/{email}]
+## Single Sign On [/hub/{platform}/load/{email}]
 
 + Parameters
 
-    + platform (string) ... the platform name to SSO into
+    + platform (string) ... the platform name
     + email (string) ... the email address of the user who is doing the SSO
 
 ### SSO login [POST]
