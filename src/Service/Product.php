@@ -219,6 +219,10 @@ class NostoServiceProduct
             $data['date_published'] = Nosto::helper('date')->format($product->getDatePublished());
         }
 
+        if ($product->getPriceVariationId()) {
+            $data['variation_id'] = $product->getPriceVariationId();
+        }
+
         return $data;
     }
 

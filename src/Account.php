@@ -122,7 +122,7 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
             );
         }
         if (count($currencies) > 1) {
-            $params['default_variant_id'] = $meta->getDefaultCurrencyVariantId();
+            $params['default_variant_id'] = $meta->getDefaultPriceVariationId();
             $params['use_exchange_rates'] = (bool)$meta->getUseCurrencyExchangeRates();
         }
 

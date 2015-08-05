@@ -127,13 +127,13 @@ interface NostoAccountMetaInterface
     public function getCurrencies();
 
     /**
-     * Returns the default currency ID if store is using multiple currencies.
-     * This ID identifies the currency that products are specified in and can be set to the
-     * currency ISO 639-1 code
+     * Returns the default price variation ID if store is using multiple currencies.
+     * This ID identifies the price that products are specified in and can be set to the currency
+     * ISO 639-1 code
      *
      * @return string|null the currency ID or null if not set.
      */
-    public function getDefaultCurrencyVariantId();
+    public function getDefaultPriceVariationId();
 
     /**
      * Returns if exchange rates are used to handle multi-currency setups.
