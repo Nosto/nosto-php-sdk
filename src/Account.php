@@ -110,9 +110,10 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
             $params['api_tokens'][] = 'api_'.$name;
         }
 
-        // Add all configured currency data.
+        // Add all configured currency formats.
+        $currencies = $meta->getCurrencies();
         foreach ($meta->getCurrencies() as $code => $currency) {
-            $params['currencies'][][strtoupper($code)] = array(
+            $params['currencies'][strtoupper($code)] = array(
                 'currency_before_amount' => ($currency->getSymbolPosition() === NostoCurrency::SYMBOL_POS_LEFT),
                 'currency_token' => $currency->getSymbol(),
                 'decimal_character' => $currency->getDecimalSymbol(),
