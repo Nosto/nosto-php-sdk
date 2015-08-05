@@ -121,6 +121,10 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
                 'decimal_places' => (int)$currency->getPrecision(),
             );
         }
+        if (count($currencies) > 1) {
+            $params['default_variant_id'] = $meta->getDefaultCurrencyVariantId();
+            $params['use_exchange_rates'] = (bool)$meta->getUseCurrencyExchangeRates();
+        }
 
         $request = new NostoApiRequest();
         $request->setPath(NostoApiRequest::PATH_SIGN_UP);
