@@ -36,15 +36,15 @@
 /**
  * Class representing a currency exchange rate.
  */
-class NostoCurrencyExchangeRate extends NostoObject implements NostoValidatableInterface
+class NostoCurrencyExchangeRate
 {
     /**
-     * @var string the currency code for the exchange rate.
+     * @var NostoCurrencyCode the currency code for the exchange rate.
      */
     protected $currencyCode;
 
     /**
-     * @var float|string the exchange rate value.
+     * @var string the exchange rate value.
      */
     protected $exchangeRate;
 
@@ -52,32 +52,25 @@ class NostoCurrencyExchangeRate extends NostoObject implements NostoValidatableI
      * Constructor.
      * Assigns exchange rate properties and validates them.
      *
-     * @param string $currencyCode the currency code for the exchange rate.
-     * @param float|string $exchangeRate the exchange rate value.
+     * @param NostoCurrencyCode $currencyCode the currency code for the exchange rate.
+     * @param string $exchangeRate the exchange rate value.
+     *
+     * @throws NostoInvalidArgumentException
      */
-    public function __construct($currencyCode, $exchangeRate)
+    public function __construct(NostoCurrencyCode $currencyCode, $exchangeRate)
     {
-        $this->currencyCode = strtoupper($currencyCode);
-        $this->exchangeRate = $exchangeRate;
-        $this->validate();
-    }
+        if (!is_numeric($exchangeRate) || $exchangeRate < 0) {
+            throw new NostoInvalidArgumentException(__CLASS__.'.exchangeRate must be a numeric value above 0.');
+        }
 
-    /**
-     * @inheritdoc
-     */
-    public function getValidationRules()
-    {
-        return array(
-            array(array('currencyCode', 'exchangeRate'), 'required'),
-            array(array('currencyCode'), 'currency', 'standard' => 'iso-4217'),
-            array(array('exchangeRate'), 'number')
-        );
+        $this->currencyCode = $currencyCode;
+        $this->exchangeRate = (string)$exchangeRate;
     }
 
     /**
      * Getter for the exchange rates currency code.
      *
-     * @return string the currency code.
+     * @return NostoCurrencyCode the currency code.
      */
     public function getCurrencyCode()
     {
@@ -87,25 +80,10 @@ class NostoCurrencyExchangeRate extends NostoObject implements NostoValidatableI
     /**
      * Getter for the exchange rate value.
      *
-     * @return float|string the exchange rate.
+     * @return string the exchange rate.
      */
     public function getExchangeRate()
     {
         return $this->exchangeRate;
-    }
-
-    /**
-     * Validates the exchange rate.
-     *
-     * @throws NostoException if the exchange rate is invalid.
-     */
-    protected function validate()
-    {
-        $validator = new NostoValidator($this);
-        if (!$validator->validate()) {
-            foreach ($validator->getErrors() as $errors) {
-                throw new NostoException(sprintf('Invalid Nosto currency exchange rate. %s', $errors[0]));
-            }
-        }
     }
 }

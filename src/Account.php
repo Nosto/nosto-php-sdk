@@ -36,7 +36,7 @@
 /**
  * Nosto account class for handling account related actions like, creation, OAuth2 syncing and SSO to Nosto.
  */
-class NostoAccount extends NostoObject implements NostoAccountInterface, NostoValidatableInterface
+class NostoAccount implements NostoAccountInterface
 {
     /**
      * @var string the name of the Nosto account.
@@ -53,21 +53,16 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
      * Create a new account object with given name.
      *
      * @param $name
+     *
+     * @throws NostoInvalidArgumentException
      */
     public function __construct($name)
     {
-        $this->name = $name;
-        $this->validate();
-    }
+        if (!is_string($name) || empty($name)) {
+            throw new NostoInvalidArgumentException(__CLASS__.'.name must be a non-empty string value.');
+        }
 
-    /**
-     * @inheritdoc
-     */
-    public function getValidationRules()
-    {
-        return array(
-            array(array('name'), 'required')
-        );
+        $this->name = (string)$name;
     }
 
     /**
@@ -112,13 +107,13 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
 
         // Add all configured currency formats.
         $currencies = $meta->getCurrencies();
-        foreach ($meta->getCurrencies() as $code => $currency) {
-            $params['currencies'][strtoupper($code)] = array(
-                'currency_before_amount' => ($currency->getSymbolPosition() === NostoCurrency::SYMBOL_POS_LEFT),
-                'currency_token' => $currency->getSymbol(),
-                'decimal_character' => $currency->getDecimalSymbol(),
-                'grouping_separator' => $currency->getGroupSymbol(),
-                'decimal_places' => (int)$currency->getPrecision(),
+        foreach ($meta->getCurrencies() as $currency) {
+            $params['currencies'][$currency->getCode()->getCode()] = array(
+                'currency_before_amount' => ($currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT),
+                'currency_token' => $currency->getSymbol()->getSymbol(),
+                'decimal_character' => $currency->getFormat()->getDecimalSymbol(),
+                'grouping_separator' => $currency->getFormat()->getGroupSymbol(),
+                'decimal_places' => $currency->getFormat()->getPrecision(),
             );
         }
         if (count($currencies) > 1) {
@@ -232,7 +227,7 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
         $foundTokens = 0;
         foreach (NostoApiToken::getApiTokenNames() as $name) {
             foreach ($this->tokens as $token) {
-                if ($token->name === $name) {
+                if ($token->getName() === $name) {
                     $foundTokens++;
                     break;
                 }
@@ -310,20 +305,5 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
         }
 
         return $result->login_url;
-    }
-
-    /**
-     * Validates the account attributes.
-     *
-     * @throws NostoException if any attribute is invalid.
-     */
-    protected function validate()
-    {
-        $validator = new NostoValidator($this);
-        if (!$validator->validate()) {
-            foreach ($validator->getErrors() as $errors) {
-                throw new NostoException(sprintf('Invalid Nosto account. %s', $errors[0]));
-            }
-        }
     }
 }

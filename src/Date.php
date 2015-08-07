@@ -34,22 +34,41 @@
  */
 
 /**
- * Date helper class for date related tasks.
- *
- * @deprecated
+ * Value Object representing a date.
  */
-class NostoHelperDate extends NostoHelper
+final class NostoDate
 {
+    const FORMAT_ISO_8601 = 'Y-m-d\TH:i:s\Z';
+
     /**
-     * Formats date into Nosto format, i.e. Y-m-d.
-     *
-     * @param string $date the date string to format (must be a datetime description valid to pass to `strtotime`).
-     * @return string the formatted date.
-     *
-     * @deprecated
+     * @var int the unix timestamp for the date.
      */
-    public function format($date)
+    private $_timestamp;
+
+    /**
+     * Constructor.
+     * Sets up the Value Object with given data.
+     *
+     * @param int $timestamp the unix timestamp.
+     *
+     * @throws NostoInvalidArgumentException
+     */
+    public function __construct($timestamp)
     {
-        return date('Y-m-d', strtotime($date));
+        if (!is_int($timestamp)) {
+            throw new NostoInvalidArgumentException(__CLASS__.'._timestamp must be a unix timestamp.');
+        }
+
+        $this->_timestamp = (int)$timestamp;
+    }
+
+    /**
+     * Returns the unix timestamp of the date.
+     *
+     * @return int the timestamp.
+     */
+    public function getTimestamp()
+    {
+        return $this->_timestamp;
     }
 }

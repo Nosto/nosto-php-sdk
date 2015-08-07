@@ -126,14 +126,15 @@ class NostoServiceCurrencyExchangeRate
         );
         $validUntil = $collection->getValidUntil();
         if (!is_null($validUntil)) {
-            // Date is formatted according to ISO 8601 standards (date+time).
-            $data['valid_until'] = date('Y-m-d\TH:i:s\Z', $validUntil);
+            /** @var NostoFormatterDate $formatter */
+            $formatter = Nosto::formatter('date');
+            $data['valid_until'] = $formatter->format($validUntil, NostoDate::FORMAT_ISO_8601);
         }
         /** @var NostoCurrencyExchangeRate $item */
         foreach ($collection->getArrayCopy() as $item) {
-            $data['rates'][$item->getCurrencyCode()] = array(
+            $data['rates'][$item->getCurrencyCode()->getCode()] = array(
                 'rate' => $item->getExchangeRate(),
-                'price_currency_code' => $item->getCurrencyCode(),
+                'price_currency_code' => $item->getCurrencyCode()->getCode(),
             );
         }
         if (empty($data['rates'])) {

@@ -17,8 +17,8 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
         $account = new NostoAccount('platform-00000000');
 
         $collection = new NostoCurrencyExchangeRateCollection();
-        $collection->setValidUntil(time() + (7 * 24 * 60 * 60));
-        $collection[] = new NostoCurrencyExchangeRate('EUR', '0.706700000000');
+        $collection->setValidUntil(new NostoDate(time() + (7 * 24 * 60 * 60)));
+        $collection[] = new NostoCurrencyExchangeRate(new NostoCurrencyCode('EUR'), '0.706700000000');
 
         $this->setExpectedException('NostoException');
 
@@ -36,7 +36,7 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
         $account->addApiToken($token);
 
         $collection = new NostoCurrencyExchangeRateCollection();
-        $collection->setValidUntil(time() + (7 * 24 * 60 * 60));
+        $collection->setValidUntil(new NostoDate(time() + (7 * 24 * 60 * 60)));
 
         $this->setExpectedException('NostoException');
 
@@ -54,8 +54,8 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
         $account->addApiToken($token);
 
         $collection = new NostoCurrencyExchangeRateCollection();
-        $collection->setValidUntil(time() + (7 * 24 * 60 * 60));
-        $collection[] = new NostoCurrencyExchangeRate('EUR', '0.706700000000');
+        $collection->setValidUntil(new NostoDate(time() + (7 * 24 * 60 * 60)));
+        $collection[] = new NostoCurrencyExchangeRate(new NostoCurrencyCode('EUR'), '0.706700000000');
 
         $service = new NostoServiceCurrencyExchangeRate($account);
         $result = $service->update($collection);

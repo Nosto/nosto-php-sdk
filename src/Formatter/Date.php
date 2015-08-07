@@ -34,22 +34,19 @@
  */
 
 /**
- * Date helper class for date related tasks.
- *
- * @deprecated
+ * Date formatter.
  */
-class NostoHelperDate extends NostoHelper
+class NostoFormatterDate extends NostoFormatter
 {
     /**
-     * Formats date into Nosto format, i.e. Y-m-d.
+     * Formats a NostoDate object into a date string.
      *
-     * @param string $date the date string to format (must be a datetime description valid to pass to `strtotime`).
+     * @param NostoDate $date the date object.
+     * @param string $format the date format compatible with date().
      * @return string the formatted date.
-     *
-     * @deprecated
      */
-    public function format($date)
+    public function format(NostoDate $date, $format)
     {
-        return date('Y-m-d', strtotime($date));
+        return date($format, $date->getTimestamp());
     }
 }

@@ -34,22 +34,11 @@
  */
 
 /**
- * Date helper class for date related tasks.
+ * Base class that all Nosto formatters must extend.
+ * Formatter classes are used in the following manner:
  *
- * @deprecated
+ * Nosto::formatter('name')->invokeMethod();
  */
-class NostoHelperDate extends NostoHelper
+abstract class NostoFormatter
 {
-    /**
-     * Formats date into Nosto format, i.e. Y-m-d.
-     *
-     * @param string $date the date string to format (must be a datetime description valid to pass to `strtotime`).
-     * @return string the formatted date.
-     *
-     * @deprecated
-     */
-    public function format($date)
-    {
-        return date('Y-m-d', strtotime($date));
-    }
 }

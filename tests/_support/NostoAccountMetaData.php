@@ -56,7 +56,19 @@ class NostoAccountMetaData implements NostoAccountMetaInterface
     public function getCurrencies()
     {
         return array(
-            new NostoCurrency('USD', '$', 'left', ',', '.', 3, 2)
+            new NostoCurrency(
+                new NostoCurrencyCode('USD'),
+                new NostoCurrencySymbol('$', 'left'),
+                new NostoCurrencyFormat(',', 3, '.', 2)
+            )
         );
+    }
+    public function getDefaultPriceVariationId()
+    {
+        return null;
+    }
+    public function getUseCurrencyExchangeRates()
+    {
+        return array();
     }
 }

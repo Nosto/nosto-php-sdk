@@ -45,29 +45,24 @@ class NostoCurrencyExchangeRateCollection extends NostoCollection
     protected $validItemType = 'NostoCurrencyExchangeRate';
 
     /**
-     * @var int the Unix timestamp for how long the exchange rates are valid.
+     * @var NostoDate the timestamp for how long the exchange rates are valid.
      */
     protected $validUntil;
 
     /**
-     * Setter for the Unix timestamp for how long the exchange rates are valid.
+     * Setter for timestamp for how long the exchange rates are valid.
      *
-     * @param int $validUntil the Unix timestamp.
-     *
-     * @throws NostoException if the value is not a Unix timestamp.
+     * @param NostoDate $validUntil the timestamp.
      */
-    public function setValidUntil($validUntil)
+    public function setValidUntil(NostoDate $validUntil)
     {
-        if (!is_int($validUntil)) {
-            throw new NostoException('Exchange rate "validUntil" must be an Unix timestamp.');
-        }
         $this->validUntil = $validUntil;
     }
 
     /**
-     * Getter for the Unix timestamp for how long the exchange rates are valid.
+     * Getter for the timestamp for how long the exchange rates are valid.
      *
-     * @return int|null the Unix timestamp or null if not set.
+     * @return NostoDate|null the timestamp or null if not set.
      */
     public function getValidUntil()
     {

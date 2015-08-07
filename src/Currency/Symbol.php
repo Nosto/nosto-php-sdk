@@ -34,22 +34,62 @@
  */
 
 /**
- * Date helper class for date related tasks.
- *
- * @deprecated
+ * Value Object representing a currency symbol and it's position.
  */
-class NostoHelperDate extends NostoHelper
+final class NostoCurrencySymbol
 {
+    const SYMBOL_POS_LEFT = 'left';
+    const SYMBOL_POS_RIGHT = 'right';
+
     /**
-     * Formats date into Nosto format, i.e. Y-m-d.
-     *
-     * @param string $date the date string to format (must be a datetime description valid to pass to `strtotime`).
-     * @return string the formatted date.
-     *
-     * @deprecated
+     * @var string the currency symbol, e.g. "$".
      */
-    public function format($date)
+    private $_symbol;
+
+    /**
+     * @var string the position of the symbol when displaying the currency.
+     */
+    private $_position;
+
+    /**
+     * Constructor.
+     * Sets up this Value Object with given data.
+     *
+     * @param string $symbol the currency symbol.
+     * @param string $position the position of the symbol when displaying the currency.
+     *
+     * @throws NostoInvalidArgumentException
+     */
+    public function __construct($symbol, $position)
     {
-        return date('Y-m-d', strtotime($date));
+        if (!is_string($symbol) || empty($symbol)) {
+            throw new NostoInvalidArgumentException(__CLASS__.'._symbol must be a non-empty value.');
+        }
+        if (!is_string($position) || !in_array($position, array(self::SYMBOL_POS_LEFT, self::SYMBOL_POS_RIGHT))) {
+            throw new NostoInvalidArgumentException(__CLASS__.'._position must be one of "'. implode('", "', array(self::SYMBOL_POS_LEFT, self::SYMBOL_POS_RIGHT)).'".');
+        }
+
+        $this->_symbol = (string)$symbol;
+        $this->_position = (string)$position;
+    }
+
+    /**
+     * Returns the position of the symbol when displaying the currency.
+     *
+     * @return string the position of the symbol when displaying the currency.
+     */
+    public function getPosition()
+    {
+        return $this->_position;
+    }
+
+    /**
+     * Returns the currency symbol.
+     *
+     * @return string the currency symbol.
+     */
+    public function getSymbol()
+    {
+        return $this->_symbol;
     }
 }

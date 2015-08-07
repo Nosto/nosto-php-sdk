@@ -36,90 +36,42 @@
 /**
  * Class representing a currency with all it's formatting details Nosto needs.
  */
-class NostoCurrency extends NostoObject implements NostoValidatableInterface
+class NostoCurrency
 {
-    const SYMBOL_POS_LEFT = 'left';
-    const SYMBOL_POS_RIGHT = 'right';
-
     /**
-     * @var string the currency ISO 4217 code.
+     * @var NostoCurrencyCode the currency ISO 4217 code.
      */
     protected $code;
 
     /**
-     * @var string the currency symbol.
+     * @var NostoCurrencySymbol the currency symbol.
      */
     protected $symbol;
 
     /**
-     * @var string the position of the currency symbol ("left" or "right").
+     * @var NostoCurrencyFormat the currency format.
      */
-    protected $symbolPosition;
-
-    /**
-     * @var string the value grouping symbol.
-     */
-    protected $groupSymbol;
-
-    /**
-     * @var string the value decimal symbol.
-     */
-    protected $decimalSymbol;
-
-    /**
-     * @var int the length of the groups separated by the group symbol.
-     */
-    protected $groupLength;
-
-    /**
-     * @var int the decimal precision.
-     */
-    protected $precision;
+    protected $format;
 
     /**
      * Constructor.
      * Assigns the currency properties.
      *
-     * @param string $code the currency ISO 4217 code.
-     * @param string $symbol the currency symbol.
-     * @param bool $symbolPosition the position of the currency symbol ("left" or "right").
-     * @param string $groupSymbol the value grouping symbol.
-     * @param string $decimalSymbol the value decimal symbol.
-     * @param int $groupLength the length of the groups separated by the group symbol.
-     * @param int $precision the decimal precision.
+     * @param NostoCurrencyCode $code the currency ISO 4217 code.
+     * @param NostoCurrencySymbol $symbol the currency symbol.
+     * @param NostoCurrencyFormat $format the currency formatting.
      */
-    public function __construct($code, $symbol, $symbolPosition, $groupSymbol, $decimalSymbol, $groupLength, $precision)
+    public function __construct(NostoCurrencyCode $code, NostoCurrencySymbol $symbol, NostoCurrencyFormat $format)
     {
         $this->code = $code;
         $this->symbol = $symbol;
-        $this->symbolPosition = $symbolPosition;
-        $this->groupSymbol = $groupSymbol;
-        $this->decimalSymbol = $decimalSymbol;
-        $this->groupLength = $groupLength;
-        $this->precision = $precision;
-        $this->validate();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getValidationRules()
-    {
-        return array(
-            array(
-                array('code', 'symbol', 'symbolPosition', 'groupSymbol', 'decimalSymbol', 'groupLength', 'precision'),
-                'required'
-            ),
-            array(array('code'), 'currency', 'standard' => 'iso-4217'),
-            array(array('symbolPosition'), 'in', 'range' => array(self::SYMBOL_POS_LEFT, self::SYMBOL_POS_RIGHT)),
-            array(array('groupLength', 'precision'), 'number', 'integer' => true)
-        );
+        $this->format = $format;
     }
 
     /**
      * Getter for the currency code.
      *
-     * @return string the currency ISO 4217 code.
+     * @return NostoCurrencyCode the currency ISO 4217 code.
      */
     public function getCode()
     {
@@ -129,7 +81,7 @@ class NostoCurrency extends NostoObject implements NostoValidatableInterface
     /**
      * Getter for the currency symbol.
      *
-     * @return string the currency symbol.
+     * @return NostoCurrencySymbol the currency symbol.
      */
     public function getSymbol()
     {
@@ -137,67 +89,12 @@ class NostoCurrency extends NostoObject implements NostoValidatableInterface
     }
 
     /**
-     * Getter for the currency symbol position.
+     * Getter for the currency format.
      *
-     * @return string the position "left" or "right".
+     * @return NostoCurrencyFormat the format.
      */
-    public function getSymbolPosition()
+    public function getFormat()
     {
-        return $this->symbolPosition;
-    }
-
-    /**
-     * Getter for the grouping symbol.
-     *
-     * @return string the value grouping symbol.
-     */
-    public function getGroupSymbol()
-    {
-        return $this->groupSymbol;
-    }
-
-    /**
-     * Getter for the decimal symbol.
-     *
-     * @return string the value decimal symbol.
-     */
-    public function getDecimalSymbol()
-    {
-        return $this->decimalSymbol;
-    }
-
-    /**
-     * Getter for the length of the groups separated by the group symbol.
-     *
-     * @return int the group length.
-     */
-    public function getGroupLength()
-    {
-        return $this->groupLength;
-    }
-
-    /**
-     * Getter for the decimal precision.
-     *
-     * @return int the decimal precision.
-     */
-    public function getPrecision()
-    {
-        return $this->precision;
-    }
-
-    /**
-     * Validates the currency.
-     *
-     * @throws NostoException if the currency is invalid.
-     */
-    protected function validate()
-    {
-        $validator = new NostoValidator($this);
-        if (!$validator->validate()) {
-            foreach ($validator->getErrors() as $errors) {
-                throw new NostoException(sprintf('Invalid Nosto currency. %s', $errors[0]));
-            }
-        }
+        return $this->format;
     }
 }
