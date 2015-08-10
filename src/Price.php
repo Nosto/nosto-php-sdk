@@ -46,7 +46,11 @@ final class NostoPrice
     public function __construct($price)
     {
         if (!is_numeric($price)) {
-            throw new NostoInvalidArgumentException(__CLASS__.'._price must be a numeric value.');
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s._price (%s) must be a numeric value.',
+                __CLASS__,
+                $price
+            ));
         }
 
         $this->_price = (string)$price;

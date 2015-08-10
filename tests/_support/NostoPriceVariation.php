@@ -9,21 +9,21 @@ class NostoPriceVariation implements NostoProductPriceVariationInterface
 
     public function getCurrencyCode()
     {
-        return 'EUR';
+        return new NostoCurrencyCode('EUR');
     }
 
     public function getPrice()
     {
-        return 88.76;
+        return new NostoPrice(88.76);
     }
 
     public function getListPrice()
     {
-        return 98.52;
+        return new NostoPrice(98.52);
     }
 
     public function getAvailability()
     {
-        return 'InStock';
+        return new NostoProductAvailability('InStock');
     }
 }

@@ -34,18 +34,47 @@
  */
 
 /**
- * Price helper class for price related tasks.
+ * Value Object for representing a product availability.
  */
-class NostoHelperPrice extends NostoHelper
+final class NostoProductAvailability
 {
+    const IN_STOCK = 'InStock';
+    const OUT_OF_STOCK = 'OutOfStock';
+
     /**
-     * Formats price into Nosto format, e.g. 1000.99.
-     *
-     * @param string|int|float $price the price string to format.
-     * @return string the formatted price.
+     * @var string the availability, i.e. either "InStock" or "OutOfStock".
      */
-    public function format($price)
+    private $_availability;
+
+    /**
+     * Constructor.
+     * Sets up the Value Object with given data.
+     *
+     * @param string $availability the availability, i.e. either "InStock" or "OutOfStock".
+     *
+     * @throws NostoInvalidArgumentException
+     */
+    public function __construct($availability)
     {
-        return number_format($price, 2, '.', '');
+        if (!is_string($availability) || !in_array($availability, array(self::IN_STOCK, self::OUT_OF_STOCK))) {
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s._availability (%s) must be one of the following: "%s".',
+                __CLASS__,
+                $availability,
+                implode('", "', array(self::IN_STOCK, self::OUT_OF_STOCK))
+            ));
+        }
+
+        $this->_availability = $availability;
+    }
+
+    /**
+     * Returns the availability, i.e. either "InStock" or "OutOfStock".
+     *
+     * @return string the availability.
+     */
+    public function getAvailability()
+    {
+        return $this->_availability;
     }
 }

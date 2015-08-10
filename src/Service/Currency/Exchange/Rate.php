@@ -128,7 +128,7 @@ class NostoServiceCurrencyExchangeRate
         if (!is_null($validUntil)) {
             /** @var NostoFormatterDate $formatter */
             $formatter = Nosto::formatter('date');
-            $data['valid_until'] = $formatter->format($validUntil, NostoDate::FORMAT_ISO_8601);
+            $data['valid_until'] = $formatter->format($validUntil, new NostoDateFormat(NostoDateFormat::ISO_8601));
         }
         /** @var NostoCurrencyExchangeRate $item */
         foreach ($collection->getArrayCopy() as $item) {

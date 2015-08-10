@@ -42,11 +42,11 @@ class NostoFormatterDate extends NostoFormatter
      * Formats a NostoDate object into a date string.
      *
      * @param NostoDate $date the date object.
-     * @param string $format the date format compatible with date().
+     * @param NostoDateFormat $format the formatting.
      * @return string the formatted date.
      */
-    public function format(NostoDate $date, $format)
+    public function format(NostoDate $date, NostoDateFormat $format)
     {
-        return date($format, $date->getTimestamp());
+        return date($format->getFormat(), $date->getTimestamp());
     }
 }

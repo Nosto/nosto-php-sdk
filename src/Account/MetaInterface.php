@@ -71,21 +71,21 @@ interface NostoAccountMetaInterface
     /**
      * The 3-letter ISO code (ISO 4217) for the currency used by the shop for which the account is created for.
      *
-     * @return string the currency ISO code.
+     * @return NostoCurrencyCode the currency code.
      */
     public function getCurrencyCode();
 
     /**
      * The 2-letter ISO code (ISO 639-1) for the language used by the shop for which the account is created for.
      *
-     * @return string the language ISO code.
+     * @return NostoLanguageCode the language code.
      */
     public function getLanguageCode();
 
     /**
      * The 2-letter ISO code (ISO 639-1) for the language of the account owner who is creating the account.
      *
-     * @return string the language ISO code.
+     * @return NostoLanguageCode the language code.
      */
     public function getOwnerLanguageCode();
 

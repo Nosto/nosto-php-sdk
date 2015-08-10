@@ -34,115 +34,91 @@
  */
 
 /**
- * Value Object representing a currency formatting, e.g. "1.234,56".
+ * Value Object representing a Nosto date format.
  */
-final class NostoCurrencyFormat
+final class NostoPriceFormat
 {
     /**
-     * @var string the grouping symbol/char.
+     * @var int the number of decimals.
      */
-    private $_groupSymbol;
+    private $_decimals;
 
     /**
-     * @var int the length of the group.
+     * @var string the decimal point.
      */
-    private $_groupLength;
+    private $_decimalPoint;
 
     /**
-     * @var string the decimal symbol/char.
+     * @var string the thousands separator.
      */
-    private $_decimalSymbol;
-
-    /**
-     * @var int the value precision.
-     */
-    private $_precision;
+    private $_thousandsSeparator;
 
     /**
      * Constructor.
-     * Sets up this Value Object with given data.
+     * Sets up the Value Object with given data.
      *
-     * @param string $groupSymbol the grouping symbol/char.
-     * @param int $groupLength the length of the group.
-     * @param string $decimalSymbol the decimal symbol/char.
-     * @param int $precision the value precision.
+     * @param int $decimals the number of decimals.
+     * @param string $decimalPoint the decimal point.
+     * @param string $thousandsSeparator the thousands separator.
      *
      * @throws NostoInvalidArgumentException
      */
-    public function __construct($groupSymbol, $groupLength, $decimalSymbol, $precision)
+    public function __construct($decimals, $decimalPoint, $thousandsSeparator)
     {
-        if (!is_string($groupSymbol) || empty($groupSymbol)) {
+        if (!is_int($decimals)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._groupSymbol (%s) must be a non-empty value.',
+                '%s._decimals (%s) must be an integer value.',
                 __CLASS__,
-                $groupSymbol
+                $decimals
             ));
         }
-        if (!is_int($groupLength)) {
+        if (!is_string($decimalPoint)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._groupLength (%s) must be an integer.',
+                '%s._decimalPoint (%s) must be an string value.',
                 __CLASS__,
-                $groupLength
+                $decimalPoint
             ));
         }
-        if (!is_string($decimalSymbol) || empty($decimalSymbol)) {
+        if (!is_string($thousandsSeparator)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._decimalSymbol (%s) must be a non-empty value.',
+                '%s._thousandsSeparator (%s) must be an string value.',
                 __CLASS__,
-                $decimalSymbol
-            ));
-        }
-        if (!is_int($precision)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s._precision (%s) must be an integer.',
-                __CLASS__,
-                $precision
+                $thousandsSeparator
             ));
         }
 
-        $this->_groupSymbol = (string)$groupSymbol;
-        $this->_groupLength = (int)$groupLength;
-        $this->_decimalSymbol = (string)$decimalSymbol;
-        $this->_precision = (int)$precision;
+        $this->_decimals = $decimals;
+        $this->_decimalPoint = $decimalPoint;
+        $this->_thousandsSeparator = $thousandsSeparator;
     }
 
     /**
-     * Returns the decimal symbol/char.
+     * Returns the number of decimals.
      *
-     * @return string the decimal symbol/char.
+     * @return int the decimals.
      */
-    public function getDecimalSymbol()
+    public function getDecimals()
     {
-        return $this->_decimalSymbol;
+        return $this->_decimals;
     }
 
     /**
-     * Returns the length of the group.
+     * Returns the decimal point.
      *
-     * @return int the length of the group.
+     * @return string the decimal point.
      */
-    public function getGroupLength()
+    public function getDecimalPoint()
     {
-        return $this->_groupLength;
+        return $this->_decimalPoint;
     }
 
     /**
-     * Returns the grouping symbol/char.
+     * Returns the thousands separator.
      *
-     * @return string the grouping symbol/char.
+     * @return string the thousands separator.
      */
-    public function getGroupSymbol()
+    public function getThousandsSeparator()
     {
-        return $this->_groupSymbol;
-    }
-
-    /**
-     * Returns the value precision.
-     *
-     * @return int the value precision.
-     */
-    public function getPrecision()
-    {
-        return $this->_precision;
+        return $this->_thousandsSeparator;
     }
 }

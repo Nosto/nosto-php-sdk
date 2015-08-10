@@ -56,4 +56,26 @@ class CurrencyTest extends \Codeception\TestCase\Test
                 $this->assertTrue($currency->getFormat()->getPrecision() === $precision);
             });
     }
+
+    /**
+     * Tests that invalid currency codes cannot be created.
+     */
+    public function testInvalidCurrencyCode()
+    {
+        $this->setExpectedException('NostoInvalidArgumentException');
+
+        new NostoCurrencyCode('eur');
+    }
+
+    /**
+     * Tests that valid currency codes can be created.
+     */
+    public function testValidCurrencyCode()
+    {
+        $currencyCode = new NostoCurrencyCode('EUR');
+
+        $this->specify('currency code is EUR', function() use ($currencyCode) {
+                $this->assertTrue($currencyCode->getCode() === "EUR");
+            });
+    }
 }

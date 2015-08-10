@@ -60,7 +60,11 @@ class NostoCurrencyExchangeRate
     public function __construct(NostoCurrencyCode $currencyCode, $exchangeRate)
     {
         if (!is_numeric($exchangeRate) || $exchangeRate < 0) {
-            throw new NostoInvalidArgumentException(__CLASS__.'.exchangeRate must be a numeric value above 0.');
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s.exchangeRate (%s) must be a numeric value above 0.',
+                __CLASS__,
+                $exchangeRate
+            ));
         }
 
         $this->currencyCode = $currencyCode;

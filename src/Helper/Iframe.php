@@ -59,7 +59,7 @@ class NostoHelperIframe extends NostoHelper
         $queryParams = http_build_query(
             array_merge(
                 array(
-                    'lang' => strtolower($meta->getLanguageIsoCode()),
+                    'lang' => $meta->getLanguageIsoCode()->getCode(),
                     'ps_version' => $meta->getVersionPlatform(),
                     'nt_version' => $meta->getVersionModule(),
                     'product_pu' => $meta->getPreviewUrlProduct(),
@@ -67,7 +67,7 @@ class NostoHelperIframe extends NostoHelper
                     'search_pu' => $meta->getPreviewUrlSearch(),
                     'cart_pu' => $meta->getPreviewUrlCart(),
                     'front_pu' => $meta->getPreviewUrlFront(),
-                    'shop_lang' => strtolower($meta->getLanguageIsoCodeShop()),
+                    'shop_lang' => $meta->getLanguageIsoCodeShop()->getCode(),
                     'shop_name' => $meta->getShopName(),
                     'unique_id' => $meta->getUniqueId(),
                     'fname' => $meta->getFirstName(),

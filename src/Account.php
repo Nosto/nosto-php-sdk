@@ -59,7 +59,11 @@ class NostoAccount implements NostoAccountInterface
     public function __construct($name)
     {
         if (!is_string($name) || empty($name)) {
-            throw new NostoInvalidArgumentException(__CLASS__.'.name must be a non-empty string value.');
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s.name (%s) must be a non-empty string value.',
+                __CLASS__,
+                $name
+            ));
         }
 
         $this->name = (string)$name;
@@ -75,8 +79,8 @@ class NostoAccount implements NostoAccountInterface
             'name' => $meta->getName(),
             'platform' => $meta->getPlatform(),
             'front_page_url' => $meta->getFrontPageUrl(),
-            'currency_code' => strtoupper($meta->getCurrencyCode()),
-            'language_code' => strtolower($meta->getOwnerLanguageCode()),
+            'currency_code' => $meta->getCurrencyCode()->getCode(),
+            'language_code' => $meta->getOwnerLanguageCode()->getCode(),
             'owner' => array(
                 'first_name' => $meta->getOwner()->getFirstName(),
                 'last_name' => $meta->getOwner()->getLastName(),
@@ -88,7 +92,7 @@ class NostoAccount implements NostoAccountInterface
 
         // Add optional billing details if the required data is set.
         $billingDetails = array(
-            'country' => strtoupper($meta->getBillingDetails()->getCountry())
+            'country' => $meta->getBillingDetails()->getCountry()->getCode()
         );
         if (!empty($billingDetails['country'])) {
             $params['billing_details'] = $billingDetails;
@@ -123,7 +127,7 @@ class NostoAccount implements NostoAccountInterface
 
         $request = new NostoApiRequest();
         $request->setPath(NostoApiRequest::PATH_SIGN_UP);
-        $request->setReplaceParams(array('{lang}' => $meta->getLanguageCode()));
+        $request->setReplaceParams(array('{lang}' => $meta->getLanguageCode()->getCode()));
         $request->setContentType('application/json');
         $request->setAuthBasic('', $meta->getSignUpApiToken());
         $response = $request->post(json_encode($params));

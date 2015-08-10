@@ -16,11 +16,11 @@ class NostoAccountMetaDataIframe implements NostoAccountMetaIframeInterface
 	}
 	public function getLanguageIsoCode()
 	{
-		return 'en';
+		return new NostoLanguageCode('en');
 	}
 	public function getLanguageIsoCodeShop()
 	{
-		return 'en';
+		return new NostoLanguageCode('en');
 	}
 	public function getUniqueId()
 	{

@@ -49,28 +49,28 @@ interface NostoProductPriceVariationInterface
     /**
      * Returns the currency code (SIO 4217) for the price variation.
      *
-     * @return string the price currency code.
+     * @return NostoCurrencyCode the price currency code.
      */
     public function getCurrencyCode();
 
     /**
      * Returns the price of the variation including possible discounts and taxes.
      *
-     * @return float the price.
+     * @return NostoPrice the price.
      */
     public function getPrice();
 
     /**
      * Returns the list price of the variation without discounts but incl taxes.
      *
-     * @return float the price.
+     * @return NostoPrice the price.
      */
     public function getListPrice();
 
     /**
      * Returns the availability of the price variation, i.e. if it is in stock or not.
      *
-     * @return string the availability, either "InStock" or "OutOfStock".
+     * @return NostoProductAvailability the availability.
      */
     public function getAvailability();
 }

@@ -77,7 +77,7 @@ interface NostoOauthClientMetaInterface
     /**
      * The 2-letter ISO code (ISO 639-1) for the language the OAuth2 server uses for UI localization.
      *
-     * @return string the ISO code.
+     * @return NostoLanguageCode the language code.
      */
     public function getLanguageIsoCode();
 }

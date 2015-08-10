@@ -38,8 +38,6 @@
  */
 final class NostoDate
 {
-    const FORMAT_ISO_8601 = 'Y-m-d\TH:i:s\Z';
-
     /**
      * @var int the unix timestamp for the date.
      */
@@ -56,7 +54,11 @@ final class NostoDate
     public function __construct($timestamp)
     {
         if (!is_int($timestamp)) {
-            throw new NostoInvalidArgumentException(__CLASS__.'._timestamp must be a unix timestamp.');
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s._timestamp (%s) must be a unix timestamp.',
+                __CLASS__,
+                $timestamp
+            ));
         }
 
         $this->_timestamp = (int)$timestamp;

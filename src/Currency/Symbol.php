@@ -63,10 +63,19 @@ final class NostoCurrencySymbol
     public function __construct($symbol, $position)
     {
         if (!is_string($symbol) || empty($symbol)) {
-            throw new NostoInvalidArgumentException(__CLASS__.'._symbol must be a non-empty value.');
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s._symbol (%s) must be a non-empty value.',
+                __CLASS__,
+                $symbol
+            ));
         }
         if (!is_string($position) || !in_array($position, array(self::SYMBOL_POS_LEFT, self::SYMBOL_POS_RIGHT))) {
-            throw new NostoInvalidArgumentException(__CLASS__.'._position must be one of "'. implode('", "', array(self::SYMBOL_POS_LEFT, self::SYMBOL_POS_RIGHT)).'".');
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s._position (%s) must be one of the following: "%s".',
+                __CLASS__,
+                $position,
+                implode('", "', array(self::SYMBOL_POS_LEFT, self::SYMBOL_POS_RIGHT))
+            ));
         }
 
         $this->_symbol = (string)$symbol;

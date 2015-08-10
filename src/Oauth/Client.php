@@ -63,7 +63,7 @@ class NostoOAuthClient
     protected $redirectUrl;
 
     /**
-     * @var string the language ISO code used for localization on the oauth2 server.
+     * @var NostoLanguageCode the language code used for localization on the oauth2 server.
      */
     protected $languageIsoCode;
 
@@ -97,7 +97,7 @@ class NostoOAuthClient
                 '{cid}' => $this->clientId,
                 '{uri}' => urlencode($this->redirectUrl),
                 '{sco}' => implode(' ', $this->scopes),
-                '{iso}' => strtolower($this->languageIsoCode),
+                '{iso}' => $this->languageIsoCode->getCode(),
             )
         );
     }

@@ -20,6 +20,6 @@ class NostoOAuthClientMetaData implements NostoOauthClientMetaInterface
 	}
 	public function getLanguageIsoCode()
 	{
-		return 'en';
+		return new NostoLanguageCode('en');
 	}
 }

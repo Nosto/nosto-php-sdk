@@ -34,25 +34,19 @@
  */
 
 /**
- * Required validator used to validate `validatable` object properties.
- *
- * Supports validation of required values.
+ * Price formatter.
  */
-class NostoValidatorRequired extends NostoValidator
+class NostoFormatterPrice extends NostoFormatter
 {
     /**
-     * @inheritdoc
+     * Formats a NostoPrice object into a price string.
+     *
+     * @param NostoPrice $price the price object.
+     * @param NostoPriceFormat $format the price format.
+     * @return string the formatted price.
      */
-    public function validate()
+    public function format(NostoPrice $price, NostoPriceFormat $format)
     {
-        $isValid = true;
-        foreach ($this->properties as $property) {
-            $value = $this->object->{$property};
-            if (empty($value)) {
-                $this->addError($property, sprintf('Property "%s" must not be empty.', $property));
-                $isValid = false;
-            }
-        }
-        return $isValid;
+        return number_format($price->getPrice(), $format->getDecimals(), $format->getDecimalPoint(), $format->getThousandsSeparator());
     }
 }

@@ -73,10 +73,19 @@ class NostoApiToken
     public function __construct($name, $value)
     {
         if (!in_array($name, self::$tokenNames)) {
-            throw new NostoInvalidArgumentException(__CLASS__.'.name must be one of "'.implode('", "', self::$tokenNames).'".');
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s.name (%s) must be one of the following: "%s"',
+                __CLASS__,
+                $name,
+                implode('", "', self::$tokenNames)
+            ));
         }
         if (!is_string($value) || empty($value)) {
-            throw new NostoInvalidArgumentException(__CLASS__.'.value must be a non-empty string value.');
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s.value (%s) must be a non-empty string value.',
+                __CLASS__,
+                $value
+            ));
         }
 
         $this->name = (string)$name;

@@ -188,14 +188,22 @@ class NostoServiceProduct
      */
     protected function getProductAsArray(NostoProductInterface $product)
     {
+        /** @var NostoFormatterDate $dateFormatter */
+        $dateFormatter = Nosto::formatter('date');
+        /** @var NostoFormatterPrice $priceFormatter */
+        $priceFormatter = Nosto::formatter('price');
+
+        $dateFormat = new NostoDateFormat(NostoDateFormat::YMD);
+        $priceFormat = new NostoPriceFormat(2, '.', '');
+
         $data = array(
             'url' => $product->getUrl(),
             'product_id' => $product->getProductId(),
             'name' => $product->getName(),
             'image_url' => $product->getImageUrl(),
-            'price' => Nosto::helper('price')->format($product->getPrice()),
-            'price_currency_code' => strtoupper($product->getCurrencyCode()),
-            'availability' => $product->getAvailability(),
+            'price' => $priceFormatter->format($product->getPrice(), $priceFormat),
+            'price_currency_code' => $product->getCurrencyCode()->getCode(),
+            'availability' => $product->getAvailability()->getAvailability(),
             'categories' => $product->getCategories(),
         );
 
@@ -205,7 +213,7 @@ class NostoServiceProduct
             $data['description'] = $product->getFullDescription();
         }
         if ($product->getListPrice()) {
-            $data['list_price'] = Nosto::helper('price')->format($product->getListPrice());
+            $data['list_price'] = $priceFormatter->format($product->getListPrice(), $priceFormat);
         }
         if ($product->getBrand()) {
             $data['brand'] = $product->getBrand();
@@ -216,7 +224,7 @@ class NostoServiceProduct
             }
         }
         if ($product->getDatePublished()) {
-            $data['date_published'] = Nosto::helper('date')->format($product->getDatePublished());
+            $data['date_published'] = $dateFormatter->format($product->getDatePublished(), $dateFormat);
         }
 
         if ($product->getPriceVariationId()) {
@@ -236,11 +244,8 @@ class NostoServiceProduct
     {
         $data = array();
         foreach ($this->collection->getArrayCopy() as $item) {
-            /** @var NostoProductInterface|NostoValidatableInterface $item */
-            $validator = new NostoValidator($item);
-            if ($validator->validate()) {
-                $data[] = $this->getProductAsArray($item);
-            }
+            /** @var NostoProductInterface $item */
+            $data[] = $this->getProductAsArray($item);
         }
         if (empty($data)) {
             throw new NostoException('No products found in collection.');

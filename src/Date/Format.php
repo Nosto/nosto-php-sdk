@@ -34,22 +34,47 @@
  */
 
 /**
- * Date helper class for date related tasks.
- *
- * @deprecated
+ * Value Object representing a Nosto date format.
  */
-class NostoHelperDate extends NostoHelper
+final class NostoDateFormat
 {
+    const ISO_8601 = 'Y-m-d\TH:i:s\Z';
+    const YMD = 'Y-m-d';
+
     /**
-     * Formats date into Nosto format, i.e. Y-m-d.
-     *
-     * @param string $date the date string to format (must be a datetime description valid to pass to `strtotime`).
-     * @return string the formatted date.
-     *
-     * @deprecated
+     * @var string the date format.
      */
-    public function format($date)
+    private $_format;
+
+    /**
+     * Constructor.
+     * Sets up the Value Object with given data.
+     *
+     * @param string $format the format string.
+     *
+     * @throws NostoInvalidArgumentException
+     */
+    public function __construct($format)
     {
-        return date('Y-m-d', strtotime($date));
+        if (!is_string($format) || !in_array($format, array(self::ISO_8601, self::YMD))) {
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s._format (%s) must be one of the following: "%s".',
+                __CLASS__,
+                $format,
+                implode('", "', array(self::ISO_8601, self::YMD))
+            ));
+        }
+
+        $this->_format = $format;
+    }
+
+    /**
+     * Returns the date format string.
+     *
+     * @return string the format.
+     */
+    public function getFormat()
+    {
+        return $this->_format;
     }
 }
