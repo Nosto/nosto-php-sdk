@@ -132,9 +132,9 @@ class NostoServiceCurrencyExchangeRate
         }
         /** @var NostoCurrencyExchangeRate $item */
         foreach ($collection->getArrayCopy() as $item) {
-            $data['rates'][$item->getCurrencyCode()->getCode()] = array(
+            $data['rates'][$item->getCurrency()->getCode()] = array(
                 'rate' => $item->getExchangeRate(),
-                'price_currency_code' => $item->getCurrencyCode()->getCode(),
+                'price_currency_code' => $item->getCurrency()->getCode(),
             );
         }
         if (empty($data['rates'])) {

@@ -74,7 +74,7 @@ class NostoExportCollectionOrder extends NostoOrderCollection implements NostoEx
                     'quantity' => (int)$orderItem->getQuantity(),
                     'name' => $orderItem->getName(),
                     'unit_price' => $priceFormatter->format($orderItem->getUnitPrice(), $priceFormat),
-                    'price_currency_code' => $orderItem->getCurrencyCode()->getCode(),
+                    'price_currency_code' => $orderItem->getCurrency()->getCode(),
                 );
             }
             $array[] = $data;

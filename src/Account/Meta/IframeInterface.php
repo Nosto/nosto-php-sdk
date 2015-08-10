@@ -72,14 +72,14 @@ interface NostoAccountMetaIframeInterface
      *
      * @return NostoLanguageCode the language code.
      */
-    public function getLanguageIsoCode();
+    public function getLanguage();
 
     /**
      * The 2-letter ISO code (ISO 639-1) for the language of the shop the account belongs to.
      *
      * @return NostoLanguageCode the language code.
      */
-    public function getLanguageIsoCodeShop();
+    public function getShopLanguage();
 
     /**
      * Unique identifier for the e-commerce installation.

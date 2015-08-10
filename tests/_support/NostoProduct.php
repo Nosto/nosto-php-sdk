@@ -26,7 +26,7 @@ class NostoProduct implements NostoProductInterface
 	{
 		return new NostoPrice(110.99);
 	}
-	public function getCurrencyCode()
+	public function getCurrency()
 	{
 		return new NostoCurrencyCode('USD');
 	}

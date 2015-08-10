@@ -7,7 +7,7 @@ class NostoPriceVariation implements NostoProductPriceVariationInterface
         return 'EUR';
     }
 
-    public function getCurrencyCode()
+    public function getCurrency()
     {
         return new NostoCurrencyCode('EUR');
     }

@@ -24,10 +24,10 @@ class LanguageTest extends \Codeception\TestCase\Test
      */
     public function testValidLanguageCode()
     {
-        $langCode = new NostoLanguageCode('en');
+        $lang = new NostoLanguageCode('en');
 
-        $this->specify('language code is en', function() use ($langCode) {
-                $this->assertTrue($langCode->getCode() === "en");
+        $this->specify('language code is en', function() use ($lang) {
+                $this->assertTrue($lang->getCode() === "en");
             });
     }
 }

@@ -86,7 +86,7 @@ interface NostoProductInterface
      *
      * @return NostoCurrencyCode the currency code.
      */
-    public function getCurrencyCode();
+    public function getCurrency();
 
     /**
      * Returns the ID of the price variation that is currently in use.

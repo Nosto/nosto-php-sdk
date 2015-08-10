@@ -25,15 +25,15 @@ class NostoAccountMetaData implements NostoAccountMetaInterface
 	{
 		return 'http://localhost';
 	}
-	public function getCurrencyCode()
+	public function getCurrency()
 	{
 		return new NostoCurrencyCode('USD');
 	}
-	public function getLanguageCode()
+	public function getLanguage()
 	{
 		return new NostoLanguageCode('en');
 	}
-	public function getOwnerLanguageCode()
+	public function getOwnerLanguage()
 	{
 		return new NostoLanguageCode('en');
 	}

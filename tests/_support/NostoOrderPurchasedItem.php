@@ -18,7 +18,7 @@ class NostoOrderPurchasedItem implements NostoOrderItemInterface
 	{
 		return new NostoPrice(99.99);
 	}
-	public function getCurrencyCode()
+	public function getCurrency()
 	{
 		return new NostoCurrencyCode('USD');
 	}

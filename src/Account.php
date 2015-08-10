@@ -79,8 +79,8 @@ class NostoAccount implements NostoAccountInterface
             'name' => $meta->getName(),
             'platform' => $meta->getPlatform(),
             'front_page_url' => $meta->getFrontPageUrl(),
-            'currency_code' => $meta->getCurrencyCode()->getCode(),
-            'language_code' => $meta->getOwnerLanguageCode()->getCode(),
+            'currency_code' => $meta->getCurrency()->getCode(),
+            'language_code' => $meta->getOwnerLanguage()->getCode(),
             'owner' => array(
                 'first_name' => $meta->getOwner()->getFirstName(),
                 'last_name' => $meta->getOwner()->getLastName(),
@@ -91,11 +91,10 @@ class NostoAccount implements NostoAccountInterface
         );
 
         // Add optional billing details if the required data is set.
-        $billingDetails = array(
-            'country' => $meta->getBillingDetails()->getCountry()->getCode()
-        );
-        if (!empty($billingDetails['country'])) {
-            $params['billing_details'] = $billingDetails;
+        if ($meta->getBillingDetails()->getCountry()) {
+            $params['billing_details'] = array(
+                'country' => $meta->getBillingDetails()->getCountry()->getCode()
+            );
         }
 
         // Add optional partner code if one is set.
@@ -127,7 +126,7 @@ class NostoAccount implements NostoAccountInterface
 
         $request = new NostoApiRequest();
         $request->setPath(NostoApiRequest::PATH_SIGN_UP);
-        $request->setReplaceParams(array('{lang}' => $meta->getLanguageCode()->getCode()));
+        $request->setReplaceParams(array('{lang}' => $meta->getLanguage()->getCode()));
         $request->setContentType('application/json');
         $request->setAuthBasic('', $meta->getSignUpApiToken());
         $response = $request->post(json_encode($params));

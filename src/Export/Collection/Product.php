@@ -61,7 +61,7 @@ class NostoExportCollectionProduct extends NostoProductCollection implements Nos
                 'name' => $item->getName(),
                 'image_url' => $item->getImageUrl(),
                 'price' => $priceFormatter->format($item->getPrice(), $priceFormat),
-                'price_currency_code' => $item->getCurrencyCode()->getCode(),
+                'price_currency_code' => $item->getCurrency()->getCode(),
                 'availability' => $item->getAvailability()->getAvailability(),
                 'categories' => $item->getCategories(),
             );

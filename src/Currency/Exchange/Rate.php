@@ -41,7 +41,7 @@ class NostoCurrencyExchangeRate
     /**
      * @var NostoCurrencyCode the currency code for the exchange rate.
      */
-    protected $currencyCode;
+    protected $currency;
 
     /**
      * @var string the exchange rate value.
@@ -67,7 +67,7 @@ class NostoCurrencyExchangeRate
             ));
         }
 
-        $this->currencyCode = $currencyCode;
+        $this->currency = $currencyCode;
         $this->exchangeRate = (string)$exchangeRate;
     }
 
@@ -76,9 +76,9 @@ class NostoCurrencyExchangeRate
      *
      * @return NostoCurrencyCode the currency code.
      */
-    public function getCurrencyCode()
+    public function getCurrency()
     {
-        return $this->currencyCode;
+        return $this->currency;
     }
 
     /**

@@ -72,10 +72,10 @@ class CurrencyTest extends \Codeception\TestCase\Test
      */
     public function testValidCurrencyCode()
     {
-        $currencyCode = new NostoCurrencyCode('EUR');
+        $currency = new NostoCurrencyCode('EUR');
 
-        $this->specify('currency code is EUR', function() use ($currencyCode) {
-                $this->assertTrue($currencyCode->getCode() === "EUR");
+        $this->specify('currency code is EUR', function() use ($currency) {
+                $this->assertTrue($currency->getCode() === "EUR");
             });
     }
 }

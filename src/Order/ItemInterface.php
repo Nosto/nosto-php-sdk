@@ -75,5 +75,5 @@ interface NostoOrderItemInterface
      *
      * @return NostoCurrencyCode the currency ISO code.
      */
-    public function getCurrencyCode();
+    public function getCurrency();
 }

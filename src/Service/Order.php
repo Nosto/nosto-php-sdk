@@ -134,7 +134,7 @@ class NostoServiceOrder
                 'quantity' => (int)$item->getQuantity(),
                 'name' => $item->getName(),
                 'unit_price' => $priceFormatter->format($item->getUnitPrice(), $priceFormat),
-                'price_currency_code' => $item->getCurrencyCode()->getCode(),
+                'price_currency_code' => $item->getCurrency()->getCode(),
             );
         }
         return json_encode($data);

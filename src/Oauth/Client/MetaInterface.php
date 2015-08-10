@@ -79,5 +79,5 @@ interface NostoOauthClientMetaInterface
      *
      * @return NostoLanguageCode the language code.
      */
-    public function getLanguageIsoCode();
+    public function getLanguage();
 }

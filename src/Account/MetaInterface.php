@@ -73,21 +73,21 @@ interface NostoAccountMetaInterface
      *
      * @return NostoCurrencyCode the currency code.
      */
-    public function getCurrencyCode();
+    public function getCurrency();
 
     /**
      * The 2-letter ISO code (ISO 639-1) for the language used by the shop for which the account is created for.
      *
      * @return NostoLanguageCode the language code.
      */
-    public function getLanguageCode();
+    public function getLanguage();
 
     /**
      * The 2-letter ISO code (ISO 639-1) for the language of the account owner who is creating the account.
      *
      * @return NostoLanguageCode the language code.
      */
-    public function getOwnerLanguageCode();
+    public function getOwnerLanguage();
 
     /**
      * Meta data model for the account owner who is creating the account.

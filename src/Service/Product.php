@@ -202,7 +202,7 @@ class NostoServiceProduct
             'name' => $product->getName(),
             'image_url' => $product->getImageUrl(),
             'price' => $priceFormatter->format($product->getPrice(), $priceFormat),
-            'price_currency_code' => $product->getCurrencyCode()->getCode(),
+            'price_currency_code' => $product->getCurrency()->getCode(),
             'availability' => $product->getAvailability()->getAvailability(),
             'categories' => $product->getCategories(),
         );

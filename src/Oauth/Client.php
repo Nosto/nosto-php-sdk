@@ -65,7 +65,7 @@ class NostoOAuthClient
     /**
      * @var NostoLanguageCode the language code used for localization on the oauth2 server.
      */
-    protected $languageIsoCode;
+    protected $language;
 
     /**
      * @var array list of scopes to request access for during "PATH_AUTH" request.
@@ -81,7 +81,7 @@ class NostoOAuthClient
         $this->clientId = $metaData->getClientId();
         $this->clientSecret = $metaData->getClientSecret();
         $this->redirectUrl = $metaData->getRedirectUrl();
-        $this->languageIsoCode = $metaData->getLanguageIsoCode();
+        $this->language = $metaData->getLanguage();
     }
 
     /**
@@ -97,7 +97,7 @@ class NostoOAuthClient
                 '{cid}' => $this->clientId,
                 '{uri}' => urlencode($this->redirectUrl),
                 '{sco}' => implode(' ', $this->scopes),
-                '{iso}' => $this->languageIsoCode->getCode(),
+                '{iso}' => $this->language->getCode(),
             )
         );
     }

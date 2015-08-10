@@ -51,7 +51,7 @@ interface NostoProductPriceVariationInterface
      *
      * @return NostoCurrencyCode the price currency code.
      */
-    public function getCurrencyCode();
+    public function getCurrency();
 
     /**
      * Returns the price of the variation including possible discounts and taxes.
