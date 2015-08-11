@@ -28,9 +28,19 @@ class AccountTest extends \Codeception\TestCase\Test
 		$token = new NostoApiToken('products', '123');
 		$account->addApiToken($token);
 
-		$this->specify('account is connected', function() use ($account) {
-			$this->assertTrue($account->isConnectedToNosto());
+		$this->specify('account is NOT connected', function() use ($account) {
+			$this->assertFalse($account->isConnectedToNosto());
 		});
+
+        $token = new NostoApiToken('rates', '123');
+        $account->addApiToken($token);
+
+        $token = new NostoApiToken('settings', '123');
+        $account->addApiToken($token);
+
+        $this->specify('account IS connected', function() use ($account) {
+            $this->assertTrue($account->isConnectedToNosto());
+        });
 	}
 
 	/**
@@ -53,15 +63,30 @@ class AccountTest extends \Codeception\TestCase\Test
 	}
 
 	/**
-	 * Tests the "ssoLogin" method for the NostoAccount class.
+	 * Tests the "ssoLogin" method for the NostoAccount class without the sso token.
 	 */
-	public function testAccountSingleSignOn()
+	public function testAccountSingleSignOnWithoutToken()
 	{
 		$account = new NostoAccount('platform-test');
 		$meta = new NostoAccountMetaDataIframe();
 
-		$this->specify('account sso without api token', function() use ($account, $meta) {
-			$this->assertFalse($account->ssoLogin($meta));
-		});
+        $this->setExpectedException('NostoException');
+
+        $account->ssoLogin($meta);
 	}
+
+    /**
+     * Tests the "ssoLogin" method for the NostoAccount class with the sso token.
+     */
+    public function testAccountSingleSignOnWithToken()
+    {
+        $account = new NostoAccount('platform-test');
+        $token = new NostoApiToken('sso', '123');
+        $account->addApiToken($token);
+        $meta = new NostoAccountMetaDataIframe();
+
+        $this->specify('account has sso token', function() use ($account, $meta) {
+            $this->assertEquals('https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg', $account->ssoLogin($meta));
+        });
+    }
 }
