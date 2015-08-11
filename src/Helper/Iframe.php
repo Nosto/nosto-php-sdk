@@ -56,6 +56,12 @@ class NostoHelperIframe extends NostoHelper
         NostoAccount $account = null,
         array $params = array()
     ) {
+        if (!is_null($account)) {
+            if (!$account->isConnectedToNosto()) {
+                $params['missing_scopes'] = implode(',', $account->getMissingScopes());
+            }
+        }
+
         $queryParams = http_build_query(
             array_merge(
                 array(
@@ -78,7 +84,7 @@ class NostoHelperIframe extends NostoHelper
             )
         );
 
-        if ($account !== null && $account->isConnectedToNosto()) {
+        if ($account !== null) {
             try {
                 $url = $account->ssoLogin($meta).'?'.$queryParams;
             } catch (NostoException $e) {

@@ -199,9 +199,7 @@ class NostoAccount implements NostoAccountInterface
     }
 
     /**
-     * Returns the account name.
-     *
-     * @return string the name.
+     * @inheritdoc
      */
     public function getName()
     {
@@ -223,26 +221,30 @@ class NostoAccount implements NostoAccountInterface
      */
     public function isConnectedToNosto()
     {
-        if (empty($this->tokens)) {
-            return false;
-        }
-        $countTokens = count($this->tokens);
-        $foundTokens = 0;
-        foreach (NostoApiToken::getApiTokenNames() as $name) {
+        $missingTokens = $this->getMissingScopes();
+        return empty($missingTokens);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMissingScopes()
+    {
+        $allTokens = NostoApiToken::getApiTokenNames();
+        $foundTokens = array();
+        foreach ($allTokens as $tokenName) {
             foreach ($this->tokens as $token) {
-                if ($token->getName() === $name) {
-                    $foundTokens++;
+                if ($token->getName() === $tokenName) {
+                    $foundTokens[] = $tokenName;
                     break;
                 }
             }
         }
-        return ($countTokens === $foundTokens);
+        return array_diff($allTokens, $foundTokens);
     }
 
     /**
-     * Adds an API token to the account.
-     *
-     * @param NostoApiToken $token the token.
+     * @inheritdoc
      */
     public function addApiToken(NostoApiToken $token)
     {
@@ -276,8 +278,8 @@ class NostoAccount implements NostoAccountInterface
     public function ssoLogin(NostoAccountMetaIframeInterface $meta)
     {
         $token = $this->getApiToken(NostoApiToken::API_SSO);
-        if ($token === null) {
-            return false;
+        if (is_null($token)) {
+            throw new NostoException(sprintf('No `%s` API token found for account "%s".', NostoApiToken::API_SSO, $this->getName()));
         }
 
         $request = new NostoHttpRequest();

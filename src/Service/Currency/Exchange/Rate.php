@@ -87,10 +87,7 @@ class NostoServiceCurrencyExchangeRate
     {
         $token = $this->account->getApiToken(NostoApiToken::API_EXCHANGE_RATES);
         if (is_null($token)) {
-            throw new NostoException(sprintf(
-                'Failed to update currency exchange rates for account %s. No `rates` API token found.',
-                $this->account->getName()
-            ));
+            throw new NostoException(sprintf('No `%s` API token found for account "%s".', NostoApiToken::API_EXCHANGE_RATES, $this->account->getName()));
         }
         $request = new NostoApiRequest();
         $request->setContentType('application/json');

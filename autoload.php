@@ -89,6 +89,7 @@ require_once(dirname(__FILE__).'/src/Oauth/Token.php');
 require_once(dirname(__FILE__).'/src/Price/Format.php');
 require_once(dirname(__FILE__).'/src/Product/Availability.php');
 require_once(dirname(__FILE__).'/src/Service/Currency/Exchange/Rate.php');
+require_once(dirname(__FILE__).'/src/Service/Account.php');
 require_once(dirname(__FILE__).'/src/Service/Order.php');
 require_once(dirname(__FILE__).'/src/Service/Product.php');
 require_once(dirname(__FILE__).'/src/Service/Recrawl.php');

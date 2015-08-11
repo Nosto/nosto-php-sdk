@@ -73,11 +73,26 @@ interface NostoAccountInterface
     public function getName();
 
     /**
+     * Returns the accounts API tokens.
+     *
+     * @return NostoApiToken[] the tokens.
+     */
+    public function getTokens();
+
+    /**
      * Checks if this account has been connected to Nosto, i.e. all API tokens exist.
      *
      * @return bool true if it is connected, false otherwise.
      */
     public function isConnectedToNosto();
+
+    /**
+     * Returns a list of API token names that are present for the account.
+     * The API tokens act as scopes when doing OAuth requests to Nosto.
+     *
+     * @return array the list of names.
+     */
+    public function getMissingScopes();
 
     /**
      * Gets an api token associated with this account by it's name , e.g. "sso".
@@ -86,6 +101,13 @@ interface NostoAccountInterface
      * @return NostoApiToken|null the token or null if not found.
      */
     public function getApiToken($name);
+
+    /**
+     * Adds an API token to the account.
+     *
+     * @param NostoApiToken $token the token.
+     */
+    public function addApiToken(NostoApiToken $token);
 
     /**
      * Gets the secured iframe url for the account configuration page.
