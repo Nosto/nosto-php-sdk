@@ -73,15 +73,21 @@ class NostoOAuthClient
     protected $scopes = array();
 
     /**
-     * @param NostoOauthClientMetaInterface $metaData
+     * @var NostoAccount the Nosto account if OAuth is done for a specific account to sync details.
      */
-    public function __construct(NostoOauthClientMetaInterface $metaData)
+    protected $account;
+
+    /**
+     * @param NostoOauthClientMetaInterface $meta
+     */
+    public function __construct(NostoOauthClientMetaInterface $meta)
     {
-        $this->scopes = $metaData->getScopes();
-        $this->clientId = $metaData->getClientId();
-        $this->clientSecret = $metaData->getClientSecret();
-        $this->redirectUrl = $metaData->getRedirectUrl();
-        $this->language = $metaData->getLanguage();
+        $this->scopes = $meta->getScopes();
+        $this->clientId = $meta->getClientId();
+        $this->clientSecret = $meta->getClientSecret();
+        $this->redirectUrl = $meta->getRedirectUrl();
+        $this->language = $meta->getLanguage();
+        $this->account = $meta->getAccount();
     }
 
     /**
@@ -91,7 +97,7 @@ class NostoOAuthClient
      */
     public function getAuthorizationUrl()
     {
-        return NostoHttpRequest::buildUri(
+        $url = NostoHttpRequest::buildUri(
             self::$baseUrl.self::PATH_AUTH,
             array(
                 '{cid}' => $this->clientId,
@@ -100,6 +106,14 @@ class NostoOAuthClient
                 '{iso}' => $this->language->getCode(),
             )
         );
+        if ($this->account) {
+            $url = NostoHttpRequest::replaceQueryParamInUrl(
+                'merchant',
+                $this->account->getName(),
+                $url
+            );
+        }
+        return $url;
     }
 
     /**

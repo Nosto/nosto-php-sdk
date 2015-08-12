@@ -80,4 +80,11 @@ interface NostoOauthClientMetaInterface
      * @return NostoLanguageCode the language code.
      */
     public function getLanguage();
+
+    /**
+     * The Nosto account if we are to sync account details from Nosto.
+     *
+     * @return NostoAccount the account.
+     */
+    public function getAccount();
 }
