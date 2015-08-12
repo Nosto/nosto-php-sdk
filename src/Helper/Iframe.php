@@ -45,14 +45,16 @@ class NostoHelperIframe extends NostoHelper
      * Returns the url for the account administration iframe.
      * If the passed account is null, then the url will point to the start page where a new account can be created.
      *
-     * @param NostoAccountMetaIframeInterface $meta the iframe meta data.
+     * @param NostoAccountMetaSingleSignOnInterface $sso the SSO meta data.
+     * @param NostoAccountMetaIframeInterface $iframe the iframe meta data.
      * @param NostoAccount|null $account the account to return the url for.
      * @param array $params additional parameters to add to the iframe url.
      * @return string the iframe url.
      * @throws NostoException if the url cannot be created.
      */
     public function getUrl(
-        NostoAccountMetaIframeInterface $meta,
+        NostoAccountMetaSingleSignOnInterface $sso,
+        NostoAccountMetaIframeInterface $iframe,
         NostoAccount $account = null,
         array $params = array()
     ) {
@@ -65,20 +67,20 @@ class NostoHelperIframe extends NostoHelper
         $queryParams = http_build_query(
             array_merge(
                 array(
-                    'lang' => $meta->getLanguage()->getCode(),
-                    'ps_version' => $meta->getVersionPlatform(),
-                    'nt_version' => $meta->getVersionModule(),
-                    'product_pu' => $meta->getPreviewUrlProduct(),
-                    'category_pu' => $meta->getPreviewUrlCategory(),
-                    'search_pu' => $meta->getPreviewUrlSearch(),
-                    'cart_pu' => $meta->getPreviewUrlCart(),
-                    'front_pu' => $meta->getPreviewUrlFront(),
-                    'shop_lang' => $meta->getShopLanguage()->getCode(),
-                    'shop_name' => $meta->getShopName(),
-                    'unique_id' => $meta->getUniqueId(),
-                    'fname' => $meta->getFirstName(),
-                    'lname' => $meta->getLastName(),
-                    'email' => $meta->getEmail(),
+                    'lang' => $iframe->getLanguage()->getCode(),
+                    'ps_version' => $iframe->getVersionPlatform(),
+                    'nt_version' => $iframe->getVersionModule(),
+                    'product_pu' => $iframe->getPreviewUrlProduct(),
+                    'category_pu' => $iframe->getPreviewUrlCategory(),
+                    'search_pu' => $iframe->getPreviewUrlSearch(),
+                    'cart_pu' => $iframe->getPreviewUrlCart(),
+                    'front_pu' => $iframe->getPreviewUrlFront(),
+                    'shop_lang' => $iframe->getShopLanguage()->getCode(),
+                    'shop_name' => $iframe->getShopName(),
+                    'unique_id' => $iframe->getUniqueId(),
+                    'fname' => $sso->getFirstName(),
+                    'lname' => $sso->getLastName(),
+                    'email' => $sso->getEmail(),
                 ),
                 $params
             )
@@ -86,7 +88,9 @@ class NostoHelperIframe extends NostoHelper
 
         if ($account !== null) {
             try {
-                $url = $account->ssoLogin($meta).'?'.$queryParams;
+                $service = new NostoServiceAccount();
+                $url = $service->sso($account, $sso);
+                $url .= '?'.$queryParams;
             } catch (NostoException $e) {
                 // If the SSO fails, we show a "remove account" page to the user in order to
                 // allow to remove Nosto and start over.
@@ -95,7 +99,7 @@ class NostoHelperIframe extends NostoHelper
                 $url = NostoHttpRequest::buildUri(
                     $this->getBaseUrl().self::IFRAME_URI_UNINSTALL.'?'.$queryParams,
                     array(
-                        '{platform}' => $meta->getPlatform(),
+                        '{platform}' => $sso->getPlatform(),
                     )
                 );
             }
@@ -103,7 +107,7 @@ class NostoHelperIframe extends NostoHelper
             $url = NostoHttpRequest::buildUri(
                 $this->getBaseUrl().self::IFRAME_URI_INSTALL.'?'.$queryParams,
                 array(
-                    '{platform}' => $meta->getPlatform(),
+                    '{platform}' => $sso->getPlatform(),
                 )
             );
         }

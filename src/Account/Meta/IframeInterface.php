@@ -39,35 +39,6 @@
 interface NostoAccountMetaIframeInterface
 {
     /**
-     * The name of the platform the iframe is used on.
-     * A list of valid platform names is issued by Nosto.
-     *
-     * @return string the platform name.
-     */
-    public function getPlatform();
-
-    /**
-     * The first name of the user who is loading the config iframe.
-     *
-     * @return string the first name.
-     */
-    public function getFirstName();
-
-    /**
-     * The last name of the user who is loading the config iframe.
-     *
-     * @return string the last name.
-     */
-    public function getLastName();
-
-    /**
-     * The email address of the user who is loading the config iframe.
-     *
-     * @return string the email address.
-     */
-    public function getEmail();
-
-    /**
      * The 2-letter ISO code (ISO 639-1) for the language of the user who is loading the config iframe.
      *
      * @return NostoLanguageCode the language code.

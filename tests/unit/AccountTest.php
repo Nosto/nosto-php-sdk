@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataIframe.php');
+require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataSingleSignOn.php');
 
 class AccountTest extends \Codeception\TestCase\Test
 {
@@ -68,11 +68,12 @@ class AccountTest extends \Codeception\TestCase\Test
 	public function testAccountSingleSignOnWithoutToken()
 	{
 		$account = new NostoAccount('platform-test');
-		$meta = new NostoAccountMetaDataIframe();
+		$meta = new NostoAccountMetaDataSingleSignOn();
 
         $this->setExpectedException('NostoException');
 
-        $account->ssoLogin($meta);
+        $service = new NostoServiceAccount();
+        $service->sso($account, $meta);
 	}
 
     /**
@@ -83,10 +84,12 @@ class AccountTest extends \Codeception\TestCase\Test
         $account = new NostoAccount('platform-test');
         $token = new NostoApiToken('sso', '123');
         $account->addApiToken($token);
-        $meta = new NostoAccountMetaDataIframe();
+        $meta = new NostoAccountMetaDataSingleSignOn();
 
         $this->specify('account has sso token', function() use ($account, $meta) {
-            $this->assertEquals('https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg', $account->ssoLogin($meta));
+            $service = new NostoServiceAccount();
+            $url = $service->sso($account, $meta);
+            $this->assertEquals('https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg', $url);
         });
     }
 }

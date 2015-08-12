@@ -148,14 +148,55 @@ class NostoServiceAccount
             $account->addApiToken($token);
         }
         if (!$account->isConnectedToNosto()) {
-            throw new NostoException('Failed to sync all account details from Nosto');
+            throw new NostoException('Failed to sync all account details from Nosto. Unknown error.');
         }
         return $account;
     }
 
-    public function sso()
+    /**
+     * Signs the user in to Nosto via SSO.
+     *
+     * Requires that the account has a valid sso token associated with it.
+     *
+     * @param NostoAccount $account the account to sign into.
+     * @param NostoAccountMetaSingleSignOnInterface $meta the SSO meta-data.
+     * @return string a secure login url.
+     *
+     * @throws NostoException on failure.
+     */
+    public function sso(NostoAccount $account, NostoAccountMetaSingleSignOnInterface $meta)
     {
-        // todo: move from NostoAccount class
+        $token = $account->getApiToken(NostoApiToken::API_SSO);
+        if (is_null($token)) {
+            throw new NostoException(sprintf('No `%s` API token found for account "%s".', NostoApiToken::API_SSO, $account->getName()));
+        }
+        $request = new NostoHttpRequest();
+        $request->setUrl(NostoHttpRequest::$baseUrl.NostoHttpRequest::PATH_SSO_AUTH);
+        $request->setReplaceParams(
+            array(
+                '{platform}' => $meta->getPlatform(),
+                '{email}' => $meta->getEmail(),
+            )
+        );
+        $request->setContentType('application/x-www-form-urlencoded');
+        $request->setAuthBasic('', $token->getValue());
+        $response = $request->post(
+            http_build_query(
+                array(
+                    'fname' => $meta->getFirstName(),
+                    'lname' => $meta->getLastName(),
+                )
+            )
+        );
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to sign into Nosto using Single Sign On.', $request, $response);
+        }
+        $result = $response->getJsonResult();
+        if (empty($result->login_url)) {
+            throw new NostoException('No "login_url" returned when logging in employee to Nosto');
+        }
+
+        return $result->login_url;
     }
 
     /**

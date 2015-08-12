@@ -39,6 +39,7 @@ require_once(dirname(__FILE__).'/src/Account/MetaInterface.php');
 require_once(dirname(__FILE__).'/src/Account/Meta/BillingInterface.php');
 require_once(dirname(__FILE__).'/src/Account/Meta/IframeInterface.php');
 require_once(dirname(__FILE__).'/src/Account/Meta/OwnerInterface.php');
+require_once(dirname(__FILE__).'/src/Account/Meta/SingleSignOnInterface.php');
 require_once(dirname(__FILE__).'/src/Export/CollectionInterface.php');
 require_once(dirname(__FILE__).'/src/Oauth/Client/MetaInterface.php');
 require_once(dirname(__FILE__).'/src/Order/BuyerInterface.php');
