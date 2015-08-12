@@ -22,4 +22,8 @@ class NostoOAuthClientMetaData implements NostoOauthClientMetaInterface
 	{
 		return new NostoLanguageCode('en');
 	}
+    public function getAccount()
+    {
+        return null;
+    }
 }

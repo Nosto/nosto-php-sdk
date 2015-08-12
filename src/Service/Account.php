@@ -34,44 +34,57 @@
  */
 
 /**
- * Handles sending account update requests though the Nosto API.
- *
- * Account updates are needed when making changes in the platform settings that
- * need to be transferred to Nosto. An example of this would be when a new
- * currency is added and the price formatting details need to be made available
- * in Nosto for the recommendations.
+ * Handles sending account related requests though the Nosto API.
  */
 class NostoServiceAccount
 {
     /**
-     * @var NostoAccount the Nosto account.
-     */
-    protected $account;
-
-    /**
-     * Constructor.
+     * Sends an account create API call to Nosto.
      *
-     * Accepts the Nosto account for which the service is to operate on.
+     * @param NostoAccountMetaInterface $meta the account meta data.
+     * @return NostoAccount the newly created account.
      *
-     * @param NostoAccount $account the Nosto account object.
+     * @throws NostoException on failure.
      */
-    public function __construct(NostoAccount $account)
+    public function create(NostoAccountMetaInterface $meta)
     {
-        $this->account = $account;
+        $request = $this->initApiRequest(NostoApiRequest::PATH_SIGN_UP, $meta->getSignUpApiToken());
+        $request->setReplaceParams(array('{lang}' => $meta->getLanguage()->getCode()));
+        $response = $request->post($this->getCreateAccountMetaAsJson($meta));
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to send account create to Nosto.', $request, $response);
+        }
+        $result = $response->getJsonResult(true);
+        $account = new NostoAccount($meta->getPlatform().'-'.$meta->getName());
+        $tokens = NostoApiToken::parseTokens($result, '', '_token');
+        foreach ($tokens as $token) {
+            $account->addApiToken($token);
+        }
+        return $account;
     }
 
     /**
      * Sends an account update API call to Nosto.
      *
+     * Account updates are needed when making changes in the platform settings that
+     * need to be transferred to Nosto. An example of this would be when a new
+     * currency is added and the price formatting details need to be made available
+     * in Nosto for the recommendations.
+     *
+     * @param NostoAccount $account the account to update.
      * @param NostoAccountMetaInterface $meta the account meta data.
      * @return bool true on success.
      *
      * @throws NostoException on failure.
      */
-    public function update(NostoAccountMetaInterface $meta)
+    public function update(NostoAccount $account, NostoAccountMetaInterface $meta)
     {
-        $request = $this->initApiRequest();
-        $response = $request->put($this->getAccountMetaAsJson($meta));
+        $token = $account->getApiToken(NostoApiToken::API_SETTINGS);
+        if (is_null($token)) {
+            throw new NostoException(sprintf('No `%s` API token found for account "%s".', NostoApiToken::API_SETTINGS, $account->getName()));
+        }
+        $request = $this->initApiRequest(NostoApiRequest::PATH_SETTINGS, $token->getValue());
+        $response = $request->put($this->getUpdateAccountMetaAsJson($meta));
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to send account update to Nosto.', $request, $response);
         }
@@ -79,34 +92,158 @@ class NostoServiceAccount
     }
 
     /**
+     * Sends an account delete API call to Nosto.
+     *
+     * This notifies Nosto about accounts that are no longer in use.
+     *
+     * @param NostoAccount $account the account to delete.
+     * @return bool true on success.
+     *
+     * @throws NostoException on failure.
+     */
+    public function delete(NostoAccount $account)
+    {
+        $token = $account->getApiToken(NostoApiToken::API_SSO);
+        if (is_null($token)) {
+            throw new NostoException(sprintf('No `%s` API token found for account "%s".', NostoApiToken::API_SSO, $account->getName()));
+        }
+        $request = new NostoHttpRequest();
+        $request->setUrl(NostoHttpRequest::$baseUrl.NostoHttpRequest::PATH_ACCOUNT_DELETED);
+        $request->setAuthBasic('', $token->getValue());
+        $response = $request->post('');
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to send account delete to Nosto.', $request, $response);
+        }
+        return true;
+    }
+
+    /**
+     * Syncs an existing Nosto account via OAuth.
+     *
+     * Requires that the OAuth cycle has already completed the first step in getting the authorization code.
+     *
+     * @param NostoOauthClientMetaInterface $meta the OAuth client meta data to use for connection to Nosto.
+     * @param string $authCode the authorization code that grants access to transfer data from Nosto.
+     * @return NostoAccount the synced account.
+     *
+     * @throws NostoException on failure.
+     */
+    public function sync(NostoOauthClientMetaInterface $meta, $authCode)
+    {
+        $oauthClient = new NostoOAuthClient($meta);
+        $token = $oauthClient->authenticate($authCode);
+        $request = new NostoHttpRequest();
+        // The request is currently not made according the the OAuth2 spec with the access token in the
+        // Authorization header. This is due to the authentication server not implementing the full OAuth2 spec yet.
+        $request->setUrl(NostoOAuthClient::$baseUrl.'/exchange');
+        $request->setQueryParams(array('access_token' => $token->getAccessToken()));
+        $response = $request->get();
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to send account sync to Nosto.', $request, $response);
+        }
+        $result = $response->getJsonResult(true);
+        $account = new NostoAccount($token->getMerchantName());
+        $tokens = NostoApiToken::parseTokens($result, 'api_');
+        foreach ($tokens as $token) {
+            $account->addApiToken($token);
+        }
+        if (!$account->isConnectedToNosto()) {
+            throw new NostoException('Failed to sync all account details from Nosto');
+        }
+        return $account;
+    }
+
+    public function sso()
+    {
+        // todo: move from NostoAccount class
+    }
+
+    /**
      * Builds the API request and returns it.
      *
+     * @param string $path the request API path.
+     * @param string $auth the basic auth token.
      * @return NostoApiRequest the request object.
-     *
-     * @throws NostoException if `settings` API token cannot be found.
      */
-    protected function initApiRequest()
+    protected function initApiRequest($path, $auth)
     {
-        $token = $this->account->getApiToken(NostoApiToken::API_SETTINGS);
-        if (is_null($token)) {
-            throw new NostoException(sprintf('No `%s` API token found for account "%s".', NostoApiToken::API_SETTINGS, $this->account->getName()));
-        }
-
         $request = new NostoApiRequest();
         $request->setContentType('application/json');
-        $request->setAuthBasic('', $token->getValue());
-        $request->setPath(NostoApiRequest::PATH_SETTINGS);
-
+        $request->setAuthBasic('', $auth);
+        $request->setPath($path);
         return $request;
     }
 
     /**
-     * Turns the account meta data into valid JSON that can be sent to Nosto.
+     * Turns the account meta data into valid JSON that can be sent to Nosto
+     * when creating an account.
      *
      * @param NostoAccountMetaInterface $meta the account meta data.
      * @return string the JSON.
      */
-    protected function getAccountMetaAsJson(NostoAccountMetaInterface $meta)
+    protected function getCreateAccountMetaAsJson(NostoAccountMetaInterface $meta)
+    {
+        $data = array(
+            'title' => $meta->getTitle(),
+            'name' => $meta->getName(),
+            'platform' => $meta->getPlatform(),
+            'front_page_url' => $meta->getFrontPageUrl(),
+            'currency_code' => $meta->getCurrency()->getCode(),
+            'language_code' => $meta->getOwnerLanguage()->getCode(),
+            'owner' => array(
+                'first_name' => $meta->getOwner()->getFirstName(),
+                'last_name' => $meta->getOwner()->getLastName(),
+                'email' => $meta->getOwner()->getEmail(),
+            ),
+            'api_tokens' => array(),
+            'currencies' => array(),
+        );
+
+        // Add optional billing details if the required data is set.
+        if ($meta->getBillingDetails()->getCountry()) {
+            $data['billing_details'] = array(
+                'country' => $meta->getBillingDetails()->getCountry()->getCode()
+            );
+        }
+
+        // Add optional partner code if one is set.
+        $partnerCode = $meta->getPartnerCode();
+        if (!empty($partnerCode)) {
+            $data['partner_code'] = $partnerCode;
+        }
+
+        // Request all available API tokens for the account.
+        foreach (NostoApiToken::getApiTokenNames() as $name) {
+            $data['api_tokens'][] = 'api_'.$name;
+        }
+
+        // Add all configured currency formats.
+        $currencies = $meta->getCurrencies();
+        foreach ($meta->getCurrencies() as $currency) {
+            $data['currencies'][$currency->getCode()->getCode()] = array(
+                'currency_before_amount' => ($currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT),
+                'currency_token' => $currency->getSymbol()->getSymbol(),
+                'decimal_character' => $currency->getFormat()->getDecimalSymbol(),
+                'grouping_separator' => $currency->getFormat()->getGroupSymbol(),
+                'decimal_places' => $currency->getFormat()->getPrecision(),
+            );
+        }
+        if (count($currencies) > 1) {
+            $data['default_variant_id'] = $meta->getDefaultPriceVariationId();
+            $data['use_exchange_rates'] = (bool)$meta->getUseCurrencyExchangeRates();
+        }
+
+        return json_encode($data);
+    }
+
+    /**
+     * Turns the account meta data into valid JSON that can be sent to Nosto
+     * when updating an account.
+     *
+     * @param NostoAccountMetaInterface $meta the account meta data.
+     * @return string the JSON.
+     */
+    protected function getUpdateAccountMetaAsJson(NostoAccountMetaInterface $meta)
     {
         $data = array(
             'title' => $meta->getTitle(),

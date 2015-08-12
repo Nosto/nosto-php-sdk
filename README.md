@@ -18,7 +18,8 @@ A Nosto account is needed for every shop and every language within each shop.
     try {
         /** @var NostoAccountMetaInterface $meta */
         /** @var NostoAccount $account */
-        $account = NostoAccount::create($meta);
+        $service = new NostoServiceAccount();
+        $account = $service->create($meta);
         // save newly created account according to the platforms requirements
         .....
     } catch (NostoException $e) {
@@ -47,7 +48,8 @@ Then have a public endpoint ready to handle the return request.
     if (isset($_GET['code'])) {
         try {
             /** @var NostoOauthClientMetaInterface $meta */
-            $account = NostoAccount::syncFromNosto($meta, $_GET['code']);
+            $service = new NostoServiceAccount();
+            $account = $service->sync($meta, $_GET['code']);
             // save the synced account according to the platforms requirements
         } catch (NostoException $e) {
             // handle failures
@@ -72,7 +74,8 @@ This should be used when you delete a Nosto account for a shop. It will notify N
 ```php
     try {
         /** @var NostoAccount $account */
-        $account->delete();
+        $service = new NostoServiceAccount();
+        $service->delete($account);
     } catch (NostoException $e) {
         // handle failure
     }

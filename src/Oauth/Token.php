@@ -34,65 +34,59 @@
  */
 
 /**
- * Helper class that represents a oauth2 access token.
+ * Value Object that represents an OAuth access token.
  */
 class NostoOAuthToken
 {
     /**
-     * @var string the access token string.
+     * @var string the merchant name.
      */
-    public $accessToken;
+    private $_merchantName;
 
     /**
-     * @var string the merchant name string.
+     * @var string the access token.
      */
-    public $merchantName;
+    private $_accessToken;
 
     /**
-     * @var string the type of token, e.g. "bearer".
-     */
-    public $tokenType;
-
-    /**
-     * @var int the amount of time this token is valid for.
-     */
-    public $expiresIn;
-
-    /**
-     * Creates a new token instance and populates it with the given data.
+     * Constructor.
+     * Sets up the Value Object with given data.
      *
-     * @param array $data the data to put in the token.
-     * @return NostoOAuthToken
+     * @param string $merchantName the merchant name.
+     * @param string $accessToken the access token.
+     *
+     * @throws NostoInvalidArgumentException
      */
-    public static function create(array $data)
+    public function __construct($merchantName, $accessToken)
     {
-        $token = new self();
-        foreach ($data as $key => $value) {
-            $key = self::underscore2CamelCase($key);
-            if (property_exists($token, $key)) {
-                $token->{$key} = $value;
-            }
+        if (!is_string($merchantName) || empty($merchantName)) {
+            throw new NostoInvalidArgumentException(sprintf('%s._merchantName (%s) must be a non-empty string value', __CLASS__, $merchantName));
         }
-        return $token;
+        if (!is_string($accessToken) || empty($accessToken)) {
+            throw new NostoInvalidArgumentException(sprintf('%s._accessToken (%s) must be a non-empty string value', __CLASS__, $accessToken));
+        }
+
+        $this->_merchantName = $merchantName;
+        $this->_accessToken = $accessToken;
     }
 
     /**
-     * Converts string from underscore format to camel case format, e.g. variable_name => variableName.
+     * Returns the merchant name.
      *
-     * @param string $str the underscore formatted string to convert.
-     * @return string the converted string.
+     * @return string the name.
      */
-    protected static function underscore2CamelCase($str)
+    public function getMerchantName()
     {
-        // Non-alpha and non-numeric characters become spaces.
-        $str = preg_replace('/[^a-z0-9]+/i', ' ', $str);
-        // Uppercase the first character of each word.
-        $str = ucwords(trim($str));
-        // Remove all spaces.
-        $str = str_replace(" ", "", $str);
-        // Lowercase the first character of the result.
-        $str[0] = strtolower($str[0]);
+        return $this->_merchantName;
+    }
 
-        return $str;
+    /**
+     * Returns the access token.
+     *
+     * @return string the token.
+     */
+    public function getAccessToken()
+    {
+        return $this->_accessToken;
     }
 }

@@ -121,6 +121,7 @@ class NostoOAuthClient
      *
      * @param string $code code sent by the authorization server to exchange for an access token.
      * @return NostoOAuthToken
+     *
      * @throws NostoException
      */
     public function authenticate($code)
@@ -141,17 +142,12 @@ class NostoOAuthClient
         );
         $response = $request->get();
         $result = $response->getJsonResult(true);
-
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to authenticate with code.', $request, $response);
         }
-        if (empty($result['access_token'])) {
-            throw new NostoException('No "access_token" returned after authenticating with code');
-        }
-        if (empty($result['merchant_name'])) {
-            throw new NostoException('No "merchant_name" returned after authenticating with code');
-        }
+        $merchantName = isset($result['merchant_name']) ? $result['merchant_name'] : null;
+        $accessToken = isset($result['access_token']) ? $result['access_token'] : null;
 
-        return NostoOAuthToken::create($result);
+        return new NostoOAuthToken($merchantName, $accessToken);
     }
 }
