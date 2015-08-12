@@ -36,7 +36,7 @@
 /**
  * Value Object that represents an OAuth access token.
  */
-class NostoOAuthToken
+final class NostoOAuthToken
 {
     /**
      * @var string the merchant name.
