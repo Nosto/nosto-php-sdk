@@ -36,7 +36,7 @@
 /**
  * Nosto account class for handling account related actions like, creation, OAuth2 syncing and SSO to Nosto.
  */
-class NostoAccount implements NostoAccountInterface
+class NostoAccount
 {
     /**
      * @var string the name of the Nosto account.
@@ -70,7 +70,12 @@ class NostoAccount implements NostoAccountInterface
     }
 
     /**
-     * @inheritdoc
+     * Creates a new Nosto account with the specified data.
+     *
+     * @param NostoAccountMetaInterface $meta the account data model.
+     * @return NostoAccount the newly created account.
+     *
+     * @throws NostoException if the account cannot be created.
      */
     public static function create(NostoAccountMetaInterface $meta)
     {
@@ -141,7 +146,14 @@ class NostoAccount implements NostoAccountInterface
     }
 
     /**
-     * @inheritdoc
+     * Syncs an existing Nosto account via Oauth2.
+     * Requires that the oauth cycle has already completed the first step in getting the authorization code.
+     *
+     * @param NostoOauthClientMetaInterface $meta the oauth2 client meta data to use for connection to Nosto.
+     * @param string $code the authorization code that grants access to transfer data from nosto.
+     * @return NostoAccount the synced account.
+     *
+     * @throws NostoException if the account cannot be synced.
      */
     public static function syncFromNosto(NostoOauthClientMetaInterface $meta, $code)
     {
@@ -179,7 +191,9 @@ class NostoAccount implements NostoAccountInterface
     }
 
     /**
-     * @inheritdoc
+     * Notifies Nosto that an account has been deleted.
+     *
+     * @throws NostoException if the API request to Nosto fails.
      */
     public function delete()
     {
@@ -199,7 +213,22 @@ class NostoAccount implements NostoAccountInterface
     }
 
     /**
-     * @inheritdoc
+     * Checks if this account is the same as the given account.
+     * They are considered equal if their name property match. The tokens are not relevant in the comparison,
+     * as they are not required by the account upon creation.
+     *
+     * @param NostoAccount $account the account to check.
+     * @return bool true if equals.
+     */
+    public function equals(NostoAccount $account)
+    {
+        return $account->getName() === $this->getName();
+    }
+
+    /**
+     * Gets the account name.
+     *
+     * @return string the account name.
      */
     public function getName()
     {
@@ -207,7 +236,7 @@ class NostoAccount implements NostoAccountInterface
     }
 
     /**
-     * Returns the account tokens.
+     * Returns the accounts API tokens.
      *
      * @return NostoApiToken[] the tokens.
      */
@@ -217,7 +246,9 @@ class NostoAccount implements NostoAccountInterface
     }
 
     /**
-     * @inheritdoc
+     * Checks if this account has been connected to Nosto, i.e. all API tokens exist.
+     *
+     * @return bool true if it is connected, false otherwise.
      */
     public function isConnectedToNosto()
     {
@@ -226,7 +257,10 @@ class NostoAccount implements NostoAccountInterface
     }
 
     /**
-     * @inheritdoc
+     * Returns a list of API token names that are present for the account.
+     * The API tokens act as scopes when doing OAuth requests to Nosto.
+     *
+     * @return array the list of names.
      */
     public function getMissingScopes()
     {
@@ -244,7 +278,9 @@ class NostoAccount implements NostoAccountInterface
     }
 
     /**
-     * @inheritdoc
+     * Adds an API token to the account.
+     *
+     * @param NostoApiToken $token the token.
      */
     public function addApiToken(NostoApiToken $token)
     {
@@ -252,7 +288,10 @@ class NostoAccount implements NostoAccountInterface
     }
 
     /**
-     * @inheritdoc
+     * Gets an api token associated with this account by it's name , e.g. "sso".
+     *
+     * @param string $name the api token name.
+     * @return NostoApiToken|null the token or null if not found.
      */
     public function getApiToken($name)
     {
@@ -265,15 +304,13 @@ class NostoAccount implements NostoAccountInterface
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getIframeUrl(NostoAccountMetaIframeInterface $meta, array $params = array())
-    {
-        return Nosto::helper('iframe')->getUrl($meta, $this, $params);
-    }
-
-    /**
-     * @inheritdoc
+     * Signs the user in to Nosto via SSO.
+     * Requires that the account has a valid sso token associated with it.
+     *
+     * @param NostoAccountMetaIframeInterface $meta the iframe meta data model.
+     * @return string a secure login url that can be used for example to build the config iframe url.
+     *
+     * @throws NostoException if SSO fails.
      */
     public function ssoLogin(NostoAccountMetaIframeInterface $meta)
     {

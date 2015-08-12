@@ -151,7 +151,7 @@ user ID, as the platform may support guest checkouts.
     try {
         /**
          * @var NostoOrderInterface $order
-         * @var NostoAccountInterface $account
+         * @var NostoAccount $account
          * @var string $customerId
          */
         $service = new NostoServiceOrder($account);
@@ -178,7 +178,7 @@ Note: you can call `addProduct` multiple times to add more products to the reque
     try {
         /**
          * @var NostoProductInterface $product
-         * @var NostoAccountInterface $account
+         * @var NostoAccount $account
          */
         $service = new NostoServiceRecrawl($account);
         $service->addProduct($product);
@@ -203,7 +203,7 @@ Creating new products:
     try {
         /**
          * @var NostoProductInterface $product
-         * @var NostoAccountInterface $account
+         * @var NostoAccount $account
          */
         $service = new NostoServiceProduct($account);
         $service->addProduct($product);
@@ -223,7 +223,7 @@ Updating existing products:
     try {
         /**
          * @var NostoProductInterface $product
-         * @var NostoAccountInterface $account
+         * @var NostoAccount $account
          */
         $service = new NostoServiceProduct($account);
         $service->addProduct($product);
@@ -243,7 +243,7 @@ Deleting existing products:
     try {
         /**
          * @var NostoProductInterface $product
-         * @var NostoAccountInterface $account
+         * @var NostoAccount $account
          */
         $service = new NostoServiceProduct($account);
         $service->addProduct($product);
@@ -275,7 +275,7 @@ integer values and expected to be applied to the data set being exported.
     .....
     /**
      * @var NostoProductInterface[] $products
-     * @var NostoAccountInterface $account
+     * @var NostoAccount $account
      */
     $collection = new NostoExportCollectionProduct();
     foreach ($products as $product) {
@@ -292,7 +292,7 @@ integer values and expected to be applied to the data set being exported.
     .....
     /**
      * @var NostoOrderInterface[] $orders
-     * @var NostoAccountInterface $account
+     * @var NostoAccount $account
      */
     $collection = new NostoExportCollectionOrder();
     foreach ($orders as $order) {

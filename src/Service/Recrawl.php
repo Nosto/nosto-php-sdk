@@ -39,7 +39,7 @@
 class NostoServiceRecrawl
 {
     /**
-     * @var NostoAccountInterface the Nosto account to recrawl product(s) for.
+     * @var NostoAccount the Nosto account to recrawl product(s) for.
      */
     protected $account;
 
@@ -53,9 +53,9 @@ class NostoServiceRecrawl
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoAccountInterface $account the Nosto account object.
+     * @param NostoAccount $account the Nosto account object.
      */
-    public function __construct(NostoAccountInterface $account)
+    public function __construct(NostoAccount $account)
     {
         $this->account = $account;
         $this->collection = new NostoProductCollection();

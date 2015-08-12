@@ -44,7 +44,7 @@
 class NostoServiceAccount
 {
     /**
-     * @var NostoAccountInterface the Nosto account.
+     * @var NostoAccount the Nosto account.
      */
     protected $account;
 
@@ -53,9 +53,9 @@ class NostoServiceAccount
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoAccountInterface $account the Nosto account object.
+     * @param NostoAccount $account the Nosto account object.
      */
-    public function __construct(NostoAccountInterface $account)
+    public function __construct(NostoAccount $account)
     {
         $this->account = $account;
     }
