@@ -58,12 +58,6 @@ class NostoHelperIframe extends NostoHelper
         NostoAccount $account = null,
         array $params = array()
     ) {
-        if (!is_null($account)) {
-            if (!$account->isConnectedToNosto()) {
-                $params['missing_scopes'] = implode(',', $account->getMissingScopes());
-            }
-        }
-
         $queryParams = http_build_query(
             array_merge(
                 array(
@@ -81,6 +75,9 @@ class NostoHelperIframe extends NostoHelper
                     'fname' => $sso->getFirstName(),
                     'lname' => $sso->getLastName(),
                     'email' => $sso->getEmail(),
+                    'missing_scopes' => (!is_null($account) && !$account->isConnectedToNosto())
+                            ? implode(',', $account->getMissingScopes())
+                            : ''
                 ),
                 $params
             )
