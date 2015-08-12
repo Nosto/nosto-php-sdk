@@ -63,7 +63,7 @@ class AccountTest extends \Codeception\TestCase\Test
 	}
 
 	/**
-	 * Tests the "ssoLogin" method for the NostoAccount class without the sso token.
+	 * Tests the account service SSO without the sso token.
 	 */
 	public function testAccountSingleSignOnWithoutToken()
 	{
@@ -77,7 +77,7 @@ class AccountTest extends \Codeception\TestCase\Test
 	}
 
     /**
-     * Tests the "ssoLogin" method for the NostoAccount class with the sso token.
+     * Tests the account service SSO with the sso token.
      */
     public function testAccountSingleSignOnWithToken()
     {
