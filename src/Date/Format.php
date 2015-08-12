@@ -34,25 +34,47 @@
  */
 
 /**
- * Required validator used to validate `validatable` object properties.
- *
- * Supports validation of required values.
+ * Value Object representing a Nosto date format.
  */
-class NostoValidatorRequired extends NostoValidator
+final class NostoDateFormat
 {
+    const ISO_8601 = 'Y-m-d\TH:i:s\Z';
+    const YMD = 'Y-m-d';
+
     /**
-     * @inheritdoc
+     * @var string the date format.
      */
-    public function validate()
+    private $_format;
+
+    /**
+     * Constructor.
+     * Sets up the Value Object with given data.
+     *
+     * @param string $format the format string.
+     *
+     * @throws NostoInvalidArgumentException
+     */
+    public function __construct($format)
     {
-        $isValid = true;
-        foreach ($this->properties as $property) {
-            $value = $this->object->{$property};
-            if (empty($value)) {
-                $this->addError($property, sprintf('Property "%s" must not be empty.', $property));
-                $isValid = false;
-            }
+        if (!is_string($format) || !in_array($format, array(self::ISO_8601, self::YMD))) {
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s._format (%s) must be one of the following: "%s".',
+                __CLASS__,
+                $format,
+                implode('", "', array(self::ISO_8601, self::YMD))
+            ));
         }
-        return $isValid;
+
+        $this->_format = $format;
+    }
+
+    /**
+     * Returns the date format string.
+     *
+     * @return string the format.
+     */
+    public function getFormat()
+    {
+        return $this->_format;
     }
 }

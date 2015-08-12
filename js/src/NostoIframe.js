@@ -45,6 +45,7 @@ if (typeof Nosto === "undefined") {
 Nosto.iframe = function(options) {
     var TYPE_NEW_ACCOUNT = "newAccount",
         TYPE_CONNECT_ACCOUNT = "connectAccount",
+        TYPE_SYNC_ACCOUNT = "syncAccount",
         TYPE_REMOVE_ACCOUNT = "removeAccount";
 
     /**
@@ -56,6 +57,7 @@ Nosto.iframe = function(options) {
         urls: {
             createAccount: "",
             connectAccount: "",
+            syncAccount: "",
             deleteAccount: ""
         },
         xhrParams: {}
@@ -115,6 +117,24 @@ Nosto.iframe = function(options) {
                                 }
                             } else {
                                 throw new Error("Nosto: failed to handle account connection.");
+                            }
+                        }
+                    });
+                    break;
+
+                case TYPE_SYNC_ACCOUNT:
+                    xhr(settings.urls.syncAccount, {
+                        success: function (e) {
+                            /** @type {{success: Boolean}, {redirect_url: String}} response */
+                            var response = JSON.parse(e.target.response);
+                            if (response.redirect_url) {
+                                if (response.success && response.success === true) {
+                                    window.location.href = response.redirect_url;
+                                } else {
+                                    getIframeElement().src = response.redirect_url;
+                                }
+                            } else {
+                                throw new Error("Nosto: failed to handle account sync.");
                             }
                         }
                     });

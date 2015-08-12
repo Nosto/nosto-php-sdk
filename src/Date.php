@@ -34,18 +34,43 @@
  */
 
 /**
- * Interface for all objects that support data validation.
+ * Value Object representing a date.
  */
-interface NostoValidatableInterface
+final class NostoDate
 {
     /**
-     * Returns an array of validator rules for the object properties.
-     *
-     * Example:
-     *
-     * return array(array('url', 'productId'), 'required');
-     *
-     * @return mixed
+     * @var int the unix timestamp for the date.
      */
-    public function getValidationRules();
+    private $_timestamp;
+
+    /**
+     * Constructor.
+     * Sets up the Value Object with given data.
+     *
+     * @param int $timestamp the unix timestamp.
+     *
+     * @throws NostoInvalidArgumentException
+     */
+    public function __construct($timestamp)
+    {
+        if (!is_int($timestamp)) {
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s._timestamp (%s) must be a unix timestamp.',
+                __CLASS__,
+                $timestamp
+            ));
+        }
+
+        $this->_timestamp = (int)$timestamp;
+    }
+
+    /**
+     * Returns the unix timestamp of the date.
+     *
+     * @return int the timestamp.
+     */
+    public function getTimestamp()
+    {
+        return $this->_timestamp;
+    }
 }

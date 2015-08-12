@@ -14,13 +14,13 @@ class NostoAccountMetaDataIframe implements NostoAccountMetaIframeInterface
 	{
 		return 'james.kirk@example.com';
 	}
-	public function getLanguageIsoCode()
+	public function getLanguage()
 	{
-		return 'en';
+		return new NostoLanguageCode('en');
 	}
-	public function getLanguageIsoCodeShop()
+	public function getShopLanguage()
 	{
-		return 'en';
+		return new NostoLanguageCode('en');
 	}
 	public function getUniqueId()
 	{

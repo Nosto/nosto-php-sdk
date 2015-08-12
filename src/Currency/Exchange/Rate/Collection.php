@@ -34,41 +34,38 @@
  */
 
 /**
- * Number validator used to validate `validatable` object properties.
- *
- * Supports validation of number formats.
+ * Currency exchange rate object collection.
+ * Supports only items extending "NostoCurrencyExchangeRate".
  */
-class NostoValidatorNumber extends NostoValidator
+class NostoCurrencyExchangeRateCollection extends NostoCollection
 {
-    /**
-     * @var bool if the number is to validated as an integer only.
-     */
-    public $integer = false;
-
-    /**
-     * @var string the regexp pattern to use for validating integers.
-     */
-    public $integerPattern = '/^\s*[+-]?\d+\s*$/';
-
     /**
      * @inheritdoc
      */
-    public function validate()
+    protected $validItemType = 'NostoCurrencyExchangeRate';
+
+    /**
+     * @var NostoDate the timestamp for how long the exchange rates are valid.
+     */
+    protected $validUntil;
+
+    /**
+     * Setter for timestamp for how long the exchange rates are valid.
+     *
+     * @param NostoDate $validUntil the timestamp.
+     */
+    public function setValidUntil(NostoDate $validUntil)
     {
-        $isValid = true;
-        foreach ($this->properties as $property) {
-            $value = $this->object->{$property};
-            if (!is_numeric($value)) {
-                $this->addError($property, sprintf('Property "%s" must be a number.', $property));
-                $isValid = false;
-            }
-            if ($this->integer) {
-                if (!preg_match($this->integerPattern, "$value")) {
-                    $this->addError($property, sprintf('Property "%s" must be an integer.', $property));
-                    $isValid = false;
-                }
-            }
-        }
-        return $isValid;
+        $this->validUntil = $validUntil;
+    }
+
+    /**
+     * Getter for the timestamp for how long the exchange rates are valid.
+     *
+     * @return NostoDate|null the timestamp or null if not set.
+     */
+    public function getValidUntil()
+    {
+        return $this->validUntil;
     }
 }

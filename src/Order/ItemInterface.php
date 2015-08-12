@@ -64,16 +64,16 @@ interface NostoOrderItemInterface
     public function getName();
 
     /**
-     * The unit price of the item included in the order, formatted according to "99.99".
+     * The unit price of the item included in the order.
      *
-     * @return float the unit price.
+     * @return NostoPrice the unit price.
      */
     public function getUnitPrice();
 
     /**
      * The 3-letter ISO code (ISO 4217) for the currency the item was purchased in.
      *
-     * @return string the currency ISO code.
+     * @return NostoCurrencyCode the currency ISO code.
      */
-    public function getCurrencyCode();
+    public function getCurrency();
 }

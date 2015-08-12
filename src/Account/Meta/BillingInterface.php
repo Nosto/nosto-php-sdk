@@ -42,7 +42,7 @@ interface NostoAccountMetaBillingInterface
     /**
      * The 2-letter ISO code (ISO 3166-1 alpha-2) for the country used in account's billing details.
      *
-     * @return string the country ISO code.
+     * @return NostoCountryCode the country code.
      */
     public function getCountry();
 }

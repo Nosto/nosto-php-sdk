@@ -71,23 +71,23 @@ interface NostoAccountMetaInterface
     /**
      * The 3-letter ISO code (ISO 4217) for the currency used by the shop for which the account is created for.
      *
-     * @return string the currency ISO code.
+     * @return NostoCurrencyCode the currency code.
      */
-    public function getCurrencyCode();
+    public function getCurrency();
 
     /**
      * The 2-letter ISO code (ISO 639-1) for the language used by the shop for which the account is created for.
      *
-     * @return string the language ISO code.
+     * @return NostoLanguageCode the language code.
      */
-    public function getLanguageCode();
+    public function getLanguage();
 
     /**
      * The 2-letter ISO code (ISO 639-1) for the language of the account owner who is creating the account.
      *
-     * @return string the language ISO code.
+     * @return NostoLanguageCode the language code.
      */
-    public function getOwnerLanguageCode();
+    public function getOwnerLanguage();
 
     /**
      * Meta data model for the account owner who is creating the account.
@@ -118,4 +118,29 @@ interface NostoAccountMetaInterface
      * @return string|null the partner code or null if none exist.
      */
     public function getPartnerCode();
+
+    /**
+     * Returns a list of currency objects supported by the store the account is to be created for.
+     *
+     * @return NostoCurrency[] the currencies.
+     */
+    public function getCurrencies();
+
+    /**
+     * Returns the default price variation ID if store is using multiple currencies.
+     * This ID identifies the price that products are specified in and can be set to the currency
+     * ISO 639-1 code
+     *
+     * @return string|null the currency ID or null if not set.
+     */
+    public function getDefaultPriceVariationId();
+
+    /**
+     * Returns if exchange rates are used to handle multi-currency setups.
+     * It is also possible to handle multi-currency setups using variation tagging on the product
+     * pages, i.e. in addition to the product base price, you also tag all price variations.
+     *
+     * @return bool if the rates are used.
+     */
+    public function getUseCurrencyExchangeRates();
 }

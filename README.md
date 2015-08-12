@@ -18,7 +18,8 @@ A Nosto account is needed for every shop and every language within each shop.
     try {
         /** @var NostoAccountMetaInterface $meta */
         /** @var NostoAccount $account */
-        $account = NostoAccount::create($meta);
+        $service = new NostoServiceAccount();
+        $account = $service->create($meta);
         // save newly created account according to the platforms requirements
         .....
     } catch (NostoException $e) {
@@ -47,7 +48,8 @@ Then have a public endpoint ready to handle the return request.
     if (isset($_GET['code'])) {
         try {
             /** @var NostoOauthClientMetaInterface $meta */
-            $account = NostoAccount::syncFromNosto($meta, $_GET['code']);
+            $service = new NostoServiceAccount();
+            $account = $service->sync($meta, $_GET['code']);
             // save the synced account according to the platforms requirements
         } catch (NostoException $e) {
             // handle failures
@@ -72,7 +74,8 @@ This should be used when you delete a Nosto account for a shop. It will notify N
 ```php
     try {
         /** @var NostoAccount $account */
-        $account->delete();
+        $service = new NostoServiceAccount();
+        $service->delete($account);
     } catch (NostoException $e) {
         // handle failure
     }
@@ -88,12 +91,13 @@ This iframe will load only content from nosto.com.
     .....
     /**
      * @var NostoAccount|null $account account with at least the 'SSO' token loaded or null if no account exists yet
-     * @var NostoAccountMetaIframeInterface $meta
+     * @var NostoAccountMetaIframeInterface $metaIframe
+     * @var NostoAccountMetaSingleSignOnInterface $metaSso
      * @var array $params (optional) extra params to add to the iframe url
      */
     try
     {
-        $url = Nosto::helper('iframe')->getUrl($meta, $account, $params);
+        $url = Nosto::helper('iframe')->getUrl($metaSso, $metaIframe, $account, $params);
     }
     catch (NostoException $e)
     {
@@ -151,7 +155,7 @@ user ID, as the platform may support guest checkouts.
     try {
         /**
          * @var NostoOrderInterface $order
-         * @var NostoAccountInterface $account
+         * @var NostoAccount $account
          * @var string $customerId
          */
         $service = new NostoServiceOrder($account);
@@ -178,7 +182,7 @@ Note: you can call `addProduct` multiple times to add more products to the reque
     try {
         /**
          * @var NostoProductInterface $product
-         * @var NostoAccountInterface $account
+         * @var NostoAccount $account
          */
         $service = new NostoServiceRecrawl($account);
         $service->addProduct($product);
@@ -203,7 +207,7 @@ Creating new products:
     try {
         /**
          * @var NostoProductInterface $product
-         * @var NostoAccountInterface $account
+         * @var NostoAccount $account
          */
         $service = new NostoServiceProduct($account);
         $service->addProduct($product);
@@ -223,7 +227,7 @@ Updating existing products:
     try {
         /**
          * @var NostoProductInterface $product
-         * @var NostoAccountInterface $account
+         * @var NostoAccount $account
          */
         $service = new NostoServiceProduct($account);
         $service->addProduct($product);
@@ -243,7 +247,7 @@ Deleting existing products:
     try {
         /**
          * @var NostoProductInterface $product
-         * @var NostoAccountInterface $account
+         * @var NostoAccount $account
          */
         $service = new NostoServiceProduct($account);
         $service->addProduct($product);
@@ -275,7 +279,7 @@ integer values and expected to be applied to the data set being exported.
     .....
     /**
      * @var NostoProductInterface[] $products
-     * @var NostoAccountInterface $account
+     * @var NostoAccount $account
      */
     $collection = new NostoExportCollectionProduct();
     foreach ($products as $product) {
@@ -292,7 +296,7 @@ integer values and expected to be applied to the data set being exported.
     .....
     /**
      * @var NostoOrderInterface[] $orders
-     * @var NostoAccountInterface $account
+     * @var NostoAccount $account
      */
     $collection = new NostoExportCollectionOrder();
     foreach ($orders as $order) {

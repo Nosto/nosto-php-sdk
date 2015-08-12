@@ -38,7 +38,9 @@ Account related resources
 
         {
             "sso_token": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783",
-            "products_token": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783"
+            "products_token": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783",
+            "rates_token": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783",
+            "settings_token": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783"
         }
 
 ## OAuth Access Token [/token{?code,client_id,client_secret,redirect_uri,grant_type}]
@@ -71,7 +73,9 @@ Account related resources
 
         {
             "api_sso": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783",
-            "api_products": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783"
+            "api_products": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783",
+            "api_rates": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783",
+            "api_settings": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783"
         }
 
 ## Single Sign On [/hub/{platform}/load/{email}]
@@ -364,6 +368,35 @@ Product related resources
             [
                 1
             ]
+
++ Response 200 (application/json)
+
+        {}
+
+# Group Currency
+Currency related resources
+
+## Exchange rates [/exchangerates]
+
+### Send exchange rate update request [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
+    + Body
+
+            {
+                "rates": {
+                    "EUR": {
+                        "rate": "0.706700000000",
+                        "price_currency_code": "EUR"
+                    }
+                },
+                "valid_until": "2015-02-27T12:00:00Z"
+            }
 
 + Response 200 (application/json)
 

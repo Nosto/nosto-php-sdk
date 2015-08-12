@@ -34,41 +34,67 @@
  */
 
 /**
- * Range validator used to validate `validatable` object properties.
- *
- * Supports validation of ranges, i.e. if a value exists in a specified range.
+ * Class representing a currency with all it's formatting details Nosto needs.
  */
-class NostoValidatorRange extends NostoValidator
+class NostoCurrency
 {
     /**
-     * @var array the range values to validate against.
+     * @var NostoCurrencyCode the currency ISO 4217 code.
      */
-    public $range;
+    protected $code;
 
     /**
-     * @inheritdoc
+     * @var NostoCurrencySymbol the currency symbol.
      */
-    public function validate()
-    {
-        if (empty($this->range)) {
-            throw new NostoException('No range values defined for range validator.');
-        }
+    protected $symbol;
 
-        $isValid = true;
-        foreach ($this->properties as $property) {
-            $value = $this->object->{$property};
-            if (!in_array($value, $this->range)) {
-                $this->addError(
-                    $property,
-                    sprintf(
-                        'Property "%s" must be one of the following: "%s".',
-                        $property,
-                        implode('", "', $this->range)
-                    )
-                );
-                $isValid = false;
-            }
-        }
-        return $isValid;
+    /**
+     * @var NostoCurrencyFormat the currency format.
+     */
+    protected $format;
+
+    /**
+     * Constructor.
+     * Assigns the currency properties.
+     *
+     * @param NostoCurrencyCode $code the currency ISO 4217 code.
+     * @param NostoCurrencySymbol $symbol the currency symbol.
+     * @param NostoCurrencyFormat $format the currency formatting.
+     */
+    public function __construct(NostoCurrencyCode $code, NostoCurrencySymbol $symbol, NostoCurrencyFormat $format)
+    {
+        $this->code = $code;
+        $this->symbol = $symbol;
+        $this->format = $format;
+    }
+
+    /**
+     * Getter for the currency code.
+     *
+     * @return NostoCurrencyCode the currency ISO 4217 code.
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * Getter for the currency symbol.
+     *
+     * @return NostoCurrencySymbol the currency symbol.
+     */
+    public function getSymbol()
+    {
+        return $this->symbol;
+    }
+
+    /**
+     * Getter for the currency format.
+     *
+     * @return NostoCurrencyFormat the format.
+     */
+    public function getFormat()
+    {
+        return $this->format;
     }
 }

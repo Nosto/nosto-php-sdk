@@ -19,7 +19,8 @@ class AccountDeleteTest extends \Codeception\TestCase\Test
 
         $this->specify('account is NOT deleted', function() use ($account) {
             $this->setExpectedException('NostoException');
-            $account->delete();
+            $service = new NostoServiceAccount();
+            $service->delete($account);
         });
     }
 
@@ -33,7 +34,8 @@ class AccountDeleteTest extends \Codeception\TestCase\Test
 		$account->addApiToken($token);
 
         $this->specify('account is deleted', function() use ($account) {
-            $account->delete();
+            $service = new NostoServiceAccount();
+            $service->delete($account);
         });
     }
 }

@@ -34,18 +34,19 @@
  */
 
 /**
- * Date helper class for date related tasks.
+ * Price formatter.
  */
-class NostoHelperDate extends NostoHelper
+class NostoFormatterPrice extends NostoFormatter
 {
     /**
-     * Formats date into Nosto format, i.e. Y-m-d.
+     * Formats a NostoPrice object into a price string.
      *
-     * @param string $date the date string to format (must be a datetime description valid to pass to `strtotime`).
-     * @return string the formatted date.
+     * @param NostoPrice $price the price object.
+     * @param NostoPriceFormat $format the price format.
+     * @return string the formatted price.
      */
-    public function format($date)
+    public function format(NostoPrice $price, NostoPriceFormat $format)
     {
-        return date('Y-m-d', strtotime($date));
+        return number_format($price->getPrice(), $format->getDecimals(), $format->getDecimalPoint(), $format->getThousandsSeparator());
     }
 }

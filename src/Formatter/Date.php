@@ -34,18 +34,19 @@
  */
 
 /**
- * Price helper class for price related tasks.
+ * Date formatter.
  */
-class NostoHelperPrice extends NostoHelper
+class NostoFormatterDate extends NostoFormatter
 {
     /**
-     * Formats price into Nosto format, e.g. 1000.99.
+     * Formats a NostoDate object into a date string.
      *
-     * @param string|int|float $price the price string to format.
-     * @return string the formatted price.
+     * @param NostoDate $date the date object.
+     * @param NostoDateFormat $format the formatting.
+     * @return string the formatted date.
      */
-    public function format($price)
+    public function format(NostoDate $date, NostoDateFormat $format)
     {
-        return number_format($price, 2, '.', '');
+        return date($format->getFormat(), $date->getTimestamp());
     }
 }

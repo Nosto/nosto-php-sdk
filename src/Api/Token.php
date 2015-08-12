@@ -36,10 +36,12 @@
 /**
  * Class representing an API token for the Nosto API's.
  */
-class NostoApiToken extends NostoObject implements NostoValidatableInterface
+class NostoApiToken
 {
     const API_SSO = 'sso';
     const API_PRODUCTS = 'products';
+    const API_EXCHANGE_RATES = 'rates';
+    const API_SETTINGS = 'settings';
 
     /**
      * @var string the token name, must be one of the defined tokens from self::$tokenNames.
@@ -57,6 +59,8 @@ class NostoApiToken extends NostoObject implements NostoValidatableInterface
     public static $tokenNames = array(
         self::API_SSO,
         self::API_PRODUCTS,
+        self::API_EXCHANGE_RATES,
+        self::API_SETTINGS,
     );
 
     /**
@@ -65,23 +69,29 @@ class NostoApiToken extends NostoObject implements NostoValidatableInterface
      *
      * @param string $name the token name (must be one of self::$tokenNames).
      * @param string $value the token value string.
+     *
+     * @throws NostoInvalidArgumentException
      */
     public function __construct($name, $value)
     {
-        $this->name = $name;
-        $this->value = $value;
-        $this->validate();
-    }
+        if (!in_array($name, self::$tokenNames)) {
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s.name (%s) must be one of the following: "%s"',
+                __CLASS__,
+                $name,
+                implode('", "', self::$tokenNames)
+            ));
+        }
+        if (!is_string($value) || empty($value)) {
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s.value (%s) must be a non-empty string value.',
+                __CLASS__,
+                $value
+            ));
+        }
 
-    /**
-     * @inheritdoc
-     */
-    public function getValidationRules()
-    {
-        return array(
-            array(array('name', 'value'), 'required'),
-            array(array('name'), 'in', 'range' => self::$tokenNames)
-        );
+        $this->name = (string)$name;
+        $this->value = (string)$value;
     }
 
     /**
@@ -132,20 +142,5 @@ class NostoApiToken extends NostoObject implements NostoValidatableInterface
     public function getValue()
     {
         return $this->value;
-    }
-
-    /**
-     * Validates the token attributes.
-     *
-     * @throws NostoException if any attribute is invalid.
-     */
-    protected function validate()
-    {
-        $validator = new NostoValidator($this);
-        if (!$validator->validate()) {
-            foreach ($validator->getErrors() as $errors) {
-                throw new NostoException(sprintf('Invalid Nosto API token. %s', $errors[0]));
-            }
-        }
     }
 }

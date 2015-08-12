@@ -47,9 +47,9 @@ interface NostoOrderInterface
     public function getOrderNumber();
 
     /**
-     * The date when the order was placed, formatted according to "Y-m-d".
+     * The date when the order was placed.
      *
-     * @return string the creation date.
+     * @return NostoDate the creation date.
      */
     public function getCreatedDate();
 

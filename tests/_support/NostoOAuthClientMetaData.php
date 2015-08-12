@@ -18,8 +18,12 @@ class NostoOAuthClientMetaData implements NostoOauthClientMetaInterface
 	{
 		return array('sso', 'products');
 	}
-	public function getLanguageIsoCode()
+	public function getLanguage()
 	{
-		return 'en';
+		return new NostoLanguageCode('en');
 	}
+    public function getAccount()
+    {
+        return null;
+    }
 }

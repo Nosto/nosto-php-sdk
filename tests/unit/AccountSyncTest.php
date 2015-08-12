@@ -25,7 +25,8 @@ class AccountSyncTest extends \Codeception\TestCase\Test
 			$this->assertEquals('http://localhost:3000?client_id=client-id&redirect_uri=http%3A%2F%2Fmy.shop.com%2Fnosto%2Foauth&response_type=code&scope=sso products&lang=en', $client->getAuthorizationUrl());
 		});
 
-		$account = NostoAccount::syncFromNosto($meta, 'test123');
+        $service = new NostoServiceAccount();
+        $account = $service->sync($meta, 'test123');
 
 		$this->specify('account was created', function() use ($account, $meta) {
 			$this->assertInstanceOf('NostoAccount', $account);

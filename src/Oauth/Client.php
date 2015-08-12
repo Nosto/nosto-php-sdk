@@ -63,9 +63,9 @@ class NostoOAuthClient
     protected $redirectUrl;
 
     /**
-     * @var string the language ISO code used for localization on the oauth2 server.
+     * @var NostoLanguageCode the language code used for localization on the oauth2 server.
      */
-    protected $languageIsoCode;
+    protected $language;
 
     /**
      * @var array list of scopes to request access for during "PATH_AUTH" request.
@@ -73,15 +73,21 @@ class NostoOAuthClient
     protected $scopes = array();
 
     /**
-     * @param NostoOauthClientMetaInterface $metaData
+     * @var NostoAccount the Nosto account if OAuth is done for a specific account to sync details.
      */
-    public function __construct(NostoOauthClientMetaInterface $metaData)
+    protected $account;
+
+    /**
+     * @param NostoOauthClientMetaInterface $meta
+     */
+    public function __construct(NostoOauthClientMetaInterface $meta)
     {
-        $this->scopes = $metaData->getScopes();
-        $this->clientId = $metaData->getClientId();
-        $this->clientSecret = $metaData->getClientSecret();
-        $this->redirectUrl = $metaData->getRedirectUrl();
-        $this->languageIsoCode = $metaData->getLanguageIsoCode();
+        $this->scopes = $meta->getScopes();
+        $this->clientId = $meta->getClientId();
+        $this->clientSecret = $meta->getClientSecret();
+        $this->redirectUrl = $meta->getRedirectUrl();
+        $this->language = $meta->getLanguage();
+        $this->account = $meta->getAccount();
     }
 
     /**
@@ -91,15 +97,23 @@ class NostoOAuthClient
      */
     public function getAuthorizationUrl()
     {
-        return NostoHttpRequest::buildUri(
+        $url = NostoHttpRequest::buildUri(
             self::$baseUrl.self::PATH_AUTH,
             array(
                 '{cid}' => $this->clientId,
                 '{uri}' => urlencode($this->redirectUrl),
                 '{sco}' => implode(' ', $this->scopes),
-                '{iso}' => strtolower($this->languageIsoCode),
+                '{iso}' => $this->language->getCode(),
             )
         );
+        if ($this->account) {
+            $url = NostoHttpRequest::replaceQueryParamInUrl(
+                'merchant',
+                $this->account->getName(),
+                $url
+            );
+        }
+        return $url;
     }
 
     /**
@@ -107,6 +121,7 @@ class NostoOAuthClient
      *
      * @param string $code code sent by the authorization server to exchange for an access token.
      * @return NostoOAuthToken
+     *
      * @throws NostoException
      */
     public function authenticate($code)
@@ -127,17 +142,12 @@ class NostoOAuthClient
         );
         $response = $request->get();
         $result = $response->getJsonResult(true);
-
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to authenticate with code.', $request, $response);
         }
-        if (empty($result['access_token'])) {
-            throw new NostoException('No "access_token" returned after authenticating with code');
-        }
-        if (empty($result['merchant_name'])) {
-            throw new NostoException('No "merchant_name" returned after authenticating with code');
-        }
+        $merchantName = isset($result['merchant_name']) ? $result['merchant_name'] : null;
+        $accessToken = isset($result['access_token']) ? $result['access_token'] : null;
 
-        return NostoOAuthToken::create($result);
+        return new NostoOAuthToken($merchantName, $accessToken);
     }
 }

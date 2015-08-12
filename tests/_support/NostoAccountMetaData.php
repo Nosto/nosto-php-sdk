@@ -25,17 +25,17 @@ class NostoAccountMetaData implements NostoAccountMetaInterface
 	{
 		return 'http://localhost';
 	}
-	public function getCurrencyCode()
+	public function getCurrency()
 	{
-		return 'USD';
+		return new NostoCurrencyCode('USD');
 	}
-	public function getLanguageCode()
+	public function getLanguage()
 	{
-		return 'en';
+		return new NostoLanguageCode('en');
 	}
-	public function getOwnerLanguageCode()
+	public function getOwnerLanguage()
 	{
-		return 'en';
+		return new NostoLanguageCode('en');
 	}
 	public function getOwner()
 	{
@@ -52,5 +52,23 @@ class NostoAccountMetaData implements NostoAccountMetaInterface
     public function getPartnerCode()
     {
         return null;
+    }
+    public function getCurrencies()
+    {
+        return array(
+            new NostoCurrency(
+                new NostoCurrencyCode('USD'),
+                new NostoCurrencySymbol('$', 'left'),
+                new NostoCurrencyFormat(',', 3, '.', 2)
+            )
+        );
+    }
+    public function getDefaultPriceVariationId()
+    {
+        return null;
+    }
+    public function getUseCurrencyExchangeRates()
+    {
+        return array();
     }
 }

@@ -44,6 +44,14 @@ class NostoExportCollectionOrder extends NostoOrderCollection implements NostoEx
      */
     public function getJson()
     {
+        /** @var NostoFormatterDate $dateFormatter */
+        $dateFormatter = Nosto::formatter('date');
+        /** @var NostoFormatterPrice $priceFormatter */
+        $priceFormatter = Nosto::formatter('price');
+
+        $dateFormat = new NostoDateFormat(NostoDateFormat::YMD);
+        $priceFormat = new NostoPriceFormat(2, '.', '');
+
         $array = array();
         /** @var NostoOrderInterface $item */
         foreach ($this->getArrayCopy() as $item) {
@@ -51,7 +59,7 @@ class NostoExportCollectionOrder extends NostoOrderCollection implements NostoEx
                 'order_number' => $item->getOrderNumber(),
                 'order_status_code' => $item->getOrderStatus()->getCode(),
                 'order_status_label' => $item->getOrderStatus()->getLabel(),
-                'created_at' => Nosto::helper('date')->format($item->getCreatedDate()),
+                'created_at' => $dateFormatter->format($item->getCreatedDate(), $dateFormat),
                 'buyer' => array(
                     'first_name' => $item->getBuyerInfo()->getFirstName(),
                     'last_name' => $item->getBuyerInfo()->getLastName(),
@@ -65,8 +73,8 @@ class NostoExportCollectionOrder extends NostoOrderCollection implements NostoEx
                     'product_id' => $orderItem->getProductId(),
                     'quantity' => (int)$orderItem->getQuantity(),
                     'name' => $orderItem->getName(),
-                    'unit_price' => Nosto::helper('price')->format($orderItem->getUnitPrice()),
-                    'price_currency_code' => strtoupper($orderItem->getCurrencyCode()),
+                    'unit_price' => $priceFormatter->format($orderItem->getUnitPrice(), $priceFormat),
+                    'price_currency_code' => $orderItem->getCurrency()->getCode(),
                 );
             }
             $array[] = $data;

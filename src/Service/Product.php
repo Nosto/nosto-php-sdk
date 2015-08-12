@@ -39,7 +39,7 @@
 class NostoServiceProduct
 {
     /**
-     * @var NostoAccountInterface the account to perform the operation on.
+     * @var NostoAccount the account to perform the operation on.
      */
     protected $account;
 
@@ -53,9 +53,9 @@ class NostoServiceProduct
      *
      * Accepts the account for which the product operation is to be performed on.
      *
-     * @param NostoAccountInterface $account the account object.
+     * @param NostoAccount $account the account object.
      */
-    public function __construct(NostoAccountInterface $account)
+    public function __construct(NostoAccount $account)
     {
         $this->account = $account;
         $this->collection = new NostoProductCollection();
@@ -151,7 +151,7 @@ class NostoServiceProduct
     {
         $token = $this->account->getApiToken(NostoApiToken::API_PRODUCTS);
         if (is_null($token)) {
-            throw new NostoException('No `products` API token found for account.');
+            throw new NostoException(sprintf('No `%s` API token found for account "%s".', NostoApiToken::API_PRODUCTS, $this->account->getName()));
         }
 
         $request = new NostoApiRequest();
@@ -188,14 +188,22 @@ class NostoServiceProduct
      */
     protected function getProductAsArray(NostoProductInterface $product)
     {
+        /** @var NostoFormatterDate $dateFormatter */
+        $dateFormatter = Nosto::formatter('date');
+        /** @var NostoFormatterPrice $priceFormatter */
+        $priceFormatter = Nosto::formatter('price');
+
+        $dateFormat = new NostoDateFormat(NostoDateFormat::YMD);
+        $priceFormat = new NostoPriceFormat(2, '.', '');
+
         $data = array(
             'url' => $product->getUrl(),
             'product_id' => $product->getProductId(),
             'name' => $product->getName(),
             'image_url' => $product->getImageUrl(),
-            'price' => Nosto::helper('price')->format($product->getPrice()),
-            'price_currency_code' => strtoupper($product->getCurrencyCode()),
-            'availability' => $product->getAvailability(),
+            'price' => $priceFormatter->format($product->getPrice(), $priceFormat),
+            'price_currency_code' => $product->getCurrency()->getCode(),
+            'availability' => $product->getAvailability()->getAvailability(),
             'categories' => $product->getCategories(),
         );
 
@@ -205,7 +213,7 @@ class NostoServiceProduct
             $data['description'] = $product->getFullDescription();
         }
         if ($product->getListPrice()) {
-            $data['list_price'] = Nosto::helper('price')->format($product->getListPrice());
+            $data['list_price'] = $priceFormatter->format($product->getListPrice(), $priceFormat);
         }
         if ($product->getBrand()) {
             $data['brand'] = $product->getBrand();
@@ -216,7 +224,11 @@ class NostoServiceProduct
             }
         }
         if ($product->getDatePublished()) {
-            $data['date_published'] = Nosto::helper('date')->format($product->getDatePublished());
+            $data['date_published'] = $dateFormatter->format($product->getDatePublished(), $dateFormat);
+        }
+
+        if ($product->getPriceVariationId()) {
+            $data['variation_id'] = $product->getPriceVariationId();
         }
 
         return $data;
@@ -232,11 +244,8 @@ class NostoServiceProduct
     {
         $data = array();
         foreach ($this->collection->getArrayCopy() as $item) {
-            /** @var NostoProductInterface|NostoValidatableInterface $item */
-            $validator = new NostoValidator($item);
-            if ($validator->validate()) {
-                $data[] = $this->getProductAsArray($item);
-            }
+            /** @var NostoProductInterface $item */
+            $data[] = $this->getProductAsArray($item);
         }
         if (empty($data)) {
             throw new NostoException('No products found in collection.');

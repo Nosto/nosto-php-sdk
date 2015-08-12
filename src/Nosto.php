@@ -65,15 +65,19 @@ class Nosto
      */
     public static function helper($helper)
     {
-        $registryKey = '__helper__/'.$helper;
-        if (!self::registry($registryKey)) {
-            $helperClass = self::getHelperClassName($helper);
-            if (!class_exists($helperClass)) {
-                throw new NostoException(sprintf('Unknown helper class %s', $helperClass));
-            }
-            self::register($registryKey, new $helperClass);
-        }
-        return self::registry($registryKey);
+        return self::getInstanceFromRegistry($helper, 'Helper');
+    }
+
+    /**
+     * Gets a formatter class instance by name.
+     *
+     * @param string $formatter the name of the formatter class.
+     * @return NostoFormatter the formatter instance.
+     * @throws NostoException if the formatter cannot be found.
+     */
+    public static function formatter($formatter)
+    {
+        return self::getInstanceFromRegistry($formatter, 'Formatter');
     }
 
     /**
@@ -123,7 +127,28 @@ class Nosto
     }
 
     /**
-     * Converts a helper class name reference name to a real class name.
+     * Gets an instance from registry by name.
+     *
+     * @param string $name the name of the class.
+     * @param string $type the type of the class, e.g. "Helper", "Formatter"
+     * @return NostoFormatter the instance.
+     * @throws NostoException if instance cannot be found.
+     */
+    protected static function getInstanceFromRegistry($name, $type)
+    {
+        $registryKey = '__'.strtolower($type).'__/'.$name;
+        if (!self::registry($registryKey)) {
+            $className = self::getClassName($name, $type);
+            if (!class_exists($className)) {
+                throw new NostoException(sprintf('Unknown %s class %s', $type, $className));
+            }
+            self::register($registryKey, new $className);
+        }
+        return self::registry($registryKey);
+    }
+
+    /**
+     * Converts a helper/formatter class name reference name to a real class name.
      *
      * Examples:
      *
@@ -134,14 +159,15 @@ class Nosto
      * nosto_tagging/date => NostoTaggingHelperDate
      * nosto_tagging/price_rule => NostoTaggingHelperPriceRule
      *
-     * @param string $ref the helper reference name.
+     * @param string $name the helper reference name.
+     * @param string $type the helper type, e.g. "Helper", "Formatter".
      * @return string|bool the helper class name or false if it cannot be built.
      */
-    protected static function getHelperClassName($ref)
+    protected static function getClassName($name, $type)
     {
-        if (strpos($ref, '/') === false) {
-            $ref = 'nosto/'.$ref;
+        if (strpos($name, '/') === false) {
+            $name = 'nosto/'.$name;
         }
-        return str_replace(' ', '', ucwords(str_replace('_', ' ', str_replace('/', ' Helper ', $ref))));
+        return str_replace(' ', '', ucwords(str_replace('_', ' ', str_replace('/', ' '.$type.' ', $name))));
     }
 }

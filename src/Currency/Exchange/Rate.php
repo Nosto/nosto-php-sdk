@@ -34,25 +34,60 @@
  */
 
 /**
- * Base class for Nosto objects to share basic functionality.
+ * Class representing a currency exchange rate.
  */
-abstract class NostoObject
+class NostoCurrencyExchangeRate
 {
     /**
-     * Returns a protected/private property value by invoking it's public getter.
-     *
-     * The getter names are assumed to be the property name in camel case with preceding word "get".
-     *
-     * @param string $name the property name.
-     * @return mixed the property value.
-     * @throws NostoException if public getter does not exist.
+     * @var NostoCurrencyCode the currency code for the exchange rate.
      */
-    public function __get($name)
+    protected $currency;
+
+    /**
+     * @var string the exchange rate value.
+     */
+    protected $exchangeRate;
+
+    /**
+     * Constructor.
+     * Assigns exchange rate properties and validates them.
+     *
+     * @param NostoCurrencyCode $currencyCode the currency code for the exchange rate.
+     * @param string $exchangeRate the exchange rate value.
+     *
+     * @throws NostoInvalidArgumentException
+     */
+    public function __construct(NostoCurrencyCode $currencyCode, $exchangeRate)
     {
-        $getter = 'get'.str_replace('_', '', $name);
-        if (method_exists($this, $getter)) {
-            return $this->{$getter}();
+        if (!is_numeric($exchangeRate) || $exchangeRate < 0) {
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s.exchangeRate (%s) must be a numeric value above 0.',
+                __CLASS__,
+                $exchangeRate
+            ));
         }
-        throw new NostoException(sprintf('Property `%s.%s` is not defined.', get_class($this), $name));
+
+        $this->currency = $currencyCode;
+        $this->exchangeRate = (string)$exchangeRate;
+    }
+
+    /**
+     * Getter for the exchange rates currency code.
+     *
+     * @return NostoCurrencyCode the currency code.
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * Getter for the exchange rate value.
+     *
+     * @return string the exchange rate.
+     */
+    public function getExchangeRate()
+    {
+        return $this->exchangeRate;
     }
 }

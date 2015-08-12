@@ -45,7 +45,7 @@
 class NostoServiceOrder
 {
     /**
-     * @var NostoAccountInterface the Nosto account to confirm an order for.
+     * @var NostoAccount the Nosto account to confirm an order for.
      */
     protected $account;
 
@@ -54,9 +54,9 @@ class NostoServiceOrder
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoAccountInterface $account the Nosto account object.
+     * @param NostoAccount $account the Nosto account object.
      */
-    public function __construct(NostoAccountInterface $account)
+    public function __construct(NostoAccount $account)
     {
         $this->account = $account;
     }
@@ -107,6 +107,14 @@ class NostoServiceOrder
      */
     protected function getOrderAsJson(NostoOrderInterface $order)
     {
+        /** @var NostoFormatterDate $dateFormatter */
+        $dateFormatter = Nosto::formatter('date');
+        /** @var NostoFormatterPrice $priceFormatter */
+        $priceFormatter = Nosto::formatter('price');
+
+        $dateFormat = new NostoDateFormat(NostoDateFormat::YMD);
+        $priceFormat = new NostoPriceFormat(2, '.', '');
+
         $data = array(
             'order_number' => $order->getOrderNumber(),
             'order_status_code' => $order->getOrderStatus()->getCode(),
@@ -116,7 +124,7 @@ class NostoServiceOrder
                 'last_name' => $order->getBuyerInfo()->getLastName(),
                 'email' => $order->getBuyerInfo()->getEmail(),
             ),
-            'created_at' => Nosto::helper('date')->format($order->getCreatedDate()),
+            'created_at' => $dateFormatter->format($order->getCreatedDate(), $dateFormat),
             'payment_provider' => $order->getPaymentProvider(),
             'purchased_items' => array(),
         );
@@ -125,8 +133,8 @@ class NostoServiceOrder
                 'product_id' => $item->getProductId(),
                 'quantity' => (int)$item->getQuantity(),
                 'name' => $item->getName(),
-                'unit_price' => Nosto::helper('price')->format($item->getUnitPrice()),
-                'price_currency_code' => strtoupper($item->getCurrencyCode()),
+                'unit_price' => $priceFormatter->format($item->getUnitPrice(), $priceFormat),
+                'price_currency_code' => $item->getCurrency()->getCode(),
             );
         }
         return json_encode($data);

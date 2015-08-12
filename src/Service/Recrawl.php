@@ -39,7 +39,7 @@
 class NostoServiceRecrawl
 {
     /**
-     * @var NostoAccountInterface the Nosto account to recrawl product(s) for.
+     * @var NostoAccount the Nosto account to recrawl product(s) for.
      */
     protected $account;
 
@@ -53,9 +53,9 @@ class NostoServiceRecrawl
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoAccountInterface $account the Nosto account object.
+     * @param NostoAccount $account the Nosto account object.
      */
-    public function __construct(NostoAccountInterface $account)
+    public function __construct(NostoAccount $account)
     {
         $this->account = $account;
         $this->collection = new NostoProductCollection();
@@ -100,7 +100,7 @@ class NostoServiceRecrawl
     {
         $token = $this->account->getApiToken(NostoApiToken::API_PRODUCTS);
         if (is_null($token)) {
-            throw new NostoException('Failed to send product re-crawl to Nosto. No `products` API token found for account.');
+            throw new NostoException(sprintf('No `%s` API token found for account "%s".', NostoApiToken::API_PRODUCTS, $this->account->getName()));
         }
         $request = new NostoApiRequest();
         $request->setPath(NostoApiRequest::PATH_PRODUCT_RE_CRAWL);

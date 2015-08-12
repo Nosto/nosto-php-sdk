@@ -8,7 +8,7 @@ class NostoOrder implements NostoOrderInterface
 	}
 	public function getCreatedDate()
 	{
-		return '2014-12-12';
+		return new NostoDate(strtotime('2014-12-12'));
 	}
 	public function getPaymentProvider()
 	{

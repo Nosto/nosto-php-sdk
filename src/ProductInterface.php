@@ -70,28 +70,35 @@ interface NostoProductInterface
     /**
      * Returns the price of the product including possible discounts and taxes.
      *
-     * @return float the price with 2 decimals, e.g. 1000.99.
+     * @return NostoPrice the price.
      */
     public function getPrice();
 
     /**
      * Returns the list price of the product without discounts but including possible taxes.
      *
-     * @return float the price with 2 decimals, e.g. 1000.99.
+     * @return NostoPrice the price.
      */
     public function getListPrice();
 
     /**
      * Returns the currency code (ISO 4217) the product is sold in.
      *
-     * @return string the currency ISO code.
+     * @return NostoCurrencyCode the currency code.
      */
-    public function getCurrencyCode();
+    public function getCurrency();
+
+    /**
+     * Returns the ID of the price variation that is currently in use.
+     *
+     * @return string the price variation ID.
+     */
+    public function getPriceVariationId();
 
     /**
      * Returns the availability of the product, i.e. if it is in stock or not.
      *
-     * @return string the availability, either "InStock" or "OutOfStock".
+     * @return NostoProductAvailability the availability.
      */
     public function getAvailability();
 
@@ -141,7 +148,14 @@ interface NostoProductInterface
     /**
      * Returns the product publication date in the shop.
      *
-     * @return string the date in format "Y-m-d".
+     * @return NostoDate the date.
      */
     public function getDatePublished();
+
+    /**
+     * Returns the product price variations if any exist.
+     *
+     * @return NostoProductPriceVariationInterface[] the price variations.
+     */
+    public function getPriceVariations();
 }
