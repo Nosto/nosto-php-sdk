@@ -33,7 +33,6 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
-require_once(dirname(__FILE__).'/src/AccountInterface.php');
 require_once(dirname(__FILE__).'/src/OrderInterface.php');
 require_once(dirname(__FILE__).'/src/ProductInterface.php');
 require_once(dirname(__FILE__).'/src/Account/MetaInterface.php');
