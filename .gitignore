@@ -1,4 +1,6 @@
 .env
+.env.*
+!.env.example
 vendor
 
 tests/_output/*
