@@ -40,7 +40,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Initial release
 
 
-[unreleased]: https://github.com/nosto/php-sdk/compare/1.13.0...develop
+[unreleased]: https://github.com/nosto/php-sdk/compare/2.0.0...develop
+[2.0.0]: https://github.com/nosto/php-sdk/compare/1.13.0...2.0.0
 [1.13.0]: https://github.com/nosto/php-sdk/compare/1.12.1...1.13.0
 [1.12.1]: https://github.com/nosto/php-sdk/compare/1.12.0...1.12.1
 [1.12.0]: https://github.com/nosto/php-sdk/compare/1.11.0...1.12.0
