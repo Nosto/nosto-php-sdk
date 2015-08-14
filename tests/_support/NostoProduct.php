@@ -1,6 +1,6 @@
 <?php
 
-class NostoProduct implements NostoProductInterface, NostoValidatableInterface
+class NostoProduct implements NostoProductInterface
 {
 	public function getUrl()
 	{
@@ -20,19 +20,23 @@ class NostoProduct implements NostoProductInterface, NostoValidatableInterface
 	}
 	public function getPrice()
 	{
-		return 99.99;
+		return new NostoPrice(99.99);
 	}
 	public function getListPrice()
 	{
-		return 110.99;
+		return new NostoPrice(110.99);
 	}
-	public function getCurrencyCode()
+	public function getCurrency()
 	{
-		return 'USD';
+		return new NostoCurrencyCode('USD');
 	}
-	public function getAvailability()
+    public function getPriceVariationId()
+    {
+        return 'USD';
+    }
+    public function getAvailability()
 	{
-		return 'InStock';
+		return new NostoProductAvailability('InStock');
 	}
 	public function getTags()
 	{
@@ -50,26 +54,22 @@ class NostoProduct implements NostoProductInterface, NostoValidatableInterface
 	{
 		return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris imperdiet ligula eu facilisis dignissim.';
 	}
+    public function getFullDescription()
+    {
+        return $this->getShortDescription().' '.$this->getDescription();
+    }
 	public function getBrand()
 	{
 		return 'Super Brand';
 	}
 	public function getDatePublished()
 	{
-		return '2013-01-05';
+		return new NostoDate(strtotime('2013-01-05'));
 	}
-	public function getValidationRules()
-	{
-		return array(
-			array(array('url', 'productId', 'name', 'imageUrl', 'price', 'listPrice', 'currencyCode', 'availability'), 'required')
-		);
-	}
-	public function __get($name)
-	{
-		$getter = 'get'.$name;
-		if (method_exists($this, $getter)) {
-			return $this->{$getter}();
-		}
-		throw new Exception(sprintf('Property `%s.%s` is not defined.', get_class($this), $name));
-	}
+    public function getPriceVariations()
+    {
+        return array(
+            new NostoPriceVariation()
+        );
+    }
 }

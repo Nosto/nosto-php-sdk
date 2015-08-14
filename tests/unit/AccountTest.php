@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataIframe.php');
+require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataSingleSignOn.php');
 
 class AccountTest extends \Codeception\TestCase\Test
 {
@@ -28,9 +28,19 @@ class AccountTest extends \Codeception\TestCase\Test
 		$token = new NostoApiToken('products', '123');
 		$account->addApiToken($token);
 
-		$this->specify('account is connected', function() use ($account) {
-			$this->assertTrue($account->isConnectedToNosto());
+		$this->specify('account is NOT connected', function() use ($account) {
+			$this->assertFalse($account->isConnectedToNosto());
 		});
+
+        $token = new NostoApiToken('rates', '123');
+        $account->addApiToken($token);
+
+        $token = new NostoApiToken('settings', '123');
+        $account->addApiToken($token);
+
+        $this->specify('account IS connected', function() use ($account) {
+            $this->assertTrue($account->isConnectedToNosto());
+        });
 	}
 
 	/**
@@ -53,15 +63,33 @@ class AccountTest extends \Codeception\TestCase\Test
 	}
 
 	/**
-	 * Tests the "ssoLogin" method for the NostoAccount class.
+	 * Tests the account service SSO without the sso token.
 	 */
-	public function testAccountSingleSignOn()
+	public function testAccountSingleSignOnWithoutToken()
 	{
 		$account = new NostoAccount('platform-test');
-		$meta = new NostoAccountMetaDataIframe();
+		$meta = new NostoAccountMetaDataSingleSignOn();
 
-		$this->specify('account sso without api token', function() use ($account, $meta) {
-			$this->assertFalse($account->ssoLogin($meta));
-		});
+        $this->setExpectedException('NostoException');
+
+        $service = new NostoServiceAccount();
+        $service->sso($account, $meta);
 	}
+
+    /**
+     * Tests the account service SSO with the sso token.
+     */
+    public function testAccountSingleSignOnWithToken()
+    {
+        $account = new NostoAccount('platform-test');
+        $token = new NostoApiToken('sso', '123');
+        $account->addApiToken($token);
+        $meta = new NostoAccountMetaDataSingleSignOn();
+
+        $this->specify('account has sso token', function() use ($account, $meta) {
+            $service = new NostoServiceAccount();
+            $url = $service->sso($account, $meta);
+            $this->assertEquals('https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg', $url);
+        });
+    }
 }

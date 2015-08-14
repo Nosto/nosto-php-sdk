@@ -1,9 +1,9 @@
 <?php
 
-class NostoAccountMetaDataBilling implements NostoAccountMetaDataBillingDetailsInterface
+class NostoAccountMetaDataBilling implements NostoAccountMetaBillingInterface
 {
 	public function getCountry()
 	{
-		return 'us';
+		return new NostoCountryCode('US');
 	}
 }

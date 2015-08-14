@@ -1,6 +1,6 @@
 <?php
 
-class NostoOrderPurchasedItem implements NostoOrderPurchasedItemInterface
+class NostoOrderPurchasedItem implements NostoOrderItemInterface
 {
 	public function getProductId()
 	{
@@ -16,10 +16,10 @@ class NostoOrderPurchasedItem implements NostoOrderPurchasedItemInterface
 	}
 	public function getUnitPrice()
 	{
-		return 99.99;
+		return new NostoPrice(99.99);
 	}
-	public function getCurrencyCode()
+	public function getCurrency()
 	{
-		return 'USD';
+		return new NostoCurrencyCode('USD');
 	}
 }

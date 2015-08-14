@@ -1,6 +1,6 @@
 <?php
 
-class NostoOAuthClientMetaData implements NostoOAuthClientMetaDataInterface
+class NostoOAuthClientMetaData implements NostoOauthClientMetaInterface
 {
 	public function getClientId()
 	{
@@ -18,8 +18,12 @@ class NostoOAuthClientMetaData implements NostoOAuthClientMetaDataInterface
 	{
 		return array('sso', 'products');
 	}
-	public function getLanguageIsoCode()
+	public function getLanguage()
 	{
-		return 'en';
+		return new NostoLanguageCode('en');
 	}
+    public function getAccount()
+    {
+        return null;
+    }
 }

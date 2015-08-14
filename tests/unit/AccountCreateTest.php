@@ -21,7 +21,8 @@ class AccountCreateTest extends \Codeception\TestCase\Test
 		/** @var NostoAccount $account */
 		/** @var NostoAccountMetaData $meta */
 		$meta = new NostoAccountMetaData();
-		$account = NostoAccount::create($meta);
+        $service = new NostoServiceAccount();
+		$account = $service->create($meta);
 
 		$this->specify('account was created', function() use ($account, $meta) {
 			$this->assertInstanceOf('NostoAccount', $account);

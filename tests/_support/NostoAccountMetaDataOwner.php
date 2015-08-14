@@ -1,6 +1,6 @@
 <?php
 
-class NostoAccountMetaDataOwner implements NostoAccountMetaDataOwnerInterface
+class NostoAccountMetaDataOwner implements NostoAccountMetaOwnerInterface
 {
 	public function getFirstName()
 	{
