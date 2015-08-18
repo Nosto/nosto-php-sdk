@@ -41,7 +41,7 @@ final class NostoCurrencyCode
     /**
      * @var string the ISO 4217 currency code.
      */
-    private $_code;
+    private $code;
 
     /**
      * @var array valid ISO 4217 currency codes.
@@ -80,7 +80,7 @@ final class NostoCurrencyCode
             ));
         }
 
-        $this->_code = (string)$code;
+        $this->code = (string)$code;
     }
 
     /**
@@ -88,6 +88,6 @@ final class NostoCurrencyCode
      */
     public function getCode()
     {
-        return $this->_code;
+        return $this->code;
     }
 }

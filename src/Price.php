@@ -33,7 +33,7 @@ final class NostoPrice
     /**
      * @var string the price.
      */
-    private $_price;
+    private $price;
 
     /**
      * Constructor.
@@ -53,7 +53,7 @@ final class NostoPrice
             ));
         }
 
-        $this->_price = (string)$price;
+        $this->price = (string)$price;
     }
 
     /**
@@ -63,6 +63,6 @@ final class NostoPrice
      */
     public function getPrice()
     {
-        return $this->_price;
+        return $this->price;
     }
 }

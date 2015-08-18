@@ -41,7 +41,7 @@ final class NostoCountryCode
     /**
      * @var string the ISO 3166-1 alpha-2 country code.
      */
-    private $_code;
+    private $code;
 
     /**
      * @var array valid ISO 3166-1 alpha-2 codes.
@@ -83,7 +83,7 @@ final class NostoCountryCode
             ));
         }
 
-        $this->_code = (string)$code;
+        $this->code = (string)$code;
     }
 
     /**
@@ -91,6 +91,6 @@ final class NostoCountryCode
      */
     public function getCode()
     {
-        return $this->_code;
+        return $this->code;
     }
 }

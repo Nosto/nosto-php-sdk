@@ -41,22 +41,22 @@ final class NostoCurrencyFormat
     /**
      * @var string the grouping symbol/char.
      */
-    private $_groupSymbol;
+    private $groupSymbol;
 
     /**
      * @var int the length of the group.
      */
-    private $_groupLength;
+    private $groupLength;
 
     /**
      * @var string the decimal symbol/char.
      */
-    private $_decimalSymbol;
+    private $decimalSymbol;
 
     /**
      * @var int the value precision.
      */
-    private $_precision;
+    private $precision;
 
     /**
      * Constructor.
@@ -100,10 +100,10 @@ final class NostoCurrencyFormat
             ));
         }
 
-        $this->_groupSymbol = (string)$groupSymbol;
-        $this->_groupLength = (int)$groupLength;
-        $this->_decimalSymbol = (string)$decimalSymbol;
-        $this->_precision = (int)$precision;
+        $this->groupSymbol = (string)$groupSymbol;
+        $this->groupLength = (int)$groupLength;
+        $this->decimalSymbol = (string)$decimalSymbol;
+        $this->precision = (int)$precision;
     }
 
     /**
@@ -113,7 +113,7 @@ final class NostoCurrencyFormat
      */
     public function getDecimalSymbol()
     {
-        return $this->_decimalSymbol;
+        return $this->decimalSymbol;
     }
 
     /**
@@ -123,7 +123,7 @@ final class NostoCurrencyFormat
      */
     public function getGroupLength()
     {
-        return $this->_groupLength;
+        return $this->groupLength;
     }
 
     /**
@@ -133,7 +133,7 @@ final class NostoCurrencyFormat
      */
     public function getGroupSymbol()
     {
-        return $this->_groupSymbol;
+        return $this->groupSymbol;
     }
 
     /**
@@ -143,6 +143,6 @@ final class NostoCurrencyFormat
      */
     public function getPrecision()
     {
-        return $this->_precision;
+        return $this->precision;
     }
 }

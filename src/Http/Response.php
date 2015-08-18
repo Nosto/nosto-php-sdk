@@ -56,7 +56,7 @@ class NostoHttpResponse
     /**
      * @var int runtime cache for the http response code.
      */
-    private $_code;
+    private $code;
 
     /**
      * Constructor.
@@ -117,7 +117,7 @@ class NostoHttpResponse
      */
     public function getCode()
     {
-        if (is_null($this->_code)) {
+        if (is_null($this->code)) {
             $code = 0;
             if (!empty($this->headers)) {
                 foreach ($this->headers as $header) {
@@ -128,9 +128,9 @@ class NostoHttpResponse
                     }
                 }
             }
-            $this->_code = $code;
+            $this->code = $code;
         }
-        return $this->_code;
+        return $this->code;
     }
 
     /**

@@ -41,7 +41,7 @@ final class NostoDate
     /**
      * @var int the unix timestamp for the date.
      */
-    private $_timestamp;
+    private $timestamp;
 
     /**
      * Constructor.
@@ -61,7 +61,7 @@ final class NostoDate
             ));
         }
 
-        $this->_timestamp = (int)$timestamp;
+        $this->timestamp = (int)$timestamp;
     }
 
     /**
@@ -71,6 +71,6 @@ final class NostoDate
      */
     public function getTimestamp()
     {
-        return $this->_timestamp;
+        return $this->timestamp;
     }
 }

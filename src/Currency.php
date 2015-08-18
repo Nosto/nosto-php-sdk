@@ -36,22 +36,22 @@
 /**
  * Class representing a currency with all it's formatting details Nosto needs.
  */
-class NostoCurrency
+final class NostoCurrency
 {
     /**
      * @var NostoCurrencyCode the currency ISO 4217 code.
      */
-    protected $code;
+    private $code;
 
     /**
      * @var NostoCurrencySymbol the currency symbol.
      */
-    protected $symbol;
+	private $symbol;
 
     /**
      * @var NostoCurrencyFormat the currency format.
      */
-    protected $format;
+	private $format;
 
     /**
      * Constructor.

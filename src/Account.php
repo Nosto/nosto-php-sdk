@@ -41,7 +41,7 @@ class NostoAccount
     /**
      * @var string the name of the Nosto account.
      */
-    private $_name;
+    private $name;
 
     /**
      * @var NostoApiToken[] the Nosto API tokens associated with this account.
@@ -66,7 +66,7 @@ class NostoAccount
             ));
         }
 
-        $this->_name = (string)$name;
+        $this->name = (string)$name;
     }
 
     /**
@@ -76,7 +76,7 @@ class NostoAccount
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**

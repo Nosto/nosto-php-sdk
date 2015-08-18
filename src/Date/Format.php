@@ -44,7 +44,7 @@ final class NostoDateFormat
     /**
      * @var string the date format.
      */
-    private $_format;
+    private $format;
 
     /**
      * Constructor.
@@ -65,7 +65,7 @@ final class NostoDateFormat
             ));
         }
 
-        $this->_format = $format;
+        $this->format = $format;
     }
 
     /**
@@ -75,6 +75,6 @@ final class NostoDateFormat
      */
     public function getFormat()
     {
-        return $this->_format;
+        return $this->format;
     }
 }

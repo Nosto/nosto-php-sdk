@@ -41,17 +41,17 @@ final class NostoPriceFormat
     /**
      * @var int the number of decimals.
      */
-    private $_decimals;
+    private $decimals;
 
     /**
      * @var string the decimal point.
      */
-    private $_decimalPoint;
+    private $decimalPoint;
 
     /**
      * @var string the thousands separator.
      */
-    private $_thousandsSeparator;
+    private $thousandsSeparator;
 
     /**
      * Constructor.
@@ -87,9 +87,9 @@ final class NostoPriceFormat
             ));
         }
 
-        $this->_decimals = $decimals;
-        $this->_decimalPoint = $decimalPoint;
-        $this->_thousandsSeparator = $thousandsSeparator;
+        $this->decimals = $decimals;
+        $this->decimalPoint = $decimalPoint;
+        $this->thousandsSeparator = $thousandsSeparator;
     }
 
     /**
@@ -99,7 +99,7 @@ final class NostoPriceFormat
      */
     public function getDecimals()
     {
-        return $this->_decimals;
+        return $this->decimals;
     }
 
     /**
@@ -109,7 +109,7 @@ final class NostoPriceFormat
      */
     public function getDecimalPoint()
     {
-        return $this->_decimalPoint;
+        return $this->decimalPoint;
     }
 
     /**
@@ -119,6 +119,6 @@ final class NostoPriceFormat
      */
     public function getThousandsSeparator()
     {
-        return $this->_thousandsSeparator;
+        return $this->thousandsSeparator;
     }
 }

@@ -41,7 +41,7 @@ final class NostoLanguageCode
     /**
      * @var string the ISO 639-1 language code.
      */
-    private $_code;
+    private $code;
 
     /**
      * @var array valid ISO 639-1 codes.
@@ -79,7 +79,7 @@ final class NostoLanguageCode
             ));
         }
 
-        $this->_code = (string)$code;
+        $this->code = (string)$code;
     }
 
     /**
@@ -87,6 +87,6 @@ final class NostoLanguageCode
      */
     public function getCode()
     {
-        return $this->_code;
+        return $this->code;
     }
 }

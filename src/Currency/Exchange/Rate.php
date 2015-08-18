@@ -36,17 +36,17 @@
 /**
  * Class representing a currency exchange rate.
  */
-class NostoCurrencyExchangeRate
+final class NostoCurrencyExchangeRate
 {
     /**
      * @var NostoCurrencyCode the currency code for the exchange rate.
      */
-    protected $currency;
+    private $currency;
 
     /**
      * @var string the exchange rate value.
      */
-    protected $exchangeRate;
+    private $exchangeRate;
 
     /**
      * Constructor.

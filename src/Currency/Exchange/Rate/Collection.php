@@ -47,7 +47,7 @@ class NostoCurrencyExchangeRateCollection extends NostoCollection
     /**
      * @var NostoDate the timestamp for how long the exchange rates are valid.
      */
-    protected $validUntil;
+    private $validUntil;
 
     /**
      * Setter for timestamp for how long the exchange rates are valid.

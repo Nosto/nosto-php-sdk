@@ -44,12 +44,12 @@ final class NostoCurrencySymbol
     /**
      * @var string the currency symbol, e.g. "$".
      */
-    private $_symbol;
+    private $symbol;
 
     /**
      * @var string the position of the symbol when displaying the currency.
      */
-    private $_position;
+    private $position;
 
     /**
      * Constructor.
@@ -78,8 +78,8 @@ final class NostoCurrencySymbol
             ));
         }
 
-        $this->_symbol = (string)$symbol;
-        $this->_position = (string)$position;
+        $this->symbol = (string)$symbol;
+        $this->position = (string)$position;
     }
 
     /**
@@ -89,7 +89,7 @@ final class NostoCurrencySymbol
      */
     public function getPosition()
     {
-        return $this->_position;
+        return $this->position;
     }
 
     /**
@@ -99,6 +99,6 @@ final class NostoCurrencySymbol
      */
     public function getSymbol()
     {
-        return $this->_symbol;
+        return $this->symbol;
     }
 }
