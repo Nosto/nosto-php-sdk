@@ -18,6 +18,10 @@ class NostoProduct implements NostoProductInterface
 	{
 		return 'http://my.shop.com/images/test_product.jpg';
 	}
+	public function getThumbUrl()
+	{
+		return 'http://my.shop.com/images/thumbnails/test_product200x200.jpg';
+	}
 	public function getPrice()
 	{
 		return new NostoPrice(99.99);

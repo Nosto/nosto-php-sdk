@@ -68,6 +68,9 @@ class NostoExportCollectionProduct extends NostoProductCollection implements Nos
 
             // Optional properties.
 
+			if ($item->getThumbUrl()) {
+				$data['thumb_url'] = $item->getThumbUrl();
+			}
             if ($item->getFullDescription()) {
                 $data['description'] = $item->getFullDescription();
             }
