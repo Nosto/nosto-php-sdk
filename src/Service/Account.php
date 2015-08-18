@@ -66,10 +66,9 @@ class NostoServiceAccount
     /**
      * Sends an account update API call to Nosto.
      *
-     * Account updates are needed when making changes in the platform settings that
-     * need to be transferred to Nosto. An example of this would be when a new
-     * currency is added and the price formatting details need to be made available
-     * in Nosto for the recommendations.
+     * Account updates are needed when making changes in the platform settings that need to be transferred to Nosto.
+     * An example of this would be when a new currency is added and the price formatting details need to be made
+     * available in Nosto for the recommendations.
      *
      * @param NostoAccount $account the account to update.
      * @param NostoAccountMetaInterface $meta the account meta data.
@@ -81,7 +80,11 @@ class NostoServiceAccount
     {
         $token = $account->getApiToken(NostoApiToken::API_SETTINGS);
         if (is_null($token)) {
-            throw new NostoException(sprintf('No `%s` API token found for account "%s".', NostoApiToken::API_SETTINGS, $account->getName()));
+            throw new NostoException(sprintf(
+                'No `%s` API token found for account "%s".',
+                NostoApiToken::API_SETTINGS,
+                $account->getName()
+            ));
         }
         $request = $this->initApiRequest(NostoApiRequest::PATH_SETTINGS, $token->getValue());
         $response = $request->put($this->getUpdateAccountMetaAsJson($meta));
@@ -105,7 +108,11 @@ class NostoServiceAccount
     {
         $token = $account->getApiToken(NostoApiToken::API_SSO);
         if (is_null($token)) {
-            throw new NostoException(sprintf('No `%s` API token found for account "%s".', NostoApiToken::API_SSO, $account->getName()));
+            throw new NostoException(sprintf(
+                'No `%s` API token found for account "%s".',
+                NostoApiToken::API_SSO,
+                $account->getName()
+            ));
         }
         $request = new NostoHttpRequest();
         $request->setUrl(NostoHttpRequest::$baseUrl.NostoHttpRequest::PATH_ACCOUNT_DELETED);
@@ -168,7 +175,11 @@ class NostoServiceAccount
     {
         $token = $account->getApiToken(NostoApiToken::API_SSO);
         if (is_null($token)) {
-            throw new NostoException(sprintf('No `%s` API token found for account "%s".', NostoApiToken::API_SSO, $account->getName()));
+            throw new NostoException(sprintf(
+                'No `%s` API token found for account "%s".',
+                NostoApiToken::API_SSO,
+                $account->getName()
+            ));
         }
         $request = new NostoHttpRequest();
         $request->setUrl(NostoHttpRequest::$baseUrl.NostoHttpRequest::PATH_SSO_AUTH);
@@ -216,8 +227,7 @@ class NostoServiceAccount
     }
 
     /**
-     * Turns the account meta data into valid JSON that can be sent to Nosto
-     * when creating an account.
+     * Turns the account meta data into valid JSON that can be sent to Nosto when creating an account.
      *
      * @param NostoAccountMetaInterface $meta the account meta data.
      * @return string the JSON.
@@ -236,8 +246,6 @@ class NostoServiceAccount
                 'last_name' => $meta->getOwner()->getLastName(),
                 'email' => $meta->getOwner()->getEmail(),
             ),
-            'api_tokens' => array(),
-            'currencies' => array(),
         );
 
         // Add optional billing details if the required data is set.
@@ -254,32 +262,39 @@ class NostoServiceAccount
         }
 
         // Request all available API tokens for the account.
-        foreach (NostoApiToken::getApiTokenNames() as $name) {
-            $data['api_tokens'][] = 'api_'.$name;
+        $tokens = NostoApiToken::getApiTokenNames();
+        if (count($tokens) > 0) {
+            $data['api_tokens'] = array();
+            foreach ($tokens as $name) {
+                $data['api_tokens'][] = 'api_'.$name;
+            }
         }
 
         // Add all configured currency formats.
         $currencies = $meta->getCurrencies();
-        foreach ($meta->getCurrencies() as $currency) {
-            $data['currencies'][$currency->getCode()->getCode()] = array(
-                'currency_before_amount' => ($currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT),
-                'currency_token' => $currency->getSymbol()->getSymbol(),
-                'decimal_character' => $currency->getFormat()->getDecimalSymbol(),
-                'grouping_separator' => $currency->getFormat()->getGroupSymbol(),
-                'decimal_places' => $currency->getFormat()->getPrecision(),
-            );
-        }
-        if (count($currencies) > 1) {
-            $data['default_variant_id'] = $meta->getDefaultPriceVariationId();
-            $data['use_exchange_rates'] = (bool)$meta->getUseCurrencyExchangeRates();
+        if (count($currencies) > 0) {
+            $data['currencies'] = array();
+            foreach ($currencies as $currency) {
+                $data['currencies'][$currency->getCode()->getCode()] = array(
+                    'currency_before_amount' => ($currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT),
+                    'currency_token' => $currency->getSymbol()->getSymbol(),
+                    'decimal_character' => $currency->getFormat()->getDecimalSymbol(),
+                    'grouping_separator' => $currency->getFormat()->getGroupSymbol(),
+                    'decimal_places' => $currency->getFormat()->getPrecision(),
+                );
+            }
+            // Add multi-currency settings.
+            if (count($currencies) > 1) {
+                $data['default_variant_id'] = $meta->getDefaultPriceVariationId();
+                $data['use_exchange_rates'] = (bool)$meta->getUseCurrencyExchangeRates();
+            }
         }
 
         return json_encode($data);
     }
 
     /**
-     * Turns the account meta data into valid JSON that can be sent to Nosto
-     * when updating an account.
+     * Turns the account meta data into valid JSON that can be sent to Nosto when updating an account.
      *
      * @param NostoAccountMetaInterface $meta the account meta data.
      * @return string the JSON.
@@ -291,23 +306,26 @@ class NostoServiceAccount
             'language_code' => $meta->getLanguage()->getCode(),
             'front_page_url' => $meta->getFrontPageUrl(),
             'currency_code' => $meta->getCurrency()->getCode(),
-            'currencies' => array(),
         );
 
+        // Add all configured currency formats.
         $currencies = $meta->getCurrencies();
-        foreach ($meta->getCurrencies() as $currency) {
-            $data['currencies'][$currency->getCode()->getCode()] = array(
-                'currency_before_amount' => ($currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT),
-                'currency_token' => $currency->getSymbol()->getSymbol(),
-                'decimal_character' => $currency->getFormat()->getDecimalSymbol(),
-                'grouping_separator' => $currency->getFormat()->getGroupSymbol(),
-                'decimal_places' => $currency->getFormat()->getPrecision(),
-            );
-        }
-
-        if (count($currencies) > 1) {
-            $data['default_variant_id'] = $meta->getDefaultPriceVariationId();
-            $data['use_exchange_rates'] = (bool)$meta->getUseCurrencyExchangeRates();
+        if (count($currencies) > 0) {
+            $data['currencies'] = array();
+            foreach ($currencies as $currency) {
+                $data['currencies'][$currency->getCode()->getCode()] = array(
+                    'currency_before_amount' => ($currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT),
+                    'currency_token' => $currency->getSymbol()->getSymbol(),
+                    'decimal_character' => $currency->getFormat()->getDecimalSymbol(),
+                    'grouping_separator' => $currency->getFormat()->getGroupSymbol(),
+                    'decimal_places' => $currency->getFormat()->getPrecision(),
+                );
+            }
+            // Add multi-currency settings.
+            if (count($currencies) > 1) {
+                $data['default_variant_id'] = $meta->getDefaultPriceVariationId();
+                $data['use_exchange_rates'] = (bool)$meta->getUseCurrencyExchangeRates();
+            }
         }
 
         return json_encode($data);
