@@ -73,28 +73,28 @@ final class NostoCurrencyFormat
     {
         if (!is_string($groupSymbol) || empty($groupSymbol)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._groupSymbol (%s) must be a non-empty value.',
+                '%s.groupSymbol (%s) must be a non-empty value.',
                 __CLASS__,
                 $groupSymbol
             ));
         }
         if (!is_int($groupLength)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._groupLength (%s) must be an integer.',
+                '%s.groupLength (%s) must be an integer.',
                 __CLASS__,
                 $groupLength
             ));
         }
         if (!is_string($decimalSymbol) || empty($decimalSymbol)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._decimalSymbol (%s) must be a non-empty value.',
+                '%s.decimalSymbol (%s) must be a non-empty value.',
                 __CLASS__,
                 $decimalSymbol
             ));
         }
         if (!is_int($precision)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._precision (%s) must be an integer.',
+                '%s.precision (%s) must be an integer.',
                 __CLASS__,
                 $precision
             ));

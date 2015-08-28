@@ -76,7 +76,7 @@ final class NostoCountryCode
     {
         if (!is_string($code) || !in_array($code, self::$validIsoCodes)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._code (%s) must be one of the following ISO 3166-1 alpha-2 codes: "%s".',
+                '%s.code (%s) must be one of the following ISO 3166-1 alpha-2 codes: "%s".',
                 __CLASS__,
                 $code,
                 implode('", "', self::$validIsoCodes)

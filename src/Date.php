@@ -55,7 +55,7 @@ final class NostoDate
     {
         if (!is_int($timestamp)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._timestamp (%s) must be a unix timestamp.',
+                '%s.timestamp (%s) must be a unix timestamp.',
                 __CLASS__,
                 $timestamp
             ));

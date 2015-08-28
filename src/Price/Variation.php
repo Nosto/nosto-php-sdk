@@ -34,47 +34,43 @@
  */
 
 /**
- * Value Object for representing a product availability.
+ * Value Object representing a Nosto price variation.
  */
-final class NostoProductAvailability
+final class NostoPriceVariation
 {
-    const IN_STOCK = 'InStock';
-    const OUT_OF_STOCK = 'OutOfStock';
+	/**
+	 * @var string the variation ID.
+	 */
+	private $id;
 
-    /**
-     * @var string the availability, i.e. either "InStock" or "OutOfStock".
-     */
-    private $availability;
+	/**
+	 * Constructor.
+	 * Sets up the Value Object with given data.
+	 *
+	 * @param string $id the variation ID.
+	 *
+	 * @throws NostoInvalidArgumentException
+	 */
+	public function __construct($id)
+	{
+		if (!is_string($id) || empty($id)) {
+			throw new NostoInvalidArgumentException(sprintf(
+				'%s.id (%s) must be an non-empty string.',
+				__CLASS__,
+				$id
+			));
+		}
 
-    /**
-     * Constructor.
-     * Sets up the Value Object with given data.
-     *
-     * @param string $availability the availability, i.e. either "InStock" or "OutOfStock".
-     *
-     * @throws NostoInvalidArgumentException
-     */
-    public function __construct($availability)
-    {
-        if (!is_string($availability) || !in_array($availability, array(self::IN_STOCK, self::OUT_OF_STOCK))) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.availability (%s) must be one of the following: "%s".',
-                __CLASS__,
-                $availability,
-                implode('", "', array(self::IN_STOCK, self::OUT_OF_STOCK))
-            ));
-        }
+		$this->id = (string)$id;
+	}
 
-        $this->availability = $availability;
-    }
-
-    /**
-     * Returns the availability, i.e. either "InStock" or "OutOfStock".
-     *
-     * @return string the availability.
-     */
-    public function getAvailability()
-    {
-        return $this->availability;
-    }
+	/**
+	 * Returns the variation ID.
+	 *
+	 * @return string the ID.
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
 }

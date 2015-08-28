@@ -60,10 +60,10 @@ final class NostoOAuthToken
     public function __construct($merchantName, $accessToken)
     {
         if (!is_string($merchantName) || empty($merchantName)) {
-            throw new NostoInvalidArgumentException(sprintf('%s._merchantName (%s) must be a non-empty string value', __CLASS__, $merchantName));
+            throw new NostoInvalidArgumentException(sprintf('%s.merchantName (%s) must be a non-empty string value', __CLASS__, $merchantName));
         }
         if (!is_string($accessToken) || empty($accessToken)) {
-            throw new NostoInvalidArgumentException(sprintf('%s._accessToken (%s) must be a non-empty string value', __CLASS__, $accessToken));
+            throw new NostoInvalidArgumentException(sprintf('%s.accessToken (%s) must be a non-empty string value', __CLASS__, $accessToken));
         }
 
         $this->merchantName = $merchantName;

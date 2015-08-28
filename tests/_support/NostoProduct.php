@@ -73,7 +73,7 @@ class NostoProduct implements NostoProductInterface
     public function getPriceVariations()
     {
         return array(
-            new NostoPriceVariation()
+            new NostoTestPriceVariation()
         );
     }
 }

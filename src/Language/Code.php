@@ -72,7 +72,7 @@ final class NostoLanguageCode
     {
         if (!is_string($code) || !in_array($code, self::$validIsoCodes)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._code (%s) must be one of the following ISO 639-1 codes: "%s".',
+                '%s.code (%s) must be one of the following ISO 639-1 codes: "%s".',
                 __CLASS__,
                 $code,
                 implode('", "', self::$validIsoCodes)

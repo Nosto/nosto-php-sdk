@@ -67,21 +67,21 @@ final class NostoPriceFormat
     {
         if (!is_int($decimals)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._decimals (%s) must be an integer value.',
+                '%s.decimals (%s) must be an integer value.',
                 __CLASS__,
                 $decimals
             ));
         }
         if (!is_string($decimalPoint)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._decimalPoint (%s) must be an string value.',
+                '%s.decimalPoint (%s) must be an string value.',
                 __CLASS__,
                 $decimalPoint
             ));
         }
         if (!is_string($thousandsSeparator)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._thousandsSeparator (%s) must be an string value.',
+                '%s.thousandsSeparator (%s) must be an string value.',
                 __CLASS__,
                 $thousandsSeparator
             ));

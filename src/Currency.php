@@ -46,12 +46,12 @@ final class NostoCurrency
     /**
      * @var NostoCurrencySymbol the currency symbol.
      */
-	private $symbol;
+    private $symbol;
 
     /**
      * @var NostoCurrencyFormat the currency format.
      */
-	private $format;
+    private $format;
 
     /**
      * Constructor.
@@ -96,5 +96,25 @@ final class NostoCurrency
     public function getFormat()
     {
         return $this->format;
+    }
+
+    /**
+     * Returns the currency sub-unit.
+     *
+     * @return int the sub-unit.
+     */
+    public function getSubUnit()
+    {
+        return NostoCurrencyInfo::getFractionUnit($this->code);
+    }
+
+    /**
+     * Returns the currency default fraction digits.
+     *
+     * @return int the fraction digits.
+     */
+    public function getDefaultFractionDigits()
+    {
+        return NostoCurrencyInfo::getFractionDecimals($this->code);
     }
 }

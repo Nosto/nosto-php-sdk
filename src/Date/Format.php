@@ -58,7 +58,7 @@ final class NostoDateFormat
     {
         if (!is_string($format) || !in_array($format, array(self::ISO_8601, self::YMD))) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._format (%s) must be one of the following: "%s".',
+                '%s.format (%s) must be one of the following: "%s".',
                 __CLASS__,
                 $format,
                 implode('", "', array(self::ISO_8601, self::YMD))

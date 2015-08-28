@@ -34,47 +34,23 @@
  */
 
 /**
- * Value Object for representing a product availability.
+ * Currency exchange component for converting prices between currencies.
  */
-final class NostoProductAvailability
+final class NostoCurrencyExchange
 {
-    const IN_STOCK = 'InStock';
-    const OUT_OF_STOCK = 'OutOfStock';
-
-    /**
-     * @var string the availability, i.e. either "InStock" or "OutOfStock".
-     */
-    private $availability;
-
-    /**
-     * Constructor.
-     * Sets up the Value Object with given data.
-     *
-     * @param string $availability the availability, i.e. either "InStock" or "OutOfStock".
-     *
-     * @throws NostoInvalidArgumentException
-     */
-    public function __construct($availability)
-    {
-        if (!is_string($availability) || !in_array($availability, array(self::IN_STOCK, self::OUT_OF_STOCK))) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.availability (%s) must be one of the following: "%s".',
-                __CLASS__,
-                $availability,
-                implode('", "', array(self::IN_STOCK, self::OUT_OF_STOCK))
-            ));
-        }
-
-        $this->availability = $availability;
-    }
-
-    /**
-     * Returns the availability, i.e. either "InStock" or "OutOfStock".
-     *
-     * @return string the availability.
-     */
-    public function getAvailability()
-    {
-        return $this->availability;
-    }
+	/**
+	 * Convert a price using given exchange rate.
+	 *
+	 * @param NostoPrice $price the price to convert into different currency.
+	 * @param NostoCurrencyExchangeRate $rate the currency exchange rate to use for the conversion.
+	 * @return NostoPrice the converted price.
+	 */
+	public function convert(NostoPrice $price, NostoCurrencyExchangeRate $rate)
+	{
+		$convertedPrice = $price->multiply($rate->getExchangeRate());
+		if ($convertedPrice->usingFractionUnits()) {
+			$convertedPrice = new NostoPrice($convertedPrice->getRawPrice(), $rate->getCurrency());
+		}
+		return $convertedPrice;
+	}
 }

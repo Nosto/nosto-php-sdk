@@ -1,6 +1,6 @@
 <?php
 
-class NostoPriceVariation implements NostoProductPriceVariationInterface
+class NostoTestPriceVariation implements NostoProductPriceVariationInterface
 {
     public function getId()
     {

@@ -42,7 +42,7 @@ interface NostoProductPriceVariationInterface
     /**
      * Returns the price variation ID.
      *
-     * @return string the variation id.
+     * @return NostoPriceVariation the variation ID.
      */
     public function getId();
 
