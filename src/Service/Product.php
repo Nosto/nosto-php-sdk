@@ -209,9 +209,9 @@ class NostoServiceProduct
 
         // Optional properties.
 
-		if ($product->getThumbUrl()) {
-			$data['thumb_url'] = $product->getThumbUrl();
-		}
+        if ($product->getThumbUrl()) {
+            $data['thumb_url'] = $product->getThumbUrl();
+        }
         if ($product->getFullDescription()) {
             $data['description'] = $product->getFullDescription();
         }
