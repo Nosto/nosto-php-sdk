@@ -44,27 +44,16 @@ class NostoHelperCurrency extends NostoHelper
 	 * REQUIRES Zend Framework (version 1) to be available.
 	 *
 	 * @param string $currencyCode the 3-letter ISO 4217 currency code.
-	 * @param string $locale the locale to parse the currency for.
+	 * @param Zend_Currency $zendCurrency the zend currency object.
 	 * @return NostoCurrency the parsed nosto currency object.
 	 *
-	 * @throws NostoException
 	 * @throws NostoInvalidArgumentException
 	 */
-	public function parseZendCurrencyFormat($currencyCode, $locale)
+	public function parseZendCurrencyFormat($currencyCode, Zend_Currency $zendCurrency)
 	{
-		if (!class_exists('Zend_Currency')) {
-			throw new NostoException('Failed to parse Zend currency format, class Zend_Currency not found.');
-		}
-		if (!class_exists('Zend_Locale')) {
-			throw new NostoException('Failed to parse Zend currency format, class Zend_Locale not found.');
-		}
-
 		try {
-			$zendLocale = new Zend_Locale($locale);
-			$zendCurrency = new Zend_Currency($locale, $currencyCode);
-
-			$format = Zend_Locale_Data::getContent($zendLocale, 'currencynumber');
-			$symbols = Zend_Locale_Data::getList($zendLocale, 'symbols');
+			$format = Zend_Locale_Data::getContent($zendCurrency->getLocale(), 'currencynumber');
+			$symbols = Zend_Locale_Data::getList($zendCurrency->getLocale(), 'symbols');
 			// Remove extra part, e.g. "¤ #,##0.00; (¤ #,##0.00)" => "¤ #,##0.00".
 			if (($pos = strpos($format, ';')) !== false) {
 				$format = substr($format, 0, $pos);
