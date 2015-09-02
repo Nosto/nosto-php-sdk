@@ -10,6 +10,26 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
     protected $tester;
 
     /**
+     * @var NostoAccount
+     */
+    private $account;
+
+    /**
+     * @var NostoServiceCurrencyExchangeRate
+     */
+    private $service;
+
+    /**
+     * @var NostoCurrencyExchangeRateCollection
+     */
+    private $collection;
+
+    /**
+     * @var NostoCurrencyExchangeRate
+     */
+    private $rate;
+
+    /**
      * @inheritdoc
      */
     protected function _before()
@@ -18,6 +38,15 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
         NostoApiRequest::$baseUrl = 'http://localhost:3000';
         NostoOAuthClient::$baseUrl = 'http://localhost:3000';
         NostoHttpRequest::$baseUrl = 'http://localhost:3000';
+
+        $this->account = new NostoAccount('platform-00000000');
+        foreach (NostoApiToken::getApiTokenNames() as $tokenName) {
+            $this->account->addApiToken(new NostoApiToken($tokenName, '123'));
+        }
+        $this->service = new NostoServiceCurrencyExchangeRate($this->account);
+        $this->collection = new NostoCurrencyExchangeRateCollection();
+        $this->collection->setValidUntil(new NostoDate(time() + (7 * 24 * 60 * 60)));
+        $this->rate = new NostoCurrencyExchangeRate(new NostoCurrencyCode('EUR'), '0.706700000000');
     }
 
     /**
@@ -25,16 +54,10 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
      */
     public function testCurrencyExchangeRateUpdateWithoutApiToken()
     {
-        $account = new NostoAccount('platform-00000000');
-
-        $collection = new NostoCurrencyExchangeRateCollection();
-        $collection->setValidUntil(new NostoDate(time() + (7 * 24 * 60 * 60)));
-        $collection[] = new NostoCurrencyExchangeRate(new NostoCurrencyCode('EUR'), '0.706700000000');
-
         $this->setExpectedException('NostoException');
-
-        $service = new NostoServiceCurrencyExchangeRate($account);
-        $service->update($collection);
+        $this->collection[] = $this->rate;
+        $service = new NostoServiceCurrencyExchangeRate(new NostoAccount('platform-00000000'));
+        $service->update($this->collection);
     }
 
     /**
@@ -42,17 +65,8 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
      */
     public function testCurrencyExchangeRateUpdateWithoutRates()
     {
-        $account = new NostoAccount('platform-00000000');
-        $token = new NostoApiToken('rates', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
-        $account->addApiToken($token);
-
-        $collection = new NostoCurrencyExchangeRateCollection();
-        $collection->setValidUntil(new NostoDate(time() + (7 * 24 * 60 * 60)));
-
         $this->setExpectedException('NostoException');
-
-        $service = new NostoServiceCurrencyExchangeRate($account);
-        $service->update($collection);
+        $this->service->update($this->collection);
     }
 
     /**
@@ -60,16 +74,8 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
      */
     public function testCurrencyExchangeRateUpdate()
     {
-        $account = new NostoAccount('platform-00000000');
-        $token = new NostoApiToken('rates', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
-        $account->addApiToken($token);
-
-        $collection = new NostoCurrencyExchangeRateCollection();
-        $collection->setValidUntil(new NostoDate(time() + (7 * 24 * 60 * 60)));
-        $collection[] = new NostoCurrencyExchangeRate(new NostoCurrencyCode('EUR'), '0.706700000000');
-
-        $service = new NostoServiceCurrencyExchangeRate($account);
-        $result = $service->update($collection);
+        $this->collection[] = $this->rate;
+        $result = $this->service->update($this->collection);
 
         $this->specify('successful currency exchange rate update', function() use ($result) {
                 $this->assertTrue($result);
@@ -79,21 +85,12 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
     /**
      * Tests that the service fails correctly.
      */
-    public function testHttpFailure()
+    public function testCurrencyExchangeRateUpdateHttpFailure()
     {
         NostoApiRequest::$baseUrl = 'http://localhost:1234'; // not a real url
 
-        $account = new NostoAccount('platform-00000000');
-        $account->addApiToken(new NostoApiToken('rates', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783'));
-
-        $service = new NostoServiceCurrencyExchangeRate($account);
-        $collection = new NostoCurrencyExchangeRateCollection();
-        $collection->setValidUntil(new NostoDate(time() + (7 * 24 * 60 * 60)));
-        $collection[] = new NostoCurrencyExchangeRate(new NostoCurrencyCode('EUR'), '0.706700000000');
-
-        $this->specify('product recrawl with invalid URL', function() use ($service, $collection) {
-            $this->setExpectedException('NostoHttpException');
-            $service->update($collection);
-        });
+        $this->setExpectedException('NostoHttpException');
+        $this->collection[] = $this->rate;
+        $this->service->update($this->collection);
     }
 }

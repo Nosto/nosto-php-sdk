@@ -12,6 +12,16 @@ class ServiceRecrawlTest extends \Codeception\TestCase\Test
     protected $tester;
 
     /**
+     * @var NostoAccount
+     */
+    private $account;
+
+    /**
+     * @var NostoServiceRecrawl
+     */
+    private $service;
+
+    /**
      * @inheritdoc
      */
     protected function _before()
@@ -20,36 +30,21 @@ class ServiceRecrawlTest extends \Codeception\TestCase\Test
         NostoApiRequest::$baseUrl = 'http://localhost:3000';
         NostoOAuthClient::$baseUrl = 'http://localhost:3000';
         NostoHttpRequest::$baseUrl = 'http://localhost:3000';
-    }
 
-    /**
-     * Tests that product re-crawl API requests cannot be made without an API token.
-     */
-    public function testSendingProductReCrawlWithoutApiToken()
-    {
-		$account = new NostoAccount('platform-00000000');
-        $product = new NostoProduct();
-
-        $this->setExpectedException('NostoException');
-
-        $service = new NostoServiceRecrawl($account);
-        $service->addProduct($product);
-        $service->send();
+        $this->account = new NostoAccount('platform-00000000');
+        foreach (NostoApiToken::getApiTokenNames() as $tokenName) {
+            $this->account->addApiToken(new NostoApiToken($tokenName, '123'));
+        }
+        $this->service = new NostoServiceRecrawl($this->account);
     }
 
 	/**
 	 * Tests that product re-crawl API requests can be made.
 	 */
-	public function testSendingProductReCrawl()
+	public function testProductReCrawl()
     {
-		$account = new NostoAccount('platform-00000000');
-		$product = new NostoProduct();
-		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
-		$account->addApiToken($token);
-
-        $service = new NostoServiceRecrawl($account);
-        $service->addProduct($product);
-        $result = $service->send();
+        $this->service->addProduct(new NostoProduct());
+        $result = $this->service->send();
 
 		$this->specify('successful product re-crawl', function() use ($result) {
 			$this->assertTrue($result);
@@ -57,21 +52,34 @@ class ServiceRecrawlTest extends \Codeception\TestCase\Test
     }
 
     /**
+     * Tests that product re-crawl API requests cannot be made without any products.
+     */
+    public function testProductReCrawlWithoutProducts()
+    {
+        $this->setExpectedException('NostoException');
+        $this->service->send();
+    }
+
+    /**
+     * Tests that product re-crawl API requests cannot be made without an API token.
+     */
+    public function testProductReCrawlWithoutToken()
+    {
+        $this->setExpectedException('NostoException');
+        $service = new NostoServiceRecrawl(new NostoAccount('platform-00000000'));
+        $service->addProduct(new NostoProduct());
+        $service->send();
+    }
+
+    /**
      * Tests that the service fails correctly.
      */
-    public function testHttpFailure()
+    public function testProductReCrawlHttpFailure()
     {
         NostoApiRequest::$baseUrl = 'http://localhost:1234'; // not a real url
 
-        $account = new NostoAccount('platform-00000000');
-        $account->addApiToken(new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783'));
-
-        $service = new NostoServiceRecrawl($account);
-        $service->addProduct(new NostoProduct());
-
-        $this->specify('product recrawl with invalid URL', function() use ($service) {
-            $this->setExpectedException('NostoHttpException');
-            $service->send();
-        });
+        $this->setExpectedException('NostoHttpException');
+        $this->service->addProduct(new NostoProduct());
+        $this->service->send();
     }
 }

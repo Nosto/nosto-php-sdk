@@ -51,7 +51,7 @@ class NostoAccountMetaData implements NostoAccountMetaInterface
 	}
     public function getPartnerCode()
     {
-        return null;
+        return 'nosto';
     }
     public function getCurrencies()
     {
