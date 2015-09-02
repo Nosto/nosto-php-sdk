@@ -95,20 +95,20 @@ class Nosto
     }
 
     /**
-     * Throws a new NostoHttpException exception with info about both the
+     * Creates a new NostoHttpException exception with info about both the
      * request and response.
      *
      * @param string $message the error message.
      * @param NostoHttpRequest $request the request object to take additional info from.
      * @param NostoHttpResponse $response the response object to take additional info from.
-     * @throws NostoHttpException the exception.
+     * @return NostoHttpException the exception.
      */
-    public static function throwHttpException($message, NostoHttpRequest $request, NostoHttpResponse $response)
+    public static function createHttpException($message, NostoHttpRequest $request, NostoHttpResponse $response)
     {
         $message .= sprintf(' Error: %s.', $response->getCode());
         $message .= sprintf(' Request: %s.', $request);
         $message .= sprintf(' Response: %s.', $response);
-        throw new NostoHttpException($message, $response->getCode());
+        return new NostoHttpException($message, $response->getCode());
     }
 
     /**

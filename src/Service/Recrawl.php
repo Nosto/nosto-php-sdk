@@ -82,7 +82,7 @@ class NostoServiceRecrawl
         $request = $this->initApiRequest();
         $response = $request->post($this->getCollectionAsJson());
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to send product re-crawl to Nosto.', $request, $response);
+            throw Nosto::createHttpException('Failed to send product re-crawl to Nosto.', $request, $response);
         }
         return true;
     }

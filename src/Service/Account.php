@@ -52,7 +52,7 @@ class NostoServiceAccount
         $request->setReplaceParams(array('{lang}' => $meta->getLanguage()->getCode()));
         $response = $request->post($this->getCreateAccountMetaAsJson($meta));
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to send account create to Nosto.', $request, $response);
+            throw Nosto::createHttpException('Failed to send account create to Nosto.', $request, $response);
         }
         $result = $response->getJsonResult(true);
         $account = new NostoAccount($meta->getPlatform().'-'.$meta->getName());
@@ -89,7 +89,7 @@ class NostoServiceAccount
         $request = $this->initApiRequest(NostoApiRequest::PATH_SETTINGS, $token->getValue());
         $response = $request->put($this->getUpdateAccountMetaAsJson($meta));
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to send account update to Nosto.', $request, $response);
+            throw Nosto::createHttpException('Failed to send account update to Nosto.', $request, $response);
         }
         return true;
     }
@@ -119,7 +119,7 @@ class NostoServiceAccount
         $request->setAuthBasic('', $token->getValue());
         $response = $request->post('');
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to send account delete to Nosto.', $request, $response);
+            throw Nosto::createHttpException('Failed to send account delete to Nosto.', $request, $response);
         }
         return true;
     }
@@ -146,7 +146,7 @@ class NostoServiceAccount
         $request->setQueryParams(array('access_token' => $token->getAccessToken()));
         $response = $request->get();
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to send account sync to Nosto.', $request, $response);
+            throw Nosto::createHttpException('Failed to send account sync to Nosto.', $request, $response);
         }
         $result = $response->getJsonResult(true);
         $account = new NostoAccount($token->getMerchantName());
@@ -200,7 +200,7 @@ class NostoServiceAccount
             )
         );
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to sign into Nosto using Single Sign On.', $request, $response);
+            throw Nosto::createHttpException('Failed to sign into Nosto using Single Sign On.', $request, $response);
         }
         $result = $response->getJsonResult();
         if (empty($result->login_url)) {

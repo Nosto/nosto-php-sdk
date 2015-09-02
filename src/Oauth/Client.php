@@ -143,7 +143,7 @@ class NostoOAuthClient
         $response = $request->get();
         $result = $response->getJsonResult(true);
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to authenticate with code.', $request, $response);
+            throw Nosto::createHttpException('Failed to authenticate with code.', $request, $response);
         }
         $merchantName = isset($result['merchant_name']) ? $result['merchant_name'] : null;
         $accessToken = isset($result['access_token']) ? $result['access_token'] : null;
