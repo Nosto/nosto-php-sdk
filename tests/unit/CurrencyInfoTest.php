@@ -1084,6 +1084,14 @@ class CurrencyInfoTest extends \Codeception\TestCase\Test
     );
 
     /**
+     * @inheritdoc
+     */
+    protected function _after()
+    {
+        \AspectMock\test::clean();
+    }
+
+    /**
      * Tests all currency fraction units.
      */
     public function testCurrencyFractionUnits()
@@ -1098,6 +1106,17 @@ class CurrencyInfoTest extends \Codeception\TestCase\Test
     }
 
     /**
+     * Tests that you cannot get an unsupported currencies fraction units.
+     */
+    public function testCurrencyFractionUnitsWithInvalidCurrencyCode()
+    {
+        \AspectMock\test::double('NostoCurrencyCode', ['getCode' => 'FOO']);
+
+        $this->setExpectedException('NostoInvalidArgumentException');
+        NostoCurrencyInfo::getFractionUnit(new NostoCurrencyCode('USD')); // USD will be replaced by FOO by the mock.
+    }
+
+    /**
      * Tests all currency fraction decimals.
      */
     public function testCurrencyFractionDecimals()
@@ -1109,5 +1128,16 @@ class CurrencyInfoTest extends \Codeception\TestCase\Test
                     $this->assertEquals($expectedFractionDecimals, $fractionDecimals);
                 });
         }
+    }
+
+    /**
+     * Tests that you cannot get an unsupported currencies fraction decimals.
+     */
+    public function testCurrencyFractionDecimalsWithInvalidCurrencyCode()
+    {
+        \AspectMock\test::double('NostoCurrencyCode', ['getCode' => 'FOO']);
+
+        $this->setExpectedException('NostoInvalidArgumentException');
+        NostoCurrencyInfo::getFractionDecimals(new NostoCurrencyCode('USD')); // USD will be replaced by FOO by the mock.
     }
 }

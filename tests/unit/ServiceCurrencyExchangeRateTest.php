@@ -34,11 +34,6 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
      */
     protected function _before()
     {
-        // Configure API, Web Hooks, and OAuth client to use Mock server when testing.
-        NostoApiRequest::$baseUrl = 'http://localhost:3000';
-        NostoOAuthClient::$baseUrl = 'http://localhost:3000';
-        NostoHttpRequest::$baseUrl = 'http://localhost:3000';
-
         $this->account = new NostoAccount('platform-00000000');
         foreach (NostoApiToken::getApiTokenNames() as $tokenName) {
             $this->account->addApiToken(new NostoApiToken($tokenName, '123'));
@@ -47,6 +42,14 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
         $this->collection = new NostoCurrencyExchangeRateCollection();
         $this->collection->setValidUntil(new NostoDate(time() + (7 * 24 * 60 * 60)));
         $this->rate = new NostoCurrencyExchangeRate(new NostoCurrencyCode('EUR'), '0.706700000000');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function _after()
+    {
+        \AspectMock\test::clean();
     }
 
     /**
@@ -87,7 +90,7 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
      */
     public function testCurrencyExchangeRateUpdateHttpFailure()
     {
-        NostoApiRequest::$baseUrl = 'http://localhost:1234'; // not a real url
+        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->collection[] = $this->rate;

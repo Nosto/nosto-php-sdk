@@ -16,10 +16,13 @@ class OauthTest extends \Codeception\TestCase\Test
      */
     protected function _before()
     {
-        // Configure API, Web Hooks, and OAuth client to use Mock server when testing.
-        NostoApiRequest::$baseUrl = 'http://localhost:3000';
-        NostoOAuthClient::$baseUrl = 'http://localhost:3000';
-        NostoHttpRequest::$baseUrl = 'http://localhost:3000';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function _after()
+    {
     }
 
     /**

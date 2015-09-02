@@ -34,15 +34,18 @@ class ServiceOrderTest extends \Codeception\TestCase\Test
 	 */
 	protected function _before()
 	{
-        // Configure API, Web Hooks, and OAuth client to use Mock server when testing.
-        NostoApiRequest::$baseUrl = 'http://localhost:3000';
-        NostoOAuthClient::$baseUrl = 'http://localhost:3000';
-        NostoHttpRequest::$baseUrl = 'http://localhost:3000';
-
 		$this->order = new NostoOrder();
 		$this->account = new NostoAccount('platform-00000000');
         $this->service = new NostoServiceOrder($this->account);
 	}
+
+    /**
+     * @inheritdoc
+     */
+    protected function _after()
+    {
+        \AspectMock\test::clean();
+    }
 
 	/**
 	 * Tests the matched order confirmation API call.
@@ -73,7 +76,7 @@ class ServiceOrderTest extends \Codeception\TestCase\Test
      */
     public function testMatchedOrderConfirmationHttpFailure()
     {
-        NostoApiRequest::$baseUrl = 'http://localhost:1234'; // not a real url
+        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->confirm($this->order, 'test123');

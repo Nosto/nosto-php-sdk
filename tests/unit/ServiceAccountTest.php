@@ -35,17 +35,20 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     protected function _before()
     {
-        // Configure API, Web Hooks, and OAuth client to use Mock server when testing.
-        NostoApiRequest::$baseUrl = 'http://localhost:3000';
-        NostoOAuthClient::$baseUrl = 'http://localhost:3000';
-        NostoHttpRequest::$baseUrl = 'http://localhost:3000';
-
         $this->service = new NostoServiceAccount();
         $this->meta = new NostoAccountMetaData();
         $this->account = new NostoAccount('platform-00000000');
         foreach (NostoApiToken::getApiTokenNames() as $tokenName) {
             $this->account->addApiToken(new NostoApiToken($tokenName, '123'));
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function _after()
+    {
+        \AspectMock\test::clean();
     }
 
     /**
@@ -80,7 +83,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     public function testAccountCreateHttpFailure()
     {
-        NostoApiRequest::$baseUrl = 'http://localhost:1234'; // not a real url
+        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->create($this->meta);
@@ -114,7 +117,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     public function testAccountUpdateHttpFailure()
     {
-        NostoApiRequest::$baseUrl = 'http://localhost:1234'; // not a real url
+        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->update($this->account, $this->meta);
@@ -155,11 +158,23 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
     }
 
     /**
+     * Tests that an account sync that returns invalid data is handled correctly.
+     */
+    public function testAccountSyncWithInvalidReturnData()
+    {
+        \AspectMock\test::double('NostoApiToken', ['parseTokens' => array()]);
+
+        $this->setExpectedException('NostoException');
+        $oauthMeta = new NostoOAuthClientMetaData();
+        $this->service->sync($oauthMeta, 'test123');
+    }
+
+    /**
      * Tests that the account sync fails correctly on http errors.
      */
     public function testAccountSyncHttpFailure()
     {
-        NostoOAuthClient::$baseUrl = 'http://localhost:1234'; // not a real url
+        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->sync(new NostoOAuthClientMetaData(), 'test123');
@@ -211,7 +226,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     public function testAccountReSyncHttpFailure()
     {
-        NostoOAuthClient::$baseUrl = 'http://localhost:1234'; // not a real url
+        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $oauthMeta = new NostoOAuthClientMetaData();
         $oauthMeta->setAccount($this->account);
@@ -246,7 +261,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     public function testAccountDeleteHttpFailure()
     {
-        NostoHttpRequest::$baseUrl = 'http://localhost:1234'; // not a real url
+        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->delete($this->account);
@@ -274,11 +289,22 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
     }
 
     /**
+     * Tests that an account single sign on that returns invalid data is handled correctly.
+     */
+    public function testAccountSingleSignOnWithInvalidReturnData()
+    {
+        \AspectMock\test::double('NostoHttpResponse', ['getJsonResult' => array()]);
+
+        $this->setExpectedException('NostoException');
+        $this->service->sso($this->account, new NostoAccountMetaDataSingleSignOn());
+    }
+
+    /**
      * Tests that the account single sign on fails correctly on http errors.
      */
     public function testAccountSingleSignOnHttpFailure()
     {
-        NostoHttpRequest::$baseUrl = 'http://localhost:1234'; // not a real url
+        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->sso($this->account, new NostoAccountMetaDataSingleSignOn());
