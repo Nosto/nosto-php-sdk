@@ -25,7 +25,7 @@ class ApiTokenTest extends \Codeception\TestCase\Test
     /**
      * Tests that a invalid token cannot be created.
      */
-    public function testInvalidMissingTokenName()
+    public function testMissingTokenName()
     {
         $this->specify('api token name is missing', function() {
             $this->setExpectedException('NostoInvalidArgumentException');
@@ -36,18 +36,18 @@ class ApiTokenTest extends \Codeception\TestCase\Test
     /**
      * Tests that a invalid token cannot be created.
      */
-    public function testInvalidMissingTokenValue()
+    public function testMissingTokenValue()
     {
         $this->specify('api token value is missing', function() {
             $this->setExpectedException('NostoInvalidArgumentException');
-            new NostoApiToken('sso', '123');
+            new NostoApiToken('sso', null);
         });
     }
 
     /**
      * Tests that a invalid token cannot be created.
      */
-    public function testInvalidInvalidTokenName()
+    public function testInvalidTokenName()
     {
         $this->specify('api token name is invalid', function() {
             $this->setExpectedException('NostoInvalidArgumentException');
@@ -58,7 +58,7 @@ class ApiTokenTest extends \Codeception\TestCase\Test
     /**
      * Tests that a invalid token cannot be created.
      */
-    public function testInvalidInvalidTokenValue()
+    public function testInvalidTokenValue()
     {
 
         $this->specify('api token value is invalid', function() {
