@@ -31,7 +31,25 @@ Account related resources
             "billing_details": {
                 "country": "us"
             },
-            "api_tokens": ["sso", "products"]
+            "api_tokens": ["sso", "products"],
+            "currencies": {
+                "USD": {
+                    "currency_before_amount": true,
+                    "currency_token": "$",
+                    "decimal_character": ".",
+                    "grouping_separator": ",",
+                    "decimal_places": 2,
+                },
+                "EUR": {
+                    "currency_before_amount": false,
+                    "currency_token": "€",
+                    "decimal_character": ".",
+                    "grouping_separator": ",",
+                    "decimal_places": 2,
+                }
+            },
+            "default_variant_id": "USD",
+            "use_exchange_rates": true
         }
 
 + Response 200 (application/json)
@@ -114,6 +132,46 @@ Account related resources
             Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
 
 + Response 200
+
+## Update Account [/settings]
+
+### Update existing account in Nosto [PUT]
+
++ Request (application/json)
+
+        {
+            "title": "My Shop",
+            "front_page_url": "http://my.shop.com",
+            "currency_code": "USD",
+            "language_code": "en",
+            "currencies": {
+                "USD": {
+                    "currency_before_amount": true,
+                    "currency_token": "$",
+                    "decimal_character": ".",
+                    "grouping_separator": ",",
+                    "decimal_places": 2,
+                },
+                "EUR": {
+                    "currency_before_amount": false,
+                    "currency_token": "€",
+                    "decimal_character": ".",
+                    "grouping_separator": ",",
+                    "decimal_places": 2,
+                }
+            },
+            "default_variant_id": "USD",
+            "use_exchange_rates": true
+        }
+
++ Response 200 (application/json)
+
+        {
+            "sso_token": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783",
+            "products_token": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783",
+            "rates_token": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783",
+            "settings_token": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783"
+        }
 
 # Group Order
 Order related resources

@@ -31,5 +31,10 @@ class DotEnvTest extends \Codeception\TestCase\Test
 			$this->assertArrayHasKey('TEST_VARIABLE_NESTED', $_ENV);
 			$this->assertEquals('test/test', $_ENV['TEST_VARIABLE_NESTED']);
 		});
+
+        $newDotEnv = NostoDotEnv::getInstance();
+        $this->specify('dot-env variable TEST_VARIABLE_NESTED assigned to $_ENV', function() use ($dotEnv, $newDotEnv) {
+                $this->assertEquals($dotEnv, $newDotEnv);
+            });
     }
 }

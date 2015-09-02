@@ -60,6 +60,11 @@ class NostoAccountMetaData implements NostoAccountMetaInterface
                 new NostoCurrencyCode('USD'),
                 new NostoCurrencySymbol('$', 'left'),
                 new NostoCurrencyFormat(',', 3, '.', 2)
+            ),
+            new NostoCurrency(
+                new NostoCurrencyCode('EUR'),
+                new NostoCurrencySymbol('€', 'right'),
+                new NostoCurrencyFormat(',', 3, '.', 2)
             )
         );
     }

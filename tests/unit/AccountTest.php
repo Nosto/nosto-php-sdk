@@ -11,6 +11,17 @@ class AccountTest extends \Codeception\TestCase\Test
      */
     protected $tester;
 
+    /**
+     * @inheritdoc
+     */
+    protected function _before()
+    {
+        // Configure API, Web Hooks, and OAuth client to use Mock server when testing.
+        NostoApiRequest::$baseUrl = 'http://localhost:3000';
+        NostoOAuthClient::$baseUrl = 'http://localhost:3000';
+        NostoHttpRequest::$baseUrl = 'http://localhost:3000';
+    }
+
 	/**
 	 * Tests the "isConnectedToNosto" method for the NostoAccount class.
 	 */
@@ -91,5 +102,44 @@ class AccountTest extends \Codeception\TestCase\Test
             $url = $service->sso($account, $meta);
             $this->assertEquals('https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg', $url);
         });
+    }
+
+    /**
+     * Test that you cannot create a nosto account object with an invalid name.
+     */
+    public function testInvalidAccountName()
+    {
+        $this->setExpectedException('NostoInvalidArgumentException');
+
+        new NostoAccount(null);
+    }
+
+    /**
+     * Test the account object equals method.
+     */
+    public function testAccountEquality()
+    {
+        $oldAccount = new NostoAccount('platform-test');
+        $newAccount = new NostoAccount('platform-test');
+
+        $this->specify('two accounts are equal', function() use ($oldAccount, $newAccount) {
+                $this->assertTrue($newAccount->equals($oldAccount));
+                $this->assertTrue($oldAccount->equals($newAccount));
+            });
+    }
+
+    /**
+     * Tests that account tokens can be fetched.
+     */
+    public function testAccountTokenGetter()
+    {
+        $account = new NostoAccount('platform-test');
+        $token = new NostoApiToken('sso', '123');
+        $account->addApiToken($token);
+        $tokens = $account->getTokens();
+
+        $this->specify('account tokens were retreived', function() use ($tokens) {
+                $this->assertNotEmpty($tokens);
+            });
     }
 }

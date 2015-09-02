@@ -11,6 +11,17 @@ class ServiceProductTest extends \Codeception\TestCase\Test
      */
     protected $tester;
 
+    /**
+     * @inheritdoc
+     */
+    protected function _before()
+    {
+        // Configure API, Web Hooks, and OAuth client to use Mock server when testing.
+        NostoApiRequest::$baseUrl = 'http://localhost:3000';
+        NostoOAuthClient::$baseUrl = 'http://localhost:3000';
+        NostoHttpRequest::$baseUrl = 'http://localhost:3000';
+    }
+
 	/**
 	 * Tests that product upsert API requests cannot be made without an API token.
 	 */
@@ -20,9 +31,9 @@ class ServiceProductTest extends \Codeception\TestCase\Test
 		$product = new NostoProduct();
 
 		$this->setExpectedException('NostoException');
-		$op = new NostoServiceProduct($account);
-		$op->addProduct($product);
-		$op->upsert();
+		$service = new NostoServiceProduct($account);
+		$service->addProduct($product);
+		$service->upsert();
 	}
 
 	/**
@@ -35,8 +46,8 @@ class ServiceProductTest extends \Codeception\TestCase\Test
 		$account->addApiToken($token);
 
 		$this->setExpectedException('NostoException');
-		$op = new NostoServiceProduct($account);
-		$op->upsert();
+		$service = new NostoServiceProduct($account);
+		$service->upsert();
 	}
 
 	/**
@@ -49,9 +60,9 @@ class ServiceProductTest extends \Codeception\TestCase\Test
 		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
 		$account->addApiToken($token);
 
-		$op = new NostoServiceProduct($account);
-		$op->addProduct($product);
-		$result = $op->upsert();
+		$service = new NostoServiceProduct($account);
+		$service->addProduct($product);
+		$result = $service->upsert();
 
 		$this->specify('successful product upsert', function() use ($result) {
 			$this->assertTrue($result);
@@ -67,9 +78,9 @@ class ServiceProductTest extends \Codeception\TestCase\Test
         $product = new NostoProduct();
 
         $this->setExpectedException('NostoException');
-        $op = new NostoServiceProduct($account);
-        $op->addProduct($product);
-        $op->update();
+        $service = new NostoServiceProduct($account);
+        $service->addProduct($product);
+        $service->update();
     }
 
     /**
@@ -82,8 +93,8 @@ class ServiceProductTest extends \Codeception\TestCase\Test
         $account->addApiToken($token);
 
         $this->setExpectedException('NostoException');
-        $op = new NostoServiceProduct($account);
-        $op->update();
+        $service = new NostoServiceProduct($account);
+        $service->update();
     }
 
     /**
@@ -96,9 +107,9 @@ class ServiceProductTest extends \Codeception\TestCase\Test
 		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
 		$account->addApiToken($token);
 
-        $op = new NostoServiceProduct($account);
-        $op->addProduct($product);
-        $result = $op->update();
+        $service = new NostoServiceProduct($account);
+        $service->addProduct($product);
+        $result = $service->update();
 
         $this->specify('successful product update', function() use ($result) {
             $this->assertTrue($result);
@@ -114,9 +125,9 @@ class ServiceProductTest extends \Codeception\TestCase\Test
         $product = new NostoProduct();
 
         $this->setExpectedException('NostoException');
-        $op = new NostoServiceProduct($account);
-        $op->addProduct($product);
-        $op->create();
+        $service = new NostoServiceProduct($account);
+        $service->addProduct($product);
+        $service->create();
     }
 
 
@@ -130,8 +141,8 @@ class ServiceProductTest extends \Codeception\TestCase\Test
 		$account->addApiToken($token);
 
         $this->setExpectedException('NostoException');
-        $op = new NostoServiceProduct($account);
-        $op->create();
+        $service = new NostoServiceProduct($account);
+        $service->create();
     }
 
     /**
@@ -144,9 +155,9 @@ class ServiceProductTest extends \Codeception\TestCase\Test
 		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
 		$account->addApiToken($token);
 
-        $op = new NostoServiceProduct($account);
-        $op->addProduct($product);
-        $result = $op->create();
+        $service = new NostoServiceProduct($account);
+        $service->addProduct($product);
+        $result = $service->create();
 
         $this->specify('successful product create', function() use ($result) {
             $this->assertTrue($result);
@@ -162,11 +173,10 @@ class ServiceProductTest extends \Codeception\TestCase\Test
         $product = new NostoProduct();
 
         $this->setExpectedException('NostoException');
-        $op = new NostoServiceProduct($account);
-        $op->addProduct($product);
-        $op->delete();
+        $service = new NostoServiceProduct($account);
+        $service->addProduct($product);
+        $service->delete();
     }
-
 
     /**
      * Tests that product delete API requests cannot be made without products.
@@ -178,8 +188,8 @@ class ServiceProductTest extends \Codeception\TestCase\Test
 		$account->addApiToken($token);
 
         $this->setExpectedException('NostoException');
-        $op = new NostoServiceProduct($account);
-        $op->delete();
+        $service = new NostoServiceProduct($account);
+        $service->delete();
     }
 
     /**
@@ -192,12 +202,46 @@ class ServiceProductTest extends \Codeception\TestCase\Test
 		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
 		$account->addApiToken($token);
 
-        $op = new NostoServiceProduct($account);
-        $op->addProduct($product);
-        $result = $op->delete();
+        $service = new NostoServiceProduct($account);
+        $service->addProduct($product);
+        $result = $service->delete();
 
         $this->specify('successful product delete', function() use ($result) {
             $this->assertTrue($result);
+        });
+    }
+
+    /**
+     * Tests that the service fails correctly.
+     */
+    public function testHttpFailure()
+    {
+        NostoApiRequest::$baseUrl = 'http://localhost:1234'; // not a real url
+
+        $account = new NostoAccount('platform-00000000');
+        $account->addApiToken(new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783'));
+
+        $service = new NostoServiceProduct($account);
+        $service->addProduct(new NostoProduct());
+
+        $this->specify('product upsert with invalid URL', function() use ($service) {
+            $this->setExpectedException('NostoHttpException');
+            $service->upsert();
+        });
+
+        $this->specify('product create with invalid URL', function() use ($service) {
+            $this->setExpectedException('NostoHttpException');
+            $service->create();
+        });
+
+        $this->specify('product update with invalid URL', function() use ($service) {
+            $this->setExpectedException('NostoHttpException');
+            $service->update();
+        });
+
+        $this->specify('product delete with invalid URL', function() use ($service) {
+            $this->setExpectedException('NostoHttpException');
+            $service->delete();
         });
     }
 }

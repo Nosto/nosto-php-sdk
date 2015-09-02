@@ -4,7 +4,7 @@ class NostoTestPriceVariation implements NostoProductPriceVariationInterface
 {
     public function getId()
     {
-        return 'EUR';
+        return new NostoPriceVariation('EUR');
     }
 
     public function getCurrency()

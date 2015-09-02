@@ -66,5 +66,42 @@ class PriceTest extends \Codeception\TestCase\Test
                 $this->assertTrue($price->getRawPrice() === 574);
                 $this->assertTrue($price->getPrice() === 5.74);
             });
+
+        $price = NostoPrice::fromString('5.74', new NostoCurrencyCode("EUR"));
+        $this->specify('price is 5.74', function() use ($price) {
+                $this->assertTrue($price->getRawPrice() === 574);
+                $this->assertTrue($price->getPrice() === 5.74);
+            });
+    }
+
+    /**
+     * Test that you cannot create a float price object with a currency set.
+     */
+    public function testInvalidMoneyPattern()
+    {
+        $this->setExpectedException('NostoInvalidArgumentException');
+
+        new NostoPrice(5.74, new NostoCurrencyCode("EUR"));
+    }
+
+    /**
+     * Tests that you cannot parse an invalid price string into an price object.
+     */
+    public function testInvalidPriceFromString()
+    {
+        $this->setExpectedException('NostoInvalidArgumentException');
+
+        NostoPrice::fromString('1a2', new NostoCurrencyCode("EUR"));
+    }
+
+    /**
+     * Tests that you cannot multiply a price object with an invalid factor.
+     */
+    public function testInvalidMultiplyFactor()
+    {
+        $this->setExpectedException('NostoInvalidArgumentException');
+
+        $price = new NostoPrice(500, new NostoCurrencyCode("EUR"));
+        $price->multiply('1a2');
     }
 }

@@ -29,6 +29,11 @@ class ServiceOrderTest extends \Codeception\TestCase\Test
 	 */
 	protected function _before()
 	{
+        // Configure API, Web Hooks, and OAuth client to use Mock server when testing.
+        NostoApiRequest::$baseUrl = 'http://localhost:3000';
+        NostoOAuthClient::$baseUrl = 'http://localhost:3000';
+        NostoHttpRequest::$baseUrl = 'http://localhost:3000';
+
 		$this->order = new NostoOrder();
 		$this->account = new NostoAccount('platform-00000000');
 	}
@@ -58,4 +63,18 @@ class ServiceOrderTest extends \Codeception\TestCase\Test
 			$this->assertTrue($result);
 		});
 	}
+
+    /**
+     * Tests that the service fails correctly.
+     */
+    public function testHttpFailure()
+    {
+        NostoApiRequest::$baseUrl = 'http://localhost:1234'; // not a real url
+
+        $this->specify('order confirmation with invalid URL', function() {
+            $this->setExpectedException('NostoHttpException');
+            $service = new NostoServiceOrder($this->account);
+            $service->confirm($this->order, 'test123');
+        });
+    }
 }

@@ -36,7 +36,8 @@ class NostoProduct implements NostoProductInterface
 	}
     public function getPriceVariationId()
     {
-        return 'USD';
+        $variation = new NostoPriceVariation('USD');
+        return $variation->getId();
     }
     public function getAvailability()
 	{
@@ -44,7 +45,10 @@ class NostoProduct implements NostoProductInterface
 	}
 	public function getTags()
 	{
-		return array('tag1', 'tag2');
+		return array(
+            'tag1' => array('test1', 'test2'),
+            'tag2' => array('test3')
+        );
 	}
 	public function getCategories()
 	{
