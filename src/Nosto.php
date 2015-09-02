@@ -95,21 +95,6 @@ class Nosto
     }
 
     /**
-     * Register a new variable.
-     *
-     * @param string $key the key to register the variable for.
-     * @param mixed $value the variable to register.
-     * @throws NostoException if the key is already registered.
-     */
-    public static function register($key, $value)
-    {
-        if (isset(self::$registry[$key])) {
-            throw new NostoException(sprintf('Nosto registry key %s already exists', $key));
-        }
-        self::$registry[$key] = $value;
-    }
-
-    /**
      * Throws a new NostoHttpException exception with info about both the
      * request and response.
      *
@@ -127,6 +112,18 @@ class Nosto
     }
 
     /**
+     * Register a new variable.
+     * Overwrites entries with identical key.
+     *
+     * @param string $key the key to register the variable for.
+     * @param mixed $value the variable to register.
+     */
+    private static function register($key, $value)
+    {
+        self::$registry[$key] = $value;
+    }
+
+    /**
      * Gets an instance from registry by name.
      *
      * @param string $name the name of the class.
@@ -134,7 +131,7 @@ class Nosto
      * @return NostoFormatter the instance.
      * @throws NostoException if instance cannot be found.
      */
-    protected static function getInstanceFromRegistry($name, $type)
+    private static function getInstanceFromRegistry($name, $type)
     {
         $registryKey = '__'.strtolower($type).'__/'.$name;
         if (!self::registry($registryKey)) {
@@ -163,7 +160,7 @@ class Nosto
      * @param string $type the helper type, e.g. "Helper", "Formatter".
      * @return string|bool the helper class name or false if it cannot be built.
      */
-    protected static function getClassName($name, $type)
+    private static function getClassName($name, $type)
     {
         if (strpos($name, '/') === false) {
             $name = 'nosto/'.$name;

@@ -103,17 +103,17 @@ final class NostoCurrency
      *
      * @return int the sub-unit.
      */
-    public function getSubUnit()
+    public function getFractionUnit()
     {
         return NostoCurrencyInfo::getFractionUnit($this->code);
     }
 
     /**
-     * Returns the currency default fraction digits.
+     * Returns the currency default fraction decimals.
      *
      * @return int the fraction digits.
      */
-    public function getDefaultFractionDigits()
+    public function getDefaultFractionDecimals()
     {
         return NostoCurrencyInfo::getFractionDecimals($this->code);
     }

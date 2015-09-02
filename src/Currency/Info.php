@@ -569,18 +569,6 @@ final class NostoCurrencyInfo
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
         ),
-        'LTL' => array(
-            'name' => 'Lithuanian Litas',
-            'numericCode' => 440,
-            'fractionDecimals' => 2,
-            'fractionUnit' => 100,
-        ),
-        'LVL' => array(
-            'name' => 'Latvian Lats',
-            'numericCode' => 428,
-            'fractionDecimals' => 2,
-            'fractionUnit' => 100,
-        ),
         'LYD' => array(
             'name' => 'Libyan Dinar',
             'numericCode' => 434,
@@ -863,12 +851,6 @@ final class NostoCurrencyInfo
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
         ),
-        'SVC' => array(
-            'name' => 'El Salvador Colon',
-            'numericCode' => 222,
-            'fractionDecimals' => 2,
-            'fractionUnit' => 100,
-        ),
         'SYP' => array(
             'name' => 'Syrian Pound',
             'numericCode' => 760,
@@ -1130,12 +1112,6 @@ final class NostoCurrencyInfo
         'ZMW' => array(
             'name' => 'Zambian Kwacha',
             'numericCode' => 967,
-            'fractionDecimals' => 2,
-            'fractionUnit' => 100,
-        ),
-        'ZWL' => array(
-            'name' => 'Zimbabwe Dollar',
-            'numericCode' => 932,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
         )

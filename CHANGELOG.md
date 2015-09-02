@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+### Added
+- Support for using thumb url in product models
+- Support for converting prices between currencies
+- Zend currency format parser
 
 ## [2.0.1]
 ### Fixed
