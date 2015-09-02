@@ -1,7 +1,5 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataSingleSignOn.php');
-
 class AccountTest extends \Codeception\TestCase\Test
 {
 	use \Codeception\Specify;
@@ -10,17 +8,6 @@ class AccountTest extends \Codeception\TestCase\Test
      * @var \UnitTester
      */
     protected $tester;
-
-    /**
-     * @inheritdoc
-     */
-    protected function _before()
-    {
-        // Configure API, Web Hooks, and OAuth client to use Mock server when testing.
-        NostoApiRequest::$baseUrl = 'http://localhost:3000';
-        NostoOAuthClient::$baseUrl = 'http://localhost:3000';
-        NostoHttpRequest::$baseUrl = 'http://localhost:3000';
-    }
 
 	/**
 	 * Tests the "isConnectedToNosto" method for the NostoAccount class.
@@ -72,37 +59,6 @@ class AccountTest extends \Codeception\TestCase\Test
 			$this->assertEquals('123', $account->getApiToken('sso')->getValue());
 		});
 	}
-
-	/**
-	 * Tests the account service SSO without the sso token.
-	 */
-	public function testAccountSingleSignOnWithoutToken()
-	{
-		$account = new NostoAccount('platform-test');
-		$meta = new NostoAccountMetaDataSingleSignOn();
-
-        $this->setExpectedException('NostoException');
-
-        $service = new NostoServiceAccount();
-        $service->sso($account, $meta);
-	}
-
-    /**
-     * Tests the account service SSO with the sso token.
-     */
-    public function testAccountSingleSignOnWithToken()
-    {
-        $account = new NostoAccount('platform-test');
-        $token = new NostoApiToken('sso', '123');
-        $account->addApiToken($token);
-        $meta = new NostoAccountMetaDataSingleSignOn();
-
-        $this->specify('account has sso token', function() use ($account, $meta) {
-            $service = new NostoServiceAccount();
-            $url = $service->sso($account, $meta);
-            $this->assertEquals('https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg', $url);
-        });
-    }
 
     /**
      * Test that you cannot create a nosto account object with an invalid name.

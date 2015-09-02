@@ -4,6 +4,7 @@ require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataBilling.php')
 require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataOwner.php');
 require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaData.php');
 require_once(dirname(__FILE__) . '/../_support/NostoOAuthClientMetaData.php');
+require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataSingleSignOn.php');
 
 class ServiceAccountTest extends \Codeception\TestCase\Test
 {
@@ -249,5 +250,37 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
 
         $this->setExpectedException('NostoHttpException');
         $this->service->delete($this->account);
+    }
+
+    /**
+     * Tests that the account single sign on returns a valid login URL.
+     */
+    public function testAccountSingleSignOn()
+    {
+        $loginUrl = $this->service->sso($this->account, new NostoAccountMetaDataSingleSignOn());
+
+        $this->specify('single sign on login url is returned', function() use ($loginUrl) {
+            $this->assertEquals('https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg', $loginUrl);
+        });
+    }
+
+    /**
+     * Tests that the account single sign on without valid API token fails.
+     */
+    public function testAccountSingleSignOnWithoutToken()
+    {
+        $this->setExpectedException('NostoException');
+        $this->service->sso(new NostoAccount('platform-00000000'), new NostoAccountMetaDataSingleSignOn());
+    }
+
+    /**
+     * Tests that the account single sign on fails correctly on http errors.
+     */
+    public function testAccountSingleSignOnHttpFailure()
+    {
+        NostoHttpRequest::$baseUrl = 'http://localhost:1234'; // not a real url
+
+        $this->setExpectedException('NostoHttpException');
+        $this->service->sso($this->account, new NostoAccountMetaDataSingleSignOn());
     }
 }
