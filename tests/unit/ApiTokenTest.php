@@ -25,22 +25,41 @@ class ApiTokenTest extends \Codeception\TestCase\Test
     /**
      * Tests that a invalid token cannot be created.
      */
-    public function testInvalidTokenFormat()
+    public function testInvalidMissingTokenName()
     {
         $this->specify('api token name is missing', function() {
             $this->setExpectedException('NostoInvalidArgumentException');
             new NostoApiToken(null, '123');
         });
+    }
 
-        $this->specify('api token name is invalid', function() {
-            $this->setExpectedException('NostoInvalidArgumentException');
-            new NostoApiToken('foo', '123');
-        });
-
+    /**
+     * Tests that a invalid token cannot be created.
+     */
+    public function testInvalidMissingTokenValue()
+    {
         $this->specify('api token value is missing', function() {
             $this->setExpectedException('NostoInvalidArgumentException');
             new NostoApiToken('sso', '123');
         });
+    }
+
+    /**
+     * Tests that a invalid token cannot be created.
+     */
+    public function testInvalidInvalidTokenName()
+    {
+        $this->specify('api token name is invalid', function() {
+            $this->setExpectedException('NostoInvalidArgumentException');
+            new NostoApiToken('foo', '123');
+        });
+    }
+
+    /**
+     * Tests that a invalid token cannot be created.
+     */
+    public function testInvalidInvalidTokenValue()
+    {
 
         $this->specify('api token value is invalid', function() {
             $this->setExpectedException('NostoInvalidArgumentException');

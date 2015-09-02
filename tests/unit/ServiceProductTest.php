@@ -214,7 +214,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
     /**
      * Tests that the service fails correctly.
      */
-    public function testHttpFailure()
+    public function testHttpFailureUpsert()
     {
         NostoApiRequest::$baseUrl = 'http://localhost:1234'; // not a real url
 
@@ -228,16 +228,58 @@ class ServiceProductTest extends \Codeception\TestCase\Test
             $this->setExpectedException('NostoHttpException');
             $service->upsert();
         });
+    }
+
+    /**
+     * Tests that the service fails correctly.
+     */
+    public function testHttpFailureCreate()
+    {
+        NostoApiRequest::$baseUrl = 'http://localhost:1234'; // not a real url
+
+        $account = new NostoAccount('platform-00000000');
+        $account->addApiToken(new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783'));
+
+        $service = new NostoServiceProduct($account);
+        $service->addProduct(new NostoProduct());
 
         $this->specify('product create with invalid URL', function() use ($service) {
             $this->setExpectedException('NostoHttpException');
             $service->create();
         });
+    }
+
+    /**
+     * Tests that the service fails correctly.
+     */
+    public function testHttpFailureUpdate()
+    {
+        NostoApiRequest::$baseUrl = 'http://localhost:1234'; // not a real url
+
+        $account = new NostoAccount('platform-00000000');
+        $account->addApiToken(new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783'));
+
+        $service = new NostoServiceProduct($account);
+        $service->addProduct(new NostoProduct());
 
         $this->specify('product update with invalid URL', function() use ($service) {
             $this->setExpectedException('NostoHttpException');
             $service->update();
         });
+    }
+
+    /**
+     * Tests that the service fails correctly.
+     */
+    public function testHttpFailureDelete()
+    {
+        NostoApiRequest::$baseUrl = 'http://localhost:1234'; // not a real url
+
+        $account = new NostoAccount('platform-00000000');
+        $account->addApiToken(new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783'));
+
+        $service = new NostoServiceProduct($account);
+        $service->addProduct(new NostoProduct());
 
         $this->specify('product delete with invalid URL', function() use ($service) {
             $this->setExpectedException('NostoHttpException');
