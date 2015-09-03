@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## [2.1.0]
 ### Added
 - Support for using thumb url in product models
 - Support for converting prices between currencies
@@ -48,7 +50,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Initial release
 
 
-[unreleased]: https://github.com/nosto/php-sdk/compare/2.0.1...develop
+[unreleased]: https://github.com/nosto/php-sdk/compare/2.1.0...develop
+[2.1.0]: https://github.com/nosto/php-sdk/compare/2.0.1...2.1.0
 [2.0.1]: https://github.com/nosto/php-sdk/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/nosto/php-sdk/compare/1.13.0...2.0.0
 [1.13.0]: https://github.com/nosto/php-sdk/compare/1.12.1...1.13.0
