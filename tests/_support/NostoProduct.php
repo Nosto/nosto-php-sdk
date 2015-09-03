@@ -18,6 +18,10 @@ class NostoProduct implements NostoProductInterface
 	{
 		return 'http://my.shop.com/images/test_product.jpg';
 	}
+	public function getThumbUrl()
+	{
+		return 'http://my.shop.com/images/thumbnails/test_product200x200.jpg';
+	}
 	public function getPrice()
 	{
 		return new NostoPrice(99.99);
@@ -32,7 +36,8 @@ class NostoProduct implements NostoProductInterface
 	}
     public function getPriceVariationId()
     {
-        return 'USD';
+        $variation = new NostoPriceVariation('USD');
+        return $variation->getId();
     }
     public function getAvailability()
 	{
@@ -40,7 +45,10 @@ class NostoProduct implements NostoProductInterface
 	}
 	public function getTags()
 	{
-		return array('tag1', 'tag2');
+		return array(
+            'tag1' => array('test1', 'test2'),
+            'tag2' => array('test3')
+        );
 	}
 	public function getCategories()
 	{
@@ -69,7 +77,7 @@ class NostoProduct implements NostoProductInterface
     public function getPriceVariations()
     {
         return array(
-            new NostoPriceVariation()
+            new NostoTestPriceVariation()
         );
     }
 }

@@ -2,6 +2,8 @@
 
 class NostoOAuthClientMetaData implements NostoOauthClientMetaInterface
 {
+    private $account;
+
 	public function getClientId()
 	{
 		return 'client-id';
@@ -24,6 +26,10 @@ class NostoOAuthClientMetaData implements NostoOauthClientMetaInterface
 	}
     public function getAccount()
     {
-        return null;
+        return $this->account;
+    }
+    public function setAccount(NostoAccount $account)
+    {
+        $this->account = $account;
     }
 }

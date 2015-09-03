@@ -41,7 +41,7 @@ final class NostoCurrencyCode
     /**
      * @var string the ISO 4217 currency code.
      */
-    private $_code;
+    private $code;
 
     /**
      * @var array valid ISO 4217 currency codes.
@@ -73,14 +73,14 @@ final class NostoCurrencyCode
     {
         if (!is_string($code) || !in_array($code, self::$validIsoCodes)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._code (%s) must be one of the following ISO 4217 codes: "%s".',
+                '%s.code (%s) must be one of the following ISO 4217 codes: "%s".',
                 __CLASS__,
                 $code,
                 implode('", "', self::$validIsoCodes)
             ));
         }
 
-        $this->_code = (string)$code;
+        $this->code = (string)$code;
     }
 
     /**
@@ -88,6 +88,6 @@ final class NostoCurrencyCode
      */
     public function getCode()
     {
-        return $this->_code;
+        return $this->code;
     }
 }

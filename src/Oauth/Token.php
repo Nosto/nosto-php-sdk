@@ -41,12 +41,12 @@ final class NostoOAuthToken
     /**
      * @var string the merchant name.
      */
-    private $_merchantName;
+    private $merchantName;
 
     /**
      * @var string the access token.
      */
-    private $_accessToken;
+    private $accessToken;
 
     /**
      * Constructor.
@@ -60,14 +60,14 @@ final class NostoOAuthToken
     public function __construct($merchantName, $accessToken)
     {
         if (!is_string($merchantName) || empty($merchantName)) {
-            throw new NostoInvalidArgumentException(sprintf('%s._merchantName (%s) must be a non-empty string value', __CLASS__, $merchantName));
+            throw new NostoInvalidArgumentException(sprintf('%s.merchantName (%s) must be a non-empty string value', __CLASS__, $merchantName));
         }
         if (!is_string($accessToken) || empty($accessToken)) {
-            throw new NostoInvalidArgumentException(sprintf('%s._accessToken (%s) must be a non-empty string value', __CLASS__, $accessToken));
+            throw new NostoInvalidArgumentException(sprintf('%s.accessToken (%s) must be a non-empty string value', __CLASS__, $accessToken));
         }
 
-        $this->_merchantName = $merchantName;
-        $this->_accessToken = $accessToken;
+        $this->merchantName = $merchantName;
+        $this->accessToken = $accessToken;
     }
 
     /**
@@ -77,7 +77,7 @@ final class NostoOAuthToken
      */
     public function getMerchantName()
     {
-        return $this->_merchantName;
+        return $this->merchantName;
     }
 
     /**
@@ -87,6 +87,6 @@ final class NostoOAuthToken
      */
     public function getAccessToken()
     {
-        return $this->_accessToken;
+        return $this->accessToken;
     }
 }

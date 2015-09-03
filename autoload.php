@@ -66,7 +66,9 @@ require_once(dirname(__FILE__).'/src/Api/Request.php');
 require_once(dirname(__FILE__).'/src/Api/Token.php');
 require_once(dirname(__FILE__).'/src/Country/Code.php');
 require_once(dirname(__FILE__).'/src/Currency/Code.php');
+require_once(dirname(__FILE__).'/src/Currency/Exchange.php');
 require_once(dirname(__FILE__).'/src/Currency/Format.php');
+require_once(dirname(__FILE__).'/src/Currency/Info.php');
 require_once(dirname(__FILE__).'/src/Currency/Symbol.php');
 require_once(dirname(__FILE__).'/src/Currency/Exchange/Rate.php');
 require_once(dirname(__FILE__).'/src/Currency/Exchange/Rate/Collection.php');
@@ -77,6 +79,7 @@ require_once(dirname(__FILE__).'/src/Product/Collection.php');
 require_once(dirname(__FILE__).'/src/Export/Collection/Product.php');
 require_once(dirname(__FILE__).'/src/Formatter/Date.php');
 require_once(dirname(__FILE__).'/src/Formatter/Price.php');
+require_once(dirname(__FILE__).'/src/Helper/Currency.php');
 require_once(dirname(__FILE__).'/src/Helper/Iframe.php');
 require_once(dirname(__FILE__).'/src/Http/Exception.php');
 require_once(dirname(__FILE__).'/src/Http/Response.php');
@@ -87,6 +90,7 @@ require_once(dirname(__FILE__).'/src/Language/Code.php');
 require_once(dirname(__FILE__).'/src/Oauth/Client.php');
 require_once(dirname(__FILE__).'/src/Oauth/Token.php');
 require_once(dirname(__FILE__).'/src/Price/Format.php');
+require_once(dirname(__FILE__).'/src/Price/Variation.php');
 require_once(dirname(__FILE__).'/src/Product/Availability.php');
 require_once(dirname(__FILE__).'/src/Service/Currency/Exchange/Rate.php');
 require_once(dirname(__FILE__).'/src/Service/Account.php');
@@ -102,7 +106,8 @@ require_once(dirname(__FILE__).'/lib/phpseclib/Crypt/Random.php');
 require_once(dirname(__FILE__).'/lib/phpseclib/Math/BigInteger.php');
 
 // Parse .env if exists and assign configured environment variables.
-NostoDotEnv::getInstance()->init(dirname(__FILE__));
+$dotEnv = new NostoDotEnv();
+$dotEnv->init(dirname(__FILE__));
 if (isset($_ENV['NOSTO_API_BASE_URL'])) {
     NostoApiRequest::$baseUrl = $_ENV['NOSTO_API_BASE_URL'];
 }

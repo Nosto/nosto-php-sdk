@@ -41,7 +41,7 @@ final class NostoDate
     /**
      * @var int the unix timestamp for the date.
      */
-    private $_timestamp;
+    private $timestamp;
 
     /**
      * Constructor.
@@ -55,13 +55,13 @@ final class NostoDate
     {
         if (!is_int($timestamp)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._timestamp (%s) must be a unix timestamp.',
+                '%s.timestamp (%s) must be a unix timestamp.',
                 __CLASS__,
                 $timestamp
             ));
         }
 
-        $this->_timestamp = (int)$timestamp;
+        $this->timestamp = (int)$timestamp;
     }
 
     /**
@@ -71,6 +71,6 @@ final class NostoDate
      */
     public function getTimestamp()
     {
-        return $this->_timestamp;
+        return $this->timestamp;
     }
 }

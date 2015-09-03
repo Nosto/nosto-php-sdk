@@ -12,36 +12,77 @@ class ServiceRecrawlTest extends \Codeception\TestCase\Test
     protected $tester;
 
     /**
-     * Tests that product re-crawl API requests cannot be made without an API token.
+     * @var NostoAccount
      */
-    public function testSendingProductReCrawlWithoutApiToken()
+    private $account;
+
+    /**
+     * @var NostoServiceRecrawl
+     */
+    private $service;
+
+    /**
+     * @inheritdoc
+     */
+    protected function _before()
     {
-		$account = new NostoAccount('platform-00000000');
-        $product = new NostoProduct();
+        $this->account = new NostoAccount('platform-00000000');
+        foreach (NostoApiToken::getApiTokenNames() as $tokenName) {
+            $this->account->addApiToken(new NostoApiToken($tokenName, '123'));
+        }
+        $this->service = new NostoServiceRecrawl($this->account);
+    }
 
-        $this->setExpectedException('NostoException');
-
-        $service = new NostoServiceRecrawl($account);
-        $service->addProduct($product);
-        $service->send();
+    /**
+     * @inheritdoc
+     */
+    protected function _after()
+    {
+        \AspectMock\test::clean();
     }
 
 	/**
 	 * Tests that product re-crawl API requests can be made.
 	 */
-	public function testSendingProductReCrawl()
+	public function testProductReCrawl()
     {
-		$account = new NostoAccount('platform-00000000');
-		$product = new NostoProduct();
-		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
-		$account->addApiToken($token);
-
-        $service = new NostoServiceRecrawl($account);
-        $service->addProduct($product);
-        $result = $service->send();
+        $this->service->addProduct(new NostoProduct());
+        $result = $this->service->send();
 
 		$this->specify('successful product re-crawl', function() use ($result) {
 			$this->assertTrue($result);
 		});
+    }
+
+    /**
+     * Tests that product re-crawl API requests cannot be made without any products.
+     */
+    public function testProductReCrawlWithoutProducts()
+    {
+        $this->setExpectedException('NostoException');
+        $this->service->send();
+    }
+
+    /**
+     * Tests that product re-crawl API requests cannot be made without an API token.
+     */
+    public function testProductReCrawlWithoutToken()
+    {
+        $this->setExpectedException('NostoException');
+        $service = new NostoServiceRecrawl(new NostoAccount('platform-00000000'));
+        $service->addProduct(new NostoProduct());
+        $service->send();
+    }
+
+    /**
+     * Tests that the service fails correctly.
+     */
+    public function testProductReCrawlHttpFailure()
+    {
+        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
+
+        $this->setExpectedException('NostoHttpException');
+        $this->service->addProduct(new NostoProduct());
+        $this->service->send();
     }
 }

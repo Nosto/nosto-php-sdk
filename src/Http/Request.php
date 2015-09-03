@@ -91,11 +91,21 @@ class NostoHttpRequest
     {
         if (!is_null($adapter)) {
             $this->adapter = $adapter;
-        } elseif (function_exists('curl_exec')) {
+        } elseif ($this->canUseCurl()) {
             $this->adapter = new NostoHttpRequestAdapterCurl();
         } else {
             $this->adapter = new NostoHttpRequestAdapterSocket();
         }
+    }
+
+    /**
+     * Checks if the Curl extension is available.
+     *
+     * @return bool true if curl is available, false otherwise.
+     */
+    public function canUseCurl()
+    {
+        return function_exists('curl_exec');
     }
 
     /**

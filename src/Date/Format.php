@@ -44,7 +44,7 @@ final class NostoDateFormat
     /**
      * @var string the date format.
      */
-    private $_format;
+    private $format;
 
     /**
      * Constructor.
@@ -58,14 +58,14 @@ final class NostoDateFormat
     {
         if (!is_string($format) || !in_array($format, array(self::ISO_8601, self::YMD))) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._format (%s) must be one of the following: "%s".',
+                '%s.format (%s) must be one of the following: "%s".',
                 __CLASS__,
                 $format,
                 implode('", "', array(self::ISO_8601, self::YMD))
             ));
         }
 
-        $this->_format = $format;
+        $this->format = $format;
     }
 
     /**
@@ -75,6 +75,6 @@ final class NostoDateFormat
      */
     public function getFormat()
     {
-        return $this->_format;
+        return $this->format;
     }
 }

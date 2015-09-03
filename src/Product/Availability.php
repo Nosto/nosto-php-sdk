@@ -44,7 +44,7 @@ final class NostoProductAvailability
     /**
      * @var string the availability, i.e. either "InStock" or "OutOfStock".
      */
-    private $_availability;
+    private $availability;
 
     /**
      * Constructor.
@@ -58,14 +58,14 @@ final class NostoProductAvailability
     {
         if (!is_string($availability) || !in_array($availability, array(self::IN_STOCK, self::OUT_OF_STOCK))) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._availability (%s) must be one of the following: "%s".',
+                '%s.availability (%s) must be one of the following: "%s".',
                 __CLASS__,
                 $availability,
                 implode('", "', array(self::IN_STOCK, self::OUT_OF_STOCK))
             ));
         }
 
-        $this->_availability = $availability;
+        $this->availability = $availability;
     }
 
     /**
@@ -75,6 +75,6 @@ final class NostoProductAvailability
      */
     public function getAvailability()
     {
-        return $this->_availability;
+        return $this->availability;
     }
 }

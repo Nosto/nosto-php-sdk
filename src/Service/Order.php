@@ -74,7 +74,7 @@ class NostoServiceOrder
         $request = $this->initApiRequest($customerId);
         $response = $request->post($this->getOrderAsJson($order));
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to send order confirmation to Nosto.', $request, $response);
+            throw Nosto::createHttpException('Failed to send order confirmation to Nosto.', $request, $response);
         }
         return true;
     }

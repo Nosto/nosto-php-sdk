@@ -1,12 +1,26 @@
 <?php
 
-
 class HttpRequestTest extends \Codeception\TestCase\Test
 {
 	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
+
+    /**
+     * @inheritdoc
+     */
+    protected function _before()
+    {
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function _after()
+    {
+        \AspectMock\test::clean();
+    }
 
 	/**
 	 * Tests setting query params to the request.
@@ -178,6 +192,20 @@ class HttpRequestTest extends \Codeception\TestCase\Test
         $response = $request->delete();
         $this->assertEquals(404, $response->getCode());
 	}
+
+    /**
+     * Tests to create a http request with adapter set to "auto" while not having curl enabled.
+     */
+    public function testHttpRequestAutoAdapterWithoutCurlEnabled()
+    {
+        $mock = \AspectMock\test::double('NostoHttpRequest', ['canUseCurl' => false]);
+
+        $request = new NostoHttpRequest();
+        $mock->verifyInvoked('canUseCurl');
+        $request->setUrl('http://localhost:3000');
+        $response = $request->get();
+        $this->assertEquals(404, $response->getCode());
+    }
 
     /**
      * Tests the http request __toString method.

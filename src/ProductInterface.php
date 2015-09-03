@@ -68,6 +68,13 @@ interface NostoProductInterface
     public function getImageUrl();
 
     /**
+     * Returns the absolute url to one of the product image thumbnails in the shop frontend.
+     *
+     * @return string the url.
+     */
+    public function getThumbUrl();
+
+    /**
      * Returns the price of the product including possible discounts and taxes.
      *
      * @return NostoPrice the price.

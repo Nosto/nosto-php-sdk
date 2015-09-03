@@ -17,12 +17,17 @@ class ServiceOrderTest extends \Codeception\TestCase\Test
 	/**
 	 * @var NostoOrder
 	 */
-	protected $order;
+    private $order;
 
 	/**
 	 * @var NostoAccount
 	 */
-	protected $account;
+    private $account;
+
+    /**
+     * @var NostoServiceOrder
+     */
+    private $service;
 
 	/**
 	 * @inheritdoc
@@ -31,15 +36,23 @@ class ServiceOrderTest extends \Codeception\TestCase\Test
 	{
 		$this->order = new NostoOrder();
 		$this->account = new NostoAccount('platform-00000000');
+        $this->service = new NostoServiceOrder($this->account);
 	}
+
+    /**
+     * @inheritdoc
+     */
+    protected function _after()
+    {
+        \AspectMock\test::clean();
+    }
 
 	/**
 	 * Tests the matched order confirmation API call.
 	 */
 	public function testMatchedOrderConfirmation()
     {
-        $service = new NostoServiceOrder($this->account);
-        $result = $service->confirm($this->order, 'test123');
+        $result = $this->service->confirm($this->order, 'test123');
 
 		$this->specify('successful matched order confirmation', function() use ($result) {
 			$this->assertTrue($result);
@@ -51,11 +64,21 @@ class ServiceOrderTest extends \Codeception\TestCase\Test
 	 */
 	public function testUnMatchedOrderConfirmation()
 	{
-        $service = new NostoServiceOrder($this->account);
-        $result = $service->confirm($this->order);
+        $result = $this->service->confirm($this->order);
 
 		$this->specify('successful un-matched order confirmation', function() use ($result) {
 			$this->assertTrue($result);
 		});
 	}
+
+    /**
+     * Tests that the service fails correctly.
+     */
+    public function testMatchedOrderConfirmationHttpFailure()
+    {
+        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
+
+        $this->setExpectedException('NostoHttpException');
+        $this->service->confirm($this->order, 'test123');
+    }
 }

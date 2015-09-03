@@ -36,22 +36,22 @@
 /**
  * Class representing a currency with all it's formatting details Nosto needs.
  */
-class NostoCurrency
+final class NostoCurrency
 {
     /**
      * @var NostoCurrencyCode the currency ISO 4217 code.
      */
-    protected $code;
+    private $code;
 
     /**
      * @var NostoCurrencySymbol the currency symbol.
      */
-    protected $symbol;
+    private $symbol;
 
     /**
      * @var NostoCurrencyFormat the currency format.
      */
-    protected $format;
+    private $format;
 
     /**
      * Constructor.
@@ -96,5 +96,25 @@ class NostoCurrency
     public function getFormat()
     {
         return $this->format;
+    }
+
+    /**
+     * Returns the currency sub-unit.
+     *
+     * @return int the sub-unit.
+     */
+    public function getFractionUnit()
+    {
+        return NostoCurrencyInfo::getFractionUnit($this->code);
+    }
+
+    /**
+     * Returns the currency default fraction decimals.
+     *
+     * @return int the fraction digits.
+     */
+    public function getDefaultFractionDecimals()
+    {
+        return NostoCurrencyInfo::getFractionDecimals($this->code);
     }
 }

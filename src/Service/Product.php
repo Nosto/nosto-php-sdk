@@ -83,7 +83,7 @@ class NostoServiceProduct
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPSERT);
         $response = $request->post($this->getCollectionAsJson());
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to upsert Nosto product(s).', $request, $response);
+            throw Nosto::createHttpException('Failed to upsert Nosto product(s).', $request, $response);
         }
         return true;
     }
@@ -100,7 +100,7 @@ class NostoServiceProduct
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_CREATE);
         $response = $request->post($this->getCollectionAsJson());
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to create Nosto product(s).', $request, $response);
+            throw Nosto::createHttpException('Failed to create Nosto product(s).', $request, $response);
         }
         return true;
     }
@@ -117,7 +117,7 @@ class NostoServiceProduct
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPDATE);
         $response = $request->put($this->getCollectionAsJson());
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to update Nosto product(s).', $request, $response);
+            throw Nosto::createHttpException('Failed to update Nosto product(s).', $request, $response);
         }
         return true;
     }
@@ -134,7 +134,7 @@ class NostoServiceProduct
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_DISCONTINUE);
         $response = $request->post($this->getCollectionIdsAsJson());
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to delete Nosto product(s).', $request, $response);
+            throw Nosto::createHttpException('Failed to delete Nosto product(s).', $request, $response);
         }
         return true;
     }
@@ -209,6 +209,9 @@ class NostoServiceProduct
 
         // Optional properties.
 
+        if ($product->getThumbUrl()) {
+            $data['thumb_url'] = $product->getThumbUrl();
+        }
         if ($product->getFullDescription()) {
             $data['description'] = $product->getFullDescription();
         }

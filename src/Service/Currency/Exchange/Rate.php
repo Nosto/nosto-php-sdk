@@ -68,7 +68,7 @@ class NostoServiceCurrencyExchangeRate
         $request = $this->initApiRequest();
         $response = $request->post($this->getCollectionAsJson($collection));
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException(
+            throw Nosto::createHttpException(
                 sprintf('Failed to update currency exchange rates for account %s.', $this->account->getName()),
                 $request,
                 $response

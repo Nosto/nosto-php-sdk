@@ -41,7 +41,7 @@ final class NostoLanguageCode
     /**
      * @var string the ISO 639-1 language code.
      */
-    private $_code;
+    private $code;
 
     /**
      * @var array valid ISO 639-1 codes.
@@ -72,14 +72,14 @@ final class NostoLanguageCode
     {
         if (!is_string($code) || !in_array($code, self::$validIsoCodes)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._code (%s) must be one of the following ISO 639-1 codes: "%s".',
+                '%s.code (%s) must be one of the following ISO 639-1 codes: "%s".',
                 __CLASS__,
                 $code,
                 implode('", "', self::$validIsoCodes)
             ));
         }
 
-        $this->_code = (string)$code;
+        $this->code = (string)$code;
     }
 
     /**
@@ -87,6 +87,6 @@ final class NostoLanguageCode
      */
     public function getCode()
     {
-        return $this->_code;
+        return $this->code;
     }
 }

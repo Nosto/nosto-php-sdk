@@ -44,12 +44,12 @@ final class NostoCurrencySymbol
     /**
      * @var string the currency symbol, e.g. "$".
      */
-    private $_symbol;
+    private $symbol;
 
     /**
      * @var string the position of the symbol when displaying the currency.
      */
-    private $_position;
+    private $position;
 
     /**
      * Constructor.
@@ -64,22 +64,22 @@ final class NostoCurrencySymbol
     {
         if (!is_string($symbol) || empty($symbol)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._symbol (%s) must be a non-empty value.',
+                '%s.symbol (%s) must be a non-empty value.',
                 __CLASS__,
                 $symbol
             ));
         }
         if (!is_string($position) || !in_array($position, array(self::SYMBOL_POS_LEFT, self::SYMBOL_POS_RIGHT))) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%s._position (%s) must be one of the following: "%s".',
+                '%s.position (%s) must be one of the following: "%s".',
                 __CLASS__,
                 $position,
                 implode('", "', array(self::SYMBOL_POS_LEFT, self::SYMBOL_POS_RIGHT))
             ));
         }
 
-        $this->_symbol = (string)$symbol;
-        $this->_position = (string)$position;
+        $this->symbol = (string)$symbol;
+        $this->position = (string)$position;
     }
 
     /**
@@ -89,7 +89,7 @@ final class NostoCurrencySymbol
      */
     public function getPosition()
     {
-        return $this->_position;
+        return $this->position;
     }
 
     /**
@@ -99,6 +99,6 @@ final class NostoCurrencySymbol
      */
     public function getSymbol()
     {
-        return $this->_symbol;
+        return $this->symbol;
     }
 }

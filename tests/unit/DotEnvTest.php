@@ -14,7 +14,7 @@ class DotEnvTest extends \Codeception\TestCase\Test
 	 */
 	public function testDotEnvFile()
     {
-		$dotEnv = NostoDotEnv::getInstance();
+		$dotEnv = new NostoDotEnv();
 		$dotEnv->init(__DIR__.'/../_support', '.env-test');
 
 		$this->specify('dot-env variable TEST_VARIABLE assigned to $_ENV', function() {

@@ -1,7 +1,5 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataSingleSignOn.php');
-
 class AccountTest extends \Codeception\TestCase\Test
 {
 	use \Codeception\Specify;
@@ -62,34 +60,42 @@ class AccountTest extends \Codeception\TestCase\Test
 		});
 	}
 
-	/**
-	 * Tests the account service SSO without the sso token.
-	 */
-	public function testAccountSingleSignOnWithoutToken()
-	{
-		$account = new NostoAccount('platform-test');
-		$meta = new NostoAccountMetaDataSingleSignOn();
+    /**
+     * Test that you cannot create a nosto account object with an invalid name.
+     */
+    public function testInvalidAccountName()
+    {
+        $this->setExpectedException('NostoInvalidArgumentException');
 
-        $this->setExpectedException('NostoException');
-
-        $service = new NostoServiceAccount();
-        $service->sso($account, $meta);
-	}
+        new NostoAccount(null);
+    }
 
     /**
-     * Tests the account service SSO with the sso token.
+     * Test the account object equals method.
      */
-    public function testAccountSingleSignOnWithToken()
+    public function testAccountEquality()
+    {
+        $oldAccount = new NostoAccount('platform-test');
+        $newAccount = new NostoAccount('platform-test');
+
+        $this->specify('two accounts are equal', function() use ($oldAccount, $newAccount) {
+                $this->assertTrue($newAccount->equals($oldAccount));
+                $this->assertTrue($oldAccount->equals($newAccount));
+            });
+    }
+
+    /**
+     * Tests that account tokens can be fetched.
+     */
+    public function testAccountTokenGetter()
     {
         $account = new NostoAccount('platform-test');
         $token = new NostoApiToken('sso', '123');
         $account->addApiToken($token);
-        $meta = new NostoAccountMetaDataSingleSignOn();
+        $tokens = $account->getTokens();
 
-        $this->specify('account has sso token', function() use ($account, $meta) {
-            $service = new NostoServiceAccount();
-            $url = $service->sso($account, $meta);
-            $this->assertEquals('https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg', $url);
-        });
+        $this->specify('account tokens were retreived', function() use ($tokens) {
+                $this->assertNotEmpty($tokens);
+            });
     }
 }
