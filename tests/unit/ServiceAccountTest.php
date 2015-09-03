@@ -123,7 +123,6 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
         $this->service->update($this->account, $this->meta);
     }
 
-
     /**
      * Tests that an account can be synced.
      */
@@ -174,7 +173,10 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     public function testAccountSyncHttpFailure()
     {
-        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
+        \AspectMock\test::double('NostoHttpResponse', ['getCode' => function () {
+                    $array = $this->getJsonResult(true);
+                    return isset($array['api_sso']) ? 404 : 200;
+                }]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->sync(new NostoOAuthClientMetaData(), 'test123');

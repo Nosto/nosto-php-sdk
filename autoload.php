@@ -106,7 +106,8 @@ require_once(dirname(__FILE__).'/lib/phpseclib/Crypt/Random.php');
 require_once(dirname(__FILE__).'/lib/phpseclib/Math/BigInteger.php');
 
 // Parse .env if exists and assign configured environment variables.
-NostoDotEnv::getInstance()->init(dirname(__FILE__));
+$dotEnv = new NostoDotEnv();
+$dotEnv->init(dirname(__FILE__));
 if (isset($_ENV['NOSTO_API_BASE_URL'])) {
     NostoApiRequest::$baseUrl = $_ENV['NOSTO_API_BASE_URL'];
 }

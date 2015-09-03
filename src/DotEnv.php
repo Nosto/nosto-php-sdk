@@ -39,32 +39,6 @@
 class NostoDotEnv
 {
     /**
-     * @var NostoDotEnv the runtime cache for the class instance.
-     */
-    private static $instance;
-
-    /**
-     * Constructor.
-     * Private; Singleton pattern.
-     */
-    private function __construct()
-    {
-    }
-
-    /**
-     * Getter for the singleton instance.
-     *
-     * @return NostoDotEnv the singleton instance.
-     */
-    public static function getInstance()
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
-
-    /**
      * Initializes the environment variables from ".env" if it exists.
      *
      * @param string $path the path where to find the ".env" file.

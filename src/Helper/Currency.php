@@ -38,66 +38,66 @@
  */
 class NostoHelperCurrency extends NostoHelper
 {
-	/**
-	 * Parses a Zend_Currency & Zend_Locale into a NostoCurrency object.
-	 *
-	 * REQUIRES Zend Framework (version 1) to be available.
-	 *
-	 * @param string $currencyCode the 3-letter ISO 4217 currency code.
-	 * @param Zend_Currency $zendCurrency the zend currency object.
-	 * @return NostoCurrency the parsed nosto currency object.
-	 *
-	 * @throws NostoInvalidArgumentException
-	 */
-	public function parseZendCurrencyFormat($currencyCode, Zend_Currency $zendCurrency)
-	{
-		try {
-			$format = Zend_Locale_Data::getContent($zendCurrency->getLocale(), 'currencynumber');
-			$symbols = Zend_Locale_Data::getList($zendCurrency->getLocale(), 'symbols');
-			// Remove extra part, e.g. "¤ #,##0.00; (¤ #,##0.00)" => "¤ #,##0.00".
-			if (($pos = strpos($format, ';')) !== false) {
-				$format = substr($format, 0, $pos);
-			}
-			// Check if the currency symbol is before or after the amount.
-			$symbolPosition = (strpos(trim($format), '¤') === 0)
-				? NostoCurrencySymbol::SYMBOL_POS_LEFT
-				: NostoCurrencySymbol::SYMBOL_POS_RIGHT;
-			// Remove all other characters than "0", "#", "." and ",",
-			$format = preg_replace('/[^0\#\.,]/', '', $format);
-			// Calculate the decimal precision.
-			$precision = 0;
-			if (($decimalPos = strpos($format, '.')) !== false) {
-				$precision = (strlen($format) - (strrpos($format, '.') + 1));
-			} else {
-				$decimalPos = strlen($format);
-			}
-			$decimalFormat = substr($format, $decimalPos);
-			if (($pos = strpos($decimalFormat, '#')) !== false){
-				$precision = strlen($decimalFormat) - $pos - $precision;
-			}
-			// Calculate the group length.
-			if (strrpos($format, ',') !== false) {
-				$groupLength = ($decimalPos - strrpos($format, ',') - 1);
-			} else {
-				$groupLength = strrpos($format, '.');
-			}
-			// If the symbol is missing for the current locale, use the ISO code.
-			$currencySymbol = $zendCurrency->getSymbol();
-			if (is_null($currencySymbol)) {
-				$currencySymbol = $currencyCode;
-			}
-			return new NostoCurrency(
-				new NostoCurrencyCode($currencyCode),
-				new NostoCurrencySymbol($currencySymbol, $symbolPosition),
-				new NostoCurrencyFormat(
-					$symbols['group'],
-					$groupLength,
-					$symbols['decimal'],
-					$precision
-				)
-			);
-		} catch (Zend_Exception $e) {
-			throw new NostoInvalidArgumentException($e);
-		}
-	}
+    /**
+     * Parses a Zend_Currency & Zend_Locale into a NostoCurrency object.
+     *
+     * REQUIRES Zend Framework (version 1) to be available.
+     *
+     * @param string $currencyCode the 3-letter ISO 4217 currency code.
+     * @param Zend_Currency $zendCurrency the zend currency object.
+     * @return NostoCurrency the parsed nosto currency object.
+     *
+     * @throws NostoInvalidArgumentException
+     */
+    public function parseZendCurrencyFormat($currencyCode, Zend_Currency $zendCurrency)
+    {
+        try {
+            $format = Zend_Locale_Data::getContent($zendCurrency->getLocale(), 'currencynumber');
+            $symbols = Zend_Locale_Data::getList($zendCurrency->getLocale(), 'symbols');
+            // Remove extra part, e.g. "¤ #,##0.00; (¤ #,##0.00)" => "¤ #,##0.00".
+            if (($pos = strpos($format, ';')) !== false) {
+                $format = substr($format, 0, $pos);
+            }
+            // Check if the currency symbol is before or after the amount.
+            $symbolPosition = (strpos(trim($format), '¤') === 0)
+                ? NostoCurrencySymbol::SYMBOL_POS_LEFT
+                : NostoCurrencySymbol::SYMBOL_POS_RIGHT;
+            // Remove all other characters than "0", "#", "." and ",",
+            $format = preg_replace('/[^0\#\.,]/', '', $format);
+            // Calculate the decimal precision.
+            $precision = 0;
+            if (($decimalPos = strpos($format, '.')) !== false) {
+                $precision = (strlen($format) - (strrpos($format, '.') + 1));
+            } else {
+                $decimalPos = strlen($format);
+            }
+            $decimalFormat = substr($format, $decimalPos);
+            if (($pos = strpos($decimalFormat, '#')) !== false) {
+                $precision = strlen($decimalFormat) - $pos - $precision;
+            }
+            // Calculate the group length.
+            if (strrpos($format, ',') !== false) {
+                $groupLength = ($decimalPos - strrpos($format, ',') - 1);
+            } else {
+                $groupLength = strrpos($format, '.');
+            }
+            // If the symbol is missing for the current locale, use the ISO code.
+            $currencySymbol = $zendCurrency->getSymbol();
+            if (is_null($currencySymbol)) {
+                $currencySymbol = $currencyCode;
+            }
+            return new NostoCurrency(
+                new NostoCurrencyCode($currencyCode),
+                new NostoCurrencySymbol($currencySymbol, $symbolPosition),
+                new NostoCurrencyFormat(
+                    $symbols['group'],
+                    $groupLength,
+                    $symbols['decimal'],
+                    $precision
+                )
+            );
+        } catch (Zend_Exception $e) {
+            throw new NostoInvalidArgumentException($e);
+        }
+    }
 }
