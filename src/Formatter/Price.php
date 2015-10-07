@@ -42,11 +42,19 @@ class NostoFormatterPrice extends NostoFormatter
      * Formats a NostoPrice object into a price string.
      *
      * @param NostoPrice $price the price object.
-     * @param NostoPriceFormat $format the price format.
+     * @param NostoPriceFormat|null $format the price format or null if default.
      * @return string the formatted price.
      */
-    public function format(NostoPrice $price, NostoPriceFormat $format)
+    public function format(NostoPrice $price, NostoPriceFormat $format = null)
     {
-        return number_format($price->getPrice(), $format->getDecimals(), $format->getDecimalPoint(), $format->getThousandsSeparator());
+        if (is_null($format)) {
+            $format = new NostoPriceFormat(2, '.', '');
+        }
+        return number_format(
+            $price->getPrice(),
+            $format->getDecimals(),
+            $format->getDecimalPoint(),
+            $format->getThousandsSeparator()
+        );
     }
 }

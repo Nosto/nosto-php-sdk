@@ -49,9 +49,6 @@ class NostoExportCollectionProduct extends NostoProductCollection implements Nos
         /** @var NostoFormatterPrice $priceFormatter */
         $priceFormatter = Nosto::formatter('price');
 
-        $dateFormat = new NostoDateFormat(NostoDateFormat::YMD);
-        $priceFormat = new NostoPriceFormat(2, '.', '');
-
         $array = array();
         /** @var NostoProductInterface $item */
         foreach ($this->getArrayCopy() as $item) {
@@ -60,7 +57,7 @@ class NostoExportCollectionProduct extends NostoProductCollection implements Nos
                 'product_id' => $item->getProductId(),
                 'name' => $item->getName(),
                 'image_url' => $item->getImageUrl(),
-                'price' => $priceFormatter->format($item->getPrice(), $priceFormat),
+                'price' => $priceFormatter->format($item->getPrice()),
                 'price_currency_code' => $item->getCurrency()->getCode(),
                 'availability' => $item->getAvailability()->getAvailability(),
                 'categories' => $item->getCategories(),
@@ -75,7 +72,7 @@ class NostoExportCollectionProduct extends NostoProductCollection implements Nos
                 $data['description'] = $item->getFullDescription();
             }
             if ($item->getListPrice()) {
-                $data['list_price'] = $priceFormatter->format($item->getListPrice(), $priceFormat);
+                $data['list_price'] = $priceFormatter->format($item->getListPrice());
             }
             if ($item->getBrand()) {
                 $data['brand'] = $item->getBrand();
@@ -86,7 +83,7 @@ class NostoExportCollectionProduct extends NostoProductCollection implements Nos
                 }
             }
             if ($item->getDatePublished()) {
-                $data['date_published'] = $dateFormatter->format($item->getDatePublished(), $dateFormat);
+                $data['date_published'] = $dateFormatter->format($item->getDatePublished());
             }
 
             $array[] = $data;

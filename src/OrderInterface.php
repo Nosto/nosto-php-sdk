@@ -47,6 +47,15 @@ interface NostoOrderInterface
     public function getOrderNumber();
 
     /**
+     * Returns an external order reference number.
+     * This can help identify the order in Nosto's backend, while the above
+     * order number is more of a "machine name" for the order.
+     *
+     * @return string|null the order reference or null if not used.
+     */
+    public function getExternalOrderRef();
+
+    /**
      * The date when the order was placed.
      *
      * @return NostoDate the creation date.
@@ -80,4 +89,12 @@ interface NostoOrderInterface
      * @return NostoOrderStatusInterface the model.
      */
     public function getOrderStatus();
+
+    /**
+     * Returns a list of history order status models.
+     * These are used in the order export to track the order funnel.
+     *
+     * @return NostoOrderStatusInterface[] the status models.
+     */
+    public function getOrderStatuses();
 }

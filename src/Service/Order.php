@@ -112,9 +112,6 @@ class NostoServiceOrder
         /** @var NostoFormatterPrice $priceFormatter */
         $priceFormatter = Nosto::formatter('price');
 
-        $dateFormat = new NostoDateFormat(NostoDateFormat::YMD);
-        $priceFormat = new NostoPriceFormat(2, '.', '');
-
         $data = array(
             'order_number' => $order->getOrderNumber(),
             'order_status_code' => $order->getOrderStatus()->getCode(),
@@ -124,7 +121,7 @@ class NostoServiceOrder
                 'last_name' => $order->getBuyerInfo()->getLastName(),
                 'email' => $order->getBuyerInfo()->getEmail(),
             ),
-            'created_at' => $dateFormatter->format($order->getCreatedDate(), $dateFormat),
+            'created_at' => $dateFormatter->format($order->getCreatedDate()),
             'payment_provider' => $order->getPaymentProvider(),
             'purchased_items' => array(),
         );
@@ -133,10 +130,15 @@ class NostoServiceOrder
                 'product_id' => $item->getProductId(),
                 'quantity' => (int)$item->getQuantity(),
                 'name' => $item->getName(),
-                'unit_price' => $priceFormatter->format($item->getUnitPrice(), $priceFormat),
+                'unit_price' => $priceFormatter->format($item->getUnitPrice()),
                 'price_currency_code' => $item->getCurrency()->getCode(),
             );
         }
+        // Add optional order reference if set.
+        if ($order->getExternalOrderRef()) {
+            $data['external_order_ref'] = $order->getExternalOrderRef();
+        }
+
         return json_encode($data);
     }
 }
