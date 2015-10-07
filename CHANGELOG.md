@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+### Added
+- "external_order_ref" to order tagging and API requests in order to better track orders
+- "order_statuses" to order export in order to better track orders
 
 ## [2.1.0]
 ### Added

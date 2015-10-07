@@ -52,4 +52,11 @@ interface NostoOrderStatusInterface
      * @return string the label.
      */
     public function getLabel();
+
+    /**
+     * Returns the date this order status was created.
+     *
+     * @return NostoDate|null the date or null if not set.
+     */
+    public function getCreatedAt();
 }

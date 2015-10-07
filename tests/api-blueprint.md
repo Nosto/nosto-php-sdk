@@ -206,7 +206,8 @@ Order related resources
                     "unit_price": "99.99",
                     "price_currency_code": "USD"
                 }
-            ]
+            ],
+            "external_order_ref": "145000013"
         }
 
 + Response 200 (application/json)
@@ -242,7 +243,8 @@ Order related resources
                     "unit_price": "99.99",
                     "price_currency_code": "USD"
                 }
-            ]
+            ],
+            "external_order_ref": "145000013"
         }
 
 + Response 200 (application/json)

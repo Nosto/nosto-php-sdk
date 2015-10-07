@@ -193,15 +193,12 @@ class NostoServiceProduct
         /** @var NostoFormatterPrice $priceFormatter */
         $priceFormatter = Nosto::formatter('price');
 
-        $dateFormat = new NostoDateFormat(NostoDateFormat::YMD);
-        $priceFormat = new NostoPriceFormat(2, '.', '');
-
         $data = array(
             'url' => $product->getUrl(),
             'product_id' => $product->getProductId(),
             'name' => $product->getName(),
             'image_url' => $product->getImageUrl(),
-            'price' => $priceFormatter->format($product->getPrice(), $priceFormat),
+            'price' => $priceFormatter->format($product->getPrice()),
             'price_currency_code' => $product->getCurrency()->getCode(),
             'availability' => $product->getAvailability()->getAvailability(),
             'categories' => $product->getCategories(),
@@ -216,7 +213,7 @@ class NostoServiceProduct
             $data['description'] = $product->getFullDescription();
         }
         if ($product->getListPrice()) {
-            $data['list_price'] = $priceFormatter->format($product->getListPrice(), $priceFormat);
+            $data['list_price'] = $priceFormatter->format($product->getListPrice());
         }
         if ($product->getBrand()) {
             $data['brand'] = $product->getBrand();
@@ -227,7 +224,7 @@ class NostoServiceProduct
             }
         }
         if ($product->getDatePublished()) {
-            $data['date_published'] = $dateFormatter->format($product->getDatePublished(), $dateFormat);
+            $data['date_published'] = $dateFormatter->format($product->getDatePublished());
         }
 
         if ($product->getPriceVariationId()) {

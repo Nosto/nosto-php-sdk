@@ -49,9 +49,6 @@ class NostoExportCollectionOrder extends NostoOrderCollection implements NostoEx
         /** @var NostoFormatterPrice $priceFormatter */
         $priceFormatter = Nosto::formatter('price');
 
-        $dateFormat = new NostoDateFormat(NostoDateFormat::YMD);
-        $priceFormat = new NostoPriceFormat(2, '.', '');
-
         $array = array();
         /** @var NostoOrderInterface $item */
         foreach ($this->getArrayCopy() as $item) {
@@ -59,7 +56,7 @@ class NostoExportCollectionOrder extends NostoOrderCollection implements NostoEx
                 'order_number' => $item->getOrderNumber(),
                 'order_status_code' => $item->getOrderStatus()->getCode(),
                 'order_status_label' => $item->getOrderStatus()->getLabel(),
-                'created_at' => $dateFormatter->format($item->getCreatedDate(), $dateFormat),
+                'created_at' => $dateFormatter->format($item->getCreatedDate()),
                 'buyer' => array(
                     'first_name' => $item->getBuyerInfo()->getFirstName(),
                     'last_name' => $item->getBuyerInfo()->getLastName(),
@@ -73,10 +70,34 @@ class NostoExportCollectionOrder extends NostoOrderCollection implements NostoEx
                     'product_id' => $orderItem->getProductId(),
                     'quantity' => (int)$orderItem->getQuantity(),
                     'name' => $orderItem->getName(),
-                    'unit_price' => $priceFormatter->format($orderItem->getUnitPrice(), $priceFormat),
+                    'unit_price' => $priceFormatter->format($orderItem->getUnitPrice()),
                     'price_currency_code' => $orderItem->getCurrency()->getCode(),
                 );
             }
+            // Add optional order reference if set.
+            if ($item->getExternalOrderRef()) {
+                $data['external_order_ref'] = $item->getExternalOrderRef();
+            }
+            // Add optional order status history if set.
+            if ($item->getOrderStatuses() !== array()) {
+                $dateFormat = new NostoDateFormat(NostoDateFormat::ISO_8601);
+                $statuses = array();
+                foreach ($item->getOrderStatuses() as $status) {
+                    if ($status->getCreatedAt()) {
+                        if (!isset($statuses[$status->getCode()])) {
+                            $statuses[$status->getCode()] = array();
+                        }
+                        $statuses[$status->getCode()][] = $dateFormatter->format(
+                            $status->getCreatedAt(),
+                            $dateFormat
+                        );
+                    }
+                }
+                if (count($statuses) > 0) {
+                    $data['order_statuses'] = $statuses;
+                }
+            }
+
             $array[] = $data;
         }
         return json_encode($array);
