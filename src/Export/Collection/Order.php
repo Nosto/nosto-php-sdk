@@ -57,11 +57,7 @@ class NostoExportCollectionOrder extends NostoOrderCollection implements NostoEx
                 'order_status_code' => $item->getOrderStatus()->getCode(),
                 'order_status_label' => $item->getOrderStatus()->getLabel(),
                 'created_at' => $dateFormatter->format($item->getCreatedDate()),
-                'buyer' => array(
-                    'first_name' => $item->getBuyerInfo()->getFirstName(),
-                    'last_name' => $item->getBuyerInfo()->getLastName(),
-                    'email' => $item->getBuyerInfo()->getEmail(),
-                ),
+                'buyer' => array(),
                 'payment_provider' => $item->getPaymentProvider(),
                 'purchased_items' => array(),
             );
@@ -97,9 +93,20 @@ class NostoExportCollectionOrder extends NostoOrderCollection implements NostoEx
                     $data['order_statuses'] = $statuses;
                 }
             }
+            // Add optional buyer info.
+            if ($item->getBuyerInfo()->getFirstName()) {
+                $data['buyer']['first_name'] = $item->getBuyerInfo()->getFirstName();
+            }
+            if ($item->getBuyerInfo()->getLastName()) {
+                $data['buyer']['last_name'] = $item->getBuyerInfo()->getLastName();
+            }
+            if ($item->getBuyerInfo()->getEmail()) {
+                $data['buyer']['email'] = $item->getBuyerInfo()->getEmail();
+            }
 
             $array[] = $data;
         }
+
         return json_encode($array);
     }
 }
