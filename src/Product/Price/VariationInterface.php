@@ -73,4 +73,82 @@ interface NostoProductPriceVariationInterface
      * @return NostoProductAvailability the availability.
      */
     public function getAvailability();
+
+    /**
+     * Returns the absolute url to the product page in the shop frontend.
+     *
+     * @return string the url.
+     */
+    public function getUrl();
+
+    /**
+     * Returns the name of the product.
+     *
+     * @return string the name.
+     */
+    public function getName();
+
+    /**
+     * Returns the absolute url the one of the product images in the shop frontend.
+     *
+     * @return string the url.
+     */
+    public function getImageUrl();
+
+    /**
+     * Returns the absolute url to one of the product image thumbnails in the shop frontend.
+     *
+     * @return string the url.
+     */
+    public function getThumbUrl();
+
+    /**
+     * Returns the tags for the product.
+     *
+     * @return array the tags array, e.g. array('tag1' => array("winter", "shoe")).
+     */
+    public function getTags();
+
+    /**
+     * Returns the categories the product is located in.
+     *
+     * @return array list of category strings, e.g. array("/shoes/winter", "shoes/boots").
+     */
+    public function getCategories();
+
+    /**
+     * Returns the product short description.
+     *
+     * @return string the short description.
+     */
+    public function getShortDescription();
+
+    /**
+     * Returns the product description.
+     *
+     * @return string the description.
+     */
+    public function getDescription();
+
+    /**
+     * Returns the full product description,
+     * i.e. both the "short" and "normal" descriptions concatenated.
+     *
+     * @return string the full descriptions.
+     */
+    public function getFullDescription();
+
+    /**
+     * Returns the product brand name.
+     *
+     * @return string the brand name.
+     */
+    public function getBrand();
+
+    /**
+     * Returns the product publication date in the shop.
+     *
+     * @return NostoDate the date.
+     */
+    public function getDatePublished();
 }

@@ -79,7 +79,9 @@ class NostoServiceProduct
      */
     public function upsert()
     {
+
         $request = $this->initApiRequest();
+
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPSERT);
         $response = $request->post($this->getCollectionAsJson());
         if ($response->getCode() !== 200) {
@@ -181,6 +183,22 @@ class NostoServiceProduct
      *     'tag2' => array('Foldable'),
      *     'tag3' => array('Brown', 'Black', 'Orange'),
      *     'date_published' => '2011-12-31'
+     *     'variations' => array(
+     *         array(
+     *             'variation_id' => 'USD',
+     *             'price_currency_code' => 'USD',
+     *             'price' => '1436.22',
+     *             'list_price' => '1470.17',
+     *             'availability' => 'InStock'
+     *         ),
+     *         array(
+     *             'variation_id' => 'GBP',
+     *             'price_currency_code' => 'GBP',
+     *             'price' => '927.81',
+     *             'list_price' => '949.80',
+     *             'availability' => 'InStock'
+     *         )
+     *     )
      * )
      *
      * @param NostoProductInterface $product the object.
@@ -229,6 +247,59 @@ class NostoServiceProduct
 
         if ($product->getPriceVariationId()) {
             $data['variation_id'] = $product->getPriceVariationId();
+        }
+        if (count($product->getPriceVariations()) > 0) {
+            $data['variations'] = array();
+            foreach ($product->getPriceVariations() as $priceVariation) {
+
+                $singleVariation = array(
+                    'variation_id' => $priceVariation->getId()->getId(),
+                    'price_currency_code' => $priceVariation->getCurrency()->getCode(),
+                    'price' => $priceFormatter->format($priceVariation->getPrice()),
+                    'list_price' => $priceFormatter->format($priceVariation->getListPrice()),
+                    'availability' => $product->getAvailability()->getAvailability()
+                );
+                if (!empty($priceVariation->getBrand())) {
+                    $singleVariation['brand'] = $priceVariation->getBrand();
+                }
+                if (!empty($priceVariation->getCategories())) {
+                    $singleVariation['categories'] = $priceVariation->getCategories();
+                }
+                if (!empty($priceVariation->getName())) {
+                    $singleVariation['name'] = $priceVariation->getName();
+                }
+                if (!empty($priceVariation->getImageUrl())) {
+                    $singleVariation['imageUrl'] = $priceVariation->getImageUrl();
+                }
+                if (!empty($priceVariation->getUrl())) {
+                    $singleVariation['url'] = $priceVariation->getUrl();
+                }
+                if (!empty($priceVariation->getThumbUrl())) {
+                    $singleVariation['thumbUrl'] = $priceVariation->getThumbUrl();
+                }
+                if (!empty($priceVariation->getListPrice())) {
+                    $singleVariation['listPrice'] = $priceFormatter->format($priceVariation->getListPrice());
+                }
+                if (!empty($priceVariation->getShortDescription())) {
+                    $singleVariation['shortDescription'] = $priceVariation->getShortDescription();
+                }
+                if (!empty($priceVariation->getDescription())) {
+                    $singleVariation['description'] = $priceVariation->getDescription();
+                }
+                if (!empty($priceVariation->getDatePublished())) {
+                    $singleVariation['datePublished'] = $dateFormatter->format($priceVariation->get());
+                }
+
+                if (count($priceVariation->getTags()) > 0) {
+                    $tagData = array();
+                    foreach ($priceVariation->getTags() as $tagType => $variationTags) {
+                        if (is_array($variationTags) && count($variationTags) > 0) {
+                            $singleVariation['tags'][$tagType] = $variationTags;
+                        }
+                    }
+                }
+                $data['variations'][] = $singleVariation;
+            }
         }
 
         return $data;
