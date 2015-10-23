@@ -34,17 +34,36 @@
  */
 
 /**
- * Product collection for historical data exports.
- * Supports only items implementing "NostoProductInterface".
+ * Category DTO (Data Transfer Object).
  */
-class NostoExportCollectionProduct extends NostoProductCollection implements NostoExportCollectionInterface
+class NostoCategory implements NostoCategoryInterface
 {
+    /**
+     * @var string the category path, e.g. "/Outdoor/Boats/Canoes",
+     */
+    private $path;
+
     /**
      * @inheritdoc
      */
-    public function getJson()
+    public function getPath()
     {
-        $serializer = new NostoProductCollectionSerializerJson();
-        return $serializer->serialize($this);
+        return $this->path;
+    }
+
+    /**
+     * Sets the category path.
+     *
+     * @param string $path the new path, e.g. "/Outdoor/Boats/Canoes".
+     *
+     * @throws NostoInvalidArgumentException
+     */
+    public function setPath($path)
+    {
+        if (!is_string($path) || empty($path)) {
+            throw new NostoInvalidArgumentException(sprintf('%s.path must be a non-empty string value.', __CLASS__));
+        }
+
+        $this->path = $path;
     }
 }

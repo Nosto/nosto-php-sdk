@@ -34,17 +34,15 @@
  */
 
 /**
- * Product collection for historical data exports.
- * Supports only items implementing "NostoProductInterface".
+ * Interface for the meta data of a category.
+ * This is used when making product re-crawl API requests and product history exports to Nosto.
  */
-class NostoExportCollectionProduct extends NostoProductCollection implements NostoExportCollectionInterface
+interface NostoCategoryInterface
 {
     /**
-     * @inheritdoc
+     * Returns the category path including parent categories, e.g. "/Outdoor/Boats/Canoes".
+     *
+     * @return string the category path.
      */
-    public function getJson()
-    {
-        $serializer = new NostoProductCollectionSerializerJson();
-        return $serializer->serialize($this);
-    }
+    public function getPath();
 }

@@ -33,6 +33,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+require_once(dirname(__FILE__).'/src/CategoryInterface.php');
 require_once(dirname(__FILE__).'/src/OrderInterface.php');
 require_once(dirname(__FILE__).'/src/ProductInterface.php');
 require_once(dirname(__FILE__).'/src/Account/MetaInterface.php');
@@ -48,6 +49,7 @@ require_once(dirname(__FILE__).'/src/Order/StatusInterface.php');
 require_once(dirname(__FILE__).'/src/Product/Price/VariationInterface.php');
 
 require_once(dirname(__FILE__).'/src/Account.php');
+require_once(dirname(__FILE__).'/src/Category.php');
 require_once(dirname(__FILE__).'/src/Cipher.php');
 require_once(dirname(__FILE__).'/src/Collection.php');
 require_once(dirname(__FILE__).'/src/Currency.php');
@@ -60,6 +62,7 @@ require_once(dirname(__FILE__).'/src/Helper.php');
 require_once(dirname(__FILE__).'/src/Message.php');
 require_once(dirname(__FILE__).'/src/Nosto.php');
 require_once(dirname(__FILE__).'/src/Price.php');
+require_once(dirname(__FILE__).'/src/Product.php');
 
 require_once(dirname(__FILE__).'/src/Http/Request.php');
 require_once(dirname(__FILE__).'/src/Api/Request.php');
@@ -91,6 +94,8 @@ require_once(dirname(__FILE__).'/src/Oauth/Client.php');
 require_once(dirname(__FILE__).'/src/Oauth/Token.php');
 require_once(dirname(__FILE__).'/src/Price/Format.php');
 require_once(dirname(__FILE__).'/src/Price/Variation.php');
+require_once(dirname(__FILE__).'/src/Product/Collection/Serializer/Json.php');
+require_once(dirname(__FILE__).'/src/Product/Serializer/Array.php');
 require_once(dirname(__FILE__).'/src/Product/Availability.php');
 require_once(dirname(__FILE__).'/src/Service/Currency/Exchange/Rate.php');
 require_once(dirname(__FILE__).'/src/Service/Account.php');

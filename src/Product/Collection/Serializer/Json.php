@@ -34,17 +34,25 @@
  */
 
 /**
- * Product collection for historical data exports.
- * Supports only items implementing "NostoProductInterface".
+ * Product collection JSON serializer.
  */
-class NostoExportCollectionProduct extends NostoProductCollection implements NostoExportCollectionInterface
+class NostoProductCollectionSerializerJson
 {
     /**
-     * @inheritdoc
+     * Serializes the product collection into JSON.
+     *
+     * @param NostoProductCollection $collection the collection to serialize.
+     * @return string the JSON.
      */
-    public function getJson()
+    public function serialize(NostoProductCollection $collection)
     {
-        $serializer = new NostoProductCollectionSerializerJson();
-        return $serializer->serialize($this);
+        $data = array();
+
+        $productSerializer = new NostoProductSerializerArray();
+        foreach ($collection->getArrayCopy() as $product) {
+            $data[] = $productSerializer->serialize($product);
+        }
+
+        return json_encode($data);
     }
 }

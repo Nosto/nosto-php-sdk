@@ -161,80 +161,6 @@ class NostoServiceProduct
     }
 
     /**
-     * Converts the product object into an array and returns it.
-     *
-     * Example:
-     *
-     * array(
-     *     'url' => 'http://www.example.com/product/CANOE123',
-     *     'product_id' => 'CANOE123',
-     *     'name' => 'ACME Foldable Canoe',
-     *     'image_url' => 'http://www.example.com/product/images/CANOE123.jpg',
-     *     'price' => '1269.00',
-     *     'price_currency_code' => 'EUR',
-     *     'availability' => 'InStock',
-     *     'categories' => array('/Outdoor/Boats/Canoes', '/Sales/Boats'),
-     *     'description' => 'This foldable canoe is easy to travel with.',
-     *     'list_price' => '1299.00',
-     *     'brand' => 'ACME',
-     *     'tag1' => array('Men'),
-     *     'tag2' => array('Foldable'),
-     *     'tag3' => array('Brown', 'Black', 'Orange'),
-     *     'date_published' => '2011-12-31'
-     * )
-     *
-     * @param NostoProductInterface $product the object.
-     * @return array the newly created array.
-     */
-    protected function getProductAsArray(NostoProductInterface $product)
-    {
-        /** @var NostoFormatterDate $dateFormatter */
-        $dateFormatter = Nosto::formatter('date');
-        /** @var NostoFormatterPrice $priceFormatter */
-        $priceFormatter = Nosto::formatter('price');
-
-        $data = array(
-            'url' => $product->getUrl(),
-            'product_id' => $product->getProductId(),
-            'name' => $product->getName(),
-            'image_url' => $product->getImageUrl(),
-            'price' => $priceFormatter->format($product->getPrice()),
-            'price_currency_code' => $product->getCurrency()->getCode(),
-            'availability' => $product->getAvailability()->getAvailability(),
-            'categories' => $product->getCategories(),
-        );
-
-        // Optional properties.
-
-        if ($product->getThumbUrl()) {
-            $data['thumb_url'] = $product->getThumbUrl();
-        }
-        if ($product->getFullDescription()) {
-            $data['description'] = $product->getFullDescription();
-        }
-        if ($product->getListPrice()) {
-            $data['list_price'] = $priceFormatter->format($product->getListPrice());
-        }
-        if ($product->getBrand()) {
-            $data['brand'] = $product->getBrand();
-        }
-        foreach ($product->getTags() as $type => $tags) {
-            if (is_array($tags) && count($tags) > 0) {
-                $data[$type] = $tags;
-            }
-        }
-        if ($product->getDatePublished()) {
-            $data['date_published'] = $dateFormatter->format($product->getDatePublished());
-        }
-
-        if ($product->getPriceVariationId()) {
-            $data['variation_id'] = $product->getPriceVariationId();
-        }
-
-        return $data;
-    }
-
-    /**
      * Returns the whole collection in JSON format.
      *
      * @return string the json.
@@ -242,15 +168,8 @@ class NostoServiceProduct
      */
     protected function getCollectionAsJson()
     {
-        $data = array();
-        foreach ($this->collection->getArrayCopy() as $item) {
-            /** @var NostoProductInterface $item */
-            $data[] = $this->getProductAsArray($item);
-        }
-        if (empty($data)) {
-            throw new NostoException('No products found in collection.');
-        }
-        return json_encode($data);
+        $serializer = new NostoProductCollectionSerializerJson();
+        return $serializer->serialize($this->collection);
     }
 
     /**
