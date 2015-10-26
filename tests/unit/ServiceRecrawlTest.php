@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../_support/NostoProduct.php');
+require_once(dirname(__FILE__) . '/../_support/NostoProductMock.php');
 
 class ServiceRecrawlTest extends \Codeception\TestCase\Test
 {
@@ -46,7 +46,7 @@ class ServiceRecrawlTest extends \Codeception\TestCase\Test
 	 */
 	public function testProductReCrawl()
     {
-        $this->service->addProduct(new NostoProduct());
+        $this->service->addProduct(new NostoProductMock());
         $result = $this->service->send();
 
 		$this->specify('successful product re-crawl', function() use ($result) {
@@ -70,7 +70,7 @@ class ServiceRecrawlTest extends \Codeception\TestCase\Test
     {
         $this->setExpectedException('NostoException');
         $service = new NostoServiceRecrawl(new NostoAccount('platform-00000000'));
-        $service->addProduct(new NostoProduct());
+        $service->addProduct(new NostoProductMock());
         $service->send();
     }
 
@@ -82,7 +82,7 @@ class ServiceRecrawlTest extends \Codeception\TestCase\Test
         \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
-        $this->service->addProduct(new NostoProduct());
+        $this->service->addProduct(new NostoProductMock());
         $this->service->send();
     }
 }

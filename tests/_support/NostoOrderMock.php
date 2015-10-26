@@ -1,11 +1,15 @@
 <?php
 
-class NostoOrder implements NostoOrderInterface
+class NostoOrderMock implements NostoOrderInterface
 {
 	public function getOrderNumber()
 	{
 		return 1;
 	}
+    public function getExternalOrderRef()
+    {
+        return '#0001';
+    }
 	public function getCreatedDate()
 	{
 		return new NostoDate(strtotime('2014-12-12'));
@@ -16,14 +20,18 @@ class NostoOrder implements NostoOrderInterface
 	}
 	public function getBuyerInfo()
 	{
-		return new NostoOrderBuyer();
+		return new NostoOrderBuyerMock();
 	}
 	public function getPurchasedItems()
 	{
-		return array(new NostoOrderPurchasedItem());
+		return array(new NostoOrderPurchasedItemMock());
 	}
 	public function getOrderStatus()
 	{
-		return new NostoOrderStatus();
+		return new NostoOrderStatusMock();
 	}
+    public function getOrderStatuses()
+    {
+        return array();
+    }
 }
