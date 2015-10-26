@@ -1,6 +1,6 @@
 <?php
 
-class NostoOrderPurchasedItem implements NostoOrderItemInterface
+class NostoOrderPurchasedItemMock implements NostoOrderItemInterface
 {
 	public function getProductId()
 	{

@@ -180,7 +180,24 @@ class NostoServiceProduct
      *     'tag1' => array('Men'),
      *     'tag2' => array('Foldable'),
      *     'tag3' => array('Brown', 'Black', 'Orange'),
-     *     'date_published' => '2011-12-31'
+     *     'date_published' => '2011-12-31',
+     *     'variation_id' => 'EUR',
+     *     'variations' => array(
+     *         array(
+     *             'variation_id' => 'USD',
+     *             'price_currency_code' => 'USD',
+     *             'price' => '1436.22',
+     *             'list_price' => '1470.17',
+     *             'availability' => 'InStock'
+     *         ),
+     *         array(
+     *             'variation_id' => 'GBP',
+     *             'price_currency_code' => 'GBP',
+     *             'price' => '927.81',
+     *             'list_price' => '949.80',
+     *             'availability' => 'InStock'
+     *         )
+     *     )
      * )
      *
      * @param NostoProductInterface $product the object.
@@ -209,8 +226,8 @@ class NostoServiceProduct
         if ($product->getThumbUrl()) {
             $data['thumb_url'] = $product->getThumbUrl();
         }
-        if ($product->getFullDescription()) {
-            $data['description'] = $product->getFullDescription();
+        if ($product->getDescription()) {
+            $data['description'] = $product->getDescription();
         }
         if ($product->getListPrice()) {
             $data['list_price'] = $priceFormatter->format($product->getListPrice());
@@ -226,9 +243,58 @@ class NostoServiceProduct
         if ($product->getDatePublished()) {
             $data['date_published'] = $dateFormatter->format($product->getDatePublished());
         }
+        if ($product->getVariationId()) {
+            $data['variation_id'] = $product->getVariationId();
+        }
+        if (count($product->getVariations()) > 0) {
+            $data['variations'] = array();
+            foreach ($product->getVariations() as $variation) {
+                $variationData = array();
 
-        if ($product->getPriceVariationId()) {
-            $data['variation_id'] = $product->getPriceVariationId();
+                if ($variation->getUrl()) {
+                    $variationData['url'] = $variation->getUrl();
+                }
+                if ($variation->getName()) {
+                    $variationData['name'] = $variation->getName();
+                }
+                if ($variation->getImageUrl()) {
+                    $variationData['image_url'] = $variation->getImageUrl();
+                }
+                if ($variation->getThumbUrl()) {
+                    $variationData['thumb_url'] = $variation->getThumbUrl();
+                }
+                if ($variation->getPrice()) {
+                    $variationData['price'] = $priceFormatter->format($variation->getPrice());
+                }
+                if ($variation->getCurrency()) {
+                    $variationData['price_currency_code'] = $variation->getCurrency()->getCode();
+                }
+                if ($variation->getAvailability()) {
+                    $variationData['availability'] = $variation->getAvailability()->getAvailability();
+                }
+                if ($variation->getCategories()) {
+                    $variationData['categories'] = $variation->getCategories();
+                }
+                if ($variation->getDescription()) {
+                    $variationData['description'] = $variation->getDescription();
+                }
+                if ($variation->getListPrice()) {
+                    $variationData['list_price'] = $priceFormatter->format($variation->getListPrice());
+                }
+                if ($variation->getBrand()) {
+                    $variationData['brand'] = $variation->getBrand();
+                }
+                foreach ($variation->getTags() as $type => $tags) {
+                    if (is_array($tags) && count($tags) > 0) {
+                        $variationData[$type] = $tags;
+                    }
+                }
+                if ($variation->getDatePublished()) {
+                    $variationData['date_published'] = $dateFormatter->format($variation->getDatePublished());
+                }
+
+                $data['variations'][$variation->getVariationId()] = $variationData;
+            }
         }
 
         return $data;
@@ -242,6 +308,7 @@ class NostoServiceProduct
      */
     protected function getCollectionAsJson()
     {
+        // todo: use the collection JSON serializer when it's available in develop
         $data = array();
         foreach ($this->collection->getArrayCopy() as $item) {
             /** @var NostoProductInterface $item */

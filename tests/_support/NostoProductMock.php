@@ -1,6 +1,8 @@
 <?php
 
-class NostoProduct implements NostoProductInterface
+require_once 'NostoProductVariationMock.php';
+
+class NostoProductMock implements NostoProductInterface
 {
 	public function getUrl()
 	{
@@ -34,11 +36,6 @@ class NostoProduct implements NostoProductInterface
 	{
 		return new NostoCurrencyCode('USD');
 	}
-    public function getPriceVariationId()
-    {
-        $variation = new NostoPriceVariation('USD');
-        return $variation->getId();
-    }
     public function getAvailability()
 	{
 		return new NostoProductAvailability('InStock');
@@ -54,18 +51,10 @@ class NostoProduct implements NostoProductInterface
 	{
 		return array('/a/b', '/a/b/c');
 	}
-    public function getShortDescription()
-    {
-        return 'Lorem ipsum dolor sit amet';
-    }
 	public function getDescription()
 	{
 		return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris imperdiet ligula eu facilisis dignissim.';
 	}
-    public function getFullDescription()
-    {
-        return $this->getShortDescription().' '.$this->getDescription();
-    }
 	public function getBrand()
 	{
 		return 'Super Brand';
@@ -74,10 +63,14 @@ class NostoProduct implements NostoProductInterface
 	{
 		return new NostoDate(strtotime('2013-01-05'));
 	}
-    public function getPriceVariations()
+    public function getVariationId()
+    {
+        return 'USD';
+    }
+    public function getVariations()
     {
         return array(
-            new NostoTestPriceVariation()
+            new NostoProductVariationMock()
         );
     }
 }

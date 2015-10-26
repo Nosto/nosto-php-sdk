@@ -45,7 +45,7 @@ require_once(dirname(__FILE__).'/src/Oauth/Client/MetaInterface.php');
 require_once(dirname(__FILE__).'/src/Order/BuyerInterface.php');
 require_once(dirname(__FILE__).'/src/Order/ItemInterface.php');
 require_once(dirname(__FILE__).'/src/Order/StatusInterface.php');
-require_once(dirname(__FILE__).'/src/Product/Price/VariationInterface.php');
+require_once(dirname(__FILE__).'/src/Product/VariationInterface.php');
 
 require_once(dirname(__FILE__).'/src/Account.php');
 require_once(dirname(__FILE__).'/src/Cipher.php');
@@ -60,6 +60,7 @@ require_once(dirname(__FILE__).'/src/Helper.php');
 require_once(dirname(__FILE__).'/src/Message.php');
 require_once(dirname(__FILE__).'/src/Nosto.php');
 require_once(dirname(__FILE__).'/src/Price.php');
+require_once(dirname(__FILE__).'/src/Uri.php');
 
 require_once(dirname(__FILE__).'/src/Http/Request.php');
 require_once(dirname(__FILE__).'/src/Api/Request.php');
@@ -90,7 +91,6 @@ require_once(dirname(__FILE__).'/src/Language/Code.php');
 require_once(dirname(__FILE__).'/src/Oauth/Client.php');
 require_once(dirname(__FILE__).'/src/Oauth/Token.php');
 require_once(dirname(__FILE__).'/src/Price/Format.php');
-require_once(dirname(__FILE__).'/src/Price/Variation.php');
 require_once(dirname(__FILE__).'/src/Product/Availability.php');
 require_once(dirname(__FILE__).'/src/Service/Currency/Exchange/Rate.php');
 require_once(dirname(__FILE__).'/src/Service/Account.php');

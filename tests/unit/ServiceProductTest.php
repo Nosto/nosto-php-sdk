@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../_support/NostoProduct.php');
+require_once(dirname(__FILE__) . '/../_support/NostoProductMock.php');
 
 class ServiceProductTest extends \Codeception\TestCase\Test
 {
@@ -48,7 +48,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
 	{
 		$this->setExpectedException('NostoException');
 		$service = new NostoServiceProduct(new NostoAccount('platform-00000000'));
-		$service->addProduct(new NostoProduct());
+		$service->addProduct(new NostoProductMock());
 		$service->upsert();
 	}
 
@@ -66,7 +66,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
 	 */
 	public function testProductUpsert()
 	{
-        $this->service->addProduct(new NostoProduct());
+        $this->service->addProduct(new NostoProductMock());
 		$result = $this->service->upsert();
 
 		$this->specify('successful product upsert', function() use ($result) {
@@ -81,7 +81,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
     {
         $this->setExpectedException('NostoException');
         $service = new NostoServiceProduct(new NostoAccount('platform-00000000'));
-        $service->addProduct(new NostoProduct());
+        $service->addProduct(new NostoProductMock());
         $service->update();
     }
 
@@ -99,7 +99,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
      */
     public function testProductUpdate()
     {
-        $this->service->addProduct(new NostoProduct());
+        $this->service->addProduct(new NostoProductMock());
         $result = $this->service->update();
 
         $this->specify('successful product update', function() use ($result) {
@@ -114,7 +114,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
     {
         $this->setExpectedException('NostoException');
         $service = new NostoServiceProduct(new NostoAccount('platform-00000000'));
-        $service->addProduct(new NostoProduct());
+        $service->addProduct(new NostoProductMock());
         $service->create();
     }
 
@@ -132,7 +132,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
      */
     public function testProductCreate()
     {
-        $this->service->addProduct(new NostoProduct());
+        $this->service->addProduct(new NostoProductMock());
         $result = $this->service->create();
 
         $this->specify('successful product create', function() use ($result) {
@@ -147,7 +147,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
     {
         $this->setExpectedException('NostoException');
         $service = new NostoServiceProduct(new NostoAccount('platform-00000000'));
-        $service->addProduct(new NostoProduct());
+        $service->addProduct(new NostoProductMock());
         $service->delete();
     }
 
@@ -165,7 +165,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
      */
     public function testProductDelete()
     {
-        $this->service->addProduct(new NostoProduct());
+        $this->service->addProduct(new NostoProductMock());
         $result = $this->service->delete();
 
         $this->specify('successful product delete', function() use ($result) {
@@ -181,7 +181,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
         \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
-        $this->service->addProduct(new NostoProduct());
+        $this->service->addProduct(new NostoProductMock());
         $this->service->upsert();
     }
 
@@ -193,7 +193,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
         \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
-        $this->service->addProduct(new NostoProduct());
+        $this->service->addProduct(new NostoProductMock());
         $this->service->create();
     }
 
@@ -205,7 +205,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
         \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
-        $this->service->addProduct(new NostoProduct());
+        $this->service->addProduct(new NostoProductMock());
         $this->service->update();
     }
 
@@ -217,7 +217,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
         \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
-        $this->service->addProduct(new NostoProduct());
+        $this->service->addProduct(new NostoProductMock());
         $this->service->delete();
     }
 }
