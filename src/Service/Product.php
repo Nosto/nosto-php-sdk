@@ -249,6 +249,8 @@ class NostoServiceProduct
         if (count($product->getVariations()) > 0) {
             $data['variations'] = array();
             foreach ($product->getVariations() as $variation) {
+                $variationData = array();
+
                 if ($variation->getUrl()) {
                     $variationData['url'] = $variation->getUrl();
                 }
@@ -267,8 +269,8 @@ class NostoServiceProduct
                 if ($variation->getCurrency()) {
                     $variationData['price_currency_code'] = $variation->getCurrency()->getCode();
                 }
-                if ($product->getAvailability()) {
-                    $variationData['availability'] = $product->getAvailability()->getAvailability();
+                if ($variation->getAvailability()) {
+                    $variationData['availability'] = $variation->getAvailability()->getAvailability();
                 }
                 if ($variation->getCategories()) {
                     $variationData['categories'] = $variation->getCategories();
