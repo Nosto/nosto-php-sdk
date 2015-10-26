@@ -61,13 +61,6 @@ interface NostoProductPriceVariationInterface
     public function getPrice();
 
     /**
-     * Returns the list price of the variation without discounts but incl taxes.
-     *
-     * @return NostoPrice the price.
-     */
-    public function getListPrice();
-
-    /**
      * Returns the availability of the price variation, i.e. if it is in stock or not.
      *
      * @return NostoProductAvailability the availability.
@@ -75,80 +68,82 @@ interface NostoProductPriceVariationInterface
     public function getAvailability();
 
     /**
-     * Returns the absolute url to the product page in the shop frontend.
+     * Returns the absolute url to the product page of the price variation in the shop frontend.
+     * This value is optional.
      *
-     * @return string the url.
+     * @return string|null the url or null if not used.
      */
     public function getUrl();
 
     /**
-     * Returns the name of the product.
+     * Returns the name of the product price variation.
+     * This value is optional.
      *
-     * @return string the name.
+     * @return string|null the name or null if not used.
      */
     public function getName();
 
     /**
-     * Returns the absolute url the one of the product images in the shop frontend.
+     * Returns the list price of the variation without discounts but incl taxes.
+     * This value is optional.
      *
-     * @return string the url.
+     * @return NostoPrice|null the price or null if not used.
+     */
+    public function getListPrice();
+
+    /**
+     * Returns the absolute url the one of the product price variation images in the shop frontend.
+     * This value is optional.
+     *
+     * @return string|null the url or null if not used.
      */
     public function getImageUrl();
 
     /**
-     * Returns the absolute url to one of the product image thumbnails in the shop frontend.
+     * Returns the absolute url to one of the product price variation image thumbnails in the shop frontend.
+     * This value is optional.
      *
-     * @return string the url.
+     * @return string|null the url or null if not used.
      */
     public function getThumbUrl();
 
     /**
-     * Returns the tags for the product.
+     * Returns the tags for the product price variation.
+     * This value is optional.
      *
-     * @return array the tags array, e.g. array('tag1' => array("winter", "shoe")).
+     * @return array the tags array, e.g. array('tag1' => array("winter", "shoe")) or empty array if not used.
      */
     public function getTags();
 
     /**
-     * Returns the categories the product is located in.
+     * Returns the categories the product price variation is located in.
+     * This value is optional.
      *
-     * @return array list of category strings, e.g. array("/shoes/winter", "shoes/boots").
+     * @return array list of category strings, e.g. array("/shoes/winter", "/shoes/boots") or empty array if not used.
      */
     public function getCategories();
 
     /**
-     * Returns the product short description.
+     * Returns the product price variation description.
+     * This value is optional.
      *
-     * @return string the short description.
-     */
-    public function getShortDescription();
-
-    /**
-     * Returns the product description.
-     *
-     * @return string the description.
+     * @return string|null the description or null if not used.
      */
     public function getDescription();
 
     /**
-     * Returns the full product description,
-     * i.e. both the "short" and "normal" descriptions concatenated.
+     * Returns the product price variation brand name.
+     * This value is optional.
      *
-     * @return string the full descriptions.
-     */
-    public function getFullDescription();
-
-    /**
-     * Returns the product brand name.
-     *
-     * @return string the brand name.
+     * @return string|null the brand name or null if not used.
      */
     public function getBrand();
 
     /**
-     * Returns the product publication date in the shop.
+     * Returns the product price variation publication date in the shop.
+     * This value is optional.
      *
-     * @return NostoDate the date.
+     * @return NostoDate|null the date or null if not used.
      */
     public function getDatePublished();
 }
