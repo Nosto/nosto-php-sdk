@@ -47,7 +47,7 @@ interface NostoProductPriceVariationInterface
     public function getId();
 
     /**
-     * Returns the currency code (SIO 4217) for the price variation.
+     * Returns the currency code (ISO 4217) for the price variation.
      *
      * @return NostoCurrencyCode the price currency code.
      */
