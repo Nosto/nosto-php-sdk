@@ -180,7 +180,8 @@ class NostoServiceProduct
      *     'tag1' => array('Men'),
      *     'tag2' => array('Foldable'),
      *     'tag3' => array('Brown', 'Black', 'Orange'),
-     *     'date_published' => '2011-12-31'
+     *     'date_published' => '2011-12-31',
+     *     'variation_id' => 'EUR',
      *     'variations' => array(
      *         array(
      *             'variation_id' => 'USD',
@@ -225,8 +226,8 @@ class NostoServiceProduct
         if ($product->getThumbUrl()) {
             $data['thumb_url'] = $product->getThumbUrl();
         }
-        if ($product->getFullDescription()) {
-            $data['description'] = $product->getFullDescription();
+        if ($product->getDescription()) {
+            $data['description'] = $product->getDescription();
         }
         if ($product->getListPrice()) {
             $data['list_price'] = $priceFormatter->format($product->getListPrice());
@@ -242,53 +243,58 @@ class NostoServiceProduct
         if ($product->getDatePublished()) {
             $data['date_published'] = $dateFormatter->format($product->getDatePublished());
         }
-
-        if ($product->getPriceVariationId()) {
-            $data['variation_id'] = $product->getPriceVariationId();
+        if ($product->getVariationId()) {
+            $data['variation_id'] = $product->getVariationId();
         }
-        if (count($product->getPriceVariations()) > 0) {
+        if (count($product->getVariations()) > 0) {
             $data['variations'] = array();
-            foreach ($product->getPriceVariations() as $priceVariation) {
+            foreach ($product->getVariations() as $variation) {
                 $variationData = array(
-                    'variation_id' => $priceVariation->getId()->getId(),
-                    'price_currency_code' => $priceVariation->getCurrency()->getCode(),
-                    'price' => $priceFormatter->format($priceVariation->getPrice()),
-                    'availability' => $product->getAvailability()->getAvailability()
+                    'variation_id' => $variation->getVariationId(),
                 );
 
                 // Optional variation properties.
 
-                if ($priceVariation->getUrl()) {
-                    $variationData['url'] = $priceVariation->getUrl();
+                if ($variation->getUrl()) {
+                    $variationData['url'] = $variation->getUrl();
                 }
-                if ($priceVariation->getName()) {
-                    $variationData['name'] = $priceVariation->getName();
+                if ($variation->getName()) {
+                    $variationData['name'] = $variation->getName();
                 }
-                if ($priceVariation->getListPrice()) {
-                    $variationData['list_price'] = $priceFormatter->format($priceVariation->getListPrice());
+                if ($variation->getImageUrl()) {
+                    $variationData['image_url'] = $variation->getImageUrl();
                 }
-                if ($priceVariation->getImageUrl()) {
-                    $variationData['image_url'] = $priceVariation->getImageUrl();
+                if ($variation->getThumbUrl()) {
+                    $variationData['thumb_url'] = $variation->getThumbUrl();
                 }
-                if ($priceVariation->getThumbUrl()) {
-                    $variationData['thumb_url'] = $priceVariation->getThumbUrl();
+                if ($variation->getPrice()) {
+                    $variationData['price'] = $priceFormatter->format($variation->getPrice());
                 }
-                foreach ($priceVariation->getTags() as $type => $tags) {
+                if ($variation->getCurrency()) {
+                    $variationData['price_currency_code'] = $variation->getCurrency()->getCode();
+                }
+                if ($product->getAvailability()) {
+                    $variationData['availability'] = $product->getAvailability()->getAvailability();
+                }
+                if ($variation->getCategories()) {
+                    $variationData['categories'] = $variation->getCategories();
+                }
+                if ($variation->getDescription()) {
+                    $variationData['description'] = $variation->getDescription();
+                }
+                if ($variation->getListPrice()) {
+                    $variationData['list_price'] = $priceFormatter->format($variation->getListPrice());
+                }
+                if ($variation->getBrand()) {
+                    $variationData['brand'] = $variation->getBrand();
+                }
+                foreach ($variation->getTags() as $type => $tags) {
                     if (is_array($tags) && count($tags) > 0) {
                         $variationData[$type] = $tags;
                     }
                 }
-                if ($priceVariation->getCategories()) {
-                    $variationData['categories'] = $priceVariation->getCategories();
-                }
-                if ($priceVariation->getDescription()) {
-                    $variationData['description'] = $priceVariation->getDescription();
-                }
-                if ($priceVariation->getBrand()) {
-                    $variationData['brand'] = $priceVariation->getBrand();
-                }
-                if ($priceVariation->getDatePublished()) {
-                    $variationData['date_published'] = $dateFormatter->format($priceVariation->getDatePublished());
+                if ($variation->getDatePublished()) {
+                    $variationData['date_published'] = $dateFormatter->format($variation->getDatePublished());
                 }
 
                 $data['variations'][] = $variationData;
@@ -306,6 +312,7 @@ class NostoServiceProduct
      */
     protected function getCollectionAsJson()
     {
+        // todo: use the collection JSON serializer when it's available in develop
         $data = array();
         foreach ($this->collection->getArrayCopy() as $item) {
             /** @var NostoProductInterface $item */

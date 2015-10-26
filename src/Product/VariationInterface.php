@@ -34,20 +34,20 @@
  */
 
 /**
- * Interface for the meta data of a product price variation.
+ * Interface for the meta data of a product variation.
  * This is used in product the tagging, when making product API requests and product history exports to Nosto.
  */
-interface NostoProductPriceVariationInterface
+interface NostoProductVariationInterface
 {
     /**
-     * Returns the price variation ID.
+     * Returns the variation ID.
      *
-     * @return NostoPriceVariation the variation ID.
+     * @return string|int the variation ID.
      */
-    public function getId();
+    public function getVariationId();
 
     /**
-     * Returns the currency code (ISO 4217) for the price variation.
+     * Returns the currency code (ISO 4217) for the variation.
      *
      * @return NostoCurrencyCode the price currency code.
      */
@@ -61,14 +61,14 @@ interface NostoProductPriceVariationInterface
     public function getPrice();
 
     /**
-     * Returns the availability of the price variation, i.e. if it is in stock or not.
+     * Returns the availability of the variation, i.e. if it is in stock or not.
      *
      * @return NostoProductAvailability the availability.
      */
     public function getAvailability();
 
     /**
-     * Returns the absolute url to the product page of the price variation in the shop frontend.
+     * Returns the absolute url to the product page of the variation in the shop frontend.
      * This value is optional.
      *
      * @return string|null the url or null if not used.
@@ -76,7 +76,7 @@ interface NostoProductPriceVariationInterface
     public function getUrl();
 
     /**
-     * Returns the name of the product price variation.
+     * Returns the name of the product variation.
      * This value is optional.
      *
      * @return string|null the name or null if not used.
@@ -92,7 +92,7 @@ interface NostoProductPriceVariationInterface
     public function getListPrice();
 
     /**
-     * Returns the absolute url the one of the product price variation images in the shop frontend.
+     * Returns the absolute url the one of the product variation images in the shop frontend.
      * This value is optional.
      *
      * @return string|null the url or null if not used.
@@ -100,7 +100,7 @@ interface NostoProductPriceVariationInterface
     public function getImageUrl();
 
     /**
-     * Returns the absolute url to one of the product price variation image thumbnails in the shop frontend.
+     * Returns the absolute url to one of the product variation image thumbnails in the shop frontend.
      * This value is optional.
      *
      * @return string|null the url or null if not used.
@@ -108,7 +108,7 @@ interface NostoProductPriceVariationInterface
     public function getThumbUrl();
 
     /**
-     * Returns the tags for the product price variation.
+     * Returns the tags for the product variation.
      * This value is optional.
      *
      * @return array the tags array, e.g. array('tag1' => array("winter", "shoe")) or empty array if not used.
@@ -116,7 +116,7 @@ interface NostoProductPriceVariationInterface
     public function getTags();
 
     /**
-     * Returns the categories the product price variation is located in.
+     * Returns the categories the product variation is located in.
      * This value is optional.
      *
      * @return array list of category strings, e.g. array("/shoes/winter", "/shoes/boots") or empty array if not used.
@@ -124,7 +124,7 @@ interface NostoProductPriceVariationInterface
     public function getCategories();
 
     /**
-     * Returns the product price variation description.
+     * Returns the product variation description.
      * This value is optional.
      *
      * @return string|null the description or null if not used.
@@ -132,7 +132,7 @@ interface NostoProductPriceVariationInterface
     public function getDescription();
 
     /**
-     * Returns the product price variation brand name.
+     * Returns the product variation brand name.
      * This value is optional.
      *
      * @return string|null the brand name or null if not used.
@@ -140,7 +140,7 @@ interface NostoProductPriceVariationInterface
     public function getBrand();
 
     /**
-     * Returns the product price variation publication date in the shop.
+     * Returns the product variation publication date in the shop.
      * This value is optional.
      *
      * @return NostoDate|null the date or null if not used.
