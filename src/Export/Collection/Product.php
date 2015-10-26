@@ -85,6 +85,59 @@ class NostoExportCollectionProduct extends NostoProductCollection implements Nos
             if ($item->getDatePublished()) {
                 $data['date_published'] = $dateFormatter->format($item->getDatePublished());
             }
+            if ($item->getVariationId()) {
+                $data['variation_id'] = $item->getVariationId();
+            }
+            if (count($item->getVariations()) > 0) {
+                $data['variations'] = array();
+                foreach ($item->getVariations() as $variation) {
+                    $variationData = array();
+
+                    if ($variation->getUrl()) {
+                        $variationData['url'] = $variation->getUrl();
+                    }
+                    if ($variation->getName()) {
+                        $variationData['name'] = $variation->getName();
+                    }
+                    if ($variation->getImageUrl()) {
+                        $variationData['image_url'] = $variation->getImageUrl();
+                    }
+                    if ($variation->getThumbUrl()) {
+                        $variationData['thumb_url'] = $variation->getThumbUrl();
+                    }
+                    if ($variation->getPrice()) {
+                        $variationData['price'] = $priceFormatter->format($variation->getPrice());
+                    }
+                    if ($variation->getCurrency()) {
+                        $variationData['price_currency_code'] = $variation->getCurrency()->getCode();
+                    }
+                    if ($variation->getAvailability()) {
+                        $variationData['availability'] = $variation->getAvailability()->getAvailability();
+                    }
+                    if ($variation->getCategories()) {
+                        $variationData['categories'] = $variation->getCategories();
+                    }
+                    if ($variation->getDescription()) {
+                        $variationData['description'] = $variation->getDescription();
+                    }
+                    if ($variation->getListPrice()) {
+                        $variationData['list_price'] = $priceFormatter->format($variation->getListPrice());
+                    }
+                    if ($variation->getBrand()) {
+                        $variationData['brand'] = $variation->getBrand();
+                    }
+                    foreach ($variation->getTags() as $type => $tags) {
+                        if (is_array($tags) && count($tags) > 0) {
+                            $variationData[$type] = $tags;
+                        }
+                    }
+                    if ($variation->getDatePublished()) {
+                        $variationData['date_published'] = $dateFormatter->format($variation->getDatePublished());
+                    }
+
+                    $data['variations'][$variation->getVariationId()] = $variationData;
+                }
+            }
 
             $array[] = $data;
         }
