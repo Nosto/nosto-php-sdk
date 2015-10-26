@@ -249,12 +249,6 @@ class NostoServiceProduct
         if (count($product->getVariations()) > 0) {
             $data['variations'] = array();
             foreach ($product->getVariations() as $variation) {
-                $variationData = array(
-                    'variation_id' => $variation->getVariationId(),
-                );
-
-                // Optional variation properties.
-
                 if ($variation->getUrl()) {
                     $variationData['url'] = $variation->getUrl();
                 }
@@ -297,7 +291,7 @@ class NostoServiceProduct
                     $variationData['date_published'] = $dateFormatter->format($variation->getDatePublished());
                 }
 
-                $data['variations'][] = $variationData;
+                $data['variations'][$variation->getVariationId()] = $variationData;
             }
         }
 
