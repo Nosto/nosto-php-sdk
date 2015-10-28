@@ -61,29 +61,6 @@ interface NostoProductVariationInterface
     public function getPrice();
 
     /**
-     * Returns the availability of the variation, i.e. if it is in stock or not.
-     *
-     * @return NostoProductAvailability the availability.
-     */
-    public function getAvailability();
-
-    /**
-     * Returns the absolute url to the product page of the variation in the shop frontend.
-     * This value is optional.
-     *
-     * @return string|null the url or null if not used.
-     */
-    public function getUrl();
-
-    /**
-     * Returns the name of the product variation.
-     * This value is optional.
-     *
-     * @return string|null the name or null if not used.
-     */
-    public function getName();
-
-    /**
      * Returns the list price of the variation without discounts but incl taxes.
      * This value is optional.
      *
@@ -92,58 +69,9 @@ interface NostoProductVariationInterface
     public function getListPrice();
 
     /**
-     * Returns the absolute url the one of the product variation images in the shop frontend.
-     * This value is optional.
+     * Returns the availability of the variation, i.e. if it is in stock or not.
      *
-     * @return string|null the url or null if not used.
+     * @return NostoProductAvailability the availability.
      */
-    public function getImageUrl();
-
-    /**
-     * Returns the absolute url to one of the product variation image thumbnails in the shop frontend.
-     * This value is optional.
-     *
-     * @return string|null the url or null if not used.
-     */
-    public function getThumbUrl();
-
-    /**
-     * Returns the tags for the product variation.
-     * This value is optional.
-     *
-     * @return array the tags array, e.g. array('tag1' => array("winter", "shoe")) or empty array if not used.
-     */
-    public function getTags();
-
-    /**
-     * Returns the categories the product variation is located in.
-     * This value is optional.
-     *
-     * @return array list of category strings, e.g. array("/shoes/winter", "/shoes/boots") or empty array if not used.
-     */
-    public function getCategories();
-
-    /**
-     * Returns the product variation description.
-     * This value is optional.
-     *
-     * @return string|null the description or null if not used.
-     */
-    public function getDescription();
-
-    /**
-     * Returns the product variation brand name.
-     * This value is optional.
-     *
-     * @return string|null the brand name or null if not used.
-     */
-    public function getBrand();
-
-    /**
-     * Returns the product variation publication date in the shop.
-     * This value is optional.
-     *
-     * @return NostoDate|null the date or null if not used.
-     */
-    public function getDatePublished();
+    public function getAvailability();
 }
