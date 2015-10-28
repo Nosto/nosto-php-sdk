@@ -26,49 +26,4 @@ class NostoProductVariationMock implements NostoProductVariationInterface
     {
         return new NostoProductAvailability('InStock');
     }
-
-    public function getUrl()
-    {
-        return null;
-    }
-
-    public function getName()
-    {
-        return null;
-    }
-
-    public function getImageUrl()
-    {
-        return null;
-    }
-
-    public function getThumbUrl()
-    {
-        return null;
-    }
-
-    public function getTags()
-    {
-        return array();
-    }
-
-    public function getCategories()
-    {
-        return array();
-    }
-
-    public function getDescription()
-    {
-        return null;
-    }
-
-    public function getBrand()
-    {
-        return null;
-    }
-
-    public function getDatePublished()
-    {
-        return null;
-    }
 }
