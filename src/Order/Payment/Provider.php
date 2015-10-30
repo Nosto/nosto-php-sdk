@@ -34,46 +34,67 @@
  */
 
 /**
- * Interface for an purchased item in an order.
- * This is used by the NostoOrderInterface meta data model when sending order confirmation API requests.
- *
- * The purchased item should also be used for shipping costs, discounts or other similar data.
+ * Order payment provider DTO (Data Transfer Object).
  */
-interface NostoOrderItemInterface
+class NostoOrderPaymentProvider implements NostoOrderPaymentProviderInterface
 {
     /**
-     * The unique identifier of the purchased item.
-     * If this item is for discounts or shipping cost, the id can be 0.
-     *
-     * @return string|int
+     * @var string the payment provider name.
      */
-    public function getItemId();
+    private $name;
 
     /**
-     * The quantity of the item included in the order.
-     *
-     * @return int the quantity.
+     * @var string the payment provider version.
      */
-    public function getQuantity();
+    private $version;
 
     /**
-     * The name of the item included in the order.
-     *
-     * @return string the name.
+     * @inheritdoc
      */
-    public function getName();
+    public function getProvider()
+    {
+        return $this->name . (!is_null($this->version) ? " [{$this->version}]" : '');
+    }
 
     /**
-     * The unit price of the item included in the order.
+     * Sets the payment provider name.
      *
-     * @return NostoPrice the unit price.
+     * The name must be a non-empty string value.
+     *
+     * Usage:
+     * $provider->setName('MyPayment');
+     *
+     * @param string $name the name.
+     *
+     * @throws NostoInvalidArgumentException
      */
-    public function getUnitPrice();
+    public function setName($name)
+    {
+        if (!is_string($name) || empty($name)) {
+            throw new NostoInvalidArgumentException(sprintf('%s.name must be a non-empty string value.', __CLASS__));
+        }
+
+        $this->name = $name;
+    }
 
     /**
-     * The 3-letter ISO code (ISO 4217) for the currency the item was purchased in.
+     * Sets the payment provider version.
      *
-     * @return NostoCurrencyCode the currency ISO code.
+     * The version must be a non-empty string value.
+     *
+     * Usage:
+     * $provider->setVersion('0.1.0');
+     *
+     * @param string $version the version.
+     *
+     * @throws NostoInvalidArgumentException
      */
-    public function getCurrency();
+    public function setVersion($version)
+    {
+        if (!is_string($version) || empty($version)) {
+            throw new NostoInvalidArgumentException(sprintf('%s.version must be a non-empty string value.', __CLASS__));
+        }
+
+        $this->version = $version;
+    }
 }

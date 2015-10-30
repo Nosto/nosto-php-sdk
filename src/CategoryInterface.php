@@ -34,46 +34,15 @@
  */
 
 /**
- * Interface for an purchased item in an order.
- * This is used by the NostoOrderInterface meta data model when sending order confirmation API requests.
- *
- * The purchased item should also be used for shipping costs, discounts or other similar data.
+ * Interface for the meta data of a category.
+ * This is used when making product re-crawl API requests and product history exports to Nosto.
  */
-interface NostoOrderItemInterface
+interface NostoCategoryInterface
 {
     /**
-     * The unique identifier of the purchased item.
-     * If this item is for discounts or shipping cost, the id can be 0.
+     * Returns the category path including parent categories, e.g. "/Outdoor/Boats/Canoes".
      *
-     * @return string|int
+     * @return string the category path.
      */
-    public function getItemId();
-
-    /**
-     * The quantity of the item included in the order.
-     *
-     * @return int the quantity.
-     */
-    public function getQuantity();
-
-    /**
-     * The name of the item included in the order.
-     *
-     * @return string the name.
-     */
-    public function getName();
-
-    /**
-     * The unit price of the item included in the order.
-     *
-     * @return NostoPrice the unit price.
-     */
-    public function getUnitPrice();
-
-    /**
-     * The 3-letter ISO code (ISO 4217) for the currency the item was purchased in.
-     *
-     * @return NostoCurrencyCode the currency ISO code.
-     */
-    public function getCurrency();
+    public function getPath();
 }

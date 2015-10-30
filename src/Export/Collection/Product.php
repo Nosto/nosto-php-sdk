@@ -44,74 +44,7 @@ class NostoExportCollectionProduct extends NostoProductCollection implements Nos
      */
     public function getJson()
     {
-        /** @var NostoFormatterDate $dateFormatter */
-        $dateFormatter = Nosto::formatter('date');
-        /** @var NostoFormatterPrice $priceFormatter */
-        $priceFormatter = Nosto::formatter('price');
-
-        $array = array();
-        /** @var NostoProductInterface $item */
-        foreach ($this->getArrayCopy() as $item) {
-            $data = array(
-                'url' => $item->getUrl(),
-                'product_id' => $item->getProductId(),
-                'name' => $item->getName(),
-                'image_url' => $item->getImageUrl(),
-                'price' => $priceFormatter->format($item->getPrice()),
-                'price_currency_code' => $item->getCurrency()->getCode(),
-                'availability' => $item->getAvailability()->getAvailability(),
-                'categories' => $item->getCategories(),
-            );
-
-            // Optional properties.
-
-            if ($item->getThumbUrl()) {
-                $data['thumb_url'] = $item->getThumbUrl();
-            }
-            if ($item->getDescription()) {
-                $data['description'] = $item->getDescription();
-            }
-            if ($item->getListPrice()) {
-                $data['list_price'] = $priceFormatter->format($item->getListPrice());
-            }
-            if ($item->getBrand()) {
-                $data['brand'] = $item->getBrand();
-            }
-            foreach ($item->getTags() as $type => $tags) {
-                if (is_array($tags) && count($tags) > 0) {
-                    $data[$type] = $tags;
-                }
-            }
-            if ($item->getDatePublished()) {
-                $data['date_published'] = $dateFormatter->format($item->getDatePublished());
-            }
-            if ($item->getVariationId()) {
-                $data['variation_id'] = $item->getVariationId();
-            }
-            if (count($item->getVariations()) > 0) {
-                $data['variations'] = array();
-                foreach ($item->getVariations() as $variation) {
-                    $variationData = array();
-
-                    if ($variation->getCurrency()) {
-                        $variationData['price_currency_code'] = $variation->getCurrency()->getCode();
-                    }
-                    if ($variation->getPrice()) {
-                        $variationData['price'] = $priceFormatter->format($variation->getPrice());
-                    }
-                    if ($variation->getListPrice()) {
-                        $variationData['list_price'] = $priceFormatter->format($variation->getListPrice());
-                    }
-                    if ($variation->getAvailability()) {
-                        $variationData['availability'] = $variation->getAvailability()->getAvailability();
-                    }
-
-                    $data['variations'][$variation->getVariationId()] = $variationData;
-                }
-            }
-
-            $array[] = $data;
-        }
-        return json_encode($array);
+        $serializer = new NostoProductCollectionSerializerJson();
+        return $serializer->serialize($this);
     }
 }

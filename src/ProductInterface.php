@@ -110,9 +110,9 @@ interface NostoProductInterface
     public function getTags();
 
     /**
-     * Returns the categories the product is located in.
+     * Returns the categories the product belongs to.
      *
-     * @return array list of category strings, e.g. array("/shoes/winter", "shoes/boots").
+     * @return NostoCategoryInterface[] list of category objects.
      */
     public function getCategories();
 

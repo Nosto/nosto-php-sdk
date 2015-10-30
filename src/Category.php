@@ -34,46 +34,41 @@
  */
 
 /**
- * Interface for an purchased item in an order.
- * This is used by the NostoOrderInterface meta data model when sending order confirmation API requests.
- *
- * The purchased item should also be used for shipping costs, discounts or other similar data.
+ * Category DTO (Data Transfer Object).
  */
-interface NostoOrderItemInterface
+class NostoCategory implements NostoCategoryInterface
 {
     /**
-     * The unique identifier of the purchased item.
-     * If this item is for discounts or shipping cost, the id can be 0.
-     *
-     * @return string|int
+     * @var string the category path, e.g. "/Outdoor/Boats/Canoes",
      */
-    public function getItemId();
+    private $path;
 
     /**
-     * The quantity of the item included in the order.
-     *
-     * @return int the quantity.
+     * @inheritdoc
      */
-    public function getQuantity();
+    public function getPath()
+    {
+        return $this->path;
+    }
 
     /**
-     * The name of the item included in the order.
+     * Sets the category path.
      *
-     * @return string the name.
+     * The path must be a non-empty string including the categories parent categories separated by a "/" character.
+     *
+     * Usage:
+     * $category->setPath('/Outdoor/Boats/Canoes');
+     *
+     * @param string $path the new path, e.g. "/Outdoor/Boats/Canoes".
+     *
+     * @throws NostoInvalidArgumentException
      */
-    public function getName();
+    public function setPath($path)
+    {
+        if (!is_string($path) || empty($path)) {
+            throw new NostoInvalidArgumentException(sprintf('%s.path must be a non-empty string value.', __CLASS__));
+        }
 
-    /**
-     * The unit price of the item included in the order.
-     *
-     * @return NostoPrice the unit price.
-     */
-    public function getUnitPrice();
-
-    /**
-     * The 3-letter ISO code (ISO 4217) for the currency the item was purchased in.
-     *
-     * @return NostoCurrencyCode the currency ISO code.
-     */
-    public function getCurrency();
+        $this->path = $path;
+    }
 }

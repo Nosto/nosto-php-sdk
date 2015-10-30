@@ -6,7 +6,7 @@ class NostoOrderMock implements NostoOrderInterface
 	{
 		return 1;
 	}
-    public function getExternalOrderRef()
+    public function getExternalRef()
     {
         return '#0001';
     }
@@ -16,21 +16,37 @@ class NostoOrderMock implements NostoOrderInterface
 	}
 	public function getPaymentProvider()
 	{
-		return 'test-gateway [1.0.0]';
+        $paymentProvider = new NostoOrderPaymentProvider();
+        $paymentProvider->setName('test-gateway');
+        $paymentProvider->setVersion('1.0.0');
+        return $paymentProvider;
 	}
-	public function getBuyerInfo()
+	public function getBuyer()
 	{
-		return new NostoOrderBuyerMock();
+        $buyer = new NostoOrderBuyer();
+        $buyer->setFirstName('James');
+        $buyer->setLastName('Kirk');
+        $buyer->setEmail('james.kirk@example.com');
+        return $buyer;
 	}
-	public function getPurchasedItems()
+	public function getItems()
 	{
-		return array(new NostoOrderPurchasedItemMock());
+        $item = new NostoOrderItem();
+        $item->setItemId(1);
+        $item->setQuantity(1);
+        $item->setName('Test Product');
+        $item->setUnitPrice(new NostoPrice(99.99));
+        $item->setCurrency(new NostoCurrencyCode('USD'));
+		return array($item);
 	}
-	public function getOrderStatus()
+	public function getStatus()
 	{
-		return new NostoOrderStatusMock();
+        $status = new NostoOrderStatus();
+        $status->setCode('completed');
+        $status->setLabel('Completed');
+        return $status;
 	}
-    public function getOrderStatuses()
+    public function getHistoryStatuses()
     {
         return array();
     }
