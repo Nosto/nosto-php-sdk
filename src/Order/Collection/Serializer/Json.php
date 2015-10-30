@@ -34,9 +34,25 @@
  */
 
 /**
- * Order item DTO (Data Transfer Object).
+ * Order collection JSON serializer.
  */
-class NostoOrderItem extends NostoLineItem implements NostoOrderItemInterface
+class NostoOrderCollectionSerializerJson
 {
+    /**
+     * Serializes the order collection into JSON.
+     *
+     * @param NostoOrderCollection $collection the collection to serialize.
+     * @return string the JSON.
+     */
+    public function serialize(NostoOrderCollection $collection)
+    {
+        $data = array();
 
+        $productSerializer = new NostoOrderSerializerArray();
+        foreach ($collection->getArrayCopy() as $order) {
+            $data[] = $productSerializer->serialize($order);
+        }
+
+        return json_encode($data);
+    }
 }

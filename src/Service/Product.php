@@ -168,6 +168,10 @@ class NostoServiceProduct
      */
     protected function getCollectionAsJson()
     {
+        if ($this->collection->count() === 0) {
+            throw new NostoException('No products found in collection.');
+        }
+
         $serializer = new NostoProductCollectionSerializerJson();
         return $serializer->serialize($this->collection);
     }
@@ -180,13 +184,14 @@ class NostoServiceProduct
      */
     protected function getCollectionIdsAsJson()
     {
+        if ($this->collection->count() === 0) {
+            throw new NostoException('No products found in collection.');
+        }
+
         $data = array();
         foreach ($this->collection->getArrayCopy() as $item) {
             /** @var NostoProductInterface $item */
             $data[] = $item->getProductId();
-        }
-        if (empty($data)) {
-            throw new NostoException('No products found in collection.');
         }
         return json_encode($data);
     }

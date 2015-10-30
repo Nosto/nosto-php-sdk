@@ -1,8 +1,5 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../_support/NostoOrderBuyerMock.php');
-require_once(dirname(__FILE__) . '/../_support/NostoOrderPurchasedItemMock.php');
-require_once(dirname(__FILE__) . '/../_support/NostoOrderStatusMock.php');
 require_once(dirname(__FILE__) . '/../_support/NostoOrderMock.php');
 
 class ServiceOrderTest extends \Codeception\TestCase\Test

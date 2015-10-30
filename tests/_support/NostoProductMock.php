@@ -1,7 +1,5 @@
 <?php
 
-require_once 'NostoProductVariationMock.php';
-
 class NostoProductMock implements NostoProductInterface
 {
 	public function getUrl()
@@ -49,7 +47,11 @@ class NostoProductMock implements NostoProductInterface
 	}
 	public function getCategories()
 	{
-		return array('/a/b', '/a/b/c');
+        $cat1 = new NostoCategory();
+        $cat1->setPath('/a/b');
+        $cat2 = new NostoCategory();
+        $cat2->setPath('/a/b/c');
+		return array($cat1, $cat2);
 	}
 	public function getDescription()
 	{
@@ -69,8 +71,12 @@ class NostoProductMock implements NostoProductInterface
     }
     public function getVariations()
     {
-        return array(
-            new NostoProductVariationMock()
-        );
+        $variation = new NostoProductVariation();
+        $variation->setVariationId('EUR');
+        $variation->setCurrency(new NostoCurrencyCode('EUR'));
+        $variation->setPrice(new NostoPrice(88.76));
+        $variation->setListPrice(new NostoPrice(98.52));
+        $variation->setAvailability(new NostoProductAvailability('InStock'));
+        return array($variation);
     }
 }

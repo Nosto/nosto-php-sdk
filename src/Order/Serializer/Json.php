@@ -34,9 +34,19 @@
  */
 
 /**
- * Order item DTO (Data Transfer Object).
+ * Order json serializer.
  */
-class NostoOrderItem extends NostoLineItem implements NostoOrderItemInterface
+class NostoOrderSerializerJson
 {
-
+    /**
+     * Serializes the order into an json structure.
+     *
+     * @param NostoOrderInterface $order the order to serialize.
+     * @return string the serialized data.
+     */
+    public function serialize(NostoOrderInterface $order)
+    {
+        $serializer = new NostoOrderSerializerArray();
+        return json_encode($serializer->serialize($order));
+    }
 }
