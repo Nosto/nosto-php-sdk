@@ -73,6 +73,7 @@ require_once(dirname(__FILE__).'/src/Uri.php');
 require_once(dirname(__FILE__).'/src/Http/Request.php');
 require_once(dirname(__FILE__).'/src/Api/Request.php');
 require_once(dirname(__FILE__).'/src/Api/Token.php');
+require_once(dirname(__FILE__).'/src/Cart/Item.php');
 require_once(dirname(__FILE__).'/src/Country/Code.php');
 require_once(dirname(__FILE__).'/src/Currency/Code.php');
 require_once(dirname(__FILE__).'/src/Currency/Exchange.php');
