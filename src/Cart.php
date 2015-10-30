@@ -34,46 +34,55 @@
  */
 
 /**
- * Interface for an purchased item in an order.
- * This is used by the NostoOrderInterface meta data model when sending order confirmation API requests.
- *
- * The purchased item should also be used for shipping costs, discounts or other similar data.
+ * Cart DTO (Data Transfer Object).
  */
-interface NostoOrderItemInterface
+class NostoCart
 {
     /**
-     * The unique identifier of the purchased item.
-     * If this item is for discounts or shipping cost, the id can be 0.
-     *
-     * @return string|int
+     * @var NostoCartItemInterface[] the cart items.
      */
-    public function getItemId();
+    private $items = array();
 
     /**
-     * The quantity of the item included in the order.
+     * Returns the items in the cart.
      *
-     * @return int the quantity.
+     * @return NostoCartItemInterface[] the items.
      */
-    public function getQuantity();
+    public function getItems()
+    {
+        return $this->items;
+    }
 
     /**
-     * The name of the item included in the order.
+     * Sets the cart items.
      *
-     * @return string the name.
+     * The items need to implement the `NostoCartItemInterface` interface.
+     *
+     * Usage:
+     * $cart->setItems(array(NostoCartItemInterface $item, [...]));
+     *
+     * @param NostoCartItemInterface[] $items the items.
      */
-    public function getName();
+    public function setItems(array $items)
+    {
+        $this->items = array();
+        foreach ($items as $item) {
+            $this->addItem($item);
+        }
+    }
 
     /**
-     * The unit price of the item included in the order.
+     * Adds a new item to the cart.
      *
-     * @return NostoPrice the unit price.
-     */
-    public function getUnitPrice();
-
-    /**
-     * The 3-letter ISO code (ISO 4217) for the currency the item was purchased in.
+     * The item needs to implement the `NostoCartItemInterface` interface.
      *
-     * @return NostoCurrencyCode the currency ISO code.
+     * Usage:
+     * $cart->addItem(NostoCartItemInterface $item);
+     *
+     * @param NostoCartItemInterface $item
      */
-    public function getCurrency();
+    public function addItem(NostoCartItemInterface $item)
+    {
+        $this->items[] = $item;
+    }
 }
