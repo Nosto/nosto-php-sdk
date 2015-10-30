@@ -92,31 +92,44 @@ class NostoProductSerializerArray
         if ($product->getThumbUrl()) {
             $data['thumb_url'] = $product->getThumbUrl();
         }
-
-        if ($product->getFullDescription()) {
-            $data['description'] = $product->getFullDescription();
+        if ($product->getDescription()) {
+            $data['description'] = $product->getDescription();
         }
-
         if ($product->getListPrice()) {
             $data['list_price'] = $priceFormatter->format($product->getListPrice());
         }
-
         if ($product->getBrand()) {
             $data['brand'] = $product->getBrand();
         }
-
         foreach ($product->getTags() as $type => $tags) {
             if (is_array($tags) && count($tags) > 0) {
                 $data[$type] = $tags;
             }
         }
-
         if ($product->getDatePublished()) {
             $data['date_published'] = $dateFormatter->format($product->getDatePublished());
         }
-
-        if ($product->getPriceVariationId()) {
-            $data['variation_id'] = $product->getPriceVariationId();
+        if ($product->getVariationId()) {
+            $data['variation_id'] = $product->getVariationId();
+        }
+        if (count($product->getVariations()) > 0) {
+            $data['variations'] = array();
+            foreach ($product->getVariations() as $variation) {
+                $variationData = array();
+                if ($variation->getCurrency()) {
+                    $variationData['price_currency_code'] = $variation->getCurrency()->getCode();
+                }
+                if ($variation->getPrice()) {
+                    $variationData['price'] = $priceFormatter->format($variation->getPrice());
+                }
+                if ($variation->getListPrice()) {
+                    $variationData['list_price'] = $priceFormatter->format($variation->getListPrice());
+                }
+                if ($variation->getAvailability()) {
+                    $variationData['availability'] = $variation->getAvailability()->getAvailability();
+                }
+                $data['variations'][$variation->getVariationId()] = $variationData;
+            }
         }
 
         return $data;

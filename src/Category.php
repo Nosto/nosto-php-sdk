@@ -54,6 +54,11 @@ class NostoCategory implements NostoCategoryInterface
     /**
      * Sets the category path.
      *
+     * The path must be a non-empty string including the categories parent categories separated by a "/" character.
+     *
+     * Usage:
+     * $category->setPath('/Outdoor/Boats/Canoes');
+     *
      * @param string $path the new path, e.g. "/Outdoor/Boats/Canoes".
      *
      * @throws NostoInvalidArgumentException

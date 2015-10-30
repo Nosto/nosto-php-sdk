@@ -1,7 +1,7 @@
 <?php
 
-require_once(dirname(__FILE__).'/../_support/NostoProduct.php');
-require_once(dirname(__FILE__).'/../_support/NostoOrder.php');
+require_once(dirname(__FILE__).'/../_support/NostoProductMock.php');
+require_once(dirname(__FILE__).'/../_support/NostoOrderMock.php');
 
 class ExportCollectionTest extends \Codeception\TestCase\Test
 {

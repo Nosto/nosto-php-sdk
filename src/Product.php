@@ -61,6 +61,11 @@ class NostoProduct implements NostoProductInterface
     private $imageUrl;
 
     /**
+     * @var string the absolute url the one of the product thumbnails in frontend.
+     */
+    private $thumbUrl;
+
+    /**
      * @var NostoPrice the product price including possible discounts and taxes.
      */
     private $price;
@@ -74,11 +79,6 @@ class NostoProduct implements NostoProductInterface
      * @var NostoCurrencyCode the currency code the product is sold in.
      */
     private $currency;
-
-    /**
-     * @var NostoPriceVariation the price variation currently in use.
-     */
-    private $priceVariation;
 
     /**
      * @var NostoProductAvailability the availability of the product.
@@ -100,11 +100,6 @@ class NostoProduct implements NostoProductInterface
     private $categories = array();
 
     /**
-     * @var string the product short description.
-     */
-    private $shortDescription;
-
-    /**
      * @var string the product description.
      */
     private $description;
@@ -120,9 +115,14 @@ class NostoProduct implements NostoProductInterface
     private $datePublished;
 
     /**
-     * @var NostoProductPriceVariationInterface[] the product price variations.
+     * @var string the variation ID currently in use.
      */
-    private $priceVariations = array();
+    private $variationId;
+
+    /**
+     * @var NostoProductVariationInterface[] the product variations.
+     */
+    private $variations = array();
 
     /**
      * @inheritdoc
@@ -161,7 +161,7 @@ class NostoProduct implements NostoProductInterface
      */
     public function getThumbUrl()
     {
-        return null;
+        return $this->thumbUrl;
     }
 
     /**
@@ -191,16 +191,6 @@ class NostoProduct implements NostoProductInterface
     /**
      * @inheritdoc
      */
-    public function getPriceVariationId()
-    {
-        return !is_null($this->priceVariation)
-            ? $this->priceVariation->getId()
-            : null;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getAvailability()
     {
         return $this->availability;
@@ -220,14 +210,6 @@ class NostoProduct implements NostoProductInterface
     public function getCategories()
     {
         return $this->categories;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getShortDescription()
-    {
-        return $this->shortDescription;
     }
 
     /**
@@ -257,24 +239,41 @@ class NostoProduct implements NostoProductInterface
     /**
      * @inheritdoc
      */
-    public function getPriceVariations()
+    public function getVariationId()
     {
-        return $this->priceVariations;
+        return $this->variationId;
     }
 
     /**
      * @inheritdoc
      */
-    public function getFullDescription()
+    public function getVariations()
     {
-        $descriptions = array();
-        if (!empty($this->shortDescription)) {
-            $descriptions[] = $this->shortDescription;
+        return $this->variations;
+    }
+
+    /**
+     * Sets the URL for the product page in the shop that shows this product.
+     *
+     * The URL must be absolute, i.e. must include the protocol http or https.
+     *
+     * Usage:
+     * $product->setUrl("http://my.shop.com/products/example.html");
+     *
+     * @param string $url the url.
+     *
+     * @throws NostoInvalidArgumentException
+     */
+    public function setUrl($url)
+    {
+        if (!NostoUri::check($url)) {
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s.url must be a valid absolute url including the protocol http or https.',
+                __CLASS__
+            ));
         }
-        if (!empty($this->description)) {
-            $descriptions[] = $this->description;
-        }
-        return implode(' ', $descriptions);
+
+        $this->url = $url;
     }
 
     /**
@@ -283,7 +282,7 @@ class NostoProduct implements NostoProductInterface
      * The ID must be either an integer above zero, or a non-empty string.
      *
      * Usage:
-     * $object->setProductId(1);
+     * $product->setProductId(1);
      *
      * @param int|string $id the product ID.
      *
@@ -308,49 +307,72 @@ class NostoProduct implements NostoProductInterface
     }
 
     /**
-     * Sets the availability state of the product.
+     * Sets the product name.
      *
-     * The availability of the product must be either "InStock" or "OutOfStock", represented as a value object of
-     * class `NostoProductAvailability`.
+     * The name must be a non-empty string.
      *
      * Usage:
-     * $object->setAvailability(new NostoProductAvailability(NostoProductAvailability::IN_STOCK));
+     * $product->setName('Example');
      *
-     * @param NostoProductAvailability $availability the availability.
+     * @param string $name the name.
+     *
+     * @throws NostoInvalidArgumentException
      */
-    public function setAvailability(NostoProductAvailability $availability)
+    public function setName($name)
     {
-        $this->availability = $availability;
+        if (!is_string($name) || empty($name)) {
+            throw new NostoInvalidArgumentException(sprintf('%.name must be a non-empty string value.', __CLASS__));
+        }
+
+        $this->name = $name;
     }
 
     /**
-     * Sets the currency code (ISO 4217) the product is sold in.
+     * Sets the image URL for the product.
      *
-     * The currency must be in ISO 4217 format, represented as a value object of class `NostoCurrencyCode`.
+     * The URL must be absolute, i.e. must include the protocol http or https.
      *
      * Usage:
-     * $object->setCurrency(new NostoCurrencyCode('USD'));
+     * $product->setImageUrl("http://my.shop.com/media/example.jpg");
      *
-     * @param NostoCurrencyCode $currency the currency code.
+     * @param string $imageUrl the url.
+     *
+     * @throws NostoInvalidArgumentException
      */
-    public function setCurrency(NostoCurrencyCode $currency)
+    public function setImageUrl($imageUrl)
     {
-        $this->currency = $currency;
+        if (!NostoUri::check($imageUrl)) {
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s.imageUrl must be a valid absolute url including the protocol http or https.',
+                __CLASS__
+            ));
+        }
+
+        $this->imageUrl = $imageUrl;
     }
 
     /**
-     * Sets the products published date.
+     * Sets the thumbnail URL for the product.
      *
-     * The date must be a UNIX timestamp, represented as a value object of class `NostoDate`.
+     * The URL must be absolute, i.e. must include the protocol http or https.
      *
      * Usage:
-     * $object->setDatePublished(new NostoDate(strtotime('2015-01-01 00:00:00')));
+     * $product->setThumbUrl("http://my.shop.com/media/example.jpg");
      *
-     * @param NostoDate $date the date.
+     * @param string $thumbUrl the url.
+     *
+     * @throws NostoInvalidArgumentException
      */
-    public function setDatePublished(NostoDate $date)
+    public function setThumbUrl($thumbUrl)
     {
-        $this->datePublished = $date;
+        if (!NostoUri::check($thumbUrl)) {
+            throw new NostoInvalidArgumentException(sprintf(
+                '%s.thumbUrl must be a valid absolute url including the protocol http or https.',
+                __CLASS__
+            ));
+        }
+
+        $this->thumbUrl = $thumbUrl;
     }
 
     /**
@@ -359,7 +381,7 @@ class NostoProduct implements NostoProductInterface
      * The price must be a numeric value, represented as a value object of class `NostoPrice`.
      *
      * Usage:
-     * $object->setPrice(new NostoPrice(99.99));
+     * $product->setPrice(new NostoPrice(99.99));
      *
      * @param NostoPrice $price the price.
      */
@@ -374,7 +396,7 @@ class NostoProduct implements NostoProductInterface
      * The price must be a numeric value, represented as a value object of class `NostoPrice`.
      *
      * Usage:
-     * $object->setListPrice(new NostoPrice(99.99));
+     * $product->setListPrice(new NostoPrice(99.99));
      *
      * @param NostoPrice $listPrice the price.
      */
@@ -384,106 +406,34 @@ class NostoProduct implements NostoProductInterface
     }
 
     /**
-     * Sets the product categories.
+     * Sets the currency code (ISO 4217) the product is sold in.
      *
-     * The categories must be an array of objects implementing the `NostoCategoryInterface` interface.
+     * The currency must be in ISO 4217 format, represented as a value object of class `NostoCurrencyCode`.
      *
      * Usage:
-     * $object->setCategories(array(NostoCategoryInterface $category [, ... ] ));
+     * $product->setCurrency(new NostoCurrencyCode('USD'));
      *
-     * @param NostoCategoryInterface[] $categories the categories.
+     * @param NostoCurrencyCode $currency the currency code.
      */
-    public function setCategories(array $categories)
+    public function setCurrency(NostoCurrencyCode $currency)
     {
-        $this->categories = array();
-        foreach ($categories as $category) {
-            $this->addCategory($category);
-        }
+        $this->currency = $currency;
     }
 
     /**
-     * Adds a category to the product.
+     * Sets the availability state of the product.
      *
-     * The category must implement the `NostoCategoryInterface` interface.
-     *
-     * Usage:
-     * $object->addCategory(NostoCategoryInterface $category);
-     *
-     * @param NostoCategoryInterface $category the category.
-     */
-    public function addCategory(NostoCategoryInterface $category)
-    {
-        $this->categories[] = $category;
-    }
-
-    /**
-     * Sets the product price variation ID.
-     *
-     * The ID must be a non-empty string, represented as a value object of class `NostoPriceVariation`.
+     * The availability of the product must be either "InStock" or "OutOfStock", represented as a value object of
+     * class `NostoProductAvailability`.
      *
      * Usage:
-     * $object->setPriceVariationId(new NostoPriceVariation('USD'));
+     * $product->setAvailability(new NostoProductAvailability(NostoProductAvailability::IN_STOCK));
      *
-     * @param NostoPriceVariation $priceVariation the price variation.
+     * @param NostoProductAvailability $availability the availability.
      */
-    public function setPriceVariationId(NostoPriceVariation $priceVariation)
+    public function setAvailability(NostoProductAvailability $availability)
     {
-        $this->priceVariation = $priceVariation;
-    }
-
-    /**
-     * Sets the product price variations.
-     *
-     * The variations represent the possible product prices in different currencies and must implement the
-     * `NostoProductPriceVariationInterface` interface.
-     * This is only used in multi currency environments when the multi currency method is set to "priceVariations".
-     *
-     * Usage:
-     * $object->setPriceVariations(array(NostoProductPriceVariationInterface $priceVariation [, ... ]))
-     *
-     * @param NostoProductPriceVariationInterface[] $priceVariations the price variations.
-     */
-    public function setPriceVariations(array $priceVariations)
-    {
-        $this->priceVariations = array();
-        foreach ($priceVariations as $priceVariation) {
-            $this->addPriceVariation($priceVariation);
-        }
-    }
-
-    /**
-     * Adds a product price variation.
-     *
-     * The variation represents the product price in another currency than the base currency, and must implement the
-     * `NostoProductPriceVariationInterface` interface.
-     * This is only used in multi currency environments when the multi currency method is set to "priceVariations".
-     *
-     * Usage:
-     * $object->addPriceVariation(NostoProductPriceVariationInterface $priceVariation);
-     *
-     * @param NostoProductPriceVariationInterface $priceVariation the price variation.
-     */
-    public function addPriceVariation(NostoProductPriceVariationInterface $priceVariation)
-    {
-        $this->priceVariations[] = $priceVariation;
-    }
-
-    /**
-     * Removes a product price variation at given index.
-     *
-     * Usage:
-     * $object->removePriceVariationAt(0);
-     *
-     * @param int $index the index of the variation in the list.
-     *
-     * @throws NostoInvalidArgumentException
-     */
-    public function removePriceVariationAt($index)
-    {
-        if (!isset($this->priceVariations[$index])) {
-            throw new NostoInvalidArgumentException(sprintf('No price variation found at index #%s.', $index));
-        }
-        unset($this->priceVariations[$index]);
+        $this->availability = $availability;
     }
 
     /**
@@ -492,7 +442,7 @@ class NostoProduct implements NostoProductInterface
      * The tags must be an array of non-empty string values.
      *
      * Usage:
-     * $object->setTag1(array('customTag1', 'customTag2'));
+     * $product->setTag1(array('customTag1', 'customTag2'));
      *
      * @param array $tags the tags.
      *
@@ -512,7 +462,7 @@ class NostoProduct implements NostoProductInterface
      * The tag must be a non-empty string value.
      *
      * Usage:
-     * $object->addTag1('customTag');
+     * $product->addTag1('customTag');
      *
      * @param string $tag the tag to add.
      *
@@ -536,7 +486,7 @@ class NostoProduct implements NostoProductInterface
      * The tags must be an array of non-empty string values.
      *
      * Usage:
-     * $object->setTag2(array('customTag1', 'customTag2'));
+     * $product->setTag2(array('customTag1', 'customTag2'));
      *
      * @param array $tags the tags.
      *
@@ -556,7 +506,7 @@ class NostoProduct implements NostoProductInterface
      * The tag must be a non-empty string value.
      *
      * Usage:
-     * $object->addTag2('customTag');
+     * $product->addTag2('customTag');
      *
      * @param string $tag the tag to add.
      *
@@ -580,7 +530,7 @@ class NostoProduct implements NostoProductInterface
      * The tags must be an array of non-empty string values.
      *
      * Usage:
-     * $object->setTag3(array('customTag1', 'customTag2'));
+     * $product->setTag3(array('customTag1', 'customTag2'));
      *
      * @param array $tags the tags.
      *
@@ -600,7 +550,7 @@ class NostoProduct implements NostoProductInterface
      * The tag must be a non-empty string value.
      *
      * Usage:
-     * $object->addTag3('customTag');
+     * $product->addTag3('customTag');
      *
      * @param string $tag the tag to add.
      *
@@ -619,89 +569,36 @@ class NostoProduct implements NostoProductInterface
     }
 
     /**
-     * Sets the brand name of the product manufacturer.
+     * Sets the product categories.
      *
-     * The name must be a non-empty string.
+     * The categories must be an array of objects implementing the `NostoCategoryInterface` interface.
      *
      * Usage:
-     * $object->setBrand('Example');
+     * $product->setCategories(array(NostoCategoryInterface $category [, ... ] ));
      *
-     * @param string $brand the brand name.
-     *
-     * @throws NostoInvalidArgumentException
+     * @param NostoCategoryInterface[] $categories the categories.
      */
-    public function setBrand($brand)
+    public function setCategories(array $categories)
     {
-        if (!is_string($brand) || empty($brand)) {
-            throw new NostoInvalidArgumentException(sprintf('%.brand must be a non-empty string value.', __CLASS__));
+        $this->categories = array();
+        foreach ($categories as $category) {
+            $this->addCategory($category);
         }
-
-        $this->brand = $brand;
     }
 
     /**
-     * Sets the product name.
+     * Adds a category to the product.
      *
-     * The name must be a non-empty string.
-     *
-     * Usage:
-     * $object->setName('Example');
-     *
-     * @param string $name the name.
-     *
-     * @throws NostoInvalidArgumentException
-     */
-    public function setName($name)
-    {
-        if (!is_string($name) || empty($name)) {
-            throw new NostoInvalidArgumentException(sprintf('%.name must be a non-empty string value.', __CLASS__));
-        }
-
-        $this->name = $name;
-    }
-
-    /**
-     * Sets the URL for the product page in the shop that shows this product.
-     *
-     * The URL must be absolute, i.e. must include the protocol http or https.
+     * The category must implement the `NostoCategoryInterface` interface.
      *
      * Usage:
-     * $object->setUrl("http://my.shop.com/products/example.html");
+     * $product->addCategory(NostoCategoryInterface $category);
      *
-     * @param string $url the url.
-     *
-     * @throws NostoInvalidArgumentException
+     * @param NostoCategoryInterface $category the category.
      */
-    public function setUrl($url)
+    public function addCategory(NostoCategoryInterface $category)
     {
-        // todo
-        /*if (!\Zend_Uri::check($url)) {
-            throw new NostoInvalidArgumentException('URL must be valid and absolute.');
-        }*/
-
-        $this->url = $url;
-    }
-
-    /**
-     * Sets the image URL for the product.
-     *
-     * The URL must be absolute, i.e. must include the protocol http or https.
-     *
-     * Usage:
-     * $object->setImageUrl("http://my.shop.com/media/example.jpg");
-     *
-     * @param string $imageUrl the url.
-     *
-     * @throws NostoInvalidArgumentException
-     */
-    public function setImageUrl($imageUrl)
-    {
-        // todo
-        /*if (!\Zend_Uri::check($imageUrl)) {
-            throw new NostoInvalidArgumentException('Image URL must be valid and absolute.');
-        }*/
-
-        $this->imageUrl = $imageUrl;
+        $this->categories[] = $category;
     }
 
     /**
@@ -710,7 +607,7 @@ class NostoProduct implements NostoProductInterface
      * The description must be a non-empty string.
      *
      * Usage:
-     * $object->setDescription('Lorem ipsum dolor sit amet, ludus possim ut ius, bonorum facilis mandamus nam ea. ... ');
+     * $product->setDescription('Lorem ipsum dolor sit amet, ludus possim ut ius, bonorum facilis mandamus nam ea. ... ');
      *
      * @param string $description the description.
      *
@@ -729,26 +626,99 @@ class NostoProduct implements NostoProductInterface
     }
 
     /**
-     * Sets the product `short` description.
+     * Sets the brand name of the product manufacturer.
      *
-     * The description must be a non-empty string.
+     * The name must be a non-empty string.
      *
      * Usage:
-     * $object->setShortDescription('Lorem ipsum dolor sit amet, ludus possim ut ius.');
+     * $product->setBrand('Example');
      *
-     * @param string $shortDescription the `short` description.
+     * @param string $brand the brand name.
      *
      * @throws NostoInvalidArgumentException
      */
-    public function setShortDescription($shortDescription)
+    public function setBrand($brand)
     {
-        if (!is_string($shortDescription) || empty($shortDescription)) {
+        if (!is_string($brand) || empty($brand)) {
+            throw new NostoInvalidArgumentException(sprintf('%.brand must be a non-empty string value.', __CLASS__));
+        }
+
+        $this->brand = $brand;
+    }
+
+    /**
+     * Sets the products published date.
+     *
+     * The date must be a UNIX timestamp, represented as a value object of class `NostoDate`.
+     *
+     * Usage:
+     * $product->setDatePublished(new NostoDate(strtotime('2015-01-01 00:00:00')));
+     *
+     * @param NostoDate $date the date.
+     */
+    public function setDatePublished(NostoDate $date)
+    {
+        $this->datePublished = $date;
+    }
+
+    /**
+     * Sets the product variation ID.
+     *
+     * The ID must be a non-empty string.
+     *
+     * Usage:
+     * $product->setVariationId('USD');
+     *
+     * @param string $variationId the variation ID.
+     *
+     * @throws NostoInvalidArgumentException
+     */
+    public function setVariationId($variationId)
+    {
+        if (!is_string($variationId) || empty($variationId)) {
             throw new NostoInvalidArgumentException(sprintf(
-                '%.shortDescription must be a non-empty string value.',
+                '%.variationId entry must be a non-empty string value.',
                 __CLASS__
             ));
         }
 
-        $this->shortDescription = $shortDescription;
+        $this->variationId = $variationId;
+    }
+
+    /**
+     * Sets the product variations.
+     *
+     * The variations represent the possible product prices in different currencies and must implement the
+     * `NostoProductVariationInterface` interface.
+     * This is only used in multi currency environments when the multi currency method is set to "priceVariations".
+     *
+     * Usage:
+     * $product->setVariations(array(NostoProductVariationInterface $variation [, ... ]))
+     *
+     * @param NostoProductVariationInterface[] $variations the variations.
+     */
+    public function setVariations(array $variations)
+    {
+        $this->variations = array();
+        foreach ($variations as $variation) {
+            $this->addVariation($variation);
+        }
+    }
+
+    /**
+     * Adds a product variation.
+     *
+     * The variation represents the product price in another currency than the base currency, and must implement the
+     * `NostoProductPriceVariationInterface` interface.
+     * This is only used in multi currency environments when the multi currency method is set to "priceVariations".
+     *
+     * Usage:
+     * $product->addVariation(NostoProductVariationInterface $variation);
+     *
+     * @param NostoProductVariationInterface $variation the variation.
+     */
+    public function addVariation(NostoProductVariationInterface $variation)
+    {
+        $this->variations[] = $variation;
     }
 }

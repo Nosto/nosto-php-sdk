@@ -1,6 +1,6 @@
 <?php
 
-class NostoOrderBuyer implements NostoOrderBuyerInterface
+class NostoOrderBuyerMock implements NostoOrderBuyerInterface
 {
 	public function getFirstName()
 	{

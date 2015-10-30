@@ -34,20 +34,20 @@
  */
 
 /**
- * Interface for the meta data of a product price variation.
+ * Interface for the meta data of a product variation.
  * This is used in product the tagging, when making product API requests and product history exports to Nosto.
  */
-interface NostoProductPriceVariationInterface
+interface NostoProductVariationInterface
 {
     /**
-     * Returns the price variation ID.
+     * Returns the variation ID.
      *
-     * @return NostoPriceVariation the variation ID.
+     * @return string|int the variation ID.
      */
-    public function getId();
+    public function getVariationId();
 
     /**
-     * Returns the currency code (SIO 4217) for the price variation.
+     * Returns the currency code (ISO 4217) for the variation.
      *
      * @return NostoCurrencyCode the price currency code.
      */
@@ -62,13 +62,14 @@ interface NostoProductPriceVariationInterface
 
     /**
      * Returns the list price of the variation without discounts but incl taxes.
+     * This value is optional.
      *
-     * @return NostoPrice the price.
+     * @return NostoPrice|null the price or null if not used.
      */
     public function getListPrice();
 
     /**
-     * Returns the availability of the price variation, i.e. if it is in stock or not.
+     * Returns the availability of the variation, i.e. if it is in stock or not.
      *
      * @return NostoProductAvailability the availability.
      */

@@ -96,13 +96,6 @@ interface NostoProductInterface
     public function getCurrency();
 
     /**
-     * Returns the ID of the price variation that is currently in use.
-     *
-     * @return string the price variation ID.
-     */
-    public function getPriceVariationId();
-
-    /**
      * Returns the availability of the product, i.e. if it is in stock or not.
      *
      * @return NostoProductAvailability the availability.
@@ -124,26 +117,11 @@ interface NostoProductInterface
     public function getCategories();
 
     /**
-     * Returns the product short description.
-     *
-     * @return string the short description.
-     */
-    public function getShortDescription();
-
-    /**
      * Returns the product description.
      *
      * @return string the description.
      */
     public function getDescription();
-
-    /**
-     * Returns the full product description,
-     * i.e. both the "short" and "normal" descriptions concatenated.
-     *
-     * @return string the full descriptions.
-     */
-    public function getFullDescription();
 
     /**
      * Returns the product brand name.
@@ -160,9 +138,16 @@ interface NostoProductInterface
     public function getDatePublished();
 
     /**
-     * Returns the product price variations if any exist.
+     * Returns the ID of the variation that is currently in use.
      *
-     * @return NostoProductPriceVariationInterface[] the price variations.
+     * @return string the variation ID.
      */
-    public function getPriceVariations();
+    public function getVariationId();
+
+    /**
+     * Returns the product variations if any exist.
+     *
+     * @return NostoProductVariationInterface[] the variations.
+     */
+    public function getVariations();
 }

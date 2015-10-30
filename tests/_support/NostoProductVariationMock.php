@@ -1,10 +1,10 @@
 <?php
 
-class NostoTestPriceVariation implements NostoProductPriceVariationInterface
+class NostoProductVariationMock implements NostoProductVariationInterface
 {
-    public function getId()
+    public function getVariationId()
     {
-        return new NostoPriceVariation('EUR');
+        return 'EUR';
     }
 
     public function getCurrency()

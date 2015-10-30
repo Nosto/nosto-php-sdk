@@ -1,9 +1,9 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../_support/NostoOrderBuyer.php');
-require_once(dirname(__FILE__) . '/../_support/NostoOrderPurchasedItem.php');
-require_once(dirname(__FILE__) . '/../_support/NostoOrderStatus.php');
-require_once(dirname(__FILE__) . '/../_support/NostoOrder.php');
+require_once(dirname(__FILE__) . '/../_support/NostoOrderBuyerMock.php');
+require_once(dirname(__FILE__) . '/../_support/NostoOrderPurchasedItemMock.php');
+require_once(dirname(__FILE__) . '/../_support/NostoOrderStatusMock.php');
+require_once(dirname(__FILE__) . '/../_support/NostoOrderMock.php');
 
 class ServiceOrderTest extends \Codeception\TestCase\Test
 {
@@ -34,7 +34,7 @@ class ServiceOrderTest extends \Codeception\TestCase\Test
 	 */
 	protected function _before()
 	{
-		$this->order = new NostoOrder();
+		$this->order = new NostoOrderMock();
 		$this->account = new NostoAccount('platform-00000000');
         $this->service = new NostoServiceOrder($this->account);
 	}

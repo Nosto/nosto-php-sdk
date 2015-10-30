@@ -1,7 +1,7 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../_support/NostoProduct.php');
-require_once(dirname(__FILE__) . '/../_support/NostoOrder.php');
+require_once(dirname(__FILE__) . '/../_support/NostoProductMock.php');
+require_once(dirname(__FILE__) . '/../_support/NostoOrderMock.php');
 
 class HistoryExportTest extends \Codeception\TestCase\Test
 {
@@ -34,7 +34,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
 	public function testProductHistoryExport()
 	{
 		$collection = new NostoExportCollectionProduct();
-		$collection[] = new NostoProduct();
+		$collection[] = new NostoProductMock();
 		$cipher_text = NostoExporter::export($this->account, $collection);
 
 		$this->specify('verify encrypted product export', function() use ($collection, $cipher_text) {
@@ -53,7 +53,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
     public function testOrderHistoryExport()
     {
 		$collection = new NostoExportCollectionOrder();
-		$collection->append(new NostoOrder());
+		$collection->append(new NostoOrderMock());
 		$cipher_text = NostoExporter::export($this->account, $collection);
 
 		$this->specify('verify encrypted order export', function() use ($collection, $cipher_text) {
