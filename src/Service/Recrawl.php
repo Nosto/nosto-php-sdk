@@ -36,7 +36,7 @@
 /**
  * Handles product re-crawl requests to Nosto via the API.
  */
-class NostoServiceRecrawl
+class NostoServiceRecrawl extends AbstractNostoService
 {
     /**
      * @var NostoAccount the Nosto account to recrawl product(s) for.

@@ -34,50 +34,24 @@
  */
 
 /**
- * API request class for making API requests to Nosto.
+ * Helper class containing constants of commonly used Nosto headers
  */
-class NostoApiRequest extends NostoHttpRequest
+class Header
 {
-    const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
-    const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
-    const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
-    const PATH_PRODUCTS_CREATE = '/v1/products/create';
-    const PATH_PRODUCTS_UPDATE = '/v1/products/update';
-    const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
-    const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
-    const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
-    const PATH_SETTINGS = '/settings';
-    const X_PLATFORM_NAME = 'X-Platform-Name';
+    /**
+     * Unique identifier of the platform installation
+     */
+    const X_UNIQUE_ID = 'X-Unique-Id';
+    /**
+     * Module version of the installed plugin, module, extension
+     */
     const X_MODULE_VERSION = 'X-Module-Version';
+    /**
+     * Platform version of the e-commerce platform
+     */
     const X_PLATFORM_VERSION = 'X-Platform-Version';
+    /**
+     * The identifier of the merchant account
+     */
     const X_MERCHANT_ID = 'X-Merchant-Id';
-
-    /**
-     * @var string base url for the nosto api.
-     */
-    public static $baseUrl = 'https://api.nosto.com';
-
-    /**
-     * @inheritDoc
-     */
-    function __construct(AbstractNostoService $params)
-    {
-        parent::__construct();
-        $this->addHeader(self::X_MODULE_VERSION, $params->getModuleVersion());
-        $this->addHeader(self::X_PLATFORM_VERSION, $params->getPlatformVersion());
-        $this->addHeader(self::X_MERCHANT_ID, $params->getMerchantId());
-        $this->addHeader(self::X_PLATFORM_NAME, $params->getPlatformName());
-    }
-
-    /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
-     *
-     * @param string $path the endpoint path (use PATH_ constants).
-     */
-    public function setPath($path)
-    {
-        $this->setUrl(self::$baseUrl.$path);
-    }
 }

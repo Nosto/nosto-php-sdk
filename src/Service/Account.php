@@ -36,7 +36,7 @@
 /**
  * Handles sending account related requests though the Nosto API.
  */
-class NostoServiceAccount
+class NostoServiceAccount extends AbstractNostoService
 {
     /**
      * Sends an account create API call to Nosto.

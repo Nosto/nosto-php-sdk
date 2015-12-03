@@ -36,7 +36,7 @@
 /**
  * Handles sending currency exchange rates through the Nosto API.
  */
-class NostoServiceCurrencyExchangeRate
+class NostoServiceCurrencyExchangeRate extends AbstractNostoService
 {
     /**
      * @var NostoAccount the Nosto account to update the rates for.

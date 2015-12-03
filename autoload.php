@@ -111,6 +111,7 @@ require_once(dirname(__FILE__).'/src/Product/Collection/Serializer/Json.php');
 require_once(dirname(__FILE__).'/src/Product/Serializer/Array.php');
 require_once(dirname(__FILE__).'/src/Product/Availability.php');
 require_once(dirname(__FILE__).'/src/Product/Variation.php');
+require_once(dirname(__FILE__).'/src/Service/Base.php');
 require_once(dirname(__FILE__).'/src/Service/Currency/Exchange/Rate.php');
 require_once(dirname(__FILE__).'/src/Service/Account.php');
 require_once(dirname(__FILE__).'/src/Service/Order.php');
