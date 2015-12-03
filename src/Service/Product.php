@@ -36,7 +36,7 @@
 /**
  * Handles create/update/delete of products through the Nosto API.
  */
-class NostoServiceProduct
+class NostoServiceProduct extends AbstractNostoService
 {
     /**
      * @var NostoAccount the account to perform the operation on.
@@ -154,7 +154,7 @@ class NostoServiceProduct
             throw new NostoException(sprintf('No `%s` API token found for account "%s".', NostoApiToken::API_PRODUCTS, $this->account->getName()));
         }
 
-        $request = new NostoApiRequest();
+        $request = new NostoApiRequest($this);
         $request->setContentType('application/json');
         $request->setAuthBasic('', $token->getValue());
         return $request;

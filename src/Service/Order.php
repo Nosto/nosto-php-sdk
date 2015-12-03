@@ -42,7 +42,7 @@
  *
  * The second option is a fallback and should be avoided as much as possible.
  */
-class NostoServiceOrder
+class NostoServiceOrder extends AbstractNostoService
 {
     /**
      * @var NostoAccount the Nosto account to confirm an order for.
@@ -87,7 +87,7 @@ class NostoServiceOrder
      */
     protected function initApiRequest($customerId)
     {
-        $request = new NostoApiRequest();
+        $request = new NostoApiRequest($this);
         $request->setContentType('application/json');
         if (!empty($customerId)) {
             $request->setPath(NostoApiRequest::PATH_ORDER_TAGGING);
