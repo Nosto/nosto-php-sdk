@@ -120,7 +120,7 @@ class NostoProduct implements NostoProductInterface
     private $variationId;
 
     /**
-     * @var NostoProductVariationInterface[] the product variations.
+     * @var NostoProductPriceVariationInterface[] the product variations.
      */
     private $variations = array();
 
@@ -689,13 +689,13 @@ class NostoProduct implements NostoProductInterface
      * Sets the product variations.
      *
      * The variations represent the possible product prices in different currencies and must implement the
-     * `NostoProductVariationInterface` interface.
+     * `NostoProductPriceVariationInterface` interface.
      * This is only used in multi currency environments when the multi currency method is set to "priceVariations".
      *
      * Usage:
-     * $product->setVariations(array(NostoProductVariationInterface $variation [, ... ]))
+     * $product->setVariations(array(NostoProductPriceVariationInterface $variation [, ... ]))
      *
-     * @param NostoProductVariationInterface[] $variations the variations.
+     * @param NostoProductPriceVariationInterface[] $variations the variations.
      */
     public function setVariations(array $variations)
     {
@@ -713,11 +713,11 @@ class NostoProduct implements NostoProductInterface
      * This is only used in multi currency environments when the multi currency method is set to "priceVariations".
      *
      * Usage:
-     * $product->addVariation(NostoProductVariationInterface $variation);
+     * $product->addVariation(NostoProductPriceVariationInterface $variation);
      *
-     * @param NostoProductVariationInterface $variation the variation.
+     * @param NostoProductPriceVariationInterface $variation the variation.
      */
-    public function addVariation(NostoProductVariationInterface $variation)
+    public function addVariation(NostoProductPriceVariationInterface $variation)
     {
         $this->variations[] = $variation;
     }

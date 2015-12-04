@@ -49,6 +49,7 @@ require_once(dirname(__FILE__).'/src/Order/ItemInterface.php');
 require_once(dirname(__FILE__).'/src/Order/StatusInterface.php');
 require_once(dirname(__FILE__).'/src/Order/Payment/ProviderInterface.php');
 require_once(dirname(__FILE__).'/src/Product/VariationInterface.php');
+require_once(dirname(__FILE__).'/src/Product/Price/VariationInterface.php');
 
 require_once(dirname(__FILE__).'/src/Account.php');
 require_once(dirname(__FILE__).'/src/Cart.php');
