@@ -143,4 +143,14 @@ interface NostoAccountMetaInterface
      * @return bool if the rates are used.
      */
     public function getUseCurrencyExchangeRates();
+
+    /**
+     * Returns if the multi variant approach should be used for handling
+     * multiple currencies or in pricing. Please note that only tells if the
+     * setting is active. This will not take account whether there are variants
+     * configured or not.
+     *
+     * @return boolean if multi variants are used
+     */
+    public function getUseMultiVariants();
 }

@@ -269,26 +269,7 @@ class NostoServiceAccount
                 $data['api_tokens'][] = 'api_'.$name;
             }
         }
-
-        // Add all configured currency formats.
-        $currencies = $meta->getCurrencies();
-        if (count($currencies) > 0) {
-            $data['currencies'] = array();
-            foreach ($currencies as $currency) {
-                $data['currencies'][$currency->getCode()->getCode()] = array(
-                    'currency_before_amount' => ($currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT),
-                    'currency_token' => $currency->getSymbol()->getSymbol(),
-                    'decimal_character' => $currency->getFormat()->getDecimalSymbol(),
-                    'grouping_separator' => $currency->getFormat()->getGroupSymbol(),
-                    'decimal_places' => $currency->getFormat()->getPrecision(),
-                );
-            }
-            // Add multi-currency settings.
-            if (count($currencies) > 1) {
-                $data['default_variant_id'] = $meta->getDefaultPriceVariationId();
-                $data['use_exchange_rates'] = (bool)$meta->getUseCurrencyExchangeRates();
-            }
-        }
+        self::resolveCurrencyOptions($data, $meta);
 
         return json_encode($data);
     }
@@ -307,8 +288,13 @@ class NostoServiceAccount
             'front_page_url' => $meta->getFrontPageUrl(),
             'currency_code' => $meta->getCurrency()->getCode(),
         );
+        self::resolveCurrencyOptions($data, $meta);
 
-        // Add all configured currency formats.
+        return json_encode($data);
+    }
+
+    public static function resolveCurrencyOptions(array &$data, NostoAccountMetaInterface $meta)
+    {
         $currencies = $meta->getCurrencies();
         if (count($currencies) > 0) {
             $data['currencies'] = array();
@@ -321,13 +307,15 @@ class NostoServiceAccount
                     'decimal_places' => $currency->getFormat()->getPrecision(),
                 );
             }
-            // Add multi-currency settings.
-            if (count($currencies) > 1) {
-                $data['default_variant_id'] = $meta->getDefaultPriceVariationId();
-                $data['use_exchange_rates'] = (bool)$meta->getUseCurrencyExchangeRates();
-            }
         }
 
-        return json_encode($data);
+        if ($meta->getUseMultiVariants()) {
+            $data['default_variant_id'] = $meta->getDefaultPriceVariationId();
+            $data['use_exchange_rates'] = false;
+        } else {
+            $data['default_variant_id'] = '';
+            $data['use_exchange_rates'] = count($currencies) > 1;
+        }
+
     }
 }
