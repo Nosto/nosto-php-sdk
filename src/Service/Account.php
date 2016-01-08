@@ -87,6 +87,7 @@ class NostoServiceAccount
             ));
         }
         $request = $this->initApiRequest(NostoApiRequest::PATH_SETTINGS, $token->getValue());
+        $jsonAccount = $this->getUpdateAccountMetaAsJson($meta);
         $response = $request->put($this->getUpdateAccountMetaAsJson($meta));
         if ($response->getCode() !== 200) {
             throw Nosto::createHttpException('Failed to send account update to Nosto.', $request, $response);
@@ -296,7 +297,8 @@ class NostoServiceAccount
     public static function resolveCurrencyOptions(array &$data, NostoAccountMetaInterface $meta)
     {
         $currencies = $meta->getCurrencies();
-        if (count($currencies) > 0) {
+        $currencyCount = count($currencies);
+        if ($currencyCount > 0) {
             $data['currencies'] = array();
             foreach ($currencies as $currency) {
                 $data['currencies'][$currency->getCode()->getCode()] = array(
@@ -314,8 +316,21 @@ class NostoServiceAccount
             $data['use_exchange_rates'] = false;
         } else {
             $data['default_variant_id'] = '';
-            $data['use_exchange_rates'] = count($currencies) > 1;
+            $data['use_exchange_rates'] = false;
+            if ($currencyCount > 1) {
+                $data['use_exchange_rates'] = true;
+            } else { // Check for possible multiple currencies used in multi store environment
+                $allCurrenciesCount = $currencyCount;
+                foreach ($currencies as $currency) {
+                    if ($currency->getCode()->getCode() !== $meta->getCurrency()->getCode()) {
+                        ++$allCurrenciesCount;
+                    }
+                }
+                if ($allCurrenciesCount > 1) {
+                    $data['use_exchange_rates'] = true;
+                }
+            }
         }
-
     }
+
 }

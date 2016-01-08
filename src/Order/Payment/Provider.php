@@ -49,6 +49,19 @@ class NostoOrderPaymentProvider implements NostoOrderPaymentProviderInterface
     private $version;
 
     /**
+     * Constructor.
+     * Create a new payment provider with given name.
+     *
+     * @param $name
+     */
+    public function __construct($name = false)
+    {
+        if (!empty($name)) {
+            $this->setName($name);
+        }
+    }
+
+    /**
      * @inheritdoc
      */
     public function getProvider()
@@ -70,7 +83,7 @@ class NostoOrderPaymentProvider implements NostoOrderPaymentProviderInterface
      */
     public function setName($name)
     {
-        if (!is_string($name) || empty($name)) {
+        if (empty($name)) {
             throw new NostoInvalidArgumentException(sprintf('%s.name must be a non-empty string value.', __CLASS__));
         }
 
