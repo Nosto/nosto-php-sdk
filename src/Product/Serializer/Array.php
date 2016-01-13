@@ -77,11 +77,26 @@ class NostoProductSerializerArray
             'product_id' => $product->getProductId(),
             'name' => $product->getName(),
             'image_url' => $product->getImageUrl(),
-            'price' => $priceFormatter->format($product->getPrice()),
-            'price_currency_code' => $product->getCurrency()->getCode(),
-            'availability' => $product->getAvailability()->getAvailability(),
             'categories' => array(),
         );
+
+        if ($product->getAvailability() instanceof NostoProductAvailability) {
+            $data['availability'] = $product->getAvailability()->getAvailability();
+        } else {
+            $data['availability'] = "";
+        }
+
+        if ($product->getPrice() instanceof NostoPrice) {
+            $data['price'] = $priceFormatter->format($product->getPrice());
+        } else {
+            $data['price'] = '';
+        }
+
+        if ($product->getPrice() instanceof NostoCurrencyCode) {
+            $data['price_currency_code'] = '';
+        } else {
+            $data['price_currency_code'] = $product->getCurrency()->getCode();
+        }
 
         foreach ($product->getCategories() as $category) {
             $data['categories'][] = $category->getPath();
