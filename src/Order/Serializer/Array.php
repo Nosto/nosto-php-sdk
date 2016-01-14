@@ -50,57 +50,71 @@ class NostoOrderSerializerArray
         $dateFormatter = Nosto::formatter('date');
         /** @var NostoFormatterPrice $priceFormatter */
         $priceFormatter = Nosto::formatter('price');
-
         $data = array(
             'order_number' => $order->getOrderNumber(),
-            'created_at' => $dateFormatter->format($order->getCreatedDate()),
             'buyer' => array(),
             'purchased_items' => array(),
         );
 
-        if ($order->getStatus()) {
-            $data['order_status_code'] = $order->getStatus()->getCode();
-            $data['order_status_label'] = $order->getStatus()->getLabel();
+        if ($order->getCreatedDate() instanceof NostoDate) {
+            $data['created_at'] = $dateFormatter->format($order->getCreatedDate());
         }
 
-        if ($order->getPaymentProvider()) {
+        if ($order->getStatus() instanceof NostoOrderStatusInterface) {
+            $data['order_status_code'] = $order->getStatus()->getCode();
+            $data['order_status_label'] = $order->getStatus()->getLabel();
+        } elseif (is_string($order->getStatus()) || is_numeric($order->getStatus())) {
+            $data['order_status_code'] = $order->getStatus();
+            $data['order_status_label'] = $order->getStatus();
+        }
+        if ($order->getPaymentProvider() instanceof NostoOrderPaymentProviderInterface) {
             $data['payment_provider'] = $order->getPaymentProvider()->getProvider();
+        } elseif (is_string($order->getPaymentProvider()) || is_numeric($order->getPaymentProvider())) {
+            $data['payment_provider'] = $order->getPaymentProvider();
         }
 
         foreach ($order->getItems() as $item) {
-            $data['purchased_items'][] = array(
+            $itemData = array(
                 'product_id' => $item->getItemId(),
                 'quantity' => (int)$item->getQuantity(),
                 'name' => $item->getName(),
-                'unit_price' => $priceFormatter->format($item->getUnitPrice()),
-                'price_currency_code' => $item->getCurrency()->getCode(),
             );
+            if ($item->getUnitPrice() instanceof NostoPrice) {
+                $itemData['unit_price'] = $priceFormatter->format($item->getUnitPrice());
+            } elseif (is_numeric($item->getUnitPrice())) {
+                $itemData['unit_price'] = $item->getUnitPrice();
+            } else {
+                $itemData['unit_price'] = '';
+            }
+            if ($item->getCurrency() instanceof NostoCurrencyCode) {
+                $itemData['price_currency_code'] = $item->getCurrency()->getCode();
+            } elseif (is_string($item->getCurrency())) {
+                $itemData['price_currency_code'] = $item->getCurrency();
+            } else {
+                $itemData['price_currency_code'] = '';
+            }
+            $data['purchased_items'][] = $itemData;
         }
 
         // Add optional order reference if set.
         if ($order->getExternalRef()) {
             $data['external_order_ref'] = $order->getExternalRef();
         }
-
         // Add optional buyer info.
-        if ($order->getBuyer()) {
-            if ($order->getBuyer()->getFirstName()) {
-                $data['buyer']['first_name'] = $order->getBuyer()->getFirstName();
-            }
-            if ($order->getBuyer()->getLastName()) {
-                $data['buyer']['last_name'] = $order->getBuyer()->getLastName();
-            }
-            if ($order->getBuyer()->getEmail()) {
-                $data['buyer']['email'] = $order->getBuyer()->getEmail();
-            }
+        if ($order->getBuyer() instanceof NostoOrderBuyerInterface) {
+            $data['buyer']['first_name'] = $order->getBuyer()->getFirstName();
+            $data['buyer']['last_name'] = $order->getBuyer()->getLastName();
+            $data['buyer']['email'] = $order->getBuyer()->getEmail();
         }
-
         // Add optional order status history if set.
         if ($order->getHistoryStatuses() !== array()) {
             $dateFormat = new NostoDateFormat(NostoDateFormat::ISO_8601);
             $statuses = array();
             foreach ($order->getHistoryStatuses() as $status) {
-                if ($status->getCreatedAt()) {
+                if (
+                    $status instanceof NostoOrderStatusInterface
+                    && $status->getCreatedAt()
+                ) {
                     if (!isset($statuses[$status->getCode()])) {
                         $statuses[$status->getCode()] = array();
                     }

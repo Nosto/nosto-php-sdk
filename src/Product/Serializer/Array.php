@@ -82,36 +82,49 @@ class NostoProductSerializerArray
 
         if ($product->getAvailability() instanceof NostoProductAvailability) {
             $data['availability'] = $product->getAvailability()->getAvailability();
+        } elseif (is_string($product->getAvailability())) {
+            $data['availability'] = $product->getAvailability();
         } else {
-            $data['availability'] = "";
+            $data['availability'] = '';
         }
 
         if ($product->getPrice() instanceof NostoPrice) {
             $data['price'] = $priceFormatter->format($product->getPrice());
+        } elseif (is_numeric($product->getPrice())) {
+            $data['price'] = $product->getPrice();
         } else {
             $data['price'] = '';
         }
 
-        if ($product->getPrice() instanceof NostoCurrencyCode) {
-            $data['price_currency_code'] = '';
-        } else {
+        if ($product->getCurrency() instanceof NostoCurrencyCode) {
             $data['price_currency_code'] = $product->getCurrency()->getCode();
+        } elseif (is_string($product->getCurrency())) {
+            $data['price_currency_code'] = $product->getCurrency();
+        } else {
+            $data['price_currency_code'] = '';
         }
 
         foreach ($product->getCategories() as $category) {
-            $data['categories'][] = $category->getPath();
+            if ($category instanceof NostoCategoryInterface) {
+                $data['categories'][] = $category->getPath();
+            } elseif (is_string($category) || is_numeric($category)) {
+                $data['categories'][] = $category;
+            }
         }
 
         // Optional properties.
-
         if ($product->getThumbUrl()) {
             $data['thumb_url'] = $product->getThumbUrl();
         }
         if ($product->getDescription()) {
             $data['description'] = $product->getDescription();
         }
-        if ($product->getListPrice()) {
+        if ($product->getListPrice() instanceof NostoPrice) {
             $data['list_price'] = $priceFormatter->format($product->getListPrice());
+        } elseif (is_numeric($product->getListPrice())) {
+            $data['list_price'] = $product->getListPrice();
+        } else {
+            $data['list_price'] = '';
         }
         if ($product->getBrand()) {
             $data['brand'] = $product->getBrand();
@@ -121,7 +134,7 @@ class NostoProductSerializerArray
                 $data[$type] = $tags;
             }
         }
-        if ($product->getDatePublished()) {
+        if ($product->getDatePublished() instanceof NostoDate) {
             $data['date_published'] = $dateFormatter->format($product->getDatePublished());
         }
         if ($product->getVariationId()) {
@@ -134,19 +147,23 @@ class NostoProductSerializerArray
                 if ($variation->getCurrency()) {
                     $variationData['price_currency_code'] = $variation->getCurrency()->getCode();
                 }
-                if ($variation->getPrice()) {
+                if ($variation->getPrice() instanceof NostoPrice) {
                     $variationData['price'] = $priceFormatter->format($variation->getPrice());
                 }
-                if ($variation->getListPrice()) {
+                if ($variation->getListPrice() instanceof NostoPrice) {
                     $variationData['list_price'] = $priceFormatter->format($variation->getListPrice());
                 }
-                if ($variation->getAvailability()) {
+                if ($variation->getAvailability() instanceof NostoProductAvailability) {
                     $variationData['availability'] = $variation->getAvailability()->getAvailability();
+                } elseif (is_string($variation->getAvailability())) {
+                    $variationData['availability'] = $variation->getAvailability();
                 }
                 if ($variation->getId()) {
                     $variationData['variation_id'] = $variation->getId();
+                    $data['variations'][$variation->getId()] = $variationData;
+                } else {
+                    $data['variations'][] = $variationData;
                 }
-                $data['variations'][$variation->getId()] = $variationData;
             }
         }
 
