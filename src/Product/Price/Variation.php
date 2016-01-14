@@ -36,7 +36,7 @@
 /**
  * Product variation DTO (Data Transfer Object).
  */
-class NostoProductVariation implements NostoProductVariationInterface
+class NostoProductPriceVariation implements NostoProductPriceVariationInterface
 {
     /**
      * @var string|int the variation ID.
@@ -176,4 +176,10 @@ class NostoProductVariation implements NostoProductVariationInterface
     {
         $this->availability = $availability;
     }
+
+    public function getId()
+    {
+        return $this->getVariationId();
+    }
+
 }

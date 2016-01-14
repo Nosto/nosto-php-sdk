@@ -48,7 +48,6 @@ require_once(dirname(__FILE__).'/src/Order/BuyerInterface.php');
 require_once(dirname(__FILE__).'/src/Order/ItemInterface.php');
 require_once(dirname(__FILE__).'/src/Order/StatusInterface.php');
 require_once(dirname(__FILE__).'/src/Order/Payment/ProviderInterface.php');
-require_once(dirname(__FILE__).'/src/Product/VariationInterface.php');
 require_once(dirname(__FILE__).'/src/Product/Price/VariationInterface.php');
 
 require_once(dirname(__FILE__).'/src/Account.php');
@@ -111,7 +110,7 @@ require_once(dirname(__FILE__).'/src/Price/Format.php');
 require_once(dirname(__FILE__).'/src/Product/Collection/Serializer/Json.php');
 require_once(dirname(__FILE__).'/src/Product/Serializer/Array.php');
 require_once(dirname(__FILE__).'/src/Product/Availability.php');
-require_once(dirname(__FILE__).'/src/Product/Variation.php');
+require_once(dirname(__FILE__).'/src/Product/Price/Variation.php');
 require_once(dirname(__FILE__).'/src/Service/Currency/Exchange/Rate.php');
 require_once(dirname(__FILE__).'/src/Service/Account.php');
 require_once(dirname(__FILE__).'/src/Service/Order.php');

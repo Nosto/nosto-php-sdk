@@ -71,7 +71,7 @@ class NostoProductMock implements NostoProductInterface
     }
     public function getVariations()
     {
-        $variation = new NostoProductVariation();
+        $variation = new NostoProductPriceVariation();
         $variation->setVariationId('EUR');
         $variation->setCurrency(new NostoCurrencyCode('EUR'));
         $variation->setPrice(new NostoPrice(88.76));
