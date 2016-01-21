@@ -86,15 +86,9 @@ class NostoOrderBuyer implements NostoOrderBuyerInterface
      * $buyer->setFirstName('John');
      *
      * @param string $firstName the first name.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setFirstName($firstName)
     {
-        if (!is_string($firstName) || empty($firstName)) {
-            throw new NostoInvalidArgumentException(sprintf('%s.firstName must be a non-empty string value.', __CLASS__));
-        }
-
         $this->firstName = $firstName;
     }
 
@@ -107,15 +101,9 @@ class NostoOrderBuyer implements NostoOrderBuyerInterface
      * $buyer->setLastName('Doe');
      *
      * @param string $lastName the last name.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setLastName($lastName)
     {
-        if (!is_string($lastName) || empty($lastName)) {
-            throw new NostoInvalidArgumentException(sprintf('%s.lastName must be a non-empty string value.', __CLASS__));
-        }
-
         $this->lastName = $lastName;
     }
 
@@ -128,15 +116,9 @@ class NostoOrderBuyer implements NostoOrderBuyerInterface
      * $buyer->setEmail('john.doe@example.com');
      *
      * @param string $email the email address.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setEmail($email)
     {
-        if (!is_string($email) || empty($email)) {
-            throw new NostoInvalidArgumentException(sprintf('%s.email must be a non-empty string value.', __CLASS__));
-        }
-
         $this->email = $email;
     }
 }

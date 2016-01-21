@@ -151,18 +151,9 @@ class NostoOrder implements NostoOrderInterface
      * $order->setOrderNumber('100');
      *
      * @param string|int $orderNumber the order number.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setOrderNumber($orderNumber)
     {
-        if (!(is_string($orderNumber) || is_int($orderNumber))) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.orderNumber must be either a string or an integer.',
-                __CLASS__
-            ));
-        }
-
         $this->orderNumber = $orderNumber;
     }
 
@@ -178,18 +169,9 @@ class NostoOrder implements NostoOrderInterface
      * $order->setExternalRef('#000100');
      *
      * @param string|int $ref the order reference.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setExternalRef($ref)
     {
-        if (!(is_string($ref) || is_int($ref))) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.externalRef must be either a string or an integer.',
-                __CLASS__
-            ));
-        }
-
         $this->externalRef = $ref;
     }
 
