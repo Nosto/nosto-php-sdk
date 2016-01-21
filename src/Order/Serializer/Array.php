@@ -58,6 +58,8 @@ class NostoOrderSerializerArray
 
         if ($order->getCreatedDate() instanceof NostoDate) {
             $data['created_at'] = $dateFormatter->format($order->getCreatedDate());
+        } else {
+            $data['created_at'] = '';
         }
 
         if ($order->getStatus() instanceof NostoOrderStatusInterface) {
