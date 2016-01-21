@@ -64,15 +64,9 @@ class NostoCategory implements NostoCategoryInterface
      * $category->setPath('/Outdoor/Boats/Canoes');
      *
      * @param string $path the new path, e.g. "/Outdoor/Boats/Canoes".
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setPath($path)
     {
-        if (!is_string($path) || empty($path)) {
-            throw new NostoInvalidArgumentException(sprintf('%s.path must be a non-empty string value.', __CLASS__));
-        }
-
         $this->path = $path;
     }
 }

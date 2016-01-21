@@ -51,20 +51,9 @@ final class NostoProductAvailability
      * Sets up the Value Object with given data.
      *
      * @param string $availability the availability, i.e. either "InStock" or "OutOfStock".
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function __construct($availability)
     {
-        if (!is_string($availability) || !in_array($availability, array(self::IN_STOCK, self::OUT_OF_STOCK))) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.availability (%s) must be one of the following: "%s".',
-                __CLASS__,
-                $availability,
-                implode('", "', array(self::IN_STOCK, self::OUT_OF_STOCK))
-            ));
-        }
-
         $this->availability = $availability;
     }
 

@@ -113,18 +113,9 @@ abstract class NostoLineItem
      * $item->setItemId('example');
      *
      * @param string|int $itemId the identifier.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setItemId($itemId)
     {
-        if (!(is_string($itemId) || is_int($itemId))) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.itemId must be either a string or an integer.',
-                __CLASS__
-            ));
-        }
-
         $this->itemId = $itemId;
     }
 
@@ -137,15 +128,9 @@ abstract class NostoLineItem
      * $item->setQuantity(2);
      *
      * @param int $quantity the quantity
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setQuantity($quantity)
     {
-        if (!is_int($quantity)) {
-            throw new NostoInvalidArgumentException(sprintf('%s.quantity must be an integer.', __CLASS__));
-        }
-
         $this->quantity = $quantity;
     }
 
@@ -158,15 +143,9 @@ abstract class NostoLineItem
      * $item->setName('Example');
      *
      * @param string $name the name.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setName($name)
     {
-        if (!is_string($name) || empty($name)) {
-            throw new NostoInvalidArgumentException(sprintf('%s.name must be a non-empty string value.', __CLASS__));
-        }
-
         $this->name = $name;
     }
 

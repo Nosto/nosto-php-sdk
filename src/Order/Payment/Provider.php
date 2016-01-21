@@ -78,15 +78,9 @@ class NostoOrderPaymentProvider implements NostoOrderPaymentProviderInterface
      * $provider->setName('MyPayment');
      *
      * @param string $name the name.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setName($name)
     {
-        if (empty($name)) {
-            throw new NostoInvalidArgumentException(sprintf('%s.name must be a non-empty string value.', __CLASS__));
-        }
-
         $this->name = $name;
     }
 
@@ -99,15 +93,9 @@ class NostoOrderPaymentProvider implements NostoOrderPaymentProviderInterface
      * $provider->setVersion('0.1.0');
      *
      * @param string $version the version.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setVersion($version)
     {
-        if (!is_string($version) || empty($version)) {
-            throw new NostoInvalidArgumentException(sprintf('%s.version must be a non-empty string value.', __CLASS__));
-        }
-
         $this->version = $version;
     }
 }

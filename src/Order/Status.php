@@ -86,15 +86,9 @@ class NostoOrderStatus implements NostoOrderStatusInterface
      * $status->setCode('completed');
      *
      * @param string $code the code.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setCode($code)
     {
-        if (!is_string($code) || empty($code)) {
-            throw new NostoInvalidArgumentException(sprintf('%s.code must be a non-empty string.', __CLASS__));
-        }
-
         $this->code = $code;
     }
 
@@ -107,15 +101,9 @@ class NostoOrderStatus implements NostoOrderStatusInterface
      * $status->setLabel('Completed');
      *
      * @param string $label the label.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setLabel($label)
     {
-        if (!is_string($label) || empty($label)) {
-            throw new NostoInvalidArgumentException(sprintf('%s.label must be a non-empty string.', __CLASS__));
-        }
-
         $this->label = $label;
     }
 

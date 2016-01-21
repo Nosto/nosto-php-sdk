@@ -185,6 +185,12 @@ final class NostoCurrencyInfo
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
         ),
+        'BTC' => array(
+            'name' => 'Bitcoin',
+            'numericCode' => 00,
+            'fractionDecimals' => 2,
+            'fractionUnit' => 100,
+        ),
         'BWP' => array(
             'name' => 'Pula',
             'numericCode' => 72,

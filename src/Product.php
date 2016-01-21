@@ -261,18 +261,9 @@ class NostoProduct implements NostoProductInterface
      * $product->setUrl("http://my.shop.com/products/example.html");
      *
      * @param string $url the url.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setUrl($url)
     {
-        if (!NostoUri::check($url)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.url must be a valid absolute url including the protocol http or https.',
-                __CLASS__
-            ));
-        }
-
         $this->url = $url;
     }
 
@@ -285,24 +276,9 @@ class NostoProduct implements NostoProductInterface
      * $product->setProductId(1);
      *
      * @param int|string $id the product ID.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setProductId($id)
     {
-        if (!is_int($id) && !is_string($id)) {
-            throw new NostoInvalidArgumentException(sprintf('%s.productId must be an integer or a string.', __CLASS__));
-        }
-        if (is_int($id) && !($id > 0)) {
-            throw new NostoInvalidArgumentException(sprintf('%s.productId must be an integer above zero.', __CLASS__));
-        }
-        if (is_string($id) && empty($id)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.productId must be an non-empty string value.',
-                __CLASS__
-            ));
-        }
-
         $this->productId = $id;
     }
 
@@ -315,15 +291,9 @@ class NostoProduct implements NostoProductInterface
      * $product->setName('Example');
      *
      * @param string $name the name.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setName($name)
     {
-        if (!is_string($name) || empty($name)) {
-            throw new NostoInvalidArgumentException(sprintf('%.name must be a non-empty string value.', __CLASS__));
-        }
-
         $this->name = $name;
     }
 
@@ -336,18 +306,9 @@ class NostoProduct implements NostoProductInterface
      * $product->setImageUrl("http://my.shop.com/media/example.jpg");
      *
      * @param string $imageUrl the url.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setImageUrl($imageUrl)
     {
-        if (!NostoUri::check($imageUrl)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.imageUrl must be a valid absolute url including the protocol http or https.',
-                __CLASS__
-            ));
-        }
-
         $this->imageUrl = $imageUrl;
     }
 
@@ -360,18 +321,9 @@ class NostoProduct implements NostoProductInterface
      * $product->setThumbUrl("http://my.shop.com/media/example.jpg");
      *
      * @param string $thumbUrl the url.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setThumbUrl($thumbUrl)
     {
-        if (!NostoUri::check($thumbUrl)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.thumbUrl must be a valid absolute url including the protocol http or https.',
-                __CLASS__
-            ));
-        }
-
         $this->thumbUrl = $thumbUrl;
     }
 
@@ -445,8 +397,6 @@ class NostoProduct implements NostoProductInterface
      * $product->setTag1(array('customTag1', 'customTag2'));
      *
      * @param array $tags the tags.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setTag1(array $tags)
     {
@@ -465,18 +415,9 @@ class NostoProduct implements NostoProductInterface
      * $product->addTag1('customTag');
      *
      * @param string $tag the tag to add.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function addTag1($tag)
     {
-        if (!is_string($tag) || empty($tag)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%.tag1 entry must be a non-empty string value.',
-                __CLASS__
-            ));
-        }
-
         $this->tags['tag1'][] = $tag;
     }
 
@@ -489,8 +430,6 @@ class NostoProduct implements NostoProductInterface
      * $product->setTag2(array('customTag1', 'customTag2'));
      *
      * @param array $tags the tags.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setTag2(array $tags)
     {
@@ -509,18 +448,9 @@ class NostoProduct implements NostoProductInterface
      * $product->addTag2('customTag');
      *
      * @param string $tag the tag to add.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function addTag2($tag)
     {
-        if (!is_string($tag) || empty($tag)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%.tag2 entry must be a non-empty string value.',
-                __CLASS__
-            ));
-        }
-
         $this->tags['tag2'][] = $tag;
     }
 
@@ -533,8 +463,6 @@ class NostoProduct implements NostoProductInterface
      * $product->setTag3(array('customTag1', 'customTag2'));
      *
      * @param array $tags the tags.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setTag3(array $tags)
     {
@@ -553,18 +481,9 @@ class NostoProduct implements NostoProductInterface
      * $product->addTag3('customTag');
      *
      * @param string $tag the tag to add.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function addTag3($tag)
     {
-        if (!is_string($tag) || empty($tag)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%.tag3 entry must be a non-empty string value.',
-                __CLASS__
-            ));
-        }
-
         $this->tags['tag3'][] = $tag;
     }
 
@@ -610,18 +529,9 @@ class NostoProduct implements NostoProductInterface
      * $product->setDescription('Lorem ipsum dolor sit amet, ludus possim ut ius, bonorum facilis mandamus nam ea. ... ');
      *
      * @param string $description the description.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setDescription($description)
     {
-        if (!is_string($description) || empty($description)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%.description must be a non-empty string value.',
-                __CLASS__
-            ));
-        }
-
         $this->description = $description;
     }
 
@@ -634,15 +544,9 @@ class NostoProduct implements NostoProductInterface
      * $product->setBrand('Example');
      *
      * @param string $brand the brand name.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setBrand($brand)
     {
-        if (!is_string($brand) || empty($brand)) {
-            throw new NostoInvalidArgumentException(sprintf('%.brand must be a non-empty string value.', __CLASS__));
-        }
-
         $this->brand = $brand;
     }
 
@@ -670,18 +574,9 @@ class NostoProduct implements NostoProductInterface
      * $product->setVariationId('USD');
      *
      * @param string $variationId the variation ID.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function setVariationId($variationId)
     {
-        if (!is_string($variationId) || empty($variationId)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%.variationId entry must be a non-empty string value.',
-                __CLASS__
-            ));
-        }
-
         $this->variationId = $variationId;
     }
 
