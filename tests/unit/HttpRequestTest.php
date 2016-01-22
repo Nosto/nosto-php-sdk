@@ -3,6 +3,12 @@
 class HttpRequestTest extends \Codeception\TestCase\Test
 {
 	/**
+	 * This must be a port that is not listening
+	 * wherever the tests are run
+	 */
+	const CURL_TEST_PORT = 9900;
+
+	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
@@ -171,9 +177,9 @@ class HttpRequestTest extends \Codeception\TestCase\Test
         $this->assertEquals(404, $response->getCode());
         $response = $request->delete();
         $this->assertEquals(404, $response->getCode());
-		$request->setUrl('http://localhost:9000');
+		$request->setUrl(sprintf('http://localhost:%d', self::CURL_TEST_PORT));
 		$response = $request->get();
-		$this->assertEquals('Failed to connect to localhost port 9000: Connection refused', $response->getMessage());
+		$this->assertEquals('Failed to connect to localhost port 9900: Connection refused', $response->getMessage());
 	}
 
 	/**

@@ -28,12 +28,15 @@ class AvailabilityTest extends \Codeception\TestCase\Test
     }
 
     /**
-     * Tests that invalid availability cannot be created.
+     * Tests that invalid availability can be created.
      */
     public function testInvalidAvailability()
     {
-        $this->setExpectedException('NostoInvalidArgumentException');
+        $invalidAvailability = 'InvalidAvailability';
+        $availability = new NostoProductAvailability($invalidAvailability);
+        $this->specify('availability is Invalid', function() use ($availability, $invalidAvailability) {
+            $this->assertEquals($invalidAvailability, $availability->getAvailability());
+        });
 
-        new NostoProductAvailability('Unknown');
     }
 }
