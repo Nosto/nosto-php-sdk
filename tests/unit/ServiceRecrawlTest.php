@@ -2,6 +2,7 @@
 
 require_once(dirname(__FILE__) . '/../_support/NostoProductMock.php');
 
+/** @noinspection PhpUndefinedClassInspection */
 class ServiceRecrawlTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;

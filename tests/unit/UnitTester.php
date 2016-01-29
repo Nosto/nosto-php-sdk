@@ -4,7 +4,7 @@
 // You should not change it manually as it will be overwritten on next build
 // @codingStandardsIgnoreFile
 
-
+/** @noinspection PhpUndefinedClassInspection */
 use Codeception\Module\Asserts;
 
 /**
@@ -20,6 +20,8 @@ use Codeception\Module\Asserts;
  * @method void comment($description)
  * @method void haveFriend($name)
 */
+
+/** @noinspection PhpUndefinedClassInspection */
 class UnitTester extends \Codeception\Actor
 {
    
@@ -36,6 +38,7 @@ class UnitTester extends \Codeception\Actor
      * @see \Codeception\Module\Asserts::assertEquals()
      */
     public function assertEquals($expected, $actual, $message = null) {
+        /** @noinspection PhpUndefinedClassInspection */
         return $this->scenario->runStep(new \Codeception\Step\Action('assertEquals', func_get_args()));
     }
 
@@ -51,6 +54,7 @@ class UnitTester extends \Codeception\Actor
      * @see \Codeception\Module\Asserts::assertNotEquals()
      */
     public function assertNotEquals($expected, $actual, $message = null) {
+        /** @noinspection PhpUndefinedClassInspection */
         return $this->scenario->runStep(new \Codeception\Step\Action('assertNotEquals', func_get_args()));
     }
 
@@ -66,6 +70,7 @@ class UnitTester extends \Codeception\Actor
      * @see \Codeception\Module\Asserts::assertGreaterThen()
      */
     public function assertGreaterThen($expected, $actual, $message = null) {
+        /** @noinspection PhpUndefinedClassInspection */
         return $this->scenario->runStep(new \Codeception\Step\Action('assertGreaterThen', func_get_args()));
     }
 
@@ -81,6 +86,7 @@ class UnitTester extends \Codeception\Actor
      * @see \Codeception\Module\Asserts::assertGreaterThenOrEqual()
      */
     public function assertGreaterThenOrEqual($expected, $actual, $message = null) {
+        /** @noinspection PhpUndefinedClassInspection */
         return $this->scenario->runStep(new \Codeception\Step\Action('assertGreaterThenOrEqual', func_get_args()));
     }
 
@@ -96,6 +102,7 @@ class UnitTester extends \Codeception\Actor
      * @see \Codeception\Module\Asserts::assertContains()
      */
     public function assertContains($needle, $haystack, $message = null) {
+        /** @noinspection PhpUndefinedClassInspection */
         return $this->scenario->runStep(new \Codeception\Step\Action('assertContains', func_get_args()));
     }
 
@@ -111,6 +118,7 @@ class UnitTester extends \Codeception\Actor
      * @see \Codeception\Module\Asserts::assertNotContains()
      */
     public function assertNotContains($needle, $haystack, $message = null) {
+        /** @noinspection PhpUndefinedClassInspection */
         return $this->scenario->runStep(new \Codeception\Step\Action('assertNotContains', func_get_args()));
     }
 
@@ -125,6 +133,7 @@ class UnitTester extends \Codeception\Actor
      * @see \Codeception\Module\Asserts::assertEmpty()
      */
     public function assertEmpty($actual, $message = null) {
+        /** @noinspection PhpUndefinedClassInspection */
         return $this->scenario->runStep(new \Codeception\Step\Action('assertEmpty', func_get_args()));
     }
 
@@ -139,6 +148,7 @@ class UnitTester extends \Codeception\Actor
      * @see \Codeception\Module\Asserts::assertNotEmpty()
      */
     public function assertNotEmpty($actual, $message = null) {
+        /** @noinspection PhpUndefinedClassInspection */
         return $this->scenario->runStep(new \Codeception\Step\Action('assertNotEmpty', func_get_args()));
     }
 
@@ -153,6 +163,7 @@ class UnitTester extends \Codeception\Actor
      * @see \Codeception\Module\Asserts::assertNull()
      */
     public function assertNull($actual, $message = null) {
+        /** @noinspection PhpUndefinedClassInspection */
         return $this->scenario->runStep(new \Codeception\Step\Action('assertNull', func_get_args()));
     }
 
@@ -167,6 +178,7 @@ class UnitTester extends \Codeception\Actor
      * @see \Codeception\Module\Asserts::assertNotNull()
      */
     public function assertNotNull($actual, $message = null) {
+        /** @noinspection PhpUndefinedClassInspection */
         return $this->scenario->runStep(new \Codeception\Step\Action('assertNotNull', func_get_args()));
     }
 
@@ -181,6 +193,7 @@ class UnitTester extends \Codeception\Actor
      * @see \Codeception\Module\Asserts::assertTrue()
      */
     public function assertTrue($condition, $message = null) {
+        /** @noinspection PhpUndefinedClassInspection */
         return $this->scenario->runStep(new \Codeception\Step\Action('assertTrue', func_get_args()));
     }
 
@@ -195,6 +208,7 @@ class UnitTester extends \Codeception\Actor
      * @see \Codeception\Module\Asserts::assertFalse()
      */
     public function assertFalse($condition, $message = null) {
+        /** @noinspection PhpUndefinedClassInspection */
         return $this->scenario->runStep(new \Codeception\Step\Action('assertFalse', func_get_args()));
     }
 
@@ -208,6 +222,7 @@ class UnitTester extends \Codeception\Actor
      * @see \Codeception\Module\Asserts::fail()
      */
     public function fail($message) {
+        /** @noinspection PhpUndefinedClassInspection */
         return $this->scenario->runStep(new \Codeception\Step\Action('fail', func_get_args()));
     }
 }

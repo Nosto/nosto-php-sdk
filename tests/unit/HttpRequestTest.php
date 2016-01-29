@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
 class HttpRequestTest extends \Codeception\TestCase\Test
 {
     /**

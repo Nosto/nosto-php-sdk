@@ -6,6 +6,7 @@ require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaData.php');
 require_once(dirname(__FILE__) . '/../_support/NostoOAuthClientMetaData.php');
 require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataSingleSignOn.php');
 
+/** @noinspection PhpUndefinedClassInspection */
 class ServiceAccountTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;

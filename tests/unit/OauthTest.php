@@ -2,6 +2,7 @@
 
 require_once(dirname(__FILE__) . '/../_support/NostoOAuthClientMetaData.php');
 
+/** @noinspection PhpUndefinedClassInspection */
 class OauthTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;

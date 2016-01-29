@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
 class PriceFormatTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
