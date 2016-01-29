@@ -69,7 +69,10 @@ class NostoServiceCurrencyExchangeRate
         $response = $request->post($this->getCollectionAsJson($collection));
         if ($response->getCode() !== 200) {
             throw Nosto::createHttpException(
-                sprintf('Failed to update currency exchange rates for account %s.', $this->account->getName()),
+                sprintf(
+                    'Failed to update currency exchange rates for account %s.',
+                    $this->account->getName()
+                ),
                 $request,
                 $response
             );
@@ -87,7 +90,13 @@ class NostoServiceCurrencyExchangeRate
     {
         $token = $this->account->getApiToken(NostoApiToken::API_EXCHANGE_RATES);
         if (is_null($token)) {
-            throw new NostoException(sprintf('No `%s` API token found for account "%s".', NostoApiToken::API_EXCHANGE_RATES, $this->account->getName()));
+            throw new NostoException(
+                sprintf(
+                    'No `%s` API token found for account "%s".',
+                    NostoApiToken::API_EXCHANGE_RATES,
+                    $this->account->getName()
+                )
+            );
         }
         $request = new NostoApiRequest();
         $request->setContentType('application/json');
@@ -135,10 +144,12 @@ class NostoServiceCurrencyExchangeRate
             );
         }
         if (empty($data['rates'])) {
-            throw new NostoException(sprintf(
-                'Failed to update currency exchange rates for account %s. No rates found in collection.',
-                $this->account->getName()
-            ));
+            throw new NostoException(
+                sprintf(
+                    'Failed to update currency exchange rates for account %s. No rates found in collection.',
+                    $this->account->getName()
+                )
+            );
         }
         return json_encode($data);
     }

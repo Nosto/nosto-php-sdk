@@ -38,6 +38,7 @@
  */
 class NostoUri
 {
+    // @codingStandardsIgnoreStart
     /**
      * @var string Symfony url validation pattern.
      */
@@ -56,6 +57,7 @@ class NostoUri
             (:[0-9]+)?                                             # a port (optional)
             (/?|/\S+|\?|\#)                                        # a /, nothing, a / with something, a query or a fragment
         $~ixu';
+    // @codingStandardsIgnoreEnd
 
     /**
      * Checks that the supplied URL is valid.

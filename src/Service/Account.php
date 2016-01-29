@@ -301,7 +301,9 @@ class NostoServiceAccount
             $data['currencies'] = array();
             foreach ($currencies as $currency) {
                 $data['currencies'][$currency->getCode()->getCode()] = array(
-                    'currency_before_amount' => ($currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT),
+                    'currency_before_amount' => (
+                        $currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT
+                    ),
                     'currency_token' => $currency->getSymbol()->getSymbol(),
                     'decimal_character' => $currency->getFormat()->getDecimalSymbol(),
                     'grouping_separator' => $currency->getFormat()->getGroupSymbol(),
