@@ -29,7 +29,7 @@ class ServiceOrderTest extends \Codeception\TestCase\Test
     /**
      * @inheritdoc
      */
-    protected function _before()
+    protected function _before() // @codingStandardsIgnoreLine
     {
         $this->order = new NostoOrderMock();
         $this->account = new NostoAccount('platform-00000000');
@@ -39,7 +39,7 @@ class ServiceOrderTest extends \Codeception\TestCase\Test
     /**
      * @inheritdoc
      */
-    protected function _after()
+    protected function _after() // @codingStandardsIgnoreLine
     {
         \AspectMock\test::clean();
     }

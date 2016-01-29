@@ -33,7 +33,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
     /**
      * @inheritdoc
      */
-    protected function _before()
+    protected function _before() // @codingStandardsIgnoreLine
     {
         $this->service = new NostoServiceAccount();
         $this->meta = new NostoAccountMetaData();
@@ -46,7 +46,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
     /**
      * @inheritdoc
      */
-    protected function _after()
+    protected function _after() // @codingStandardsIgnoreLine
     {
         \AspectMock\test::clean();
     }

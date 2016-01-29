@@ -1086,7 +1086,7 @@ class CurrencyInfoTest extends \Codeception\TestCase\Test
     /**
      * @inheritdoc
      */
-    protected function _after()
+    protected function _after() // @codingStandardsIgnoreLine
     {
         \AspectMock\test::clean();
     }

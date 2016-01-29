@@ -12,10 +12,14 @@ $kernel->init([
     'includePaths' => [dirname(__FILE__).'/../src', dirname(__FILE__).'/_support/Zend']
 ]);
 // Load SDK.
+/** @noinspection PhpUndefinedMethodInspection */
 $kernel->loadFile(dirname(__FILE__) . '/../autoload.php');
 // Load Zend.
+/** @noinspection PhpUndefinedMethodInspection */
 $kernel->loadFile(dirname(__FILE__).'/_support/Zend/Exception.php');
+/** @noinspection PhpUndefinedMethodInspection */
 $kernel->loadFile(dirname(__FILE__).'/_support/Zend/Currency.php');
+/** @noinspection PhpUndefinedMethodInspection */
 $kernel->loadFile(dirname(__FILE__).'/_support/Zend/Locale.php');
 
 // Configure API, Web Hooks, and OAuth client to use Mock server when testing.

@@ -19,8 +19,9 @@ class IframeAuthTest extends \Codeception\TestCase\Test
     {
         $metaSso = new NostoAccountMetaDataSingleSignOn();
         $metaIframe = new NostoAccountMetaDataIframe();
-
-        $url = Nosto::helper('iframe')->getUrl($metaSso, $metaIframe);
+        /** @var NostoHelperIframe $helper */
+        $helper = Nosto::helper('iframe');
+        $url = $helper->getUrl($metaSso, $metaIframe);
 
         $this->specify('install iframe url was created', function () use ($url) {
             $baseUrl = isset($_ENV['NOSTO_WEB_HOOK_BASE_URL']) ? $_ENV['NOSTO_WEB_HOOK_BASE_URL'] : NostoHttpRequest::$baseUrl;

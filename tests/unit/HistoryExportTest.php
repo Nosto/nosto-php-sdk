@@ -20,7 +20,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
     /**
      * @inheritdoc
      */
-    protected function _before()
+    protected function _before() // @codingStandardsIgnoreLine
     {
         $this->account = new NostoAccount('platform-00000000');
         // The first 16 chars of the SSO token are used as the encryption key.

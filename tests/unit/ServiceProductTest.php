@@ -24,7 +24,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
     /**
      * @inheritdoc
      */
-    protected function _before()
+    protected function _before() // @codingStandardsIgnoreLine
     {
         $this->account = new NostoAccount('platform-00000000');
         foreach (NostoApiToken::getApiTokenNames() as $tokenName) {
@@ -36,7 +36,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
     /**
      * @inheritdoc
      */
-    protected function _after()
+    protected function _after() // @codingStandardsIgnoreLine
     {
         \AspectMock\test::clean();
     }
