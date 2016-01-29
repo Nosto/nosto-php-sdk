@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
 class AvailabilityTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;

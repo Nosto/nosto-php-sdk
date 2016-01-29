@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
 class ApiTokenTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;

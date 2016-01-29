@@ -3,6 +3,7 @@
 require_once(dirname(__FILE__) . '/../_support/NostoProductMock.php');
 require_once(dirname(__FILE__) . '/../_support/NostoOrderMock.php');
 
+/** @noinspection PhpUndefinedClassInspection */
 class HistoryExportTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;

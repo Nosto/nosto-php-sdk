@@ -7,6 +7,7 @@ require_once(dirname(__FILE__) . '/../_support/Zend/Locale.php');
 require_once(dirname(__FILE__) . '/../_support/Zend/Xml/Exception.php');
 require_once(dirname(__FILE__) . '/../_support/Zend/Xml/Security.php');
 
+/** @noinspection PhpUndefinedClassInspection */
 class CurrencyHelperTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;

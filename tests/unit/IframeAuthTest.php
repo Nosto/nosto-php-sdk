@@ -3,6 +3,7 @@
 require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataSingleSignOn.php');
 require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataIframe.php');
 
+/** @noinspection PhpUndefinedClassInspection */
 class IframeAuthTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;

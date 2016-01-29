@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
 class CurrencyInfoTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
