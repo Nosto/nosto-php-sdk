@@ -4,8 +4,8 @@
 // You should not change it manually as it will be overwritten on next build
 // @codingStandardsIgnoreFile
 
-/** @noinspection PhpUndefinedClassInspection */
-use Codeception\Module\Asserts;
+use /** @noinspection PhpUndefinedClassInspection */
+    Codeception\Module\Asserts;
 
 /**
  * Inherited Methods

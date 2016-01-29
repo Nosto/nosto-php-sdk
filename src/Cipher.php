@@ -68,6 +68,7 @@ class NostoCipher
      */
     public function setIV($iv)
     {
+        /** @noinspection PhpInternalEntityUsedInspection */
         $this->crypt->setIV($iv);
     }
 
@@ -79,6 +80,7 @@ class NostoCipher
      */
     public function encrypt($plaintext)
     {
+        /** @noinspection PhpInternalEntityUsedInspection */
         return $this->crypt->encrypt($plaintext);
     }
 
@@ -90,6 +92,7 @@ class NostoCipher
      */
     public function decrypt($ciphertext)
     {
+        /** @noinspection PhpInternalEntityUsedInspection */
         return $this->crypt->decrypt($ciphertext);
     }
 }

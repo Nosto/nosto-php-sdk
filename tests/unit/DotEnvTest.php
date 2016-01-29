@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
 class DotEnvTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
