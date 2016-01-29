@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
 class CountryTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
@@ -36,10 +37,10 @@ class CountryTest extends \Codeception\TestCase\Test
     public function testValidCountryCodes()
     {
         foreach (self::$validIsoCodes as $countryCode) {
-            $this->specify("country code is {$countryCode}", function() use ($countryCode) {
+            $this->specify("country code is {$countryCode}", function () use ($countryCode) {
                     $country = new NostoCountryCode($countryCode);
                     $this->assertEquals($countryCode, $country->getCode());
-                });
+            });
         }
     }
 

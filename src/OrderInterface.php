@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2015, Nosto Solutions Ltd
+ * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2015 Nosto Solutions Ltd
+ * @copyright 2016 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
@@ -53,7 +53,7 @@ interface NostoOrderInterface
      *
      * @return string|null the order reference or null if not used.
      */
-    public function getExternalOrderRef();
+    public function getExternalRef();
 
     /**
      * The date when the order was placed.
@@ -63,9 +63,9 @@ interface NostoOrderInterface
     public function getCreatedDate();
 
     /**
-     * The payment provider used for placing the order, formatted according to "[provider name] [provider version]".
+     * The payment provider used for placing the order.
      *
-     * @return string the payment provider.
+     * @return NostoOrderPaymentProviderInterface the payment provider.
      */
     public function getPaymentProvider();
 
@@ -74,21 +74,21 @@ interface NostoOrderInterface
      *
      * @return NostoOrderBuyerInterface the meta data model.
      */
-    public function getBuyerInfo();
+    public function getBuyer();
 
     /**
      * The purchased items which were included in the order.
      *
      * @return NostoOrderItemInterface[] the meta data models.
      */
-    public function getPurchasedItems();
+    public function getItems();
 
     /**
      * Returns the order status model.
      *
      * @return NostoOrderStatusInterface the model.
      */
-    public function getOrderStatus();
+    public function getStatus();
 
     /**
      * Returns a list of history order status models.
@@ -96,5 +96,5 @@ interface NostoOrderInterface
      *
      * @return NostoOrderStatusInterface[] the status models.
      */
-    public function getOrderStatuses();
+    public function getHistoryStatuses();
 }

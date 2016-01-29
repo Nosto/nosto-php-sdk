@@ -76,4 +76,11 @@ class NostoAccountMetaData implements NostoAccountMetaInterface
     {
         return array();
     }
+
+	public function getUseMultiVariants()
+	{
+		return false;
+	}
+
+
 }

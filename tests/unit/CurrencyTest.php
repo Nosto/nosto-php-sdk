@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
 class CurrencyTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
@@ -46,41 +47,41 @@ class CurrencyTest extends \Codeception\TestCase\Test
             new NostoCurrencyFormat($groupSymbol, $groupLength, $decimalSymbol, $precision)
         );
 
-        $this->specify('currency code is EUR', function() use ($currency, $code) {
+        $this->specify('currency code is EUR', function () use ($currency, $code) {
                 $this->assertTrue($currency->getCode()->getCode() === $code);
-            });
+        });
 
-        $this->specify('currency symbol is €', function() use ($currency, $symbol) {
+        $this->specify('currency symbol is €', function () use ($currency, $symbol) {
                 $this->assertTrue($currency->getSymbol()->getSymbol() === $symbol);
-            });
+        });
 
-        $this->specify('currency symbol position is right', function() use ($currency, $symbolPosition) {
+        $this->specify('currency symbol position is right', function () use ($currency, $symbolPosition) {
                 $this->assertTrue($currency->getSymbol()->getPosition() === $symbolPosition);
-            });
+        });
 
-        $this->specify('currency group symbol is empty string', function() use ($currency, $groupSymbol) {
+        $this->specify('currency group symbol is empty string', function () use ($currency, $groupSymbol) {
                 $this->assertTrue($currency->getFormat()->getGroupSymbol() === $groupSymbol);
-            });
+        });
 
-        $this->specify('currency decimal symbol is dot', function() use ($currency, $decimalSymbol) {
+        $this->specify('currency decimal symbol is dot', function () use ($currency, $decimalSymbol) {
                 $this->assertTrue($currency->getFormat()->getDecimalSymbol() === $decimalSymbol);
-            });
+        });
 
-        $this->specify('currency group length is 3', function() use ($currency, $groupLength) {
+        $this->specify('currency group length is 3', function () use ($currency, $groupLength) {
                 $this->assertTrue($currency->getFormat()->getGroupLength() === $groupLength);
-            });
+        });
 
-        $this->specify('currency decimal precision is 2', function() use ($currency, $precision) {
+        $this->specify('currency decimal precision is 2', function () use ($currency, $precision) {
                 $this->assertTrue($currency->getFormat()->getPrecision() === $precision);
-            });
+        });
 
-        $this->specify('currency fraction-unit is 100', function() use ($currency) {
+        $this->specify('currency fraction-unit is 100', function () use ($currency) {
                 $this->assertTrue($currency->getFractionUnit() === 100);
-            });
+        });
 
-        $this->specify('currency fraction-decimals is 2', function() use ($currency) {
+        $this->specify('currency fraction-decimals is 2', function () use ($currency) {
                 $this->assertTrue($currency->getDefaultFractionDecimals() === 2);
-            });
+        });
     }
 
     /**
@@ -89,10 +90,10 @@ class CurrencyTest extends \Codeception\TestCase\Test
     public function testValidCurrencyCodes()
     {
         foreach (self::$validIsoCodes as $currencyCode) {
-            $this->specify("currency code is {$currencyCode}", function() use ($currencyCode) {
+            $this->specify("currency code is {$currencyCode}", function () use ($currencyCode) {
                     $currency = new NostoCurrencyCode($currencyCode);
                     $this->assertEquals($currencyCode, $currency->getCode());
-                });
+            });
         }
     }
 

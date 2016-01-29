@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2015, Nosto Solutions Ltd
+ * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2015 Nosto Solutions Ltd
+ * @copyright 2016 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
@@ -107,44 +107,7 @@ class NostoServiceOrder
      */
     protected function getOrderAsJson(NostoOrderInterface $order)
     {
-        /** @var NostoFormatterDate $dateFormatter */
-        $dateFormatter = Nosto::formatter('date');
-        /** @var NostoFormatterPrice $priceFormatter */
-        $priceFormatter = Nosto::formatter('price');
-
-        $data = array(
-            'order_number' => $order->getOrderNumber(),
-            'order_status_code' => $order->getOrderStatus()->getCode(),
-            'order_status_label' => $order->getOrderStatus()->getLabel(),
-            'buyer' => array(),
-            'created_at' => $dateFormatter->format($order->getCreatedDate()),
-            'payment_provider' => $order->getPaymentProvider(),
-            'purchased_items' => array(),
-        );
-        foreach ($order->getPurchasedItems() as $item) {
-            $data['purchased_items'][] = array(
-                'product_id' => $item->getProductId(),
-                'quantity' => (int)$item->getQuantity(),
-                'name' => $item->getName(),
-                'unit_price' => $priceFormatter->format($item->getUnitPrice()),
-                'price_currency_code' => $item->getCurrency()->getCode(),
-            );
-        }
-        // Add optional order reference if set.
-        if ($order->getExternalOrderRef()) {
-            $data['external_order_ref'] = $order->getExternalOrderRef();
-        }
-        // Add optional buyer info.
-        if ($order->getBuyerInfo()->getFirstName()) {
-            $data['buyer']['first_name'] = $order->getBuyerInfo()->getFirstName();
-        }
-        if ($order->getBuyerInfo()->getLastName()) {
-            $data['buyer']['last_name'] = $order->getBuyerInfo()->getLastName();
-        }
-        if ($order->getBuyerInfo()->getEmail()) {
-            $data['buyer']['email'] = $order->getBuyerInfo()->getEmail();
-        }
-
-        return json_encode($data);
+        $serializer = new NostoOrderSerializerJson();
+        return $serializer->serialize($order);
     }
 }

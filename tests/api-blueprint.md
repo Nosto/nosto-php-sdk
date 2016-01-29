@@ -306,7 +306,16 @@ Product related resources
                     "categories": ["/a/b", "/a/b/c"],
                     "description": "Lorem ipsum dolor sit amet",
                     "brand": "Super Brand",
-                    "date_published": "2013-01-05"
+                    "date_published": "2013-01-05",
+                    "variation_id": "USD",
+                    "variations": {
+                        "EUR": {
+                            "price": "88.76",
+                            "list_price": "98.52",
+                            "price_currency_code": "EUR",
+                            "availability": "InStock"
+                        }
+                    }
                 }
             ]
 
@@ -339,7 +348,16 @@ Product related resources
                     "categories": ["/a/b", "/a/b/c"],
                     "description": "Lorem ipsum dolor sit amet",
                     "brand": "Super Brand",
-                    "date_published": "2013-01-05"
+                    "date_published": "2013-01-05",
+                    "variation_id": "USD",
+                    "variations": {
+                        "EUR": {
+                            "price": "88.76",
+                            "list_price": "98.52",
+                            "price_currency_code": "EUR",
+                            "availability": "InStock"
+                        }
+                    }
                 }
             ]
 
@@ -374,7 +392,16 @@ Product related resources
                     "categories": ["/a/b", "/a/b/c"],
                     "description": "Lorem ipsum dolor sit amet",
                     "brand": "Super Brand",
-                    "date_published": "2013-01-05"
+                    "date_published": "2013-01-05",
+                    "variation_id": "USD",
+                    "variations": {
+                        "EUR": {
+                            "price": "88.76",
+                            "list_price": "98.52",
+                            "price_currency_code": "EUR",
+                            "availability": "InStock"
+                        }
+                    }
                 }
             ]
 
@@ -409,7 +436,16 @@ Product related resources
                     "categories": ["/a/b", "/a/b/c"],
                     "description": "Lorem ipsum dolor sit amet",
                     "brand": "Super Brand",
-                    "date_published": "2013-01-05"
+                    "date_published": "2013-01-05",
+                    "variation_id": "USD",
+                    "variations": {
+                        "EUR": {
+                            "price": "88.76",
+                            "list_price": "98.52",
+                            "price_currency_code": "EUR",
+                            "availability": "InStock"
+                        }
+                    }
                 }
             ]
 

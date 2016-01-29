@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2015, Nosto Solutions Ltd
+ * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,48 +29,73 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2015 Nosto Solutions Ltd
+ * @copyright 2016 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
 /**
- * Value Object representing a Nosto price variation.
+ * Order payment provider DTO (Data Transfer Object).
  */
-final class NostoPriceVariation
+class NostoOrderPaymentProvider implements NostoOrderPaymentProviderInterface
 {
-	/**
-	 * @var string the variation ID.
-	 */
-	private $id;
+    /**
+     * @var string the payment provider name.
+     */
+    private $name;
 
-	/**
-	 * Constructor.
-	 * Sets up the Value Object with given data.
-	 *
-	 * @param string $id the variation ID.
-	 *
-	 * @throws NostoInvalidArgumentException
-	 */
-	public function __construct($id)
-	{
-		if (!is_string($id) || empty($id)) {
-			throw new NostoInvalidArgumentException(sprintf(
-				'%s.id (%s) must be an non-empty string.',
-				__CLASS__,
-				$id
-			));
-		}
+    /**
+     * @var string the payment provider version.
+     */
+    private $version;
 
-		$this->id = (string)$id;
-	}
+    /**
+     * Constructor.
+     * Create a new payment provider with given name.
+     *
+     * @param $name
+     */
+    public function __construct($name = false)
+    {
+        if (!empty($name)) {
+            $this->setName($name);
+        }
+    }
 
-	/**
-	 * Returns the variation ID.
-	 *
-	 * @return string the ID.
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getProvider()
+    {
+        return $this->name . (!is_null($this->version) ? " [{$this->version}]" : '');
+    }
+
+    /**
+     * Sets the payment provider name.
+     *
+     * The name must be a non-empty string value.
+     *
+     * Usage:
+     * $provider->setName('MyPayment');
+     *
+     * @param string $name the name.
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Sets the payment provider version.
+     *
+     * The version must be a non-empty string value.
+     *
+     * Usage:
+     * $provider->setVersion('0.1.0');
+     *
+     * @param string $version the version.
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+    }
 }

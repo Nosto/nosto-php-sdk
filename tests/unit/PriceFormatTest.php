@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
 class PriceFormatTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
@@ -15,11 +16,11 @@ class PriceFormatTest extends \Codeception\TestCase\Test
     public function testValidPrice()
     {
         $format = new NostoPriceFormat(2, '.', ',');
-        $this->specify('price format is like 1,000.99', function() use ($format) {
+        $this->specify('price format is like 1,000.99', function () use ($format) {
                 $this->assertEquals(2, $format->getDecimals());
                 $this->assertEquals('.', $format->getDecimalPoint());
                 $this->assertEquals(',', $format->getThousandsSeparator());
-            });
+        });
     }
 
     /**

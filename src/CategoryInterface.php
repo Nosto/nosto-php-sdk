@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2015, Nosto Solutions Ltd
+ * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,20 +29,20 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2015 Nosto Solutions Ltd
+ * @copyright 2016 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
 /**
- * Nosto exception class for all errors within the sdk.
+ * Interface for the meta data of a category.
+ * This is used when making product re-crawl API requests and product history exports to Nosto.
  */
-class NostoException extends Exception
+interface NostoCategoryInterface
 {
-}
-
-/**
- * Nosto exception class for invalid arguments.
- */
-class NostoInvalidArgumentException extends NostoException
-{
+    /**
+     * Returns the category path including parent categories, e.g. "/Outdoor/Boats/Canoes".
+     *
+     * @return string the category path.
+     */
+    public function getPath();
 }

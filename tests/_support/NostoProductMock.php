@@ -1,6 +1,6 @@
 <?php
 
-class NostoProduct implements NostoProductInterface
+class NostoProductMock implements NostoProductInterface
 {
 	public function getUrl()
 	{
@@ -34,11 +34,6 @@ class NostoProduct implements NostoProductInterface
 	{
 		return new NostoCurrencyCode('USD');
 	}
-    public function getPriceVariationId()
-    {
-        $variation = new NostoPriceVariation('USD');
-        return $variation->getId();
-    }
     public function getAvailability()
 	{
 		return new NostoProductAvailability('InStock');
@@ -52,20 +47,16 @@ class NostoProduct implements NostoProductInterface
 	}
 	public function getCategories()
 	{
-		return array('/a/b', '/a/b/c');
+        $cat1 = new NostoCategory();
+        $cat1->setPath('/a/b');
+        $cat2 = new NostoCategory();
+        $cat2->setPath('/a/b/c');
+		return array($cat1, $cat2);
 	}
-    public function getShortDescription()
-    {
-        return 'Lorem ipsum dolor sit amet';
-    }
 	public function getDescription()
 	{
 		return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris imperdiet ligula eu facilisis dignissim.';
 	}
-    public function getFullDescription()
-    {
-        return $this->getShortDescription().' '.$this->getDescription();
-    }
 	public function getBrand()
 	{
 		return 'Super Brand';
@@ -74,10 +65,18 @@ class NostoProduct implements NostoProductInterface
 	{
 		return new NostoDate(strtotime('2013-01-05'));
 	}
-    public function getPriceVariations()
+    public function getVariationId()
     {
-        return array(
-            new NostoTestPriceVariation()
-        );
+        return 'USD';
+    }
+    public function getVariations()
+    {
+        $variation = new NostoProductPriceVariation();
+        $variation->setVariationId('EUR');
+        $variation->setCurrency(new NostoCurrencyCode('EUR'));
+        $variation->setPrice(new NostoPrice(88.76));
+        $variation->setListPrice(new NostoPrice(98.52));
+        $variation->setAvailability(new NostoProductAvailability('InStock'));
+        return array($variation);
     }
 }

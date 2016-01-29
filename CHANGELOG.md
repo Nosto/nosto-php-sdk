@@ -2,7 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased][unreleased]
+## [2.4.0]
+### Changed
+- Loosen up the data validation and handle incorrect data types
+- Add support for Bitcoin
+- Exclude test related code from archives with .gitattributes
 
 ## [2.3.0]
 ### Changed
