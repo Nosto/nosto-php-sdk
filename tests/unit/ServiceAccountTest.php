@@ -175,6 +175,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
     public function testAccountSyncHttpFailure()
     {
         \AspectMock\test::double('NostoHttpResponse', ['getCode' => function () {
+                    /** @var NostoHttpResponse $this */
                     $array = $this->getJsonResult(true);
                     return isset($array['api_sso']) ? 404 : 200;
         }]);
