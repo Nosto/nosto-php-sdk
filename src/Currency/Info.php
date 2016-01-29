@@ -41,7 +41,9 @@ final class NostoCurrencyInfo
     /**
      * Private Constructor to disallow instantiation.
      */
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     /**
      * @var array currency data keyed on the currencies ISO 4217 codes.

@@ -181,5 +181,4 @@ class NostoProductPriceVariation implements NostoProductPriceVariationInterface
     {
         return $this->getVariationId();
     }
-
 }

@@ -41,38 +41,38 @@ class ServiceProductTest extends \Codeception\TestCase\Test
         \AspectMock\test::clean();
     }
 
-	/**
-	 * Tests that product upsert API requests cannot be made without an API token.
-	 */
-	public function testProductUpsertWithoutApiToken()
-	{
-		$this->setExpectedException('NostoException');
-		$service = new NostoServiceProduct(new NostoAccount('platform-00000000'));
-		$service->addProduct(new NostoProductMock());
-		$service->upsert();
-	}
+    /**
+     * Tests that product upsert API requests cannot be made without an API token.
+     */
+    public function testProductUpsertWithoutApiToken()
+    {
+        $this->setExpectedException('NostoException');
+        $service = new NostoServiceProduct(new NostoAccount('platform-00000000'));
+        $service->addProduct(new NostoProductMock());
+        $service->upsert();
+    }
 
-	/**
-	 * Tests that product upsert API requests cannot be made without products.
-	 */
-	public function testProductUpsertWithoutProduct()
-	{
-		$this->setExpectedException('NostoException');
+    /**
+     * Tests that product upsert API requests cannot be made without products.
+     */
+    public function testProductUpsertWithoutProduct()
+    {
+        $this->setExpectedException('NostoException');
         $this->service->upsert();
-	}
+    }
 
-	/**
-	 * Tests that product upsert API requests can be made.
-	 */
-	public function testProductUpsert()
-	{
+    /**
+     * Tests that product upsert API requests can be made.
+     */
+    public function testProductUpsert()
+    {
         $this->service->addProduct(new NostoProductMock());
-		$result = $this->service->upsert();
+        $result = $this->service->upsert();
 
-		$this->specify('successful product upsert', function() use ($result) {
-			$this->assertTrue($result);
-		});
-	}
+        $this->specify('successful product upsert', function () use ($result) {
+            $this->assertTrue($result);
+        });
+    }
 
     /**
      * Tests that product update API requests cannot be made without an API token.
@@ -102,7 +102,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
         $this->service->addProduct(new NostoProductMock());
         $result = $this->service->update();
 
-        $this->specify('successful product update', function() use ($result) {
+        $this->specify('successful product update', function () use ($result) {
             $this->assertTrue($result);
         });
     }
@@ -135,7 +135,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
         $this->service->addProduct(new NostoProductMock());
         $result = $this->service->create();
 
-        $this->specify('successful product create', function() use ($result) {
+        $this->specify('successful product create', function () use ($result) {
             $this->assertTrue($result);
         });
     }
@@ -168,7 +168,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
         $this->service->addProduct(new NostoProductMock());
         $result = $this->service->delete();
 
-        $this->specify('successful product delete', function() use ($result) {
+        $this->specify('successful product delete', function () use ($result) {
             $this->assertTrue($result);
         });
     }

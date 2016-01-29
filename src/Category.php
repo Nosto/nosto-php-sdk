@@ -43,7 +43,8 @@ class NostoCategory implements NostoCategoryInterface
      */
     private $path;
 
-    public function __construct($path = false) {
+    public function __construct($path = false)
+    {
         $this->path = $path;
     }
 

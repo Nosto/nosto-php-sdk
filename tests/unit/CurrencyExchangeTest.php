@@ -18,10 +18,10 @@ class CurrencyExchangeTest extends \Codeception\TestCase\Test
         $exchange = new NostoCurrencyExchange();
         $exchangeRate = new NostoCurrencyExchangeRate(new NostoCurrencyCode('USD'), 1.14787);
 
-        $this->specify('converted price is 5.74 USD', function() use ($price, $exchange, $exchangeRate) {
+        $this->specify('converted price is 5.74 USD', function () use ($price, $exchange, $exchangeRate) {
                 $newPrice = $exchange->convert($price, $exchangeRate);
                 $this->assertEquals(5.74, $newPrice->getPrice());
                 $this->assertEquals('USD', $newPrice->getCurrency()->getCode());
-            });
+        });
     }
 }

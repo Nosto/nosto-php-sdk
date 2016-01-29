@@ -113,8 +113,7 @@ class NostoOrderSerializerArray
             $dateFormat = new NostoDateFormat(NostoDateFormat::ISO_8601);
             $statuses = array();
             foreach ($order->getHistoryStatuses() as $status) {
-                if (
-                    $status instanceof NostoOrderStatusInterface
+                if ($status instanceof NostoOrderStatusInterface
                     && $status->getCreatedAt()
                 ) {
                     if (!isset($statuses[$status->getCode()])) {

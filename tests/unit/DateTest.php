@@ -26,8 +26,8 @@ class DateTest extends \Codeception\TestCase\Test
     {
         $date = new NostoDate(strtotime('2015-01-01 00:00:00'));
 
-        $this->specify('date is 2015-01-01 00:00:00', function() use ($date) {
+        $this->specify('date is 2015-01-01 00:00:00', function () use ($date) {
                 $this->assertTrue($date->getTimestamp() === strtotime('2015-01-01 00:00:00'));
-            });
+        });
     }
 }

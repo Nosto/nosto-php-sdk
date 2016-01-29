@@ -44,7 +44,7 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
     {
         // Format: $ #,##0.00
         $currency = $this->helper->parseZendCurrencyFormat('USD', new Zend_Currency('USD', 'en_US'));
-        $this->specify('parsed USD for locale en_US', function() use ($currency) {
+        $this->specify('parsed USD for locale en_US', function () use ($currency) {
             $this->assertInstanceOf('NostoCurrency', $currency);
             $this->assertEquals('USD', $currency->getCode()->getCode());
             $this->assertEquals('$', $currency->getSymbol()->getSymbol());
@@ -60,11 +60,14 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
      */
     public function testZendCurrencyFormatParserWithStandardFormat()
     {
-        $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function($locale, $path) { return ($path === 'currencynumber') ? '#,##0.00 ¤' : '$'; }]);
+        $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function ($locale, $path) {
+            return ($path === 'currencynumber') ? '#,##0.00 ¤' : '$';
+
+        }]);
 
         $currency = $this->helper->parseZendCurrencyFormat('USD', new Zend_Currency('USD', 'en_US'));
         $mock->verifyInvoked('getContent');
-        $this->specify('parsed format "#,##0.00 ¤"', function() use ($currency) {
+        $this->specify('parsed format "#,##0.00 ¤"', function () use ($currency) {
             $this->assertInstanceOf('NostoCurrency', $currency);
             $this->assertEquals('USD', $currency->getCode()->getCode());
             $this->assertEquals('$', $currency->getSymbol()->getSymbol());
@@ -80,11 +83,14 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
      */
     public function testZendCurrencyFormatParserWithAccountingFormat()
     {
-        $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function($locale, $path) { return ($path === 'currencynumber') ? '¤ #,##0.00; (¤ #,##0.00)' : '$'; }]);
+        $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function ($locale, $path) {
+            return ($path === 'currencynumber') ? '¤ #,##0.00; (¤ #,##0.00)' : '$';
+
+        }]);
 
         $currency = $this->helper->parseZendCurrencyFormat('USD', new Zend_Currency('USD', 'en_US'));
         $mock->verifyInvoked('getContent');
-        $this->specify('parsed format "¤ #,##0.00; (¤ #,##0.00)"', function() use ($currency) {
+        $this->specify('parsed format "¤ #,##0.00; (¤ #,##0.00)"', function () use ($currency) {
             $this->assertInstanceOf('NostoCurrency', $currency);
             $this->assertEquals('USD', $currency->getCode()->getCode());
             $this->assertEquals('$', $currency->getSymbol()->getSymbol());
@@ -100,11 +106,14 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
      */
     public function testZendCurrencyFormatParserWithNoPrecision()
     {
-        $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function($locale, $path) { return ($path === 'currencynumber') ? '¤ #,##0' : '$'; }]);
+        $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function ($locale, $path) {
+            return ($path === 'currencynumber') ? '¤ #,##0' : '$';
+
+        }]);
 
         $currency = $this->helper->parseZendCurrencyFormat('USD', new Zend_Currency('USD', 'en_US'));
         $mock->verifyInvoked('getContent');
-        $this->specify('parsed format "¤ #,##0"', function() use ($currency) {
+        $this->specify('parsed format "¤ #,##0"', function () use ($currency) {
             $this->assertInstanceOf('NostoCurrency', $currency);
             $this->assertEquals('USD', $currency->getCode()->getCode());
             $this->assertEquals('$', $currency->getSymbol()->getSymbol());
@@ -120,11 +129,14 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
      */
     public function testZendCurrencyFormatParserWithGeneratedPrecision()
     {
-        $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function($locale, $path) { return ($path === 'currencynumber') ? '¤ #0.#' : '$'; }]);
+        $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function ($locale, $path) {
+            return ($path === 'currencynumber') ? '¤ #0.#' : '$';
+
+        }]);
 
         $currency = $this->helper->parseZendCurrencyFormat('USD', new Zend_Currency('USD', 'en_US'));
         $mock->verifyInvoked('getContent');
-        $this->specify('parsed format "¤ #0.#"', function() use ($currency) {
+        $this->specify('parsed format "¤ #0.#"', function () use ($currency) {
                 $this->assertInstanceOf('NostoCurrency', $currency);
                 $this->assertEquals('USD', $currency->getCode()->getCode());
                 $this->assertEquals('$', $currency->getSymbol()->getSymbol());
@@ -132,7 +144,7 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
                 $this->assertEquals(',', $currency->getFormat()->getGroupSymbol());
                 $this->assertEquals('.', $currency->getFormat()->getDecimalSymbol());
                 $this->assertEquals(0, $currency->getFormat()->getPrecision());
-            });
+        });
     }
 
     /**
@@ -140,11 +152,14 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
      */
     public function testZendCurrencyFormatParserWithNoGroupLength()
     {
-        $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function($locale, $path) { return ($path === 'currencynumber') ? '¤ #0.00' : '$'; }]);
+        $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function ($locale, $path) {
+            return ($path === 'currencynumber') ? '¤ #0.00' : '$';
+
+        }]);
 
         $currency = $this->helper->parseZendCurrencyFormat('USD', new Zend_Currency('USD', 'en_US'));
         $mock->verifyInvoked('getContent');
-        $this->specify('parsed format "¤ #0.00"', function() use ($currency) {
+        $this->specify('parsed format "¤ #0.00"', function () use ($currency) {
             $this->assertInstanceOf('NostoCurrency', $currency);
             $this->assertEquals('USD', $currency->getCode()->getCode());
             $this->assertEquals('$', $currency->getSymbol()->getSymbol());
@@ -164,7 +179,7 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
 
         $currency = $this->helper->parseZendCurrencyFormat('USD', new Zend_Currency('USD', 'en_US'));
         $mock->verifyInvoked('getSymbol');
-        $this->specify('parsed format "¤ #,##0.00"', function() use ($currency) {
+        $this->specify('parsed format "¤ #,##0.00"', function () use ($currency) {
             $this->assertInstanceOf('NostoCurrency', $currency);
             $this->assertEquals('USD', $currency->getCode()->getCode());
             $this->assertEquals('USD', $currency->getSymbol()->getSymbol());
@@ -180,7 +195,10 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
      */
     public function testZendCurrencyFormatParserException()
     {
-        \AspectMock\test::double('Zend_Locale_Data', ['getList' => function() { throw new Zend_Locale_Exception(); }]);
+        \AspectMock\test::double('Zend_Locale_Data', ['getList' => function () {
+            throw new Zend_Locale_Exception();
+
+        }]);
 
         $this->setExpectedException('NostoInvalidArgumentException');
         $this->helper->parseZendCurrencyFormat('USD', new Zend_Currency('USD', 'en_US'));

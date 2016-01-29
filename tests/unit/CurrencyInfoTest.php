@@ -1098,10 +1098,10 @@ class CurrencyInfoTest extends \Codeception\TestCase\Test
     {
         foreach ($this->info as $currencyCode => $info) {
             $expectedFractionUnit = $info['fractionUnit'];
-            $this->specify("currency {$currencyCode} fraction unit is {$expectedFractionUnit}", function() use ($currencyCode, $expectedFractionUnit) {
+            $this->specify("currency {$currencyCode} fraction unit is {$expectedFractionUnit}", function () use ($currencyCode, $expectedFractionUnit) {
                     $fractionUnit = NostoCurrencyInfo::getFractionUnit(new NostoCurrencyCode($currencyCode));
                     $this->assertEquals($expectedFractionUnit, $fractionUnit);
-                });
+            });
         }
     }
 
@@ -1123,10 +1123,10 @@ class CurrencyInfoTest extends \Codeception\TestCase\Test
     {
         foreach ($this->info as $currencyCode => $info) {
             $expectedFractionDecimals = $info['fractionDecimals'];
-            $this->specify("currency {$currencyCode} fraction decimals is {$expectedFractionDecimals}", function() use ($currencyCode, $expectedFractionDecimals) {
+            $this->specify("currency {$currencyCode} fraction decimals is {$expectedFractionDecimals}", function () use ($currencyCode, $expectedFractionDecimals) {
                     $fractionDecimals= NostoCurrencyInfo::getFractionDecimals(new NostoCurrencyCode($currencyCode));
                     $this->assertEquals($expectedFractionDecimals, $fractionDecimals);
-                });
+            });
         }
     }
 

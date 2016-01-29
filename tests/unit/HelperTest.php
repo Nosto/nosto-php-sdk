@@ -11,15 +11,15 @@ class HelperTest extends \Codeception\TestCase\Test
     {
         $helper = Nosto::helper('currency');
 
-        $this->specify('currency helper could be created', function() use ($helper) {
+        $this->specify('currency helper could be created', function () use ($helper) {
                 $this->assertInstanceOf('NostoHelperCurrency', $helper);
-            });
+        });
 
         $helper = Nosto::helper('iframe');
 
-        $this->specify('iframe helper could be created', function() use ($helper) {
+        $this->specify('iframe helper could be created', function () use ($helper) {
                 $this->assertInstanceOf('NostoHelperIframe', $helper);
-            });
+        });
     }
 
     /**
@@ -39,15 +39,15 @@ class HelperTest extends \Codeception\TestCase\Test
     {
         $helper = Nosto::formatter('date');
 
-        $this->specify('date formatter could be created', function() use ($helper) {
+        $this->specify('date formatter could be created', function () use ($helper) {
                 $this->assertInstanceOf('NostoFormatterDate', $helper);
-            });
+        });
 
         $helper = Nosto::formatter('price');
 
-        $this->specify('price formatter could be created', function() use ($helper) {
+        $this->specify('price formatter could be created', function () use ($helper) {
                 $this->assertInstanceOf('NostoFormatterPrice', $helper);
-            });
+        });
     }
 
     /**

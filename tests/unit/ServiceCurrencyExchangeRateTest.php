@@ -80,9 +80,9 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
         $this->collection[] = $this->rate;
         $result = $this->service->update($this->collection);
 
-        $this->specify('successful currency exchange rate update', function() use ($result) {
+        $this->specify('successful currency exchange rate update', function () use ($result) {
                 $this->assertTrue($result);
-            });
+        });
     }
 
     /**

@@ -38,19 +38,19 @@
  */
 final class NostoCurrencyExchange
 {
-	/**
-	 * Convert a price using given exchange rate.
-	 *
-	 * @param NostoPrice $price the price to convert into different currency.
-	 * @param NostoCurrencyExchangeRate $rate the currency exchange rate to use for the conversion.
-	 * @return NostoPrice the converted price.
-	 */
-	public function convert(NostoPrice $price, NostoCurrencyExchangeRate $rate)
-	{
-		$convertedPrice = $price->multiply($rate->getExchangeRate());
-		if ($convertedPrice->usingFractionUnits()) {
-			$convertedPrice = new NostoPrice($convertedPrice->getRawPrice(), $rate->getCurrency());
-		}
-		return $convertedPrice;
-	}
+    /**
+     * Convert a price using given exchange rate.
+     *
+     * @param NostoPrice $price the price to convert into different currency.
+     * @param NostoCurrencyExchangeRate $rate the currency exchange rate to use for the conversion.
+     * @return NostoPrice the converted price.
+     */
+    public function convert(NostoPrice $price, NostoCurrencyExchangeRate $rate)
+    {
+        $convertedPrice = $price->multiply($rate->getExchangeRate());
+        if ($convertedPrice->usingFractionUnits()) {
+            $convertedPrice = new NostoPrice($convertedPrice->getRawPrice(), $rate->getCurrency());
+        }
+        return $convertedPrice;
+    }
 }

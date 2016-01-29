@@ -4,7 +4,7 @@ require_once(dirname(__FILE__) . '/../_support/NostoProductMock.php');
 
 class ServiceRecrawlTest extends \Codeception\TestCase\Test
 {
-	use \Codeception\Specify;
+    use \Codeception\Specify;
 
     /**
      * @var \UnitTester
@@ -41,17 +41,17 @@ class ServiceRecrawlTest extends \Codeception\TestCase\Test
         \AspectMock\test::clean();
     }
 
-	/**
-	 * Tests that product re-crawl API requests can be made.
-	 */
-	public function testProductReCrawl()
+    /**
+     * Tests that product re-crawl API requests can be made.
+     */
+    public function testProductReCrawl()
     {
         $this->service->addProduct(new NostoProductMock());
         $result = $this->service->send();
 
-		$this->specify('successful product re-crawl', function() use ($result) {
-			$this->assertTrue($result);
-		});
+        $this->specify('successful product re-crawl', function () use ($result) {
+            $this->assertTrue($result);
+        });
     }
 
     /**
