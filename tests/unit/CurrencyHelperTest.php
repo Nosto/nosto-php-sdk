@@ -60,6 +60,7 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
      */
     public function testZendCurrencyFormatParserWithStandardFormat()
     {
+        /** @noinspection PhpUnusedParameterInspection */
         $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function ($locale, $path) {
             return ($path === 'currencynumber') ? '#,##0.00 ¤' : '$';
 
@@ -83,6 +84,7 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
      */
     public function testZendCurrencyFormatParserWithAccountingFormat()
     {
+        /** @noinspection PhpUnusedParameterInspection */
         $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function ($locale, $path) {
             return ($path === 'currencynumber') ? '¤ #,##0.00; (¤ #,##0.00)' : '$';
 
@@ -106,6 +108,7 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
      */
     public function testZendCurrencyFormatParserWithNoPrecision()
     {
+        /** @noinspection PhpUnusedParameterInspection */
         $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function ($locale, $path) {
             return ($path === 'currencynumber') ? '¤ #,##0' : '$';
 
@@ -129,6 +132,7 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
      */
     public function testZendCurrencyFormatParserWithGeneratedPrecision()
     {
+        /** @noinspection PhpUnusedParameterInspection */
         $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function ($locale, $path) {
             return ($path === 'currencynumber') ? '¤ #0.#' : '$';
 
@@ -152,6 +156,7 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
      */
     public function testZendCurrencyFormatParserWithNoGroupLength()
     {
+        /** @noinspection PhpUnusedParameterInspection */
         $mock = \AspectMock\test::double('Zend_Locale_Data', ['getContent' => function ($locale, $path) {
             return ($path === 'currencynumber') ? '¤ #0.00' : '$';
 

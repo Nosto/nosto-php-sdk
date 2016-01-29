@@ -6,7 +6,6 @@
 
 
 use Codeception\Module\Asserts;
-use Codeception\Module\UnitHelper;
 
 /**
  * Inherited Methods

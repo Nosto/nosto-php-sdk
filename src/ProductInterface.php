@@ -147,7 +147,7 @@ interface NostoProductInterface
     /**
      * Returns the product variations if any exist.
      *
-     * @return NostoProductVariationInterface[] the variations.
+     * @return NostoProductPriceVariationInterface[] the variations.
      */
     public function getVariations();
 }

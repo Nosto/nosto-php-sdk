@@ -87,7 +87,6 @@ class NostoServiceAccount
             ));
         }
         $request = $this->initApiRequest(NostoApiRequest::PATH_SETTINGS, $token->getValue());
-        $jsonAccount = $this->getUpdateAccountMetaAsJson($meta);
         $response = $request->put($this->getUpdateAccountMetaAsJson($meta));
         if ($response->getCode() !== 200) {
             throw Nosto::createHttpException('Failed to send account update to Nosto.', $request, $response);

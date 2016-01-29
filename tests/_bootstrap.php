@@ -4,6 +4,7 @@
 date_default_timezone_set('Europe/Helsinki');
 
 // Setup the aspect mock.
+/** @noinspection PhpIncludeInspection */
 require_once(dirname(__FILE__) . '/../vendor/autoload.php');
 $kernel = \AspectMock\Kernel::getInstance();
 $kernel->init([

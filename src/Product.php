@@ -526,7 +526,7 @@ class NostoProduct implements NostoProductInterface
      * The description must be a non-empty string.
      *
      * Usage:
-     * $product->setDescription('Lorem ipsum dolor sit amet, ludus possim ut ius, bonorum facilis mandamus nam ea. ... ');
+     * $product->setDescription('Lorem ipsum dolor sit amet... ');
      *
      * @param string $description the description.
      */
