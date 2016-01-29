@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2015, Nosto Solutions Ltd
+ * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2015 Nosto Solutions Ltd
+ * @copyright 2016 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
@@ -87,7 +87,6 @@ class NostoServiceAccount
             ));
         }
         $request = $this->initApiRequest(NostoApiRequest::PATH_SETTINGS, $token->getValue());
-        $jsonAccount = $this->getUpdateAccountMetaAsJson($meta);
         $response = $request->put($this->getUpdateAccountMetaAsJson($meta));
         if ($response->getCode() !== 200) {
             throw Nosto::createHttpException('Failed to send account update to Nosto.', $request, $response);
@@ -302,7 +301,9 @@ class NostoServiceAccount
             $data['currencies'] = array();
             foreach ($currencies as $currency) {
                 $data['currencies'][$currency->getCode()->getCode()] = array(
-                    'currency_before_amount' => ($currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT),
+                    'currency_before_amount' => (
+                        $currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT
+                    ),
                     'currency_token' => $currency->getSymbol()->getSymbol(),
                     'decimal_character' => $currency->getFormat()->getDecimalSymbol(),
                     'grouping_separator' => $currency->getFormat()->getGroupSymbol(),
@@ -332,5 +333,4 @@ class NostoServiceAccount
             }
         }
     }
-
 }

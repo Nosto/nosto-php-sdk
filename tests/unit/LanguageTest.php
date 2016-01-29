@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
 class LanguageTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
@@ -32,7 +33,7 @@ class LanguageTest extends \Codeception\TestCase\Test
     public function testValidLanguageCodes()
     {
         foreach (self::$validIsoCodes as $code) {
-            $this->specify("language code is {$code}", function() use ($code) {
+            $this->specify("language code is {$code}", function () use ($code) {
                 $language = new NostoLanguageCode($code);
                 $this->assertEquals($code, $language->getCode());
             });

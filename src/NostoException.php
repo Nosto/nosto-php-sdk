@@ -34,15 +34,8 @@
  */
 
 /**
- * Interface for the meta data of a category.
- * This is used when making product re-crawl API requests and product history exports to Nosto.
+ * Nosto exception class for all errors within the sdk.
  */
-interface NostoCategoryInterface
+class NostoException extends Exception
 {
-    /**
-     * Returns the category path including parent categories, e.g. "/Outdoor/Boats/Canoes".
-     *
-     * @return string the category path.
-     */
-    public function getPath();
 }

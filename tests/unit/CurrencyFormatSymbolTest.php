@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
 class CurrencySymbolTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
@@ -16,19 +17,19 @@ class CurrencySymbolTest extends \Codeception\TestCase\Test
     {
         $symbol = new NostoCurrencySymbol('$', NostoCurrencySymbol::SYMBOL_POS_LEFT);
 
-        $this->specify('currency symbol is $', function() use ($symbol) {
+        $this->specify('currency symbol is $', function () use ($symbol) {
                 $this->assertEquals('$', $symbol->getSymbol());
-            });
+        });
 
-        $this->specify('currency symbol position is "left"', function() use ($symbol) {
-                $this->assertEquals(NostoCurrencySymbol::SYMBOL_POS_LEFT , $symbol->getPosition());
-            });
+        $this->specify('currency symbol position is "left"', function () use ($symbol) {
+                $this->assertEquals(NostoCurrencySymbol::SYMBOL_POS_LEFT, $symbol->getPosition());
+        });
 
         $symbol = new NostoCurrencySymbol('$', NostoCurrencySymbol::SYMBOL_POS_RIGHT);
 
-        $this->specify('currency symbol position is "right"', function() use ($symbol) {
-                $this->assertEquals(NostoCurrencySymbol::SYMBOL_POS_RIGHT , $symbol->getPosition());
-            });
+        $this->specify('currency symbol position is "right"', function () use ($symbol) {
+                $this->assertEquals(NostoCurrencySymbol::SYMBOL_POS_RIGHT, $symbol->getPosition());
+        });
     }
 
     /**

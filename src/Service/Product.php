@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2015, Nosto Solutions Ltd
+ * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2015 Nosto Solutions Ltd
+ * @copyright 2016 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
@@ -151,7 +151,13 @@ class NostoServiceProduct
     {
         $token = $this->account->getApiToken(NostoApiToken::API_PRODUCTS);
         if (is_null($token)) {
-            throw new NostoException(sprintf('No `%s` API token found for account "%s".', NostoApiToken::API_PRODUCTS, $this->account->getName()));
+            throw new NostoException(
+                sprintf(
+                    'No `%s` API token found for account "%s".',
+                    NostoApiToken::API_PRODUCTS,
+                    $this->account->getName()
+                )
+            );
         }
 
         $request = new NostoApiRequest();

@@ -6,9 +6,10 @@ require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaData.php');
 require_once(dirname(__FILE__) . '/../_support/NostoOAuthClientMetaData.php');
 require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataSingleSignOn.php');
 
+/** @noinspection PhpUndefinedClassInspection */
 class ServiceAccountTest extends \Codeception\TestCase\Test
 {
-	use \Codeception\Specify;
+    use \Codeception\Specify;
 
     /**
      * @var \UnitTester
@@ -33,7 +34,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
     /**
      * @inheritdoc
      */
-    protected function _before()
+    protected function _before() // @codingStandardsIgnoreLine
     {
         $this->service = new NostoServiceAccount();
         $this->meta = new NostoAccountMetaData();
@@ -46,7 +47,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
     /**
      * @inheritdoc
      */
-    protected function _after()
+    protected function _after() // @codingStandardsIgnoreLine
     {
         \AspectMock\test::clean();
     }
@@ -59,13 +60,13 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
         $account = $this->service->create($this->meta);
         $expectedAccountName = $this->meta->getPlatform().'-'.$this->meta->getName();
 
-        $this->specify('account was created', function() use ($account, $expectedAccountName) {
+        $this->specify('account was created', function () use ($account, $expectedAccountName) {
             $this->assertInstanceOf('NostoAccount', $account);
             $this->assertEquals($expectedAccountName, $account->getName());
         });
 
         foreach (NostoApiToken::getApiTokenNames() as $tokenName) {
-            $this->specify("account has api token {$tokenName}", function() use ($account, $tokenName) {
+            $this->specify("account has api token {$tokenName}", function () use ($account, $tokenName) {
                 $token = $account->getApiToken($tokenName);
                 $this->assertInstanceOf('NostoApiToken', $token);
                 $this->assertEquals($tokenName, $token->getName());
@@ -73,7 +74,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
             });
         }
 
-        $this->specify('account is connected to nosto', function() use ($account) {
+        $this->specify('account is connected to nosto', function () use ($account) {
             $this->assertTrue($account->isConnectedToNosto());
         });
     }
@@ -96,7 +97,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
     {
         $result = $this->service->update($this->account, $this->meta);
 
-        $this->specify('account was updated', function() use ($result) {
+        $this->specify('account was updated', function () use ($result) {
             $this->assertTrue($result);
         });
     }
@@ -131,19 +132,19 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
         $oauthMeta = new NostoOAuthClientMetaData();
         $client = new NostoOAuthClient($oauthMeta);
 
-        $this->specify('oauth authorize url can be created', function() use ($client) {
+        $this->specify('oauth authorize url can be created', function () use ($client) {
             $this->assertEquals('http://localhost:3000?client_id=client-id&redirect_uri=http%3A%2F%2Fmy.shop.com%2Fnosto%2Foauth&response_type=code&scope=sso products&lang=en', $client->getAuthorizationUrl());
         });
 
         $account = $this->service->sync($oauthMeta, 'test123');
 
-        $this->specify('account was synced', function() use ($account) {
+        $this->specify('account was synced', function () use ($account) {
             $this->assertInstanceOf('NostoAccount', $account);
             $this->assertEquals('platform-00000000', $account->getName());
         });
 
         foreach (NostoApiToken::getApiTokenNames() as $tokenName) {
-            $this->specify("account has api token {$tokenName}", function() use ($account, $tokenName) {
+            $this->specify("account has api token {$tokenName}", function () use ($account, $tokenName) {
                 $token = $account->getApiToken($tokenName);
                 $this->assertInstanceOf('NostoApiToken', $token);
                 $this->assertEquals($tokenName, $token->getName());
@@ -151,7 +152,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
             });
         }
 
-        $this->specify('account is connected to nosto', function() use ($account) {
+        $this->specify('account is connected to nosto', function () use ($account) {
             $this->assertTrue($account->isConnectedToNosto());
         });
     }
@@ -174,9 +175,10 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
     public function testAccountSyncHttpFailure()
     {
         \AspectMock\test::double('NostoHttpResponse', ['getCode' => function () {
+                    /** @var NostoHttpResponse $this */
                     $array = $this->getJsonResult(true);
                     return isset($array['api_sso']) ? 404 : 200;
-                }]);
+        }]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->sync(new NostoOAuthClientMetaData(), 'test123');
@@ -193,24 +195,24 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
         $oauthMeta->setAccount($oldAccount);
         $client = new NostoOAuthClient($oauthMeta);
 
-        $this->specify('oauth authorize url can be created', function() use ($client) {
+        $this->specify('oauth authorize url can be created', function () use ($client) {
             $this->assertEquals('http://localhost:3000?client_id=client-id&redirect_uri=http%3A%2F%2Fmy.shop.com%2Fnosto%2Foauth&response_type=code&scope=sso+products&lang=en&merchant=platform-00000000', $client->getAuthorizationUrl());
         });
 
         $service = new NostoServiceAccount();
         $newAccount = $service->sync($oauthMeta, 'test123');
 
-        $this->specify('account was re-synced', function() use ($newAccount) {
+        $this->specify('account was re-synced', function () use ($newAccount) {
             $this->assertInstanceOf('NostoAccount', $newAccount);
             $this->assertEquals('platform-00000000', $newAccount->getName());
         });
 
-        $this->specify('new account equals old account', function() use ($newAccount, $oldAccount) {
+        $this->specify('new account equals old account', function () use ($newAccount, $oldAccount) {
             $this->assertTrue($newAccount->equals($oldAccount));
         });
 
         foreach (NostoApiToken::getApiTokenNames() as $tokenName) {
-            $this->specify("account has api token {$tokenName}", function() use ($newAccount, $tokenName) {
+            $this->specify("account has api token {$tokenName}", function () use ($newAccount, $tokenName) {
                 $token = $newAccount->getApiToken($tokenName);
                 $this->assertInstanceOf('NostoApiToken', $token);
                 $this->assertEquals($tokenName, $token->getName());
@@ -218,7 +220,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
             });
         }
 
-        $this->specify('account is connected to nosto', function() use ($newAccount, $oauthMeta) {
+        $this->specify('account is connected to nosto', function () use ($newAccount, $oauthMeta) {
             $this->assertTrue($newAccount->isConnectedToNosto());
         });
     }
@@ -244,7 +246,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
     {
         $result = $this->service->delete($this->account);
 
-        $this->specify('account is deleted', function() use ($result) {
+        $this->specify('account is deleted', function () use ($result) {
             $this->assertTrue($result);
         });
     }
@@ -276,7 +278,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
     {
         $loginUrl = $this->service->sso($this->account, new NostoAccountMetaDataSingleSignOn());
 
-        $this->specify('single sign on login url is returned', function() use ($loginUrl) {
+        $this->specify('single sign on login url is returned', function () use ($loginUrl) {
             $this->assertEquals('https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg', $loginUrl);
         });
     }

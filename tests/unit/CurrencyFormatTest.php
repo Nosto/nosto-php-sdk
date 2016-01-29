@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
 class CurrencyFormatTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
@@ -16,21 +17,21 @@ class CurrencyFormatTest extends \Codeception\TestCase\Test
     {
         $format = new NostoCurrencyFormat(' ', 3, '.', 2);
 
-        $this->specify('currency group symbol is empty string', function() use ($format) {
-                $this->assertEquals(' ' , $format->getGroupSymbol());
-            });
+        $this->specify('currency group symbol is empty string', function () use ($format) {
+                $this->assertEquals(' ', $format->getGroupSymbol());
+        });
 
-        $this->specify('currency decimal symbol is dot', function() use ($format) {
-                $this->assertEquals('.' , $format->getDecimalSymbol());
-            });
+        $this->specify('currency decimal symbol is dot', function () use ($format) {
+                $this->assertEquals('.', $format->getDecimalSymbol());
+        });
 
-        $this->specify('currency group length is 3', function() use ($format) {
-                $this->assertEquals(3 , $format->getGroupLength());
-            });
+        $this->specify('currency group length is 3', function () use ($format) {
+                $this->assertEquals(3, $format->getGroupLength());
+        });
 
-        $this->specify('currency decimal precision is 2', function() use ($format) {
-                $this->assertEquals(2 , $format->getPrecision());
-            });
+        $this->specify('currency decimal precision is 2', function () use ($format) {
+                $this->assertEquals(2, $format->getPrecision());
+        });
     }
 
     /**

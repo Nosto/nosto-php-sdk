@@ -326,7 +326,7 @@ Then install Codeception via composer:
     php composer.phar install
 ```
 
-And then install Node (http://nodejs.org/) and the npm package manager (https://www.npmjs.com/). After that you can install the api-mock server via npm:
+And then install Node (http://nodejs.org/) and the npm package manager (https://www.npmjs.com/). Please note that node 0.12 is required for the api-mock. In case you are using never version of node install nvm (https://www.npmjs.com/package/nvm) and set you node version to 0.12 before installing api-mock. After that you can install the api-mock server via npm:
 
 ```bash
     npm install -g api-mock

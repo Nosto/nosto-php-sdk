@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2015, Nosto Solutions Ltd
+ * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2015 Nosto Solutions Ltd
+ * @copyright 2016 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
@@ -134,15 +134,6 @@ interface NostoAccountMetaInterface
      * @return string|null the currency ID or null if not set.
      */
     public function getDefaultPriceVariationId();
-
-    /**
-     * Returns if exchange rates are used to handle multi-currency setups.
-     * It is also possible to handle multi-currency setups using variation tagging on the product
-     * pages, i.e. in addition to the product base price, you also tag all price variations.
-     *
-     * @return bool if the rates are used.
-     */
-    public function getUseCurrencyExchangeRates();
 
     /**
      * Returns if the multi variant approach should be used for handling

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2015, Nosto Solutions Ltd
+ * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2015 Nosto Solutions Ltd
+ * @copyright 2016 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
@@ -113,8 +113,7 @@ class NostoOrderSerializerArray
             $dateFormat = new NostoDateFormat(NostoDateFormat::ISO_8601);
             $statuses = array();
             foreach ($order->getHistoryStatuses() as $status) {
-                if (
-                    $status instanceof NostoOrderStatusInterface
+                if ($status instanceof NostoOrderStatusInterface
                     && $status->getCreatedAt()
                 ) {
                     if (!isset($statuses[$status->getCode()])) {

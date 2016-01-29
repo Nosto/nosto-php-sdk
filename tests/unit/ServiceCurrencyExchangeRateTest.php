@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
 class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
@@ -32,7 +33,7 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
     /**
      * @inheritdoc
      */
-    protected function _before()
+    protected function _before() // @codingStandardsIgnoreLine
     {
         $this->account = new NostoAccount('platform-00000000');
         foreach (NostoApiToken::getApiTokenNames() as $tokenName) {
@@ -47,7 +48,7 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
     /**
      * @inheritdoc
      */
-    protected function _after()
+    protected function _after() // @codingStandardsIgnoreLine
     {
         \AspectMock\test::clean();
     }
@@ -80,9 +81,9 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
         $this->collection[] = $this->rate;
         $result = $this->service->update($this->collection);
 
-        $this->specify('successful currency exchange rate update', function() use ($result) {
+        $this->specify('successful currency exchange rate update', function () use ($result) {
                 $this->assertTrue($result);
-            });
+        });
     }
 
     /**

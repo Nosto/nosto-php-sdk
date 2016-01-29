@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
 class DateFormatTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
@@ -14,15 +15,15 @@ class DateFormatTest extends \Codeception\TestCase\Test
      */
     public function testValidDateFormats()
     {
-        $this->specify('date format can be ISO 8601', function() {
+        $this->specify('date format can be ISO 8601', function () {
                 $format = new NostoDateFormat(NostoDateFormat::ISO_8601);
                 $this->assertEquals('Y-m-d\TH:i:s\Z', $format->getFormat());
-            });
+        });
 
-        $this->specify('date format can YMD', function() {
+        $this->specify('date format can YMD', function () {
                 $format = new NostoDateFormat(NostoDateFormat::YMD);
                 $this->assertEquals('Y-m-d', $format->getFormat());
-            });
+        });
     }
 
     /**
