@@ -1,4 +1,4 @@
-php-sdk
+PHP-SDK
 =======
 
 [![BSD-3-Clause license](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](http://opensource.org/licenses/BSD-3-Clause)
