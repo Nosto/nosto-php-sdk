@@ -135,7 +135,7 @@ class NostoOauth implements \NostoOauthClientMetaInterface
     /**
      * @inheritdoc
      */
-    public function setAccount(\NostoAccount $account)
+    public function setAccount(\NostoAccountMetaInterface $account)
     {
         $this->_account = $account;
     }

@@ -45,7 +45,7 @@
 class NostoServiceOrder
 {
     /**
-     * @var NostoAccount the Nosto account to confirm an order for.
+     * @var NostoAccountMetaInterface the Nosto account to confirm an order for.
      */
     protected $account;
 
@@ -54,9 +54,9 @@ class NostoServiceOrder
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoAccount $account the Nosto account object.
+     * @param NostoAccountMetaInterface $account the Nosto account object.
      */
-    public function __construct(NostoAccount $account)
+    public function __construct(NostoAccountMetaInterface $account)
     {
         $this->account = $account;
     }

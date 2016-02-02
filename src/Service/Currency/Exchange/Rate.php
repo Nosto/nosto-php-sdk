@@ -39,7 +39,7 @@
 class NostoServiceCurrencyExchangeRate
 {
     /**
-     * @var NostoAccount the Nosto account to update the rates for.
+     * @var NostoAccountMetaInterface the Nosto account to update the rates for.
      */
     protected $account;
 
@@ -48,9 +48,9 @@ class NostoServiceCurrencyExchangeRate
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoAccount $account the Nosto account object.
+     * @param NostoAccountMetaInterface $account the Nosto account object.
      */
-    public function __construct(NostoAccount $account)
+    public function __construct(NostoAccountMetaInterface $account)
     {
         $this->account = $account;
     }

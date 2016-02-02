@@ -55,7 +55,7 @@ class NostoHelperIframe extends NostoHelper
     public function getUrl(
         NostoAccountMetaSingleSignOnInterface $sso,
         NostoAccountMetaIframeInterface $iframe,
-        NostoAccount $account = null,
+        NostoAccountMetaInterface $account = null,
         array $params = array()
     ) {
         $queryParams = http_build_query(

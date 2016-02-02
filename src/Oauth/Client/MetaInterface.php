@@ -84,7 +84,7 @@ interface NostoOauthClientMetaInterface
     /**
      * The Nosto account if we are to sync account details from Nosto.
      *
-     * @return NostoAccount the account.
+     * @return NostoAccountMetaInterface the account.
      */
     public function getAccount();
 }

@@ -74,7 +74,7 @@ class NostoAccount implements \NostoAccountMetaInterface
     protected $_owner;
 
     /**
-     * @var \NostoBilling the billing meta model.
+     * @var \NostoAccountMetaBillingInterface the billing meta model.
      */
     protected $_billing;
 
