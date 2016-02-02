@@ -99,6 +99,11 @@ class NostoAccount implements \NostoAccountMetaInterface
     protected $_signUpApiToken = 'YBDKYwSqTCzSsU8Bwbg4im2pkHMcgTy9cCX7vevjJwON1UISJIwXOLMM0a8nZY7h';
 
     /**
+     * @var NostoApiToken[] the Nosto API tokens associated with this account.
+     */
+    protected $_tokens = array();
+
+    /**
      * @inheritdoc
      */
     public function getTitle()
@@ -296,5 +301,71 @@ class NostoAccount implements \NostoAccountMetaInterface
     public function getUseMultiVariants()
     {
         return false;
+    }
+
+    /**
+     * Checks if this account has been connected to Nosto, i.e. all API tokens exist.
+     *
+     * @return bool true if it is connected, false otherwise.
+     */
+    public function isConnectedToNosto()
+    {
+        $missingTokens = $this->getMissingScopes();
+        return empty($missingTokens);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMissingScopes()
+    {
+        $allTokens = NostoApiToken::getApiTokenNames();
+        $foundTokens = array();
+        foreach ($allTokens as $tokenName) {
+            foreach ($this->_tokens as $token) {
+                if ($token->getName() === $tokenName) {
+                    $foundTokens[] = $tokenName;
+                    break;
+                }
+            }
+        }
+        return array_diff($allTokens, $foundTokens);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function addApiToken(NostoApiToken $token)
+    {
+        $this->_tokens[] = $token;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getApiToken($name)
+    {
+        foreach ($this->_tokens as $token) {
+            if ($token->getName() === $name) {
+                return $token;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function equals(NostoAccount $account)
+    {
+        return $account->getName() === $this->getName();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTokens()
+    {
+        return $this->_tokens;
     }
 }

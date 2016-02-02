@@ -47,7 +47,7 @@ class NostoHelperIframe extends NostoHelper
      *
      * @param NostoAccountMetaSingleSignOnInterface $sso the SSO meta data.
      * @param NostoAccountMetaIframeInterface $iframe the iframe meta data.
-     * @param NostoAccount|null $account the account to return the url for.
+     * @param NostoAccountMetaInterface $account the account to return the url for.
      * @param array $params additional parameters to add to the iframe url.
      * @return string the iframe url.
      * @throws NostoException if the url cannot be created.
