@@ -34,129 +34,267 @@
  */
 
 /**
- * Data Transfer Object representing a Nosto account.
+ * Account DTO (Data Transfer Object).
  */
-class NostoAccount
+class NostoAccount implements \NostoAccountMetaInterface
 {
     /**
-     * @var string the name of the Nosto account.
+     * @var string the store name.
      */
-    private $name;
+    protected $_title;
 
     /**
-     * @var NostoApiToken[] the Nosto API tokens associated with this account.
+     * @var string the account name.
      */
-    protected $tokens = array();
+    protected $_name;
 
     /**
-     * Constructor.
-     * Create a new account object with given name.
-     *
-     * @param $name
-     *
-     * @throws NostoInvalidArgumentException
+     * @var string the store front end url.
      */
-    public function __construct($name)
+    protected $_frontPageUrl;
+
+    /**
+     * @var \NostoCurrencyCode the store currency ISO (ISO 4217) code.
+     */
+    protected $_currency;
+
+    /**
+     * @var \NostoLanguageCode the store language ISO (ISO 639-1) code.
+     */
+    protected $_language;
+
+    /**
+     * @var \NostoLanguageCode the owner language ISO (ISO 639-1) code.
+     */
+    protected $_ownerLanguage;
+
+    /**
+     * @var \NostoOwner the account owner meta model.
+     */
+    protected $_owner;
+
+    /**
+     * @var \NostoBilling the billing meta model.
+     */
+    protected $_billing;
+
+    /**
+     * @var \NostoCurrency[] list of supported currencies by the store.
+     */
+    protected $_currencies = array();
+
+    /**
+     * @var string the default price variation ID if using multiple currencies.
+     */
+    protected $_defaultPriceVariationId;
+
+    /**
+     * @var bool if the store uses exchange rates to manage multiple currencies.
+     */
+    protected $_useCurrencyExchangeRates = false;
+
+    /**
+     * @var string the API token used to identify an account creation.
+     */
+    protected $_signUpApiToken = 'YBDKYwSqTCzSsU8Bwbg4im2pkHMcgTy9cCX7vevjJwON1UISJIwXOLMM0a8nZY7h';
+
+    /**
+     * @inheritdoc
+     */
+    public function getTitle()
     {
-        if (!is_string($name) || empty($name)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.name (%s) must be a non-empty string value.',
-                __CLASS__,
-                $name
-            ));
-        }
-
-        $this->name = (string)$name;
+        return $this->_title;
     }
 
     /**
-     * Gets the account name.
-     *
-     * @return string the account name.
+     * @inheritdoc
+     */
+    public function setTitle($title)
+    {
+        $this->_title = $title;
+    }
+
+    /**
+     * @inheritdoc
      */
     public function getName()
     {
-        return $this->name;
+        return $this->_name;
     }
 
     /**
-     * Returns the accounts API tokens.
-     *
-     * @return NostoApiToken[] the tokens.
+     * @inheritdoc
      */
-    public function getTokens()
+    public function setName($name)
     {
-        return $this->tokens;
+        $this->_name = $name;
     }
 
     /**
-     * Checks if this account is the same as the given account.
-     * They are considered equal if their name property match. The tokens are not relevant in the comparison,
-     * as they are not required by the account upon creation.
-     *
-     * @param NostoAccount $account the account to check.
-     * @return bool true if equals.
+     * @inheritdoc
      */
-    public function equals(NostoAccount $account)
+    public function getPlatform()
     {
-        return $account->getName() === $this->getName();
+        return 'magento';
     }
 
     /**
-     * Checks if this account has been connected to Nosto, i.e. all API tokens exist.
-     *
-     * @return bool true if it is connected, false otherwise.
+     * @inheritdoc
      */
-    public function isConnectedToNosto()
+    public function getFrontPageUrl()
     {
-        $missingTokens = $this->getMissingScopes();
-        return empty($missingTokens);
+        return $this->_frontPageUrl;
     }
 
     /**
-     * Returns a list of API token names that are present for the account.
-     * The API tokens act as scopes when doing OAuth requests to Nosto.
-     *
-     * @return array the list of names.
+     * @inheritdoc
      */
-    public function getMissingScopes()
+    public function setFrontPageUrl($frontPageUrl)
     {
-        $allTokens = NostoApiToken::getApiTokenNames();
-        $foundTokens = array();
-        foreach ($allTokens as $tokenName) {
-            foreach ($this->tokens as $token) {
-                if ($token->getName() === $tokenName) {
-                    $foundTokens[] = $tokenName;
-                    break;
-                }
-            }
-        }
-        return array_diff($allTokens, $foundTokens);
+        $this->_frontPageUrl = $frontPageUrl;
     }
 
     /**
-     * Adds an API token to the account.
-     *
-     * @param NostoApiToken $token the token.
+     * @inheritdoc
      */
-    public function addApiToken(NostoApiToken $token)
+    public function getCurrency()
     {
-        $this->tokens[] = $token;
+        return $this->_currency;
     }
 
     /**
-     * Gets an api token associated with this account by it's name , e.g. "sso".
-     *
-     * @param string $name the api token name.
-     * @return NostoApiToken|null the token or null if not found.
+     * @inheritdoc
      */
-    public function getApiToken($name)
+    public function setCurrency(\NostoCurrencyCode $currency)
     {
-        foreach ($this->tokens as $token) {
-            if ($token->getName() === $name) {
-                return $token;
-            }
-        }
+        $this->_currency = $currency;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLanguage()
+    {
+        return $this->_language;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setLanguage(\NostoLanguageCode $language)
+    {
+        $this->_language = $language;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getOwnerLanguage()
+    {
+        return $this->_ownerLanguage;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setOwnerLanguage(\NostoLanguageCode $ownerLanguage)
+    {
+        $this->_ownerLanguage = $ownerLanguage;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getOwner()
+    {
+        return $this->_owner;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setOwner(\NostoAccountMetaOwnerInterface $owner)
+    {
+        $this->_owner = $owner;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getBillingDetails()
+    {
+        return $this->_billing;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCurrencies()
+    {
+        return $this->_currencies;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setCurrencies(array $currencies)
+    {
+        $this->_currencies = $currencies;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDefaultPriceVariationId()
+    {
         return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUseCurrencyExchangeRates()
+    {
+        return $this->_useCurrencyExchangeRates;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setUseCurrencyExchangeRates($useCurrencyExchangeRates)
+    {
+        $this->_useCurrencyExchangeRates = $useCurrencyExchangeRates;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSignUpApiToken()
+    {
+        return $this->_signUpApiToken;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPartnerCode()
+    {
+        return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setBilling(\NostoAccountMetaBillingInterface $billing)
+    {
+        $this->_billing = $billing;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUseMultiVariants()
+    {
+        return false;
     }
 }
