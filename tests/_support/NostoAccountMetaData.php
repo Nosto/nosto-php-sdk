@@ -2,53 +2,53 @@
 
 class NostoAccountMetaData implements NostoAccountMetaInterface
 {
-	protected $owner;
-	protected $billing;
-	public function __construct()
-	{
-		$this->owner = new NostoAccountMetaDataOwner();
-		$this->billing = new NostoAccountMetaDataBilling();
-	}
-	public function getTitle()
-	{
-		return 'My Shop';
-	}
-	public function getName()
-	{
-		return '00000000';
-	}
-	public function getPlatform()
-	{
-		return 'platform';
-	}
-	public function getFrontPageUrl()
-	{
-		return 'http://localhost';
-	}
-	public function getCurrency()
-	{
-		return new NostoCurrencyCode('USD');
-	}
-	public function getLanguage()
-	{
-		return new NostoLanguageCode('en');
-	}
-	public function getOwnerLanguage()
-	{
-		return new NostoLanguageCode('en');
-	}
-	public function getOwner()
-	{
-		return $this->owner;
-	}
-	public function getBillingDetails()
-	{
-		return $this->billing;
-	}
-	public function getSignUpApiToken()
-	{
-		return 'abc123';
-	}
+    protected $owner;
+    protected $billing;
+    public function __construct()
+    {
+        $this->owner = new NostoAccountMetaDataOwner();
+        $this->billing = new NostoAccountMetaDataBilling();
+    }
+    public function getTitle()
+    {
+        return 'My Shop';
+    }
+    public function getName()
+    {
+        return '00000000';
+    }
+    public function getPlatform()
+    {
+        return 'platform';
+    }
+    public function getFrontPageUrl()
+    {
+        return 'http://localhost';
+    }
+    public function getCurrency()
+    {
+        return new NostoCurrencyCode('USD');
+    }
+    public function getLanguage()
+    {
+        return new NostoLanguageCode('en');
+    }
+    public function getOwnerLanguage()
+    {
+        return new NostoLanguageCode('en');
+    }
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+    public function getBillingDetails()
+    {
+        return $this->billing;
+    }
+    public function getSignUpApiToken()
+    {
+        return 'abc123';
+    }
     public function getPartnerCode()
     {
         return 'nosto';
@@ -76,11 +76,28 @@ class NostoAccountMetaData implements NostoAccountMetaInterface
     {
         return array();
     }
-
-	public function getUseMultiVariants()
-	{
-		return false;
-	}
-
-
+    public function getUseMultiVariants()
+    {
+        return false;
+    }
+    public function isConnectedToNosto()
+    {
+        return false;
+    }
+    public function getMissingScopes()
+    {
+        return array();
+    }
+    public function getApiToken($name)
+    {
+        return null;
+    }
+    public function getTokens()
+    {
+        return array();
+    }
+    public function equals(NostoAccount $account)
+    {
+        return false;
+    }
 }
