@@ -136,10 +136,10 @@ interface NostoAccountMetaInterface
     public function getDefaultPriceVariationId();
 
     /**
-     * Returns if the multi variant approach should be used for handling
-     * multiple currencies or in pricing. Please note that only tells if the
-     * setting is active. This will not take account whether there are variants
-     * configured or not.
+     * Returns if exchange rates should be used for handling
+     * multiple currencies. Please note that the method only tells if the
+     * setting is active. Method does not take account whether multiple
+     * currencies actually exist or are used.
      *
      * @return boolean if multi variants are used
      */

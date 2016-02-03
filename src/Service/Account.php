@@ -293,6 +293,12 @@ class NostoServiceAccount
         return json_encode($data);
     }
 
+    /**
+     * Resolves and populates the currency settings
+     *
+     * @param array $data
+     * @param NostoAccountMetaInterface $meta
+     */
     public static function resolveCurrencyOptions(array &$data, NostoAccountMetaInterface $meta)
     {
         $currencies = $meta->getCurrencies();
@@ -312,25 +318,8 @@ class NostoServiceAccount
             }
         }
 
-        if ($meta->getUseCurrencyExchangeRates()) {
-            $data['default_variant_id'] = $meta->getDefaultPriceVariationId();
-            $data['use_exchange_rates'] = false;
-        } else {
-            $data['default_variant_id'] = '';
-            $data['use_exchange_rates'] = false;
-            if ($currencyCount > 1) {
-                $data['use_exchange_rates'] = true;
-            } else { // Check for possible multiple currencies used in multi store environment
-                $allCurrenciesCount = $currencyCount;
-                foreach ($currencies as $currency) {
-                    if ($currency->getCode()->getCode() !== $meta->getCurrency()->getCode()) {
-                        ++$allCurrenciesCount;
-                    }
-                }
-                if ($allCurrenciesCount > 1) {
-                    $data['use_exchange_rates'] = true;
-                }
-            }
-        }
+        $data['use_exchange_rates'] = $meta->getUseCurrencyExchangeRates();
+        $data['default_variant_id'] = $meta->getDefaultPriceVariationId();
+
     }
 }
