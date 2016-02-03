@@ -312,7 +312,7 @@ class NostoServiceAccount
             }
         }
 
-        if ($meta->getUseMultiVariants()) {
+        if ($meta->getUseCurrencyExchangeRates()) {
             $data['default_variant_id'] = $meta->getDefaultPriceVariationId();
             $data['use_exchange_rates'] = false;
         } else {

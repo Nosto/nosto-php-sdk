@@ -305,14 +305,6 @@ class NostoAccount implements \NostoAccountMetaInterface
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getUseMultiVariants()
-    {
-        return false;
-    }
-
-    /**
      * Checks if this account has been connected to Nosto, i.e. all API tokens exist.
      *
      * @return bool true if it is connected, false otherwise.

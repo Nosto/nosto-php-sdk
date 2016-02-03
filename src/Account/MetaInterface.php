@@ -143,7 +143,7 @@ interface NostoAccountMetaInterface
      *
      * @return boolean if multi variants are used
      */
-    public function getUseMultiVariants();
+    public function getUseCurrencyExchangeRates();
 
     /**
      * Checks if this account has been connected to Nosto, i.e. all API tokens exist.
