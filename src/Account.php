@@ -104,6 +104,15 @@ class NostoAccount implements \NostoAccountMetaInterface
     protected $_tokens = array();
 
     /**
+     * NostoAccount constructor.
+     * @param $name
+     */
+    public function __construct($name = '')
+    {
+        $this->_name = $name;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getTitle()
