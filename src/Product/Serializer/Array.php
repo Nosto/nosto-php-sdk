@@ -159,7 +159,6 @@ class NostoProductSerializerArray
                     $variationData['availability'] = $variation->getAvailability();
                 }
                 if ($variation->getId()) {
-                    $variationData['variation_id'] = $variation->getId();
                     $data['variations'][$variation->getId()] = $variationData;
                 } else {
                     $data['variations'][] = $variationData;
