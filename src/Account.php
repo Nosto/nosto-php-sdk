@@ -261,7 +261,7 @@ class NostoAccount implements \NostoAccountMetaInterface
      */
     public function getDefaultPriceVariationId()
     {
-        return null;
+        return $this->_defaultPriceVariationId;
     }
 
     /**
