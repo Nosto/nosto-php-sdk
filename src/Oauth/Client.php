@@ -74,7 +74,7 @@ class NostoOAuthClient
     protected $scopes = array();
 
     /**
-     * @var NostoAccount the Nosto account if OAuth is done for a specific account to sync details.
+     * @var NostoAccountMetaInterface the Nosto account if OAuth is done for a specific account to sync details.
      */
     protected $account;
 

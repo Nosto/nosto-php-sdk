@@ -136,12 +136,52 @@ interface NostoAccountMetaInterface
     public function getDefaultPriceVariationId();
 
     /**
-     * Returns if the multi variant approach should be used for handling
-     * multiple currencies or in pricing. Please note that only tells if the
-     * setting is active. This will not take account whether there are variants
-     * configured or not.
+     * Returns if exchange rates should be used for handling
+     * multiple currencies. Please note that the method only tells if the
+     * setting is active. Method does not take account whether multiple
+     * currencies actually exist or are used.
      *
      * @return boolean if multi variants are used
      */
-    public function getUseMultiVariants();
+    public function getUseCurrencyExchangeRates();
+
+    /**
+     * Checks if this account has been connected to Nosto, i.e. all API tokens exist.
+     *
+     * @return bool true if it is connected, false otherwise.
+     */
+    public function isConnectedToNosto();
+
+    /**
+     * Returns a list of API token names that are present for the account.
+     * The API tokens act as scopes when doing OAuth requests to Nosto.
+     *
+     * @return array the list of names.
+     */
+    public function getMissingScopes();
+
+    /**
+     * Gets an api token associated with this account by it's name , e.g. "sso".
+     *
+     * @param string $name the api token name.
+     * @return NostoApiToken|null the token or null if not found.
+     */
+    public function getApiToken($name);
+
+    /**
+     * Returns the accounts API tokens.
+     *
+     * @return NostoApiToken[] the tokens.
+     */
+    public function getTokens();
+
+    /**
+     * Checks if this account is the same as the given account.
+     * They are considered equal if their name property match. The tokens are not relevant in the comparison,
+     * as they are not required by the account upon creation.
+     *
+     * @param NostoAccount $account the account to check.
+     * @return bool true if equals.
+     */
+    public function equals(NostoAccount $account);
 }

@@ -42,7 +42,7 @@ class NostoServiceAccount
      * Sends an account create API call to Nosto.
      *
      * @param NostoAccountMetaInterface $meta the account meta data.
-     * @return NostoAccount the newly created account.
+     * @return NostoAccountMetaInterface the newly created account.
      *
      * @throws NostoException on failure.
      */
@@ -70,13 +70,13 @@ class NostoServiceAccount
      * An example of this would be when a new currency is added and the price formatting details need to be made
      * available in Nosto for the recommendations.
      *
-     * @param NostoAccount $account the account to update.
+     * @param NostoAccountMetaInterface $account the account to update.
      * @param NostoAccountMetaInterface $meta the account meta data.
      * @return bool true on success.
      *
      * @throws NostoException on failure.
      */
-    public function update(NostoAccount $account, NostoAccountMetaInterface $meta)
+    public function update(NostoAccountMetaInterface $account, NostoAccountMetaInterface $meta)
     {
         $token = $account->getApiToken(NostoApiToken::API_SETTINGS);
         if (is_null($token)) {
@@ -99,12 +99,12 @@ class NostoServiceAccount
      *
      * This notifies Nosto about accounts that are no longer in use.
      *
-     * @param NostoAccount $account the account to delete.
+     * @param NostoAccountMetaInterface $account the account to delete.
      * @return bool true on success.
      *
      * @throws NostoException on failure.
      */
-    public function delete(NostoAccount $account)
+    public function delete(NostoAccountMetaInterface $account)
     {
         $token = $account->getApiToken(NostoApiToken::API_SSO);
         if (is_null($token)) {
@@ -131,7 +131,7 @@ class NostoServiceAccount
      *
      * @param NostoOauthClientMetaInterface $meta the OAuth client meta data to use for connection to Nosto.
      * @param string $authCode the authorization code that grants access to transfer data from Nosto.
-     * @return NostoAccount the synced account.
+     * @return NostoAccountMetaInterface the synced account.
      *
      * @throws NostoException on failure.
      */
@@ -165,13 +165,13 @@ class NostoServiceAccount
      *
      * Requires that the account has a valid sso token associated with it.
      *
-     * @param NostoAccount $account the account to sign into.
+     * @param NostoAccountMetaInterface $account the account to sign into.
      * @param NostoAccountMetaSingleSignOnInterface $meta the SSO meta-data.
      * @return string a secure login url.
      *
      * @throws NostoException on failure.
      */
-    public function sso(NostoAccount $account, NostoAccountMetaSingleSignOnInterface $meta)
+    public function sso(NostoAccountMetaInterface $account, NostoAccountMetaSingleSignOnInterface $meta)
     {
         $token = $account->getApiToken(NostoApiToken::API_SSO);
         if (is_null($token)) {
@@ -293,6 +293,12 @@ class NostoServiceAccount
         return json_encode($data);
     }
 
+    /**
+     * Resolves and populates the currency settings
+     *
+     * @param array $data
+     * @param NostoAccountMetaInterface $meta
+     */
     public static function resolveCurrencyOptions(array &$data, NostoAccountMetaInterface $meta)
     {
         $currencies = $meta->getCurrencies();
@@ -312,25 +318,8 @@ class NostoServiceAccount
             }
         }
 
-        if ($meta->getUseMultiVariants()) {
-            $data['default_variant_id'] = $meta->getDefaultPriceVariationId();
-            $data['use_exchange_rates'] = false;
-        } else {
-            $data['default_variant_id'] = '';
-            $data['use_exchange_rates'] = false;
-            if ($currencyCount > 1) {
-                $data['use_exchange_rates'] = true;
-            } else { // Check for possible multiple currencies used in multi store environment
-                $allCurrenciesCount = $currencyCount;
-                foreach ($currencies as $currency) {
-                    if ($currency->getCode()->getCode() !== $meta->getCurrency()->getCode()) {
-                        ++$allCurrenciesCount;
-                    }
-                }
-                if ($allCurrenciesCount > 1) {
-                    $data['use_exchange_rates'] = true;
-                }
-            }
-        }
+        $data['use_exchange_rates'] = $meta->getUseCurrencyExchangeRates();
+        $data['default_variant_id'] = $meta->getDefaultPriceVariationId();
+
     }
 }

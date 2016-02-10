@@ -51,6 +51,7 @@ require_once(dirname(__FILE__).'/src/Order/Payment/ProviderInterface.php');
 require_once(dirname(__FILE__).'/src/Product/Price/VariationInterface.php');
 
 require_once(dirname(__FILE__).'/src/Account.php');
+require_once(dirname(__FILE__).'/src/Billing.php');
 require_once(dirname(__FILE__).'/src/Cart.php');
 require_once(dirname(__FILE__).'/src/Category.php');
 require_once(dirname(__FILE__).'/src/Cipher.php');
@@ -63,12 +64,16 @@ require_once(dirname(__FILE__).'/src/NostoInvalidArgumentException.php');
 require_once(dirname(__FILE__).'/src/Exporter.php');
 require_once(dirname(__FILE__).'/src/Formatter.php');
 require_once(dirname(__FILE__).'/src/Helper.php');
+require_once(dirname(__FILE__).'/src/Iframe.php');
 require_once(dirname(__FILE__).'/src/LineItem.php');
 require_once(dirname(__FILE__).'/src/Message.php');
 require_once(dirname(__FILE__).'/src/Nosto.php');
+require_once(dirname(__FILE__).'/src/Oauth.php');
 require_once(dirname(__FILE__).'/src/Order.php');
+require_once(dirname(__FILE__).'/src/Owner.php');
 require_once(dirname(__FILE__).'/src/Price.php');
 require_once(dirname(__FILE__).'/src/Product.php');
+require_once(dirname(__FILE__).'/src/Sso.php');
 require_once(dirname(__FILE__).'/src/Uri.php');
 
 require_once(dirname(__FILE__).'/src/Http/Request.php');

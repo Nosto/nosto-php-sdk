@@ -62,16 +62,6 @@ class AccountTest extends \Codeception\TestCase\Test
     }
 
     /**
-     * Test that you cannot create a nosto account object with an invalid name.
-     */
-    public function testInvalidAccountName()
-    {
-        $this->setExpectedException('NostoInvalidArgumentException');
-
-        new NostoAccount(null);
-    }
-
-    /**
      * Test the account object equals method.
      */
     public function testAccountEquality()

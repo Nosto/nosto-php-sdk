@@ -39,7 +39,7 @@
 class NostoServiceProduct
 {
     /**
-     * @var NostoAccount the account to perform the operation on.
+     * @var NostoAccountMetaInterface the account to perform the operation on.
      */
     protected $account;
 
@@ -53,9 +53,9 @@ class NostoServiceProduct
      *
      * Accepts the account for which the product operation is to be performed on.
      *
-     * @param NostoAccount $account the account object.
+     * @param NostoAccountMetaInterface $account the account object.
      */
-    public function __construct(NostoAccount $account)
+    public function __construct(NostoAccountMetaInterface $account)
     {
         $this->account = $account;
         $this->collection = new NostoProductCollection();
