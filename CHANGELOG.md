@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.2]
+### Changed
+- Add composer autoload and bootsrap file to handle the environment
+
 ## [2.4.1]
 ### Changed
 - Impelement more classes in SDK
