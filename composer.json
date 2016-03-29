@@ -7,9 +7,9 @@
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "2.*",
-        "codeception/codeception": "2.0.*",
-        "codeception/specify": "0.4.*",
-        "codeception/aspect-mock": "0.5.*"
+        "codeception/codeception": "2.0.0",
+        "codeception/specify": "0.4.1",
+        "codeception/aspect-mock": "0.5.3"
     },
     "autoload": {
         "classmap": [
