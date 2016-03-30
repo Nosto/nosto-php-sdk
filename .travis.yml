@@ -23,11 +23,8 @@ install:
   - composer install --no-interaction
 
 before_script:
-  # Expand max_nesting_level to prevent error
-  - if [[ "$TRAVIS_PHP_VERSION" = "php*" ]]; then echo "xdebug.max_nesting_level=1000" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi
-  
-  # Add more memory to prevent errors
-  - if [[ "$TRAVIS_PHP_VERSION" = "php*" ]]; echo "memory_limit=2048M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi
+  # Add my own .ini file for PHP
+  - if [[ "$TRAVIS_PHP_VERSION" = "php*" ]]; then phpenv config-add travis.php.ini; fi
   
   # Start API Mock server
   - api-mock tests/api-blueprint.md > /dev/null 2>&1 &
