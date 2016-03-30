@@ -26,6 +26,9 @@ before_script:
   # Expand max_nesting_level to prevent error
   - echo "xdebug.max_nesting_level=1000" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   
+  # Add more memory to prevent errors
+  - echo "memory_limit=2048M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  
   # Start API Mock server
   - api-mock tests/api-blueprint.md > /dev/null 2>&1 &
 
