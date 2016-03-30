@@ -16,6 +16,11 @@ matrix:
     - php: 7.0
     - php: nightly
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - node_modules
+
 install:
   - nvm install 0.12
   - npm install -g api-mock
