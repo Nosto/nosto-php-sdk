@@ -16,6 +16,12 @@ matrix:
     - php: 7.0
     - php: nightly
 
+before_install:
+
+ # Expand max_nesting_level to prevent error
+ - export ADDITIONAL_PATH=`php -i | grep -F --color=never 'Scan this dir for additional .ini files'`
+ - echo "xdebug.max_nesting_level=9999" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
 install:
   - nvm install 0.12
   - npm install -g api-mock
