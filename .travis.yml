@@ -20,7 +20,7 @@ before_install:
 
  # Expand max_nesting_level to prevent error
  - export ADDITIONAL_PATH=`php -i | grep -F --color=never 'Scan this dir for additional .ini files'`
- - echo "xdebug.max_nesting_level=9999" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+ - echo 'xdebug.max_nesting_level=9999' | sudo tee ${ADDITIONAL_PATH:42}/symfony2.ini
 
 install:
   - nvm install 0.12
