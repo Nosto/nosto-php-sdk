@@ -20,7 +20,7 @@ cache:
   directories:
     - $HOME/.composer/cache
     - $HOME/node_modules
-    - $HOME/.nvm/versions/node/
+    - $HOME/.nvm/versions/node
 
 install:
   - nvm install 0.12
