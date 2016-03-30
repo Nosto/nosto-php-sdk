@@ -30,7 +30,7 @@ install:
 
 before_script:
   # Expand max_nesting_level to prevent error
-  - if [[ "$TRAVIS_PHP_VERSION" = "php*" ]]; then phpenv config-add .travis.php.ini; phpenv rehash; fi
+  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm*" ]]; then phpenv config-add .travis.php.ini; phpenv rehash; fi
 
   # Start API Mock server
   - api-mock tests/api-blueprint.md > /dev/null 2>&1 &
