@@ -16,11 +16,6 @@ matrix:
     - php: 7.0
     - php: nightly
 
-before_install:
-
- # Expand max_nesting_level to prevent error
- - echo "xdebug.max_nesting_level=1000" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-
 install:
   - nvm install 0.12
   - npm install -g api-mock
@@ -28,6 +23,10 @@ install:
   - composer install --no-interaction
 
 before_script:
+  # Expand max_nesting_level to prevent error
+  - echo "xdebug.max_nesting_level=1000" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  
+  # Start API Mock server
   - api-mock tests/api-blueprint.md > /dev/null 2>&1 &
 
 script:
