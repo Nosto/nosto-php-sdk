@@ -38,5 +38,5 @@ before_script:
   - api-mock tests/api-blueprint.md > /dev/null 2>&1 &
 
 script:
-  - for f in tests/unit/*Test.php; do vendor/bin/codecept run $f; done
+  - ./vendor/bin/codecept run
   - ./vendor/bin/phpcs --standard=ruleset.xml --extensions=php --ignore=lib --ignore=_data --ignore=_support --ignore=tests src
