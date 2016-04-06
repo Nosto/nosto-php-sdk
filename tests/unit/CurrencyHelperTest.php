@@ -35,7 +35,7 @@ class CurrencyHelperTest extends \Codeception\TestCase\Test
      */
     protected function _after() // @codingStandardsIgnoreLine
     {
-        \AspectMock\test::clean();
+        \AspectMock\Test::clean();
     }
 
     /**

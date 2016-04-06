@@ -39,7 +39,7 @@ class ServiceRecrawlTest extends \Codeception\TestCase\Test
      */
     protected function _after() // @codingStandardsIgnoreLine
     {
-        \AspectMock\test::clean();
+        \AspectMock\Test::clean();
     }
 
     /**
@@ -80,7 +80,7 @@ class ServiceRecrawlTest extends \Codeception\TestCase\Test
      */
     public function testProductReCrawlHttpFailure()
     {
-        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
+        \AspectMock\Test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->addProduct(new NostoProductMock());

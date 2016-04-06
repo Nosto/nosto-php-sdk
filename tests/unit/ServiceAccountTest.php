@@ -49,7 +49,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     protected function _after() // @codingStandardsIgnoreLine
     {
-        \AspectMock\test::clean();
+        \AspectMock\Test::clean();
     }
 
     /**
@@ -84,7 +84,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     public function testAccountCreateHttpFailure()
     {
-        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
+        \AspectMock\Test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->create($this->meta);
@@ -118,7 +118,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     public function testAccountUpdateHttpFailure()
     {
-        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
+        \AspectMock\Test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->update($this->account, $this->meta);
@@ -162,7 +162,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     public function testAccountSyncWithInvalidReturnData()
     {
-        \AspectMock\test::double('NostoApiToken', ['parseTokens' => array()]);
+        \AspectMock\Test::double('NostoApiToken', ['parseTokens' => array()]);
 
         $this->setExpectedException('NostoException');
         $oauthMeta = new NostoOAuthClientMetaData();
@@ -174,7 +174,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     public function testAccountSyncHttpFailure()
     {
-        \AspectMock\test::double('NostoHttpResponse', ['getCode' => function () {
+        \AspectMock\Test::double('NostoHttpResponse', ['getCode' => function () {
                     /** @var NostoHttpResponse $this */
                     $array = $this->getJsonResult(true);
                     return isset($array['api_sso']) ? 404 : 200;
@@ -230,7 +230,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     public function testAccountReSyncHttpFailure()
     {
-        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
+        \AspectMock\Test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $oauthMeta = new NostoOAuthClientMetaData();
         $oauthMeta->setAccount($this->account);
@@ -265,7 +265,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     public function testAccountDeleteHttpFailure()
     {
-        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
+        \AspectMock\Test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->delete($this->account);
@@ -297,7 +297,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     public function testAccountSingleSignOnWithInvalidReturnData()
     {
-        \AspectMock\test::double('NostoHttpResponse', ['getJsonResult' => array()]);
+        \AspectMock\Test::double('NostoHttpResponse', ['getJsonResult' => array()]);
 
         $this->setExpectedException('NostoException');
         $this->service->sso($this->account, new NostoAccountMetaDataSingleSignOn());
@@ -308,7 +308,7 @@ class ServiceAccountTest extends \Codeception\TestCase\Test
      */
     public function testAccountSingleSignOnHttpFailure()
     {
-        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
+        \AspectMock\Test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->sso($this->account, new NostoAccountMetaDataSingleSignOn());
