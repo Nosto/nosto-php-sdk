@@ -39,7 +39,7 @@ before_script:
 
 script:
   - BUILD_OWNER=`dirname $TRAVIS_BUILD_DIR`
-  - FILES=$BUILD_OWNER/php-sdk/tests/unit/*
+  - FILES=./tests/unit/*
   - ls $BUILD_OWNER/php-sdk/tests/unit/
   - for f in $FILES; do vendor/bin/codecept run $f; done
   - ./vendor/bin/phpcs --standard=ruleset.xml --extensions=php --ignore=lib --ignore=_data --ignore=_support --ignore=tests src
