@@ -5,7 +5,8 @@
     "require-dev": {
         "codeception/codeception": "2.0.0",
         "codeception/specify": "0.4.1",
-        "codeception/aspect-mock": "0.5.3"
+        "codeception/aspect-mock": "0.5.3",
+        "squizlabs/php_codesniffer": "2.*"
     },
     "autoload": {
         "classmap": [
