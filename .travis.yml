@@ -30,7 +30,7 @@ install:
   - php composer-setup.php
   - php -r "unlink('composer-setup.php');"
   - php composer.phar install --no-interaction
-  
+
   # Closing port in firewall
   - sudo ufw status
   - sudo iptables -L -n -v
