@@ -31,6 +31,13 @@ install:
   - php -r "unlink('composer-setup.php');"
   - php composer.phar install --no-interaction
 
+  # Closing port in firewall
+  - sudo ufw status
+  - sudo iptables -L -n -v
+  - sudo iptables -A OUTPUT -p tcp --dport 9900 -j DROP
+  - sudo ufw --force enable
+  - sudo ufw reload
+
 before_script:
   - cp .env.example .env
 
