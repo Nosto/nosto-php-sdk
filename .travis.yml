@@ -1,4 +1,4 @@
-language: php
+language: true
 sudo: false
 
 php:
@@ -27,8 +27,8 @@ install:
   - npm install -g api-mock
   - composer self-update
   - composer install --no-interaction
-  - iptables -A OUTPUT -p tcp --dport 9900 -j DROP
-  - service iptables save
+  - sudo iptables -A OUTPUT -p tcp --dport 9900 -j DROP
+  - sudo service iptables save
 
 before_script:
   - cp .env.example .env
