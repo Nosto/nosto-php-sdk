@@ -50,7 +50,7 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
      */
     protected function _after() // @codingStandardsIgnoreLine
     {
-        \AspectMock\test::clean();
+        \AspectMock\Test::clean();
     }
 
     /**
@@ -91,7 +91,7 @@ class ServiceCurrencyExchangeRateTest extends \Codeception\TestCase\Test
      */
     public function testCurrencyExchangeRateUpdateHttpFailure()
     {
-        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
+        \AspectMock\Test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->collection[] = $this->rate;
