@@ -39,7 +39,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
      */
     protected function _after() // @codingStandardsIgnoreLine
     {
-        \AspectMock\test::clean();
+        \AspectMock\Test::clean();
     }
 
     /**
@@ -179,7 +179,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
      */
     public function testProductUpsertHttpFailure()
     {
-        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
+        \AspectMock\Test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->addProduct(new NostoProductMock());
@@ -191,7 +191,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
      */
     public function testProductCreateHttpFailure()
     {
-        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
+        \AspectMock\Test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->addProduct(new NostoProductMock());
@@ -203,7 +203,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
      */
     public function testProductUpdateHttpFailure()
     {
-        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
+        \AspectMock\Test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->addProduct(new NostoProductMock());
@@ -215,7 +215,7 @@ class ServiceProductTest extends \Codeception\TestCase\Test
      */
     public function testProductDeleteHttpFailure()
     {
-        \AspectMock\test::double('NostoHttpResponse', ['getCode' => 404]);
+        \AspectMock\Test::double('NostoHttpResponse', ['getCode' => 404]);
 
         $this->setExpectedException('NostoHttpException');
         $this->service->addProduct(new NostoProductMock());
