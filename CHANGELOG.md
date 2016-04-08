@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.3]
+### Added
+- Add new product statuses
+
 ## [2.4.2]
 ### Changed
 - Add composer autoload and bootsrap file to handle the environment
@@ -71,8 +75,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Initial release
 
-
-[unreleased]: https://github.com/nosto/php-sdk/compare/2.3.0...develop
+[unreleased]: https://github.com/nosto/php-sdk/compare/2.4.3...develop
+[2.4.3]: https://github.com/nosto/php-sdk/compare/2.4.2...2.4.3
+[2.4.2]: https://github.com/nosto/php-sdk/compare/2.4.1...2.4.2
+[2.4.1]: https://github.com/nosto/php-sdk/compare/2.4.0...2.4.1
+[2.4.0]: https://github.com/nosto/php-sdk/compare/2.3.0...2.4.0
 [2.3.0]: https://github.com/nosto/php-sdk/compare/2.2.0...2.3.0
 [2.2.0]: https://github.com/nosto/php-sdk/compare/2.1.0...2.2.0
 [2.1.0]: https://github.com/nosto/php-sdk/compare/2.0.1...2.1.0
