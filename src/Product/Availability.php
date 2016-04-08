@@ -40,6 +40,8 @@ final class NostoProductAvailability
 {
     const IN_STOCK = 'InStock';
     const OUT_OF_STOCK = 'OutOfStock';
+    const INVISIBLE = 'Invisible';
+    const DISCONTINUED = 'Discontinued';
 
     /**
      * @var string the availability, i.e. either "InStock" or "OutOfStock".
