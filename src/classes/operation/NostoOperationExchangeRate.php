@@ -34,41 +34,48 @@
  */
 
 /**
- * Handles sending currency exchange rates through the Nosto API.
+ * Handles sending currencyCode exchange rates through the Nosto API.
  */
 class NostoOperationExchangeRate
 {
     /**
-     * @var NostoAccountMetaInterface the Nosto account to update the rates for.
+     * @var NostoAccountInterface the Nosto account to update the rates for.
      */
     protected $account;
+
+    /**
+     * @var NostoExhangeRateCollection collection of exhange rates to be updated
+     */
+    protected $collection;
 
     /**
      * Constructor.
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoAccountMetaInterface $account the Nosto account object.
+     * @param NostoAccountInterface $account the Nosto account object.
      */
-    public function __construct(NostoAccountInterface $account)
-    {
+    public function __construct(
+        NostoAccountInterface $account,
+        NostoExchangeRateCollection $collection
+    ) {
         $this->account = $account;
+        $this->collection = $collection;
     }
 
     /**
      * Updates exhange rates to Nosto
-     * @param array $collection
      * @return bool
      * @throws NostoException
      */
-    public function update(array $collection)
+    public function update()
     {
         $request = $this->initApiRequest();
-        $response = $request->post($this->getCollectionAsJson($collection));
+        $response = $request->post($this->getCollectionAsJson());
         if ($response->getCode() !== 200) {
             throw Nosto::createHttpException(
                 sprintf(
-                    'Failed to update currency exchange rates for account %s.',
+                    'Failed to update currencyCode exchange rates for account %s.',
                     $this->account->getName()
                 ),
                 $request,
@@ -104,7 +111,7 @@ class NostoOperationExchangeRate
     }
 
     /**
-     * Turn the currency exchange rate collection into a JSON structure.
+     * Turn the currencyCode exchange rate collection into a JSON structure.
      *
      * Format:
      *
@@ -118,33 +125,28 @@ class NostoOperationExchangeRate
      *   "valid_until": "2015-02-27T12:00:00Z"
      * }
      *
-     * @param NostoExchangeRateCollection $collection the rate collection.
      * @return string the JSON structure.
      * @throws NostoException of the rate collection is empty.
      */
-    protected function getCollectionAsJson(NostoExhangeRateCollection $collection)
+    protected function getCollectionAsJson()
     {
         $data = array(
             'rates' => array(),
             'valid_until' => null,
         );
-        $validUntil = $collection->getValidUntil();
-        if (!is_null($validUntil)) {
-            /** @var NostoFormatterDate $formatter */
-            $formatter = Nosto::formatter('date');
-            $data['valid_until'] = $formatter->format($validUntil, new NostoDateFormat(NostoDateFormat::ISO_8601));
-        }
-        /** @var NostoCurrencyExchangeRate $item */
-        foreach ($collection as $item) {
-            $data['rates'][$item->getCurrency()->getCode()] = array(
+
+        /** @var NostoExchangeRate $item */
+        foreach ($this->collection as $item) {
+            $data['rates'][$item->getCurrencyCode()] = array(
                 'rate' => $item->getExchangeRate(),
-                'price_currency_code' => $item->getCurrency()->getCode(),
+                'price_currency_code' => $item->getCurrencyCode(),
             );
         }
         if (empty($data['rates'])) {
+            //ToDo add logging instead of error
             throw new NostoException(
                 sprintf(
-                    'Failed to update currency exchange rates for account %s. No rates found in collection.',
+                    'Failed to update currencyCode exchange rates for account %s. No rates found in collection.',
                     $this->account->getName()
                 )
             );

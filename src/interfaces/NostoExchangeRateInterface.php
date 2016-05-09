@@ -34,13 +34,24 @@
  */
 
 /**
- * Product object collection.
- * Supports only items implementing "NostoProductInterface".
+ * Interface for the meta data of a exhange rate.
+ * This is used when making product API requests for updating the exchange rate.
  */
-class NostoExhangeRateCollection extends NostoCollection
+interface NostoExchangeRateInterface
 {
+
     /**
-     * @inheritdoc
+     * Getter for the exchange rates currencyCode code.
+     *
+     * @return string the currencyCode code in ISO 4217 format.
      */
-    protected $validItemType = 'NostoExhangeRateInterface';
+    public function getCurrencyCode();
+
+    /**
+     * Getter for the exchange rate value.
+     *
+     * @return string the exchange rate.
+     */
+    public function getExchangeRate();
 }
+

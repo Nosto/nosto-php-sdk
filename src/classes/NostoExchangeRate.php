@@ -36,12 +36,12 @@
 /**
  * Class representing a currency exchange rate.
  */
-class NostoExchangeRate implements NostoExhangeRateInterface
+class NostoExchangeRate implements NostoExchangeRateInterface
 {
     /**
-     * @var NostoCurrencyCode the currency code for the exchange rate.
+     * @var string the currencyCode code for the exchange rate.
      */
-    private $currency;
+    private $currencyCode;
 
     /**
      * @var string the exchange rate value.
@@ -52,25 +52,25 @@ class NostoExchangeRate implements NostoExhangeRateInterface
      * Constructor.
      * Assigns exchange rate properties and validates them.
      *
-     * @param string $currencyCode the currency code for the exchange rate.
+     * @param string $currencyCode the currencyCode code for the exchange rate.
      * @param string $exchangeRate the exchange rate value.
      *
      * @throws NostoInvalidArgumentException
      */
     public function __construct($currencyCode, $exchangeRate)
     {
-        $this->currency = $currencyCode;
+        $this->currencyCode = $currencyCode;
         $this->exchangeRate = (string)$exchangeRate;
     }
 
     /**
-     * Getter for the exchange rates currency code.
+     * Getter for the exchange rates currencyCode code.
      *
-     * @return NostoCurrencyCode the currency code.
+     * @return string the currencyCode code.
      */
-    public function getCurrency()
+    public function getCurrencyCode()
     {
-        return $this->currency;
+        return $this->currencyCode;
     }
 
     /**
