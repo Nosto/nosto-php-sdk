@@ -143,7 +143,6 @@ class NostoOperationExchangeRate
             );
         }
         if (empty($data['rates'])) {
-            //ToDo add logging instead of error
             throw new NostoException(
                 sprintf(
                     'Failed to update currencyCode exchange rates for account %s. No rates found in collection.',
