@@ -342,7 +342,7 @@ class NostoHttpRequest
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);
         }
-        return $this->adapter->post(
+         return $this->adapter->post(
             $url,
             array(
                 'headers' => $this->headers,

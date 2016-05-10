@@ -370,3 +370,28 @@ Product related resources
 + Response 200 (application/json)
 
         {}
+
+## Single Sign On [/hub/{platform}/load/{email}]
+
++ Parameters
+
+    + platform (string) ... the platform name
+    + email (string) ... the email address of the user who is doing the SSO
+
+### SSO login [POST]
+
++ Request (application/x-www-form-urlencoded)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
+    + Body
+
+            fname=James&lname=Kirk
+
++ Response 200 (application/json)
+
+        {
+            "login_url": "https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg"
+        }

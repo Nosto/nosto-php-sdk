@@ -26,6 +26,12 @@ class NostoProduct implements NostoProductInterface, NostoValidatableInterface
 	{
 		return 110.99;
 	}
+
+	public function getFullDescription()
+	{
+		return 'This is a full description';
+	}
+
 	public function getCurrencyCode()
 	{
 		return 'USD';

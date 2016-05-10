@@ -18,7 +18,7 @@ class AccountDeleteTest extends \Codeception\TestCase\Test
         $account = new NostoAccount('platform-test');
 
         $this->specify('account is NOT deleted', function() use ($account) {
-            $this->setExpectedException('NostoException');
+            $this->setExpectedExceptionRegExp('NostoException');
             $account->delete();
         });
     }
