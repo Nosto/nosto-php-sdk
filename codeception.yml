@@ -12,5 +12,4 @@ coverage:
     enabled: true
     whitelist:
             include:
-                - src/classes/*
-                - src/interfaces/*
+                - src/*

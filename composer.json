@@ -3,7 +3,41 @@
     "description": "PHP SDK for developing Nosto modules for e-commerce platforms",
     "license": "BSD-3-Clause",
     "require-dev": {
-        "codeception/codeception": "@stable",
-        "codeception/specify": "@stable"
+        "codeception/codeception": "2.0.0",
+        "codeception/specify": "0.4.1",
+        "codeception/aspect-mock": "0.5.3",
+        "squizlabs/php_codesniffer": "2.*"
+    },
+    "autoload": {
+        "classmap": [
+          "src/",
+          "src/Account",
+          "src/Account/Meta",
+          "src/Api",
+          "src/Cart",
+          "src/Country",
+          "src/Currency",
+          "src/Currency/Exchange",
+          "src/Currency/Exchange/Rate",
+          "src/Date",
+          "src/Export",
+          "src/Export/Collection",
+          "src/Formatter",
+          "src/Helper",
+          "src/Http",
+          "src/Http/Request",
+          "src/Http/Request/Adapter",
+          "src/Language",
+          "src/Oauth",
+          "src/Order",
+          "src/Price",
+          "src/Product",
+          "src/Service",
+          "lib/phpseclib/Crypt",
+          "lib/phpseclib/Math"
+        ],
+        "files": [
+          "bootstrap.php"
+        ]
     }
 }

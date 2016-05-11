@@ -1,0 +1,49 @@
+sudo: required
+language: php
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7.0
+  - hhvm
+  - nightly
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: hhvm
+    - php: 7.0
+    - php: nightly
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/node_modules
+    - $HOME/.nvm/versions/node
+
+install:
+  - nvm install 0.12
+  - npm install -g api-mock
+  - composer self-update
+  - composer install --no-interaction
+
+  # Closing port in firewall for making the HttpRequestTest running
+  # - sudo ufw status
+  # - sudo iptables -L -n -v
+  # - sudo iptables -A OUTPUT -p tcp --dport 9900 -j DROP
+  # - sudo ufw --force enable
+  # - sudo ufw reload
+
+before_script:
+  - cp .env.example .env
+
+  # Expand max_nesting_level to prevent error
+  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm*" ]]; then phpenv config-add .travis.php.ini; phpenv rehash; fi
+
+  # Start API Mock server
+  - api-mock tests/api-blueprint.md > /dev/null 2>&1 &
+
+script:
+  - ./vendor/bin/codecept run --skip-group cUrl
+  - ./vendor/bin/phpcs --standard=ruleset.xml --extensions=php --ignore=lib --ignore=_data --ignore=_support --ignore=tests src

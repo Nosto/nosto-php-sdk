@@ -4,7 +4,7 @@ module.exports = function(grunt) {
       uglify: {
         my_target: {
           files: {
-            'src/js/NostoIframe.min.js': ['src/js/src/NostoIframe.js']
+            'js/NostoIframe.min.js': ['js/src/NostoIframe.js']
           }
         }
       }
