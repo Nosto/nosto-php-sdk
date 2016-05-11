@@ -45,5 +45,5 @@ before_script:
   - api-mock tests/api-blueprint.md > /dev/null 2>&1 &
 
 script:
-  - ./vendor/bin/codecept --skip=HttpRequestTest run
+  - ./vendor/bin/codecept --skip HttpRequestTest run
   - ./vendor/bin/phpcs --standard=ruleset.xml --extensions=php --ignore=lib --ignore=_data --ignore=_support --ignore=tests src
