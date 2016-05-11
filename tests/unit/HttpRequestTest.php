@@ -165,6 +165,8 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 
     /**
      * Tests the http request curl adapter.
+     *
+     * @group cUrl
      */
     public function testHttpRequestCurlAdapter()
     {
@@ -202,6 +204,8 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 
     /**
      * Tests to create a http request with adapter set to "auto" while not having curl enabled.
+     *
+     * @group cUrl
      */
     public function testHttpRequestAutoAdapterWithoutCurlEnabled()
     {
