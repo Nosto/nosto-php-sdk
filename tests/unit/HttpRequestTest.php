@@ -26,7 +26,7 @@ class HttpRequestTest extends \Codeception\TestCase\Test
      */
     protected function _after() // @codingStandardsIgnoreLine
     {
-        \AspectMock\test::clean();
+        \AspectMock\Test::clean();
     }
 
     /**
@@ -165,6 +165,8 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 
     /**
      * Tests the http request curl adapter.
+     *
+     * @group cUrl
      */
     public function testHttpRequestCurlAdapter()
     {
@@ -202,10 +204,12 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 
     /**
      * Tests to create a http request with adapter set to "auto" while not having curl enabled.
+     *
+     * @group cUrl
      */
     public function testHttpRequestAutoAdapterWithoutCurlEnabled()
     {
-        $mock = \AspectMock\test::double('NostoHttpRequest', ['canUseCurl' => false]);
+        $mock = \AspectMock\Test::double('NostoHttpRequest', ['canUseCurl' => false]);
 
         $request = new NostoHttpRequest();
         $mock->verifyInvoked('canUseCurl');

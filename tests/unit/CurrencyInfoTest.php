@@ -1089,7 +1089,7 @@ class CurrencyInfoTest extends \Codeception\TestCase\Test
      */
     protected function _after() // @codingStandardsIgnoreLine
     {
-        \AspectMock\test::clean();
+        \AspectMock\Test::clean();
     }
 
     /**
@@ -1111,7 +1111,7 @@ class CurrencyInfoTest extends \Codeception\TestCase\Test
      */
     public function testCurrencyFractionUnitsWithInvalidCurrencyCode()
     {
-        \AspectMock\test::double('NostoCurrencyCode', ['getCode' => 'FOO']);
+        \AspectMock\Test::double('NostoCurrencyCode', ['getCode' => 'FOO']);
 
         $this->setExpectedException('NostoInvalidArgumentException');
         NostoCurrencyInfo::getFractionUnit(new NostoCurrencyCode('USD')); // USD will be replaced by FOO by the mock.
@@ -1136,7 +1136,7 @@ class CurrencyInfoTest extends \Codeception\TestCase\Test
      */
     public function testCurrencyFractionDecimalsWithInvalidCurrencyCode()
     {
-        \AspectMock\test::double('NostoCurrencyCode', ['getCode' => 'FOO']);
+        \AspectMock\Test::double('NostoCurrencyCode', ['getCode' => 'FOO']);
 
         $this->setExpectedException('NostoInvalidArgumentException');
         NostoCurrencyInfo::getFractionDecimals(new NostoCurrencyCode('USD')); // USD will be replaced by FOO by the mock.
