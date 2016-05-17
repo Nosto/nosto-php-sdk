@@ -4,6 +4,12 @@
 class HttpRequestTest extends \Codeception\TestCase\Test
 {
 	/**
+	 * This must be a port that is not listening
+	 * wherever the tests are run
+	 */
+	const CURL_TEST_PORT = 9900;
+
+	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
@@ -33,7 +39,10 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 		$request = new NostoHttpRequest();
 		$request->setAuthBasic('test', 'test');
 		$headers = $request->getHeaders();
-		$this->assertContains('Authorization: Basic '.base64_encode(implode(':', array('test', 'test'))), $headers);
+		$this->assertContains(
+			'Authorization: Basic '.base64_encode(implode(':', array('test', 'test')))
+			, $headers
+		);
 	}
 
 	/**
@@ -63,13 +72,22 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 	public function testHttpRequestBuildUri()
 	{
 		$uri = NostoHttpRequest::buildUri(
-			'http://localhost:9000?param1={p1}&param2={p2}',
+			sprintf(
+				'http://localhost:%d?param1={p1}&param2={p2}',
+				self::CURL_TEST_PORT
+			),
 			array(
 				'{p1}' => 'first',
 				'{p2}' => 'second'
 			)
 		);
-		$this->assertEquals('http://localhost:9000?param1=first&param2=second', $uri);
+		$this->assertEquals(
+			sprintf(
+				'http://localhost:%d?param1=first&param2=second',
+				self::CURL_TEST_PORT
+			),
+			$uri
+		);
 	}
 
 	/**
@@ -77,9 +95,20 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 	 */
 	public function testHttpRequestBuildUrl()
 	{
-		$url_parts = NostoHttpRequest::parseUrl('http://localhost:9000/tmp/?param1=first&param2=second#fragment1=test');
+		$url_parts = NostoHttpRequest::parseUrl(
+			sprintf(
+				'http://localhost:%d/tmp/?param1=first&param2=second#fragment1=test',
+				self::CURL_TEST_PORT
+			)
+		);
 		$url = NostoHttpRequest::buildUrl($url_parts);
-		$this->assertEquals('http://localhost:9000/tmp/?param1=first&param2=second#fragment1=test', $url);
+		$this->assertEquals(
+			sprintf(
+				'http://localhost:%d/tmp/?param1=first&param2=second#fragment1=test',
+				self::CURL_TEST_PORT
+			),
+			$url
+		);
 	}
 
 	/**
@@ -99,8 +128,21 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 	 */
 	public function testHttpRequestReplaceQueryParamInUrl()
 	{
-		$url = NostoHttpRequest::replaceQueryParamInUrl('param1', 'replaced_first', 'http://localhost:9000/tmp/?param1=first&param2=second');
-		$this->assertEquals('http://localhost:9000/tmp/?param1=replaced_first&param2=second', $url);
+		$url = NostoHttpRequest::replaceQueryParamInUrl(
+			'param1',
+			'replaced_first',
+			sprintf(
+				'http://localhost:%d/tmp/?param1=first&param2=second',
+				self::CURL_TEST_PORT
+			)
+		);
+		$this->assertEquals(
+			sprintf(
+				'http://localhost:%d/tmp/?param1=replaced_first&param2=second',
+				self::CURL_TEST_PORT
+			),
+			$url
+		);
 	}
 
 	/**
@@ -108,8 +150,15 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 	 */
 	public function testHttpRequestReplaceQueryParam()
 	{
-		$query_string = NostoHttpRequest::replaceQueryParam('param2', 'replaced_second', 'param1=first&param2=second');
-		$this->assertEquals('param1=first&param2=replaced_second', $query_string);
+		$query_string = NostoHttpRequest::replaceQueryParam(
+			'param2',
+			'replaced_second',
+			'param1=first&param2=second'
+		);
+		$this->assertEquals(
+			'param1=first&param2=replaced_second',
+			$query_string
+		);
 	}
 
 	/**
@@ -144,9 +193,20 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 		$this->assertEquals(404, $response->getCode());
 		$response = $request->post('test');
 		$this->assertEquals(404, $response->getCode());
-		$request->setUrl('http://localhost:9000');
+		$request->setUrl(
+			sprintf(
+				'http://localhost:%d',
+				SELF::CURL_TEST_PORT
+			)
+		);
 		$response = $request->get();
-		$this->assertEquals('Failed to connect to localhost port 9000: Connection refused', $response->getMessage());
+		$this->assertEquals(
+			sprintf(
+				'Failed to connect to localhost port %d: Connection refused',
+				self::CURL_TEST_PORT
+			),
+			$response->getMessage()
+		);
 	}
 
 	/**

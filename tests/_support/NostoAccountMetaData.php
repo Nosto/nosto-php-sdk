@@ -49,4 +49,9 @@ class NostoAccountMetaData implements NostoAccountMetaDataInterface
 	{
 		return 'abc123';
 	}
+
+	public function getPartnerCode()
+	{
+		return '';
+	}
 }
