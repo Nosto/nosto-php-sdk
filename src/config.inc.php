@@ -85,6 +85,7 @@ require_once(dirname(__FILE__).'/classes/oauth/NostoOAuthToken.php');
 
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationProduct.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationExchangeRate.php');
+require_once(dirname(__FILE__).'/classes/operation/NostoOperationAccount.php');
 
 require_once(dirname(__FILE__).'/classes/Nosto.php');
 require_once(dirname(__FILE__).'/classes/NostoAccount.php');
@@ -95,6 +96,10 @@ require_once(dirname(__FILE__).'/classes/NostoOrderConfirmation.php');
 require_once(dirname(__FILE__).'/classes/NostoProductReCrawl.php');
 require_once(dirname(__FILE__).'/classes/NostoValidator.php');
 require_once(dirname(__FILE__).'/classes/NostoExchangeRate.php');
+require_once(dirname(__FILE__).'/classes/NostoCurrency.php');
+require_once(dirname(__FILE__).'/classes/NostoCurrencyCode.php');
+require_once(dirname(__FILE__).'/classes/NostoCurrencySymbol.php');
+require_once(dirname(__FILE__).'/classes/NostoCurrencyFormat.php');
 
 // Libs
 require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptBase.php');
