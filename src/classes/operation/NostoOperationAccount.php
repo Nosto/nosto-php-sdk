@@ -70,14 +70,13 @@ class NostoOperationAccount
      */
     public function update()
     {
-        var_dump($this->getJson());
-        die;
         $request = $this->initApiRequest();
-        $response = $request->post($this->getJson());
+        $content = $this->getJson();
+        $response = $request->put($this->getJson());
         if ($response->getCode() !== 200) {
             throw new NostoException(
                 sprintf(
-                    'Failed to update account settings to Nosto for account %s. Error was %s',
+                    'Update error for account %s: %s',
                     $this->account->getName(),
                     $response->getMessage()
                 )
@@ -152,13 +151,8 @@ class NostoOperationAccount
                 );
             }
         }
-        if ($this->accountMeta->getUseCurrencyExchangeRates()) {
-            $data['use_exchange_rates'] = $this->accountMeta->getUseCurrencyExchangeRates();
-        }
-
-        if ($this->accountMeta->getDefaultVariationId()) {
-            $data['default_variant_id'] = $this->accountMeta->getDefaultVariationId();
-        }
+        $data['use_exchange_rates'] = $this->accountMeta->getUseCurrencyExchangeRates();
+        $data['default_variant_id'] = $this->accountMeta->getDefaultVariationId();
 
         return json_encode($data);
     }
