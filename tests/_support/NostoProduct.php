@@ -78,4 +78,11 @@ class NostoProduct implements NostoProductInterface, NostoValidatableInterface
 		}
 		throw new Exception(sprintf('Property `%s.%s` is not defined.', get_class($this), $name));
 	}
+
+	public function getVariationId()
+	{
+		return false;
+	}
+
+
 }
