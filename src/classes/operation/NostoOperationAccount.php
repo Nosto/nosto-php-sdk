@@ -71,8 +71,7 @@ class NostoOperationAccount
     public function update()
     {
         $request = $this->initApiRequest();
-        $content = $this->getJson();
-        $response = $request->put($this->getJson());
+        $response = $request->put($this->getSettingsJson());
         if ($response->getCode() !== 200) {
             throw new NostoException(
                 sprintf(
@@ -114,26 +113,13 @@ class NostoOperationAccount
      *
      * @return string the JSON structure.
      */
-    protected function getJson()
+    protected function getSettingsJson()
     {
         $data = array(
             'title' => $this->accountMeta->getTitle(),
-            'name' => $this->accountMeta->getName(),
-            'platform' => $this->accountMeta->getPlatform(),
             'front_page_url' => $this->accountMeta->getFrontPageUrl(),
             'currency_code' => $this->accountMeta->getCurrencyCode(),
-            'owner' => array(
-                'first_name' => $this->accountMeta->getOwner()->getFirstName(),
-                'last_name' => $this->accountMeta->getOwner()->getLastName(),
-                'email' => $this->accountMeta->getOwner()->getEmail(),
-            ),
         );
-
-        // Add optional partner code if one is set.
-        $partnerCode = $this->accountMeta->getPartnerCode();
-        if (!empty($partnerCode)) {
-            $data['partner_code'] = $partnerCode;
-        }
 
         // Currencies and currency options
         $currencyCount = count($this->accountMeta->getCurrencies());
