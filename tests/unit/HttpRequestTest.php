@@ -196,7 +196,7 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 		$request->setUrl(
 			sprintf(
 				'http://localhost:%d',
-				SELF::CURL_TEST_PORT
+				self::CURL_TEST_PORT
 			)
 		);
 		$response = $request->get();
