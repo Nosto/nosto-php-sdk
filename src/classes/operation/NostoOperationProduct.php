@@ -218,6 +218,9 @@ class NostoOperationProduct
         if ($product->getDatePublished()) {
             $data['date_published'] = Nosto::helper('date')->format($product->getDatePublished());
         }
+        if ($product->getVariationId()) {
+            $data['variation_id'] = $product->getVariationId();
+        }
 
         return $data;
     }

@@ -35,7 +35,7 @@
 
 /**
  * Product object collection.
- * Supports only items implementing "NostoProductInterface".
+ * Supports only items implementing "NostoExhangeRateInterface".
  */
 class NostoExchangeRateCollection extends NostoCollection
 {

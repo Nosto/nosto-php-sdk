@@ -39,6 +39,12 @@
  */
 interface NostoExchangeRateInterface
 {
+    /**
+     * Getter for the name of the exhange rate.
+     *
+     * @return string the name (can be different than ISO 4217).
+     */
+    public function getName();
 
     /**
      * Getter for the exchange rates currencyCode code.
@@ -54,4 +60,3 @@ interface NostoExchangeRateInterface
      */
     public function getExchangeRate();
 }
-

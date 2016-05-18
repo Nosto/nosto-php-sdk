@@ -73,13 +73,11 @@ class NostoOperationExchangeRate
         $request = $this->initApiRequest();
         $response = $request->post($this->getCollectionAsJson());
         if ($response->getCode() !== 200) {
-            throw Nosto::createHttpException(
+            throw new NostoException(
                 sprintf(
                     'Failed to update currencyCode exchange rates for account %s.',
                     $this->account->getName()
-                ),
-                $request,
-                $response
+                )
             );
         }
         return true;
@@ -137,7 +135,7 @@ class NostoOperationExchangeRate
 
         /** @var NostoExchangeRate $item */
         foreach ($this->collection as $item) {
-            $data['rates'][$item->getCurrencyCode()] = array(
+            $data['rates'][$item->getName()] = array(
                 'rate' => $item->getExchangeRate(),
                 'price_currency_code' => $item->getCurrencyCode(),
             );

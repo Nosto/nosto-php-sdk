@@ -138,7 +138,11 @@ class NostoOperationAccount
             }
         }
         $data['use_exchange_rates'] = $this->accountMeta->getUseCurrencyExchangeRates();
-        $data['default_variant_id'] = $this->accountMeta->getDefaultVariationId();
+        if ($this->accountMeta->getDefaultVariationId()) {
+            $data['default_variant_id'] = $this->accountMeta->getDefaultVariationId();
+        } else {
+            $data['default_variant_id'] = '';
+        }
 
         return json_encode($data);
     }

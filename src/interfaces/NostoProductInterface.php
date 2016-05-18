@@ -144,4 +144,11 @@ interface NostoProductInterface
      * @return string the date in format "Y-m-d".
      */
     public function getDatePublished();
+
+    /**
+     * Returns the product variation id.
+     *
+     * @return mixed|null
+     */
+    public function getVariationId();
 }
