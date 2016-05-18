@@ -54,4 +54,20 @@ class NostoAccountMetaData implements NostoAccountMetaDataInterface
 	{
 		return '';
 	}
+
+	public function getCurrencies()
+	{
+		return array();
+	}
+
+	public function getUseCurrencyExchangeRates()
+	{
+		return array();
+	}
+
+	public function getDefaultVariationId()
+	{
+		return null;
+	}
+
 }
