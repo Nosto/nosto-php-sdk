@@ -71,35 +71,6 @@ final class NostoCurrencyFormat
      */
     public function __construct($groupSymbol, $groupLength, $decimalSymbol, $precision)
     {
-        if (!is_string($groupSymbol) || empty($groupSymbol)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.groupSymbol (%s) must be a non-empty value.',
-                __CLASS__,
-                $groupSymbol
-            ));
-        }
-        if (!is_int($groupLength)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.groupLength (%s) must be an integer.',
-                __CLASS__,
-                $groupLength
-            ));
-        }
-        if (!is_string($decimalSymbol) || empty($decimalSymbol)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.decimalSymbol (%s) must be a non-empty value.',
-                __CLASS__,
-                $decimalSymbol
-            ));
-        }
-        if (!is_int($precision)) {
-            throw new NostoInvalidArgumentException(sprintf(
-                '%s.precision (%s) must be an integer.',
-                __CLASS__,
-                $precision
-            ));
-        }
-
         $this->groupSymbol = (string)$groupSymbol;
         $this->groupLength = (int)$groupLength;
         $this->decimalSymbol = (string)$decimalSymbol;
