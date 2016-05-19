@@ -57,10 +57,10 @@ class NostoExchangeRate implements NostoExchangeRateInterface
      * Constructor.
      * Assigns exchange rate properties and validates them.
      *
+     * @param string $name the name of the exchange rate
      * @param string $currencyCode the currencyCode code for the exchange rate.
      * @param string $exchangeRate the exchange rate value.
      *
-     * @throws NostoInvalidArgumentException
      */
     public function __construct($name, $currencyCode, $exchangeRate)
     {

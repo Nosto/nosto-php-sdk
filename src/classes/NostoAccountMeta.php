@@ -265,11 +265,11 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     /**
      * Sets the currencies
      *
-     * @return void
+     * @param $currencies
      */
     public function setCurrencies($currencies)
     {
-        return $this->currencies = $currencies;
+        $this->currencies = $currencies;
     }
 
     /**
@@ -283,7 +283,7 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
-     * Returns if the exhange rates are used
+     * Returns if the exchange rates are used
      *
      * @return boolean
      */
@@ -293,6 +293,7 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
+     * Sets the default variation id
      * @param string $defaultVariationId
      */
     public function setDefaultVariationId($defaultVariationId)
@@ -304,6 +305,9 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     /*
      * Returns the default variation id
      *
+     * @return string
+     */
+    /**
      * @return string
      */
     public function getDefaultVariationId()

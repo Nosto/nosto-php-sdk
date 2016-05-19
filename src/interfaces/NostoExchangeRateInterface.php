@@ -34,13 +34,13 @@
  */
 
 /**
- * Interface for the meta data of a exhange rate.
+ * Interface for the meta data of a exchange rate.
  * This is used when making product API requests for updating the exchange rate.
  */
 interface NostoExchangeRateInterface
 {
     /**
-     * Getter for the name of the exhange rate.
+     * Getter for the name of the exchange rate.
      *
      * @return string the name (can be different than ISO 4217).
      */

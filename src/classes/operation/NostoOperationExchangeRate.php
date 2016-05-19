@@ -44,7 +44,7 @@ class NostoOperationExchangeRate
     protected $account;
 
     /**
-     * @var NostoExhangeRateCollection collection of exhange rates to be updated
+     * @var NostoExchangeRateCollection collection of exchange rates to be updated
      */
     protected $collection;
 
@@ -54,6 +54,7 @@ class NostoOperationExchangeRate
      * Accepts the Nosto account for which the service is to operate on.
      *
      * @param NostoAccountInterface $account the Nosto account object.
+     * @param NostoExchangeRateCollection $collection the Nosto account object.
      */
     public function __construct(
         NostoAccountInterface $account,
@@ -64,7 +65,7 @@ class NostoOperationExchangeRate
     }
 
     /**
-     * Updates exhange rates to Nosto
+     * Updates exchange rates to Nosto
      * @return bool
      * @throws NostoException
      */

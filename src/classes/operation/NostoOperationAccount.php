@@ -54,6 +54,7 @@ class NostoOperationAccount
      * Accepts the Nosto account for which the service is to operate on.
      *
      * @param NostoAccountInterface $account the Nosto account object.
+     * @param NostoAccountMetaDataInterface $accountMeta the Nosto account object.
      */
     public function __construct(
         NostoAccountInterface $account,
