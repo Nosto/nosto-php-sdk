@@ -41,22 +41,22 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     /**
      * @var string the store front end url.
      */
-    protected $front_page_url;
+    protected $frontPageUrl;
 
     /**
      * @var string the store currency ISO (ISO 4217) code.
      */
-    protected $currency_code;
+    protected $currencyCode;
 
     /**
      * @var string the store language ISO (ISO 639-1) code.
      */
-    protected $language_code;
+    protected $languageCode;
 
     /**
      * @var string the owner language ISO (ISO 639-1) code.
      */
-    protected $owner_language_code;
+    protected $ownerLanguageCode;
 
     /**
      * @var NostoTaggingMetaAccountOwner the account owner meta model.
@@ -140,7 +140,7 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
      */
     public function setFrontPageUrl($url)
     {
-        $this->front_page_url = $url;
+        $this->frontPageUrl = $url;
     }
 
     /**
@@ -151,7 +151,7 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
      */
     public function getFrontPageUrl()
     {
-        return $this->front_page_url;
+        return $this->frontPageUrl;
     }
 
     /**
@@ -161,7 +161,7 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
      */
     public function setCurrencyCode($code)
     {
-        $this->currency_code = $code;
+        $this->currencyCode = $code;
     }
 
     /**
@@ -172,17 +172,17 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
      */
     public function getCurrencyCode()
     {
-        return $this->currency_code;
+        return $this->currencyCode;
     }
 
     /**
      * Sets the store language ISO (ISO 639-1) code.
      *
-     * @param string $language_code the language ISO code.
+     * @param string $languageCode the language ISO code.
      */
-    public function setLanguageCode($language_code)
+    public function setLanguageCode($languageCode)
     {
-        $this->language_code = $language_code;
+        $this->languageCode = $languageCode;
     }
 
     /**
@@ -193,7 +193,7 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
      */
     public function getLanguageCode()
     {
-        return $this->language_code;
+        return $this->languageCode;
     }
 
     /**
@@ -203,7 +203,7 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
      */
     public function setOwnerLanguageCode($language_code)
     {
-        $this->owner_language_code = $language_code;
+        $this->ownerLanguageCode = $language_code;
     }
 
     /**
@@ -214,7 +214,7 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
      */
     public function getOwnerLanguageCode()
     {
-        return $this->owner_language_code;
+        return $this->ownerLanguageCode;
     }
 
     /**

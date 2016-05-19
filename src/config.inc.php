@@ -101,6 +101,7 @@ require_once(dirname(__FILE__).'/classes/NostoCurrency.php');
 require_once(dirname(__FILE__).'/classes/NostoCurrencyCode.php');
 require_once(dirname(__FILE__).'/classes/NostoCurrencySymbol.php');
 require_once(dirname(__FILE__).'/classes/NostoCurrencyFormat.php');
+require_once(dirname(__FILE__).'/classes/NostoCurrencyInfo.php');
 
 // Libs
 require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptBase.php');
