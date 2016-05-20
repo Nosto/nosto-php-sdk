@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2015, Nosto Solutions Ltd
+ * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,39 +29,37 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2015 Nosto Solutions Ltd
+ * @copyright 2016 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
 /**
- * API request class for making API requests to Nosto.
+ * Value Object representing a currency code in ISO 4217 format.
  */
-class NostoApiRequest extends NostoHttpRequest
+final class NostoCurrencyCode
 {
-    const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
-    const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
-    const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
-    const PATH_PRODUCTS_CREATE = '/v1/products/create';
-    const PATH_PRODUCTS_UPDATE = '/v1/products/update';
-    const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
-    const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
-    const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
-    const PATH_SETTINGS = '/settings';
-
     /**
-     * @var string base url for the nosto api.
+     * @var string the ISO 4217 currency code.
      */
-    public static $baseUrl = 'https://api.nosto.com';
+    private $code;
 
     /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
+     * Constructor.
+     * Sets up this Value Object with the ISO 4217 currency code.
      *
-     * @param string $path the endpoint path (use PATH_ constants).
+     * @param string $code the currency code.
+     *
      */
-    public function setPath($path)
+    public function __construct($code)
     {
-        $this->setUrl(self::$baseUrl.$path);
+        $this->code = (string)$code;
+    }
+
+    /**
+     * @return string the ISO 4217 currency code.
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 }

@@ -26,6 +26,12 @@ class NostoProduct implements NostoProductInterface, NostoValidatableInterface
 	{
 		return 110.99;
 	}
+
+	public function getFullDescription()
+	{
+		return 'This is a full description';
+	}
+
 	public function getCurrencyCode()
 	{
 		return 'USD';
@@ -72,4 +78,11 @@ class NostoProduct implements NostoProductInterface, NostoValidatableInterface
 		}
 		throw new Exception(sprintf('Property `%s.%s` is not defined.', get_class($this), $name));
 	}
+
+	public function getVariationId()
+	{
+		return false;
+	}
+
+
 }

@@ -78,6 +78,10 @@ class NostoExportProductCollection extends NostoProductCollection implements Nos
                 $data['date_published'] = Nosto::helper('date')->format($item->getDatePublished());
             }
 
+            if ($item->getVariationId()) {
+                $data['variation_id'] = $item->getVariationId();
+            }
+
             $array[] = $data;
         }
         return json_encode($array);

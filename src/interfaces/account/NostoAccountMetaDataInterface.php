@@ -46,7 +46,7 @@ interface NostoAccountMetaDataInterface
     public function getTitle();
 
     /**
-     * The name of the account to create.
+     * The name of the Nosto account.
      * This has to follow the pattern of "[platform name]-[8 character lowercase alpha numeric string]".
      *
      * @return string the account name.
@@ -118,4 +118,28 @@ interface NostoAccountMetaDataInterface
      * @return string|null the partner code or null if none exist.
      */
     public function getPartnerCode();
+
+    /**
+     * Returns a list of currency objects supported by the store the account is to be created for.
+     *
+     * @return NostoCurrency[] the currencies.
+     */
+    public function getCurrencies();
+
+    /**
+     * Returns if exchange rates should be used for handling
+     * multiple currencies. Please note that the method only tells if the
+     * setting is active. Method does not take account whether multiple
+     * currencies actually exist or are used.
+     *
+     * @return boolean if multi variants are used
+     */
+    public function getUseCurrencyExchangeRates();
+
+    /**
+     * Returns the default variation id
+     *
+     * @return string
+     */
+    public function getDefaultVariationId();
 }

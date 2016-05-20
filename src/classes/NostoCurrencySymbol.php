@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2015, Nosto Solutions Ltd
+ * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,39 +29,60 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2015 Nosto Solutions Ltd
+ * @copyright 2016 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
 /**
- * API request class for making API requests to Nosto.
+ * Value Object representing a currency symbol and it's position.
  */
-class NostoApiRequest extends NostoHttpRequest
+final class NostoCurrencySymbol
 {
-    const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
-    const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
-    const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
-    const PATH_PRODUCTS_CREATE = '/v1/products/create';
-    const PATH_PRODUCTS_UPDATE = '/v1/products/update';
-    const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
-    const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
-    const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
-    const PATH_SETTINGS = '/settings';
+    const SYMBOL_POS_LEFT = 'left';
+    const SYMBOL_POS_RIGHT = 'right';
 
     /**
-     * @var string base url for the nosto api.
+     * @var string the currency symbol, e.g. "$".
      */
-    public static $baseUrl = 'https://api.nosto.com';
+    private $symbol;
 
     /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
+     * @var string the position of the symbol when displaying the currency.
+     */
+    private $position;
+
+    /**
+     * Constructor.
+     * Sets up this Value Object with given data.
      *
-     * @param string $path the endpoint path (use PATH_ constants).
+     * @param string $symbol the currency symbol.
+     * @param string $position the position of the symbol when displaying the currency.
+     *
+     * @throws NostoInvalidArgumentException
      */
-    public function setPath($path)
+    public function __construct($symbol, $position)
     {
-        $this->setUrl(self::$baseUrl.$path);
+        $this->symbol = (string)$symbol;
+        $this->position = (string)$position;
+    }
+
+    /**
+     * Returns the position of the symbol when displaying the currency.
+     *
+     * @return string the position of the symbol when displaying the currency.
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Returns the currency symbol.
+     *
+     * @return string the currency symbol.
+     */
+    public function getSymbol()
+    {
+        return $this->symbol;
     }
 }

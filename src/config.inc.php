@@ -49,6 +49,7 @@ require_once(dirname(__FILE__).'/interfaces/NostoOAuthClientMetaDataInterface.ph
 require_once(dirname(__FILE__).'/interfaces/NostoProductInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoExportCollectionInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoValidatableInterface.php');
+require_once(dirname(__FILE__).'/interfaces/NostoExchangeRateInterface.php');
 
 // Classes
 require_once(dirname(__FILE__).'/classes/http/NostoHttpRequest.php'); // Must be loaded before `NostoApiRequest`
@@ -60,6 +61,7 @@ require_once(dirname(__FILE__).'/classes/api/NostoApiToken.php');
 require_once(dirname(__FILE__).'/classes/collection/NostoCollection.php');
 require_once(dirname(__FILE__).'/classes/collection/NostoProductCollection.php');
 require_once(dirname(__FILE__).'/classes/collection/NostoOrderCollection.php');
+require_once(dirname(__FILE__).'/classes/collection/NostoExchangeRateCollection.php');
 
 require_once(dirname(__FILE__).'/classes/exception/NostoException.php');
 require_once(dirname(__FILE__).'/classes/exception/NostoHttpException.php');
@@ -82,15 +84,24 @@ require_once(dirname(__FILE__).'/classes/oauth/NostoOAuthClient.php');
 require_once(dirname(__FILE__).'/classes/oauth/NostoOAuthToken.php');
 
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationProduct.php');
+require_once(dirname(__FILE__).'/classes/operation/NostoOperationExchangeRate.php');
+require_once(dirname(__FILE__).'/classes/operation/NostoOperationAccount.php');
 
 require_once(dirname(__FILE__).'/classes/Nosto.php');
 require_once(dirname(__FILE__).'/classes/NostoAccount.php');
+require_once(dirname(__FILE__).'/classes/NostoAccountMeta.php');
 require_once(dirname(__FILE__).'/classes/NostoCipher.php');
 require_once(dirname(__FILE__).'/classes/NostoDotEnv.php');
 require_once(dirname(__FILE__).'/classes/NostoMessage.php');
 require_once(dirname(__FILE__).'/classes/NostoOrderConfirmation.php');
 require_once(dirname(__FILE__).'/classes/NostoProductReCrawl.php');
 require_once(dirname(__FILE__).'/classes/NostoValidator.php');
+require_once(dirname(__FILE__).'/classes/NostoExchangeRate.php');
+require_once(dirname(__FILE__).'/classes/NostoCurrency.php');
+require_once(dirname(__FILE__).'/classes/NostoCurrencyCode.php');
+require_once(dirname(__FILE__).'/classes/NostoCurrencySymbol.php');
+require_once(dirname(__FILE__).'/classes/NostoCurrencyFormat.php');
+require_once(dirname(__FILE__).'/classes/NostoCurrencyInfo.php');
 
 // Libs
 require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptBase.php');

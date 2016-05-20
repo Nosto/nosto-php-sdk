@@ -38,6 +38,11 @@
  */
 class NostoApiToken extends NostoObject implements NostoValidatableInterface
 {
+    const API_SSO = 'sso';
+    const API_PRODUCTS = 'products';
+    const API_EXCHANGE_RATES = 'rates';
+    const API_SETTINGS = 'settings';
+
     /**
      * @var string the token name, must be one of the defined tokens from self::$tokenNames.
      */
@@ -52,8 +57,10 @@ class NostoApiToken extends NostoObject implements NostoValidatableInterface
      * @var array list of valid api tokens to request from Nosto.
      */
     public static $tokenNames = array(
-        'sso',
-        'products'
+        self::API_SSO,
+        self::API_PRODUCTS,
+        self::API_EXCHANGE_RATES,
+        self::API_SETTINGS
     );
 
     /**

@@ -34,34 +34,29 @@
  */
 
 /**
- * API request class for making API requests to Nosto.
+ * Interface for the meta data of a exchange rate.
+ * This is used when making product API requests for updating the exchange rate.
  */
-class NostoApiRequest extends NostoHttpRequest
+interface NostoExchangeRateInterface
 {
-    const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
-    const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
-    const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
-    const PATH_PRODUCTS_CREATE = '/v1/products/create';
-    const PATH_PRODUCTS_UPDATE = '/v1/products/update';
-    const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
-    const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
-    const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
-    const PATH_SETTINGS = '/settings';
-
     /**
-     * @var string base url for the nosto api.
-     */
-    public static $baseUrl = 'https://api.nosto.com';
-
-    /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
+     * Getter for the name of the exchange rate.
      *
-     * @param string $path the endpoint path (use PATH_ constants).
+     * @return string the name (can be different than ISO 4217).
      */
-    public function setPath($path)
-    {
-        $this->setUrl(self::$baseUrl.$path);
-    }
+    public function getName();
+
+    /**
+     * Getter for the exchange rates currencyCode code.
+     *
+     * @return string the currencyCode code in ISO 4217 format.
+     */
+    public function getCurrencyCode();
+
+    /**
+     * Getter for the exchange rate value.
+     *
+     * @return string the exchange rate.
+     */
+    public function getExchangeRate();
 }
