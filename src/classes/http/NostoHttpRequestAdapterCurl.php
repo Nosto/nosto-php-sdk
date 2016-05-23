@@ -39,6 +39,23 @@
  */
 class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
 {
+
+    /**
+     * @var string the user-agent to use if specified
+     */
+    private $userAgent = false;
+
+    /**
+     * Constructor.
+     * Creates the http request adapter with the specified user-agent
+     *
+     * @param $userAgent string the user-agent header for all requests
+     */
+    public function __construct($userAgent)
+    {
+        $this->userAgent = $userAgent;
+    }
+
     /**
      * @inheritdoc
      */
@@ -126,6 +143,9 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
     {
         if (!empty($this->headers)) {
             $curlOptions[CURLOPT_HTTPHEADER] = $this->headers;
+        }
+        if (!in_array(CURLOPT_USERAGENT, $curlOptions) && $this->userAgent) {
+            $curlOptions[CURLOPT_USERAGENT] = $this->userAgent;
         }
         $ch = curl_init();
         curl_setopt_array($ch, $curlOptions);

@@ -50,6 +50,11 @@ class NostoHttpRequest
     public static $baseUrl = 'https://my.nosto.com';
 
     /**
+     * @var string user-agent to use for all requests
+     */
+    public static $userAgent = '';
+
+    /**
      * @var string the request url.
      */
     protected $url;
@@ -92,9 +97,9 @@ class NostoHttpRequest
         if ($adapter !== null) {
             $this->adapter = $adapter;
         } elseif (function_exists('curl_exec')) {
-            $this->adapter = new NostoHttpRequestAdapterCurl();
+            $this->adapter = new NostoHttpRequestAdapterCurl(self::$userAgent);
         } else {
-            $this->adapter = new NostoHttpRequestAdapterSocket();
+            $this->adapter = new NostoHttpRequestAdapterSocket(self::$userAgent);
         }
     }
 
@@ -412,6 +417,19 @@ class NostoHttpRequest
                 'headers' => $this->headers,
             )
         );
+    }
+
+    /**
+     * Builds the custom-user agent by using the platform's name and version with the
+     * plugin version
+     *
+     * @param string $platformName the name of the platform using the SDK
+     * @param array $platformVersion the version of the platform using the SDK
+     * @param array $pluginVersion the version of the plugin using the SDK
+     */
+    public static function buildUserAgent($platformName, $platformVersion, $pluginVersion)
+    {
+        self::$userAgent = sprintf('Nosto %s / %s %s', $pluginVersion, $platformName, $platformVersion);
     }
 
     /**
