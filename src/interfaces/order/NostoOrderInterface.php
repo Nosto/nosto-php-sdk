@@ -80,4 +80,11 @@ interface NostoOrderInterface
      * @return NostoOrderStatusInterface the model.
      */
     public function getOrderStatus();
+
+    /**
+     * Returns the external order ref.
+     *
+     * @return string the external order ref.
+     */
+    public function getExternalOrderRef();
 }
