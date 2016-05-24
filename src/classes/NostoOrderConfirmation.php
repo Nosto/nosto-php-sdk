@@ -78,8 +78,10 @@ class NostoOrderConfirmation
             ),
             'created_at' => Nosto::helper('date')->format($order->getCreatedDate()),
             'payment_provider' => $order->getPaymentProvider(),
+            'external_order_ref' => $order->getExternalOrderRef(),
             'purchased_items' => array(),
         );
+
         foreach ($order->getPurchasedItems() as $item) {
             $orderData['purchased_items'][] = array(
                 'product_id' => $item->getProductId(),
