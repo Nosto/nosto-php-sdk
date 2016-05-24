@@ -58,6 +58,7 @@ class NostoExportOrderCollection extends NostoOrderCollection implements NostoEx
                     'email' => $item->getBuyerInfo()->getEmail(),
                 ),
                 'payment_provider' => $item->getPaymentProvider(),
+                'external_order_ref' => $item->getExternalOrderRef(),
                 'purchased_items' => array(),
             );
             foreach ($item->getPurchasedItems() as $orderItem) {
@@ -69,6 +70,7 @@ class NostoExportOrderCollection extends NostoOrderCollection implements NostoEx
                     'price_currency_code' => strtoupper($orderItem->getCurrencyCode()),
                 );
             }
+
             $array[] = $data;
         }
         return json_encode($array);
