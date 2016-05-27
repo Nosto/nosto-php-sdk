@@ -39,6 +39,12 @@
  */
 interface NostoProductInterface
 {
+    const IN_STOCK = 'InStock';
+    const OUT_OF_STOCK = 'OutOfStock';
+    const INVISIBLE = 'Invisible';
+    const DISCONTINUED = 'Discontinued';
+    const ADD_TO_CART = 'add-to-cart';
+
     /**
      * Returns the absolute url to the product page in the shop frontend.
      *
