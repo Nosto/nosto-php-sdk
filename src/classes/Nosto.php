@@ -119,7 +119,13 @@ class Nosto
         $message .= sprintf(' Error: %s.', $response->getCode());
         $message .= sprintf(' Request: %s.', $request);
         $message .= sprintf(' Response: %s.', $response);
-        throw new NostoHttpException($message, $response->getCode());
+        throw new NostoHttpException(
+            $message,
+            $response->getCode(),
+            null,
+            $request,
+            $response
+        );
     }
 
     /**

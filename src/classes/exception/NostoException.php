@@ -38,4 +38,54 @@
  */
 class NostoException extends Exception
 {
+    /**
+     * @var string
+     */
+    private $publicMessage;
+
+    /**
+     * @var array
+     */
+    private $errors;
+
+    /**
+     * @return NostoExceptionMessage
+     */
+    public function getPublicMessage()
+    {
+        return $this->publicMessage;
+    }
+
+    /**
+     * @param string $publicMessage
+     */
+    public function setPublicMessage($publicMessage)
+    {
+        $this->publicMessage = $publicMessage;
+    }
+
+    /**
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    /**
+     * @param array $errors
+     */
+    public function setErrors($errors)
+    {
+        $this->errors = $errors;
+    }
+
+    /**
+     * @param NostoExceptionMessage $error
+     */
+    public function addError(NostoExceptionMessage $error)
+    {
+        $this->errors[] = $error;
+    }
+
 }

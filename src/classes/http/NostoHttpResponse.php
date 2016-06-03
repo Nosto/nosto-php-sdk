@@ -38,6 +38,12 @@
  */
 class NostoHttpResponse
 {
+    const RESPONSE_TYPE_BAD_REQUEST = "bad_request";
+
+    public static $errorResponseTypes = array(
+        self::RESPONSE_TYPE_BAD_REQUEST => "One or more mandatory parameters are missing"
+    );
+    
     /**
      * @var array the response headers if there are any.
      */

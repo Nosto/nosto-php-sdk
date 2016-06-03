@@ -38,4 +38,86 @@
  */
 class NostoHttpException extends NostoException
 {
+    /**
+     * @var NostoHttpResponse
+     */
+    private $response;
+
+    /**
+     * @var NostoHttpRequest
+     */
+    private $request;
+
+
+    /**
+     * NostoHttpException constructor.
+     * @param string $message
+     * @param null $code
+     * @param Throwable|null $previous
+     * @param NostoHttpRequest|null $request
+     * @param NostoHttpResponse|null $response
+     */
+    public function __construct(
+        $message = "",
+        $code = null,
+        Throwable $previous = null,
+        NostoHttpRequest $request = null,
+        NostoHttpResponse $response = null
+    ) {
+        parent::__construct($message, $code, $previous);
+        $this->setRequest($request);
+        $this->setResponse($response);
+    }
+
+    /**
+     * @return NostoHttpRequest
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @param NostoHttpRequest $request
+     */
+    public function setRequest(NostoHttpRequest $request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * @return NostoHttpResponse
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+     * @param NostoHttpResponse $response
+     */
+    public function setResponse(NostoHttpResponse $response)
+    {
+        $this->response = $response;
+        $this->checkErrors($response);
+    }
+
+    public function checkErrors(NostoHttpResponse $response)
+    {
+        $json = $response->getJsonResult(true);
+        if (isset($json['type']) && (isset(NostoHttpResponse::$errorResponseTypes[$json['type']]))) {
+            $message = new NostoExceptionMessage(
+                $json['type'],
+                NostoHttpResponse::$errorResponseTypes[$json['type']]
+            );
+            $this->setPublicMessage($message);
+
+            $error = new NostoExceptionMessage(
+                $json['type'],
+                isset($json['message']) ? $json['message'] : ''
+            );
+
+            $this->addError($error);
+        }
+    }
 }
