@@ -10,3 +10,4 @@ require_once(dirname(__FILE__) . '/../src/config.inc.php');
 NostoApiRequest::$baseUrl = 'http://localhost:3000';
 NostoOAuthClient::$baseUrl = 'http://localhost:3000';
 NostoHttpRequest::$baseUrl = 'http://localhost:3000';
+NostoHttpRequest::buildUserAgent('PHPUnit', '1.0.0', '1.0.0');
