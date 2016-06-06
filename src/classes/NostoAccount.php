@@ -117,9 +117,7 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
         $response = $request->post(json_encode($params));
 
         /* In case of no result we have not been able to make the API call */
-        if (!$response->getResult()) {
-            Nosto::throwException($response->getMessage());
-        } elseif ($response->getCode() !== 200) {
+        if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to create Nosto account', $request, $response);
         }
 
