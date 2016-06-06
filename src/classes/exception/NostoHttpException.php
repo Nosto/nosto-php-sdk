@@ -48,7 +48,6 @@ class NostoHttpException extends NostoException
      */
     private $request;
 
-
     /**
      * NostoHttpException constructor.
      * @param string $message
@@ -99,25 +98,5 @@ class NostoHttpException extends NostoException
     public function setResponse(NostoHttpResponse $response)
     {
         $this->response = $response;
-        $this->checkErrors($response);
-    }
-
-    public function checkErrors(NostoHttpResponse $response)
-    {
-        $json = $response->getJsonResult(true);
-        if (isset($json['type']) && (isset(NostoHttpResponse::$errorResponseTypes[$json['type']]))) {
-            $message = new NostoExceptionMessage(
-                $json['type'],
-                NostoHttpResponse::$errorResponseTypes[$json['type']]
-            );
-            $this->setPublicMessage($message);
-
-            $error = new NostoExceptionMessage(
-                $json['type'],
-                isset($json['message']) ? $json['message'] : ''
-            );
-
-            $this->addError($error);
-        }
     }
 }

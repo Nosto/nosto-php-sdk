@@ -120,7 +120,7 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
         if (!$response->getResult()) {
             Nosto::throwException($response->getMessage());
         } elseif ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Nosto account could not be created.', $request, $response);
+            Nosto::throwHttpException($request, $response);
         }
 
         $account = new self($meta->getPlatform().'-'.$meta->getName());

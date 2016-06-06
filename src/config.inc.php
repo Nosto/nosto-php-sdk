@@ -64,8 +64,8 @@ require_once(dirname(__FILE__).'/classes/collection/NostoOrderCollection.php');
 require_once(dirname(__FILE__).'/classes/collection/NostoExchangeRateCollection.php');
 
 require_once(dirname(__FILE__).'/classes/exception/NostoException.php');
-require_once(dirname(__FILE__).'/classes/exception/NostoExceptionMessage.php');
 require_once(dirname(__FILE__).'/classes/exception/NostoHttpException.php');
+require_once(dirname(__FILE__).'/classes/exception/NostoApiResponseException.php');
 
 require_once(dirname(__FILE__).'/classes/export/NostoExporter.php');
 require_once(dirname(__FILE__).'/classes/export/NostoExportProductCollection.php');
