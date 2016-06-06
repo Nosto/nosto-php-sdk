@@ -129,6 +129,21 @@ class Nosto
     }
 
     /**
+     * Throws a new NostoException exception
+     *
+     * @param string $message the error message
+     * @param int $code the code
+     * @throws NostoException the exception
+     */
+    public static function throwException($message, $code = null)
+    {
+        throw new NostoException(
+            $message,
+            $code
+        );
+    }
+
+    /**
      * Converts a helper class name reference name to a real class name.
      *
      * Examples:

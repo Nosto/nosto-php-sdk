@@ -67,7 +67,6 @@ class NostoHttpException extends NostoException
         parent::__construct($message, $code, $previous);
         $this->setRequest($request);
         $this->setResponse($response);
-        $this->addError(new NostoExceptionMessage('default', $message));
     }
 
     /**
