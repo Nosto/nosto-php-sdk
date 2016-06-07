@@ -187,7 +187,7 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 	 */
 	public function testHttpRequestCurlAdapter()
 	{
-		$request = new NostoHttpRequest(new NostoHttpRequestAdapterCurl());
+		$request = new NostoHttpRequest(new NostoHttpRequestAdapterCurl(NostoHttpRequest::$userAgent));
 		$request->setUrl('http://localhost:3000');
 		$response = $request->get();
 		$this->assertEquals(404, $response->getCode());
@@ -214,7 +214,7 @@ class HttpRequestTest extends \Codeception\TestCase\Test
 	 */
 	public function testHttpRequestSocketAdapter()
 	{
-		$request = new NostoHttpRequest(new NostoHttpRequestAdapterSocket());
+		$request = new NostoHttpRequest(new NostoHttpRequestAdapterSocket(NostoHttpRequest::$userAgent));
 		$request->setUrl('http://localhost:3000');
 		$response = $request->get();
 		$this->assertEquals(404, $response->getCode());

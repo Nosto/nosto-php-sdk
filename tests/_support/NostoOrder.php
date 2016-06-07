@@ -26,4 +26,9 @@ class NostoOrder implements NostoOrderInterface
 	{
 		return new NostoOrderStatus();
 	}
+
+	public function getExternalOrderRef()
+	{
+		return 'ext ref';
+	}
 }
