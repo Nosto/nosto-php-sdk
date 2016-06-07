@@ -116,8 +116,9 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
         $request->setAuthBasic('', $meta->getSignUpApiToken());
         $response = $request->post(json_encode($params));
 
+        /* In case of no result we have not been able to make the API call */
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Nosto account could not be created.', $request, $response);
+            Nosto::throwHttpException('Failed to create Nosto account', $request, $response);
         }
 
         $account = new self($meta->getPlatform().'-'.$meta->getName());

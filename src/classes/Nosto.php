@@ -112,14 +112,53 @@ class Nosto
      * @param string $message the error message.
      * @param NostoHttpRequest $request the request object to take additional info from.
      * @param NostoHttpResponse $response the response object to take additional info from.
-     * @throws NostoHttpException the exception.
+     * @throws NostoHttpException|NostoApiResponseException the exception.
      */
     public static function throwHttpException($message, NostoHttpRequest $request, NostoHttpResponse $response)
     {
-        $message .= sprintf(' Error: %s.', $response->getCode());
-        $message .= sprintf(' Request: %s.', $request);
-        $message .= sprintf(' Response: %s.', $response);
-        throw new NostoHttpException($message, $response->getCode());
+        $jsonResponse = $response->getJsonResult();
+
+        if (
+            isset($jsonResponse->type)
+            && isset($jsonResponse->message)
+        ) {
+            if (isset($jsonResponse->message)) {
+                $message .= '. ' . $jsonResponse->message;
+            }
+            throw new NostoApiResponseException(
+                $message,
+                $response->getCode(), // http status code
+                null,
+                $request,
+                $response
+            );
+        } else {
+            if ($response->getMessage()) {
+                $message .= '. ' . $response->getMessage();
+            }
+            throw new NostoHttpException(
+                $message,
+                $response->getCode(),
+                null,
+                $request,
+                $response
+            );
+        }
+    }
+
+    /**
+     * Throws a new NostoException exception
+     *
+     * @param string $message the error message
+     * @param int $code the code
+     * @throws NostoException the exception
+     */
+    public static function throwException($message, $code = null)
+    {
+        throw new NostoException(
+            $message,
+            $code
+        );
     }
 
     /**
