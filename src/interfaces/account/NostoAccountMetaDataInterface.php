@@ -142,4 +142,11 @@ interface NostoAccountMetaDataInterface
      * @return string
      */
     public function getDefaultVariationId();
+
+    /**
+     * Returns the account details
+     *
+     * @return string
+     */
+    public function getDetails();
 }
