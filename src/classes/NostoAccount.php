@@ -109,6 +109,10 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
             $params['api_tokens'][] = 'api_'.$name;
         }
 
+        if ($meta->getDetails()) {
+            $params['details'] = $meta->getDetails();
+        }
+
         $request = new NostoApiRequest();
         $request->setPath(NostoApiRequest::PATH_SIGN_UP);
         $request->setReplaceParams(array('{lang}' => $meta->getLanguageCode()));

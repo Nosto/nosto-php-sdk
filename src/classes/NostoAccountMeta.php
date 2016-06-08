@@ -84,6 +84,11 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     protected $defaultVariationId = false;
 
     /**
+     * @var string details
+     */
+    protected $details = false;
+
+    /**
      * Sets the store title.
      *
      * @param string $title the store title.
@@ -301,7 +306,6 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
         $this->defaultVariationId = $defaultVariationId;
     }
 
-
     /*
      * Returns the default variation id
      *
@@ -313,5 +317,24 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     public function getDefaultVariationId()
     {
         return $this->defaultVariationId;
+    }
+
+    /**
+     * Sets the details
+     * @param string $details
+     */
+    public function setDetails($details)
+    {
+        $this->details = $details;
+    }
+
+    /*
+     * Returns the account details
+     *
+     * @return string
+     */
+    public function getDetails()
+    {
+        return $this->details;
     }
 }
