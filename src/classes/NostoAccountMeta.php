@@ -89,6 +89,35 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     protected $details = false;
 
     /**
+     * @var string sign up api token
+     */
+    protected $signupApiToken;
+
+    /**
+     * @var string platform name
+     */
+    protected $platform;
+
+    /**
+     * @var string partner code
+     */
+    protected $partnerCode;
+
+    /**
+     * Constructor
+     *
+     * @param string $platform
+     * @param string $signupApiToken
+     * @param string $partnerCode
+     */
+    public function __construct($platform, $signupApiToken, $partnerCode)
+    {
+        $this->platform = $platform;
+        $this->signupApiToken = $signupApiToken;
+        $this->partnerCode = $partnerCode;
+    }
+
+    /**
      * Sets the store title.
      *
      * @param string $title the store title.
@@ -129,14 +158,6 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     {
         return $this->name;
     }
-
-    /**
-     * The name of the platform the account is used on.
-     * A list of valid platform names is issued by Nosto.
-     *
-     * @return string the platform names.
-     */
-    abstract public function getPlatform();
 
     /**
      * Sets the store front page url.
@@ -243,21 +264,6 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
-     * The API token used to identify an account creation.
-     * This token is platform specific and issued by Nosto.
-     *
-     * @return string the API token.
-     */
-    abstract public function getSignUpApiToken();
-
-    /**
-     * Returns the partner code
-     *
-     * @return string
-     */
-    abstract public function getPartnerCode();
-
-    /**
      * Returns an array of currencies used for this account
      *
      * @return array
@@ -306,12 +312,9 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
         $this->defaultVariationId = $defaultVariationId;
     }
 
-    /*
-     * Returns the default variation id
-     *
-     * @return string
-     */
     /**
+     * Return the default variation id
+     *
      * @return string
      */
     public function getDefaultVariationId()
@@ -328,7 +331,7 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
         $this->details = $details;
     }
 
-    /*
+    /**
      * Returns the account details
      *
      * @return string
@@ -337,4 +340,35 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     {
         return $this->details;
     }
+
+    /**
+     * Returns the partner code
+     *
+     * @return string
+     */
+    public function getPartnerCode()
+    {
+        return $this->partnerCode;
+    }
+
+    /**
+     * Returns the name of the platform
+     *
+     * @return string
+     */
+    public function getPlatform()
+    {
+        return $this->platform;
+    }
+
+    /**
+     * Returns the signup api token
+     *
+     * @return string
+     */
+    public function getSignupApiToken()
+    {
+        return $this->signupApiToken;
+    }
+
 }
