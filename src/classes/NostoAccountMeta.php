@@ -320,14 +320,6 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
-     * @return NostoTaggingMetaAccountBilling
-     */
-    public function getBilling()
-    {
-        return $this->billing;
-    }
-
-    /**
      * Sets the details
      * @param string $details
      */
