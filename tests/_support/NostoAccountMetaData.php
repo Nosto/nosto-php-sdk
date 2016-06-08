@@ -70,4 +70,8 @@ class NostoAccountMetaData implements NostoAccountMetaDataInterface
 		return null;
 	}
 
+	public function getDetails()
+	{
+		return null;
+	}
 }
