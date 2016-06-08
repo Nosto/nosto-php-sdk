@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2015, Nosto Solutions Ltd
+ * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,8 +29,9 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2015 Nosto Solutions Ltd
+ * @copyright 2016 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
+ *
  */
 
 /**
@@ -56,7 +57,7 @@ class NostoHttpResponse
     /**
      * @var int runtime cache for the http response code.
      */
-    private $_code;
+    private $code;
 
     /**
      * Constructor.
@@ -117,7 +118,7 @@ class NostoHttpResponse
      */
     public function getCode()
     {
-        if (is_null($this->_code)) {
+        if (is_null($this->code)) {
             $code = 0;
             if (!empty($this->headers)) {
                 foreach ($this->headers as $header) {
@@ -128,9 +129,9 @@ class NostoHttpResponse
                     }
                 }
             }
-            $this->_code = $code;
+            $this->code = $code;
         }
-        return $this->_code;
+        return $this->code;
     }
 
     /**

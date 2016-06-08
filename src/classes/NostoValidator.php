@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2015, Nosto Solutions Ltd
+ * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,8 +29,9 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2015 Nosto Solutions Ltd
+ * @copyright 2016 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
+ *
  */
 
 /**
@@ -41,12 +42,12 @@ class NostoValidator
     /**
      * @var NostoValidatableInterface the object to validate.
      */
-    private $_object;
+    private $object;
 
     /**
      * @var array map of validation errors per attribute.
      */
-    private $_errors = array();
+    private $errors = array();
 
     /**
      * Constructor.
@@ -56,7 +57,7 @@ class NostoValidator
      */
     public function __construct(NostoValidatableInterface $object)
     {
-        $this->_object = $object;
+        $this->object = $object;
     }
 
     /**
@@ -67,7 +68,7 @@ class NostoValidator
      */
     public function validate()
     {
-        foreach ($this->_object->getValidationRules() as $rule) {
+        foreach ($this->object->getValidationRules() as $rule) {
             if (isset($rule[0], $rule[1])) {
                 $properties = $rule[0];
                 $validator = 'validate'.$rule[1];
@@ -91,7 +92,7 @@ class NostoValidator
      */
     public function hasErrors()
     {
-        return (bool)count($this->_errors);
+        return (bool)count($this->errors);
     }
 
     /**
@@ -101,7 +102,7 @@ class NostoValidator
      */
     public function getErrors()
     {
-        return $this->_errors;
+        return $this->errors;
     }
 
     /**
@@ -112,10 +113,10 @@ class NostoValidator
      */
     protected function addError($attribute, $message)
     {
-        if (!isset($this->_errors[$attribute])) {
-            $this->_errors[$attribute] = array();
+        if (!isset($this->errors[$attribute])) {
+            $this->errors[$attribute] = array();
         }
-        $this->_errors[$attribute][] = $message;
+        $this->errors[$attribute][] = $message;
     }
 
     /**
@@ -127,7 +128,7 @@ class NostoValidator
     protected function validateRequired(array $properties)
     {
         foreach ($properties as $property) {
-            $value = $this->_object->{$property};
+            $value = $this->object->{$property};
             if (empty($value)) {
                 $this->addError($property, sprintf('Property "%s" must not be empty.', $property));
                 return false;
@@ -147,7 +148,7 @@ class NostoValidator
     {
         $supported = implode('", "', $values);
         foreach ($properties as $property) {
-            $value = $this->_object->{$property};
+            $value = $this->object->{$property};
             if (!in_array($value, $values)) {
                 $this->addError(
                     $property,
