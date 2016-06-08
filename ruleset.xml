@@ -34,5 +34,5 @@
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*/tests/*</exclude-pattern>
     <exclude-pattern>*/phpseclib/*</exclude-pattern>
-
+    <exclude-pattern>*.js</exclude-pattern>
 </ruleset>

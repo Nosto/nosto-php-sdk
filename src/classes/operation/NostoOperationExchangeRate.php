@@ -31,6 +31,7 @@
  * @author Nosto Solutions Ltd <contact@nosto.com>
  * @copyright 2016 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
+ *
  */
 
 /**
