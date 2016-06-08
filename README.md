@@ -414,3 +414,13 @@ Then in another window run the tests:
 ```bash
     vendor/bin/codecept run
 ```
+
+### Running phpcs
+
+First cd into the root directory.
+
+Then the phpcs:
+
+```bash
+    phpcs --standard=ruleset.xml -v .
+```
