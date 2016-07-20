@@ -217,17 +217,12 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
         if (empty($this->tokens)) {
             return false;
         }
-        $countTokens = count($this->tokens);
-        $foundTokens = 0;
         foreach (NostoApiToken::getApiTokenNames() as $name) {
-            foreach ($this->tokens as $token) {
-                if ($token->name === $name) {
-                    $foundTokens++;
-                    break;
-                }
+            if ($this->getApiToken($name) === null) {
+                return false;
             }
         }
-        return ($countTokens === $foundTokens);
+        return true;
     }
 
     /**
