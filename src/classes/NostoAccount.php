@@ -114,6 +114,11 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
             $params['details'] = $meta->getDetails();
         }
 
+        $params['use_exchange_rates'] = $meta->getUseCurrencyExchangeRates();
+        if ($meta->getDefaultVariationId()) {
+            $params['default_variant_id'] = $meta->getDefaultVariationId();
+        }
+
         $request = new NostoApiRequest();
         $request->setPath(NostoApiRequest::PATH_SIGN_UP);
         $request->setReplaceParams(array('{lang}' => $meta->getLanguageCode()));
