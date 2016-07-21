@@ -217,6 +217,22 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
         if (empty($this->tokens)) {
             return false;
         }
+        foreach (NostoApiToken::getMandatoryApiTokenNames() as $name) {
+            if ($this->getApiToken($name) === null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function hasMissingTokens()
+    {
+        if (empty($this->tokens)) {
+            return false;
+        }
         foreach (NostoApiToken::getApiTokenNames() as $name) {
             if ($this->getApiToken($name) === null) {
                 return false;
