@@ -37,7 +37,7 @@
 /**
  * Interface for the meta data needed for the account configuration iframe.
  */
-interface NostoAccountMetaDataIframeInterface
+interface NostoAccountIframeInterface
 {
     /**
      * The name of the platform the iframe is used on.

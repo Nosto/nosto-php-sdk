@@ -187,7 +187,7 @@ class NostoConfiguration extends NostoObject implements NostoConfigurationInterf
     /**
      * @inheritdoc
      */
-    public function getIframeUrl(NostoAccountMetaDataIframeInterface $meta, array $params = array())
+    public function getIframeUrl(NostoAccountIframeInterface $meta, array $params = array())
     {
         return Nosto::helper('iframe')->getUrl($meta, $this, $params);
     }
@@ -195,7 +195,7 @@ class NostoConfiguration extends NostoObject implements NostoConfigurationInterf
     /**
      * @inheritdoc
      */
-    public function ssoLogin(NostoAccountMetaDataIframeInterface $meta)
+    public function ssoLogin(NostoAccountIframeInterface $meta)
     {
         $token = $this->getApiToken('sso');
         if ($token === null) {

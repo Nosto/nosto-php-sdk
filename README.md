@@ -46,10 +46,10 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 ### Interfaces
 
 * **NostoAccountInterface** interface defining methods needed to manage Nosto accounts
-* **NostoAccountMetaDataBillingDetailsInterface** interface defining getters for billing information needed during Nosto account creation over the API
-* **NostoAccountMetaDataIframeInterface** interface defining getters for information needed by the Nosto account configuration iframe
-* **NostoAccountMetaDataInterface** interface defining getters for information needed during Nosto account creation over the API
-* **NostoAccountMetaDataOwnerInterface** interface defining getters for account owner information needed during Nosto account creation over the API
+* **NostoAccountBillingDetailsInterface** interface defining getters for billing information needed during Nosto account creation over the API
+* **NostoAccountIframeInterface** interface defining getters for information needed by the Nosto account configuration iframe
+* **NostoAccountInterface** interface defining getters for information needed during Nosto account creation over the API
+* **NostoAccountOwnerInterface** interface defining getters for account owner information needed during Nosto account creation over the API
 * **NostoOrderBuyerInterface** interface defining getters for buyer information needed during order confirmation requests
 * **NostoOrderInterface** interface defining getters for information needed during order confirmation requests
 * **NostoOrderPurchasedItemInterface** interface defining getters for purchased item information needed during order confirmation requests
@@ -75,7 +75,7 @@ A Nosto account is needed for every shop and every language within each shop.
 ```php
     .....
     try {
-        /** @var NostoAccountMetaDataInterface $meta */
+        /** @var NostoAccountInterface $meta */
         /** @var NostoAccount $account */
         $account = NostoAccount::create($meta);
         // save newly created account according to the platforms requirements
@@ -147,7 +147,7 @@ This iframe will load only content from nosto.com.
     .....
     /**
      * @var NostoAccount|null $account account with at least the 'SSO' token loaded or null if no account exists yet
-     * @var NostoAccountMetaDataIframeInterface $meta
+     * @var NostoAccountIframeInterface $meta
      * @var array $params (optional) extra params to add to the iframe url
      */
     try

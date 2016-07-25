@@ -34,7 +34,7 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataIframe.php');
+require_once(dirname(__FILE__) . '/../_support/NostoAccountIframe.php');
 
 class AccountTest extends \Codeception\TestCase\Test
 {
@@ -92,7 +92,7 @@ class AccountTest extends \Codeception\TestCase\Test
 	public function testAccountSingleSignOn()
 	{
 		$account = new NostoConfiguration('platform-test');
-		$meta = new NostoAccountMetaDataIframe();
+		$meta = new NostoAccountIframe();
 
 		$this->specify('account sso without api token', function() use ($account, $meta) {
 			$this->assertFalse($account->ssoLogin($meta));

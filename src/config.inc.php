@@ -35,10 +35,10 @@
  */
 
 // Interfaces
-require_once(dirname(__FILE__).'/interfaces/account/NostoAccountMetaDataBillingDetailsInterface.php');
-require_once(dirname(__FILE__).'/interfaces/account/NostoAccountMetaDataIframeInterface.php');
-require_once(dirname(__FILE__).'/interfaces/account/NostoAccountMetaDataInterface.php');
-require_once(dirname(__FILE__).'/interfaces/account/NostoAccountMetaDataOwnerInterface.php');
+require_once(dirname(__FILE__).'/interfaces/account/NostoAccountBillingDetailsInterface.php');
+require_once(dirname(__FILE__).'/interfaces/account/NostoAccountIframeInterface.php');
+require_once(dirname(__FILE__).'/interfaces/account/NostoAccountInterface.php');
+require_once(dirname(__FILE__).'/interfaces/account/NostoAccountOwnerInterface.php');
 
 require_once(dirname(__FILE__).'/interfaces/order/NostoOrderBuyerInterface.php');
 require_once(dirname(__FILE__).'/interfaces/order/NostoOrderInterface.php');

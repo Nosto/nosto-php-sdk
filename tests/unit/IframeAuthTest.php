@@ -34,7 +34,7 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataIframe.php');
+require_once(dirname(__FILE__) . '/../_support/NostoAccountIframe.php');
 
 class IframeAuthTest extends \Codeception\TestCase\Test
 {
@@ -52,7 +52,7 @@ class IframeAuthTest extends \Codeception\TestCase\Test
     {
 		/** @var NostoAccount $account */
 		$account = new NostoConfiguration('platform-00000000');
-		$meta = new NostoAccountMetaDataIframe();
+		$meta = new NostoAccountIframe();
 		$baseUrl = isset($_ENV['NOSTO_WEB_HOOK_BASE_URL']) ? $_ENV['NOSTO_WEB_HOOK_BASE_URL'] : NostoHttpRequest::$baseUrl;
 
 		$url = $account->getIframeUrl($meta);

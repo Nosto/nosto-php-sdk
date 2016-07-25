@@ -42,11 +42,11 @@ interface NostoConfigurationInterface
     /**
      * Creates a new Nosto account with the specified data.
      *
-     * @param NostoAccountMetaDataInterface $meta the account data model.
+     * @param NostoAccountInterface $meta the account data model.
      * @return NostoAccount the newly created account.
      * @throws NostoException if the account cannot be created.
      */
-    public static function create(NostoAccountMetaDataInterface $meta);
+    public static function create(NostoAccountInterface $meta);
 
     /**
      * Syncs an existing Nosto account via Oauth2.
@@ -99,19 +99,19 @@ interface NostoConfigurationInterface
     /**
      * Gets the secured iframe url for the account configuration page.
      *
-     * @param NostoAccountMetaDataIframeInterface $meta the iframe meta data to use for fetching the secured url.
+     * @param NostoAccountIframeInterface $meta the iframe meta data to use for fetching the secured url.
      * @param array $params optional extra params to add to the iframe url.
      * @return bool|string the url or false if could not be fetched.
      */
-    public function getIframeUrl(NostoAccountMetaDataIframeInterface $meta, array $params = array());
+    public function getIframeUrl(NostoAccountIframeInterface $meta, array $params = array());
 
     /**
      * Signs the user in to Nosto via SSO.
      * Requires that the account has a valid sso token associated with it.
      *
-     * @param NostoAccountMetaDataIframeInterface $meta the iframe meta data model.
+     * @param NostoAccountIframeInterface $meta the iframe meta data model.
      * @return string a secure login url that can be used for example to build the config iframe url.
      * @throws NostoException if SSO fails.
      */
-    public function ssoLogin(NostoAccountMetaDataIframeInterface $meta);
+    public function ssoLogin(NostoAccountIframeInterface $meta);
 }

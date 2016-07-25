@@ -36,9 +36,9 @@
 
 /**
  * Interface for the account owner details.
- * This is used by the NostoAccountMetaDataInterface meta data model when creating new Nosto accounts.
+ * This is used by the NostoAccountInterface meta data model when creating new Nosto accounts.
  */
-interface NostoAccountMetaDataOwnerInterface
+interface NostoAccountOwnerInterface
 {
     /**
      * The first name of the account owner.

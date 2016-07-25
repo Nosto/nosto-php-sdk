@@ -38,7 +38,7 @@
  * Meta data class which holds information about the Nosto account owner.
  * This is used during the Nosto account creation.
  */
-class NostoAccountOwner implements NostoAccountMetaDataOwnerInterface
+class NostoAccountOwner implements NostoAccountOwnerInterface
 {
     /**
      * @var string the account owner first name.

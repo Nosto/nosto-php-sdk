@@ -34,9 +34,9 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataBilling.php');
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataOwner.php');
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaData.php');
+require_once(dirname(__FILE__) . '/../_support/NostoAccountBilling.php');
+require_once(dirname(__FILE__) . '/../_support/NostoAccountOwner.php');
+require_once(dirname(__FILE__) . '/../_support/NostoAccount.php');
 
 class AccountCreateTest extends \Codeception\TestCase\Test
 {
@@ -53,8 +53,8 @@ class AccountCreateTest extends \Codeception\TestCase\Test
 	public function testCreatingNewAccount()
     {
 		/** @var NostoAccount $account */
-		/** @var NostoAccountMetaData $meta */
-		$meta = new NostoAccountMetaData();
+		/** @var NostoAccount $meta */
+		$meta = new NostoAccount();
 		$account = NostoAccount::create($meta);
 
 		$this->specify('account was created', function() use ($account, $meta) {

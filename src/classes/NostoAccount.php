@@ -37,7 +37,7 @@
 /**
  * Meta data class for account related information needed when creating new accounts.
  */
-class NostoAccountMeta implements NostoAccountMetaDataInterface
+class NostoAccount implements NostoAccountInterface
 {
     /**
      * @var string the store name.
@@ -115,9 +115,9 @@ class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
-     * @param NostoAccountMetaDataBillingDetailsInterface $billing
+     * @param NostoAccountBilling $billing
      */
-    public function setBilling(NostoAccountMetaDataBillingDetailsInterface $billing)
+    public function setBilling(NostoAccountBilling $billing)
     {
         $this->billing = $billing;
     }
@@ -251,7 +251,7 @@ class NostoAccountMeta implements NostoAccountMetaDataInterface
     /**
      * Meta data model for the account owner who is creating the account.
      *
-     * @return NostoTaggingMetaAccountOwner the meta data model.
+     * @return NostoAccountOwner the meta data model.
      */
     public function getOwner()
     {
@@ -259,9 +259,9 @@ class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
-     * @param NostoAccountMetaDataOwnerInterface $owner
+     * @param NostoAccountOwner $owner
      */
-    public function setOwner(NostoAccountMetaDataOwnerInterface $owner)
+    public function setOwner(NostoAccountOwner $owner)
     {
         $this->owner = $owner;
     }
