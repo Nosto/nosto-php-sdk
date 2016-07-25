@@ -37,7 +37,7 @@
 /**
  * Handles sending currencyCode exchange rates through the Nosto API.
  */
-class NostoOperationAccount
+class NostoOperationSettings
 {
     /**
      * @var NostoAccountMetaDataInterface Nosto account meta
@@ -61,14 +61,14 @@ class NostoOperationAccount
      * - content type
      * - auth token
      *
-     * @param NostoApiToken the token to use for the endpoint
      * @return NostoApiRequest the newly created request object.
-     * @throws NostoException if the account does not have the `signup` token set.
+     * @throws NostoException if the account does not have the `setting` token set.
      */
-    protected function initApiRequest(NostoApiToken $token)
+    protected function initApiRequest()
     {
+        $token = $this->account->getApiToken(NostoApiToken::API_SETTINGS);
         if (is_null($token)) {
-            throw new NostoException('No `signup` API token found for account.');
+            throw new NostoException('No `settings` API token found for account.');
         }
 
         $request = new NostoApiRequest();
@@ -80,91 +80,54 @@ class NostoOperationAccount
     /**
      * Sends a POST request to create a new account for a store in Nosto
      *
-     * @return NostoConfigurationInterface if the request was successful.
-     * @throws NostoException on failure.
-     */
-    public function create()
-    {
-        $request = $this->initApiRequest($this->accountMeta->getSignUpApiToken());
-        $request->setPath(NostoApiRequest::PATH_SIGN_UP);
-        $request->setReplaceParams(array('{lang}' => $meta->getLanguageCode()));
-        $response = $request->post($this->getJson());
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to create Nosto account.', $request, $response);
-        }
-
-        $config = new NostoConfiguration($meta->getPlatform().'-'.$meta->getName());
-        $config->tokens = NostoApiToken::parseTokens($response->getJsonResult(true), '', '_token');
-        return $config;
-    }
-
-    /**
-     * Sends a POST request to delete an account for a store in Nosto
-     *
-     * @param NostoCo
      * @return bool if the request was successful.
      * @throws NostoException on failure.
      */
-    public function delete(NostoConfiguration $config)
+    public function update()
     {
-        $request = $this->initApiRequest($config->getApiToken('sso'));
-        $request->setPath(NostoApiRequest::PATH_ACCOUNT_DELETED);
-        $response = $request->post('');
+        $request = $this->initApiRequest();
+        $request->setPath(NostoApiRequest::PATH_SETTINGS);
+        $response = $request->post($this->getJson());
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to delete Nosto account.', $request, $response);
+            Nosto::throwHttpException('Failed to update Nosto settings.', $request, $response);
         }
-
         return true;
     }
 
     /**
-     * Returns the account in JSON format
+     * Returns the settings in JSON format
      *
      * @return string the JSON structure.
      */
     protected function getJson()
     {
         $data = array(
-            'title' => $meta->getTitle(),
-            'name' => $meta->getName(),
-            'platform' => $meta->getPlatform(),
-            'front_page_url' => $meta->getFrontPageUrl(),
-            'currency_code' => strtoupper($meta->getCurrencyCode()),
-            'language_code' => strtolower($meta->getOwnerLanguageCode()),
-            'owner' => array(
-                'first_name' => $meta->getOwner()->getFirstName(),
-                'last_name' => $meta->getOwner()->getLastName(),
-                'email' => $meta->getOwner()->getEmail(),
-            ),
-            'api_tokens' => array(),
+            'title' => $this->accountMeta->getTitle(),
+            'front_page_url' => $this->accountMeta->getFrontPageUrl(),
+            'currency_code' => $this->accountMeta->getCurrencyCode(),
         );
 
-        // Add optional billing details if the required data is set.
-        $billingDetails = array(
-            'country' => strtoupper($meta->getBillingDetails()->getCountry())
-        );
-        if (!empty($billingDetails['country'])) {
-            $data['billing_details'] = $billingDetails;
+        // Currencies and currency options
+        $currencyCount = count($this->accountMeta->getCurrencies());
+        if ($currencyCount > 0) {
+            $data['currencies'] = array();
+            foreach ($this->accountMeta->getCurrencies() as $currency) {
+                $data['currencies'][$currency->getCode()->getCode()] = array(
+                    'currency_before_amount' => (
+                        $currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT
+                    ),
+                    'currency_token' => $currency->getSymbol()->getSymbol(),
+                    'decimal_character' => $currency->getFormat()->getDecimalSymbol(),
+                    'grouping_separator' => $currency->getFormat()->getGroupSymbol(),
+                    'decimal_places' => $currency->getFormat()->getPrecision(),
+                );
+            }
         }
-
-        // Add optional partner code if one is set.
-        $partnerCode = $meta->getPartnerCode();
-        if (!empty($partnerCode)) {
-            $data['partner_code'] = $partnerCode;
-        }
-
-        // Request all available API tokens for the account.
-        foreach (NostoApiToken::$tokenNames as $name) {
-            $data['api_tokens'][] = 'api_'.$name;
-        }
-
-        if ($meta->getDetails()) {
-            $data['details'] = $meta->getDetails();
-        }
-
-        $data['use_exchange_rates'] = $meta->getUseCurrencyExchangeRates();
-        if ($meta->getDefaultVariationId()) {
-            $data['default_variant_id'] = $meta->getDefaultVariationId();
+        $data['use_exchange_rates'] = $this->accountMeta->getUseCurrencyExchangeRates();
+        if ($this->accountMeta->getDefaultVariationId()) {
+            $data['default_variant_id'] = $this->accountMeta->getDefaultVariationId();
+        } else {
+            $data['default_variant_id'] = '';
         }
 
         return json_encode($data);

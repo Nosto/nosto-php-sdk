@@ -74,71 +74,6 @@ class NostoConfiguration extends NostoObject implements NostoConfigurationInterf
     /**
      * @inheritdoc
      */
-    public static function create(NostoAccountMetaDataInterface $meta)
-    {
-        $params = array(
-            'title' => $meta->getTitle(),
-            'name' => $meta->getName(),
-            'platform' => $meta->getPlatform(),
-            'front_page_url' => $meta->getFrontPageUrl(),
-            'currency_code' => strtoupper($meta->getCurrencyCode()),
-            'language_code' => strtolower($meta->getOwnerLanguageCode()),
-            'owner' => array(
-                'first_name' => $meta->getOwner()->getFirstName(),
-                'last_name' => $meta->getOwner()->getLastName(),
-                'email' => $meta->getOwner()->getEmail(),
-            ),
-            'api_tokens' => array(),
-        );
-
-        // Add optional billing details if the required data is set.
-        $billingDetails = array(
-            'country' => strtoupper($meta->getBillingDetails()->getCountry())
-        );
-        if (!empty($billingDetails['country'])) {
-            $params['billing_details'] = $billingDetails;
-        }
-
-        // Add optional partner code if one is set.
-        $partnerCode = $meta->getPartnerCode();
-        if (!empty($partnerCode)) {
-            $params['partner_code'] = $partnerCode;
-        }
-
-        // Request all available API tokens for the account.
-        foreach (NostoApiToken::$tokenNames as $name) {
-            $params['api_tokens'][] = 'api_'.$name;
-        }
-
-        if ($meta->getDetails()) {
-            $params['details'] = $meta->getDetails();
-        }
-
-        $params['use_exchange_rates'] = $meta->getUseCurrencyExchangeRates();
-        if ($meta->getDefaultVariationId()) {
-            $params['default_variant_id'] = $meta->getDefaultVariationId();
-        }
-
-        $request = new NostoApiRequest();
-        $request->setPath(NostoApiRequest::PATH_SIGN_UP);
-        $request->setReplaceParams(array('{lang}' => $meta->getLanguageCode()));
-        $request->setContentType('application/json');
-        $request->setAuthBasic('', $meta->getSignUpApiToken());
-        $response = $request->post(json_encode($params));
-
-        /* In case of no result we have not been able to make the API call */
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to create Nosto account', $request, $response);
-        }
-
-        $account = new self($meta->getPlatform().'-'.$meta->getName());
-        $account->tokens = NostoApiToken::parseTokens($response->getJsonResult(true), '', '_token');
-        return $account;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public static function syncFromNosto(NostoOAuthClientMetaDataInterface $meta, $code)
     {
         $oauthClient = new NostoOAuthClient($meta);
@@ -172,26 +107,6 @@ class NostoConfiguration extends NostoObject implements NostoConfigurationInterf
             throw new NostoException('Failed to sync all account details from Nosto');
         }
         return $account;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function delete()
-    {
-        $token = $this->getApiToken('sso');
-        if ($token === null) {
-            throw new NostoException('Failed to notify Nosto about deleted account, no "sso" token');
-        }
-
-        $request = new NostoHttpRequest();
-        $request->setUrl(NostoHttpRequest::$baseUrl.NostoHttpRequest::PATH_ACCOUNT_DELETED);
-        $request->setAuthBasic('', $token->getValue());
-        $response = $request->post('');
-
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to notify Nosto about deleted account.', $request, $response);
-        }
     }
 
     /**

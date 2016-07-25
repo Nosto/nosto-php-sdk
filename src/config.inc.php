@@ -89,6 +89,7 @@ require_once(dirname(__FILE__).'/classes/oauth/NostoOAuthToken.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationProduct.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationExchangeRate.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationAccount.php');
+require_once(dirname(__FILE__).'/classes/operation/NostoOperationSettings.php');
 
 require_once(dirname(__FILE__).'/classes/Nosto.php');
 require_once(dirname(__FILE__).'/classes/NostoConfiguration.php');

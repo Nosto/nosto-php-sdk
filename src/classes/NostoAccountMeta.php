@@ -42,63 +42,63 @@ class NostoAccountMeta implements NostoAccountMetaDataInterface
     /**
      * @var string the store name.
      */
-    protected $title;
+    private $title;
     /**
      * @var string the account name.
      */
-    protected $name;
+    private $name;
     /**
      * @var string the store front end url.
      */
-    protected $frontPageUrl;
+    private $frontPageUrl;
     /**
      * @var string the store currency ISO (ISO 4217) code.
      */
-    protected $currencyCode;
+    private $currencyCode;
     /**
      * @var string the store language ISO (ISO 639-1) code.
      */
-    protected $languageCode;
+    private $languageCode;
     /**
      * @var string the owner language ISO (ISO 639-1) code.
      */
-    protected $ownerLanguageCode;
+    private $ownerLanguageCode;
     /**
      * @var NostoTaggingMetaAccountOwner the account owner meta model.
      */
-    protected $owner;
+    private $owner;
     /**
      * @var NostoTaggingMetaAccountBilling the billing meta model.
      */
-    protected $billing;
+    private $billing;
     /**
      * @var array list of NostoCurrency objects supported by the store .
      */
-    protected $currencies = array();
+    private $currencies = array();
     /**
      * @var bool if the store uses exchange rates to manage multiple currencies.
      */
-    protected $useCurrencyExchangeRates = false;
+    private $useCurrencyExchangeRates = false;
     /**
      * @var string default variation id
      */
-    protected $defaultVariationId = false;
+    private $defaultVariationId = false;
     /**
      * @var string details
      */
-    protected $details = false;
+    private $details = false;
     /**
      * @var string sign up api token
      */
-    protected $signupApiToken;
+    private $signupApiToken;
     /**
      * @var string platform name
      */
-    protected $platform;
+    private $platform;
     /**
      * @var string partner code
      */
-    protected $partnerCode;
+    private $partnerCode;
 
     /**
      * Constructor
@@ -109,9 +109,9 @@ class NostoAccountMeta implements NostoAccountMetaDataInterface
      */
     public function __construct($platform, $signupApiToken, $partnerCode)
     {
-        $this->platform = $platform;
-        $this->signupApiToken = $signupApiToken;
-        $this->partnerCode = $partnerCode;
+        $this->setPlatform($platform);
+        $this->setSignupApiToken(new NostoApiToken(NostoApiToken::API_CREATE, $signupApiToken));
+        $this->setPartnerCode($partnerCode);
     }
 
     /**
@@ -393,7 +393,7 @@ class NostoAccountMeta implements NostoAccountMetaDataInterface
     /**
      * Returns the signup api token
      *
-     * @return string
+     * @return NostoApiToken
      */
     public function getSignupApiToken()
     {
@@ -401,9 +401,9 @@ class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
-     * @param string $signupApiToken
+     * @param NostoApiToken $signupApiToken
      */
-    public function setSignupApiToken($signupApiToken)
+    public function setSignupApiToken(NostoApiToken $signupApiToken)
     {
         $this->signupApiToken = $signupApiToken;
     }

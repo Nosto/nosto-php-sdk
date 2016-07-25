@@ -43,6 +43,7 @@ class NostoApiToken extends NostoObject implements NostoValidatableInterface
     const API_PRODUCTS = 'products';
     const API_EXCHANGE_RATES = 'rates';
     const API_SETTINGS = 'settings';
+    const API_CREATE = 'create'; // Special token related to the platform
 
     /**
      * @var string the token name, must be one of the defined tokens from self::$tokenNames.
