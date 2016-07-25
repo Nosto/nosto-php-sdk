@@ -37,7 +37,7 @@
 /**
  * Handles sending currencyCode exchange rates through the Nosto API.
  */
-class NostoOperationAccount
+class NostoOperationAccount extends NostoOperation
 {
     /**
      * @var NostoAccountInterface Nosto account meta
@@ -54,27 +54,6 @@ class NostoOperationAccount
     public function __construct(NostoAccountInterface $accountMeta)
     {
         $this->accountMeta = $accountMeta;
-    }
-
-    /**
-     * Create and returns a new API request object initialized with:
-     * - content type
-     * - auth token
-     *
-     * @param NostoApiToken the token to use for the endpoint
-     * @return NostoApiRequest the newly created request object.
-     * @throws NostoException if the account does not have the `signup` token set.
-     */
-    protected function initApiRequest(NostoApiToken $token)
-    {
-        if (is_null($token)) {
-            throw new NostoException('No `signup` API token found for account.');
-        }
-
-        $request = new NostoApiRequest();
-        $request->setContentType('application/json');
-        $request->setAuthBasic('', $token->getValue());
-        return $request;
     }
 
     /**

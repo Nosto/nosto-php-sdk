@@ -37,7 +37,7 @@
 /**
  * Handles create/update/delete of products through the Nosto API.
  */
-class NostoOperationProduct
+class NostoOperationProduct extends NostoOperation
 {
     /**
      * @var NostoAccountInterface the account to perform the operation on.
@@ -80,7 +80,7 @@ class NostoOperationProduct
      */
     public function upsert()
     {
-        $request = $this->initApiRequest();
+        $request = $this->initApiRequest($this->account->getApiToken('products'));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPSERT);
         $response = $request->post($this->getCollectionAsJson());
         if ($response->getCode() !== 200) {
@@ -97,7 +97,7 @@ class NostoOperationProduct
      */
     public function create()
     {
-        $request = $this->initApiRequest();
+        $request = $this->initApiRequest($this->account->getApiToken('products'));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_CREATE);
         $response = $request->post($this->getCollectionAsJson());
         if ($response->getCode() !== 200) {
@@ -114,7 +114,7 @@ class NostoOperationProduct
      */
     public function update()
     {
-        $request = $this->initApiRequest();
+        $request = $this->initApiRequest($this->account->getApiToken('products'));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPDATE);
         $response = $request->put($this->getCollectionAsJson());
         if ($response->getCode() !== 200) {
@@ -131,34 +131,13 @@ class NostoOperationProduct
      */
     public function delete()
     {
-        $request = $this->initApiRequest();
+        $request = $this->initApiRequest($this->account->getApiToken('products'));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_DISCONTINUE);
         $response = $request->post($this->getCollectionIdsAsJson());
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to delete Nosto product(s).', $request, $response);
         }
         return true;
-    }
-
-    /**
-     * Create and returns a new API request object initialized with:
-     * - content type
-     * - auth token
-     *
-     * @return NostoApiRequest the newly created request object.
-     * @throws NostoException if the account does not have the `products` token set.
-     */
-    protected function initApiRequest()
-    {
-        $token = $this->account->getApiToken('products');
-        if (is_null($token)) {
-            throw new NostoException('No `products` API token found for account.');
-        }
-
-        $request = new NostoApiRequest();
-        $request->setContentType('application/json');
-        $request->setAuthBasic('', $token->getValue());
-        return $request;
     }
 
     /**

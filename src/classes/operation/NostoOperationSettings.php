@@ -37,7 +37,7 @@
 /**
  * Handles sending currencyCode exchange rates through the Nosto API.
  */
-class NostoOperationSettings
+class NostoOperationSettings extends NostoOperation
 {
     /**
      * @var NostoAccountInterface Nosto account meta
@@ -57,27 +57,6 @@ class NostoOperationSettings
     }
 
     /**
-     * Create and returns a new API request object initialized with:
-     * - content type
-     * - auth token
-     *
-     * @return NostoApiRequest the newly created request object.
-     * @throws NostoException if the account does not have the `setting` token set.
-     */
-    protected function initApiRequest()
-    {
-        $token = $this->account->getApiToken(NostoApiToken::API_SETTINGS);
-        if (is_null($token)) {
-            throw new NostoException('No `settings` API token found for account.');
-        }
-
-        $request = new NostoApiRequest();
-        $request->setContentType('application/json');
-        $request->setAuthBasic('', $token->getValue());
-        return $request;
-    }
-
-    /**
      * Sends a POST request to create a new account for a store in Nosto
      *
      * @return bool if the request was successful.
@@ -85,7 +64,7 @@ class NostoOperationSettings
      */
     public function update()
     {
-        $request = $this->initApiRequest();
+        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_SETTINGS));
         $request->setPath(NostoApiRequest::PATH_SETTINGS);
         $response = $request->post($this->getJson());
         if ($response->getCode() !== 200) {

@@ -37,7 +37,7 @@
 /**
  * Handles sending currencyCode exchange rates through the Nosto API.
  */
-class NostoOperationExchangeRate
+class NostoOperationExchangeRate extends NostoOperation
 {
     /**
      * @var NostoAccountInterface the Nosto account to update the rates for.
@@ -72,8 +72,9 @@ class NostoOperationExchangeRate
      */
     public function update()
     {
-        $request = $this->initApiRequest();
-        $response = $request->post($this->getCollectionAsJson());
+        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_EXCHANGE_RATES));
+        $request->setPath(NostoApiRequest::PATH_CURRENCY_EXCHANGE_RATE);
+        $response = $request->post($this->getJson());
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException(
                 sprintf(
@@ -85,31 +86,6 @@ class NostoOperationExchangeRate
             );
         }
         return true;
-    }
-
-    /**
-     * Builds the API request and returns it.
-     *
-     * @return NostoApiRequest the request object.
-     * @throws NostoException if the request object cannot be built.
-     */
-    protected function initApiRequest()
-    {
-        $token = $this->account->getApiToken(NostoApiToken::API_EXCHANGE_RATES);
-        if (is_null($token)) {
-            Nosto::throwHttpException(
-                sprintf(
-                    'No `%s` API token found for account "%s".',
-                    NostoApiToken::API_EXCHANGE_RATES,
-                    $this->account->getName()
-                )
-            );
-        }
-        $request = new NostoApiRequest();
-        $request->setContentType('application/json');
-        $request->setAuthBasic('', $token->getValue());
-        $request->setPath(NostoApiRequest::PATH_CURRENCY_EXCHANGE_RATE);
-        return $request;
     }
 
     /**
@@ -130,7 +106,7 @@ class NostoOperationExchangeRate
      * @return string the JSON structure.
      * @throws NostoException of the rate collection is empty.
      */
-    protected function getCollectionAsJson()
+    protected function getJson()
     {
         $data = array(
             'rates' => array(),
