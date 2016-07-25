@@ -40,15 +40,6 @@
 interface NostoConfigurationInterface
 {
     /**
-     * Creates a new Nosto account with the specified data.
-     *
-     * @param NostoAccountInterface $meta the account data model.
-     * @return NostoAccount the newly created account.
-     * @throws NostoException if the account cannot be created.
-     */
-    public static function create(NostoAccountInterface $meta);
-
-    /**
      * Syncs an existing Nosto account via Oauth2.
      * Requires that the oauth cycle has already completed the first step in getting the authorization code.
      *
@@ -58,13 +49,6 @@ interface NostoConfigurationInterface
      * @throws NostoException if the account cannot be synced.
      */
     public static function syncFromNosto(NostoOAuthClientMetaDataInterface $meta, $code);
-
-    /**
-     * Notifies Nosto that an account has been deleted.
-     *
-     * @throws NostoException if the API request to Nosto fails.
-     */
-    public function delete();
 
     /**
      * Gets the account name.

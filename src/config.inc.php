@@ -97,7 +97,7 @@ require_once(dirname(__FILE__).'/classes/NostoConfiguration.php');
 require_once(dirname(__FILE__).'/classes/NostoAccountOwner.php');
 require_once(dirname(__FILE__).'/classes/NostoAccountIframe.php');
 require_once(dirname(__FILE__).'/classes/NostoAccountBilling.php');
-require_once(dirname(__FILE__).'/classes/NostoAccountMeta.php');
+require_once(dirname(__FILE__).'/classes/NostoAccount.php');
 require_once(dirname(__FILE__).'/classes/NostoCipher.php');
 require_once(dirname(__FILE__).'/classes/NostoDotEnv.php');
 require_once(dirname(__FILE__).'/classes/NostoMessage.php');
