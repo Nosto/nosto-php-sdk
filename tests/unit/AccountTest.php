@@ -50,7 +50,7 @@ class AccountTest extends \Codeception\TestCase\Test
 	 */
 	public function testAccountIsConnected()
 	{
-		$account = new NostoAccount('platform-test');
+		$account = new NostoConfiguration('platform-test');
 
 		$this->specify('account is not connected', function() use ($account) {
 			$this->assertFalse($account->isConnectedToNosto());
@@ -72,7 +72,7 @@ class AccountTest extends \Codeception\TestCase\Test
 	 */
 	public function testAccountApiToken()
 	{
-		$account = new NostoAccount('platform-test');
+		$account = new NostoConfiguration('platform-test');
 
 		$this->specify('account does not have sso token', function() use ($account) {
 			$this->assertNull($account->getApiToken('sso'));
@@ -91,7 +91,7 @@ class AccountTest extends \Codeception\TestCase\Test
 	 */
 	public function testAccountSingleSignOn()
 	{
-		$account = new NostoAccount('platform-test');
+		$account = new NostoConfiguration('platform-test');
 		$meta = new NostoAccountMetaDataIframe();
 
 		$this->specify('account sso without api token', function() use ($account, $meta) {

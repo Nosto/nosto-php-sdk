@@ -56,7 +56,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
 	 */
 	protected function _before()
 	{
-		$this->account = new NostoAccount('platform-00000000');
+		$this->account = new NostoConfiguration('platform-00000000');
 		// The first 16 chars of the SSO token are used as the encryption key.
 		$token = new NostoApiToken('sso', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
 		$this->account->addApiToken($token);
