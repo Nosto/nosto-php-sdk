@@ -86,7 +86,7 @@ class NostoApiToken extends NostoObject implements NostoValidatableInterface
     {
         return array(
             array(array('name', 'value'), 'required'),
-            array(array('name'), 'in', self::$tokenNames)
+            array(array('name'), 'in', array_merge(self::$tokenNames, array(self::API_CREATE)))
         );
     }
 

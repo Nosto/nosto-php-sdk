@@ -62,13 +62,18 @@ class NostoConfiguration extends NostoObject implements NostoConfigurationInterf
     }
 
     /**
-     * @inheritdoc
+     * Validates the account attributes.
+     *
+     * @throws NostoException if any attribute is invalid.
      */
-    public function getValidationRules()
+    protected function validate()
     {
-        return array(
-            array(array('name'), 'required')
-        );
+        $validator = new NostoValidator($this);
+        if (!$validator->validate()) {
+            foreach ($validator->getErrors() as $errors) {
+                throw new NostoException(sprintf('Invalid Nosto account. %s', $errors[0]));
+            }
+        }
     }
 
     /**
@@ -110,26 +115,6 @@ class NostoConfiguration extends NostoObject implements NostoConfigurationInterf
     }
 
     /**
-     * Returns the account name.
-     *
-     * @return string the name.
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Returns the account tokens.
-     *
-     * @return NostoApiToken[] the tokens.
-     */
-    public function getTokens()
-    {
-        return $this->tokens;
-    }
-
-    /**
      * @inheritdoc
      */
     public function isConnectedToNosto()
@@ -143,6 +128,65 @@ class NostoConfiguration extends NostoObject implements NostoConfigurationInterf
             }
         }
         return true;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getApiToken($name)
+    {
+        foreach ($this->tokens as $token) {
+            if ($token->getName() === $name) {
+                return $token;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getValidationRules()
+    {
+        return array(
+            array(array('name'), 'required')
+        );
+    }
+
+    /**
+     * Returns the account name.
+     *
+     * @return string the name.
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Returns the account tokens.
+     *
+     * @return NostoApiToken[] the tokens.
+     */
+    public function getTokens()
+    {
+        return $this->tokens;
+    }
+
+    /**
+     * @param NostoApiToken[] $tokens
+     */
+    public function setTokens($tokens)
+    {
+        $this->tokens = $tokens;
     }
 
     /**
@@ -169,19 +213,6 @@ class NostoConfiguration extends NostoObject implements NostoConfigurationInterf
     public function addApiToken(NostoApiToken $token)
     {
         $this->tokens[] = $token;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getApiToken($name)
-    {
-        foreach ($this->tokens as $token) {
-            if ($token->getName() === $name) {
-                return $token;
-            }
-        }
-        return null;
     }
 
     /**
@@ -230,20 +261,5 @@ class NostoConfiguration extends NostoObject implements NostoConfigurationInterf
         }
 
         return $result->login_url;
-    }
-
-    /**
-     * Validates the account attributes.
-     *
-     * @throws NostoException if any attribute is invalid.
-     */
-    protected function validate()
-    {
-        $validator = new NostoValidator($this);
-        if (!$validator->validate()) {
-            foreach ($validator->getErrors() as $errors) {
-                throw new NostoException(sprintf('Invalid Nosto account. %s', $errors[0]));
-            }
-        }
     }
 }

@@ -42,18 +42,18 @@ class NostoOperationAccount extends NostoOperation
     /**
      * @var NostoAccountInterface Nosto account meta
      */
-    protected $accountMeta;
+    protected $account;
 
     /**
      * Constructor.
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoAccountInterface $accountMeta the Nosto account object.
+     * @param NostoAccountInterface $account the Nosto account object.
      */
-    public function __construct(NostoAccountInterface $accountMeta)
+    public function __construct(NostoAccountInterface $account)
     {
-        $this->accountMeta = $accountMeta;
+        $this->account = $account;
     }
 
     /**
@@ -64,16 +64,16 @@ class NostoOperationAccount extends NostoOperation
      */
     public function create()
     {
-        $request = $this->initApiRequest($this->accountMeta->getSignUpApiToken());
+        $request = $this->initApiRequest($this->account->getSignUpApiToken());
         $request->setPath(NostoApiRequest::PATH_SIGN_UP);
-        $request->setReplaceParams(array('{lang}' => $meta->getLanguageCode()));
+        $request->setReplaceParams(array('{lang}' => $this->account->getLanguageCode()));
         $response = $request->post($this->getJson());
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to create Nosto account.', $request, $response);
         }
 
-        $config = new NostoConfiguration($meta->getPlatform().'-'.$meta->getName());
-        $config->tokens = NostoApiToken::parseTokens($response->getJsonResult(true), '', '_token');
+        $config = new NostoConfiguration($this->account->getPlatform().'-'.$this->account->getName());
+        $config->setTokens(NostoApiToken::parseTokens($response->getJsonResult(true), '', '_token'));
         return $config;
     }
 
@@ -104,30 +104,30 @@ class NostoOperationAccount extends NostoOperation
     protected function getJson()
     {
         $data = array(
-            'title' => $meta->getTitle(),
-            'name' => $meta->getName(),
-            'platform' => $meta->getPlatform(),
-            'front_page_url' => $meta->getFrontPageUrl(),
-            'currency_code' => strtoupper($meta->getCurrencyCode()),
-            'language_code' => strtolower($meta->getOwnerLanguageCode()),
+            'title' => $this->account->getTitle(),
+            'name' => $this->account->getName(),
+            'platform' => $this->account->getPlatform(),
+            'front_page_url' => $this->account->getFrontPageUrl(),
+            'currency_code' => strtoupper($this->account->getCurrencyCode()),
+            'language_code' => strtolower($this->account->getOwnerLanguageCode()),
             'owner' => array(
-                'first_name' => $meta->getOwner()->getFirstName(),
-                'last_name' => $meta->getOwner()->getLastName(),
-                'email' => $meta->getOwner()->getEmail(),
+                'first_name' => $this->account->getOwner()->getFirstName(),
+                'last_name' => $this->account->getOwner()->getLastName(),
+                'email' => $this->account->getOwner()->getEmail(),
             ),
             'api_tokens' => array(),
         );
 
         // Add optional billing details if the required data is set.
         $billingDetails = array(
-            'country' => strtoupper($meta->getBillingDetails()->getCountry())
+            'country' => strtoupper($this->account->getBillingDetails()->getCountry())
         );
         if (!empty($billingDetails['country'])) {
             $data['billing_details'] = $billingDetails;
         }
 
         // Add optional partner code if one is set.
-        $partnerCode = $meta->getPartnerCode();
+        $partnerCode = $this->account->getPartnerCode();
         if (!empty($partnerCode)) {
             $data['partner_code'] = $partnerCode;
         }
@@ -137,13 +137,13 @@ class NostoOperationAccount extends NostoOperation
             $data['api_tokens'][] = 'api_'.$name;
         }
 
-        if ($meta->getDetails()) {
-            $data['details'] = $meta->getDetails();
+        if ($this->account->getDetails()) {
+            $data['details'] = $this->account->getDetails();
         }
 
-        $data['use_exchange_rates'] = $meta->getUseCurrencyExchangeRates();
-        if ($meta->getDefaultVariationId()) {
-            $data['default_variant_id'] = $meta->getDefaultVariationId();
+        $data['use_exchange_rates'] = $this->account->getUseCurrencyExchangeRates();
+        if ($this->account->getDefaultVariationId()) {
+            $data['default_variant_id'] = $this->account->getDefaultVariationId();
         }
 
         return json_encode($data);

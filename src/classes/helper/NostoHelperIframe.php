@@ -47,14 +47,14 @@ class NostoHelperIframe extends NostoHelper
      * If the passed account is null, then the url will point to the start page where a new account can be created.
      *
      * @param NostoAccountIframeInterface $meta the iframe meta data.
-     * @param NostoAccount|null $account the account to return the url for.
+     * @param NostoConfiguration|null $config the configuration to return the url for.
      * @param array $params additional parameters to add to the iframe url.
      * @return string the iframe url.
      * @throws NostoException if the url cannot be created.
      */
     public function getUrl(
         NostoAccountIframeInterface $meta,
-        NostoAccount $account = null,
+        NostoConfiguration $config = null,
         array $params = array()
     ) {
         $queryParams = http_build_query(
@@ -79,9 +79,9 @@ class NostoHelperIframe extends NostoHelper
             )
         );
 
-        if ($account !== null && $account->isConnectedToNosto()) {
+        if ($config !== null && $config->isConnectedToNosto()) {
             try {
-                $url = $account->ssoLogin($meta).'?'.$queryParams;
+                $url = $config->ssoLogin($meta).'?'.$queryParams;
             } catch (NostoException $e) {
                 // If the SSO fails, we show a "remove account" page to the user in order to
                 // allow to remove Nosto and start over.
