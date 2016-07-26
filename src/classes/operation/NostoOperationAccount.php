@@ -78,25 +78,6 @@ class NostoOperationAccount extends NostoOperation
     }
 
     /**
-     * Sends a POST request to delete an account for a store in Nosto
-     *
-     * @param NostoCo
-     * @return bool if the request was successful.
-     * @throws NostoException on failure.
-     */
-    public function delete(NostoConfiguration $config)
-    {
-        $request = $this->initApiRequest($config->getApiToken('sso'));
-        $request->setPath(NostoApiRequest::PATH_ACCOUNT_DELETED);
-        $response = $request->post('');
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to delete Nosto account.', $request, $response);
-        }
-
-        return true;
-    }
-
-    /**
      * Returns the account in JSON format
      *
      * @return string the JSON structure.
