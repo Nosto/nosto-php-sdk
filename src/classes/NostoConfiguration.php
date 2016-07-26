@@ -222,44 +222,4 @@ class NostoConfiguration extends NostoObject implements NostoConfigurationInterf
     {
         return Nosto::helper('iframe')->getUrl($meta, $this, $params);
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function ssoLogin(NostoAccountIframeInterface $meta)
-    {
-        $token = $this->getApiToken('sso');
-        if ($token === null) {
-            return false;
-        }
-
-        $request = new NostoHttpRequest();
-        $request->setUrl(NostoHttpRequest::$baseUrl.NostoHttpRequest::PATH_SSO_AUTH);
-        $request->setReplaceParams(
-            array(
-                '{platform}' => $meta->getPlatform(),
-                '{email}' => $meta->getEmail(),
-            )
-        );
-        $request->setContentType('application/x-www-form-urlencoded');
-        $request->setAuthBasic('', $token->getValue());
-        $response = $request->post(
-            http_build_query(
-                array(
-                    'fname' => $meta->getFirstName(),
-                    'lname' => $meta->getLastName(),
-                )
-            )
-        );
-        $result = $response->getJsonResult();
-
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Unable to login employee to Nosto with SSO token.', $request, $response);
-        }
-        if (empty($result->login_url)) {
-            throw new NostoException('No "login_url" returned when logging in employee to Nosto');
-        }
-
-        return $result->login_url;
-    }
 }

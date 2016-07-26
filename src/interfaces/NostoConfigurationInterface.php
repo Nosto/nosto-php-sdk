@@ -88,14 +88,4 @@ interface NostoConfigurationInterface
      * @return bool|string the url or false if could not be fetched.
      */
     public function getIframeUrl(NostoAccountIframeInterface $meta, array $params = array());
-
-    /**
-     * Signs the user in to Nosto via SSO.
-     * Requires that the account has a valid sso token associated with it.
-     *
-     * @param NostoAccountIframeInterface $meta the iframe meta data model.
-     * @return string a secure login url that can be used for example to build the config iframe url.
-     * @throws NostoException if SSO fails.
-     */
-    public function ssoLogin(NostoAccountIframeInterface $meta);
 }

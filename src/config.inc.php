@@ -92,6 +92,7 @@ require_once(dirname(__FILE__).'/classes/operation/NostoOperationExchangeRate.ph
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationAccount.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationSettings.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationUninstall.php');
+require_once(dirname(__FILE__).'/classes/operation/NostoOperationSso.php');
 
 require_once(dirname(__FILE__).'/classes/Nosto.php');
 require_once(dirname(__FILE__).'/classes/NostoConfiguration.php');

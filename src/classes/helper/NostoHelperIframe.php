@@ -54,7 +54,8 @@ class NostoHelperIframe extends NostoHelper
      */
     public function getUrl(
         NostoAccountIframeInterface $meta,
-        NostoConfiguration $config = null,
+        NostoConfigurationInterface $config = null,
+        NostoAccountOwnerInterface $user = null,
         array $params = array()
     ) {
         $queryParams = http_build_query(
@@ -79,9 +80,10 @@ class NostoHelperIframe extends NostoHelper
             )
         );
 
-        if ($config !== null && $config->isConnectedToNosto()) {
+        if ($config !== null && $user !== null && $config->isConnectedToNosto()) {
             try {
-                $url = $config->ssoLogin($meta).'?'.$queryParams;
+                $service = new NostoOperationSSO($config, $user, $meta->getPlatform());
+                $url = $service->get().'?'.$queryParams;
             } catch (NostoException $e) {
                 // If the SSO fails, we show a "remove account" page to the user in order to
                 // allow to remove Nosto and start over.

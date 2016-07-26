@@ -222,6 +222,17 @@ class NostoHttpRequest
     }
 
     /**
+     * Setter for the end point path, e.g. one of the PATH_ constants.
+     * The API base url is always prepended.
+     *
+     * @param string $path the endpoint path (use PATH_ constants).
+     */
+    public function setPath($path)
+    {
+        $this->setUrl(self::$baseUrl.$path);
+    }
+
+    /**
      * Builds an uri by replacing the param placeholders in $uri with the ones given in $$replaceParams.
      *
      * @param string $uri

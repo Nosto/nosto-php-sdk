@@ -59,4 +59,25 @@ class NostoOperation
         $request->setAuthBasic('', $token->getValue());
         return $request;
     }
+
+    /**
+     * Create and returns a new HTTP request object initialized with:
+     * - content type
+     * - auth token
+     *
+     * @param NostoApiToken the token to use for the endpoint
+     * @return NostoHttpRequest the newly created request object.
+     * @throws NostoException if the account does not have the correct token set.
+     */
+    protected function initHttpRequest(NostoApiToken $token)
+    {
+        if (is_null($token)) {
+            throw new NostoException('No API token found for account.');
+        }
+
+        $request = new NostoHttpRequest();
+        $request->setContentType('application/x-www-form-urlencoded');
+        $request->setAuthBasic('', $token->getValue());
+        return $request;
+    }
 }
