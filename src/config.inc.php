@@ -93,6 +93,7 @@ require_once(dirname(__FILE__).'/classes/operation/NostoOperationAccount.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationSettings.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationUninstall.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationSso.php');
+require_once(dirname(__FILE__).'/classes/operation/NostoOperationOrderConfirmation.php');
 
 require_once(dirname(__FILE__).'/classes/Nosto.php');
 require_once(dirname(__FILE__).'/classes/NostoConfiguration.php');
@@ -103,8 +104,6 @@ require_once(dirname(__FILE__).'/classes/NostoAccount.php');
 require_once(dirname(__FILE__).'/classes/NostoCipher.php');
 require_once(dirname(__FILE__).'/classes/NostoDotEnv.php');
 require_once(dirname(__FILE__).'/classes/NostoMessage.php');
-require_once(dirname(__FILE__).'/classes/NostoOrderConfirmation.php');
-require_once(dirname(__FILE__).'/classes/NostoProductReCrawl.php');
 require_once(dirname(__FILE__).'/classes/NostoValidator.php');
 require_once(dirname(__FILE__).'/classes/NostoExchangeRate.php');
 require_once(dirname(__FILE__).'/classes/NostoCurrency.php');
