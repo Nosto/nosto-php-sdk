@@ -59,7 +59,7 @@ class NostoOperationAccount extends NostoOperation
     /**
      * Sends a POST request to create a new account for a store in Nosto
      *
-     * @return NostoConfigurationInterface if the request was successful.
+     * @return NostoAccountInterface if the request was successful.
      * @throws NostoException on failure.
      */
     public function create()
@@ -72,7 +72,7 @@ class NostoOperationAccount extends NostoOperation
             Nosto::throwHttpException('Failed to create Nosto account.', $request, $response);
         }
 
-        $config = new NostoConfiguration($this->account->getPlatform() . '-' . $this->account->getName());
+        $config = new NostoAccount($this->account->getPlatform() . '-' . $this->account->getName());
         $config->setTokens(NostoApiToken::parseTokens($response->getJsonResult(true), '', '_token'));
         return $config;
     }

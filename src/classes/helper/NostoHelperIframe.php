@@ -47,14 +47,14 @@ class NostoHelperIframe extends NostoHelper
      * If the passed account is null, then the url will point to the start page where a new account can be created.
      *
      * @param NostoIframeInterface $iframe the iframe meta data.
-     * @param NostoConfiguration|null $config the configuration to return the url for.
+     * @param NostoAccount|null $config the configuration to return the url for.
      * @param array $params additional parameters to add to the iframe url.
      * @return string the iframe url.
      * @throws NostoException if the url cannot be created.
      */
     public function getUrl(
         NostoIframeInterface $iframe,
-        NostoConfigurationInterface $config = null,
+        NostoAccountInterface $config = null,
         NostoSignupOwnerInterface $user = null,
         array $params = array()
     )

@@ -58,7 +58,7 @@ class AccountCreateTest extends \Codeception\TestCase\Test
         $account = $service->create();
 
         $this->specify('account was created', function () use ($account, $meta) {
-            $this->assertInstanceOf('NostoConfiguration', $account);
+            $this->assertInstanceOf('NostoAccount', $account);
             $this->assertEquals($meta->getPlatform() . '-' . $meta->getName(), $account->getName());
         });
 

@@ -34,7 +34,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class MockNostoConfiguration extends NostoConfiguration
+class MockNostoAccount extends NostoAccount
 {
     public function getName()
     {

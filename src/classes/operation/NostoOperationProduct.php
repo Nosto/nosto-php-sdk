@@ -40,7 +40,7 @@
 class NostoOperationProduct extends NostoOperation
 {
     /**
-     * @var NostoConfigurationInterface the account to perform the operation on.
+     * @var NostoAccountInterface the account to perform the operation on.
      */
     private $account;
 
@@ -54,9 +54,9 @@ class NostoOperationProduct extends NostoOperation
      *
      * Accepts the account for which the product operation is to be performed on.
      *
-     * @param NostoConfigurationInterface $account the account object.
+     * @param NostoAccountInterface $account the account object.
      */
-    public function __construct(NostoConfigurationInterface $account)
+    public function __construct(NostoAccountInterface $account)
     {
         $this->account = $account;
         $this->collection = new NostoProductCollection();

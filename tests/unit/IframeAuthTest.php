@@ -50,8 +50,8 @@ class IframeAuthTest extends \Codeception\TestCase\Test
      */
     public function testIframeUrlAuthentication()
     {
-        /** @var NostoConfigurationInterface $account */
-        $account = new MockNostoConfiguration('platform-00000000');
+        /** @var NostoAccountInterface $account */
+        $account = new MockNostoAccount('platform-00000000');
         $meta = new MockNostoIframe();
         $baseUrl = isset($_ENV['NOSTO_WEB_HOOK_BASE_URL']) ? $_ENV['NOSTO_WEB_HOOK_BASE_URL'] : NostoHttpRequest::$baseUrl;
 

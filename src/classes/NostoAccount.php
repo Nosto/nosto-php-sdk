@@ -37,7 +37,7 @@
 /**
  * Nosto account class for handling account related actions like, creation, OAuth2 syncing and SSO to Nosto.
  */
-class NostoConfiguration extends NostoObject implements NostoConfigurationInterface, NostoValidatableInterface
+class NostoAccount extends NostoObject implements NostoAccountInterface, NostoValidatableInterface
 {
     /**
      * @var string the name of the Nosto account.

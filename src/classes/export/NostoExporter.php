@@ -44,11 +44,11 @@ class NostoExporter
     /**
      * Encrypts and returns the data.
      *
-     * @param NostoConfigurationInterface $config the account to export the data for.
+     * @param NostoAccountInterface $config the account to export the data for.
      * @param NostoExportCollectionInterface $collection the data collection to export.
      * @return string the encrypted data.
      */
-    public static function export(NostoConfigurationInterface $config, NostoExportCollectionInterface $collection)
+    public static function export(NostoAccountInterface $config, NostoExportCollectionInterface $collection)
     {
         $data = '';
         // Use the first 16 chars of the SSO token as secret for encryption.

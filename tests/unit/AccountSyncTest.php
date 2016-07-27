@@ -63,7 +63,7 @@ class AccountSyncTest extends \Codeception\TestCase\Test
         $account = $service->exchange("test123");
 
         $this->specify('account was created', function () use ($account, $meta) {
-            $this->assertInstanceOf('NostoConfiguration', $account);
+            $this->assertInstanceOf('NostoAccount', $account);
             $this->assertEquals('platform-00000000', $account->getName());
         });
 

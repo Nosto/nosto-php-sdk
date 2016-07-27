@@ -46,7 +46,7 @@
 class NostoOperationOrderConfirmation extends NostoOperation
 {
     /**
-     * @var NostoConfigurationInterface the account to perform the operation on.
+     * @var NostoAccountInterface the account to perform the operation on.
      */
     private $config;
 
@@ -55,9 +55,9 @@ class NostoOperationOrderConfirmation extends NostoOperation
      *
      * Accepts the account for which the product operation is to be performed on.
      *
-     * @param NostoConfigurationInterface $config the configuration object.
+     * @param NostoAccountInterface $config the configuration object.
      */
-    public function __construct(NostoConfigurationInterface $config)
+    public function __construct(NostoAccountInterface $config)
     {
         $this->config = $config;
     }

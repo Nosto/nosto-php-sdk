@@ -50,7 +50,7 @@ require_once(dirname(__FILE__) . '/interfaces/NostoProductInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoExportCollectionInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoValidatableInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoExchangeRateInterface.php');
-require_once(dirname(__FILE__) . '/interfaces/NostoConfigurationInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/NostoAccountInterface.php');
 
 // Classes
 require_once(dirname(__FILE__) . '/classes/http/NostoHttpRequest.php'); // Must be loaded before `NostoApiRequest`
@@ -97,7 +97,7 @@ require_once(dirname(__FILE__) . '/classes/operation/NostoOperationOrderConfirma
 require_once(dirname(__FILE__) . '/classes/operation/NostoOperationOauthSync.php');
 
 require_once(dirname(__FILE__) . '/classes/Nosto.php');
-require_once(dirname(__FILE__) . '/classes/NostoConfiguration.php');
+require_once(dirname(__FILE__) . '/classes/NostoAccount.php');
 require_once(dirname(__FILE__) . '/classes/NostoSignupOwner.php');
 require_once(dirname(__FILE__) . '/classes/NostoIframe.php');
 require_once(dirname(__FILE__) . '/classes/NostoSignupBilling.php');

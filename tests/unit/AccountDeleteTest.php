@@ -48,7 +48,7 @@ class AccountDeleteTest extends \Codeception\TestCase\Test
      */
     public function testDeletingAccountWithoutToken()
     {
-        $account = new NostoConfiguration('platform-test');
+        $account = new NostoAccount('platform-test');
 
         $this->specify('account is NOT deleted', function () use ($account) {
             $this->setExpectedExceptionRegExp('NostoException');
@@ -62,7 +62,7 @@ class AccountDeleteTest extends \Codeception\TestCase\Test
      */
     public function testDeletingAccountWithToken()
     {
-        $account = new NostoConfiguration('platform-test');
+        $account = new NostoAccount('platform-test');
         $token = new NostoApiToken('sso', '123');
         $account->addApiToken($token);
 

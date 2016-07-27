@@ -37,7 +37,7 @@
 /**
  * Interface for the Nosto account model that handles creation, syncing and SSO access for the Nosto account.
  */
-interface NostoConfigurationInterface
+interface NostoAccountInterface
 {
     /**
      * Gets the account name.

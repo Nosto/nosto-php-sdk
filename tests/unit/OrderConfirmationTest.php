@@ -54,7 +54,7 @@ class OrderConfirmationTest extends \Codeception\TestCase\Test
     protected $order;
 
     /**
-     * @var NostoConfigurationInterface
+     * @var NostoAccountInterface
      */
     protected $account;
 
@@ -90,6 +90,6 @@ class OrderConfirmationTest extends \Codeception\TestCase\Test
     protected function _before()
     {
         $this->order = new MockNostoOrder();
-        $this->account = new MockNostoConfiguration('platform-00000000');
+        $this->account = new MockNostoAccount('platform-00000000');
     }
 }

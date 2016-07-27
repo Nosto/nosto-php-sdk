@@ -60,7 +60,7 @@ class NostoOperationOauthSync extends NostoOperation
      * Sends a POST request to delete an account for a store in Nosto
      *
      * @param $code string the oauth access code.
-     * @return NostoConfigurationInterface the configured account
+     * @return NostoAccountInterface the configured account
      * @throws NostoException on failure.
      */
     public function exchange($code)
@@ -78,7 +78,7 @@ class NostoOperationOauthSync extends NostoOperation
         }
 
         $tokens = NostoApiToken::parseTokens($response->getJsonResult(true), 'api_');
-        $config = new NostoConfiguration($oauthResponse->getMerchantName());
+        $config = new NostoAccount($oauthResponse->getMerchantName());
         $config->setTokens($tokens);
         return $config;
     }
