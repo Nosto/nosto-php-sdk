@@ -34,36 +34,25 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class MockNostoAccountIframe implements NostoAccountIframeInterface
+class MockNostoSignup implements NostoSignupInterface
 {
-    public function getFirstName()
+    protected $owner;
+    protected $billing;
+
+    public function __construct()
     {
-        return 'James';
+        $this->owner = new MockNostoSignupOwner();
+        $this->billing = new MockNostoSignupBilling();
     }
 
-    public function getLastName()
+    public function getTitle()
     {
-        return 'Kirk';
+        return 'My Shop';
     }
 
-    public function getEmail()
+    public function getName()
     {
-        return 'james.kirk@example.com';
-    }
-
-    public function getLanguageIsoCode()
-    {
-        return 'en';
-    }
-
-    public function getLanguageIsoCodeShop()
-    {
-        return 'en';
-    }
-
-    public function getUniqueId()
-    {
-        return '123';
+        return '00000000';
     }
 
     public function getPlatform()
@@ -71,43 +60,63 @@ class MockNostoAccountIframe implements NostoAccountIframeInterface
         return 'platform';
     }
 
-    public function getVersionPlatform()
+    public function getFrontPageUrl()
     {
-        return '1.0.0';
+        return 'http://localhost';
     }
 
-    public function getVersionModule()
+    public function getCurrencyCode()
     {
-        return '1.0.0';
+        return 'USD';
     }
 
-    public function getPreviewUrlProduct()
+    public function getLanguageCode()
     {
-        return 'http://my.shop.com/products/product123?nostodebug=true';
+        return 'en';
     }
 
-    public function getPreviewUrlCategory()
+    public function getOwnerLanguageCode()
     {
-        return 'http://my.shop.com/products/category123?nostodebug=true';
+        return 'en';
     }
 
-    public function getPreviewUrlSearch()
+    public function getOwner()
     {
-        return 'http://my.shop.com/search?query=red?nostodebug=true';
+        return $this->owner;
     }
 
-    public function getPreviewUrlCart()
+    public function getBillingDetails()
     {
-        return 'http://my.shop.com/cart?nostodebug=true';
+        return $this->billing;
     }
 
-    public function getPreviewUrlFront()
+    public function getSignUpApiToken()
     {
-        return 'http://my.shop.com?nostodebug=true';
+        return new NostoApiToken('create', 'abc123');
     }
 
-    public function getShopName()
+    public function getPartnerCode()
     {
-        return 'Shop Name';
+        return '';
+    }
+
+    public function getCurrencies()
+    {
+        return array();
+    }
+
+    public function getUseCurrencyExchangeRates()
+    {
+        return array();
+    }
+
+    public function getDefaultVariationId()
+    {
+        return null;
+    }
+
+    public function getDetails()
+    {
+        return null;
     }
 }

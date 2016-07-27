@@ -34,7 +34,7 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/MockNostoAccountIframe.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoIframe.php');
 
 class AccountTest extends \Codeception\TestCase\Test
 {
@@ -92,7 +92,7 @@ class AccountTest extends \Codeception\TestCase\Test
     public function testAccountSingleSignOn()
     {
         $account = new MockNostoConfiguration('platform-test');
-        $user = new MockNostoAccountOwner();
+        $user = new MockNostoSignupOwner();
 
         $this->specify('account sso with an api token', function () use ($account, $user) {
             $service = new NostoOperationSso($account, $user, 'platform');

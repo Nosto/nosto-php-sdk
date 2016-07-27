@@ -40,7 +40,7 @@
 class NostoOperationSettings extends NostoOperation
 {
     /**
-     * @var NostoAccountInterface Nosto account meta
+     * @var NostoSignupInterface Nosto account meta
      */
     private $accountMeta;
 
@@ -49,9 +49,9 @@ class NostoOperationSettings extends NostoOperation
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoAccountInterface $accountMeta the Nosto account object.
+     * @param NostoSignupInterface $accountMeta the Nosto account object.
      */
-    public function __construct(NostoAccountInterface $accountMeta)
+    public function __construct(NostoSignupInterface $accountMeta)
     {
         $this->accountMeta = $accountMeta;
     }

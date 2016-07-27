@@ -35,16 +35,16 @@
  */
 
 // Interfaces
-require_once(dirname(__FILE__) . '/interfaces/account/NostoAccountBillingDetailsInterface.php');
-require_once(dirname(__FILE__) . '/interfaces/account/NostoAccountIframeInterface.php');
-require_once(dirname(__FILE__) . '/interfaces/account/NostoAccountInterface.php');
-require_once(dirname(__FILE__) . '/interfaces/account/NostoAccountOwnerInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/signup/NostoSignupBillingDetailsInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/signup/NostoSignupInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/signup/NostoSignupOwnerInterface.php');
 
 require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderBuyerInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderPurchasedItemInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderStatusInterface.php');
 
+require_once(dirname(__FILE__) . '/interfaces/NostoIframeInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoOAuthClientMetaDataInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoProductInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoExportCollectionInterface.php');
@@ -98,10 +98,10 @@ require_once(dirname(__FILE__) . '/classes/operation/NostoOperationOauthSync.php
 
 require_once(dirname(__FILE__) . '/classes/Nosto.php');
 require_once(dirname(__FILE__) . '/classes/NostoConfiguration.php');
-require_once(dirname(__FILE__) . '/classes/NostoAccountOwner.php');
-require_once(dirname(__FILE__) . '/classes/NostoAccountIframe.php');
-require_once(dirname(__FILE__) . '/classes/NostoAccountBilling.php');
-require_once(dirname(__FILE__) . '/classes/NostoAccount.php');
+require_once(dirname(__FILE__) . '/classes/NostoSignupOwner.php');
+require_once(dirname(__FILE__) . '/classes/NostoIframe.php');
+require_once(dirname(__FILE__) . '/classes/NostoSignupBilling.php');
+require_once(dirname(__FILE__) . '/classes/NostoSignup.php');
 require_once(dirname(__FILE__) . '/classes/NostoCipher.php');
 require_once(dirname(__FILE__) . '/classes/NostoDotEnv.php');
 require_once(dirname(__FILE__) . '/classes/NostoMessage.php');

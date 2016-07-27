@@ -180,7 +180,7 @@ class NostoConfiguration extends NostoObject implements NostoConfigurationInterf
     /**
      * @inheritdoc
      */
-    public function getIframeUrl(NostoAccountIframeInterface $meta, array $params = array())
+    public function getIframeUrl(NostoIframeInterface $meta, array $params = array())
     {
         return Nosto::helper('iframe')->getUrl($meta, $this, $params);
     }

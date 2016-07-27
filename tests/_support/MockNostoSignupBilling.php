@@ -34,20 +34,10 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class MockNostoAccountOwner implements NostoAccountOwnerInterface
+class MockNostoSignupBilling implements NostoSignupBillingDetailsInterface
 {
-    public function getFirstName()
+    public function getCountry()
     {
-        return 'James';
-    }
-
-    public function getLastName()
-    {
-        return 'Kirk';
-    }
-
-    public function getEmail()
-    {
-        return 'james.kirk@example.com';
+        return 'us';
     }
 }

@@ -44,7 +44,7 @@ class NostoOperationSso extends NostoOperation
      */
     private $config;
     /**
-     * @var NostoAccountOwnerInterface the current user
+     * @var NostoSignupOwnerInterface the current user
      */
     private $user;
     /**
@@ -58,9 +58,9 @@ class NostoOperationSso extends NostoOperation
      * Accepts the Nosto account for which the service is to operate on.
      *
      * @param NostoConfigurationInterface $config the Nosto configuration object.
-     * @param NostoAccountOwnerInterface $user the current user
+     * @param NostoSignupOwnerInterface $user the current user
      */
-    public function __construct(NostoConfigurationInterface $config, NostoAccountOwnerInterface $user, $platform)
+    public function __construct(NostoConfigurationInterface $config, NostoSignupOwnerInterface $user, $platform)
     {
         $this->config = $config;
         $this->user = $user;

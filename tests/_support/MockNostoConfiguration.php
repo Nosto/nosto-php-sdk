@@ -56,7 +56,7 @@ class MockNostoConfiguration extends NostoConfiguration
         return new NostoApiToken($name, 'abc123');
     }
 
-    public function getIframeUrl(NostoAccountIframeInterface $meta, array $params = array())
+    public function getIframeUrl(NostoIframeInterface $meta, array $params = array())
     {
         return null;
     }

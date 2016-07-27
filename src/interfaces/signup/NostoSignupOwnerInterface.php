@@ -35,15 +35,29 @@
  */
 
 /**
- * Interface for account billing details.
- * This is used by the NostoAccountInterface meta data model when creating new Nosto accounts.
+ * Interface for the account owner details.
+ * This is used by the NostoSignupInterface meta data model when creating new Nosto accounts.
  */
-interface NostoAccountBillingDetailsInterface
+interface NostoSignupOwnerInterface
 {
     /**
-     * The 2-letter ISO code (ISO 3166-1 alpha-2) for the country used in account's billing details.
+     * The first name of the account owner.
      *
-     * @return string the country ISO code.
+     * @return string the first name.
      */
-    public function getCountry();
+    public function getFirstName();
+
+    /**
+     * The last name of the account owner.
+     *
+     * @return string the last name.
+     */
+    public function getLastName();
+
+    /**
+     * The email address of the account owner.
+     *
+     * @return string the email address.
+     */
+    public function getEmail();
 }

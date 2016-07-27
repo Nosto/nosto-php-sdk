@@ -38,7 +38,7 @@
  * Meta data class which holds information about Nosto account billing.
  * This is used during the Nosto account creation.
  */
-class NostoAccountBilling implements NostoAccountBillingDetailsInterface
+class NostoSignupBilling implements NostoSignupBillingDetailsInterface
 {
     /**
      * @var string country ISO (ISO 3166-1 alpha-2) code for billing details.

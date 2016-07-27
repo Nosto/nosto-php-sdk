@@ -34,7 +34,7 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/MockNostoAccountIframe.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoIframe.php');
 
 class IframeAuthTest extends \Codeception\TestCase\Test
 {
@@ -50,9 +50,9 @@ class IframeAuthTest extends \Codeception\TestCase\Test
      */
     public function testIframeUrlAuthentication()
     {
-        /** @var NostoAccount $account */
+        /** @var NostoConfigurationInterface $account */
         $account = new MockNostoConfiguration('platform-00000000');
-        $meta = new MockNostoAccountIframe();
+        $meta = new MockNostoIframe();
         $baseUrl = isset($_ENV['NOSTO_WEB_HOOK_BASE_URL']) ? $_ENV['NOSTO_WEB_HOOK_BASE_URL'] : NostoHttpRequest::$baseUrl;
 
         $url = $account->getIframeUrl($meta);

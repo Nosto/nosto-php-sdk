@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
@@ -34,10 +33,17 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class MockNostoAccountBilling implements NostoAccountBillingDetailsInterface
+
+/**
+ * Interface for account billing details.
+ * This is used by the NostoSignupInterface meta data model when creating new Nosto accounts.
+ */
+interface NostoSignupBillingDetailsInterface
 {
-    public function getCountry()
-    {
-        return 'us';
-    }
+    /**
+     * The 2-letter ISO code (ISO 3166-1 alpha-2) for the country used in account's billing details.
+     *
+     * @return string the country ISO code.
+     */
+    public function getCountry();
 }

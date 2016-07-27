@@ -40,7 +40,7 @@
 class NostoOperationExchangeRate extends NostoOperation
 {
     /**
-     * @var NostoAccountInterface the Nosto account to update the rates for.
+     * @var NostoSignupInterface the Nosto account to update the rates for.
      */
     private $account;
 
@@ -54,11 +54,11 @@ class NostoOperationExchangeRate extends NostoOperation
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoAccountInterface $account the Nosto account object.
+     * @param NostoSignupInterface $account the Nosto account object.
      * @param NostoExchangeRateCollection $collection the Nosto account object.
      */
     public function __construct(
-        NostoAccountInterface $account,
+        NostoSignupInterface $account,
         NostoExchangeRateCollection $collection
     )
     {

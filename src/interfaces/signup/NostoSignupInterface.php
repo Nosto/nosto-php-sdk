@@ -37,7 +37,7 @@
 /**
  * Interface for the meta data model used when creating new Nosto accounts.
  */
-interface NostoAccountInterface
+interface NostoSignupInterface
 {
     /**
      * The shops name for which the account is to be created for.
@@ -93,14 +93,14 @@ interface NostoAccountInterface
     /**
      * Meta data model for the account owner who is creating the account.
      *
-     * @return NostoAccountOwnerInterface the meta data model.
+     * @return NostoSignupOwnerInterface the meta data model.
      */
     public function getOwner();
 
     /**
      * Meta data model for the account billing details.
      *
-     * @return NostoAccountBillingDetailsInterface the meta data model.
+     * @return NostoSignupBillingDetailsInterface the meta data model.
      */
     public function getBillingDetails();
 

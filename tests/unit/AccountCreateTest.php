@@ -34,9 +34,9 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/MockNostoAccountBilling.php');
-require_once(dirname(__FILE__) . '/../_support/MockNostoAccountOwner.php');
-require_once(dirname(__FILE__) . '/../_support/MockNostoAccount.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoSignupBilling.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoSignupOwner.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoSignup.php');
 
 class AccountCreateTest extends \Codeception\TestCase\Test
 {
@@ -53,7 +53,7 @@ class AccountCreateTest extends \Codeception\TestCase\Test
     public function testCreatingNewAccount()
     {
         /** @var NostoAccount $meta */
-        $meta = new MockNostoAccount();
+        $meta = new MockNostoSignup();
         $service = new NostoOperationAccount($meta);
         $account = $service->create();
 
