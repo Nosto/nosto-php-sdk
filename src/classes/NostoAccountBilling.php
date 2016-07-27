@@ -43,7 +43,7 @@ class NostoAccountBilling implements NostoAccountBillingDetailsInterface
     /**
      * @var string country ISO (ISO 3166-1 alpha-2) code for billing details.
      */
-    protected $country;
+    private $country;
 
     /**
      * The 2-letter ISO code (ISO 3166-1 alpha-2) for billing details country.

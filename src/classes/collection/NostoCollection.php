@@ -42,11 +42,6 @@
 abstract class NostoCollection extends ArrayObject
 {
     /**
-     * @var string the type of items this collection can contain.
-     */
-    protected $validItemType = '';
-
-    /**
      * @inheritdoc
      */
     public function offsetSet($index, $newval)
@@ -64,18 +59,25 @@ abstract class NostoCollection extends ArrayObject
      */
     protected function validate($value)
     {
-        if (!is_a($value, $this->validItemType)) {
+        if (!is_a($value, $this->getValidItemType())) {
             $valueType = gettype($value);
             if ($valueType === 'object') {
                 $valueType = get_class($value);
             }
             throw new NostoException(sprintf(
                 'Collection supports items of type "%s" (type "%s" given)',
-                $this->validItemType,
+                $this->getValidItemType(),
                 $valueType
             ));
         }
     }
+
+    /**
+     * Returns the type of items this collection can contain.
+     *
+     * @return string the type of items this collection can contain.
+     */
+    abstract protected function getValidItemType();
 
     /**
      * @inheritdoc

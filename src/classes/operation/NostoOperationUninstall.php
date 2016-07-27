@@ -42,7 +42,7 @@ class NostoOperationUninstall extends NostoOperation
     /**
      * @var NostoConfigurationInterface Nosto configuration
      */
-    protected $config;
+    private $config;
 
     /**
      * Constructor.

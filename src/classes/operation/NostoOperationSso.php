@@ -42,15 +42,15 @@ class NostoOperationSso extends NostoOperation
     /**
      * @var NostoConfigurationInterface the Nosto configuration object.
      */
-    protected $config;
+    private $config;
     /**
      * @var NostoAccountOwnerInterface the current user
      */
-    protected $user;
+    private $user;
     /**
      * @var string the current platform name
      */
-    protected $platform;
+    private $platform;
 
     /**
      * Constructor.

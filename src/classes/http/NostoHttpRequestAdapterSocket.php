@@ -71,7 +71,7 @@ class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
             array(
                 'http' => array(
                     'method' => 'GET',
-                    'header' => implode("\r\n", $this->headers),
+                    'header' => implode("\r\n", $this->getHeaders()),
                     // Fetch the content even on failure status codes.
                     'ignore_errors' => true,
                 ),
@@ -111,8 +111,8 @@ class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
             array(
                 'http' => array(
                     'method' => 'POST',
-                    'header' => implode("\r\n", $this->headers),
-                    'content' => $this->content,
+                    'header' => implode("\r\n", $this->getHeaders()),
+                    'content' => $this->getContent(),
                     // Fetch the content even on failure status codes.
                     'ignore_errors' => true,
                 ),
@@ -131,8 +131,8 @@ class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
             array(
                 'http' => array(
                     'method' => 'PUT',
-                    'header' => implode("\r\n", $this->headers),
-                    'content' => $this->content,
+                    'header' => implode("\r\n", $this->getHeaders()),
+                    'content' => $this->getContent(),
                     // Fetch the content even on failure status codes.
                     'ignore_errors' => true,
                 ),
@@ -151,7 +151,7 @@ class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
             array(
                 'http' => array(
                     'method' => 'DELETE',
-                    'header' => implode("\r\n", $this->headers),
+                    'header' => implode("\r\n", $this->getHeaders()),
                     // Fetch the content even on failure status codes.
                     'ignore_errors' => true,
                 ),

@@ -42,7 +42,7 @@ class NostoOperationSettings extends NostoOperation
     /**
      * @var NostoAccountInterface Nosto account meta
      */
-    protected $accountMeta;
+    private $accountMeta;
 
     /**
      * Constructor.

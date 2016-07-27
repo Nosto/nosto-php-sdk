@@ -222,7 +222,7 @@ class NostoAccount implements NostoAccountInterface
      *
      * @param string $languageCode the language ISO code.
      */
-    protected function setLanguageCode($languageCode)
+    public function setLanguageCode($languageCode)
     {
         $this->languageCode = $languageCode;
     }

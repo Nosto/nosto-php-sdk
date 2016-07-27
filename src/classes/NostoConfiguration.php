@@ -42,12 +42,12 @@ class NostoConfiguration extends NostoObject implements NostoConfigurationInterf
     /**
      * @var string the name of the Nosto account.
      */
-    protected $name;
+    private $name;
 
     /**
      * @var NostoApiToken[] the Nosto API tokens associated with this account.
      */
-    protected $tokens = array();
+    private $tokens = array();
 
     /**
      * Constructor.

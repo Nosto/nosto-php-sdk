@@ -83,8 +83,8 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
      */
     protected function send(array $curlOptions)
     {
-        if (!empty($this->headers)) {
-            $curlOptions[CURLOPT_HTTPHEADER] = $this->headers;
+        if (!empty($this->getHeaders())) {
+            $curlOptions[CURLOPT_HTTPHEADER] = $this->getHeaders();
         }
         if (!in_array(CURLOPT_USERAGENT, $curlOptions) && $this->userAgent) {
             $curlOptions[CURLOPT_USERAGENT] = $this->userAgent;
@@ -109,7 +109,7 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
         return $this->send(
             array(
                 CURLOPT_URL => $url,
-                CURLOPT_POSTFIELDS => $this->content,
+                CURLOPT_POSTFIELDS => $this->getContent(),
                 CURLOPT_POST => 1,
                 CURLOPT_HEADER => 1,
                 CURLOPT_FRESH_CONNECT => 1,
@@ -129,7 +129,7 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
         return $this->send(
             array(
                 CURLOPT_URL => $url,
-                CURLOPT_POSTFIELDS => $this->content,
+                CURLOPT_POSTFIELDS => $this->getContent(),
                 CURLOPT_CUSTOMREQUEST => 'PUT',
                 CURLOPT_HEADER => 1,
                 CURLOPT_FRESH_CONNECT => 1,

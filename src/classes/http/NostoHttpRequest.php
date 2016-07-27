@@ -59,27 +59,27 @@ class NostoHttpRequest
     /**
      * @var string the request url.
      */
-    protected $url;
+    private $url;
 
     /**
      * @var array list of headers to include in the requests.
      */
-    protected $headers = array();
+    private $headers = array();
 
     /**
      * @var string the request content (populated in post() and put() methods).
      */
-    protected $content = '';
+    private $content = '';
 
     /**
      * @var array list of optional query params that are added to the request url.
      */
-    protected $queryParams = array();
+    private $queryParams = array();
 
     /**
      * @var array list of optional replace params that can be injected into the url if it contains placeholders.
      */
-    protected $replaceParams = array();
+    private $replaceParams = array();
 
     /**
      * @var NostoHttpRequestAdapter the adapter to use for making the request.

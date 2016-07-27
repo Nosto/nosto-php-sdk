@@ -42,12 +42,27 @@ abstract class NostoHttpRequestAdapter
     /**
      * @var array the request headers.
      */
-    protected $headers = array();
-
+    private $headers = array();
     /**
      * @var mixed the request content.
      */
-    protected $content = null;
+    private $content = null;
+
+    /**
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
 
     /**
      * Does a GET request and returns the http response object.

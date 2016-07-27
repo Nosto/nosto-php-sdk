@@ -42,12 +42,12 @@ class NostoOperationExchangeRate extends NostoOperation
     /**
      * @var NostoAccountInterface the Nosto account to update the rates for.
      */
-    protected $account;
+    private $account;
 
     /**
      * @var NostoExchangeRateCollection collection of exchange rates to be updated
      */
-    protected $collection;
+    private $collection;
 
     /**
      * Constructor.

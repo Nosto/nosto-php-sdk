@@ -48,7 +48,7 @@ class NostoOperationOrderConfirmation extends NostoOperation
     /**
      * @var NostoConfigurationInterface the account to perform the operation on.
      */
-    protected $config;
+    private $config;
 
     /**
      * Constructor.

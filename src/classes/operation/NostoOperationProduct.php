@@ -42,12 +42,12 @@ class NostoOperationProduct extends NostoOperation
     /**
      * @var NostoConfigurationInterface the account to perform the operation on.
      */
-    protected $account;
+    private $account;
 
     /**
      * @var NostoProductCollection collection object of products to perform the operation on.
      */
-    protected $collection;
+    private $collection;
 
     /**
      * Constructor.

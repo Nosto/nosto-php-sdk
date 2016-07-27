@@ -56,11 +56,11 @@ class NostoApiToken extends NostoObject implements NostoValidatableInterface
     /**
      * @var string the token name, must be one of the defined tokens from self::$tokenNames.
      */
-    protected $name;
+    private $name;
     /**
      * @var string the token value, e.g. the actual token string.
      */
-    protected $value;
+    private $value;
 
     /**
      * Constructor.

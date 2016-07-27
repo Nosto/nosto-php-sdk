@@ -42,14 +42,13 @@ class NostoOperationOauthSync extends NostoOperation
     /**
      * @var NostoOAuthClientMetaDataInterface the Oauth meta data params
      */
-    protected $meta;
+    private $meta;
 
     /**
      * Constructor.
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoConfigurationInterface $config the Nosto configuration object.
      * @param NostoOAuthClientMetaDataInterface $meta the oauth meta data params
      */
     public function __construct(NostoOAuthClientMetaDataInterface $meta)
@@ -72,14 +71,14 @@ class NostoOperationOauthSync extends NostoOperation
         $request = new NostoHttpRequest();
         $request->setContentType('application/x-www-form-urlencoded');
         $request->setPath(NostoHttpRequest::PATH_OAUTH_SYNC);
-        $request->setQueryParams(array('access_token' => $oauthResponse->accessToken));
+        $request->setQueryParams(array('access_token' => $oauthResponse->getAccessToken()));
         $response = $request->get();
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to sync account from Nosto..', $request, $response);
         }
 
         $tokens = NostoApiToken::parseTokens($response->getJsonResult(true), 'api_');
-        $config = new NostoConfiguration($oauthResponse->merchantName);
+        $config = new NostoConfiguration($oauthResponse->getMerchantName());
         $config->setTokens($tokens);
         return $config;
     }
