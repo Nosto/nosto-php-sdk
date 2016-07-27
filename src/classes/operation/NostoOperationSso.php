@@ -42,7 +42,7 @@ class NostoOperationSso extends NostoOperation
     /**
      * @var NostoAccountInterface the Nosto configuration object.
      */
-    private $config;
+    private $account;
     /**
      * @var NostoSignupOwnerInterface the current user
      */
@@ -57,12 +57,12 @@ class NostoOperationSso extends NostoOperation
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoAccountInterface $config the Nosto configuration object.
+     * @param NostoAccountInterface $account the Nosto configuration object.
      * @param NostoSignupOwnerInterface $user the current user
      */
-    public function __construct(NostoAccountInterface $config, NostoSignupOwnerInterface $user, $platform)
+    public function __construct(NostoAccountInterface $account, NostoSignupOwnerInterface $user, $platform)
     {
-        $this->config = $config;
+        $this->account = $account;
         $this->user = $user;
         $this->platform = $platform;
     }
@@ -75,7 +75,7 @@ class NostoOperationSso extends NostoOperation
      */
     public function get()
     {
-        $request = $this->initHttpRequest($this->config->getApiToken(NostoApiToken::API_SSO));
+        $request = $this->initHttpRequest($this->account->getApiToken(NostoApiToken::API_SSO));
         $request->setPath(NostoApiRequest::PATH_SSO_AUTH);
         $request->setContentType('application/x-www-form-urlencoded');
         $request->setReplaceParams(

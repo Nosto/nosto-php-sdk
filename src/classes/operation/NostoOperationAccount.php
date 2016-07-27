@@ -72,9 +72,9 @@ class NostoOperationAccount extends NostoOperation
             Nosto::throwHttpException('Failed to create Nosto account.', $request, $response);
         }
 
-        $config = new NostoAccount($this->account->getPlatform() . '-' . $this->account->getName());
-        $config->setTokens(NostoApiToken::parseTokens($response->getJsonResult(true), '', '_token'));
-        return $config;
+        $account = new NostoAccount($this->account->getPlatform() . '-' . $this->account->getName());
+        $account->setTokens(NostoApiToken::parseTokens($response->getJsonResult(true), '', '_token'));
+        return $account;
     }
 
     /**

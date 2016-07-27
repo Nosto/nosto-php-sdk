@@ -48,18 +48,18 @@ class NostoOperationOrderConfirmation extends NostoOperation
     /**
      * @var NostoAccountInterface the account to perform the operation on.
      */
-    private $config;
+    private $account;
 
     /**
      * Constructor.
      *
      * Accepts the account for which the product operation is to be performed on.
      *
-     * @param NostoAccountInterface $config the configuration object.
+     * @param NostoAccountInterface $account the configuration object.
      */
-    public function __construct(NostoAccountInterface $config)
+    public function __construct(NostoAccountInterface $account)
     {
-        $this->config = $config;
+        $this->account = $account;
     }
 
     /**
@@ -75,10 +75,10 @@ class NostoOperationOrderConfirmation extends NostoOperation
         $request = new NostoApiRequest();
         if (!empty($customerId)) {
             $request->setPath(NostoApiRequest::PATH_ORDER_TAGGING);
-            $replaceParams = array('{m}' => $this->config->getName(), '{cid}' => $customerId);
+            $replaceParams = array('{m}' => $this->account->getName(), '{cid}' => $customerId);
         } else {
             $request->setPath(NostoApiRequest::PATH_UNMATCHED_ORDER_TAGGING);
-            $replaceParams = array('{m}' => $this->config->getName());
+            $replaceParams = array('{m}' => $this->account->getName());
         }
         $request->setReplaceParams($replaceParams);
         $response = $request->post($this->getJson($order));

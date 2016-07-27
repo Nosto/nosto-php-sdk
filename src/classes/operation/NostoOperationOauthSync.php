@@ -78,8 +78,8 @@ class NostoOperationOauthSync extends NostoOperation
         }
 
         $tokens = NostoApiToken::parseTokens($response->getJsonResult(true), 'api_');
-        $config = new NostoAccount($oauthResponse->getMerchantName());
-        $config->setTokens($tokens);
-        return $config;
+        $account = new NostoAccount($oauthResponse->getMerchantName());
+        $account->setTokens($tokens);
+        return $account;
     }
 }

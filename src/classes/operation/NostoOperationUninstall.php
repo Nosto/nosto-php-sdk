@@ -42,18 +42,18 @@ class NostoOperationUninstall extends NostoOperation
     /**
      * @var NostoAccountInterface Nosto configuration
      */
-    private $config;
+    private $account;
 
     /**
      * Constructor.
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoAccountInterface $config the Nosto configuration object.
+     * @param NostoAccountInterface $account the Nosto configuration object.
      */
-    public function __construct(NostoAccountInterface $config)
+    public function __construct(NostoAccountInterface $account)
     {
-        $this->config = $config;
+        $this->account = $account;
     }
 
     /**
@@ -64,7 +64,7 @@ class NostoOperationUninstall extends NostoOperation
      */
     public function delete()
     {
-        $request = $this->initApiRequest($this->config->getApiToken('sso'));
+        $request = $this->initApiRequest($this->account->getApiToken('sso'));
         $request->setPath(NostoApiRequest::PATH_ACCOUNT_DELETED);
         $response = $request->post('');
         if ($response->getCode() !== 200) {

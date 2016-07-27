@@ -43,7 +43,7 @@ if (typeof Nosto === "undefined") {
  *
  * @param {Object} options
  */
-Nosto.iframe = function(options) {
+Nosto.iframe = function (options) {
     var TYPE_NEW_ACCOUNT = "newAccount",
         TYPE_CONNECT_ACCOUNT = "connectAccount",
         TYPE_REMOVE_ACCOUNT = "removeAccount";
@@ -72,19 +72,18 @@ Nosto.iframe = function(options) {
      *
      * @param {Object} event
      */
-    function receiveMessage(event)
-    {
+    function receiveMessage(event) {
         // Check the origin to prevent cross-site scripting.
         var originRegexp = new RegExp(settings.origin);
         if (!originRegexp.test(event.origin)) {
             return;
         }
         // If the message does not start with "[Nosto]", then it is not for us.
-        if ((""+event.data).substr(0, 7) !== "[Nosto]") {
+        if (("" + event.data).substr(0, 7) !== "[Nosto]") {
             return;
         }
 
-        var json = (""+event.data).substr(7);
+        var json = ("" + event.data).substr(7);
         var data = JSON.parse(json);
         if (typeof data === "object" && data.type) {
             switch (data.type) {
@@ -208,7 +207,7 @@ Nosto.iframe = function(options) {
                 if (queryString !== "") {
                     queryString += "&";
                 }
-                queryString += encodeURIComponent(key)+"="+encodeURIComponent(params[key]);
+                queryString += encodeURIComponent(key) + "=" + encodeURIComponent(params[key]);
             }
         }
         return queryString;
@@ -219,8 +218,7 @@ Nosto.iframe = function(options) {
      *
      * @returns {HTMLElement} the element.
      */
-    function getIframeElement()
-    {
+    function getIframeElement() {
         return document.getElementById(settings.iframeId);
     }
 
