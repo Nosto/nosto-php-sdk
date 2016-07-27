@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,7 +34,6 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
 class AccountDeleteTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
@@ -50,9 +50,10 @@ class AccountDeleteTest extends \Codeception\TestCase\Test
     {
         $account = new NostoConfiguration('platform-test');
 
-        $this->specify('account is NOT deleted', function() use ($account) {
+        $this->specify('account is NOT deleted', function () use ($account) {
             $this->setExpectedExceptionRegExp('NostoException');
-            $account->delete();
+            $service = new NostoOperationUninstall($account);
+            $service->delete();
         });
     }
 
@@ -63,10 +64,11 @@ class AccountDeleteTest extends \Codeception\TestCase\Test
     {
         $account = new NostoConfiguration('platform-test');
         $token = new NostoApiToken('sso', '123');
-		$account->addApiToken($token);
+        $account->addApiToken($token);
 
-        $this->specify('account is deleted', function() use ($account) {
-            $account->delete();
+        $this->specify('account is deleted', function () use ($account) {
+            $service = new NostoOperationUninstall($account);
+            $service->delete();
         });
     }
 }

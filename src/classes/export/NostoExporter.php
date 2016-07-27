@@ -64,7 +64,7 @@ class NostoExporter
                 $cipherText = $cipher->encrypt($collection->getJson());
                 // Prepend the IV to the cipher string so that nosto can parse and use it.
                 // There is no security concern with sending the IV as plain text.
-                $data = $iv.$cipherText;
+                $data = $iv . $cipherText;
             }
         }
         return $data;

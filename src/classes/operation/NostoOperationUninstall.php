@@ -40,7 +40,7 @@
 class NostoOperationUninstall extends NostoOperation
 {
     /**
-     * @var NostoConfiguration Nosto configuration
+     * @var NostoConfigurationInterface Nosto configuration
      */
     protected $config;
 
@@ -49,9 +49,9 @@ class NostoOperationUninstall extends NostoOperation
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoConfiguration $config the Nosto configuration object.
+     * @param NostoConfigurationInterface $config the Nosto configuration object.
      */
-    public function __construct(NostoConfiguration $config)
+    public function __construct(NostoConfigurationInterface $config)
     {
         $this->config = $config;
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,19 +34,89 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
-class NostoAccountOwner implements NostoAccountOwnerInterface
+class MockNostoAccount implements NostoAccountInterface
 {
-	public function getFirstName()
-	{
-		return 'James';
-	}
-	public function getLastName()
-	{
-		return 'Kirk';
-	}
-	public function getEmail()
-	{
-		return 'james.kirk@example.com';
-	}
+    protected $owner;
+    protected $billing;
+
+    public function __construct()
+    {
+        $this->owner = new NostoAccountOwner();
+        $this->billing = new NostoAccountBilling();
+    }
+
+    public function getTitle()
+    {
+        return 'My Shop';
+    }
+
+    public function getName()
+    {
+        return '00000000';
+    }
+
+    public function getPlatform()
+    {
+        return 'platform';
+    }
+
+    public function getFrontPageUrl()
+    {
+        return 'http://localhost';
+    }
+
+    public function getCurrencyCode()
+    {
+        return 'USD';
+    }
+
+    public function getLanguageCode()
+    {
+        return 'en';
+    }
+
+    public function getOwnerLanguageCode()
+    {
+        return 'en';
+    }
+
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    public function getBillingDetails()
+    {
+        return $this->billing;
+    }
+
+    public function getSignUpApiToken()
+    {
+        return new NostoApiToken('create', 'abc123');
+    }
+
+    public function getPartnerCode()
+    {
+        return '';
+    }
+
+    public function getCurrencies()
+    {
+        return array();
+    }
+
+    public function getUseCurrencyExchangeRates()
+    {
+        return array();
+    }
+
+    public function getDefaultVariationId()
+    {
+        return null;
+    }
+
+    public function getDetails()
+    {
+        return null;
+    }
 }

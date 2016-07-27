@@ -73,7 +73,7 @@ class NostoDotEnv
      */
     public function init($path, $fileName = '.env')
     {
-        $file = (!empty($path) ? rtrim($path, '/').'/' : '').$fileName;
+        $file = (!empty($path) ? rtrim($path, '/') . '/' : '') . $fileName;
         if (is_file($file) && is_readable($file)) {
             foreach ($this->parseFile($file) as $line) {
                 $this->setEnvVariable($line);
@@ -127,6 +127,17 @@ class NostoDotEnv
     }
 
     /**
+     * Sanitizes the variable name, i.e. strips quotes.
+     *
+     * @param string $name the variable name to sanitize.
+     * @return string the sanitized name.
+     */
+    protected function sanitizeVariableName($name)
+    {
+        return trim(str_replace(array('\'', '"'), '', $name));
+    }
+
+    /**
      * Sanitizes the variable value, i.e. strips quotes.
      *
      * @param string $value the variable value to sanitize.
@@ -163,17 +174,6 @@ class NostoDotEnv
             $value = $parts[0];
         }
         return trim($value);
-    }
-
-    /**
-     * Sanitizes the variable name, i.e. strips quotes.
-     *
-     * @param string $name the variable name to sanitize.
-     * @return string the sanitized name.
-     */
-    protected function sanitizeVariableName($name)
-    {
-        return trim(str_replace(array('\'', '"'), '', $name));
     }
 
     /**

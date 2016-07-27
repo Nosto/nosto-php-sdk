@@ -41,7 +41,7 @@
 class NostoOAuthClient
 {
     const PATH_AUTH = '?client_id={cid}&redirect_uri={uri}&response_type=code&scope={sco}&lang={iso}'; // @codingStandardsIgnoreLine
-    const PATH_TOKEN = '/token?code={cod}&client_id={cid}&client_secret={sec}&redirect_uri={uri}&grant_type=authorization_code'; // @codingStandardsIgnoreLine
+    const PATH_TOKEN = '/oauth/token?code={cod}&client_id={cid}&client_secret={sec}&redirect_uri={uri}&grant_type=authorization_code'; // @codingStandardsIgnoreLine
 
     /**
      * @var string the nosto oauth endpoint base url.
@@ -93,7 +93,7 @@ class NostoOAuthClient
     public function getAuthorizationUrl()
     {
         return NostoHttpRequest::buildUri(
-            self::$baseUrl.self::PATH_AUTH,
+            self::$baseUrl . self::PATH_AUTH,
             array(
                 '{cid}' => $this->clientId,
                 '{uri}' => urlencode($this->redirectUrl),
@@ -117,7 +117,7 @@ class NostoOAuthClient
         }
 
         $request = new NostoHttpRequest();
-        $request->setUrl(self::$baseUrl.self::PATH_TOKEN);
+        $request->setUrl(self::$baseUrl . self::PATH_TOKEN);
         $request->setReplaceParams(
             array(
                 '{cid}' => $this->clientId,

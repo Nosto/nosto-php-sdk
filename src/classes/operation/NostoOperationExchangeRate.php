@@ -60,7 +60,8 @@ class NostoOperationExchangeRate extends NostoOperation
     public function __construct(
         NostoAccountInterface $account,
         NostoExchangeRateCollection $collection
-    ) {
+    )
+    {
         $this->account = $account;
         $this->collection = $collection;
     }

@@ -35,89 +35,89 @@
  */
 
 // Interfaces
-require_once(dirname(__FILE__).'/interfaces/account/NostoAccountBillingDetailsInterface.php');
-require_once(dirname(__FILE__).'/interfaces/account/NostoAccountIframeInterface.php');
-require_once(dirname(__FILE__).'/interfaces/account/NostoAccountInterface.php');
-require_once(dirname(__FILE__).'/interfaces/account/NostoAccountOwnerInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/account/NostoAccountBillingDetailsInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/account/NostoAccountIframeInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/account/NostoAccountInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/account/NostoAccountOwnerInterface.php');
 
-require_once(dirname(__FILE__).'/interfaces/order/NostoOrderBuyerInterface.php');
-require_once(dirname(__FILE__).'/interfaces/order/NostoOrderInterface.php');
-require_once(dirname(__FILE__).'/interfaces/order/NostoOrderPurchasedItemInterface.php');
-require_once(dirname(__FILE__).'/interfaces/order/NostoOrderStatusInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderBuyerInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderPurchasedItemInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderStatusInterface.php');
 
-require_once(dirname(__FILE__).'/interfaces/NostoOAuthClientMetaDataInterface.php');
-require_once(dirname(__FILE__).'/interfaces/NostoProductInterface.php');
-require_once(dirname(__FILE__).'/interfaces/NostoExportCollectionInterface.php');
-require_once(dirname(__FILE__).'/interfaces/NostoValidatableInterface.php');
-require_once(dirname(__FILE__).'/interfaces/NostoExchangeRateInterface.php');
-require_once(dirname(__FILE__).'/interfaces/NostoConfigurationInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/NostoOAuthClientMetaDataInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/NostoProductInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/NostoExportCollectionInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/NostoValidatableInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/NostoExchangeRateInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/NostoConfigurationInterface.php');
 
 // Classes
-require_once(dirname(__FILE__).'/classes/http/NostoHttpRequest.php'); // Must be loaded before `NostoApiRequest`
-require_once(dirname(__FILE__).'/classes/NostoObject.php');
+require_once(dirname(__FILE__) . '/classes/http/NostoHttpRequest.php'); // Must be loaded before `NostoApiRequest`
+require_once(dirname(__FILE__) . '/classes/NostoObject.php');
 
-require_once(dirname(__FILE__).'/classes/api/NostoApiRequest.php');
-require_once(dirname(__FILE__).'/classes/api/NostoApiToken.php');
+require_once(dirname(__FILE__) . '/classes/api/NostoApiRequest.php');
+require_once(dirname(__FILE__) . '/classes/api/NostoApiToken.php');
 
-require_once(dirname(__FILE__).'/classes/collection/NostoCollection.php');
-require_once(dirname(__FILE__).'/classes/collection/NostoProductCollection.php');
-require_once(dirname(__FILE__).'/classes/collection/NostoOrderCollection.php');
-require_once(dirname(__FILE__).'/classes/collection/NostoExchangeRateCollection.php');
+require_once(dirname(__FILE__) . '/classes/collection/NostoCollection.php');
+require_once(dirname(__FILE__) . '/classes/collection/NostoProductCollection.php');
+require_once(dirname(__FILE__) . '/classes/collection/NostoOrderCollection.php');
+require_once(dirname(__FILE__) . '/classes/collection/NostoExchangeRateCollection.php');
 
-require_once(dirname(__FILE__).'/classes/exception/NostoException.php');
-require_once(dirname(__FILE__).'/classes/exception/NostoHttpException.php');
-require_once(dirname(__FILE__).'/classes/exception/NostoHttpResponseException.php');
-require_once(dirname(__FILE__).'/classes/exception/NostoApiResponseException.php');
+require_once(dirname(__FILE__) . '/classes/exception/NostoException.php');
+require_once(dirname(__FILE__) . '/classes/exception/NostoHttpException.php');
+require_once(dirname(__FILE__) . '/classes/exception/NostoHttpResponseException.php');
+require_once(dirname(__FILE__) . '/classes/exception/NostoApiResponseException.php');
 
-require_once(dirname(__FILE__).'/classes/export/NostoExporter.php');
-require_once(dirname(__FILE__).'/classes/export/NostoExportProductCollection.php');
-require_once(dirname(__FILE__).'/classes/export/NostoExportOrderCollection.php');
+require_once(dirname(__FILE__) . '/classes/export/NostoExporter.php');
+require_once(dirname(__FILE__) . '/classes/export/NostoExportProductCollection.php');
+require_once(dirname(__FILE__) . '/classes/export/NostoExportOrderCollection.php');
 
-require_once(dirname(__FILE__).'/classes/helper/NostoHelper.php');
-require_once(dirname(__FILE__).'/classes/helper/NostoHelperDate.php');
-require_once(dirname(__FILE__).'/classes/helper/NostoHelperIframe.php');
-require_once(dirname(__FILE__).'/classes/helper/NostoHelperPrice.php');
+require_once(dirname(__FILE__) . '/classes/helper/NostoHelper.php');
+require_once(dirname(__FILE__) . '/classes/helper/NostoHelperDate.php');
+require_once(dirname(__FILE__) . '/classes/helper/NostoHelperIframe.php');
+require_once(dirname(__FILE__) . '/classes/helper/NostoHelperPrice.php');
 
-require_once(dirname(__FILE__).'/classes/http/NostoHttpRequestAdapter.php');
-require_once(dirname(__FILE__).'/classes/http/NostoHttpRequestAdapterCurl.php');
-require_once(dirname(__FILE__).'/classes/http/NostoHttpRequestAdapterSocket.php');
-require_once(dirname(__FILE__).'/classes/http/NostoHttpResponse.php');
+require_once(dirname(__FILE__) . '/classes/http/NostoHttpRequestAdapter.php');
+require_once(dirname(__FILE__) . '/classes/http/NostoHttpRequestAdapterCurl.php');
+require_once(dirname(__FILE__) . '/classes/http/NostoHttpRequestAdapterSocket.php');
+require_once(dirname(__FILE__) . '/classes/http/NostoHttpResponse.php');
 
-require_once(dirname(__FILE__).'/classes/oauth/NostoOAuthClient.php');
-require_once(dirname(__FILE__).'/classes/oauth/NostoOAuthToken.php');
+require_once(dirname(__FILE__) . '/classes/oauth/NostoOAuthClient.php');
+require_once(dirname(__FILE__) . '/classes/oauth/NostoOAuthToken.php');
 
-require_once(dirname(__FILE__).'/classes/operation/NostoOperation.php');
-require_once(dirname(__FILE__).'/classes/operation/NostoOperationProduct.php');
-require_once(dirname(__FILE__).'/classes/operation/NostoOperationExchangeRate.php');
-require_once(dirname(__FILE__).'/classes/operation/NostoOperationAccount.php');
-require_once(dirname(__FILE__).'/classes/operation/NostoOperationSettings.php');
-require_once(dirname(__FILE__).'/classes/operation/NostoOperationUninstall.php');
-require_once(dirname(__FILE__).'/classes/operation/NostoOperationSso.php');
-require_once(dirname(__FILE__).'/classes/operation/NostoOperationOrderConfirmation.php');
-require_once(dirname(__FILE__).'/classes/operation/NostoOperationOauthSync.php');
+require_once(dirname(__FILE__) . '/classes/operation/NostoOperation.php');
+require_once(dirname(__FILE__) . '/classes/operation/NostoOperationProduct.php');
+require_once(dirname(__FILE__) . '/classes/operation/NostoOperationExchangeRate.php');
+require_once(dirname(__FILE__) . '/classes/operation/NostoOperationAccount.php');
+require_once(dirname(__FILE__) . '/classes/operation/NostoOperationSettings.php');
+require_once(dirname(__FILE__) . '/classes/operation/NostoOperationUninstall.php');
+require_once(dirname(__FILE__) . '/classes/operation/NostoOperationSso.php');
+require_once(dirname(__FILE__) . '/classes/operation/NostoOperationOrderConfirmation.php');
+require_once(dirname(__FILE__) . '/classes/operation/NostoOperationOauthSync.php');
 
-require_once(dirname(__FILE__).'/classes/Nosto.php');
-require_once(dirname(__FILE__).'/classes/NostoConfiguration.php');
-require_once(dirname(__FILE__).'/classes/NostoAccountOwner.php');
-require_once(dirname(__FILE__).'/classes/NostoAccountIframe.php');
-require_once(dirname(__FILE__).'/classes/NostoAccountBilling.php');
-require_once(dirname(__FILE__).'/classes/NostoAccount.php');
-require_once(dirname(__FILE__).'/classes/NostoCipher.php');
-require_once(dirname(__FILE__).'/classes/NostoDotEnv.php');
-require_once(dirname(__FILE__).'/classes/NostoMessage.php');
-require_once(dirname(__FILE__).'/classes/NostoValidator.php');
-require_once(dirname(__FILE__).'/classes/NostoExchangeRate.php');
-require_once(dirname(__FILE__).'/classes/NostoCurrency.php');
-require_once(dirname(__FILE__).'/classes/NostoCurrencyCode.php');
-require_once(dirname(__FILE__).'/classes/NostoCurrencySymbol.php');
-require_once(dirname(__FILE__).'/classes/NostoCurrencyFormat.php');
-require_once(dirname(__FILE__).'/classes/NostoCurrencyInfo.php');
+require_once(dirname(__FILE__) . '/classes/Nosto.php');
+require_once(dirname(__FILE__) . '/classes/NostoConfiguration.php');
+require_once(dirname(__FILE__) . '/classes/NostoAccountOwner.php');
+require_once(dirname(__FILE__) . '/classes/NostoAccountIframe.php');
+require_once(dirname(__FILE__) . '/classes/NostoAccountBilling.php');
+require_once(dirname(__FILE__) . '/classes/NostoAccount.php');
+require_once(dirname(__FILE__) . '/classes/NostoCipher.php');
+require_once(dirname(__FILE__) . '/classes/NostoDotEnv.php');
+require_once(dirname(__FILE__) . '/classes/NostoMessage.php');
+require_once(dirname(__FILE__) . '/classes/NostoValidator.php');
+require_once(dirname(__FILE__) . '/classes/NostoExchangeRate.php');
+require_once(dirname(__FILE__) . '/classes/NostoCurrency.php');
+require_once(dirname(__FILE__) . '/classes/NostoCurrencyCode.php');
+require_once(dirname(__FILE__) . '/classes/NostoCurrencySymbol.php');
+require_once(dirname(__FILE__) . '/classes/NostoCurrencyFormat.php');
+require_once(dirname(__FILE__) . '/classes/NostoCurrencyInfo.php');
 
 // Libs
-require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptBase.php');
-require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptRijndael.php');
-require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptAES.php');
-require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptRandom.php');
+require_once(dirname(__FILE__) . '/libs/phpseclib/crypt/NostoCryptBase.php');
+require_once(dirname(__FILE__) . '/libs/phpseclib/crypt/NostoCryptRijndael.php');
+require_once(dirname(__FILE__) . '/libs/phpseclib/crypt/NostoCryptAES.php');
+require_once(dirname(__FILE__) . '/libs/phpseclib/crypt/NostoCryptRandom.php');
 
 // Parse .env if exists and assign configured environment variables.
 NostoDotEnv::getInstance()->init(dirname(__FILE__));

@@ -57,7 +57,8 @@ class NostoHelperIframe extends NostoHelper
         NostoConfigurationInterface $config = null,
         NostoAccountOwnerInterface $user = null,
         array $params = array()
-    ) {
+    )
+    {
         $queryParams = http_build_query(
             array_merge(
                 array(
@@ -83,14 +84,14 @@ class NostoHelperIframe extends NostoHelper
         if ($config !== null && $user !== null && $config->isConnectedToNosto()) {
             try {
                 $service = new NostoOperationSSO($config, $user, $iframe->getPlatform());
-                $url = $service->get().'?'.$queryParams;
+                $url = $service->get() . '?' . $queryParams;
             } catch (NostoException $e) {
                 // If the SSO fails, we show a "remove account" page to the user in order to
                 // allow to remove Nosto and start over.
                 // The only case when this should happen is when the api token for some
                 // reason is invalid, which is the case when switching between environments.
                 $url = NostoHttpRequest::buildUri(
-                    $this->getBaseUrl().self::IFRAME_URI_UNINSTALL.'?'.$queryParams,
+                    $this->getBaseUrl() . self::IFRAME_URI_UNINSTALL . '?' . $queryParams,
                     array(
                         '{platform}' => $iframe->getPlatform(),
                     )
@@ -98,7 +99,7 @@ class NostoHelperIframe extends NostoHelper
             }
         } else {
             $url = NostoHttpRequest::buildUri(
-                $this->getBaseUrl().self::IFRAME_URI_INSTALL.'?'.$queryParams,
+                $this->getBaseUrl() . self::IFRAME_URI_INSTALL . '?' . $queryParams,
                 array(
                     '{platform}' => $iframe->getPlatform(),
                 )

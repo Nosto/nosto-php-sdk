@@ -106,164 +106,20 @@ class NostoHttpRequest
     }
 
     /**
-     * Setter for the request url.
+     * Replaces or adds a query parameter to a url.
      *
+     * @param string $param the query param name to replace.
+     * @param mixed $value the query param value to replace.
      * @param string $url the url.
+     * @return string the updated url.
      */
-    public function setUrl($url)
+    public static function replaceQueryParamInUrl($param, $value, $url)
     {
-        $this->url = $url;
-    }
-
-    /**
-     * Setter for the content type to add to the request header.
-     *
-     * @param string $contentType the content type.
-     */
-    public function setContentType($contentType)
-    {
-        $this->addHeader('Content-type', $contentType);
-    }
-
-    /**
-     * Adds a new header to the request.
-     *
-     * @param string $key the header key, e.g. 'Content-type'.
-     * @param string $value the header value, e.g. 'application/json'.
-     */
-    public function addHeader($key, $value)
-    {
-        $this->headers[] = $key.': '.$value;
-    }
-
-    /**
-     * Returns the registered headers.
-     *
-     * @return array
-     */
-    public function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    /**
-     * Setter for the request url query params.
-     *
-     * @param array $queryParams the query params.
-     */
-    public function setQueryParams($queryParams)
-    {
-        $this->queryParams = $queryParams;
-    }
-
-    /**
-     * Returns the registered query params.
-     *
-     * @return array
-     */
-    public function getQueryParams()
-    {
-        return $this->queryParams;
-    }
-
-    /**
-     * Setter for the request url replace params.
-     *
-     * @param array $replaceParams the replace params.
-     */
-    public function setReplaceParams($replaceParams)
-    {
-        $this->replaceParams = $replaceParams;
-    }
-
-    /**
-     * Setter for the request authentication header.
-     *
-     * @param string $type the auth type (use AUTH_ constants).
-     * @param mixed $value the auth header value, format depending on the auth type.
-     * @throws Exception if an incorrect auth type is given.
-     */
-    public function setAuth($type, $value)
-    {
-        switch ($type) {
-            case self::AUTH_BASIC:
-                // The use of base64 encoding for authorization headers follow the RFC 2617 standard for http
-                // authentication (https://www.ietf.org/rfc/rfc2617.txt).
-                $this->addHeader('Authorization', 'Basic '.base64_encode(implode(':', $value)));
-                break;
-
-            case self::AUTH_BEARER:
-                $this->addHeader('Authorization', 'Bearer '.$value);
-                break;
-
-            default:
-                throw new NostoException('Unsupported auth type.');
-        }
-    }
-
-    /**
-     * Convenience method for setting the basic auth type.
-     *
-     * @param string $username the user name.
-     * @param string $password the password.
-     */
-    public function setAuthBasic($username, $password)
-    {
-        $this->setAuth(self::AUTH_BASIC, array($username, $password));
-    }
-
-    /**
-     * Convenience method for setting the bearer auth type.
-     *
-     * @param string $token the access token.
-     */
-    public function setAuthBearer($token)
-    {
-        $this->setAuth(self::AUTH_BEARER, $token);
-    }
-
-    /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
-     *
-     * @param string $path the endpoint path (use PATH_ constants).
-     */
-    public function setPath($path)
-    {
-        $this->setUrl(self::$baseUrl.$path);
-    }
-
-    /**
-     * Builds an uri by replacing the param placeholders in $uri with the ones given in $$replaceParams.
-     *
-     * @param string $uri
-     * @param array $replaceParams
-     * @return string
-     */
-    public static function buildUri($uri, array $replaceParams)
-    {
-        return strtr($uri, $replaceParams);
-    }
-
-    /**
-     * Builds a url based on given parts.
-     *
-     * @see http://php.net/manual/en/function.parse-url.php
-     * @param array $parts part(s) of an URL in form of a string or associative array like parseUrl() returns.
-     * @return string
-     */
-    public static function buildUrl(array $parts)
-    {
-        $scheme = isset($parts['scheme']) ? $parts['scheme'].'://' : '';
-        $host = isset($parts['host']) ? $parts['host'] : '';
-        $port = isset($parts['port']) ? ':'.$parts['port'] : '';
-        $user = isset($parts['user']) ? $parts['user'] : '';
-        $pass = isset($parts['pass']) ? ':'.$parts['pass'] : '';
-        $pass = ($user || $pass) ? "$pass@" : '';
-        $path = isset($parts['path']) ? $parts['path'] : '';
-        $query = isset($parts['query']) ? '?'.$parts['query'] : '';
-        $fragment = isset($parts['fragment']) ? '#'.$parts['fragment'] : '';
-        return $scheme.$user.$pass.$host.$port.$path.$query.$fragment;
+        $parsedUrl = self::parseUrl($url);
+        $queryString = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
+        $queryString = self::replaceQueryParam($param, $value, $queryString);
+        $parsedUrl['query'] = $queryString;
+        return self::buildUrl($parsedUrl);
     }
 
     /**
@@ -276,6 +132,21 @@ class NostoHttpRequest
     public static function parseUrl($url)
     {
         return parse_url($url);
+    }
+
+    /**
+     * Replaces a parameter in a query string with given value.
+     *
+     * @param string $param the query param name to replace.
+     * @param mixed $value the query param value to replace.
+     * @param string $queryString the query string.
+     * @return string the updated query string.
+     */
+    public static function replaceQueryParam($param, $value, $queryString)
+    {
+        $parsedQuery = self::parseQueryString($queryString);
+        $parsedQuery[$param] = $value;
+        return http_build_query($parsedQuery);
     }
 
     /**
@@ -295,35 +166,24 @@ class NostoHttpRequest
     }
 
     /**
-     * Replaces a parameter in a query string with given value.
+     * Builds a url based on given parts.
      *
-     * @param string $param the query param name to replace.
-     * @param mixed $value the query param value to replace.
-     * @param string $queryString the query string.
-     * @return string the updated query string.
+     * @see http://php.net/manual/en/function.parse-url.php
+     * @param array $parts part(s) of an URL in form of a string or associative array like parseUrl() returns.
+     * @return string
      */
-    public static function replaceQueryParam($param, $value, $queryString)
+    public static function buildUrl(array $parts)
     {
-        $parsedQuery = self::parseQueryString($queryString);
-        $parsedQuery[$param] = $value;
-        return http_build_query($parsedQuery);
-    }
-
-    /**
-     * Replaces or adds a query parameter to a url.
-     *
-     * @param string $param the query param name to replace.
-     * @param mixed $value the query param value to replace.
-     * @param string $url the url.
-     * @return string the updated url.
-     */
-    public static function replaceQueryParamInUrl($param, $value, $url)
-    {
-        $parsedUrl = self::parseUrl($url);
-        $queryString = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
-        $queryString = self::replaceQueryParam($param, $value, $queryString);
-        $parsedUrl['query'] = $queryString;
-        return self::buildUrl($parsedUrl);
+        $scheme = isset($parts['scheme']) ? $parts['scheme'] . '://' : '';
+        $host = isset($parts['host']) ? $parts['host'] : '';
+        $port = isset($parts['port']) ? ':' . $parts['port'] : '';
+        $user = isset($parts['user']) ? $parts['user'] : '';
+        $pass = isset($parts['pass']) ? ':' . $parts['pass'] : '';
+        $pass = ($user || $pass) ? "$pass@" : '';
+        $path = isset($parts['path']) ? $parts['path'] : '';
+        $query = isset($parts['query']) ? '?' . $parts['query'] : '';
+        $fragment = isset($parts['fragment']) ? '#' . $parts['fragment'] : '';
+        return $scheme . $user . $pass . $host . $port . $path . $query . $fragment;
     }
 
     /**
@@ -348,6 +208,147 @@ class NostoHttpRequest
     }
 
     /**
+     * Builds the custom-user agent by using the platform's name and version with the
+     * plugin version
+     *
+     * @param string $platformName the name of the platform using the SDK
+     * @param array $platformVersion the version of the platform using the SDK
+     * @param array $pluginVersion the version of the plugin using the SDK
+     */
+    public static function buildUserAgent($platformName, $platformVersion, $pluginVersion)
+    {
+        self::$userAgent = sprintf('Nosto %s / %s %s', $pluginVersion, $platformName, $platformVersion);
+    }
+
+    /**
+     * Setter for the content type to add to the request header.
+     *
+     * @param string $contentType the content type.
+     */
+    public function setContentType($contentType)
+    {
+        $this->addHeader('Content-type', $contentType);
+    }
+
+    /**
+     * Adds a new header to the request.
+     *
+     * @param string $key the header key, e.g. 'Content-type'.
+     * @param string $value the header value, e.g. 'application/json'.
+     */
+    public function addHeader($key, $value)
+    {
+        $this->headers[] = $key . ': ' . $value;
+    }
+
+    /**
+     * Returns the registered headers.
+     *
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    /**
+     * Returns the registered query params.
+     *
+     * @return array
+     */
+    public function getQueryParams()
+    {
+        return $this->queryParams;
+    }
+
+    /**
+     * Setter for the request url query params.
+     *
+     * @param array $queryParams the query params.
+     */
+    public function setQueryParams($queryParams)
+    {
+        $this->queryParams = $queryParams;
+    }
+
+    /**
+     * Setter for the request url replace params.
+     *
+     * @param array $replaceParams the replace params.
+     */
+    public function setReplaceParams($replaceParams)
+    {
+        $this->replaceParams = $replaceParams;
+    }
+
+    /**
+     * Convenience method for setting the basic auth type.
+     *
+     * @param string $username the user name.
+     * @param string $password the password.
+     */
+    public function setAuthBasic($username, $password)
+    {
+        $this->setAuth(self::AUTH_BASIC, array($username, $password));
+    }
+
+    /**
+     * Setter for the request authentication header.
+     *
+     * @param string $type the auth type (use AUTH_ constants).
+     * @param mixed $value the auth header value, format depending on the auth type.
+     * @throws Exception if an incorrect auth type is given.
+     */
+    public function setAuth($type, $value)
+    {
+        switch ($type) {
+            case self::AUTH_BASIC:
+                // The use of base64 encoding for authorization headers follow the RFC 2617 standard for http
+                // authentication (https://www.ietf.org/rfc/rfc2617.txt).
+                $this->addHeader('Authorization', 'Basic ' . base64_encode(implode(':', $value)));
+                break;
+
+            case self::AUTH_BEARER:
+                $this->addHeader('Authorization', 'Bearer ' . $value);
+                break;
+
+            default:
+                throw new NostoException('Unsupported auth type.');
+        }
+    }
+
+    /**
+     * Convenience method for setting the bearer auth type.
+     *
+     * @param string $token the access token.
+     */
+    public function setAuthBearer($token)
+    {
+        $this->setAuth(self::AUTH_BEARER, $token);
+    }
+
+    /**
+     * Setter for the end point path, e.g. one of the PATH_ constants.
+     * The API base url is always prepended.
+     *
+     * @param string $path the endpoint path (use PATH_ constants).
+     */
+    public function setPath($path)
+    {
+        $this->setUrl(self::$baseUrl . $path);
+    }
+
+    /**
+     * Setter for the request url.
+     *
+     * @param string $url the url.
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    /**
      * Sends a POST request.
      *
      * @param string $content
@@ -367,6 +368,18 @@ class NostoHttpRequest
                 'content' => $content,
             )
         );
+    }
+
+    /**
+     * Builds an uri by replacing the param placeholders in $uri with the ones given in $$replaceParams.
+     *
+     * @param string $uri
+     * @param array $replaceParams
+     * @return string
+     */
+    public static function buildUri($uri, array $replaceParams)
+    {
+        return strtr($uri, $replaceParams);
     }
 
     /**
@@ -403,7 +416,7 @@ class NostoHttpRequest
             $url = self::buildUri($url, $this->replaceParams);
         }
         if (!empty($this->queryParams)) {
-            $url .= '?'.http_build_query($this->queryParams);
+            $url .= '?' . http_build_query($this->queryParams);
         }
         return $this->adapter->get(
             $url,
@@ -430,19 +443,6 @@ class NostoHttpRequest
                 'headers' => $this->headers,
             )
         );
-    }
-
-    /**
-     * Builds the custom-user agent by using the platform's name and version with the
-     * plugin version
-     *
-     * @param string $platformName the name of the platform using the SDK
-     * @param array $platformVersion the version of the platform using the SDK
-     * @param array $pluginVersion the version of the plugin using the SDK
-     */
-    public static function buildUserAgent($platformName, $platformVersion, $pluginVersion)
-    {
-        self::$userAgent = sprintf('Nosto %s / %s %s', $pluginVersion, $platformName, $platformVersion);
     }
 
     /**

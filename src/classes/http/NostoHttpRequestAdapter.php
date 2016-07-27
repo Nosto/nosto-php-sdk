@@ -50,20 +50,6 @@ abstract class NostoHttpRequestAdapter
     protected $content = null;
 
     /**
-     * Initializes the request options.
-     *
-     * @param array $options the options.
-     */
-    protected function init(array $options = array())
-    {
-        foreach ($options as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->{$key} = $value;
-            }
-        }
-    }
-
-    /**
      * Does a GET request and returns the http response object.
      *
      * @param string $url the URL to request.
@@ -98,4 +84,18 @@ abstract class NostoHttpRequestAdapter
      * @return NostoHttpResponse the response object.
      */
     abstract public function delete($url, array $options = array());
+
+    /**
+     * Initializes the request options.
+     *
+     * @param array $options the options.
+     */
+    protected function init(array $options = array())
+    {
+        foreach ($options as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
+        }
+    }
 }

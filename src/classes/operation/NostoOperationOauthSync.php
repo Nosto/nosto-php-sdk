@@ -60,7 +60,7 @@ class NostoOperationOauthSync extends NostoOperation
     /**
      * Sends a POST request to delete an account for a store in Nosto
      *
-     * @param $code the oauth access code.
+     * @param $code string the oauth access code.
      * @return NostoConfigurationInterface the configured account
      * @throws NostoException on failure.
      */

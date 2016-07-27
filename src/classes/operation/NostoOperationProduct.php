@@ -40,7 +40,7 @@
 class NostoOperationProduct extends NostoOperation
 {
     /**
-     * @var NostoAccountInterface the account to perform the operation on.
+     * @var NostoConfigurationInterface the account to perform the operation on.
      */
     protected $account;
 
@@ -54,9 +54,9 @@ class NostoOperationProduct extends NostoOperation
      *
      * Accepts the account for which the product operation is to be performed on.
      *
-     * @param NostoAccountInterface $account the account object.
+     * @param NostoConfigurationInterface $account the account object.
      */
-    public function __construct(NostoAccountInterface $account)
+    public function __construct(NostoConfigurationInterface $account)
     {
         $this->account = $account;
         $this->collection = new NostoProductCollection();
@@ -90,54 +90,25 @@ class NostoOperationProduct extends NostoOperation
     }
 
     /**
-     * Sends a POST request to create all the products currently in the collection.
+     * Returns the whole collection in JSON format.
      *
-     * @return bool if the request was successful.
-     * @throws NostoException on failure.
+     * @return string the json.
+     * @throws NostoException if the collection is empty.
      */
-    public function create()
+    protected function getCollectionAsJson()
     {
-        $request = $this->initApiRequest($this->account->getApiToken('products'));
-        $request->setPath(NostoApiRequest::PATH_PRODUCTS_CREATE);
-        $response = $request->post($this->getCollectionAsJson());
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to create Nosto product(s).', $request, $response);
+        $data = array();
+        foreach ($this->collection->getArrayCopy() as $item) {
+            /** @var NostoProductInterface|NostoValidatableInterface $item */
+            $validator = new NostoValidator($item);
+            if ($validator->validate()) {
+                $data[] = $this->getProductAsArray($item);
+            }
         }
-        return true;
-    }
-
-    /**
-     * Sends a PUT request to update all the products currently in the collection.
-     *
-     * @return bool if the request was successful.
-     * @throws NostoException on failure.
-     */
-    public function update()
-    {
-        $request = $this->initApiRequest($this->account->getApiToken('products'));
-        $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPDATE);
-        $response = $request->put($this->getCollectionAsJson());
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to update Nosto product(s).', $request, $response);
+        if (empty($data)) {
+            throw new NostoException('No products found in collection.');
         }
-        return true;
-    }
-
-    /**
-     * Sends a POST request to delete all the products currently in the collection.
-     *
-     * @return bool if the request was successful.
-     * @throws NostoException on failure.
-     */
-    public function delete()
-    {
-        $request = $this->initApiRequest($this->account->getApiToken('products'));
-        $request->setPath(NostoApiRequest::PATH_PRODUCTS_DISCONTINUE);
-        $response = $request->post($this->getCollectionIdsAsJson());
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to delete Nosto product(s).', $request, $response);
-        }
-        return true;
+        return json_encode($data);
     }
 
     /**
@@ -206,25 +177,54 @@ class NostoOperationProduct extends NostoOperation
     }
 
     /**
-     * Returns the whole collection in JSON format.
+     * Sends a POST request to create all the products currently in the collection.
      *
-     * @return string the json.
-     * @throws NostoException if the collection is empty.
+     * @return bool if the request was successful.
+     * @throws NostoException on failure.
      */
-    protected function getCollectionAsJson()
+    public function create()
     {
-        $data = array();
-        foreach ($this->collection->getArrayCopy() as $item) {
-            /** @var NostoProductInterface|NostoValidatableInterface $item */
-            $validator = new NostoValidator($item);
-            if ($validator->validate()) {
-                $data[] = $this->getProductAsArray($item);
-            }
+        $request = $this->initApiRequest($this->account->getApiToken('products'));
+        $request->setPath(NostoApiRequest::PATH_PRODUCTS_CREATE);
+        $response = $request->post($this->getCollectionAsJson());
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to create Nosto product(s).', $request, $response);
         }
-        if (empty($data)) {
-            throw new NostoException('No products found in collection.');
+        return true;
+    }
+
+    /**
+     * Sends a PUT request to update all the products currently in the collection.
+     *
+     * @return bool if the request was successful.
+     * @throws NostoException on failure.
+     */
+    public function update()
+    {
+        $request = $this->initApiRequest($this->account->getApiToken('products'));
+        $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPDATE);
+        $response = $request->put($this->getCollectionAsJson());
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to update Nosto product(s).', $request, $response);
         }
-        return json_encode($data);
+        return true;
+    }
+
+    /**
+     * Sends a POST request to delete all the products currently in the collection.
+     *
+     * @return bool if the request was successful.
+     * @throws NostoException on failure.
+     */
+    public function delete()
+    {
+        $request = $this->initApiRequest($this->account->getApiToken('products'));
+        $request->setPath(NostoApiRequest::PATH_PRODUCTS_DISCONTINUE);
+        $response = $request->post($this->getCollectionIdsAsJson());
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to delete Nosto product(s).', $request, $response);
+        }
+        return true;
     }
 
     /**

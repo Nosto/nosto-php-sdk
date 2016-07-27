@@ -48,7 +48,7 @@ class NostoOperation
      * @return NostoApiRequest the newly created request object.
      * @throws NostoException if the account does not have the correct token set.
      */
-    protected function initApiRequest(NostoApiToken $token)
+    protected function initApiRequest(NostoApiToken $token = null)
     {
         if (is_null($token)) {
             throw new NostoException('No API token found for account.');
@@ -69,7 +69,7 @@ class NostoOperation
      * @return NostoHttpRequest the newly created request object.
      * @throws NostoException if the account does not have the correct token set.
      */
-    protected function initHttpRequest(NostoApiToken $token)
+    protected function initHttpRequest(NostoApiToken $token = null)
     {
         if (is_null($token)) {
             throw new NostoException('No API token found for account.');

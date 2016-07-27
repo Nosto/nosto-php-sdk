@@ -151,12 +151,12 @@ class NostoCryptRandom
         $v = $seed = $_SESSION['seed'] = pack(
             'H*',
             sha1(
-                serialize($_SERVER).
-                serialize($_POST).
-                serialize($_GET).
-                serialize($_COOKIE).
-                serialize($GLOBALS).
-                serialize($_SESSION).
+                serialize($_SERVER) .
+                serialize($_POST) .
+                serialize($_GET) .
+                serialize($_COOKIE) .
+                serialize($GLOBALS) .
+                serialize($_SESSION) .
                 serialize($_OLD_SESSION)
             )
         );
@@ -191,8 +191,8 @@ class NostoCryptRandom
          * @link http://tools.ietf.org/html/rfc4253#section-7.2
          */
 
-        $key = pack('H*', sha1($seed.'A'));
-        $iv = pack('H*', sha1($seed.'C'));
+        $key = pack('H*', sha1($seed . 'A'));
+        $iv = pack('H*', sha1($seed . 'C'));
 
         /*
          * Ciphers are used as per the nist.gov.

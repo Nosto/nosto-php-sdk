@@ -56,15 +56,6 @@ abstract class NostoCollection extends ArrayObject
     }
 
     /**
-     * @inheritdoc
-     */
-    public function append($value)
-    {
-        $this->validate($value);
-        parent::append($value);
-    }
-
-    /**
      * Validates that the given value is of correct type.
      *
      * @see NostoCollection::$validItemType
@@ -84,5 +75,14 @@ abstract class NostoCollection extends ArrayObject
                 $valueType
             ));
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function append($value)
+    {
+        $this->validate($value);
+        parent::append($value);
     }
 }

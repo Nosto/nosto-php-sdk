@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,11 +34,30 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
-class NostoAccountBilling implements NostoAccountBillingDetailsInterface
+class MockNostoConfiguration extends NostoConfiguration
 {
-	public function getCountry()
-	{
-		return 'us';
-	}
+    public function getName()
+    {
+        return 'platform-00000000';
+    }
+
+    public function isConnectedToNosto()
+    {
+        return true;
+    }
+
+    public function hasMissingTokens()
+    {
+        return false;
+    }
+
+    public function getApiToken($name)
+    {
+        return new NostoApiToken($name, 'abc123');
+    }
+
+    public function getIframeUrl(NostoAccountIframeInterface $meta, array $params = array())
+    {
+        return null;
+    }
 }

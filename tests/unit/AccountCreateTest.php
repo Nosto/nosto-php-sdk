@@ -34,50 +34,50 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/NostoAccountBilling.php');
-require_once(dirname(__FILE__) . '/../_support/NostoAccountOwner.php');
-require_once(dirname(__FILE__) . '/../_support/NostoAccount.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoAccountBilling.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoAccountOwner.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoAccount.php');
 
 class AccountCreateTest extends \Codeception\TestCase\Test
 {
-	use \Codeception\Specify;
+    use \Codeception\Specify;
 
     /**
      * @var \UnitTester
      */
     protected $tester;
 
-	/**
-	 * Tests that new accounts can be created successfully.
-	 */
-	public function testCreatingNewAccount()
+    /**
+     * Tests that new accounts can be created successfully.
+     */
+    public function testCreatingNewAccount()
     {
-		/** @var NostoAccount $account */
-		/** @var NostoAccount $meta */
-		$meta = new NostoAccount();
-		$account = NostoAccount::create($meta);
+        /** @var NostoAccount $meta */
+        $meta = new MockNostoAccount();
+        $service = new NostoOperationAccount($meta);
+        $account = $service->create();
 
-		$this->specify('account was created', function() use ($account, $meta) {
-			$this->assertInstanceOf('NostoAccount', $account);
-			$this->assertEquals($meta->getPlatform() . '-' . $meta->getName(), $account->getName());
-		});
+        $this->specify('account was created', function () use ($account, $meta) {
+            $this->assertInstanceOf('NostoConfiguration', $account);
+            $this->assertEquals($meta->getPlatform() . '-' . $meta->getName(), $account->getName());
+        });
 
-		$this->specify('account has api token sso', function() use ($account, $meta) {
-			$token = $account->getApiToken('sso');
-			$this->assertInstanceOf('NostoApiToken', $token);
-			$this->assertEquals('sso', $token->getName());
-			$this->assertNotEmpty($token->getValue());
-		});
+        $this->specify('account has api token sso', function () use ($account, $meta) {
+            $token = $account->getApiToken('sso');
+            $this->assertInstanceOf('NostoApiToken', $token);
+            $this->assertEquals('sso', $token->getName());
+            $this->assertNotEmpty($token->getValue());
+        });
 
-		$this->specify('account has api token products', function() use ($account, $meta) {
-			$token = $account->getApiToken('products');
-			$this->assertInstanceOf('NostoApiToken', $token);
-			$this->assertEquals('products', $token->getName());
-			$this->assertNotEmpty($token->getValue());
-		});
+        $this->specify('account has api token products', function () use ($account, $meta) {
+            $token = $account->getApiToken('products');
+            $this->assertInstanceOf('NostoApiToken', $token);
+            $this->assertEquals('products', $token->getName());
+            $this->assertNotEmpty($token->getValue());
+        });
 
-		$this->specify('account is connected to nosto', function() use ($account, $meta) {
-			$this->assertTrue($account->isConnectedToNosto());
-		});
+        $this->specify('account is connected to nosto', function () use ($account, $meta) {
+            $this->assertTrue($account->isConnectedToNosto());
+        });
     }
 }
