@@ -94,6 +94,7 @@ require_once(dirname(__FILE__).'/classes/operation/NostoOperationSettings.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationUninstall.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationSso.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationOrderConfirmation.php');
+require_once(dirname(__FILE__).'/classes/operation/NostoOperationOauthSync.php');
 
 require_once(dirname(__FILE__).'/classes/Nosto.php');
 require_once(dirname(__FILE__).'/classes/NostoConfiguration.php');

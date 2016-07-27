@@ -44,6 +44,7 @@ class NostoHttpRequest
 
     const PATH_ACCOUNT_DELETED = '/hub/uninstall';
     const PATH_SSO_AUTH = '/hub/{platform}/load/{email}';
+    const PATH_OAUTH_SYNC = '/oauth/exchange';
 
     /**
      * @var string base url for the nosto web hook requests.

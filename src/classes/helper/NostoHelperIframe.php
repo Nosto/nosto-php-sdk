@@ -46,14 +46,14 @@ class NostoHelperIframe extends NostoHelper
      * Returns the url for the account administration iframe.
      * If the passed account is null, then the url will point to the start page where a new account can be created.
      *
-     * @param NostoAccountIframeInterface $meta the iframe meta data.
+     * @param NostoAccountIframeInterface $iframe the iframe meta data.
      * @param NostoConfiguration|null $config the configuration to return the url for.
      * @param array $params additional parameters to add to the iframe url.
      * @return string the iframe url.
      * @throws NostoException if the url cannot be created.
      */
     public function getUrl(
-        NostoAccountIframeInterface $meta,
+        NostoAccountIframeInterface $iframe,
         NostoConfigurationInterface $config = null,
         NostoAccountOwnerInterface $user = null,
         array $params = array()
@@ -61,20 +61,20 @@ class NostoHelperIframe extends NostoHelper
         $queryParams = http_build_query(
             array_merge(
                 array(
-                    'lang' => strtolower($meta->getLanguageIsoCode()),
-                    'ps_version' => $meta->getVersionPlatform(),
-                    'nt_version' => $meta->getVersionModule(),
-                    'product_pu' => $meta->getPreviewUrlProduct(),
-                    'category_pu' => $meta->getPreviewUrlCategory(),
-                    'search_pu' => $meta->getPreviewUrlSearch(),
-                    'cart_pu' => $meta->getPreviewUrlCart(),
-                    'front_pu' => $meta->getPreviewUrlFront(),
-                    'shop_lang' => strtolower($meta->getLanguageIsoCodeShop()),
-                    'shop_name' => $meta->getShopName(),
-                    'unique_id' => $meta->getUniqueId(),
-                    'fname' => $meta->getFirstName(),
-                    'lname' => $meta->getLastName(),
-                    'email' => $meta->getEmail(),
+                    'lang' => strtolower($iframe->getLanguageIsoCode()),
+                    'ps_version' => $iframe->getVersionPlatform(),
+                    'nt_version' => $iframe->getVersionModule(),
+                    'product_pu' => $iframe->getPreviewUrlProduct(),
+                    'category_pu' => $iframe->getPreviewUrlCategory(),
+                    'search_pu' => $iframe->getPreviewUrlSearch(),
+                    'cart_pu' => $iframe->getPreviewUrlCart(),
+                    'front_pu' => $iframe->getPreviewUrlFront(),
+                    'shop_lang' => strtolower($iframe->getLanguageIsoCodeShop()),
+                    'shop_name' => $iframe->getShopName(),
+                    'unique_id' => $iframe->getUniqueId(),
+                    'fname' => $iframe->getFirstName(),
+                    'lname' => $iframe->getLastName(),
+                    'email' => $iframe->getEmail(),
                 ),
                 $params
             )
@@ -82,7 +82,7 @@ class NostoHelperIframe extends NostoHelper
 
         if ($config !== null && $user !== null && $config->isConnectedToNosto()) {
             try {
-                $service = new NostoOperationSSO($config, $user, $meta->getPlatform());
+                $service = new NostoOperationSSO($config, $user, $iframe->getPlatform());
                 $url = $service->get().'?'.$queryParams;
             } catch (NostoException $e) {
                 // If the SSO fails, we show a "remove account" page to the user in order to
@@ -92,7 +92,7 @@ class NostoHelperIframe extends NostoHelper
                 $url = NostoHttpRequest::buildUri(
                     $this->getBaseUrl().self::IFRAME_URI_UNINSTALL.'?'.$queryParams,
                     array(
-                        '{platform}' => $meta->getPlatform(),
+                        '{platform}' => $iframe->getPlatform(),
                     )
                 );
             }
@@ -100,7 +100,7 @@ class NostoHelperIframe extends NostoHelper
             $url = NostoHttpRequest::buildUri(
                 $this->getBaseUrl().self::IFRAME_URI_INSTALL.'?'.$queryParams,
                 array(
-                    '{platform}' => $meta->getPlatform(),
+                    '{platform}' => $iframe->getPlatform(),
                 )
             );
         }

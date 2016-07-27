@@ -79,44 +79,6 @@ class NostoConfiguration extends NostoObject implements NostoConfigurationInterf
     /**
      * @inheritdoc
      */
-    public static function syncFromNosto(NostoOAuthClientMetaDataInterface $meta, $code)
-    {
-        $oauthClient = new NostoOAuthClient($meta);
-        $token = $oauthClient->authenticate($code);
-
-        if (empty($token->accessToken)) {
-            throw new NostoException('No access token found when trying to sync account from Nosto');
-        }
-        if (empty($token->merchantName)) {
-            throw new NostoException('No merchant name found when trying to sync account from Nosto');
-        }
-
-        $request = new NostoHttpRequest();
-        // The request is currently not made according the the OAuth2 spec with the access token in the
-        // Authorization header. This is due to the authentication server not implementing the full OAuth2 spec yet.
-        $request->setUrl(NostoOAuthClient::$baseUrl.'/exchange');
-        $request->setQueryParams(array('access_token' => $token->accessToken));
-        $response = $request->get();
-        $result = $response->getJsonResult(true);
-
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to sync account from Nosto.', $request, $response);
-        }
-        if (empty($result)) {
-            throw new NostoException('Received invalid data from Nosto when trying to sync account');
-        }
-
-        $account = new self($token->merchantName);
-        $account->tokens = NostoApiToken::parseTokens($result, 'api_');
-        if (!$account->isConnectedToNosto()) {
-            throw new NostoException('Failed to sync all account details from Nosto');
-        }
-        return $account;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function isConnectedToNosto()
     {
         if (empty($this->tokens)) {

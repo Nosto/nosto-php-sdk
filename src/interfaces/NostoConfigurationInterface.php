@@ -40,17 +40,6 @@
 interface NostoConfigurationInterface
 {
     /**
-     * Syncs an existing Nosto account via Oauth2.
-     * Requires that the oauth cycle has already completed the first step in getting the authorization code.
-     *
-     * @param NostoOAuthClientMetaDataInterface $meta the oauth2 client meta data to use for connection to Nosto.
-     * @param string $code the authorization code that grants access to transfer data from nosto.
-     * @return NostoAccount the synced account.
-     * @throws NostoException if the account cannot be synced.
-     */
-    public static function syncFromNosto(NostoOAuthClientMetaDataInterface $meta, $code);
-
-    /**
      * Gets the account name.
      *
      * @return string the account name.

@@ -35,38 +35,52 @@
  */
 
 /**
- * Helper class for exporting historical product and order data from the shop.
- * This information is used to bootstrap recommendations and decreases the time needed to get accurate recommendations
- * showing in the shop.
+ * Handles exchaning the authorization token for the API tokes from Nosto
  */
-class NostoExporter
+class NostoOperationOauthSync extends NostoOperation
 {
     /**
-     * Encrypts and returns the data.
-     *
-     * @param NostoConfigurationInterface $config the account to export the data for.
-     * @param NostoExportCollectionInterface $collection the data collection to export.
-     * @return string the encrypted data.
+     * @var NostoOAuthClientMetaDataInterface the Oauth meta data params
      */
-    public static function export(NostoConfigurationInterface $config, NostoExportCollectionInterface $collection)
+    protected $meta;
+
+    /**
+     * Constructor.
+     *
+     * Accepts the Nosto account for which the service is to operate on.
+     *
+     * @param NostoConfigurationInterface $config the Nosto configuration object.
+     * @param NostoOAuthClientMetaDataInterface $meta the oauth meta data params
+     */
+    public function __construct(NostoOAuthClientMetaDataInterface $meta)
     {
-        $data = '';
-        // Use the first 16 chars of the SSO token as secret for encryption.
-        $token = $config->getApiToken('sso');
-        if (!empty($token)) {
-            $tokenValue = $token->getValue();
-            $secret = substr($tokenValue, 0, 16);
-            if (!empty($secret)) {
-                $iv = NostoCryptRandom::getRandomString(16);
-                $cipher = new NostoCipher();
-                $cipher->setSecret($secret);
-                $cipher->setIV($iv);
-                $cipherText = $cipher->encrypt($collection->getJson());
-                // Prepend the IV to the cipher string so that nosto can parse and use it.
-                // There is no security concern with sending the IV as plain text.
-                $data = $iv.$cipherText;
-            }
+        $this->meta = $meta;
+    }
+
+    /**
+     * Sends a POST request to delete an account for a store in Nosto
+     *
+     * @param $code the oauth access code.
+     * @return NostoConfigurationInterface the configured account
+     * @throws NostoException on failure.
+     */
+    public function exchange($code)
+    {
+        $oauthClient = new NostoOAuthClient($this->meta);
+        $oauthResponse = $oauthClient->authenticate($code);
+
+        $request = new NostoHttpRequest();
+        $request->setContentType('application/x-www-form-urlencoded');
+        $request->setPath(NostoHttpRequest::PATH_OAUTH_SYNC);
+        $request->setQueryParams(array('access_token' => $oauthResponse->accessToken));
+        $response = $request->get();
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to sync account from Nosto..', $request, $response);
         }
-        return $data;
+
+        $tokens = NostoApiToken::parseTokens($response->getJsonResult(true), 'api_');
+        $config = new NostoConfiguration($oauthResponse->merchantName);
+        $config->setTokens($tokens);
+        return $config;
     }
 }
