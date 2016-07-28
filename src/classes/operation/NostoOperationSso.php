@@ -59,6 +59,7 @@ class NostoOperationSso extends NostoOperation
      *
      * @param NostoAccountInterface $account the Nosto configuration object.
      * @param NostoSignupOwnerInterface $user the current user
+     * @param $platform
      */
     public function __construct(NostoAccountInterface $account, NostoSignupOwnerInterface $user, $platform)
     {

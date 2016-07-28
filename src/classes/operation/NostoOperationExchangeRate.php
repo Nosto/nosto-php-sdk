@@ -114,7 +114,7 @@ class NostoOperationExchangeRate extends NostoOperation
             'valid_until' => null,
         );
 
-        /** @var NostoExchangeRate $item */
+        /** @var NostoExchangeRateInterface $item */
         foreach ($this->collection as $item) {
             $data['rates'][$item->getName()] = array(
                 'rate' => $item->getExchangeRate(),

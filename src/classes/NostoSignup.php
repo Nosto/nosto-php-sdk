@@ -115,9 +115,9 @@ class NostoSignup implements NostoSignupInterface
     }
 
     /**
-     * @param NostoSignupBilling $billing
+     * @param NostoSignupBillingDetailsInterface $billing
      */
-    public function setBilling(NostoSignupBilling $billing)
+    public function setBilling(NostoSignupBillingDetailsInterface $billing)
     {
         $this->billing = $billing;
     }
@@ -259,9 +259,9 @@ class NostoSignup implements NostoSignupInterface
     }
 
     /**
-     * @param NostoSignupOwner $owner
+     * @param NostoSignupOwnerInterface $owner
      */
-    public function setOwner(NostoSignupOwner $owner)
+    public function setOwner(NostoSignupOwnerInterface $owner)
     {
         $this->owner = $owner;
     }

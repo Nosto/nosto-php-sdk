@@ -71,7 +71,6 @@ class IframeAuthTest extends \Codeception\TestCase\Test
         $account = new MockNostoAccount('platform-00000000');
         $meta = new MockNostoIframe();
         $user = new MockNostoSignupOwner();
-        $baseUrl = isset($_ENV['NOSTO_WEB_HOOK_BASE_URL']) ? $_ENV['NOSTO_WEB_HOOK_BASE_URL'] : NostoHttpRequest::$baseUrl;
 
         $url = $account->getIframeUrl($meta, $user, array());
         $this->specify('auth iframe url was created', function () use ($url) {
