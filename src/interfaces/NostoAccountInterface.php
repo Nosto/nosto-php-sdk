@@ -70,6 +70,13 @@ interface NostoAccountInterface
     public function getApiToken($name);
 
     /**
+     * Returns the account tokens.
+     *
+     * @return NostoApiToken[] the tokens.
+     */
+    public function getTokens();
+
+    /**
      * Gets the secured iframe url for the account configuration page.
      *
      * @param NostoIframeInterface $meta the iframe meta data to use for fetching the secured url.
