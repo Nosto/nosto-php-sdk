@@ -34,7 +34,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class AccountDeleteTest extends \Codeception\TestCase\Test
+class AccountDeleteOperationTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
 
