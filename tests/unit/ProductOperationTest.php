@@ -53,7 +53,7 @@ class ProductOperationTest extends \Codeception\TestCase\Test
         $account = new NostoAccount('platform-00000000');
         $product = new MockNostoProduct();
 
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $op = new NostoOperationProduct($account);
         $op->addProduct($product);
         $op->upsert();
@@ -68,7 +68,7 @@ class ProductOperationTest extends \Codeception\TestCase\Test
         $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
         $account->addApiToken($token);
 
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $op = new NostoOperationProduct($account);
         $op->upsert();
     }
@@ -100,7 +100,7 @@ class ProductOperationTest extends \Codeception\TestCase\Test
         $account = new NostoAccount('platform-00000000');
         $product = new MockNostoProduct();
 
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $op = new NostoOperationProduct($account);
         $op->addProduct($product);
         $op->update();
@@ -115,7 +115,7 @@ class ProductOperationTest extends \Codeception\TestCase\Test
         $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
         $account->addApiToken($token);
 
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $op = new NostoOperationProduct($account);
         $op->update();
     }
@@ -147,7 +147,7 @@ class ProductOperationTest extends \Codeception\TestCase\Test
         $account = new NostoAccount('platform-00000000');
         $product = new MockNostoProduct();
 
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $op = new NostoOperationProduct($account);
         $op->addProduct($product);
         $op->create();
@@ -163,7 +163,7 @@ class ProductOperationTest extends \Codeception\TestCase\Test
         $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
         $account->addApiToken($token);
 
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $op = new NostoOperationProduct($account);
         $op->create();
     }
@@ -195,7 +195,7 @@ class ProductOperationTest extends \Codeception\TestCase\Test
         $account = new NostoAccount('platform-00000000');
         $product = new MockNostoProduct();
 
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $op = new NostoOperationProduct($account);
         $op->addProduct($product);
         $op->delete();
@@ -211,7 +211,7 @@ class ProductOperationTest extends \Codeception\TestCase\Test
         $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
         $account->addApiToken($token);
 
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $op = new NostoOperationProduct($account);
         $op->delete();
     }

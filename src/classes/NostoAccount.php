@@ -180,8 +180,8 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
     /**
      * @inheritdoc
      */
-    public function getIframeUrl(NostoIframeInterface $meta, array $params = array())
+    public function getIframeUrl(NostoIframeInterface $meta, NostoSignupOwnerInterface $user, array $params = array())
     {
-        return Nosto::helper('iframe')->getUrl($meta, $this, $params);
+        return Nosto::helper('iframe')->getUrl($meta, $this, $user, $params);
     }
 }

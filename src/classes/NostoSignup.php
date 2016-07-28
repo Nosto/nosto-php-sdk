@@ -64,11 +64,11 @@ class NostoSignup implements NostoSignupInterface
      */
     private $ownerLanguageCode;
     /**
-     * @var NostoTaggingMetaAccountOwner the account owner meta model.
+     * @var NostoSignupOwnerInterface the account owner meta model.
      */
     private $owner;
     /**
-     * @var NostoTaggingMetaAccountBilling the billing meta model.
+     * @var NostoSignupBillingDetailsInterface the billing meta model.
      */
     private $billing;
     /**
@@ -88,7 +88,7 @@ class NostoSignup implements NostoSignupInterface
      */
     private $details = false;
     /**
-     * @var string sign up api token
+     * @var NostoApiToken sign up api token
      */
     private $signupApiToken;
     /**
@@ -251,7 +251,7 @@ class NostoSignup implements NostoSignupInterface
     /**
      * Meta data model for the account owner who is creating the account.
      *
-     * @return NostoSignupOwner the meta data model.
+     * @return NostoSignupOwnerInterface the meta data model.
      */
     public function getOwner()
     {
@@ -269,7 +269,7 @@ class NostoSignup implements NostoSignupInterface
     /**
      * Meta data model for the account billing details.
      *
-     * @return NostoTaggingMetaAccountBilling the meta data model.
+     * @return NostoSignupBillingDetailsInterface the meta data model.
      */
     public function getBillingDetails()
     {

@@ -55,9 +55,4 @@ class MockNostoAccount extends NostoAccount
     {
         return new NostoApiToken($name, 'abc123');
     }
-
-    public function getIframeUrl(NostoIframeInterface $meta, array $params = array())
-    {
-        return null;
-    }
 }
