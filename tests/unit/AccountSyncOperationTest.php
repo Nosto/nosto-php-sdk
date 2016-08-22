@@ -56,7 +56,7 @@ class AccountSyncOperationTest extends \Codeception\TestCase\Test
         $client = new NostoOAuthClient($meta);
 
         $this->specify('oauth authorize url can be created', function () use ($client) {
-            $this->assertEquals('http://localhost:3000?client_id=client-id&redirect_uri=http%3A%2F%2Fmy.shop.com%2Fnosto%2Foauth&response_type=code&scope=sso products&lang=en', $client->getAuthorizationUrl());
+            $this->assertEquals('http://localhost:3000/oauth?client_id=client-id&redirect_uri=http%3A%2F%2Fmy.shop.com%2Fnosto%2Foauth&response_type=code&scope=sso products&lang=en', $client->getAuthorizationUrl());
         });
 
         $service = new NostoOperationOauthSync($meta);

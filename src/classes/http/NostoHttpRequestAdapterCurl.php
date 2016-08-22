@@ -83,8 +83,9 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
      */
     protected function send(array $curlOptions)
     {
-        if (!empty($this->getHeaders())) {
-            $curlOptions[CURLOPT_HTTPHEADER] = $this->getHeaders();
+        $headers = $this->getHeaders();
+        if (!empty($headers)) {
+            $curlOptions[CURLOPT_HTTPHEADER] = $headers;
         }
         if (!in_array(CURLOPT_USERAGENT, $curlOptions) && $this->userAgent) {
             $curlOptions[CURLOPT_USERAGENT] = $this->userAgent;
