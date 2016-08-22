@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,16 +34,25 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
-class NostoOrderStatus implements NostoOrderStatusInterface
+class MockNostoAccount extends NostoAccount
 {
-	public function getCode()
-	{
-		return 'completed';
-	}
+    public function getName()
+    {
+        return 'platform-00000000';
+    }
 
-	public function getLabel()
-	{
-		return 'Completed';
-	}
+    public function isConnectedToNosto()
+    {
+        return true;
+    }
+
+    public function hasMissingTokens()
+    {
+        return false;
+    }
+
+    public function getApiToken($name)
+    {
+        return new NostoApiToken($name, 'abc123');
+    }
 }

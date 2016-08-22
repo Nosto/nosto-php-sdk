@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,40 +34,30 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
-/**
- * Helper class for exporting historical product and order data from the shop.
- * This information is used to bootstrap recommendations and decreases the time needed to get accurate recommendations
- * showing in the shop.
- */
-class NostoExporter
+class MockNostoOrderPurchasedItem implements NostoOrderPurchasedItemInterface
 {
-    /**
-     * Encrypts and returns the data.
-     *
-     * @param NostoAccountInterface $account the account to export the data for.
-     * @param NostoExportCollectionInterface $collection the data collection to export.
-     * @return string the encrypted data.
-     */
-    public static function export(NostoAccountInterface $account, NostoExportCollectionInterface $collection)
+    public function getProductId()
     {
-        $data = '';
-        // Use the first 16 chars of the SSO token as secret for encryption.
-        $token = $account->getApiToken('sso');
-        if (!empty($token)) {
-            $tokenValue = $token->getValue();
-            $secret = substr($tokenValue, 0, 16);
-            if (!empty($secret)) {
-                $iv = NostoCryptRandom::getRandomString(16);
-                $cipher = new NostoCipher();
-                $cipher->setSecret($secret);
-                $cipher->setIV($iv);
-                $cipherText = $cipher->encrypt($collection->getJson());
-                // Prepend the IV to the cipher string so that nosto can parse and use it.
-                // There is no security concern with sending the IV as plain text.
-                $data = $iv . $cipherText;
-            }
-        }
-        return $data;
+        return 1;
+    }
+
+    public function getQuantity()
+    {
+        return 2;
+    }
+
+    public function getName()
+    {
+        return 'Test Product';
+    }
+
+    public function getUnitPrice()
+    {
+        return 99.99;
+    }
+
+    public function getCurrencyCode()
+    {
+        return 'USD';
     }
 }

@@ -43,59 +43,92 @@
  *
  * The second option is a fallback and should be avoided as much as possible.
  */
-class NostoOrderConfirmation
+class NostoOperationOrderConfirmation extends NostoOperation
 {
+    /**
+     * @var NostoAccountInterface the account to perform the operation on.
+     */
+    private $account;
+
+    /**
+     * Constructor.
+     *
+     * Accepts the account for which the product operation is to be performed on.
+     *
+     * @param NostoAccountInterface $account the configuration object.
+     */
+    public function __construct(NostoAccountInterface $account)
+    {
+        $this->account = $account;
+    }
+
     /**
      * Sends the order confirmation to Nosto.
      *
      * @param NostoOrderInterface $order the placed order model.
-     * @param NostoAccountInterface $account the Nosto account for the shop where the order was placed.
      * @param null $customerId the Nosto customer ID of the user who placed the order.
      * @throws NostoException on failure.
      * @return true on success.
      */
-    public static function send(NostoOrderInterface $order, NostoAccountInterface $account, $customerId = null)
+    public function send(NostoOrderInterface $order, $customerId = null)
     {
-        if (!empty($customerId)) {
-            $path = NostoApiRequest::PATH_ORDER_TAGGING;
-            $replaceParams = array('{m}' => $account->getName(), '{cid}' => $customerId);
-        } else {
-            $path = NostoApiRequest::PATH_UNMATCHED_ORDER_TAGGING;
-            $replaceParams = array('{m}' => $account->getName());
-        }
         $request = new NostoApiRequest();
-        $request->setPath($path);
-        $request->setContentType('application/json');
+        if (!empty($customerId)) {
+            $request->setPath(NostoApiRequest::PATH_ORDER_TAGGING);
+            $replaceParams = array('{m}' => $this->account->getName(), '{cid}' => $customerId);
+        } else {
+            $request->setPath(NostoApiRequest::PATH_UNMATCHED_ORDER_TAGGING);
+            $replaceParams = array('{m}' => $this->account->getName());
+        }
         $request->setReplaceParams($replaceParams);
+        $response = $request->post($this->getJson($order));
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to send order confirmarion', $request, $response);
+        }
 
-        $orderData = array(
+        return true;
+    }
+
+    /**
+     * Returns the order in JSON format
+     *
+     * @param NostoOrderInterface $order the order to confirm
+     * @return string the JSON structure.
+     */
+    protected function getJson(NostoOrderInterface $order)
+    {
+        $data = array(
             'order_number' => $order->getOrderNumber(),
-            'order_status_code' => $order->getOrderStatus()->getCode(),
-            'order_status_label' => $order->getOrderStatus()->getLabel(),
-            'buyer' => array(
-                'first_name' => $order->getBuyerInfo()->getFirstName(),
-                'last_name' => $order->getBuyerInfo()->getLastName(),
-                'email' => $order->getBuyerInfo()->getEmail(),
-            ),
+            'external_order_ref' => $order->getExternalOrderRef(),
+            'buyer' => array(),
             'created_at' => Nosto::helper('date')->format($order->getCreatedDate()),
             'payment_provider' => $order->getPaymentProvider(),
-            'external_order_ref' => $order->getExternalOrderRef(),
             'purchased_items' => array(),
         );
-
+        if ($order->getOrderStatus()) {
+            $data['order_status_code'] = $order->getOrderStatus()->getCode();
+            $data['order_status_label'] = $order->getOrderStatus()->getLabel();
+        }
         foreach ($order->getPurchasedItems() as $item) {
-            $orderData['purchased_items'][] = array(
+            $data['purchased_items'][] = array(
                 'product_id' => $item->getProductId(),
-                'quantity' => (int)$item->getQuantity(),
+                'quantity' => $item->getQuantity(),
                 'name' => $item->getName(),
                 'unit_price' => Nosto::helper('price')->format($item->getUnitPrice()),
                 'price_currency_code' => strtoupper($item->getCurrencyCode()),
             );
         }
-        $response = $request->post(json_encode($orderData));
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to send order confirmation to Nosto.', $request, $response);
+        if ($order->getBuyerInfo()) {
+            if ($order->getBuyerInfo()->getFirstName()) {
+                $data['buyer']['first_name'] = $order->getBuyerInfo()->getFirstName();
+            }
+            if ($order->getBuyerInfo()->getLastName()) {
+                $data['buyer']['last_name'] = $order->getBuyerInfo()->getLastName();
+            }
+            if ($order->getBuyerInfo()->getEmail()) {
+                $data['buyer']['email'] = $order->getBuyerInfo()->getEmail();
+            }
         }
-        return true;
+        return json_encode($data);
     }
 }

@@ -37,82 +37,68 @@
 /**
  * Meta data class for account related information needed when creating new accounts.
  */
-abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
+class NostoSignup implements NostoSignupInterface
 {
     /**
      * @var string the store name.
      */
-    protected $title;
-
+    private $title;
     /**
      * @var string the account name.
      */
-    protected $name;
-
+    private $name;
     /**
      * @var string the store front end url.
      */
-    protected $frontPageUrl;
-
+    private $frontPageUrl;
     /**
      * @var string the store currency ISO (ISO 4217) code.
      */
-    protected $currencyCode;
-
+    private $currencyCode;
     /**
      * @var string the store language ISO (ISO 639-1) code.
      */
-    protected $languageCode;
-
+    private $languageCode;
     /**
      * @var string the owner language ISO (ISO 639-1) code.
      */
-    protected $ownerLanguageCode;
-
+    private $ownerLanguageCode;
     /**
-     * @var NostoTaggingMetaAccountOwner the account owner meta model.
+     * @var NostoSignupOwnerInterface the account owner meta model.
      */
-    protected $owner;
-
+    private $owner;
     /**
-     * @var NostoTaggingMetaAccountBilling the billing meta model.
+     * @var NostoSignupBillingDetailsInterface the billing meta model.
      */
-    protected $billing;
-
+    private $billing;
     /**
      * @var array list of NostoCurrency objects supported by the store .
      */
-    protected $currencies = array();
-
+    private $currencies = array();
     /**
      * @var bool if the store uses exchange rates to manage multiple currencies.
      */
-    protected $useCurrencyExchangeRates = false;
-
+    private $useCurrencyExchangeRates = false;
     /**
      * @var string default variation id
      */
-    protected $defaultVariationId = false;
-
+    private $defaultVariationId = false;
     /**
      * @var string details
      */
-    protected $details = false;
-
+    private $details = false;
     /**
-     * @var string sign up api token
+     * @var NostoApiToken sign up api token
      */
-    protected $signupApiToken;
-
+    private $signupApiToken;
     /**
      * @var string platform name
      */
-    protected $platform;
-
+    private $platform;
     /**
      * @var string partner code
      */
-    protected $partnerCode;
+    private $partnerCode;
 
     /**
      * Constructor
@@ -123,19 +109,17 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
      */
     public function __construct($platform, $signupApiToken, $partnerCode)
     {
-        $this->platform = $platform;
-        $this->signupApiToken = $signupApiToken;
-        $this->partnerCode = $partnerCode;
+        $this->setPlatform($platform);
+        $this->setSignupApiToken(new NostoApiToken(NostoApiToken::API_CREATE, $signupApiToken));
+        $this->setPartnerCode($partnerCode);
     }
 
     /**
-     * Sets the store title.
-     *
-     * @param string $title the store title.
+     * @param NostoSignupBillingDetailsInterface $billing
      */
-    public function setTitle($title)
+    public function setBilling(NostoSignupBillingDetailsInterface $billing)
     {
-        $this->title = $title;
+        $this->billing = $billing;
     }
 
     /**
@@ -149,13 +133,13 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
-     * Sets the account name.
+     * Sets the store title.
      *
-     * @param string $name the account name.
+     * @param string $title the store title.
      */
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
+        $this->title = $title;
     }
 
     /**
@@ -171,13 +155,13 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
-     * Sets the store front page url.
+     * Sets the account name.
      *
-     * @param string $url the front page url.
+     * @param string $name the account name.
      */
-    public function setFrontPageUrl($url)
+    public function setName($name)
     {
-        $this->frontPageUrl = $url;
+        $this->name = $name;
     }
 
     /**
@@ -192,13 +176,13 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
-     * Sets the store currency ISO (ISO 4217) code.
+     * Sets the store front page url.
      *
-     * @param string $code the currency ISO code.
+     * @param string $url the front page url.
      */
-    public function setCurrencyCode($code)
+    public function setFrontPageUrl($url)
     {
-        $this->currencyCode = $code;
+        $this->frontPageUrl = $url;
     }
 
     /**
@@ -213,13 +197,13 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
-     * Sets the store language ISO (ISO 639-1) code.
+     * Sets the store currency ISO (ISO 4217) code.
      *
-     * @param string $languageCode the language ISO code.
+     * @param string $code the currency ISO code.
      */
-    public function setLanguageCode($languageCode)
+    public function setCurrencyCode($code)
     {
-        $this->languageCode = $languageCode;
+        $this->currencyCode = $code;
     }
 
     /**
@@ -234,13 +218,13 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
-     * Sets the owner language ISO (ISO 639-1) code.
+     * Sets the store language ISO (ISO 639-1) code.
      *
-     * @param string $language_code the language ISO code.
+     * @param string $languageCode the language ISO code.
      */
-    public function setOwnerLanguageCode($language_code)
+    public function setLanguageCode($languageCode)
     {
-        $this->ownerLanguageCode = $language_code;
+        $this->languageCode = $languageCode;
     }
 
     /**
@@ -255,9 +239,19 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
+     * Sets the owner language ISO (ISO 639-1) code.
+     *
+     * @param string $language_code the language ISO code.
+     */
+    public function setOwnerLanguageCode($language_code)
+    {
+        $this->ownerLanguageCode = $language_code;
+    }
+
+    /**
      * Meta data model for the account owner who is creating the account.
      *
-     * @return NostoTaggingMetaAccountOwner the meta data model.
+     * @return NostoSignupOwnerInterface the meta data model.
      */
     public function getOwner()
     {
@@ -265,9 +259,17 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
+     * @param NostoSignupOwnerInterface $owner
+     */
+    public function setOwner(NostoSignupOwnerInterface $owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
      * Meta data model for the account billing details.
      *
-     * @return NostoTaggingMetaAccountBilling the meta data model.
+     * @return NostoSignupBillingDetailsInterface the meta data model.
      */
     public function getBillingDetails()
     {
@@ -295,16 +297,6 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
-     * Setter for useCurrencyExhangeRates
-     *
-     * @param boolean $useCurrencyExchangeRates
-     */
-    public function setUseCurrencyExchangeRates($useCurrencyExchangeRates)
-    {
-        $this->useCurrencyExchangeRates = $useCurrencyExchangeRates;
-    }
-
-    /**
      * Returns if the exchange rates are used
      *
      * @return boolean
@@ -315,12 +307,13 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
-     * Sets the default variation id
-     * @param string $defaultVariationId
+     * Setter for useCurrencyExhangeRates
+     *
+     * @param boolean $useCurrencyExchangeRates
      */
-    public function setDefaultVariationId($defaultVariationId)
+    public function setUseCurrencyExchangeRates($useCurrencyExchangeRates)
     {
-        $this->defaultVariationId = $defaultVariationId;
+        $this->useCurrencyExchangeRates = $useCurrencyExchangeRates;
     }
 
     /**
@@ -334,12 +327,12 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
-     * Sets the details
-     * @param string $details
+     * Sets the default variation id
+     * @param string $defaultVariationId
      */
-    public function setDetails($details)
+    public function setDefaultVariationId($defaultVariationId)
     {
-        $this->details = $details;
+        $this->defaultVariationId = $defaultVariationId;
     }
 
     /**
@@ -353,6 +346,15 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
+     * Sets the details
+     * @param string $details
+     */
+    public function setDetails($details)
+    {
+        $this->details = $details;
+    }
+
+    /**
      * Returns the partner code
      *
      * @return string
@@ -360,6 +362,14 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     public function getPartnerCode()
     {
         return $this->partnerCode;
+    }
+
+    /**
+     * @param string $partnerCode
+     */
+    public function setPartnerCode($partnerCode)
+    {
+        $this->partnerCode = $partnerCode;
     }
 
     /**
@@ -373,12 +383,28 @@ abstract class NostoAccountMeta implements NostoAccountMetaDataInterface
     }
 
     /**
+     * @param string $platform
+     */
+    public function setPlatform($platform)
+    {
+        $this->platform = $platform;
+    }
+
+    /**
      * Returns the signup api token
      *
-     * @return string
+     * @return NostoApiToken
      */
     public function getSignupApiToken()
     {
         return $this->signupApiToken;
+    }
+
+    /**
+     * @param NostoApiToken $signupApiToken
+     */
+    public function setSignupApiToken(NostoApiToken $signupApiToken)
+    {
+        $this->signupApiToken = $signupApiToken;
     }
 }

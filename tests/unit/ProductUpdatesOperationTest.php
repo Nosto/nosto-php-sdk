@@ -34,7 +34,7 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/NostoProduct.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoProduct.php');
 
 class ProductOperationTest extends \Codeception\TestCase\Test
 {
@@ -45,52 +45,52 @@ class ProductOperationTest extends \Codeception\TestCase\Test
      */
     protected $tester;
 
-	/**
-	 * Tests that product upsert API requests cannot be made without an API token.
-	 */
-	public function testSendingProductUpsertWithoutApiToken()
-	{
-		$account = new NostoAccount('platform-00000000');
-		$product = new NostoProduct();
+    /**
+     * Tests that product upsert API requests cannot be made without an API token.
+     */
+    public function testSendingProductUpsertWithoutApiToken()
+    {
+        $account = new NostoAccount('platform-00000000');
+        $product = new MockNostoProduct();
 
-		$this->setExpectedException('NostoException');
-		$op = new NostoOperationProduct($account);
-		$op->addProduct($product);
-		$op->upsert();
-	}
+        $this->expectException('NostoException');
+        $op = new NostoOperationProduct($account);
+        $op->addProduct($product);
+        $op->upsert();
+    }
 
-	/**
-	 * Tests that product upsert API requests cannot be made without products.
-	 */
-	public function testSendingProductUpsertWithoutProduct()
-	{
-		$account = new NostoAccount('platform-00000000');
-		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
-		$account->addApiToken($token);
+    /**
+     * Tests that product upsert API requests cannot be made without products.
+     */
+    public function testSendingProductUpsertWithoutProduct()
+    {
+        $account = new MockNostoAccount('platform-00000000');
+        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $account->addApiToken($token);
 
-		$this->setExpectedException('NostoException');
-		$op = new NostoOperationProduct($account);
-		$op->upsert();
-	}
+        $this->expectException('NostoException');
+        $op = new NostoOperationProduct($account);
+        $op->upsert();
+    }
 
-	/**
-	 * Tests that product upsert API requests can be made.
-	 */
-	public function testSendingProductUpsert()
-	{
-		$account = new NostoAccount('platform-00000000');
-		$product = new NostoProduct();
-		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
-		$account->addApiToken($token);
+    /**
+     * Tests that product upsert API requests can be made.
+     */
+    public function testSendingProductUpsert()
+    {
+        $account = new MockNostoAccount('platform-00000000');
+        $product = new MockNostoProduct();
+        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $account->addApiToken($token);
 
-		$op = new NostoOperationProduct($account);
-		$op->addProduct($product);
-		$result = $op->upsert();
+        $op = new NostoOperationProduct($account);
+        $op->addProduct($product);
+        $result = $op->upsert();
 
-		$this->specify('successful product upsert', function() use ($result) {
-			$this->assertTrue($result);
-		});
-	}
+        $this->specify('successful product upsert', function () use ($result) {
+            $this->assertTrue($result);
+        });
+    }
 
     /**
      * Tests that product update API requests cannot be made without an API token.
@@ -98,9 +98,9 @@ class ProductOperationTest extends \Codeception\TestCase\Test
     public function testSendingProductUpdateWithoutApiToken()
     {
         $account = new NostoAccount('platform-00000000');
-        $product = new NostoProduct();
+        $product = new MockNostoProduct();
 
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $op = new NostoOperationProduct($account);
         $op->addProduct($product);
         $op->update();
@@ -111,11 +111,11 @@ class ProductOperationTest extends \Codeception\TestCase\Test
      */
     public function testSendingProductUpdateWithoutProduct()
     {
-        $account = new NostoAccount('platform-00000000');
+        $account = new MockNostoAccount('platform-00000000');
         $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
         $account->addApiToken($token);
 
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $op = new NostoOperationProduct($account);
         $op->update();
     }
@@ -125,16 +125,16 @@ class ProductOperationTest extends \Codeception\TestCase\Test
      */
     public function testSendingProductUpdate()
     {
-        $account = new NostoAccount('platform-00000000');
-        $product = new NostoProduct();
-		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
-		$account->addApiToken($token);
+        $account = new MockNostoAccount('platform-00000000');
+        $product = new MockNostoProduct();
+        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $account->addApiToken($token);
 
         $op = new NostoOperationProduct($account);
         $op->addProduct($product);
         $result = $op->update();
 
-        $this->specify('successful product update', function() use ($result) {
+        $this->specify('successful product update', function () use ($result) {
             $this->assertTrue($result);
         });
     }
@@ -145,9 +145,9 @@ class ProductOperationTest extends \Codeception\TestCase\Test
     public function testSendingProductCreateWithoutApiToken()
     {
         $account = new NostoAccount('platform-00000000');
-        $product = new NostoProduct();
+        $product = new MockNostoProduct();
 
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $op = new NostoOperationProduct($account);
         $op->addProduct($product);
         $op->create();
@@ -159,11 +159,11 @@ class ProductOperationTest extends \Codeception\TestCase\Test
      */
     public function testSendingProductCreateWithoutProduct()
     {
-        $account = new NostoAccount('platform-00000000');
-		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
-		$account->addApiToken($token);
+        $account = new MockNostoAccount('platform-00000000');
+        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $account->addApiToken($token);
 
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $op = new NostoOperationProduct($account);
         $op->create();
     }
@@ -173,16 +173,16 @@ class ProductOperationTest extends \Codeception\TestCase\Test
      */
     public function testSendingProductCreate()
     {
-        $account = new NostoAccount('platform-00000000');
-        $product = new NostoProduct();
-		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
-		$account->addApiToken($token);
+        $account = new MockNostoAccount('platform-00000000');
+        $product = new MockNostoProduct();
+        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $account->addApiToken($token);
 
         $op = new NostoOperationProduct($account);
         $op->addProduct($product);
         $result = $op->create();
 
-        $this->specify('successful product create', function() use ($result) {
+        $this->specify('successful product create', function () use ($result) {
             $this->assertTrue($result);
         });
     }
@@ -193,9 +193,9 @@ class ProductOperationTest extends \Codeception\TestCase\Test
     public function testSendingProductDeleteWithoutApiToken()
     {
         $account = new NostoAccount('platform-00000000');
-        $product = new NostoProduct();
+        $product = new MockNostoProduct();
 
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $op = new NostoOperationProduct($account);
         $op->addProduct($product);
         $op->delete();
@@ -207,11 +207,11 @@ class ProductOperationTest extends \Codeception\TestCase\Test
      */
     public function testSendingProductDeleteWithoutProduct()
     {
-        $account = new NostoAccount('platform-00000000');
-		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
-		$account->addApiToken($token);
+        $account = new MockNostoAccount('platform-00000000');
+        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $account->addApiToken($token);
 
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $op = new NostoOperationProduct($account);
         $op->delete();
     }
@@ -221,16 +221,16 @@ class ProductOperationTest extends \Codeception\TestCase\Test
      */
     public function testSendingProductDelete()
     {
-        $account = new NostoAccount('platform-00000000');
-        $product = new NostoProduct();
-		$token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
-		$account->addApiToken($token);
+        $account = new MockNostoAccount('platform-00000000');
+        $product = new MockNostoProduct();
+        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $account->addApiToken($token);
 
         $op = new NostoOperationProduct($account);
         $op->addProduct($product);
         $result = $op->delete();
 
-        $this->specify('successful product delete', function() use ($result) {
+        $this->specify('successful product delete', function () use ($result) {
             $this->assertTrue($result);
         });
     }

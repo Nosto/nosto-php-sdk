@@ -71,7 +71,7 @@ class NostoValidator
         foreach ($this->object->getValidationRules() as $rule) {
             if (isset($rule[0], $rule[1])) {
                 $properties = $rule[0];
-                $validator = 'validate'.$rule[1];
+                $validator = 'validate' . $rule[1];
                 if (!method_exists($this, $validator)) {
                     throw new NostoException(sprintf('Nosto validator "%s" does not exist.', $validator));
                 }
@@ -106,20 +106,6 @@ class NostoValidator
     }
 
     /**
-     * Adds a new validation error message for the attribute.
-     *
-     * @param string $attribute the attribute name.
-     * @param string $message the error message.
-     */
-    protected function addError($attribute, $message)
-    {
-        if (!isset($this->errors[$attribute])) {
-            $this->errors[$attribute] = array();
-        }
-        $this->errors[$attribute][] = $message;
-    }
-
-    /**
      * Validates that all the given properties are NOT empty in this instance.
      *
      * @param array $properties the list of property names to validate.
@@ -135,6 +121,20 @@ class NostoValidator
             }
         }
         return true;
+    }
+
+    /**
+     * Adds a new validation error message for the attribute.
+     *
+     * @param string $attribute the attribute name.
+     * @param string $message the error message.
+     */
+    protected function addError($attribute, $message)
+    {
+        if (!isset($this->errors[$attribute])) {
+            $this->errors[$attribute] = array();
+        }
+        $this->errors[$attribute][] = $message;
     }
 
     /**

@@ -34,60 +34,32 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/NostoOrderBuyer.php');
-require_once(dirname(__FILE__) . '/../_support/NostoOrderPurchasedItem.php');
-require_once(dirname(__FILE__) . '/../_support/NostoOrderStatus.php');
-require_once(dirname(__FILE__) . '/../_support/NostoOrder.php');
-
-class OrderConfirmationTest extends \Codeception\TestCase\Test
+/**
+ * Meta data class which holds information about Nosto account billing.
+ * This is used during the Nosto account creation.
+ */
+class NostoSignupBilling implements NostoSignupBillingDetailsInterface
 {
-	use \Codeception\Specify;
+    /**
+     * @var string country ISO (ISO 3166-1 alpha-2) code for billing details.
+     */
+    private $country;
 
     /**
-     * @var \UnitTester
+     * The 2-letter ISO code (ISO 3166-1 alpha-2) for billing details country.
+     *
+     * @return string the country ISO code.
      */
-    protected $tester;
-
-	/**
-	 * @var NostoOrder
-	 */
-	protected $order;
-
-	/**
-	 * @var NostoAccount
-	 */
-	protected $account;
-
-	/**
-	 * @inheritdoc
-	 */
-	protected function _before()
-	{
-		$this->order = new NostoOrder();
-		$this->account = new NostoAccount('platform-00000000');
-	}
-
-	/**
-	 * Tests the matched order confirmation API call.
-	 */
-	public function testMatchedOrderConfirmation()
+    public function getCountry()
     {
-		$result = NostoOrderConfirmation::send($this->order, $this->account, 'test123');
-
-		$this->specify('successful matched order confirmation', function() use ($result) {
-			$this->assertTrue($result);
-		});
+        return $this->country;
     }
 
-	/**
-	 * Tests the un-matched order confirmation API call.
-	 */
-	public function testUnMatchedOrderConfirmation()
-	{
-		$result = NostoOrderConfirmation::send($this->order, $this->account);
-
-		$this->specify('successful un-matched order confirmation', function() use ($result) {
-			$this->assertTrue($result);
-		});
-	}
+    /**
+     * @param string $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
 }

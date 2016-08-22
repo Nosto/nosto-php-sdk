@@ -46,59 +46,62 @@ class NostoHelperIframe extends NostoHelper
      * Returns the url for the account administration iframe.
      * If the passed account is null, then the url will point to the start page where a new account can be created.
      *
-     * @param NostoAccountMetaDataIframeInterface $meta the iframe meta data.
-     * @param NostoAccount|null $account the account to return the url for.
+     * @param NostoIframeInterface $iframe the iframe meta data.
+     * @param NostoAccountInterface|null $account the configuration to return the url for.
+     * @param NostoSignupOwnerInterface $user
      * @param array $params additional parameters to add to the iframe url.
      * @return string the iframe url.
-     * @throws NostoException if the url cannot be created.
      */
     public function getUrl(
-        NostoAccountMetaDataIframeInterface $meta,
-        NostoAccount $account = null,
+        NostoIframeInterface $iframe,
+        NostoAccountInterface $account = null,
+        NostoSignupOwnerInterface $user = null,
         array $params = array()
-    ) {
+    )
+    {
         $queryParams = http_build_query(
             array_merge(
                 array(
-                    'lang' => strtolower($meta->getLanguageIsoCode()),
-                    'ps_version' => $meta->getVersionPlatform(),
-                    'nt_version' => $meta->getVersionModule(),
-                    'product_pu' => $meta->getPreviewUrlProduct(),
-                    'category_pu' => $meta->getPreviewUrlCategory(),
-                    'search_pu' => $meta->getPreviewUrlSearch(),
-                    'cart_pu' => $meta->getPreviewUrlCart(),
-                    'front_pu' => $meta->getPreviewUrlFront(),
-                    'shop_lang' => strtolower($meta->getLanguageIsoCodeShop()),
-                    'shop_name' => $meta->getShopName(),
-                    'unique_id' => $meta->getUniqueId(),
-                    'fname' => $meta->getFirstName(),
-                    'lname' => $meta->getLastName(),
-                    'email' => $meta->getEmail(),
+                    'lang' => strtolower($iframe->getLanguageIsoCode()),
+                    'ps_version' => $iframe->getVersionPlatform(),
+                    'nt_version' => $iframe->getVersionModule(),
+                    'product_pu' => $iframe->getPreviewUrlProduct(),
+                    'category_pu' => $iframe->getPreviewUrlCategory(),
+                    'search_pu' => $iframe->getPreviewUrlSearch(),
+                    'cart_pu' => $iframe->getPreviewUrlCart(),
+                    'front_pu' => $iframe->getPreviewUrlFront(),
+                    'shop_lang' => strtolower($iframe->getLanguageIsoCodeShop()),
+                    'shop_name' => $iframe->getShopName(),
+                    'unique_id' => $iframe->getUniqueId(),
+                    'fname' => $iframe->getFirstName(),
+                    'lname' => $iframe->getLastName(),
+                    'email' => $iframe->getEmail(),
                 ),
                 $params
             )
         );
 
-        if ($account !== null && $account->isConnectedToNosto()) {
+        if ($account !== null && $user !== null && $account->isConnectedToNosto()) {
             try {
-                $url = $account->ssoLogin($meta).'?'.$queryParams;
+                $service = new NostoOperationSSO($account, $user, $iframe->getPlatform());
+                $url = $service->get() . '?' . $queryParams;
             } catch (NostoException $e) {
                 // If the SSO fails, we show a "remove account" page to the user in order to
                 // allow to remove Nosto and start over.
                 // The only case when this should happen is when the api token for some
                 // reason is invalid, which is the case when switching between environments.
                 $url = NostoHttpRequest::buildUri(
-                    $this->getBaseUrl().self::IFRAME_URI_UNINSTALL.'?'.$queryParams,
+                    $this->getBaseUrl() . self::IFRAME_URI_UNINSTALL . '?' . $queryParams,
                     array(
-                        '{platform}' => $meta->getPlatform(),
+                        '{platform}' => $iframe->getPlatform(),
                     )
                 );
             }
         } else {
             $url = NostoHttpRequest::buildUri(
-                $this->getBaseUrl().self::IFRAME_URI_INSTALL.'?'.$queryParams,
+                $this->getBaseUrl() . self::IFRAME_URI_INSTALL . '?' . $queryParams,
                 array(
-                    '{platform}' => $meta->getPlatform(),
+                    '{platform}' => $iframe->getPlatform(),
                 )
             );
         }

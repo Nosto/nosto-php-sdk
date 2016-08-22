@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,67 +34,20 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
-class NostoAccountMetaDataIframe implements NostoAccountMetaDataIframeInterface
+class MockNostoSignupOwner implements NostoSignupOwnerInterface
 {
-	public function getFirstName()
-	{
-		return 'James';
-	}
-	public function getLastName()
-	{
-		return 'Kirk';
-	}
-	public function getEmail()
-	{
-		return 'james.kirk@example.com';
-	}
-	public function getLanguageIsoCode()
-	{
-		return 'en';
-	}
-	public function getLanguageIsoCodeShop()
-	{
-		return 'en';
-	}
-	public function getUniqueId()
-	{
-		return '123';
-	}
-	public function getPlatform()
-	{
-		return 'platform';
-	}
-	public function getVersionPlatform()
-	{
-		return '1.0.0';
-	}
-	public function getVersionModule()
-	{
-		return '1.0.0';
-	}
-	public function getPreviewUrlProduct()
-	{
-		return 'http://my.shop.com/products/product123?nostodebug=true';
-	}
-	public function getPreviewUrlCategory()
-	{
-		return 'http://my.shop.com/products/category123?nostodebug=true';
-	}
-	public function getPreviewUrlSearch()
-	{
-		return 'http://my.shop.com/search?query=red?nostodebug=true';
-	}
-	public function getPreviewUrlCart()
-	{
-		return 'http://my.shop.com/cart?nostodebug=true';
-	}
-	public function getPreviewUrlFront()
-	{
-		return 'http://my.shop.com?nostodebug=true';
-	}
-	public function getShopName()
-	{
-		return 'Shop Name';
-	}
+    public function getFirstName()
+    {
+        return 'James';
+    }
+
+    public function getLastName()
+    {
+        return 'Kirk';
+    }
+
+    public function getEmail()
+    {
+        return 'james.kirk@example.com';
+    }
 }

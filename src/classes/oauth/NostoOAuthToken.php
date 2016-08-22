@@ -42,22 +42,19 @@ class NostoOAuthToken
     /**
      * @var string the access token string.
      */
-    public $accessToken;
-
+    private $accessToken;
     /**
      * @var string the merchant name string.
      */
-    public $merchantName;
-
+    private $merchantName;
     /**
      * @var string the type of token, e.g. "bearer".
      */
-    public $tokenType;
-
+    private $tokenType;
     /**
      * @var int the amount of time this token is valid for.
      */
-    public $expiresIn;
+    private $expiresIn;
 
     /**
      * Creates a new token instance and populates it with the given data.
@@ -95,5 +92,37 @@ class NostoOAuthToken
         $str[0] = strtolower($str[0]);
 
         return $str;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccessToken()
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMerchantName()
+    {
+        return $this->merchantName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTokenType()
+    {
+        return $this->tokenType;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExpiresIn()
+    {
+        return $this->expiresIn;
     }
 }

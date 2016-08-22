@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,19 +34,40 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
-class NostoOrderBuyer implements NostoOrderBuyerInterface
+class MockNostoOrder implements NostoOrderInterface
 {
-	public function getFirstName()
-	{
-		return 'James';
-	}
-	public function getLastName()
-	{
-		return 'Kirk';
-	}
-	public function getEmail()
-	{
-		return 'james.kirk@example.com';
-	}
+    public function getOrderNumber()
+    {
+        return 1;
+    }
+
+    public function getCreatedDate()
+    {
+        return '2014-12-12';
+    }
+
+    public function getPaymentProvider()
+    {
+        return 'test-gateway [1.0.0]';
+    }
+
+    public function getBuyerInfo()
+    {
+        return new MockNostoOrderBuyer();
+    }
+
+    public function getPurchasedItems()
+    {
+        return array(new MockNostoOrderPurchasedItem());
+    }
+
+    public function getOrderStatus()
+    {
+        return new MockNostoOrderStatus();
+    }
+
+    public function getExternalOrderRef()
+    {
+        return 'ext ref';
+    }
 }

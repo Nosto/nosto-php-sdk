@@ -37,98 +37,78 @@
 /**
  * Handles sending currencyCode exchange rates through the Nosto API.
  */
-class NostoOperationExchangeRate extends NostoOperation
+class NostoOperationSettings extends NostoOperation
 {
     /**
-     * @var NostoSignupInterface the Nosto account to update the rates for.
+     * @var NostoSignupInterface Nosto account meta
      */
-    private $account;
-
-    /**
-     * @var NostoExchangeRateCollection collection of exchange rates to be updated
-     */
-    private $collection;
+    private $accountMeta;
 
     /**
      * Constructor.
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoSignupInterface $account the Nosto account object.
-     * @param NostoExchangeRateCollection $collection the Nosto account object.
+     * @param NostoSignupInterface $accountMeta the Nosto account object.
      */
-    public function __construct(
-        NostoSignupInterface $account,
-        NostoExchangeRateCollection $collection
-    )
+    public function __construct(NostoSignupInterface $accountMeta)
     {
-        $this->account = $account;
-        $this->collection = $collection;
+        $this->accountMeta = $accountMeta;
     }
 
     /**
-     * Updates exchange rates to Nosto
-     * @return bool
-     * @throws NostoException
+     * Sends a POST request to create a new account for a store in Nosto
+     *
+     * @return bool if the request was successful.
+     * @throws NostoException on failure.
      */
     public function update()
     {
-        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_EXCHANGE_RATES));
-        $request->setPath(NostoApiRequest::PATH_CURRENCY_EXCHANGE_RATE);
+        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_SETTINGS));
+        $request->setPath(NostoApiRequest::PATH_SETTINGS);
         $response = $request->post($this->getJson());
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException(
-                sprintf(
-                    'Failed to update currencyCode exchange rates for account %s.',
-                    $this->account->getName()
-                ),
-                $request,
-                $response
-            );
+            Nosto::throwHttpException('Failed to update Nosto settings.', $request, $response);
         }
         return true;
     }
 
     /**
-     * Turn the currencyCode exchange rate collection into a JSON structure.
-     *
-     * Format:
-     *
-     * {
-     *   "rates": {
-     *     "EUR": {
-     *       "rate": "0.706700000000",
-     *       "price_currency_code": "EUR"
-     *     }
-     *   },
-     *   "valid_until": "2015-02-27T12:00:00Z"
-     * }
+     * Returns the settings in JSON format
      *
      * @return string the JSON structure.
-     * @throws NostoException of the rate collection is empty.
      */
     protected function getJson()
     {
         $data = array(
-            'rates' => array(),
-            'valid_until' => null,
+            'title' => $this->accountMeta->getTitle(),
+            'front_page_url' => $this->accountMeta->getFrontPageUrl(),
+            'currency_code' => $this->accountMeta->getCurrencyCode(),
         );
 
-        /** @var NostoExchangeRateInterface $item */
-        foreach ($this->collection as $item) {
-            $data['rates'][$item->getName()] = array(
-                'rate' => $item->getExchangeRate(),
-                'price_currency_code' => $item->getCurrencyCode(),
-            );
+        // Currencies and currency options
+        $currencyCount = count($this->accountMeta->getCurrencies());
+        if ($currencyCount > 0) {
+            $data['currencies'] = array();
+            foreach ($this->accountMeta->getCurrencies() as $currency) {
+                $data['currencies'][$currency->getCode()->getCode()] = array(
+                    'currency_before_amount' => (
+                        $currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT
+                    ),
+                    'currency_token' => $currency->getSymbol()->getSymbol(),
+                    'decimal_character' => $currency->getFormat()->getDecimalSymbol(),
+                    'grouping_separator' => $currency->getFormat()->getGroupSymbol(),
+                    'decimal_places' => $currency->getFormat()->getPrecision(),
+                );
+            }
         }
-        if (empty($data['rates'])) {
-            Nosto::throwException(
-                sprintf(
-                    'Failed to update currencyCode exchange rates for account %s. No rates found in collection.',
-                    $this->account->getName()
-                )
-            );
+        $data['use_exchange_rates'] = $this->accountMeta->getUseCurrencyExchangeRates();
+        if ($this->accountMeta->getDefaultVariationId()) {
+            $data['default_variant_id'] = $this->accountMeta->getDefaultVariationId();
+        } else {
+            $data['default_variant_id'] = '';
         }
+
         return json_encode($data);
     }
 }

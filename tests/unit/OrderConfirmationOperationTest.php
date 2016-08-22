@@ -34,7 +34,12 @@
  *
  */
 
-class AccountDeleteTest extends \Codeception\TestCase\Test
+require_once(dirname(__FILE__) . '/../_support/MockNostoOrderBuyer.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoOrderPurchasedItem.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoOrderStatus.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoOrder.php');
+
+class OrderConfirmationTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
 
@@ -44,29 +49,47 @@ class AccountDeleteTest extends \Codeception\TestCase\Test
     protected $tester;
 
     /**
-     * Test the account deletion without the required SSO token.
+     * @var NostoOrderInterface
      */
-    public function testDeletingAccountWithoutToken()
-    {
-        $account = new NostoAccount('platform-test');
+    protected $order;
 
-        $this->specify('account is NOT deleted', function() use ($account) {
-            $this->setExpectedExceptionRegExp('NostoException');
-            $account->delete();
+    /**
+     * @var NostoAccountInterface
+     */
+    protected $account;
+
+    /**
+     * Tests the matched order confirmation API call.
+     */
+    public function testMatchedOrderConfirmation()
+    {
+        $service = new NostoOperationOrderConfirmation($this->account);
+        $result = $service->send($this->order, 'test123');
+
+        $this->specify('successful matched order confirmation', function () use ($result) {
+            $this->assertTrue($result);
         });
     }
 
     /**
-     * Test the account deletion with the required SSO token.
+     * Tests the un-matched order confirmation API call.
      */
-    public function testDeletingAccountWithToken()
+    public function testUnMatchedOrderConfirmation()
     {
-        $account = new NostoAccount('platform-test');
-        $token = new NostoApiToken('sso', '123');
-		$account->addApiToken($token);
+        $service = new NostoOperationOrderConfirmation($this->account);
+        $result = $service->send($this->order, null);
 
-        $this->specify('account is deleted', function() use ($account) {
-            $account->delete();
+        $this->specify('successful un-matched order confirmation', function () use ($result) {
+            $this->assertTrue($result);
         });
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function _before()
+    {
+        $this->order = new MockNostoOrder();
+        $this->account = new MockNostoAccount('platform-00000000');
     }
 }

@@ -34,26 +34,50 @@
  *
  */
 
-class NostoOrderPurchasedItem implements NostoOrderPurchasedItemInterface
+/**
+ * Handles communications through the Nosto API.
+ */
+class NostoOperation
 {
-	public function getProductId()
-	{
-		return 1;
-	}
-	public function getQuantity()
-	{
-		return 2;
-	}
-	public function getName()
-	{
-		return 'Test Product';
-	}
-	public function getUnitPrice()
-	{
-		return 99.99;
-	}
-	public function getCurrencyCode()
-	{
-		return 'USD';
-	}
+    /**
+     * Create and returns a new API request object initialized with:
+     * - content type
+     * - auth token
+     *
+     * @param NostoApiToken the token to use for the endpoint
+     * @return NostoApiRequest the newly created request object.
+     * @throws NostoException if the account does not have the correct token set.
+     */
+    protected function initApiRequest(NostoApiToken $token = null)
+    {
+        if (is_null($token)) {
+            throw new NostoException('No API token found for account.');
+        }
+
+        $request = new NostoApiRequest();
+        $request->setContentType('application/json');
+        $request->setAuthBasic('', $token->getValue());
+        return $request;
+    }
+
+    /**
+     * Create and returns a new HTTP request object initialized with:
+     * - content type
+     * - auth token
+     *
+     * @param NostoApiToken the token to use for the endpoint
+     * @return NostoHttpRequest the newly created request object.
+     * @throws NostoException if the account does not have the correct token set.
+     */
+    protected function initHttpRequest(NostoApiToken $token = null)
+    {
+        if (is_null($token)) {
+            throw new NostoException('No API token found for account.');
+        }
+
+        $request = new NostoHttpRequest();
+        $request->setContentType('application/x-www-form-urlencoded');
+        $request->setAuthBasic('', $token->getValue());
+        return $request;
+    }
 }

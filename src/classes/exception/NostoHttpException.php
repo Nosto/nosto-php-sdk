@@ -63,7 +63,8 @@ class NostoHttpException extends NostoException
         Throwable $previous = null,
         NostoHttpRequest $request = null,
         NostoHttpResponse $response = null
-    ) {
+    )
+    {
         parent::__construct($message, $code, $previous);
         $this->setRequest($request);
         $this->setResponse($response);

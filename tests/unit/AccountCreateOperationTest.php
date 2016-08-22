@@ -34,16 +34,50 @@
  *
  */
 
-/**
- * Interface for account billing details.
- * This is used by the NostoAccountMetaDataInterface meta data model when creating new Nosto accounts.
- */
-interface NostoAccountMetaDataBillingDetailsInterface
+require_once(dirname(__FILE__) . '/../_support/MockNostoSignupBilling.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoSignupOwner.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoSignup.php');
+
+class AccountCreateTest extends \Codeception\TestCase\Test
 {
+    use \Codeception\Specify;
+
     /**
-     * The 2-letter ISO code (ISO 3166-1 alpha-2) for the country used in account's billing details.
-     *
-     * @return string the country ISO code.
+     * @var \UnitTester
      */
-    public function getCountry();
+    protected $tester;
+
+    /**
+     * Tests that new accounts can be created successfully.
+     */
+    public function testCreatingNewAccount()
+    {
+        /** @var NostoAccount $meta */
+        $meta = new MockNostoSignup();
+        $service = new NostoOperationAccount($meta);
+        $account = $service->create();
+
+        $this->specify('account was created', function () use ($account, $meta) {
+            $this->assertInstanceOf('NostoAccount', $account);
+            $this->assertEquals($meta->getPlatform() . '-' . $meta->getName(), $account->getName());
+        });
+
+        $this->specify('account has api token sso', function () use ($account, $meta) {
+            $token = $account->getApiToken('sso');
+            $this->assertInstanceOf('NostoApiToken', $token);
+            $this->assertEquals('sso', $token->getName());
+            $this->assertNotEmpty($token->getValue());
+        });
+
+        $this->specify('account has api token products', function () use ($account, $meta) {
+            $token = $account->getApiToken('products');
+            $this->assertInstanceOf('NostoApiToken', $token);
+            $this->assertEquals('products', $token->getName());
+            $this->assertNotEmpty($token->getValue());
+        });
+
+        $this->specify('account is connected to nosto', function () use ($account, $meta) {
+            $this->assertTrue($account->isConnectedToNosto());
+        });
+    }
 }

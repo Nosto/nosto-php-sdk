@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,27 +34,20 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
-class NostoOAuthClientMetaData implements NostoOAuthClientMetaDataInterface
+class MockNostoOrderBuyer implements NostoOrderBuyerInterface
 {
-	public function getClientId()
-	{
-		return 'client-id';
-	}
-	public function getClientSecret()
-	{
-		return 'client-secret';
-	}
-	public function getRedirectUrl()
-	{
-		return 'http://my.shop.com/nosto/oauth';
-	}
-	public function getScopes()
-	{
-		return array('sso', 'products');
-	}
-	public function getLanguageIsoCode()
-	{
-		return 'en';
-	}
+    public function getFirstName()
+    {
+        return 'James';
+    }
+
+    public function getLastName()
+    {
+        return 'Kirk';
+    }
+
+    public function getEmail()
+    {
+        return 'james.kirk@example.com';
+    }
 }

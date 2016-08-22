@@ -34,78 +34,43 @@
  *
  */
 
-class NostoAccountMetaData implements NostoAccountMetaDataInterface
+/**
+ * Handles sending currencyCode exchange rates through the Nosto API.
+ */
+class NostoOperationUninstall extends NostoOperation
 {
-	protected $owner;
-	protected $billing;
-	public function __construct()
-	{
-		$this->owner = new NostoAccountMetaDataOwner();
-		$this->billing = new NostoAccountMetaDataBilling();
-	}
-	public function getTitle()
-	{
-		return 'My Shop';
-	}
-	public function getName()
-	{
-		return '00000000';
-	}
-	public function getPlatform()
-	{
-		return 'platform';
-	}
-	public function getFrontPageUrl()
-	{
-		return 'http://localhost';
-	}
-	public function getCurrencyCode()
-	{
-		return 'USD';
-	}
-	public function getLanguageCode()
-	{
-		return 'en';
-	}
-	public function getOwnerLanguageCode()
-	{
-		return 'en';
-	}
-	public function getOwner()
-	{
-		return $this->owner;
-	}
-	public function getBillingDetails()
-	{
-		return $this->billing;
-	}
-	public function getSignUpApiToken()
-	{
-		return 'abc123';
-	}
+    /**
+     * @var NostoAccountInterface Nosto configuration
+     */
+    private $account;
 
-	public function getPartnerCode()
-	{
-		return '';
-	}
+    /**
+     * Constructor.
+     *
+     * Accepts the Nosto account for which the service is to operate on.
+     *
+     * @param NostoAccountInterface $account the Nosto configuration object.
+     */
+    public function __construct(NostoAccountInterface $account)
+    {
+        $this->account = $account;
+    }
 
-	public function getCurrencies()
-	{
-		return array();
-	}
+    /**
+     * Sends a POST request to delete an account for a store in Nosto
+     *
+     * @return bool if the request was successful.
+     * @throws NostoException on failure.
+     */
+    public function delete()
+    {
+        $request = $this->initApiRequest($this->account->getApiToken('sso'));
+        $request->setPath(NostoApiRequest::PATH_ACCOUNT_DELETED);
+        $response = $request->post('');
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to delete Nosto account.', $request, $response);
+        }
 
-	public function getUseCurrencyExchangeRates()
-	{
-		return array();
-	}
-
-	public function getDefaultVariationId()
-	{
-		return null;
-	}
-
-	public function getDetails()
-	{
-		return null;
-	}
+        return true;
+    }
 }

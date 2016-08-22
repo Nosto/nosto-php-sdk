@@ -34,50 +34,52 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataBilling.php');
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataOwner.php');
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaData.php');
-
-class AccountCreateTest extends \Codeception\TestCase\Test
+/**
+ * Handles exchaning the authorization token for the API tokes from Nosto
+ */
+class NostoOperationOauthSync extends NostoOperation
 {
-	use \Codeception\Specify;
+    /**
+     * @var NostoOAuthClientMetaDataInterface the Oauth meta data params
+     */
+    private $meta;
 
     /**
-     * @var \UnitTester
+     * Constructor.
+     *
+     * Accepts the Nosto account for which the service is to operate on.
+     *
+     * @param NostoOAuthClientMetaDataInterface $meta the oauth meta data params
      */
-    protected $tester;
-
-	/**
-	 * Tests that new accounts can be created successfully.
-	 */
-	public function testCreatingNewAccount()
+    public function __construct(NostoOAuthClientMetaDataInterface $meta)
     {
-		/** @var NostoAccount $account */
-		/** @var NostoAccountMetaData $meta */
-		$meta = new NostoAccountMetaData();
-		$account = NostoAccount::create($meta);
+        $this->meta = $meta;
+    }
 
-		$this->specify('account was created', function() use ($account, $meta) {
-			$this->assertInstanceOf('NostoAccount', $account);
-			$this->assertEquals($meta->getPlatform() . '-' . $meta->getName(), $account->getName());
-		});
+    /**
+     * Sends a POST request to delete an account for a store in Nosto
+     *
+     * @param $code string the oauth access code.
+     * @return NostoAccountInterface the configured account
+     * @throws NostoException on failure.
+     */
+    public function exchange($code)
+    {
+        $oauthClient = new NostoOAuthClient($this->meta);
+        $oauthResponse = $oauthClient->authenticate($code);
 
-		$this->specify('account has api token sso', function() use ($account, $meta) {
-			$token = $account->getApiToken('sso');
-			$this->assertInstanceOf('NostoApiToken', $token);
-			$this->assertEquals('sso', $token->getName());
-			$this->assertNotEmpty($token->getValue());
-		});
+        $request = new NostoHttpRequest();
+        $request->setContentType('application/x-www-form-urlencoded');
+        $request->setPath(NostoHttpRequest::PATH_OAUTH_SYNC);
+        $request->setQueryParams(array('access_token' => $oauthResponse->getAccessToken()));
+        $response = $request->get();
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to sync account from Nosto..', $request, $response);
+        }
 
-		$this->specify('account has api token products', function() use ($account, $meta) {
-			$token = $account->getApiToken('products');
-			$this->assertInstanceOf('NostoApiToken', $token);
-			$this->assertEquals('products', $token->getName());
-			$this->assertNotEmpty($token->getValue());
-		});
-
-		$this->specify('account is connected to nosto', function() use ($account, $meta) {
-			$this->assertTrue($account->isConnectedToNosto());
-		});
+        $tokens = NostoApiToken::parseTokens($response->getJsonResult(true), 'api_');
+        $account = new NostoAccount($oauthResponse->getMerchantName());
+        $account->setTokens($tokens);
+        return $account;
     }
 }
