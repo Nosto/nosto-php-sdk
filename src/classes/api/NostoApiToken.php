@@ -120,6 +120,19 @@ class NostoApiToken extends NostoObject implements NostoValidatableInterface
     }
 
     /**
+     * Returns mandatory API token names.
+     *
+     * @return array the token names.
+     */
+    public static function getMandatoryApiTokenNames()
+    {
+        return array(
+            self::API_SSO,
+            self::API_PRODUCTS
+        );
+    }
+
+    /**
      * Returns the token name.
      *
      * @return string the token name.

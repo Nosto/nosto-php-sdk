@@ -74,11 +74,19 @@ interface NostoAccountInterface
     public function getName();
 
     /**
-     * Checks if this account has been connected to Nosto, i.e. all API tokens exist.
+     * Checks if this account has been connected to Nosto,
+     * i.e. all mandatory API tokens exist.
      *
      * @return bool true if it is connected, false otherwise.
      */
     public function isConnectedToNosto();
+
+    /**
+     * Checks if this account has all API tokens
+     *
+     * @return bool true if some token(s) are missing, false otherwise.
+     */
+    public function hasMissingTokens();
 
     /**
      * Gets an api token associated with this account by it's name , e.g. "sso".
