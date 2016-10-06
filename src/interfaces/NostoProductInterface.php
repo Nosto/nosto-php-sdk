@@ -146,13 +146,6 @@ interface NostoProductInterface
     public function getBrand();
 
     /**
-     * Returns the product publication date in the shop.
-     *
-     * @return string the date in format "Y-m-d".
-     */
-    public function getDatePublished();
-
-    /**
      * Returns the product variation id.
      *
      * @return mixed|null

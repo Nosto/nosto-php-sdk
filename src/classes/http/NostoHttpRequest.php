@@ -56,6 +56,16 @@ class NostoHttpRequest
     public static $userAgent = '';
 
     /**
+     * @var int timeout for waiting response from the api
+     */
+    public static $responseTimeout = 5;
+
+    /**
+     * @var int timeout for connecting to the api
+     */
+    public static $connectTimeout = 5;
+
+    /**
      * @var string the request url.
      */
     protected $url;

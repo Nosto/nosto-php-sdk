@@ -181,7 +181,6 @@ class NostoOperationProduct
      *     'tag1' => array('Men'),
      *     'tag2' => array('Foldable'),
      *     'tag3' => array('Brown', 'Black', 'Orange'),
-     *     'date_published' => '2011-12-31'
      * )
      *
      * @param NostoProductInterface $product the object.
@@ -215,9 +214,6 @@ class NostoOperationProduct
             if (is_array($tags) && count($tags) > 0) {
                 $data[$type] = $tags;
             }
-        }
-        if ($product->getDatePublished()) {
-            $data['date_published'] = Nosto::helper('date')->format($product->getDatePublished());
         }
         if ($product->getVariationId()) {
             $data['variation_id'] = $product->getVariationId();
