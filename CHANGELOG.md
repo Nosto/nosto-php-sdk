@@ -5,6 +5,7 @@ This project adheres to Semantic Versioning(http://semver.org/).
 ## 1.15.7
 * Remove getDatePublished from product interface
 * Decrease the API call timeout
+* Add type check for price formatter
 
 ## 1.15.6
 * Add checks for missing tokens
