@@ -70,8 +70,7 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
                 CURLOPT_FRESH_CONNECT => 1,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_FORBID_REUSE => 1,
-                CURLOPT_TIMEOUT => 60,
-            )
+           )
         );
     }
 
@@ -90,7 +89,6 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
                 CURLOPT_FRESH_CONNECT => 1,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_FORBID_REUSE => 1,
-                CURLOPT_TIMEOUT => 60,
             )
         );
     }
@@ -110,7 +108,6 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
                 CURLOPT_FRESH_CONNECT => 1,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_FORBID_REUSE => 1,
-                CURLOPT_TIMEOUT => 60,
             )
         );
     }
@@ -129,7 +126,6 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
                 CURLOPT_FRESH_CONNECT => 1,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_FORBID_REUSE => 1,
-                CURLOPT_TIMEOUT => 60,
             )
         );
     }
@@ -147,6 +143,12 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
         }
         if (!in_array(CURLOPT_USERAGENT, $curlOptions) && $this->userAgent) {
             $curlOptions[CURLOPT_USERAGENT] = $this->userAgent;
+        }
+        if (!in_array(CURLOPT_TIMEOUT, $curlOptions)) {
+            $curlOptions[CURLOPT_TIMEOUT] = NostoHttpRequest::$responseTimeout;
+        }
+        if (!in_array(CURLOPT_CONNECTTIMEOUT, $curlOptions)) {
+            $curlOptions[CURLOPT_CONNECTTIMEOUT] = NostoHttpRequest::$connectTimeout;
         }
         $ch = curl_init();
         curl_setopt_array($ch, $curlOptions);

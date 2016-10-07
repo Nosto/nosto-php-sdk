@@ -97,7 +97,7 @@ class NostoOperationExchangeRate
     {
         $token = $this->account->getApiToken(NostoApiToken::API_EXCHANGE_RATES);
         if (is_null($token)) {
-            Nosto::throwHttpException(
+            Nosto::throwException(
                 sprintf(
                     'No `%s` API token found for account "%s".',
                     NostoApiToken::API_EXCHANGE_RATES,

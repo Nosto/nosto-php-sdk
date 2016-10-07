@@ -94,10 +94,6 @@ class NostoProduct implements NostoProductInterface, NostoValidatableInterface
 	{
 		return 'Super Brand';
 	}
-	public function getDatePublished()
-	{
-		return '2013-01-05';
-	}
 	public function getValidationRules()
 	{
 		return array(

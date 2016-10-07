@@ -150,6 +150,9 @@ class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
         if (!array_key_exists('user_agent', $streamOptions['http']) && $this->userAgent) {
             $streamOptions['http']['user_agent'] = $this->userAgent;
         }
+        if (!array_key_exists('timeout', $streamOptions['http'])) {
+            $streamOptions['http']['timeout'] = NostoHttpRequest::$responseTimeout;
+        }
         $context = stream_context_create($streamOptions);
         // We use file_get_contents() directly here as we need the http response headers which are automatically
         // populated into $headers, which is only available in the local scope where file_get_contents()

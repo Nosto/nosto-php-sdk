@@ -242,8 +242,7 @@ Product related resources
                     "tag1": ["tag1", "tag2"],
                     "categories": ["/a/b", "/a/b/c"],
                     "description": "Lorem ipsum dolor sit amet",
-                    "brand": "Super Brand",
-                    "date_published": "2013-01-05"
+                    "brand": "Super Brand"
                 }
             ]
 
@@ -274,8 +273,7 @@ Product related resources
                     "tag1": ["tag1", "tag2"],
                     "categories": ["/a/b", "/a/b/c"],
                     "description": "Lorem ipsum dolor sit amet",
-                    "brand": "Super Brand",
-                    "date_published": "2013-01-05"
+                    "brand": "Super Brand"
                 }
             ]
 
@@ -308,8 +306,7 @@ Product related resources
                     "tag1": ["tag1", "tag2"],
                     "categories": ["/a/b", "/a/b/c"],
                     "description": "Lorem ipsum dolor sit amet",
-                    "brand": "Super Brand",
-                    "date_published": "2013-01-05"
+                    "brand": "Super Brand"
                 }
             ]
 
@@ -342,8 +339,7 @@ Product related resources
                     "tag1": ["tag1", "tag2"],
                     "categories": ["/a/b", "/a/b/c"],
                     "description": "Lorem ipsum dolor sit amet",
-                    "brand": "Super Brand",
-                    "date_published": "2013-01-05"
+                    "brand": "Super Brand"
                 }
             ]
 
