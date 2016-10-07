@@ -60,7 +60,6 @@ class NostoExportProductCollection extends NostoProductCollection implements Nos
             );
 
             // Optional properties.
-
             if ($item->getFullDescription()) {
                 $data['description'] = $item->getFullDescription();
             }
@@ -75,14 +74,9 @@ class NostoExportProductCollection extends NostoProductCollection implements Nos
                     $data[$type] = $tags;
                 }
             }
-            if ($item->getDatePublished()) {
-                $data['date_published'] = Nosto::helper('date')->format($item->getDatePublished());
-            }
-
             if ($item->getVariationId()) {
                 $data['variation_id'] = $item->getVariationId();
             }
-
             $array[] = $data;
         }
         return json_encode($array);
