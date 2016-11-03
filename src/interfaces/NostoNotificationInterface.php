@@ -45,13 +45,6 @@ interface NostoNotificationInterface
     const TYPE_MULTI_CURRENCY_DISABLED = 'multi_currency_disabled';
 
     /**
-    'message' => 'Nosto account is not installed to shop <b>%s</b> and language <b>%s</b>',
-    'notification_code' => 'missing_installation',
-    'notification_type' => 'info',
-
-     */
-
-    /**
      * The id of the store
      *
      * @return string|int the client id.
