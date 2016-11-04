@@ -80,6 +80,13 @@ interface NostoNotificationInterface
     public function getMessage();
 
     /**
+     * The message attributes for sprintf. Array must contain only scalar values.
+     *
+     * @return array
+     */
+    public function getMessageAttributes();
+
+    /**
      * The notification type
      *
      * For return values

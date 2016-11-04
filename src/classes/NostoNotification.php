@@ -76,6 +76,11 @@ class NostoNotification implements NostoNotificationInterface
      */
     protected $notificationSeverity;
 
+    /*
+     * @var array of attributes required by the message
+     */
+    protected $messageAttributes;
+
     /**
      * @inheritdoc
      */
@@ -201,5 +206,37 @@ class NostoNotification implements NostoNotificationInterface
     public function setNotificationSeverity($notificationSeverity)
     {
         $this->notificationSeverity = $notificationSeverity;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMessageAttributes()
+    {
+        return $this->messageAttributes;
+    }
+
+    /**
+     * Sets all message attributes
+     *
+     * @param array $messageAttributes
+     */
+    public function setMessageAttributes(array $messageAttributes)
+    {
+        $this->messageAttributes = $messageAttributes;
+    }
+
+    /**
+     * Adds a message attribute
+     *
+     * @param int|string $messageAttribute
+     * @throws NostoException
+     */
+    public function addMessageAttribute($messageAttribute)
+    {
+        if (!is_scalar($messageAttribute)) {
+            throw new NostoException('Message attribute must be a scalar value');
+        }
+        $this->messageAttributes[] = $messageAttribute;
     }
 }
