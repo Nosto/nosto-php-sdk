@@ -239,4 +239,18 @@ class NostoNotification implements NostoNotificationInterface
         }
         $this->messageAttributes[] = $messageAttribute;
     }
+
+    /**
+     * Returns formatted message
+     *
+     * @return string
+     */
+    public function formatMessage()
+    {
+        return vsprintf(
+            $this->getMessage(),
+            $this->getMessageAttributes()
+        );
+    }
+
 }
