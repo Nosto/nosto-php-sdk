@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning(http://semver.org/).
 
+## 1.15.9
+* Add logic for getting missing tokens
+
 ## 1.15.8
 * Add notification classes
 
