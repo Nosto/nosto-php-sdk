@@ -333,4 +333,20 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
             }
         }
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMissingTokens()
+    {
+        $allTokens = NostoApiToken::getApiTokenNames();
+        $missingTokens = array();
+        foreach ($allTokens as $token) {
+            if (!$this->getApiToken($token)) {
+                $missingTokens[] = $token;
+            }
+        }
+
+        return $missingTokens;
+    }
 }
