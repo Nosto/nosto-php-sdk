@@ -51,6 +51,7 @@ require_once(dirname(__FILE__).'/interfaces/NostoProductInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoExportCollectionInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoValidatableInterface.php');
 require_once(dirname(__FILE__).'/interfaces/NostoExchangeRateInterface.php');
+require_once(dirname(__FILE__).'/interfaces/NostoNotificationInterface.php');
 
 // Classes
 require_once(dirname(__FILE__).'/classes/http/NostoHttpRequest.php'); // Must be loaded before `NostoApiRequest`
@@ -105,6 +106,7 @@ require_once(dirname(__FILE__).'/classes/NostoCurrencyCode.php');
 require_once(dirname(__FILE__).'/classes/NostoCurrencySymbol.php');
 require_once(dirname(__FILE__).'/classes/NostoCurrencyFormat.php');
 require_once(dirname(__FILE__).'/classes/NostoCurrencyInfo.php');
+require_once(dirname(__FILE__).'/classes/NostoNotification.php');
 
 // Libs
 require_once(dirname(__FILE__).'/libs/phpseclib/crypt/NostoCryptBase.php');
