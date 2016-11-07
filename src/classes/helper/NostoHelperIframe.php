@@ -54,27 +54,34 @@ class NostoHelperIframe extends NostoHelper
      */
     public function getUrl(
         NostoAccountMetaDataIframeInterface $meta,
-        NostoAccount $account = null,
+        NostoAccountInterface $account = null,
         array $params = array()
     ) {
+        $defaultParameters = array(
+            'lang' => strtolower($meta->getLanguageIsoCode()),
+            'ps_version' => $meta->getVersionPlatform(),
+            'nt_version' => $meta->getVersionModule(),
+            'product_pu' => $meta->getPreviewUrlProduct(),
+            'category_pu' => $meta->getPreviewUrlCategory(),
+            'search_pu' => $meta->getPreviewUrlSearch(),
+            'cart_pu' => $meta->getPreviewUrlCart(),
+            'front_pu' => $meta->getPreviewUrlFront(),
+            'shop_lang' => strtolower($meta->getLanguageIsoCodeShop()),
+            'shop_name' => $meta->getShopName(),
+            'unique_id' => $meta->getUniqueId(),
+            'fname' => $meta->getFirstName(),
+            'lname' => $meta->getLastName(),
+            'email' => $meta->getEmail(),
+        );
+        if ($account instanceof NostoAccountInterface) {
+            $missingScopes = $account->getMissingTokens();
+            if (!empty($missingScopes)) {
+                $defaultParameters['missing_scopes'] = implode(',', $missingScopes);
+            }
+        }
         $queryParams = http_build_query(
             array_merge(
-                array(
-                    'lang' => strtolower($meta->getLanguageIsoCode()),
-                    'ps_version' => $meta->getVersionPlatform(),
-                    'nt_version' => $meta->getVersionModule(),
-                    'product_pu' => $meta->getPreviewUrlProduct(),
-                    'category_pu' => $meta->getPreviewUrlCategory(),
-                    'search_pu' => $meta->getPreviewUrlSearch(),
-                    'cart_pu' => $meta->getPreviewUrlCart(),
-                    'front_pu' => $meta->getPreviewUrlFront(),
-                    'shop_lang' => strtolower($meta->getLanguageIsoCodeShop()),
-                    'shop_name' => $meta->getShopName(),
-                    'unique_id' => $meta->getUniqueId(),
-                    'fname' => $meta->getFirstName(),
-                    'lname' => $meta->getLastName(),
-                    'email' => $meta->getEmail(),
-                ),
+                $defaultParameters,
                 $params
             )
         );
