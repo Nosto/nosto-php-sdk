@@ -89,6 +89,13 @@ interface NostoAccountInterface
     public function hasMissingTokens();
 
     /**
+     * Returns the missing API tokens
+     *
+     * @return array
+     */
+    public function getMissingTokens();
+
+    /**
      * Gets an api token associated with this account by it's name , e.g. "sso".
      *
      * @param string $name the api token name.
