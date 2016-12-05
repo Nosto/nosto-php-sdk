@@ -151,4 +151,98 @@ interface NostoProductInterface
      * @return mixed|null
      */
     public function getVariationId();
+
+    /**
+     * Returns the supplier cost
+     *
+     * @return float|null
+     */
+    public function getSupplierCost();
+
+    /**
+     * Returns the inventory level
+     *
+     * @return int|null
+     */
+    public function getInventoryLevel();
+
+    /**
+     * Returns the count of reviews
+     *
+     * @return int|null
+     */
+    public function getReviewCount();
+
+    /**
+     * Returns the value of the rating(s)
+     *
+     * @return float|null
+     */
+    public function getRatingValue();
+
+    /**
+     * Returns the alternative images
+     *
+     * @return array|null
+     */
+    public function getAlternateImageUrls();
+
+    /**
+     * Returns the condition
+     *
+     * @return string|null
+     */
+    public function getCondition();
+
+    /**
+     * Returns the gender
+     *
+     * @return string|null
+     */
+    public function getGender();
+
+    /**
+     * Returns the age group
+     *
+     * @return string|null
+     */
+    public function getAgeGroup();
+
+    /**
+     * Returns the gtin / barcode
+     *
+     * @return string|null
+     */
+    public function getGtin();
+
+    /**
+     * Returns the category used for Google's services
+     *
+     * @return string|null
+     */
+    public function getGoogleCategory();
+
+    /**
+     * Returns the pricing measure of the product. Pricing measure for a 0.33
+     * liter bottle for example is "0.33".
+     *
+     * @return float|null
+     */
+    public function getUnitPricingMeasure();
+
+    /**
+     * Returns the pricing base measure of the product. Pricing base measure
+     * for a 0.33l bottle is "1".
+     *
+     * @return float|null
+     */
+    public function getUnitPricingBaseMeasure();
+
+    /**
+     * Returns the pricing unit of the product. Pricing unit for a 0.33l
+     * bottle is "l" (litre).
+     *
+     * @return string|null
+     */
+    public function getUnitPricingUnit();
 }

@@ -186,26 +186,29 @@ class NostoOperationProduct
      * @param NostoProductInterface $product the object.
      * @return array the newly created array.
      */
-    protected function getProductAsArray(NostoProductInterface $product)
+    public static function getProductAsArray(NostoProductInterface $product)
     {
+        /* @var NostoHelperPrice $nostoPriceHelper */
+        $nostoPriceHelper = Nosto::helper('price');
         $data = array(
             'url' => $product->getUrl(),
             'product_id' => $product->getProductId(),
             'name' => $product->getName(),
             'image_url' => $product->getImageUrl(),
-            'price' => Nosto::helper('price')->format($product->getPrice()),
+            'price' => $nostoPriceHelper->format($product->getPrice()),
             'price_currency_code' => strtoupper($product->getCurrencyCode()),
             'availability' => $product->getAvailability(),
             'categories' => $product->getCategories(),
         );
 
         // Optional properties.
-
         if ($product->getFullDescription()) {
             $data['description'] = $product->getFullDescription();
         }
         if ($product->getListPrice()) {
-            $data['list_price'] = Nosto::helper('price')->format($product->getListPrice());
+            $data['list_price'] = $nostoPriceHelper->format(
+                $product->getListPrice()
+            );
         }
         if ($product->getBrand()) {
             $data['brand'] = $product->getBrand();
@@ -217,6 +220,51 @@ class NostoOperationProduct
         }
         if ($product->getVariationId()) {
             $data['variation_id'] = $product->getVariationId();
+        }
+        if ($product->getSupplierCost()) {
+            $data['supplier_cost'] = $nostoPriceHelper->format(
+                $product->getSupplierCost()
+            );
+        }
+        if ($product->getInventoryLevel()) {
+            $data['inventory_level'] = $product->getInventoryLevel();
+        }
+        if ($product->getReviewCount()) {
+            $data['review_count'] = $product->getReviewCount();
+        }
+        if ($product->getRatingValue()) {
+            $data['rating_value'] = $product->getRatingValue();
+        }
+        if (
+            is_array($product->getAlternateImageUrls())
+            && count($product->getAlternateImageUrls() > 0)
+        ) {
+            $data['alternate_image_urls'] = $product->getAlternateImageUrls();
+        }
+        if ($product->getCondition()) {
+            $data['condition'] = $product->getCondition();
+        }
+        if ($product->getGender()) {
+            $data['gender'] = $product->getGender();
+        }
+        if ($product->getAgeGroup()) {
+            $data['age_group'] = $product->getAgeGroup();
+        }
+        if ($product->getGtin()) {
+            $data['gtin'] = $product->getGtin();
+        }
+        if ($product->getGoogleCategory()) {
+            $data['google_category'] = $product->getGoogleCategory();
+        }
+        if ($product->getUnitPricingMeasure()) {
+            $data['unit_pricing_measure'] = $product->getUnitPricingMeasure();
+        }
+        if ($product->getUnitPricingBaseMeasure()) {
+            $data['unit_pricing_base_measure']
+                = $product->getUnitPricingBaseMeasure();
+        }
+        if ($product->getUnitPricingUnit()) {
+            $data['unit_pricing_unit'] = $product->getUnitPricingUnit();
         }
 
         return $data;
@@ -235,7 +283,7 @@ class NostoOperationProduct
             /** @var NostoProductInterface|NostoValidatableInterface $item */
             $validator = new NostoValidator($item);
             if ($validator->validate()) {
-                $data[] = $this->getProductAsArray($item);
+                $data[] = self::getProductAsArray($item);
             }
         }
         if (empty($data)) {

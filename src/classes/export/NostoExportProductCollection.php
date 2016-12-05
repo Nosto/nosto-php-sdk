@@ -48,36 +48,7 @@ class NostoExportProductCollection extends NostoProductCollection implements Nos
         $array = array();
         /** @var NostoProductInterface $item */
         foreach ($this->getArrayCopy() as $item) {
-            $data = array(
-                'url' => $item->getUrl(),
-                'product_id' => $item->getProductId(),
-                'name' => $item->getName(),
-                'image_url' => $item->getImageUrl(),
-                'price' => Nosto::helper('price')->format($item->getPrice()),
-                'price_currency_code' => strtoupper($item->getCurrencyCode()),
-                'availability' => $item->getAvailability(),
-                'categories' => $item->getCategories(),
-            );
-
-            // Optional properties.
-            if ($item->getFullDescription()) {
-                $data['description'] = $item->getFullDescription();
-            }
-            if ($item->getListPrice()) {
-                $data['list_price'] = Nosto::helper('price')->format($item->getListPrice());
-            }
-            if ($item->getBrand()) {
-                $data['brand'] = $item->getBrand();
-            }
-            foreach ($item->getTags() as $type => $tags) {
-                if (is_array($tags) && count($tags) > 0) {
-                    $data[$type] = $tags;
-                }
-            }
-            if ($item->getVariationId()) {
-                $data['variation_id'] = $item->getVariationId();
-            }
-            $array[] = $data;
+            $array[] = NostoOperationProduct::getProductAsArray($item);
         }
         return json_encode($array);
     }
