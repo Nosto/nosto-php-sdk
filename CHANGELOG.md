@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning(http://semver.org/).
 
+## 1.16.0
+* Introduce new product fields / product attributes
+
 ## 1.15.9
 * Add logic for getting missing tokens
 
