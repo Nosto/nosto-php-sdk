@@ -114,5 +114,70 @@ class NostoProduct implements NostoProductInterface, NostoValidatableInterface
 		return false;
 	}
 
+    public function getSupplierCost()
+    {
+        return null;
+    }
+
+    public function getInventoryLevel()
+    {
+        return null;
+    }
+
+    public function getReviewCount()
+    {
+        return null;
+    }
+
+    public function getRatingValue()
+    {
+        return null;
+    }
+
+    public function getAlternateImageUrls()
+    {
+        return null;
+    }
+
+    public function getCondition()
+    {
+        return null;
+    }
+
+    public function getGender()
+    {
+        return null;
+    }
+
+    public function getAgeGroup()
+    {
+        return null;
+    }
+
+    public function getGtin()
+    {
+        return null;
+    }
+
+    public function getGoogleCategory()
+    {
+        return null;
+    }
+
+    public function getUnitPricingMeasure()
+    {
+        return null;
+    }
+
+    public function getUnitPricingBaseMeasure()
+    {
+        return null;
+    }
+
+    public function getUnitPricingUnit()
+    {
+        return null;
+    }
+
 
 }
