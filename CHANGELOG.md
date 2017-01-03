@@ -2,11 +2,22 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning(http://semver.org/).
 
-## 3.0.0
-* Unify operations and services
-* Introduce more implementations of interfaces
-* Rename meta classes to be more descriptive
-* Introduce mock classes for testing
+## 1.16.0
+* Introduce new product fields / product attributes
+
+## 1.15.9
+* Add logic for getting missing tokens
+
+## 1.15.8
+* Add notification classes
+
+## 1.15.7
+* Remove getDatePublished from product interface
+* Decrease the API call timeout
+* Add type check for price formatter
+
+## 1.15.6
+* Add checks for missing tokens
 
 ## 1.15.5
 * Code style fixes

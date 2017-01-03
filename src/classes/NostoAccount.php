@@ -182,6 +182,24 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
      */
     public function getIframeUrl(NostoIframeInterface $meta, NostoSignupOwnerInterface $user, array $params = array())
     {
-        return Nosto::helper('iframe')->getUrl($meta, $this, $user, $params);
+        /* @var $iframeHelper NostoHelperIframe */
+        $iframeHelper = Nosto::helper('iframe');
+        return $iframeHelper->getUrl($meta, $this, $params);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMissingTokens()
+    {
+        $allTokens = NostoApiToken::getApiTokenNames();
+        $missingTokens = array();
+        foreach ($allTokens as $token) {
+            if (!$this->getApiToken($token)) {
+                $missingTokens[] = $token;
+            }
+        }
+
+        return $missingTokens;
     }
 }

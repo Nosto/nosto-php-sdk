@@ -59,24 +59,31 @@ class NostoHelperIframe extends NostoHelper
         array $params = array()
     )
     {
+        $defaultParameters = array(
+            'lang' => strtolower($iframe->getLanguageIsoCode()),
+            'ps_version' => $iframe->getVersionPlatform(),
+            'nt_version' => $iframe->getVersionModule(),
+            'product_pu' => $iframe->getPreviewUrlProduct(),
+            'category_pu' => $iframe->getPreviewUrlCategory(),
+            'search_pu' => $iframe->getPreviewUrlSearch(),
+            'cart_pu' => $iframe->getPreviewUrlCart(),
+            'front_pu' => $iframe->getPreviewUrlFront(),
+            'shop_lang' => strtolower($iframe->getLanguageIsoCodeShop()),
+            'shop_name' => $iframe->getShopName(),
+            'unique_id' => $iframe->getUniqueId(),
+            'fname' => $iframe->getFirstName(),
+            'lname' => $iframe->getLastName(),
+            'email' => $iframe->getEmail(),
+        );
+        if ($account instanceof NostoAccountInterface) {
+            $missingScopes = $account->getMissingTokens();
+            if (!empty($missingScopes)) {
+                $defaultParameters['missing_scopes'] = implode(',', $missingScopes);
+            }
+        }
         $queryParams = http_build_query(
             array_merge(
-                array(
-                    'lang' => strtolower($iframe->getLanguageIsoCode()),
-                    'ps_version' => $iframe->getVersionPlatform(),
-                    'nt_version' => $iframe->getVersionModule(),
-                    'product_pu' => $iframe->getPreviewUrlProduct(),
-                    'category_pu' => $iframe->getPreviewUrlCategory(),
-                    'search_pu' => $iframe->getPreviewUrlSearch(),
-                    'cart_pu' => $iframe->getPreviewUrlCart(),
-                    'front_pu' => $iframe->getPreviewUrlFront(),
-                    'shop_lang' => strtolower($iframe->getLanguageIsoCodeShop()),
-                    'shop_name' => $iframe->getShopName(),
-                    'unique_id' => $iframe->getUniqueId(),
-                    'fname' => $iframe->getFirstName(),
-                    'lname' => $iframe->getLastName(),
-                    'email' => $iframe->getEmail(),
-                ),
+                $defaultParameters,
                 $params
             )
         );
