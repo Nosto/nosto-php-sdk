@@ -132,5 +132,70 @@ class MockNostoProduct implements NostoProductInterface, NostoValidatableInterfa
         return false;
     }
 
+    public function getSupplierCost()
+    {
+        // TODO: Implement getSupplierCost() method.
+    }
+
+    public function getInventoryLevel()
+    {
+        // TODO: Implement getInventoryLevel() method.
+    }
+
+    public function getReviewCount()
+    {
+        // TODO: Implement getReviewCount() method.
+    }
+
+    public function getRatingValue()
+    {
+        // TODO: Implement getRatingValue() method.
+    }
+
+    public function getAlternateImageUrls()
+    {
+        // TODO: Implement getAlternateImageUrls() method.
+    }
+
+    public function getCondition()
+    {
+        // TODO: Implement getCondition() method.
+    }
+
+    public function getGender()
+    {
+        // TODO: Implement getGender() method.
+    }
+
+    public function getAgeGroup()
+    {
+        // TODO: Implement getAgeGroup() method.
+    }
+
+    public function getGtin()
+    {
+        // TODO: Implement getGtin() method.
+    }
+
+    public function getGoogleCategory()
+    {
+        // TODO: Implement getGoogleCategory() method.
+    }
+
+    public function getUnitPricingMeasure()
+    {
+        // TODO: Implement getUnitPricingMeasure() method.
+    }
+
+    public function getUnitPricingBaseMeasure()
+    {
+        // TODO: Implement getUnitPricingBaseMeasure() method.
+    }
+
+    public function getUnitPricingUnit()
+    {
+        // TODO: Implement getUnitPricingUnit() method.
+    }
+
 
 }

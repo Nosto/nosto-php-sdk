@@ -57,8 +57,7 @@ class NostoHelperIframe extends NostoHelper
         NostoAccountInterface $account = null,
         NostoSignupOwnerInterface $user = null,
         array $params = array()
-    )
-    {
+    ) {
         $defaultParameters = array(
             'lang' => strtolower($iframe->getLanguageIsoCode()),
             'ps_version' => $iframe->getVersionPlatform(),
