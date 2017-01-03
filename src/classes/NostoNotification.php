@@ -37,7 +37,7 @@
 /**
  * Implementation for NostoNotificationInterface
  */
-class NostoNotification implements NostoNotificationInterface
+class NostoNotification extends NostoObject implements NostoNotificationInterface
 {
     /*
      * @var int|string unique id of the store

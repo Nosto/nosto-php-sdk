@@ -35,79 +35,104 @@
  */
 
 /**
- * Meta data class which holds information about the Nosto account owner.
- * This is used during the Nosto account creation.
+ * Model for order buyer information. This is used when compiling the info about
+ * an order that is sent to Nosto.
  */
-class NostoSignupOwner extends NostoObject implements NostoSignupOwnerInterface
+class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
 {
     /**
-     * @var string the account owner first name.
+     * @var string the first name of the user who placed the order.
      */
-    private $firstName;
+    protected $_firstName;
 
     /**
-     * @var string the account owner last name.
+     * @var string the last name of the user who placed the order.
      */
-    private $lastName;
+    protected $_lastName;
 
     /**
-     * @var string the account owner email address.
+     * @var string the email address of the user who placed the order.
      */
-    private $email;
+    protected $_email;
 
     /**
-     * The first name of the account owner.
-     *
-     * @return string the first name.
+     * @inheritdoc
      */
     public function getFirstName()
     {
-        return $this->firstName;
+        return $this->_firstName;
     }
 
     /**
-     * @param string $firstName
-     */
-    public function setFirstName($firstName)
-    {
-        $this->firstName = $firstName;
-    }
-
-    /**
-     * The last name of the account owner.
-     *
-     * @return string the last name.
+     * @inheritdoc
      */
     public function getLastName()
     {
-        return $this->lastName;
+        return $this->_lastName;
     }
 
     /**
-     * @param string $lastName
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
-    }
-
-    /**
-     * The email address of the account owner.
-     *
-     * @return string the email address.
+     * @inheritdoc
      */
     public function getEmail()
     {
-        return $this->email;
+        return $this->_email;
     }
 
     /**
-     * Sets the owner email address.
+     * Sets the firstname of the buyer.
      *
-     * @param string $email the email address.
+     * The name must be a non-empty string.
+     *
+     * Usage:
+     * $object->setFirstName('John');
+     *
+     * @param string $firstName the firstname.
+     *
+     * @return $this Self for chaining
+     */
+    public function setFirstName($firstName)
+    {
+        $this->_firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Sets the lastname of the buyer.
+     *
+     * The name must be a non-empty string.
+     *
+     * Usage:
+     * $object->setLastName('Doe');
+     *
+     * @param string $lastName the lastname.
+     *
+     * @return $this Self for chaining
+     */
+    public function setLastName($lastName)
+    {
+        $this->_lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Sets the email of the buyer.
+     *
+     * The email must be a non-empty string.
+     *
+     * Usage:
+     * $object->setEmail('john@doe.com');
+     *
+     * @param string $email the email.
+     *
+     * @return $this Self for chaining
      */
     public function setEmail($email)
     {
-        $this->email = $email;
+        $this->_email = $email;
+
+        return $this;
     }
 }

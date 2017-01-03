@@ -38,7 +38,7 @@
  * Meta data class which holds information to be sent to the Nosto account
  * configuration iframe.
  */
-class NostoIframe implements NostoIframeInterface
+class NostoIframe extends NostoObject implements NostoIframeInterface
 {
     /**
      * @var string the name of the platform the iframe is used on.

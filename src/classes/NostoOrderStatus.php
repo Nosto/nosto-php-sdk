@@ -35,79 +35,86 @@
  */
 
 /**
- * Meta data class which holds information about the Nosto account owner.
- * This is used during the Nosto account creation.
+ * Model for order status information. This is used when compiling the info
+ * about an order that is sent to Nosto.
  */
-class NostoSignupOwner extends NostoObject implements NostoSignupOwnerInterface
+class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
 {
     /**
-     * @var string the account owner first name.
+     * @var string the order status code.
      */
-    private $firstName;
+    protected $_code;
 
     /**
-     * @var string the account owner last name.
+     * @var string the order status label.
      */
-    private $lastName;
+    protected $_label;
 
     /**
-     * @var string the account owner email address.
-     */
-    private $email;
-
-    /**
-     * The first name of the account owner.
+     * Converts a human readable status description to a machine readable code,
+     * i.e. converts the description to a lower case alphanumeric string.
      *
-     * @return string the first name.
+     * @param string $description the description to convert.
+     * @return string the status code.
      */
-    public function getFirstName()
+    protected function convertDescriptionToCode($description)
     {
-        return $this->firstName;
+        $pattern = array('/[^a-zA-Z0-9]+/', '/_+/', '/^_+/', '/_+$/');
+        $replacement = array('_', '_', '', '');
+        return strtolower(preg_replace($pattern, $replacement, $description));
     }
 
     /**
-     * @param string $firstName
+     * @inheritdoc
      */
-    public function setFirstName($firstName)
+    public function getCode()
     {
-        $this->firstName = $firstName;
+        return $this->_code;
     }
 
     /**
-     * The last name of the account owner.
+     * @inheritdoc
+     */
+    public function getLabel()
+    {
+        return $this->_label;
+    }
+
+    /**
+     * Sets the code of the order.
      *
-     * @return string the last name.
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * @param string $lastName
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
-    }
-
-    /**
-     * The email address of the account owner.
+     * The code must be a non-empty string.
      *
-     * @return string the email address.
+     * Usage:
+     * $object->setCode('offen');
+     *
+     * @param string $code the code.
+     *
+     * @return $this Self for chaining
      */
-    public function getEmail()
+    public function setCode($code)
     {
-        return $this->email;
+        $this->_code = $code;
+
+        return $this;
     }
 
     /**
-     * Sets the owner email address.
+     * Sets the label of the order.
      *
-     * @param string $email the email address.
+     * The label must be a non-empty string.
+     *
+     * Usage:
+     * $object->setLabel('Offen');
+     *
+     * @param string $label the label.
+     *
+     * @return $this Self for chaining
      */
-    public function setEmail($email)
+    public function setLabel($label)
     {
-        $this->email = $email;
+        $this->_label = $label;
+
+        return $this;
     }
 }
