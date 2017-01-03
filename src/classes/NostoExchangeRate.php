@@ -37,7 +37,7 @@
 /**
  * Class representing a currency exchange rate.
  */
-class NostoExchangeRate implements NostoExchangeRateInterface
+class NostoExchangeRate extends NostoObject implements NostoExchangeRateInterface
 {
     /**
      * @var string the name for the exchange rate (can be different than the ISO 4217).

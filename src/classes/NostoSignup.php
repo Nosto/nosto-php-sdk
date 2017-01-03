@@ -37,64 +37,78 @@
 /**
  * Meta data class for account related information needed when creating new accounts.
  */
-class NostoSignup implements NostoSignupInterface
+class NostoSignup extends NostoObject implements NostoSignupInterface
 {
     /**
      * @var string the store name.
      */
     private $title;
+
     /**
      * @var string the account name.
      */
     private $name;
+
     /**
      * @var string the store front end url.
      */
     private $frontPageUrl;
+
     /**
      * @var string the store currency ISO (ISO 4217) code.
      */
     private $currencyCode;
+
     /**
      * @var string the store language ISO (ISO 639-1) code.
      */
     private $languageCode;
+
     /**
      * @var string the owner language ISO (ISO 639-1) code.
      */
     private $ownerLanguageCode;
+
     /**
      * @var NostoSignupOwnerInterface the account owner meta model.
      */
     private $owner;
+
     /**
      * @var NostoSignupBillingDetailsInterface the billing meta model.
      */
     private $billing;
+
     /**
      * @var array list of NostoCurrency objects supported by the store .
      */
     private $currencies = array();
+
     /**
      * @var bool if the store uses exchange rates to manage multiple currencies.
      */
     private $useCurrencyExchangeRates = false;
+
     /**
      * @var string default variation id
      */
     private $defaultVariationId = false;
+
     /**
      * @var string details
      */
     private $details = false;
+
     /**
      * @var NostoApiToken sign up api token
      */
     private $signupApiToken;
+
     /**
      * @var string platform name
      */
     private $platform;
+
     /**
      * @var string partner code
      */
@@ -249,6 +263,16 @@ class NostoSignup implements NostoSignupInterface
     }
 
     /**
+     * Sets the account owner who is creating the account.
+     *
+     * @param $owner NostoSignupOwnerInterface the account owner
+     */
+    public function setOwner(NostoSignupOwnerInterface $owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
      * Meta data model for the account owner who is creating the account.
      *
      * @return NostoSignupOwnerInterface the meta data model.
@@ -259,11 +283,13 @@ class NostoSignup implements NostoSignupInterface
     }
 
     /**
-     * @param NostoSignupOwnerInterface $owner
+     * Sets the account billing details.
+     *
+     * @param $billingDetails NostoSignupBillingDetailsInterface the account billing detals
      */
-    public function setOwner(NostoSignupOwnerInterface $owner)
+    public function setBillingDetails(NostoSignupBillingDetailsInterface $billingDetails)
     {
-        $this->owner = $owner;
+        $this->billing = $billingDetails;
     }
 
     /**
@@ -328,6 +354,7 @@ class NostoSignup implements NostoSignupInterface
 
     /**
      * Sets the default variation id
+     *
      * @param string $defaultVariationId
      */
     public function setDefaultVariationId($defaultVariationId)
