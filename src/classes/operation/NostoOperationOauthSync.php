@@ -34,26 +34,52 @@
  *
  */
 
-class NostoOrderPurchasedItem implements NostoOrderPurchasedItemInterface
+/**
+ * Handles exchaning the authorization token for the API tokes from Nosto
+ */
+class NostoOperationOauthSync extends NostoOperation
 {
-	public function getProductId()
-	{
-		return 1;
-	}
-	public function getQuantity()
-	{
-		return 2;
-	}
-	public function getName()
-	{
-		return 'Test Product';
-	}
-	public function getUnitPrice()
-	{
-		return 99.99;
-	}
-	public function getCurrencyCode()
-	{
-		return 'USD';
-	}
+    /**
+     * @var NostoOAuthClientMetaDataInterface the Oauth meta data params
+     */
+    private $meta;
+
+    /**
+     * Constructor.
+     *
+     * Accepts the Nosto account for which the service is to operate on.
+     *
+     * @param NostoOAuthClientMetaDataInterface $meta the oauth meta data params
+     */
+    public function __construct(NostoOAuthClientMetaDataInterface $meta)
+    {
+        $this->meta = $meta;
+    }
+
+    /**
+     * Sends a POST request to delete an account for a store in Nosto
+     *
+     * @param $code string the oauth access code.
+     * @return NostoAccountInterface the configured account
+     * @throws NostoException on failure.
+     */
+    public function exchange($code)
+    {
+        $oauthClient = new NostoOAuthClient($this->meta);
+        $oauthResponse = $oauthClient->authenticate($code);
+
+        $request = new NostoHttpRequest();
+        $request->setContentType('application/x-www-form-urlencoded');
+        $request->setPath(NostoHttpRequest::PATH_OAUTH_SYNC);
+        $request->setQueryParams(array('access_token' => $oauthResponse->getAccessToken()));
+        $response = $request->get();
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to sync account from Nosto..', $request, $response);
+        }
+
+        $tokens = NostoApiToken::parseTokens($response->getJsonResult(true), 'api_');
+        $account = new NostoAccount($oauthResponse->getMerchantName());
+        $account->setTokens($tokens);
+        return $account;
+    }
 }

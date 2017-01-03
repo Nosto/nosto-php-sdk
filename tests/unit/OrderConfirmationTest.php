@@ -34,60 +34,62 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/NostoOrderBuyer.php');
-require_once(dirname(__FILE__) . '/../_support/NostoOrderPurchasedItem.php');
-require_once(dirname(__FILE__) . '/../_support/NostoOrderStatus.php');
-require_once(dirname(__FILE__) . '/../_support/NostoOrder.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoOrderBuyer.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoOrderPurchasedItem.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoOrderStatus.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoOrder.php');
 
 class OrderConfirmationTest extends \Codeception\TestCase\Test
 {
-	use \Codeception\Specify;
+    use \Codeception\Specify;
 
     /**
      * @var \UnitTester
      */
     protected $tester;
 
-	/**
-	 * @var NostoOrder
-	 */
-	protected $order;
+    /**
+     * @var NostoOrderInterface
+     */
+    protected $order;
 
-	/**
-	 * @var NostoAccount
-	 */
-	protected $account;
+    /**
+     * @var NostoAccountInterface
+     */
+    protected $account;
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function _before()
-	{
-		$this->order = new NostoOrder();
-		$this->account = new NostoAccount('platform-00000000');
-	}
-
-	/**
-	 * Tests the matched order confirmation API call.
-	 */
-	public function testMatchedOrderConfirmation()
+    /**
+     * Tests the matched order confirmation API call.
+     */
+    public function testMatchedOrderConfirmation()
     {
-		$result = NostoOrderConfirmation::send($this->order, $this->account, 'test123');
+        $service = new NostoOperationOrderConfirmation($this->account);
+        $result = $service->send($this->order, 'test123');
 
-		$this->specify('successful matched order confirmation', function() use ($result) {
-			$this->assertTrue($result);
-		});
+        $this->specify('successful matched order confirmation', function () use ($result) {
+            $this->assertTrue($result);
+        });
     }
 
-	/**
-	 * Tests the un-matched order confirmation API call.
-	 */
-	public function testUnMatchedOrderConfirmation()
-	{
-		$result = NostoOrderConfirmation::send($this->order, $this->account);
+    /**
+     * Tests the un-matched order confirmation API call.
+     */
+    public function testUnMatchedOrderConfirmation()
+    {
+        $service = new NostoOperationOrderConfirmation($this->account);
+        $result = $service->send($this->order, null);
 
-		$this->specify('successful un-matched order confirmation', function() use ($result) {
-			$this->assertTrue($result);
-		});
-	}
+        $this->specify('successful un-matched order confirmation', function () use ($result) {
+            $this->assertTrue($result);
+        });
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function _before()
+    {
+        $this->order = new MockNostoOrder();
+        $this->account = new MockNostoAccount('platform-00000000');
+    }
 }

@@ -41,7 +41,12 @@
 class NostoProductCollection extends NostoCollection
 {
     /**
-     * @inheritdoc
+     * Returns the type of items this collection can contain.
+     *
+     * @return string the type of items this collection can contain.
      */
-    protected $validItemType = 'NostoProductInterface';
+    protected function getValidItemType()
+    {
+        return 'NostoProductInterface';
+    }
 }

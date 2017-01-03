@@ -35,15 +35,49 @@
  */
 
 /**
- * Interface for account billing details.
- * This is used by the NostoAccountMetaDataInterface meta data model when creating new Nosto accounts.
+ * Handles communications through the Nosto API.
  */
-interface NostoAccountMetaDataBillingDetailsInterface
+class NostoOperation
 {
     /**
-     * The 2-letter ISO code (ISO 3166-1 alpha-2) for the country used in account's billing details.
+     * Create and returns a new API request object initialized with:
+     * - content type
+     * - auth token
      *
-     * @return string the country ISO code.
+     * @param NostoApiToken the token to use for the endpoint
+     * @return NostoApiRequest the newly created request object.
+     * @throws NostoException if the account does not have the correct token set.
      */
-    public function getCountry();
+    protected function initApiRequest(NostoApiToken $token = null)
+    {
+        if (is_null($token)) {
+            throw new NostoException('No API token found for account.');
+        }
+
+        $request = new NostoApiRequest();
+        $request->setContentType('application/json');
+        $request->setAuthBasic('', $token->getValue());
+        return $request;
+    }
+
+    /**
+     * Create and returns a new HTTP request object initialized with:
+     * - content type
+     * - auth token
+     *
+     * @param NostoApiToken the token to use for the endpoint
+     * @return NostoHttpRequest the newly created request object.
+     * @throws NostoException if the account does not have the correct token set.
+     */
+    protected function initHttpRequest(NostoApiToken $token = null)
+    {
+        if (is_null($token)) {
+            throw new NostoException('No API token found for account.');
+        }
+
+        $request = new NostoHttpRequest();
+        $request->setContentType('application/x-www-form-urlencoded');
+        $request->setAuthBasic('', $token->getValue());
+        return $request;
+    }
 }

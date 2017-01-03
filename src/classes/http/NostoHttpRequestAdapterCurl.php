@@ -75,6 +75,32 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
     }
 
     /**
+     * Sends the request and creates a NostoHttpResponse instance containing the response headers and body.
+     *
+     * @param array $curlOptions options for curl_setopt_array().
+     * @return NostoHttpResponse
+     */
+    protected function send(array $curlOptions)
+    {
+        $headers = $this->getHeaders();
+        if (!empty($headers)) {
+            $curlOptions[CURLOPT_HTTPHEADER] = $headers;
+        }
+        if (!in_array(CURLOPT_USERAGENT, $curlOptions) && $this->userAgent) {
+            $curlOptions[CURLOPT_USERAGENT] = $this->userAgent;
+        }
+        $ch = curl_init();
+        curl_setopt_array($ch, $curlOptions);
+        $result = curl_exec($ch);
+        $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $headers = explode("\r\n", substr($result, 0, $headerSize));
+        $body = substr($result, $headerSize);
+        $message = curl_error($ch);
+        curl_close($ch);
+        return new NostoHttpResponse($headers, $body, $message);
+    }
+
+    /**
      * @inheritdoc
      */
     public function post($url, array $options = array())
@@ -83,7 +109,7 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
         return $this->send(
             array(
                 CURLOPT_URL => $url,
-                CURLOPT_POSTFIELDS => $this->content,
+                CURLOPT_POSTFIELDS => $this->getContent(),
                 CURLOPT_POST => 1,
                 CURLOPT_HEADER => 1,
                 CURLOPT_FRESH_CONNECT => 1,
@@ -102,7 +128,7 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
         return $this->send(
             array(
                 CURLOPT_URL => $url,
-                CURLOPT_POSTFIELDS => $this->content,
+                CURLOPT_POSTFIELDS => $this->getContent(),
                 CURLOPT_CUSTOMREQUEST => 'PUT',
                 CURLOPT_HEADER => 1,
                 CURLOPT_FRESH_CONNECT => 1,

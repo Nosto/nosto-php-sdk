@@ -35,11 +35,10 @@
  */
 
 // Interfaces
+require_once(dirname(__FILE__).'/interfaces/account/NostoAccountBillingDetailsInterface.php');
+require_once(dirname(__FILE__).'/interfaces/account/NostoAccountIframeInterface.php');
 require_once(dirname(__FILE__).'/interfaces/account/NostoAccountInterface.php');
-require_once(dirname(__FILE__).'/interfaces/account/NostoAccountMetaDataBillingDetailsInterface.php');
-require_once(dirname(__FILE__).'/interfaces/account/NostoAccountMetaDataIframeInterface.php');
-require_once(dirname(__FILE__).'/interfaces/account/NostoAccountMetaDataInterface.php');
-require_once(dirname(__FILE__).'/interfaces/account/NostoAccountMetaDataOwnerInterface.php');
+require_once(dirname(__FILE__).'/interfaces/account/NostoAccountOwnerInterface.php');
 
 require_once(dirname(__FILE__).'/interfaces/order/NostoOrderBuyerInterface.php');
 require_once(dirname(__FILE__).'/interfaces/order/NostoOrderInterface.php');
@@ -87,18 +86,25 @@ require_once(dirname(__FILE__).'/classes/http/NostoHttpResponse.php');
 require_once(dirname(__FILE__).'/classes/oauth/NostoOAuthClient.php');
 require_once(dirname(__FILE__).'/classes/oauth/NostoOAuthToken.php');
 
+require_once(dirname(__FILE__).'/classes/operation/NostoOperation.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationProduct.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationExchangeRate.php');
 require_once(dirname(__FILE__).'/classes/operation/NostoOperationAccount.php');
+require_once(dirname(__FILE__).'/classes/operation/NostoOperationSettings.php');
+require_once(dirname(__FILE__).'/classes/operation/NostoOperationUninstall.php');
+require_once(dirname(__FILE__).'/classes/operation/NostoOperationSso.php');
+require_once(dirname(__FILE__).'/classes/operation/NostoOperationOrderConfirmation.php');
+require_once(dirname(__FILE__).'/classes/operation/NostoOperationOauthSync.php');
 
 require_once(dirname(__FILE__).'/classes/Nosto.php');
+require_once(dirname(__FILE__).'/classes/NostoConfiguration.php');
+require_once(dirname(__FILE__).'/classes/NostoAccountOwner.php');
+require_once(dirname(__FILE__).'/classes/NostoAccountIframe.php');
+require_once(dirname(__FILE__).'/classes/NostoAccountBilling.php');
 require_once(dirname(__FILE__).'/classes/NostoAccount.php');
-require_once(dirname(__FILE__).'/classes/NostoAccountMeta.php');
 require_once(dirname(__FILE__).'/classes/NostoCipher.php');
 require_once(dirname(__FILE__).'/classes/NostoDotEnv.php');
 require_once(dirname(__FILE__).'/classes/NostoMessage.php');
-require_once(dirname(__FILE__).'/classes/NostoOrderConfirmation.php');
-require_once(dirname(__FILE__).'/classes/NostoProductReCrawl.php');
 require_once(dirname(__FILE__).'/classes/NostoValidator.php');
 require_once(dirname(__FILE__).'/classes/NostoExchangeRate.php');
 require_once(dirname(__FILE__).'/classes/NostoCurrency.php');

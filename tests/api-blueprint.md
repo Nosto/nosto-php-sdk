@@ -41,7 +41,7 @@ Account related resources
             "products_token": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783"
         }
 
-## OAuth Access Token [/token{?code,client_id,client_secret,redirect_uri,grant_type}]
+## OAuth Access Token [/oauth/token{?code,client_id,client_secret,redirect_uri,grant_type}]
 
 + Parameters
 
@@ -59,7 +59,7 @@ Account related resources
             "merchant_name": "platform-00000000"
         }
 
-## Sync Account [/exchange{?access_token}]
+## Sync Account [/oauth/exchange{?access_token}]
 
 + Parameters
 
@@ -109,7 +109,8 @@ Account related resources
 
     + Headers
 
-            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+            Content-type: application/json
+            Authorization: Basic OjEyMw==
 
 + Response 200
 

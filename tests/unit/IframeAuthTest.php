@@ -34,7 +34,7 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataIframe.php');
+require_once(dirname(__FILE__) . '/../_support/NostoAccountIframe.php');
 
 class IframeAuthTest extends \Codeception\TestCase\Test
 {

@@ -34,15 +34,43 @@
  *
  */
 
-class NostoOrderStatus implements NostoOrderStatusInterface
+/**
+ * Handles sending currencyCode exchange rates through the Nosto API.
+ */
+class NostoOperationUninstall extends NostoOperation
 {
-	public function getCode()
-	{
-		return 'completed';
-	}
+    /**
+     * @var NostoAccountInterface Nosto configuration
+     */
+    private $account;
 
-	public function getLabel()
-	{
-		return 'Completed';
-	}
+    /**
+     * Constructor.
+     *
+     * Accepts the Nosto account for which the service is to operate on.
+     *
+     * @param NostoAccountInterface $account the Nosto configuration object.
+     */
+    public function __construct(NostoAccountInterface $account)
+    {
+        $this->account = $account;
+    }
+
+    /**
+     * Sends a POST request to delete an account for a store in Nosto
+     *
+     * @return bool if the request was successful.
+     * @throws NostoException on failure.
+     */
+    public function delete()
+    {
+        $request = $this->initApiRequest($this->account->getApiToken('sso'));
+        $request->setPath(NostoApiRequest::PATH_ACCOUNT_DELETED);
+        $response = $request->post('');
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to delete Nosto account.', $request, $response);
+        }
+
+        return true;
+    }
 }

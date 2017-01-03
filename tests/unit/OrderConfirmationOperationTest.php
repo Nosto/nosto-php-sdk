@@ -34,26 +34,62 @@
  *
  */
 
-class NostoOAuthClientMetaData implements NostoOAuthClientMetaDataInterface
+require_once(dirname(__FILE__) . '/../_support/MockNostoOrderBuyer.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoOrderPurchasedItem.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoOrderStatus.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoOrder.php');
+
+class OrderConfirmationTest extends \Codeception\TestCase\Test
 {
-	public function getClientId()
-	{
-		return 'client-id';
-	}
-	public function getClientSecret()
-	{
-		return 'client-secret';
-	}
-	public function getRedirectUrl()
-	{
-		return 'http://my.shop.com/nosto/oauth';
-	}
-	public function getScopes()
-	{
-		return array('sso', 'products');
-	}
-	public function getLanguageIsoCode()
-	{
-		return 'en';
-	}
+    use \Codeception\Specify;
+
+    /**
+     * @var \UnitTester
+     */
+    protected $tester;
+
+    /**
+     * @var NostoOrderInterface
+     */
+    protected $order;
+
+    /**
+     * @var NostoAccountInterface
+     */
+    protected $account;
+
+    /**
+     * Tests the matched order confirmation API call.
+     */
+    public function testMatchedOrderConfirmation()
+    {
+        $service = new NostoOperationOrderConfirmation($this->account);
+        $result = $service->send($this->order, 'test123');
+
+        $this->specify('successful matched order confirmation', function () use ($result) {
+            $this->assertTrue($result);
+        });
+    }
+
+    /**
+     * Tests the un-matched order confirmation API call.
+     */
+    public function testUnMatchedOrderConfirmation()
+    {
+        $service = new NostoOperationOrderConfirmation($this->account);
+        $result = $service->send($this->order, null);
+
+        $this->specify('successful un-matched order confirmation', function () use ($result) {
+            $this->assertTrue($result);
+        });
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function _before()
+    {
+        $this->order = new MockNostoOrder();
+        $this->account = new MockNostoAccount('platform-00000000');
+    }
 }

@@ -1,0 +1,10 @@
+diff a/tests/unit/AccountDeleteTest.php b/tests/unit/AccountDeleteTest.php	(rejected hunks)
+@@ -62,7 +62,7 @@ class AccountDeleteTest extends \Codeception\TestCase\Test
+      */
+     public function testDeletingAccountWithToken()
+     {
+-        $account = new NostoConfiguration('platform-test');
++        $account = new NostoAccount('platform-test');
+         $token = new NostoApiToken('sso', '123');
+         $account->addApiToken($token);
+ 

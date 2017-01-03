@@ -34,14 +34,14 @@
  *
  */
 
-class NostoAccountMetaData implements NostoAccountMetaDataInterface
+class NostoAccount implements NostoAccountInterface
 {
 	protected $owner;
 	protected $billing;
 	public function __construct()
 	{
-		$this->owner = new NostoAccountMetaDataOwner();
-		$this->billing = new NostoAccountMetaDataBilling();
+		$this->owner = new NostoAccountOwner();
+		$this->billing = new NostoAccountBilling();
 	}
 	public function getTitle()
 	{

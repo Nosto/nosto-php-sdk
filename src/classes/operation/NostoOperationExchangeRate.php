@@ -37,30 +37,31 @@
 /**
  * Handles sending currencyCode exchange rates through the Nosto API.
  */
-class NostoOperationExchangeRate
+class NostoOperationExchangeRate extends NostoOperation
 {
     /**
-     * @var NostoAccountInterface the Nosto account to update the rates for.
+     * @var NostoSignupInterface the Nosto account to update the rates for.
      */
-    protected $account;
+    private $account;
 
     /**
      * @var NostoExchangeRateCollection collection of exchange rates to be updated
      */
-    protected $collection;
+    private $collection;
 
     /**
      * Constructor.
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoAccountInterface $account the Nosto account object.
+     * @param NostoSignupInterface $account the Nosto account object.
      * @param NostoExchangeRateCollection $collection the Nosto account object.
      */
     public function __construct(
-        NostoAccountInterface $account,
+        NostoSignupInterface $account,
         NostoExchangeRateCollection $collection
-    ) {
+    )
+    {
         $this->account = $account;
         $this->collection = $collection;
     }
@@ -72,8 +73,9 @@ class NostoOperationExchangeRate
      */
     public function update()
     {
-        $request = $this->initApiRequest();
-        $response = $request->post($this->getCollectionAsJson());
+        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_EXCHANGE_RATES));
+        $request->setPath(NostoApiRequest::PATH_CURRENCY_EXCHANGE_RATE);
+        $response = $request->post($this->getJson());
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException(
                 sprintf(
@@ -130,14 +132,14 @@ class NostoOperationExchangeRate
      * @return string the JSON structure.
      * @throws NostoException of the rate collection is empty.
      */
-    protected function getCollectionAsJson()
+    protected function getJson()
     {
         $data = array(
             'rates' => array(),
             'valid_until' => null,
         );
 
-        /** @var NostoExchangeRate $item */
+        /** @var NostoExchangeRateInterface $item */
         foreach ($this->collection as $item) {
             $data['rates'][$item->getName()] = array(
                 'rate' => $item->getExchangeRate(),

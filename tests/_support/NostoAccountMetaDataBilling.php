@@ -34,7 +34,7 @@
  *
  */
 
-class NostoAccountMetaDataBilling implements NostoAccountMetaDataBillingDetailsInterface
+class NostoAccountBilling implements NostoAccountBillingDetailsInterface
 {
 	public function getCountry()
 	{

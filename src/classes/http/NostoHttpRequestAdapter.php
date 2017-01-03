@@ -42,25 +42,26 @@ abstract class NostoHttpRequestAdapter
     /**
      * @var array the request headers.
      */
-    protected $headers = array();
-
+    private $headers = array();
     /**
      * @var mixed the request content.
      */
-    protected $content = null;
+    private $content = null;
 
     /**
-     * Initializes the request options.
-     *
-     * @param array $options the options.
+     * @return array
      */
-    protected function init(array $options = array())
+    public function getHeaders()
     {
-        foreach ($options as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->{$key} = $value;
-            }
-        }
+        return $this->headers;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 
     /**
@@ -98,4 +99,18 @@ abstract class NostoHttpRequestAdapter
      * @return NostoHttpResponse the response object.
      */
     abstract public function delete($url, array $options = array());
+
+    /**
+     * Initializes the request options.
+     *
+     * @param array $options the options.
+     */
+    protected function init(array $options = array())
+    {
+        foreach ($options as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
+        }
+    }
 }

@@ -34,28 +34,28 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/NostoOAuthClientMetaData.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoOAuthClientMetaData.php');
 
 class OauthTest extends \Codeception\TestCase\Test
 {
-	use \Codeception\Specify;
+    use \Codeception\Specify;
 
     /**
      * @var \UnitTester
      */
     protected $tester;
 
-	/**
-	 * Test the OAuth client authenticate without a authorize code.
-	 */
-	public function testOauthAuthenticateWithoutCode()
+    /**
+     * Test the OAuth client authenticate without a authorize code.
+     */
+    public function testOauthAuthenticateWithoutCode()
     {
-		$meta = new NostoOAuthClientMetaData();
-		$client = new NostoOAuthClient($meta);
+        $meta = new MockNostoOAuthClientMetaData();
+        $client = new NostoOAuthClient($meta);
 
-		$this->specify('failed oauth authenticate', function() use ($client) {
-			$this->setExpectedException('NostoException');
-			$client->authenticate('');
-		});
+        $this->specify('failed oauth authenticate', function () use ($client) {
+            $this->expectException('NostoException');
+            $client->authenticate('');
+        });
     }
 }

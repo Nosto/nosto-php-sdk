@@ -50,7 +50,7 @@ abstract class NostoObject
      */
     public function __get($name)
     {
-        $getter = 'get'.str_replace('_', '', $name);
+        $getter = 'get' . str_replace('_', '', $name);
         if (method_exists($this, $getter)) {
             return $this->{$getter}();
         }
