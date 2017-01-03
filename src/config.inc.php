@@ -41,7 +41,7 @@ require_once(dirname(__FILE__) . '/interfaces/signup/NostoSignupOwnerInterface.p
 
 require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderBuyerInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderInterface.php');
-require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderPurchasedItemInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/order/NostoLineItemInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderStatusInterface.php');
 
 require_once(dirname(__FILE__) . '/interfaces/NostoIframeInterface.php');

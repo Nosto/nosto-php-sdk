@@ -38,7 +38,7 @@
  * Model for order line item information. This is used when compiling the info
  * about an order that is sent to Nosto.
  */
-class NostoOrderPurchasedItem extends NostoObject implements NostoOrderPurchasedItemInterface
+class NostoLineItem extends NostoObject implements NostoLineItemInterface
 {
     /**
      * @var string the unique identifier of the purchased item.

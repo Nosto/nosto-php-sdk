@@ -58,7 +58,7 @@ class MockNostoOrder implements NostoOrderInterface
 
     public function getPurchasedItems()
     {
-        return array(new MockNostoOrderPurchasedItem());
+        return array(new MockNostoLineItem());
     }
 
     public function getOrderStatus()

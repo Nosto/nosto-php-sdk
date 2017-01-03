@@ -71,7 +71,7 @@ interface NostoOrderInterface
     /**
      * The purchased items which were included in the order.
      *
-     * @return NostoOrderPurchasedItemInterface[] the meta data models.
+     * @return NostoLineItem[] the meta data models.
      */
     public function getPurchasedItems();
 

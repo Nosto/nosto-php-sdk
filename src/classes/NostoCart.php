@@ -39,14 +39,14 @@
 class NostoCart
 {
     /**
-     * @var NostoOrderPurchasedItemInterface[] the cart items.
+     * @var NostoLineItemInterface[] the cart items.
      */
     private $items = array();
 
     /**
      * Returns the items in the cart.
      *
-     * @return NostoOrderPurchasedItemInterface[] the items.
+     * @return NostoLineItemInterface[] the items.
      */
     public function getItems()
     {
@@ -56,12 +56,12 @@ class NostoCart
     /**
      * Sets the cart items.
      *
-     * The items need to implement the `NostoOrderPurchasedItemInterface` interface.
+     * The items need to implement the `NostoLineItemInterface` interface.
      *
      * Usage:
-     * $cart->setItems(array(NostoOrderPurchasedItemInterface $item, [...]));
+     * $cart->setItems(array(NostoLineItemInterface $item, [...]));
      *
-     * @param NostoOrderPurchasedItemInterface[] $items the items.
+     * @param NostoLineItemInterface[] $items the items.
      */
     public function setItems(array $items)
     {
@@ -74,14 +74,14 @@ class NostoCart
     /**
      * Adds a new item to the cart.
      *
-     * The item needs to implement the `NostoOrderPurchasedItemInterface` interface.
+     * The item needs to implement the `NostoLineItemInterface` interface.
      *
      * Usage:
-     * $cart->addItem(NostoOrderPurchasedItemInterface $item);
+     * $cart->addItem(NostoLineItemInterface $item);
      *
-     * @param NostoOrderPurchasedItemInterface $item
+     * @param NostoLineItemInterface $item
      */
-    public function addItem(NostoOrderPurchasedItemInterface $item)
+    public function addItem(NostoLineItemInterface $item)
     {
         $this->items[] = $item;
     }

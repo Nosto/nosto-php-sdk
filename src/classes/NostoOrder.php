@@ -70,7 +70,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     private $_buyerInfo;
 
     /**
-     * @var NostoOrderPurchasedItem[] the items in the order.
+     * @var NostoLineItem[] the items in the order.
      */
     private $_purchasedItems = array();
 

@@ -35,7 +35,7 @@
  */
 
 require_once(dirname(__FILE__) . '/../_support/MockNostoOrderBuyer.php');
-require_once(dirname(__FILE__) . '/../_support/MockNostoOrderPurchasedItem.php');
+require_once(dirname(__FILE__) . '/../_support/MockNostoLineItem.php');
 require_once(dirname(__FILE__) . '/../_support/MockNostoOrderStatus.php');
 require_once(dirname(__FILE__) . '/../_support/MockNostoOrder.php');
 
