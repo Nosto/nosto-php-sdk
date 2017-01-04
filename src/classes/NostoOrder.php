@@ -238,8 +238,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
  * Usage:
  * $object->setPurchasedItems([new NostoOrderLineItem(), ...]);
  *
- * @param NostoOrderLineItem[] $purchasedItems the purchased items.
- *
+ * @param NostoLineItemInterface[] $purchasedItems the purchased items.
  * @return $this Self for chaining
  */
     public function setPurchasedItems($purchasedItems)
@@ -257,11 +256,11 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      * Usage:
      * $object->addPurchasedItems(new NostoOrderLineItem());
      *
-     * @param NostoOrderLineItem $purchasedItem the purchased item.
-     *
+     * @param NostoLineItemInterface $purchasedItems
      * @return $this Self for chaining
+     *
      */
-    public function addPurchasedItems($purchasedItems)
+    public function addPurchasedItems(NostoLineItemInterface $purchasedItems)
     {
         $this->_purchasedItems[] = $purchasedItems;
 

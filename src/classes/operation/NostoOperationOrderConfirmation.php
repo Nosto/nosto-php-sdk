@@ -101,7 +101,7 @@ class NostoOperationOrderConfirmation extends NostoOperation
             'order_number' => $order->getOrderNumber(),
             'external_order_ref' => $order->getExternalOrderRef(),
             'buyer' => array(),
-            'created_at' => Nosto::helper('date')->format($order->getCreatedDate()),
+            'created_at' => NostoHelperDate::format($order->getCreatedDate()),
             'payment_provider' => $order->getPaymentProvider(),
             'purchased_items' => array(),
         );
@@ -114,7 +114,7 @@ class NostoOperationOrderConfirmation extends NostoOperation
                 'product_id' => $item->getProductId(),
                 'quantity' => $item->getQuantity(),
                 'name' => $item->getName(),
-                'unit_price' => Nosto::helper('price')->format($item->getUnitPrice()),
+                'unit_price' => NostoHelperPrice::format($item->getUnitPrice()),
                 'price_currency_code' => strtoupper($item->getCurrencyCode()),
             );
         }

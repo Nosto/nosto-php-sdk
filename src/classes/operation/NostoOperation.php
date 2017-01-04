@@ -44,7 +44,7 @@ class NostoOperation
      * - content type
      * - auth token
      *
-     * @param NostoApiToken the token to use for the endpoint
+     * @param NostoApiToken $token the token to use for the endpoint
      * @return NostoApiRequest the newly created request object.
      * @throws NostoException if the account does not have the correct token set.
      */
@@ -65,7 +65,7 @@ class NostoOperation
      * - content type
      * - auth token
      *
-     * @param NostoApiToken the token to use for the endpoint
+     * @param NostoApiToken $token the token to use for the endpoint
      * @return NostoHttpRequest the newly created request object.
      * @throws NostoException if the account does not have the correct token set.
      */

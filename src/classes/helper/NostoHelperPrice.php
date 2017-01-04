@@ -37,7 +37,7 @@
 /**
  * Price helper class for price related tasks.
  */
-class NostoHelperPrice extends NostoHelper
+final class NostoHelperPrice extends NostoHelper
 {
     /**
      * Formats price into Nosto format, e.g. 1000.99.
@@ -45,7 +45,7 @@ class NostoHelperPrice extends NostoHelper
      * @param int|float|string $price the price string to format.
      * @return string the formatted price.
      */
-    public function format($price)
+    public static function format($price)
     {
         $formatted = null;
         if (is_numeric($price)) {

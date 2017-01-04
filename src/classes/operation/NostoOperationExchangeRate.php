@@ -45,37 +45,27 @@ class NostoOperationExchangeRate extends NostoOperation
     private $account;
 
     /**
-     * @var NostoExchangeRateCollection collection of exchange rates to be updated
-     */
-    private $collection;
-
-    /**
      * Constructor.
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoSignupInterface $account the Nosto account object.
-     * @param NostoExchangeRateCollection $collection the Nosto account object.
+     * @param NostoAccountInterface $account the Nosto configuration object.
      */
-    public function __construct(
-        NostoSignupInterface $account,
-        NostoExchangeRateCollection $collection
-    )
+    public function __construct(NostoAccountInterface $account)
     {
         $this->account = $account;
-        $this->collection = $collection;
     }
 
     /**
      * Updates exchange rates to Nosto
+     * @param NostoExchangeRateCollection $collection
      * @return bool
-     * @throws NostoException
      */
-    public function update()
+    public function update(NostoExchangeRateCollection $collection)
     {
         $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_EXCHANGE_RATES));
         $request->setPath(NostoApiRequest::PATH_CURRENCY_EXCHANGE_RATE);
-        $response = $request->post($this->getJson());
+        $response = $request->post($this->getJson($collection));
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException(
                 sprintf(
@@ -104,10 +94,10 @@ class NostoOperationExchangeRate extends NostoOperation
      *   "valid_until": "2015-02-27T12:00:00Z"
      * }
      *
+     * @param NostoExchangeRateCollection $collection
      * @return string the JSON structure.
-     * @throws NostoException of the rate collection is empty.
      */
-    protected function getJson()
+    protected function getJson(NostoExchangeRateCollection $collection)
     {
         $data = array(
             'rates' => array(),
@@ -115,7 +105,7 @@ class NostoOperationExchangeRate extends NostoOperation
         );
 
         /** @var NostoExchangeRateInterface $item */
-        foreach ($this->collection as $item) {
+        foreach ($collection as $item) {
             $data['rates'][$item->getName()] = array(
                 'rate' => $item->getExchangeRate(),
                 'price_currency_code' => $item->getCurrencyCode(),

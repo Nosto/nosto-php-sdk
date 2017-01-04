@@ -36,7 +36,7 @@
 /**
  * Oauth DTO (Data Transfer Object).
  */
-class NostoOAuth implements \NostoOauthClientMetaInterface
+class NostoOAuth implements NostoOAuthClientMetaDataInterface
 {
     /**
      * @var array The scopes for the OAuth2 request.
@@ -111,7 +111,7 @@ class NostoOAuth implements \NostoOauthClientMetaInterface
     /**
      * @inheritdoc
      */
-    public function getLanguage()
+    public function getLanguageIsoCode()
     {
         return $this->_language;
     }
@@ -119,7 +119,7 @@ class NostoOAuth implements \NostoOauthClientMetaInterface
     /**
      * @inheritdoc
      */
-    public function setLanguage($language)
+    public function setLanguageIsoCode($language)
     {
         $this->_language = $language;
     }

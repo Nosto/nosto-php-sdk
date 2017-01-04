@@ -58,8 +58,6 @@ final class NostoCurrencySymbol
      *
      * @param string $symbol the currency symbol.
      * @param string $position the position of the symbol when displaying the currency.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function __construct($symbol, $position)
     {

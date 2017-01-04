@@ -37,7 +37,7 @@
 /**
  * Iframe helper class for account administration iframe.
  */
-class NostoHelperIframe extends NostoHelper
+final class NostoHelperIframe extends NostoHelper
 {
     const IFRAME_URI_INSTALL = '/hub/{platform}/install';
     const IFRAME_URI_UNINSTALL = '/hub/{platform}/uninstall';

@@ -52,7 +52,7 @@ class NostoExportOrderCollection extends NostoOrderCollection implements NostoEx
                 'order_number' => $item->getOrderNumber(),
                 'order_status_code' => $item->getOrderStatus()->getCode(),
                 'order_status_label' => $item->getOrderStatus()->getLabel(),
-                'created_at' => Nosto::helper('date')->format($item->getCreatedDate()),
+                'created_at' => NostoHelperDate::format($item->getCreatedDate()),
                 'buyer' => array(
                     'first_name' => $item->getBuyerInfo()->getFirstName(),
                     'last_name' => $item->getBuyerInfo()->getLastName(),
@@ -67,7 +67,7 @@ class NostoExportOrderCollection extends NostoOrderCollection implements NostoEx
                     'product_id' => $orderItem->getProductId(),
                     'quantity' => (int)$orderItem->getQuantity(),
                     'name' => $orderItem->getName(),
-                    'unit_price' => Nosto::helper('price')->format($orderItem->getUnitPrice()),
+                    'unit_price' => NostoHelperPrice::format($orderItem->getUnitPrice()),
                     'price_currency_code' => strtoupper($orderItem->getCurrencyCode()),
                 );
             }

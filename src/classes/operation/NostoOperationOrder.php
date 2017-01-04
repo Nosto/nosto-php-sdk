@@ -56,12 +56,12 @@ class NostoOperationOrder
     /**
      * Sends an order confirmation to Nosto.
      *
-     * @param Nosto_Tagging_Model_Meta_Order $order the order to confirm.
+     * @param NostoOrderInterface $order the order to confirm.
      * @param null $customerId the Nosto customer ID of the user who placed the order.
      * @throws NostoException on failure.
      * @return true on success.
      */
-    public function confirm(Nosto_Tagging_Model_Meta_Order $order, $customerId = null)
+    public function confirm(NostoOrderInterface $order, $customerId = null)
     {
         $request = $this->initApiRequest($this->account, $customerId);
         $response = $request->post($this->getOrderAsJson($order));
@@ -74,11 +74,11 @@ class NostoOperationOrder
     /**
      * Builds the API request and returns it.
      *
-     * @param NostoAccount $account the Nosto account object.
+     * @param NostoAccountInterface $account the Nosto account object.
      * @param string|null $customerId the Nosto customer ID of the user who placed the order.
      * @return NostoApiRequest the request object.
      */
-    protected function initApiRequest(NostoAccount $account, $customerId)
+    protected function initApiRequest(NostoAccountInterface $account, $customerId)
     {
         $request = new NostoApiRequest();
         $request->setContentType('application/json');
@@ -95,10 +95,10 @@ class NostoOperationOrder
     /**
      * Turns an order object into a JSON structure.
      *
-     * @param Nosto_Tagging_Model_Meta_Order $order the order object.
+     * @param NostoOrderInterface $order the order object.
      * @return string the JSON structure.
      */
-    protected function getOrderAsJson(Nosto_Tagging_Model_Meta_Order $order)
+    protected function getOrderAsJson(NostoOrderInterface $order)
     {
         /** @var NostoHelperDate $dateHelper */
         $dateHelper = Nosto::helper('date');

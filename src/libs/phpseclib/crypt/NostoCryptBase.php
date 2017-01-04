@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpDocSignatureInspection */
 /**
  * Base Class for all NostoCrypt* cipher classes
  *

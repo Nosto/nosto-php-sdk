@@ -187,7 +187,7 @@ class NostoOperationProduct extends NostoOperation
         }
         if (
             is_array($product->getAlternateImageUrls())
-            && count($product->getAlternateImageUrls() > 0)
+            && count($product->getAlternateImageUrls()) > 0
         ) {
             $data['alternate_image_urls'] = $product->getAlternateImageUrls();
         }

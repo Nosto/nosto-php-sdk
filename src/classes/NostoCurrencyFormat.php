@@ -67,8 +67,6 @@ final class NostoCurrencyFormat
      * @param int $groupLength the length of the group.
      * @param string $decimalSymbol the decimal symbol/char.
      * @param int $precision the value precision.
-     *
-     * @throws NostoInvalidArgumentException
      */
     public function __construct($groupSymbol, $groupLength, $decimalSymbol, $precision)
     {

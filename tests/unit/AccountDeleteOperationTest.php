@@ -39,7 +39,7 @@ class AccountDeleteOperationTest extends \Codeception\TestCase\Test
     use \Codeception\Specify;
 
     /**
-     * @var \UnitTester
+     * @var UnitTester
      */
     protected $tester;
 

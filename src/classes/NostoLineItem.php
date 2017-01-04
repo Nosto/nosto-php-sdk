@@ -78,7 +78,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
         $this->_productId = -1;
         $this->_quantity = 1;
         $this->_name = $name;
-        $this->_unitPrice = Nosto::helper('price')->format($price);
+        $this->_unitPrice = NostoHelperDate::format($price);
         $this->_currencyCode = strtoupper($currency);
     }
 
