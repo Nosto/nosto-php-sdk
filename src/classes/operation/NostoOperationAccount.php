@@ -67,7 +67,7 @@ class NostoOperationAccount extends NostoOperation
         $request = $this->initApiRequest($this->account->getSignUpApiToken());
         $request->setPath(NostoApiRequest::PATH_SIGN_UP);
         $request->setReplaceParams(array('{lang}' => $this->account->getLanguageCode()));
-        $response = $request->post($this->getJson());
+        $response = $request->post($this->account);
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to create Nosto account.', $request, $response);
         }
@@ -79,58 +79,5 @@ class NostoOperationAccount extends NostoOperation
             '_token'
         ));
         return $account;
-    }
-
-    /**
-     * Returns the account in JSON format
-     *
-     * @return string the JSON structure.
-     */
-    protected function getJson()
-    {
-        $data = array(
-            'title' => $this->account->getTitle(),
-            'name' => $this->account->getName(),
-            'platform' => $this->account->getPlatform(),
-            'front_page_url' => $this->account->getFrontPageUrl(),
-            'currency_code' => strtoupper($this->account->getCurrencyCode()),
-            'language_code' => strtolower($this->account->getOwnerLanguageCode()),
-            'owner' => array(
-                'first_name' => $this->account->getOwner()->getFirstName(),
-                'last_name' => $this->account->getOwner()->getLastName(),
-                'email' => $this->account->getOwner()->getEmail(),
-            ),
-            'api_tokens' => array(),
-        );
-
-        // Add optional billing details if the required data is set.
-        $billingDetails = array(
-            'country' => strtoupper($this->account->getBillingDetails()->getCountry())
-        );
-        if (!empty($billingDetails['country'])) {
-            $data['billing_details'] = $billingDetails;
-        }
-
-        // Add optional partner code if one is set.
-        $partnerCode = $this->account->getPartnerCode();
-        if (!empty($partnerCode)) {
-            $data['partner_code'] = $partnerCode;
-        }
-
-        // Request all available API tokens for the account.
-        foreach (NostoApiToken::$tokenNames as $name) {
-            $data['api_tokens'][] = 'api_' . $name;
-        }
-
-        if ($this->account->getDetails()) {
-            $data['details'] = $this->account->getDetails();
-        }
-
-        $data['use_exchange_rates'] = $this->account->getUseCurrencyExchangeRates();
-        if ($this->account->getDefaultVariationId()) {
-            $data['default_variant_id'] = $this->account->getDefaultVariationId();
-        }
-
-        return json_encode($data);
     }
 }

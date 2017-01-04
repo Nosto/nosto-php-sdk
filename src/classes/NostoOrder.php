@@ -38,7 +38,7 @@
  * Model for order information. This is used when compiling the info about an
  * order that is sent to Nosto.
  */
-class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValidatableInterface
+class NostoOrder extends NostoSerializableObject implements NostoOrderInterface, NostoValidatableInterface
 {
     /**
      * @var string|int the unique order number identifying the order.
@@ -100,6 +100,76 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     }
 
     /**
+     * Add a purchased item for the order.
+     *
+     * The line item must be an array of NostoOrderLineItem
+     *
+     * Usage:
+     * $object->addPurchasedItems(new NostoOrderLineItem());
+     *
+     * @param NostoLineItemInterface $purchasedItems
+     */
+    public function addPurchasedItems(NostoLineItemInterface $purchasedItems)
+    {
+        $this->purchasedItems[] = $purchasedItems;
+    }
+
+    /**
+     * Sets the order status.
+     *
+     * The order status must be an instance of NostoOrderStatus.
+     *
+     * Usage:
+     * $object->addOrderStatus(new NostoOrderStatus());
+     *
+     * @param NostoOrderStatus $orderStatus the buyer info.
+     */
+    public function addOrderStatus($orderStatus)
+    {
+        $this->orderStatus[] = $orderStatus;
+    }
+
+    /**
+     * @return array the array representation of the object for serialization
+     */
+    public function getArray()
+    {
+        $data = array(
+            'order_number' => $this->getOrderNumber(),
+            'external_order_ref' => $this->getExternalOrderRef(),
+            'buyer' => array(),
+            'created_at' => NostoHelperDate::format($this->getCreatedDate()),
+            'payment_provider' => $this->getPaymentProvider(),
+            'purchased_items' => array(),
+        );
+        if ($this->getOrderStatus()) {
+            $data['order_status_code'] = $this->getOrderStatus()->getCode();
+            $data['order_status_label'] = $this->getOrderStatus()->getLabel();
+        }
+        foreach ($this->getPurchasedItems() as $item) {
+            $data['purchased_items'][] = array(
+                'product_id' => $item->getProductId(),
+                'quantity' => $item->getQuantity(),
+                'name' => $item->getName(),
+                'unit_price' => NostoHelperPrice::format($item->getUnitPrice()),
+                'price_currency_code' => strtoupper($item->getCurrencyCode()),
+            );
+        }
+        if ($this->getBuyerInfo()) {
+            if ($this->getBuyerInfo()->getFirstName()) {
+                $data['buyer']['first_name'] = $this->getBuyerInfo()->getFirstName();
+            }
+            if ($this->getBuyerInfo()->getLastName()) {
+                $data['buyer']['last_name'] = $this->getBuyerInfo()->getLastName();
+            }
+            if ($this->getBuyerInfo()->getEmail()) {
+                $data['buyer']['email'] = $this->getBuyerInfo()->getEmail();
+            }
+        }
+        return $data;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getOrderNumber()
@@ -120,6 +190,26 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     public function setOrderNumber($orderNumber)
     {
         $this->orderNumber = $orderNumber;
+    }
+
+    /**
+     * Returns the external order reference
+     *
+     * @return string
+     */
+    public function getExternalOrderRef()
+    {
+        return $this->externalOrderRef;
+    }
+
+    /**
+     * Sets the external order reference
+     *
+     * @param string $externalOrderRef
+     */
+    public function setExternalOrderRef($externalOrderRef)
+    {
+        $this->externalOrderRef = $externalOrderRef;
     }
 
     /**
@@ -171,24 +261,24 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     /**
      * @inheritdoc
      */
-    public function getBuyerInfo()
+    public function getOrderStatus()
     {
-        return $this->buyerInfo;
+        return $this->orderStatus;
     }
 
     /**
-     * Sets the buyer information for the order.
+     * Sets the order status.
      *
-     * The buyer information must be an instance of NostoOrderBuyer.
+     * The order status must be an instance of NostoOrderStatus.
      *
      * Usage:
-     * $object->setBuyerInfo(new NostoOrderBuyer());
+     * $object->setOrderStatus(new NostoOrderStatus());
      *
-     * @param NostoOrderBuyer $buyerInfo the buyer info.
+     * @param NostoOrderStatus $orderStatus the buyer info.
      */
-    public function setBuyerInfo($buyerInfo)
+    public function setOrderStatus($orderStatus)
     {
-        $this->buyerInfo = $buyerInfo;
+        $this->orderStatus = $orderStatus;
     }
 
     /**
@@ -217,73 +307,23 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     /**
      * @inheritdoc
      */
-    public function getOrderStatus()
+    public function getBuyerInfo()
     {
-        return $this->orderStatus;
+        return $this->buyerInfo;
     }
 
     /**
-     * Sets the order status.
+     * Sets the buyer information for the order.
      *
-     * The order status must be an instance of NostoOrderStatus.
+     * The buyer information must be an instance of NostoOrderBuyer.
      *
      * Usage:
-     * $object->setOrderStatus(new NostoOrderStatus());
+     * $object->setBuyerInfo(new NostoOrderBuyer());
      *
-     * @param NostoOrderStatus $orderStatus the buyer info.
+     * @param NostoOrderBuyer $buyerInfo the buyer info.
      */
-    public function setOrderStatus($orderStatus)
+    public function setBuyerInfo($buyerInfo)
     {
-        $this->orderStatus = $orderStatus;
-    }
-
-    /**
-     * Add a purchased item for the order.
-     *
-     * The line item must be an array of NostoOrderLineItem
-     *
-     * Usage:
-     * $object->addPurchasedItems(new NostoOrderLineItem());
-     *
-     * @param NostoLineItemInterface $purchasedItems
-     */
-    public function addPurchasedItems(NostoLineItemInterface $purchasedItems)
-    {
-        $this->purchasedItems[] = $purchasedItems;
-    }
-
-    /**
-     * Sets the order status.
-     *
-     * The order status must be an instance of NostoOrderStatus.
-     *
-     * Usage:
-     * $object->addOrderStatus(new NostoOrderStatus());
-     *
-     * @param NostoOrderStatus $orderStatus the buyer info.
-     */
-    public function addOrderStatus($orderStatus)
-    {
-        $this->orderStatus[] = $orderStatus;
-    }
-
-    /**
-     * Returns the external order reference
-     *
-     * @return string
-     */
-    public function getExternalOrderRef()
-    {
-        return $this->externalOrderRef;
-    }
-
-    /**
-     * Sets the external order reference
-     *
-     * @param string $externalOrderRef
-     */
-    public function setExternalOrderRef($externalOrderRef)
-    {
-        $this->externalOrderRef = $externalOrderRef;
+        $this->buyerInfo = $buyerInfo;
     }
 }

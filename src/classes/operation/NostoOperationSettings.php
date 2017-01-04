@@ -66,50 +66,10 @@ class NostoOperationSettings extends NostoOperation
     {
         $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_SETTINGS));
         $request->setPath(NostoApiRequest::PATH_SETTINGS);
-        $response = $request->post($this->getJson($accountMeta));
+        $response = $request->post($accountMeta);
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to update Nosto settings.', $request, $response);
         }
         return true;
-    }
-
-    /**
-     * Returns the settings in JSON format
-     *
-     * @param NostoSignupInterface $accountMeta
-     * @return string the JSON structure.
-     */
-    protected function getJson(NostoSignupInterface $accountMeta)
-    {
-        $data = array(
-            'title' => $accountMeta->getTitle(),
-            'front_page_url' => $accountMeta->getFrontPageUrl(),
-            'currency_code' => $accountMeta->getCurrencyCode(),
-        );
-
-        // Currencies and currency options
-        $currencyCount = count($accountMeta->getCurrencies());
-        if ($currencyCount > 0) {
-            $data['currencies'] = array();
-            foreach ($accountMeta->getCurrencies() as $currency) {
-                $data['currencies'][$currency->getCode()->getCode()] = array(
-                    'currency_before_amount' => (
-                        $currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT
-                    ),
-                    'currency_token' => $currency->getSymbol()->getSymbol(),
-                    'decimal_character' => $currency->getFormat()->getDecimalSymbol(),
-                    'grouping_separator' => $currency->getFormat()->getGroupSymbol(),
-                    'decimal_places' => $currency->getFormat()->getPrecision(),
-                );
-            }
-        }
-        $data['use_exchange_rates'] = $accountMeta->getUseCurrencyExchangeRates();
-        if ($accountMeta->getDefaultVariationId()) {
-            $data['default_variant_id'] = $accountMeta->getDefaultVariationId();
-        } else {
-            $data['default_variant_id'] = '';
-        }
-
-        return json_encode($data);
     }
 }

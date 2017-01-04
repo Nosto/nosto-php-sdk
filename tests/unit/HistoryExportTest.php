@@ -51,7 +51,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
      */
     public function testProductHistoryExport()
     {
-        $collection = new NostoExportProductCollection();
+        $collection = new NostoProductCollection();
         $collection[] = new MockNostoProduct();
         $cipher_text = NostoExporter::export($this->account, $collection);
 
@@ -62,7 +62,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
                 $cipher->setIV(substr($cipher_text, 0, 16));
                 $plain_text = $cipher->decrypt(substr($cipher_text, 16));
 
-                $this->assertEquals($collection->getJson(), $plain_text);
+                $this->assertEquals(json_encode($collection->getArray()), $plain_text);
             });
     }
 
@@ -71,7 +71,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
      */
     public function testOrderHistoryExport()
     {
-        $collection = new NostoExportOrderCollection();
+        $collection = new NostoOrderCollection();
         $collection->append(new MockNostoOrder());
         $cipher_text = NostoExporter::export($this->account, $collection);
 
@@ -82,7 +82,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
                 $cipher->setIV(substr($cipher_text, 0, 16));
                 $plain_text = $cipher->decrypt(substr($cipher_text, 16));
 
-                $this->assertEquals($collection->getJson(), $plain_text);
+                $this->assertEquals(json_encode($collection->getArray()), $plain_text);
             });
     }
 

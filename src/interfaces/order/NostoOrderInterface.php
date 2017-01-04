@@ -38,7 +38,7 @@
  * Interface for the meta data of an placed order.
  * This is used when making order confirmation API requests and order history exports to Nosto.
  */
-interface NostoOrderInterface
+interface NostoOrderInterface extends NostoSerializableInterface
 {
     /**
      * The unique order number identifying the order.

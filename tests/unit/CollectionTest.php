@@ -37,7 +37,7 @@
 require_once(dirname(__FILE__) . '/../_support/MockNostoProduct.php');
 require_once(dirname(__FILE__) . '/../_support/MockNostoOrder.php');
 
-class ExportCollectionTest extends \Codeception\TestCase\Test
+class CollectionTest extends \Codeception\TestCase\Test
 {
     /**
      * Tests that the export collection does not accept string items.
@@ -45,7 +45,7 @@ class ExportCollectionTest extends \Codeception\TestCase\Test
     public function testCollectionValidationForString()
     {
         $this->expectException('NostoException');
-        $collection = new NostoExportProductCollection();
+        $collection = new NostoProductCollection();
         $collection[] = 'invalid item type';
     }
 
@@ -55,7 +55,7 @@ class ExportCollectionTest extends \Codeception\TestCase\Test
     public function testCollectionValidationForInteger()
     {
         $this->expectException('NostoException');
-        $collection = new NostoExportProductCollection();
+        $collection = new NostoProductCollection();
         $collection->append(1);
     }
 
@@ -65,7 +65,7 @@ class ExportCollectionTest extends \Codeception\TestCase\Test
     public function testCollectionValidationForFloat()
     {
         $this->expectException('NostoException');
-        $collection = new NostoExportProductCollection();
+        $collection = new NostoProductCollection();
         $collection->append(99.99);
     }
 
@@ -75,7 +75,7 @@ class ExportCollectionTest extends \Codeception\TestCase\Test
     public function testCollectionValidationForArray()
     {
         $this->expectException('NostoException');
-        $collection = new NostoExportProductCollection();
+        $collection = new NostoProductCollection();
         $collection[] = array('test');
     }
 
@@ -85,7 +85,7 @@ class ExportCollectionTest extends \Codeception\TestCase\Test
     public function testCollectionValidationForObject()
     {
         $this->expectException('NostoException');
-        $collection = new NostoExportProductCollection();
+        $collection = new NostoProductCollection();
         $collection->append(new stdClass());
     }
 }

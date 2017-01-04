@@ -37,7 +37,7 @@
 /**
  * Interface for the meta data model used when creating new Nosto accounts.
  */
-interface NostoSignupInterface
+interface NostoSignupInterface extends NostoSerializableInterface
 {
     /**
      * The shops name for which the account is to be created for.

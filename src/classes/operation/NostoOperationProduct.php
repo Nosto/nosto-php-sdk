@@ -82,140 +82,11 @@ class NostoOperationProduct extends NostoOperation
     {
         $request = $this->initApiRequest($this->account->getApiToken('products'));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPSERT);
-        $response = $request->post($this->getCollectionAsJson());
+        $response = $request->post($this->collection);
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to upsert Nosto product(s).', $request, $response);
         }
         return true;
-    }
-
-    /**
-     * Returns the whole collection in JSON format.
-     *
-     * @return string the json.
-     * @throws NostoException if the collection is empty.
-     */
-    protected function getCollectionAsJson()
-    {
-        $data = array();
-        foreach ($this->collection->getArrayCopy() as $item) {
-            /** @var NostoProductInterface|NostoValidatableInterface $item */
-            $validator = new NostoValidator($item);
-            if ($validator->validate()) {
-                $data[] = self::getProductAsArray($item);
-            }
-        }
-        if (empty($data)) {
-            throw new NostoException('No products found in collection.');
-        }
-        return json_encode($data);
-    }
-
-    /**
-     * Converts the product object into an array and returns it.
-     *
-     * Example:
-     *
-     * array(
-     *     'url' => 'http://www.example.com/product/CANOE123',
-     *     'product_id' => 'CANOE123',
-     *     'name' => 'ACME Foldable Canoe',
-     *     'image_url' => 'http://www.example.com/product/images/CANOE123.jpg',
-     *     'price' => '1269.00',
-     *     'price_currency_code' => 'EUR',
-     *     'availability' => 'InStock',
-     *     'categories' => array('/Outdoor/Boats/Canoes', '/Sales/Boats'),
-     *     'description' => 'This foldable canoe is easy to travel with.',
-     *     'list_price' => '1299.00',
-     *     'brand' => 'ACME',
-     *     'tag1' => array('Men'),
-     *     'tag2' => array('Foldable'),
-     *     'tag3' => array('Brown', 'Black', 'Orange'),
-     * )
-     *
-     * @param NostoProductInterface $product the object.
-     * @return array the newly created array.
-     */
-    public static function getProductAsArray(NostoProductInterface $product)
-    {
-        $data = array(
-            'url' => $product->getUrl(),
-            'product_id' => $product->getProductId(),
-            'name' => $product->getName(),
-            'image_url' => $product->getImageUrl(),
-            'price' => NostoHelperPrice::format($product->getPrice()),
-            'price_currency_code' => strtoupper($product->getCurrencyCode()),
-            'availability' => $product->getAvailability(),
-            'categories' => $product->getCategories(),
-        );
-
-        // Optional properties.
-        if ($product->getFullDescription()) {
-            $data['description'] = $product->getFullDescription();
-        }
-        if ($product->getListPrice()) {
-            $data['list_price'] = NostoHelperPrice::format(
-                $product->getListPrice()
-            );
-        }
-        if ($product->getBrand()) {
-            $data['brand'] = $product->getBrand();
-        }
-        foreach ($product->getTags() as $type => $tags) {
-            if (is_array($tags) && count($tags) > 0) {
-                $data[$type] = $tags;
-            }
-        }
-        if ($product->getVariationId()) {
-            $data['variation_id'] = $product->getVariationId();
-        }
-        if ($product->getSupplierCost()) {
-            $data['supplier_cost'] = NostoHelperPrice::format(
-                $product->getSupplierCost()
-            );
-        }
-        if ($product->getInventoryLevel()) {
-            $data['inventory_level'] = $product->getInventoryLevel();
-        }
-        if ($product->getReviewCount()) {
-            $data['review_count'] = $product->getReviewCount();
-        }
-        if ($product->getRatingValue()) {
-            $data['rating_value'] = $product->getRatingValue();
-        }
-        if (
-            is_array($product->getAlternateImageUrls())
-            && count($product->getAlternateImageUrls()) > 0
-        ) {
-            $data['alternate_image_urls'] = $product->getAlternateImageUrls();
-        }
-        if ($product->getCondition()) {
-            $data['condition'] = $product->getCondition();
-        }
-        if ($product->getGender()) {
-            $data['gender'] = $product->getGender();
-        }
-        if ($product->getAgeGroup()) {
-            $data['age_group'] = $product->getAgeGroup();
-        }
-        if ($product->getGtin()) {
-            $data['gtin'] = $product->getGtin();
-        }
-        if ($product->getGoogleCategory()) {
-            $data['google_category'] = $product->getGoogleCategory();
-        }
-        if ($product->getUnitPricingMeasure()) {
-            $data['unit_pricing_measure'] = $product->getUnitPricingMeasure();
-        }
-        if ($product->getUnitPricingBaseMeasure()) {
-            $data['unit_pricing_base_measure']
-                = $product->getUnitPricingBaseMeasure();
-        }
-        if ($product->getUnitPricingUnit()) {
-            $data['unit_pricing_unit'] = $product->getUnitPricingUnit();
-        }
-
-        return $data;
     }
 
     /**
@@ -228,7 +99,7 @@ class NostoOperationProduct extends NostoOperation
     {
         $request = $this->initApiRequest($this->account->getApiToken('products'));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_CREATE);
-        $response = $request->post($this->getCollectionAsJson());
+        $response = $request->post($this->collection);
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to create Nosto product(s).', $request, $response);
         }
@@ -245,7 +116,7 @@ class NostoOperationProduct extends NostoOperation
     {
         $request = $this->initApiRequest($this->account->getApiToken('products'));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPDATE);
-        $response = $request->put($this->getCollectionAsJson());
+        $response = $request->put($this->collection);
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to update Nosto product(s).', $request, $response);
         }
@@ -262,29 +133,10 @@ class NostoOperationProduct extends NostoOperation
     {
         $request = $this->initApiRequest($this->account->getApiToken('products'));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_DISCONTINUE);
-        $response = $request->post($this->getCollectionIdsAsJson());
+        $response = $request->post($this->collection);
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to delete Nosto product(s).', $request, $response);
         }
         return true;
-    }
-
-    /**
-     * Returns all the product IDs of the items in the collection in JSON format.
-     *
-     * @return string the json.
-     * @throws NostoException if the collection is empty.
-     */
-    protected function getCollectionIdsAsJson()
-    {
-        $data = array();
-        foreach ($this->collection->getArrayCopy() as $item) {
-            /** @var NostoProductInterface $item */
-            $data[] = $item->getProductId();
-        }
-        if (empty($data)) {
-            throw new NostoException('No products found in collection.');
-        }
-        return json_encode($data);
     }
 }

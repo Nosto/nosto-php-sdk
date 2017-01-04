@@ -36,10 +36,35 @@
 
 /**
  * Product object collection.
- * Supports only items implementing "NostoExhangeRateInterface".
+ * Supports only items implementing "NostoExchangeRateInterface".
  */
 class NostoExchangeRateCollection extends NostoCollection
 {
+    public function getArray()
+    {
+        $data = array(
+            'rates' => array(),
+            'valid_until' => null,
+        );
+
+        /** @var NostoExchangeRateInterface $item */
+        foreach ($this as $item) {
+            $data['rates'][$item->getName()] = array(
+                'rate' => $item->getExchangeRate(),
+                'price_currency_code' => $item->getCurrencyCode(),
+            );
+        }
+        if (empty($data['rates'])) {
+            Nosto::throwException(
+                sprintf(
+                    'Failed to update currencyCode exchange rates for account %s. No rates found in collection.',
+                    $this->account->getName()
+                )
+            );
+        }
+        return $data;
+    }
+
     /**
      * Returns the type of items this collection can contain.
      *

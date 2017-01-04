@@ -73,8 +73,6 @@ require_once(dirname(__FILE__) . '/classes/exception/NostoHttpResponseException.
 require_once(dirname(__FILE__) . '/classes/exception/NostoApiResponseException.php');
 
 require_once(dirname(__FILE__) . '/classes/export/NostoExporter.php');
-require_once(dirname(__FILE__) . '/classes/export/NostoExportProductCollection.php');
-require_once(dirname(__FILE__) . '/classes/export/NostoExportOrderCollection.php');
 
 require_once(dirname(__FILE__) . '/classes/helper/NostoHelper.php');
 require_once(dirname(__FILE__) . '/classes/helper/NostoHelperDate.php');

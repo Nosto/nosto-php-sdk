@@ -37,7 +37,7 @@
 /**
  * Handles communications through the Nosto API.
  */
-class NostoOperation
+abstract class NostoOperation
 {
     /**
      * Create and returns a new API request object initialized with:

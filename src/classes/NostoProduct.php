@@ -38,7 +38,7 @@
  * Model for product information. This is used when compiling the info about a
  * product that is sent to Nosto.
  */
-class NostoProduct extends NostoObject implements NostoProductInterface, NostoValidatableInterface
+class NostoProduct extends NostoSerializableObject implements NostoProductInterface, NostoValidatableInterface
 {
     /**
      * @var string absolute url to the product page.
@@ -193,242 +193,6 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     /**
      * @inheritdoc
      */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
-     * Sets the URL for the product page in the shop that shows this product.
-     *
-     * The URL must be absolute, i.e. must include the protocol http or https.
-     *
-     * Usage:
-     * $object->setUrl("http://my.shop.com/products/example.html");
-     *
-     * @param string $url the url.
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getProductId()
-    {
-        return $this->productId;
-    }
-
-    /**
-     * Sets the product ID from given product.
-     *
-     * The product ID must be an integer above zero.
-     *
-     * Usage:
-     * $object->setProductId(1);
-     *
-     * @param int $id the product ID.
-     */
-    public function setProductId($id)
-    {
-        $this->productId = $id;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Sets the product name.
-     *
-     * The name must be a non-empty string.
-     *
-     * Usage:
-     * $object->setName('Example');
-     *
-     * @param string $name the name.
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getImageUrl()
-    {
-        return $this->imageUrl;
-    }
-
-    /**
-     * Sets the image URL for the product.
-     *
-     * The URL must be absolute, i.e. must include the protocol http or https.
-     *
-     * Usage:
-     * $object->setImageUrl("http://my.shop.com/media/example.jpg");
-     *
-     * @param string $imageUrl the url.
-     */
-    public function setImageUrl($imageUrl)
-    {
-        $this->imageUrl = $imageUrl;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
-     * Sets the product price.
-     *
-     * The price must be a numeric value
-     *
-     * Usage:
-     * $object->setPrice(99.99);
-     *
-     * @param integer $price the price.
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getListPrice()
-    {
-        return $this->listPrice;
-    }
-
-    /**
-     * Sets the product list price.
-     *
-     ** The price must be a numeric value
-     *
-     * Usage:
-     * $object->setListPrice(99.99);
-     *
-     * @param integer $listPrice the price.
-     */
-    public function setListPrice($listPrice)
-    {
-        $this->listPrice = $listPrice;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getCurrencyCode()
-    {
-        return $this->currencyCode;
-    }
-
-    /**
-     * Sets the currency code (ISO 4217) the product is sold in.
-     *
-     * The currency must be in ISO 4217 format
-     *
-     * Usage:
-     * $object->setCurrency('USD');
-     *
-     * @param string $currency the currency code.
-     */
-    public function setCurrencyCode($currency)
-    {
-        $this->currencyCode = $currency;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAvailability()
-    {
-        return $this->availability;
-    }
-
-    /**
-     * Sets the availability state of the product.
-     *
-     * The availability of the product must be either "InStock" or "OutOfStock"
-     *
-     * Usage:
-     * $object->setAvailability('InStock');
-     *
-     * @param string $availability the availability.
-     */
-    public function setAvailability($availability)
-    {
-        $this->availability = $availability;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
-
-    /**
-     * Sets the product categories.
-     *
-     * The categories must be an array of non-empty string values. The
-     * categories are expected to include the entire sub/parent category path,
-     * e.g. "clothes/winter/coats".
-     *
-     * Usage:
-     * $object->setCategories(array('clothes/winter/coats' [, ... ] ));
-     *
-     * @param array $categories the categories.
-     */
-    public function setCategories(array $categories)
-    {
-        $this->categories = array();
-        foreach ($categories as $category) {
-            $this->addCategory($category);
-        }
-    }
-
-    /**
-     * Adds a category to the product.
-     *
-     * The category must be a non-empty string and is expected to include the
-     * entire sub/parent category path, e.g. "clothes/winter/coats".
-     *
-     * Usage:
-     * $object->addCategory('clothes/winter/coats');
-     *
-     * @param string $category the category.
-     */
-    public function addCategory($category)
-    {
-        $this->categories[] = $category;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getShortDescription()
     {
         return $this->shortDescription;
@@ -470,44 +234,6 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     public function setDescription($description)
     {
         $this->description = $description;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getFullDescription()
-    {
-        $descriptions = array();
-        if (!empty($this->shortDescription)) {
-            $descriptions[] = $this->shortDescription;
-        }
-        if (!empty($this->description)) {
-            $descriptions[] = $this->description;
-        }
-        return implode(' ', $descriptions);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getBrand()
-    {
-        return $this->brand;
-    }
-
-    /**
-     * Sets the brand name of the product manufacturer.
-     *
-     * The name must be a non-empty string.
-     *
-     * Usage:
-     * $object->setBrand('Example');
-     *
-     * @param string $brand the brand name.
-     */
-    public function setBrand($brand)
-    {
-        $this->brand = $brand;
     }
 
     /**
@@ -626,6 +352,346 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
         $this->tags['tag3'][] = $tag;
     }
 
+    public function getArray()
+    {
+        $data = array(
+            'url' => $this->getUrl(),
+            'product_id' => $this->getProductId(),
+            'name' => $this->getName(),
+            'image_url' => $this->getImageUrl(),
+            'price' => NostoHelperPrice::format($this->getPrice()),
+            'price_currency_code' => strtoupper($this->getCurrencyCode()),
+            'availability' => $this->getAvailability(),
+            'categories' => $this->getCategories(),
+        );
+
+        // Optional properties.
+        if ($this->getFullDescription()) {
+            $data['description'] = $this->getFullDescription();
+        }
+        if ($this->getListPrice()) {
+            $data['list_price'] = NostoHelperPrice::format(
+                $this->getListPrice()
+            );
+        }
+        if ($this->getBrand()) {
+            $data['brand'] = $this->getBrand();
+        }
+        foreach ($this->getTags() as $type => $tags) {
+            if (is_array($tags) && count($tags) > 0) {
+                $data[$type] = $tags;
+            }
+        }
+        if ($this->getVariationId()) {
+            $data['variation_id'] = $this->getVariationId();
+        }
+        if ($this->getSupplierCost()) {
+            $data['supplier_cost'] = NostoHelperPrice::format(
+                $this->getSupplierCost()
+            );
+        }
+        if ($this->getInventoryLevel()) {
+            $data['inventory_level'] = $this->getInventoryLevel();
+        }
+        if ($this->getReviewCount()) {
+            $data['review_count'] = $this->getReviewCount();
+        }
+        if ($this->getRatingValue()) {
+            $data['rating_value'] = $this->getRatingValue();
+        }
+        if (
+            is_array($this->getAlternateImageUrls())
+            && count($this->getAlternateImageUrls()) > 0
+        ) {
+            $data['alternate_image_urls'] = $this->getAlternateImageUrls();
+        }
+        if ($this->getCondition()) {
+            $data['condition'] = $this->getCondition();
+        }
+        if ($this->getGender()) {
+            $data['gender'] = $this->getGender();
+        }
+        if ($this->getAgeGroup()) {
+            $data['age_group'] = $this->getAgeGroup();
+        }
+        if ($this->getGtin()) {
+            $data['gtin'] = $this->getGtin();
+        }
+        if ($this->getGoogleCategory()) {
+            $data['google_category'] = $this->getGoogleCategory();
+        }
+        if ($this->getUnitPricingMeasure()) {
+            $data['unit_pricing_measure'] = $this->getUnitPricingMeasure();
+        }
+        if ($this->getUnitPricingBaseMeasure()) {
+            $data['unit_pricing_base_measure']
+                = $this->getUnitPricingBaseMeasure();
+        }
+        if ($this->getUnitPricingUnit()) {
+            $data['unit_pricing_unit'] = $this->getUnitPricingUnit();
+        }
+
+        return $data;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Sets the URL for the product page in the shop that shows this product.
+     *
+     * The URL must be absolute, i.e. must include the protocol http or https.
+     *
+     * Usage:
+     * $object->setUrl("http://my.shop.com/products/example.html");
+     *
+     * @param string $url the url.
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getProductId()
+    {
+        return $this->productId;
+    }
+
+    /**
+     * Sets the product ID from given product.
+     *
+     * The product ID must be an integer above zero.
+     *
+     * Usage:
+     * $object->setProductId(1);
+     *
+     * @param int $id the product ID.
+     */
+    public function setProductId($id)
+    {
+        $this->productId = $id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Sets the product name.
+     *
+     * The name must be a non-empty string.
+     *
+     * Usage:
+     * $object->setName('Example');
+     *
+     * @param string $name the name.
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getImageUrl()
+    {
+        return $this->imageUrl;
+    }
+
+    /**
+     * Sets the image URL for the product.
+     *
+     * The URL must be absolute, i.e. must include the protocol http or https.
+     *
+     * Usage:
+     * $object->setImageUrl("http://my.shop.com/media/example.jpg");
+     *
+     * @param string $imageUrl the url.
+     */
+    public function setImageUrl($imageUrl)
+    {
+        $this->imageUrl = $imageUrl;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Sets the product price.
+     *
+     * The price must be a numeric value
+     *
+     * Usage:
+     * $object->setPrice(99.99);
+     *
+     * @param integer $price the price.
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCurrencyCode()
+    {
+        return $this->currencyCode;
+    }
+
+    /**
+     * Sets the currency code (ISO 4217) the product is sold in.
+     *
+     * The currency must be in ISO 4217 format
+     *
+     * Usage:
+     * $object->setCurrency('USD');
+     *
+     * @param string $currency the currency code.
+     */
+    public function setCurrencyCode($currency)
+    {
+        $this->currencyCode = $currency;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAvailability()
+    {
+        return $this->availability;
+    }
+
+    /**
+     * Sets the availability state of the product.
+     *
+     * The availability of the product must be either "InStock" or "OutOfStock"
+     *
+     * Usage:
+     * $object->setAvailability('InStock');
+     *
+     * @param string $availability the availability.
+     */
+    public function setAvailability($availability)
+    {
+        $this->availability = $availability;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Sets the product categories.
+     *
+     * The categories must be an array of non-empty string values. The
+     * categories are expected to include the entire sub/parent category path,
+     * e.g. "clothes/winter/coats".
+     *
+     * Usage:
+     * $object->setCategories(array('clothes/winter/coats' [, ... ] ));
+     *
+     * @param array $categories the categories.
+     */
+    public function setCategories(array $categories)
+    {
+        $this->categories = array();
+        foreach ($categories as $category) {
+            $this->addCategory($category);
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getFullDescription()
+    {
+        $descriptions = array();
+        if (!empty($this->shortDescription)) {
+            $descriptions[] = $this->shortDescription;
+        }
+        if (!empty($this->description)) {
+            $descriptions[] = $this->description;
+        }
+        return implode(' ', $descriptions);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getListPrice()
+    {
+        return $this->listPrice;
+    }
+
+    /**
+     * Sets the product list price.
+     *
+     ** The price must be a numeric value
+     *
+     * Usage:
+     * $object->setListPrice(99.99);
+     *
+     * @param integer $listPrice the price.
+     */
+    public function setListPrice($listPrice)
+    {
+        $this->listPrice = $listPrice;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    /**
+     * Sets the brand name of the product manufacturer.
+     *
+     * The name must be a non-empty string.
+     *
+     * Usage:
+     * $object->setBrand('Example');
+     *
+     * @param string $brand the brand name.
+     */
+    public function setBrand($brand)
+    {
+        $this->brand = $brand;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
     /**
      * @inheritdoc
      */
@@ -736,5 +802,21 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     public function getUnitPricingUnit()
     {
         return $this->unitPricingUnit;
+    }
+
+    /**
+     * Adds a category to the product.
+     *
+     * The category must be a non-empty string and is expected to include the
+     * entire sub/parent category path, e.g. "clothes/winter/coats".
+     *
+     * Usage:
+     * $object->addCategory('clothes/winter/coats');
+     *
+     * @param string $category the category.
+     */
+    public function addCategory($category)
+    {
+        $this->categories[] = $category;
     }
 }

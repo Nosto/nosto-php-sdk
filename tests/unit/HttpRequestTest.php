@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,7 +34,6 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
 class HttpRequestTest extends \Codeception\TestCase\Test
 {
     /**
@@ -219,7 +219,7 @@ class HttpRequestTest extends \Codeception\TestCase\Test
         $request->setUrl('http://localhost:3000');
         $response = $request->get();
         $this->assertEquals(404, $response->getCode());
-        $response = $request->post('test');
+        $response = $request->post(new MockNostoCurrentUser());
         $this->assertEquals(404, $response->getCode());
         $request->setUrl(
             sprintf(
@@ -246,7 +246,7 @@ class HttpRequestTest extends \Codeception\TestCase\Test
         $request->setUrl('http://localhost:3000');
         $response = $request->get();
         $this->assertEquals(404, $response->getCode());
-        $response = $request->post('test');
+        $response = $request->post(new MockNostoCurrentUser());
         $this->assertEquals(404, $response->getCode());
     }
 }

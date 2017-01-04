@@ -68,20 +68,8 @@ class NostoOperationSso extends NostoOperation
         $request = $this->initHttpRequest($this->account->getApiToken(NostoApiToken::API_SSO));
         $request->setPath(NostoApiRequest::PATH_SSO_AUTH);
         $request->setContentType('application/x-www-form-urlencoded');
-        $request->setReplaceParams(
-            array(
-                '{platform}' => $platform,
-                '{email}' => $user->getEmail(),
-            )
-        );
-        $response = $request->post(
-            http_build_query(
-                array(
-                    'fname' => $user->getFirstName(),
-                    'lname' => $user->getLastName(),
-                )
-            )
-        );
+        $request->setReplaceParams(array('{platform}' => $platform));
+        $response = $request->post($user);
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to initiate Nosto SSO.', $request, $response);
         }

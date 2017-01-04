@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,7 +34,6 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
 class NostoUser extends NostoObject implements NostoUserInterface
 {
     /**
@@ -50,6 +50,20 @@ class NostoUser extends NostoObject implements NostoUserInterface
      * @var string the account owner email address.
      */
     private $email;
+
+    /**
+     * @return array the array representation of the object for serialization
+     */
+    public function getArray()
+    {
+        $data = array(
+            'first_name' => $this->getFirstName(),
+            'last_name' => $this->getLastName(),
+            'email' => $this->getEmail(),
+        );
+
+        return $data;
+    }
 
     /**
      * The first name of the account owner.

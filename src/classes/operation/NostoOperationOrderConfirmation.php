@@ -81,54 +81,11 @@ class NostoOperationOrderConfirmation extends NostoOperation
             $replaceParams = array('{m}' => $this->account->getName());
         }
         $request->setReplaceParams($replaceParams);
-        $response = $request->post($this->getJson($order));
+        $response = $request->post($order);
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to send order confirmation', $request, $response);
         }
 
         return true;
-    }
-
-    /**
-     * Returns the order in JSON format
-     *
-     * @param NostoOrderInterface $order the order to confirm
-     * @return string the JSON structure.
-     */
-    protected function getJson(NostoOrderInterface $order)
-    {
-        $data = array(
-            'order_number' => $order->getOrderNumber(),
-            'external_order_ref' => $order->getExternalOrderRef(),
-            'buyer' => array(),
-            'created_at' => NostoHelperDate::format($order->getCreatedDate()),
-            'payment_provider' => $order->getPaymentProvider(),
-            'purchased_items' => array(),
-        );
-        if ($order->getOrderStatus()) {
-            $data['order_status_code'] = $order->getOrderStatus()->getCode();
-            $data['order_status_label'] = $order->getOrderStatus()->getLabel();
-        }
-        foreach ($order->getPurchasedItems() as $item) {
-            $data['purchased_items'][] = array(
-                'product_id' => $item->getProductId(),
-                'quantity' => $item->getQuantity(),
-                'name' => $item->getName(),
-                'unit_price' => NostoHelperPrice::format($item->getUnitPrice()),
-                'price_currency_code' => strtoupper($item->getCurrencyCode()),
-            );
-        }
-        if ($order->getBuyerInfo()) {
-            if ($order->getBuyerInfo()->getFirstName()) {
-                $data['buyer']['first_name'] = $order->getBuyerInfo()->getFirstName();
-            }
-            if ($order->getBuyerInfo()->getLastName()) {
-                $data['buyer']['last_name'] = $order->getBuyerInfo()->getLastName();
-            }
-            if ($order->getBuyerInfo()->getEmail()) {
-                $data['buyer']['email'] = $order->getBuyerInfo()->getEmail();
-            }
-        }
-        return json_encode($data);
     }
 }

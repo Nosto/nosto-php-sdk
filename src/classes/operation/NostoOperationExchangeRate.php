@@ -65,7 +65,7 @@ class NostoOperationExchangeRate extends NostoOperation
     {
         $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_EXCHANGE_RATES));
         $request->setPath(NostoApiRequest::PATH_CURRENCY_EXCHANGE_RATE);
-        $response = $request->post($this->getJson($collection));
+        $response = $request->post($collection);
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException(
                 sprintf(
@@ -77,48 +77,5 @@ class NostoOperationExchangeRate extends NostoOperation
             );
         }
         return true;
-    }
-
-    /**
-     * Turn the currencyCode exchange rate collection into a JSON structure.
-     *
-     * Format:
-     *
-     * {
-     *   "rates": {
-     *     "EUR": {
-     *       "rate": "0.706700000000",
-     *       "price_currency_code": "EUR"
-     *     }
-     *   },
-     *   "valid_until": "2015-02-27T12:00:00Z"
-     * }
-     *
-     * @param NostoExchangeRateCollection $collection
-     * @return string the JSON structure.
-     */
-    protected function getJson(NostoExchangeRateCollection $collection)
-    {
-        $data = array(
-            'rates' => array(),
-            'valid_until' => null,
-        );
-
-        /** @var NostoExchangeRateInterface $item */
-        foreach ($collection as $item) {
-            $data['rates'][$item->getName()] = array(
-                'rate' => $item->getExchangeRate(),
-                'price_currency_code' => $item->getCurrencyCode(),
-            );
-        }
-        if (empty($data['rates'])) {
-            Nosto::throwException(
-                sprintf(
-                    'Failed to update currencyCode exchange rates for account %s. No rates found in collection.',
-                    $this->account->getName()
-                )
-            );
-        }
-        return json_encode($data);
     }
 }

@@ -51,12 +51,12 @@ class NostoExporter
      * Encrypts and returns the data.
      *
      * @param NostoAccountInterface $account the account to export the data for.
-     * @param NostoExportCollectionInterface $collection the data collection to export.
+     * @param NostoSerializableInterface $collection the data collection to export.
      * @return string the encrypted data.
      */
     public static function export(
         NostoAccountInterface $account,
-        NostoExportCollectionInterface $collection
+        NostoSerializableInterface $collection
     ) {
         $data = '';
         // Use the first 16 chars of the SSO token as secret for encryption.
@@ -69,7 +69,7 @@ class NostoExporter
                 $cipher = new NostoCipher();
                 $cipher->setSecret($secret);
                 $cipher->setIV($iv);
-                $cipherText = $cipher->encrypt($collection->getJson());
+                $cipherText = $cipher->encrypt(json_encode($collection->getArray()));
                 // Prepend the IV to the cipher string so that nosto can parse and use it.
                 // There is no security concern with sending the IV as plain text.
                 $data = $iv . $cipherText;

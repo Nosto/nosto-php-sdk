@@ -35,21 +35,9 @@
  */
 
 /**
- * Product collection for historical data exports.
- * Supports only items implementing "NostoProductInterface".
+ * Base class for Nosto objects to share basic functionality.
  */
-class NostoExportProductCollection extends NostoProductCollection implements NostoExportCollectionInterface
+abstract class NostoSerializableObject extends NostoObject implements NostoSerializableInterface
 {
-    /**
-     * @inheritdoc
-     */
-    public function getJson()
-    {
-        $array = array();
-        /** @var NostoProductInterface $item */
-        foreach ($this->getArrayCopy() as $item) {
-            $array[] = NostoOperationProduct::getProductAsArray($item);
-        }
-        return json_encode($array);
-    }
+
 }

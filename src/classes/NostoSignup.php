@@ -137,6 +137,122 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     }
 
     /**
+     * The 2-letter ISO code (ISO 639-1) for the language used by the shop for
+     * which the account is created for.
+     *
+     * @return string the language ISO code.
+     */
+    public function getLanguageCode()
+    {
+        return $this->languageCode;
+    }
+
+    /**
+     * Sets the store language ISO (ISO 639-1) code.
+     *
+     * @param string $languageCode the language ISO code.
+     */
+    public function setLanguageCode($languageCode)
+    {
+        $this->languageCode = $languageCode;
+    }
+
+    /**
+     * Sets the account billing details.
+     *
+     * @param $billingDetails NostoSignupBillingDetailsInterface the account billing details
+     */
+    public function setBillingDetails(NostoSignupBillingDetailsInterface $billingDetails)
+    {
+        $this->billing = $billingDetails;
+    }
+
+    /**
+     * Returns an array of currencies used for this account
+     *
+     * @return array
+     */
+    public function getCurrencies()
+    {
+        return $this->currencies;
+    }
+
+    /**
+     * Sets the currencies
+     *
+     * @param $currencies
+     */
+    public function setCurrencies($currencies)
+    {
+        $this->currencies = $currencies;
+    }
+
+    /**
+     * Returns the signup api token
+     *
+     * @return NostoApiToken
+     */
+    public function getSignupApiToken()
+    {
+        return $this->signupApiToken;
+    }
+
+    /**
+     * @param NostoApiToken $signupApiToken
+     */
+    public function setSignupApiToken(NostoApiToken $signupApiToken)
+    {
+        $this->signupApiToken = $signupApiToken;
+    }
+
+    /**
+     * @return array the array representation of the object for serialization
+     */
+    public function getArray()
+    {
+        $data = array(
+            'title' => $this->getTitle(),
+            'name' => $this->getName(),
+            'platform' => $this->getPlatform(),
+            'front_page_url' => $this->getFrontPageUrl(),
+            'currency_code' => strtoupper($this->getCurrencyCode()),
+            'language_code' => strtolower($this->getOwnerLanguageCode()),
+            'owner' => $this->getOwner()->getArray(),
+            'api_tokens' => array(),
+        );
+
+        // Add optional billing details if the required data is set.
+        $billingDetails = array(
+            'country' => strtoupper($this->getBillingDetails()->getCountry())
+        );
+        if (!empty($billingDetails['country'])) {
+            $data['billing_details'] = $billingDetails;
+        }
+
+        // Add optional partner code if one is set.
+        $partnerCode = $this->getPartnerCode();
+        if (!empty($partnerCode)) {
+            $data['partner_code'] = $partnerCode;
+        }
+
+        // Request all available API tokens for the account.
+        foreach (NostoApiToken::$tokenNames as $name) {
+            $data['api_tokens'][] = 'api_' . $name;
+        }
+
+        if ($this->getDetails()) {
+            $data['details'] = $this->getDetails();
+        }
+
+        $data['use_exchange_rates'] = $this->getUseCurrencyExchangeRates();
+        if ($this->getDefaultVariationId()) {
+            $data['default_variant_id'] = $this->getDefaultVariationId();
+        }
+
+        return $data;
+    }
+
+    /**
      * The shops name for which the account is to be created for.
      *
      * @return string the name.
@@ -176,6 +292,24 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * Returns the name of the platform
+     *
+     * @return string
+     */
+    public function getPlatform()
+    {
+        return $this->platform;
+    }
+
+    /**
+     * @param string $platform
+     */
+    public function setPlatform($platform)
+    {
+        $this->platform = $platform;
     }
 
     /**
@@ -221,27 +355,6 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     }
 
     /**
-     * The 2-letter ISO code (ISO 639-1) for the language used by the shop for
-     * which the account is created for.
-     *
-     * @return string the language ISO code.
-     */
-    public function getLanguageCode()
-    {
-        return $this->languageCode;
-    }
-
-    /**
-     * Sets the store language ISO (ISO 639-1) code.
-     *
-     * @param string $languageCode the language ISO code.
-     */
-    public function setLanguageCode($languageCode)
-    {
-        $this->languageCode = $languageCode;
-    }
-
-    /**
      * The 2-letter ISO code (ISO 639-1) for the language of the account owner
      * who is creating the account.
      *
@@ -283,16 +396,6 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     }
 
     /**
-     * Sets the account billing details.
-     *
-     * @param $billingDetails NostoSignupBillingDetailsInterface the account billing details
-     */
-    public function setBillingDetails(NostoSignupBillingDetailsInterface $billingDetails)
-    {
-        $this->billing = $billingDetails;
-    }
-
-    /**
      * Meta data model for the account billing details.
      *
      * @return NostoSignupBillingDetailsInterface the meta data model.
@@ -303,23 +406,40 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     }
 
     /**
-     * Returns an array of currencies used for this account
+     * Returns the partner code
      *
-     * @return array
+     * @return string
      */
-    public function getCurrencies()
+    public function getPartnerCode()
     {
-        return $this->currencies;
+        return $this->partnerCode;
     }
 
     /**
-     * Sets the currencies
-     *
-     * @param $currencies
+     * @param string $partnerCode
      */
-    public function setCurrencies($currencies)
+    public function setPartnerCode($partnerCode)
     {
-        $this->currencies = $currencies;
+        $this->partnerCode = $partnerCode;
+    }
+
+    /**
+     * Returns the account details
+     *
+     * @return string
+     */
+    public function getDetails()
+    {
+        return $this->details;
+    }
+
+    /**
+     * Sets the details
+     * @param string $details
+     */
+    public function setDetails($details)
+    {
+        $this->details = $details;
     }
 
     /**
@@ -360,78 +480,5 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     public function setDefaultVariationId($defaultVariationId)
     {
         $this->defaultVariationId = $defaultVariationId;
-    }
-
-    /**
-     * Returns the account details
-     *
-     * @return string
-     */
-    public function getDetails()
-    {
-        return $this->details;
-    }
-
-    /**
-     * Sets the details
-     * @param string $details
-     */
-    public function setDetails($details)
-    {
-        $this->details = $details;
-    }
-
-    /**
-     * Returns the partner code
-     *
-     * @return string
-     */
-    public function getPartnerCode()
-    {
-        return $this->partnerCode;
-    }
-
-    /**
-     * @param string $partnerCode
-     */
-    public function setPartnerCode($partnerCode)
-    {
-        $this->partnerCode = $partnerCode;
-    }
-
-    /**
-     * Returns the name of the platform
-     *
-     * @return string
-     */
-    public function getPlatform()
-    {
-        return $this->platform;
-    }
-
-    /**
-     * @param string $platform
-     */
-    public function setPlatform($platform)
-    {
-        $this->platform = $platform;
-    }
-
-    /**
-     * Returns the signup api token
-     *
-     * @return NostoApiToken
-     */
-    public function getSignupApiToken()
-    {
-        return $this->signupApiToken;
-    }
-
-    /**
-     * @param NostoApiToken $signupApiToken
-     */
-    public function setSignupApiToken(NostoApiToken $signupApiToken)
-    {
-        $this->signupApiToken = $signupApiToken;
     }
 }
