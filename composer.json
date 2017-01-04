@@ -5,5 +5,10 @@
     "require-dev": {
         "codeception/codeception": "@stable",
         "codeception/specify": "@stable"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
     }
 }
