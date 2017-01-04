@@ -209,7 +209,7 @@ interface NostoProductInterface
     public function getAgeGroup();
 
     /**
-     * Returns the gtin / barcode
+     * Returns the GTIN / barcode
      *
      * @return string|null
      */

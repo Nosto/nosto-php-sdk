@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,12 +34,20 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
-/**
- * Interface for the account owner details.
- * This is used by the NostoSignupInterface meta data model when creating new Nosto accounts.
- */
-interface NostoSignupOwnerInterface extends NostoUserInterface
+class MockNostoCurrentUser implements NostoCurrentUserInterface
 {
+    public function getFirstName()
+    {
+        return 'James';
+    }
 
+    public function getLastName()
+    {
+        return 'Kirk';
+    }
+
+    public function getEmail()
+    {
+        return 'james.kirk@example.com';
+    }
 }

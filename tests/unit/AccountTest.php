@@ -87,7 +87,7 @@ class AccountTest extends \Codeception\TestCase\Test
     public function testAccountSingleSignOn()
     {
         $account = new MockNostoAccount('platform-test');
-        $user = new MockNostoSignupOwner();
+        $user = new MockNostoCurrentUser();
 
         $this->specify('account sso with an api token', function () use ($account, $user) {
             $service = new NostoOperationSso($account);

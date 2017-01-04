@@ -61,11 +61,29 @@ class NostoOAuth implements NostoOAuthClientMetaDataInterface
     protected $account;
 
     /**
+     * @var string the client-identifier of the platform doing the OAuth
+     */
+    protected $clientId;
+
+    /**
+     * @var string the client-secret of the platform doing the OAuth
+     */
+    protected $clientSecret;
+
+    /**
      * @inheritdoc
      */
     public function getClientId()
     {
-        return 'magento';
+        return $this->clientId;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setClientId($clientId)
+    {
+        $this->clientId = $clientId;
     }
 
     /**
@@ -73,7 +91,15 @@ class NostoOAuth implements NostoOAuthClientMetaDataInterface
      */
     public function getClientSecret()
     {
-        return 'magento';
+        return $this->clientSecret;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setClientSecret($clientSecret)
+    {
+        $this->clientSecret = $clientSecret;
     }
 
     /**
