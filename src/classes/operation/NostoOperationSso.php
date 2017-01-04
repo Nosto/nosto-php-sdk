@@ -40,17 +40,9 @@
 class NostoOperationSso extends NostoOperation
 {
     /**
-     * @var NostoAccountInterface the Nosto configuration object.
+     * @var NostoAccountInterface Nosto configuration
      */
     private $account;
-    /**
-     * @var NostoSignupOwnerInterface the current user
-     */
-    private $user;
-    /**
-     * @var string the current platform name
-     */
-    private $platform;
 
     /**
      * Constructor.
@@ -58,38 +50,35 @@ class NostoOperationSso extends NostoOperation
      * Accepts the Nosto account for which the service is to operate on.
      *
      * @param NostoAccountInterface $account the Nosto configuration object.
-     * @param NostoSignupOwnerInterface $user the current user
-     * @param $platform
      */
-    public function __construct(NostoAccountInterface $account, NostoSignupOwnerInterface $user, $platform)
+    public function __construct(NostoAccountInterface $account)
     {
         $this->account = $account;
-        $this->user = $user;
-        $this->platform = $platform;
     }
 
     /**
      * Sends a POST request to get a single signon URL for a store
      *
+     * @param NostoSignupOwnerInterface $user
+     * @param $platform
      * @return string the sso URL if the request was successful.
-     * @throws NostoException on failure.
      */
-    public function get()
+    public function get(NostoSignupOwnerInterface $user, $platform)
     {
         $request = $this->initHttpRequest($this->account->getApiToken(NostoApiToken::API_SSO));
         $request->setPath(NostoApiRequest::PATH_SSO_AUTH);
         $request->setContentType('application/x-www-form-urlencoded');
         $request->setReplaceParams(
             array(
-                '{platform}' => $this->platform,
-                '{email}' => $this->user->getEmail(),
+                '{platform}' => $platform,
+                '{email}' => $user->getEmail(),
             )
         );
         $response = $request->post(
             http_build_query(
                 array(
-                    'fname' => $this->user->getFirstName(),
-                    'lname' => $this->user->getLastName(),
+                    'fname' => $user->getFirstName(),
+                    'lname' => $user->getLastName(),
                 )
             )
         );

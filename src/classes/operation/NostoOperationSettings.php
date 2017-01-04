@@ -43,10 +43,6 @@ class NostoOperationSettings extends NostoOperation
      * @var NostoAccountInterface Nosto configuration
      */
     private $account;
-    /**
-     * @var NostoSignupInterface Nosto account meta
-     */
-    private $accountMeta;
 
     /**
      * Constructor.
@@ -63,14 +59,14 @@ class NostoOperationSettings extends NostoOperation
     /**
      * Sends a POST request to create a new account for a store in Nosto
      *
+     * @param NostoSignupInterface $accountMeta
      * @return bool if the request was successful.
-     * @throws NostoException on failure.
      */
-    public function update()
+    public function update(NostoSignupInterface $accountMeta)
     {
         $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_SETTINGS));
         $request->setPath(NostoApiRequest::PATH_SETTINGS);
-        $response = $request->post($this->getJson());
+        $response = $request->post($this->getJson($accountMeta));
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException('Failed to update Nosto settings.', $request, $response);
         }
@@ -80,21 +76,22 @@ class NostoOperationSettings extends NostoOperation
     /**
      * Returns the settings in JSON format
      *
+     * @param NostoSignupInterface $accountMeta
      * @return string the JSON structure.
      */
-    protected function getJson()
+    protected function getJson(NostoSignupInterface $accountMeta)
     {
         $data = array(
-            'title' => $this->accountMeta->getTitle(),
-            'front_page_url' => $this->accountMeta->getFrontPageUrl(),
-            'currency_code' => $this->accountMeta->getCurrencyCode(),
+            'title' => $accountMeta->getTitle(),
+            'front_page_url' => $accountMeta->getFrontPageUrl(),
+            'currency_code' => $accountMeta->getCurrencyCode(),
         );
 
         // Currencies and currency options
-        $currencyCount = count($this->accountMeta->getCurrencies());
+        $currencyCount = count($accountMeta->getCurrencies());
         if ($currencyCount > 0) {
             $data['currencies'] = array();
-            foreach ($this->accountMeta->getCurrencies() as $currency) {
+            foreach ($accountMeta->getCurrencies() as $currency) {
                 $data['currencies'][$currency->getCode()->getCode()] = array(
                     'currency_before_amount' => (
                         $currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT
@@ -106,9 +103,9 @@ class NostoOperationSettings extends NostoOperation
                 );
             }
         }
-        $data['use_exchange_rates'] = $this->accountMeta->getUseCurrencyExchangeRates();
-        if ($this->accountMeta->getDefaultVariationId()) {
-            $data['default_variant_id'] = $this->accountMeta->getDefaultVariationId();
+        $data['use_exchange_rates'] = $accountMeta->getUseCurrencyExchangeRates();
+        if ($accountMeta->getDefaultVariationId()) {
+            $data['default_variant_id'] = $accountMeta->getDefaultVariationId();
         } else {
             $data['default_variant_id'] = '';
         }

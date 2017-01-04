@@ -95,8 +95,8 @@ class AccountTest extends \Codeception\TestCase\Test
         $user = new MockNostoSignupOwner();
 
         $this->specify('account sso with an api token', function () use ($account, $user) {
-            $service = new NostoOperationSso($account, $user, 'platform');
-            $this->assertEquals("https://", substr($service->get(), 0, 8));
+            $service = new NostoOperationSso($account);
+            $this->assertEquals("https://", substr($service->get($user, 'platform'), 0, 8));
         });
     }
 }
