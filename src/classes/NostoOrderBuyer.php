@@ -72,14 +72,10 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
      * $object->setFirstName('John');
      *
      * @param string $firstName the firstname.
-     *
-     * @return $this Self for chaining
      */
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-
-        return $this;
     }
 
     /**
@@ -99,14 +95,10 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
      * $object->setLastName('Doe');
      *
      * @param string $lastName the lastname.
-     *
-     * @return $this Self for chaining
      */
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-
-        return $this;
     }
 
     /**
@@ -126,13 +118,9 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
      * $object->setEmail('john@doe.com');
      *
      * @param string $email the email.
-     *
-     * @return $this Self for chaining
      */
     public function setEmail($email)
     {
         $this->email = $email;
-
-        return $this;
     }
 }

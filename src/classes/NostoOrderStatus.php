@@ -67,14 +67,10 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
      * $object->setCode('completed');
      *
      * @param string $code the code.
-     *
-     * @return $this Self for chaining
      */
     public function setCode($code)
     {
         $this->code = $code;
-
-        return $this;
     }
 
     /**
@@ -94,14 +90,10 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
      * $object->setLabel('Completed');
      *
      * @param string $label the label.
-     *
-     * @return $this Self for chaining
      */
     public function setLabel($label)
     {
         $this->label = $label;
-
-        return $this;
     }
 
     /**

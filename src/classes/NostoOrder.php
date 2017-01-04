@@ -123,14 +123,10 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      * $object->setOrderNumber('123456');
      *
      * @param string $orderNumber the ordernumber.
-     *
-     * @return $this Self for chaining
      */
     public function setOrderNumber($orderNumber)
     {
         $this->orderNumber = $orderNumber;
-
-        return $this;
     }
 
     /**
@@ -150,14 +146,10 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      * $object->setCreatedDate('2016-01-20');
      *
      * @param string $createdDate the created date.
-     *
-     * @return $this Self for chaining
      */
     public function setCreatedDate($createdDate)
     {
         $this->createdDate = $createdDate;
-
-        return $this;
     }
 
     /**
@@ -177,14 +169,10 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      * $object->setPaymentProvider('invoice');
      *
      * @param string $paymentProvider the payment provider.
-     *
-     * @return $this Self for chaining
      */
     public function setPaymentProvider($paymentProvider)
     {
         $this->paymentProvider = $paymentProvider;
-
-        return $this;
     }
 
     /**
@@ -204,14 +192,10 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      * $object->setBuyerInfo(new NostoOrderBuyer());
      *
      * @param NostoOrderBuyer $buyerInfo the buyer info.
-     *
-     * @return $this Self for chaining
      */
     public function setBuyerInfo($buyerInfo)
     {
         $this->buyerInfo = $buyerInfo;
-
-        return $this;
     }
 
     /**
@@ -231,13 +215,10 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      * $object->setPurchasedItems([new NostoOrderLineItem(), ...]);
      *
      * @param NostoLineItemInterface[] $purchasedItems the purchased items.
-     * @return $this Self for chaining
      */
     public function setPurchasedItems($purchasedItems)
     {
         $this->purchasedItems = $purchasedItems;
-
-        return $this;
     }
 
     /**
@@ -257,14 +238,10 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      * $object->setOrderStatus(new NostoOrderStatus());
      *
      * @param NostoOrderStatus $orderStatus the buyer info.
-     *
-     * @return $this Self for chaining
      */
     public function setOrderStatus($orderStatus)
     {
         $this->orderStatus = $orderStatus;
-
-        return $this;
     }
 
     /**
@@ -276,14 +253,10 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      * $object->addPurchasedItems(new NostoOrderLineItem());
      *
      * @param NostoLineItemInterface $purchasedItems
-     * @return $this Self for chaining
-     *
      */
     public function addPurchasedItems(NostoLineItemInterface $purchasedItems)
     {
         $this->purchasedItems[] = $purchasedItems;
-
-        return $this;
     }
 
     /**
@@ -295,14 +268,10 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      * $object->addOrderStatus(new NostoOrderStatus());
      *
      * @param NostoOrderStatus $orderStatus the buyer info.
-     *
-     * @return $this Self for chaining
      */
     public function addOrderStatus($orderStatus)
     {
         $this->orderStatus[] = $orderStatus;
-
-        return $this;
     }
 
     /**

@@ -73,7 +73,10 @@ class NostoValidator
                 $properties = $rule[0];
                 $validator = 'validate' . $rule[1];
                 if (!method_exists($this, $validator)) {
-                    throw new NostoException(sprintf('Nosto validator "%s" does not exist.', $validator));
+                    throw new NostoException(sprintf(
+                        'Nosto validator "%s" does not exist.',
+                        $validator
+                    ));
                 }
                 $params = array_merge(array($properties), array_slice($rule, 2));
                 $isValid = call_user_func_array(array($this, $validator), $params);
@@ -152,7 +155,11 @@ class NostoValidator
             if (!in_array($value, $values)) {
                 $this->addError(
                     $property,
-                    sprintf('Property "%s" must be one of the following: "%s".', $property, $supported)
+                    sprintf(
+                        'Property "%s" must be one of the following: "%s".',
+                        $property,
+                        $supported
+                    )
                 );
                 return false;
             }
