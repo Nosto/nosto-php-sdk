@@ -73,8 +73,6 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
     public function setCode($code)
     {
         $this->code = $code;
-
-        return $this;
     }
 
     /**
@@ -100,8 +98,6 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
     public function setLabel($label)
     {
         $this->label = $label;
-
-        return $this;
     }
 
     /**

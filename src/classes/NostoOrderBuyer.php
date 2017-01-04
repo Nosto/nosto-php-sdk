@@ -78,8 +78,6 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-
-        return $this;
     }
 
     /**
@@ -105,8 +103,6 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-
-        return $this;
     }
 
     /**
@@ -132,7 +128,5 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
     public function setEmail($email)
     {
         $this->email = $email;
-
-        return $this;
     }
 }

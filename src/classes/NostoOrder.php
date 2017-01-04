@@ -129,8 +129,6 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     public function setOrderNumber($orderNumber)
     {
         $this->orderNumber = $orderNumber;
-
-        return $this;
     }
 
     /**
@@ -156,8 +154,6 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     public function setCreatedDate($createdDate)
     {
         $this->createdDate = $createdDate;
-
-        return $this;
     }
 
     /**
@@ -183,8 +179,6 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     public function setPaymentProvider($paymentProvider)
     {
         $this->paymentProvider = $paymentProvider;
-
-        return $this;
     }
 
     /**
@@ -210,8 +204,6 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     public function setBuyerInfo($buyerInfo)
     {
         $this->buyerInfo = $buyerInfo;
-
-        return $this;
     }
 
     /**
@@ -236,8 +228,6 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     public function setPurchasedItems($purchasedItems)
     {
         $this->purchasedItems = $purchasedItems;
-
-        return $this;
     }
 
     /**
@@ -263,8 +253,6 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     public function setOrderStatus($orderStatus)
     {
         $this->orderStatus = $orderStatus;
-
-        return $this;
     }
 
     /**
@@ -282,8 +270,6 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     public function addPurchasedItems(NostoLineItemInterface $purchasedItems)
     {
         $this->purchasedItems[] = $purchasedItems;
-
-        return $this;
     }
 
     /**
@@ -301,8 +287,6 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     public function addOrderStatus($orderStatus)
     {
         $this->orderStatus[] = $orderStatus;
-
-        return $this;
     }
 
     /**

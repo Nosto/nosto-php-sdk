@@ -104,8 +104,6 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     public function setProductId($id)
     {
         $this->productId = $id;
-
-        return $this;
     }
 
     /**
@@ -130,8 +128,6 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
-
-        return $this;
     }
 
     /**
@@ -157,8 +153,6 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     public function setName($name)
     {
         $this->name = $name;
-
-        return $this;
     }
 
     /**
@@ -192,8 +186,6 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     public function setCurrencyCode($currency)
     {
         $this->currencyCode = $currency;
-
-        return $this;
     }
 
     /**
@@ -211,7 +203,5 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     public function setPrice($unitPrice)
     {
         $this->unitPrice = $unitPrice;
-
-        return $this;
     }
 }
