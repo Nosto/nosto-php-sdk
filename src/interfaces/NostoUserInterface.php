@@ -34,30 +34,26 @@
  *
  */
 
-class MockNostoLineItem implements NostoLineItemInterface
+interface NostoUserInterface
 {
-    public function getProductId()
-    {
-        return 1;
-    }
+    /**
+     * The first name of the user
+     *
+     * @return string the first name.
+     */
+    public function getFirstName();
 
-    public function getQuantity()
-    {
-        return 2;
-    }
+    /**
+     * The last name of the user
+     *
+     * @return string the last name.
+     */
+    public function getLastName();
 
-    public function getName()
-    {
-        return 'Test Product';
-    }
-
-    public function getUnitPrice()
-    {
-        return 99.99;
-    }
-
-    public function getCurrencyCode()
-    {
-        return 'USD';
-    }
+    /**
+     * The email address of the user
+     *
+     * @return string the email address.
+     */
+    public function getEmail();
 }

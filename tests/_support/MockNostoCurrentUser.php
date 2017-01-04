@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,31 +34,20 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
-class MockNostoLineItem implements NostoLineItemInterface
+class MockNostoCurrentUser implements NostoCurrentUserInterface
 {
-    public function getProductId()
+    public function getFirstName()
     {
-        return 1;
+        return 'James';
     }
 
-    public function getQuantity()
+    public function getLastName()
     {
-        return 2;
+        return 'Kirk';
     }
 
-    public function getName()
+    public function getEmail()
     {
-        return 'Test Product';
-    }
-
-    public function getUnitPrice()
-    {
-        return 99.99;
-    }
-
-    public function getCurrencyCode()
-    {
-        return 'USD';
+        return 'james.kirk@example.com';
     }
 }

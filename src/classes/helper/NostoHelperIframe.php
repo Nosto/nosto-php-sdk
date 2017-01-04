@@ -48,14 +48,14 @@ final class NostoHelperIframe extends NostoHelper
      *
      * @param NostoIframeInterface $iframe the iframe meta data.
      * @param NostoAccountInterface|null $account the configuration to return the url for.
-     * @param NostoSignupOwnerInterface $user
+     * @param NostoCurrentUserInterface $user
      * @param array $params additional parameters to add to the iframe url.
      * @return string the iframe url.
      */
     public static function getUrl(
         NostoIframeInterface $iframe,
         NostoAccountInterface $account = null,
-        NostoSignupOwnerInterface $user = null,
+        NostoCurrentUserInterface $user = null,
         array $params = array()
     ) {
         $defaultParameters = array(

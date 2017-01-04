@@ -34,30 +34,76 @@
  *
  */
 
-class MockNostoLineItem implements NostoLineItemInterface
+class NostoUser extends NostoObject implements NostoUserInterface
 {
-    public function getProductId()
+    /**
+     * @var string the account owner first name.
+     */
+    private $firstName;
+
+    /**
+     * @var string the account owner last name.
+     */
+    private $lastName;
+
+    /**
+     * @var string the account owner email address.
+     */
+    private $email;
+
+    /**
+     * The first name of the account owner.
+     *
+     * @return string the first name.
+     */
+    public function getFirstName()
     {
-        return 1;
+        return $this->firstName;
     }
 
-    public function getQuantity()
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName($firstName)
     {
-        return 2;
+        $this->firstName = $firstName;
     }
 
-    public function getName()
+    /**
+     * The last name of the account owner.
+     *
+     * @return string the last name.
+     */
+    public function getLastName()
     {
-        return 'Test Product';
+        return $this->lastName;
     }
 
-    public function getUnitPrice()
+    /**
+     * @param string $lastName
+     */
+    public function setLastName($lastName)
     {
-        return 99.99;
+        $this->lastName = $lastName;
     }
 
-    public function getCurrencyCode()
+    /**
+     * The email address of the account owner.
+     *
+     * @return string the email address.
+     */
+    public function getEmail()
     {
-        return 'USD';
+        return $this->email;
+    }
+
+    /**
+     * Sets the owner email address.
+     *
+     * @param string $email the email address.
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 }

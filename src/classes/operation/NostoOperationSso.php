@@ -59,11 +59,11 @@ class NostoOperationSso extends NostoOperation
     /**
      * Sends a POST request to get a single signon URL for a store
      *
-     * @param NostoSignupOwnerInterface $user
+     * @param NostoCurrentUserInterface $user
      * @param $platform
      * @return string the sso URL if the request was successful.
      */
-    public function get(NostoSignupOwnerInterface $user, $platform)
+    public function get(NostoCurrentUserInterface $user, $platform)
     {
         $request = $this->initHttpRequest($this->account->getApiToken(NostoApiToken::API_SSO));
         $request->setPath(NostoApiRequest::PATH_SSO_AUTH);

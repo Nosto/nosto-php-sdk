@@ -34,30 +34,11 @@
  *
  */
 
-class MockNostoLineItem implements NostoLineItemInterface
+/**
+ * Interface for the account owner details.
+ * This is used by the NostoSignupInterface meta data model when creating new Nosto accounts.
+ */
+interface NostoCurrentUserInterface extends NostoUserInterface
 {
-    public function getProductId()
-    {
-        return 1;
-    }
 
-    public function getQuantity()
-    {
-        return 2;
-    }
-
-    public function getName()
-    {
-        return 'Test Product';
-    }
-
-    public function getUnitPrice()
-    {
-        return 99.99;
-    }
-
-    public function getCurrencyCode()
-    {
-        return 'USD';
-    }
 }
