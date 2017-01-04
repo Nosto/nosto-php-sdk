@@ -144,31 +144,4 @@ class Nosto
             $code
         );
     }
-
-    /**
-     * Converts a helper class name reference name to a real class name.
-     *
-     * Examples:
-     *
-     * date => NostoHelperDate
-     * price_rule => NostoHelperPriceRule
-     * nosto/date => NostoHelperDate
-     * nosto/price_rule => NostoHelperPriceRule
-     * nosto_tagging/date => NostoTaggingHelperDate
-     * nosto_tagging/price_rule => NostoTaggingHelperPriceRule
-     *
-     * @param string $ref the helper reference name.
-     * @return string|bool the helper class name or false if it cannot be built.
-     */
-    protected static function getHelperClassName($ref)
-    {
-        if (strpos($ref, '/') === false) {
-            $ref = 'nosto/' . $ref;
-        }
-        return str_replace(
-            ' ',
-            '',
-            ucwords(str_replace('_', ' ', str_replace('/', ' Helper ', $ref)))
-        );
-    }
 }

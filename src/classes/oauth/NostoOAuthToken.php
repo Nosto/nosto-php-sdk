@@ -80,7 +80,7 @@ class NostoOAuthToken
      * @param string $str the underscore formatted string to convert.
      * @return string the converted string.
      */
-    protected static function underscore2CamelCase($str)
+    private static function underscore2CamelCase($str)
     {
         // Non-alpha and non-numeric characters become spaces.
         $str = preg_replace('/[^a-z0-9]+/i', ' ', $str);

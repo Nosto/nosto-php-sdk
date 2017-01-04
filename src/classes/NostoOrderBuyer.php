@@ -43,17 +43,17 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
     /**
      * @var string the first name of the user who placed the order.
      */
-    protected $firstName;
+    private $firstName;
 
     /**
      * @var string the last name of the user who placed the order.
      */
-    protected $lastName;
+    private $lastName;
 
     /**
      * @var string the email address of the user who placed the order.
      */
-    protected $email;
+    private $email;
 
     /**
      * @inheritdoc

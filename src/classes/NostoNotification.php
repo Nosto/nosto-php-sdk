@@ -39,47 +39,47 @@
  */
 class NostoNotification extends NostoObject implements NostoNotificationInterface
 {
-    /*
+    /**
      * @var int|string unique id of the store
      */
-    protected $storeId;
+    private $storeId;
 
-    /*
+    /**
      * @var string the name of the store
      */
-    protected $storeName;
+    private $storeName;
 
-    /*
+    /**
      * @var int|string unique id of language
      */
-    protected $languageId;
+    private $languageId;
 
-    /*
+    /**
      * @var string the name of the language
      */
-    protected $languageName;
+    private $languageName;
 
-    /*
+    /**
      * @var string notification message
      */
-    protected $message;
+    private $message;
 
-    /*
+    /**
      * @var int type of the notification
      * @see NostoNotificationInterface::TYPE_* constants
      */
-    protected $notificationType;
+    private $notificationType;
 
-    /*
+    /**
      * @var int severity of the notification
      * @see NostoNotificationInterface::SEVERITY_* constants
      */
-    protected $notificationSeverity;
+    private $notificationSeverity;
 
-    /*
+    /**
      * @var array of attributes required by the message
      */
-    protected $messageAttributes;
+    private $messageAttributes;
 
     /**
      * @inheritdoc

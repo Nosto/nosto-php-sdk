@@ -42,34 +42,34 @@ class NostoOAuth implements NostoOAuthClientMetaDataInterface
     /**
      * @var array The scopes for the OAuth2 request.
      */
-    protected $scopes = array();
+    private $scopes = array();
 
     /**
      * @var string the url where the oauth2 server should redirect after
      * authorization is done.
      */
-    protected $redirectUrl;
+    private $redirectUrl;
 
     /**
      * @var string 2-letter ISO code (ISO 639-1) for localization
      * on oauth2 server.
      */
-    protected $language;
+    private $language;
 
     /**
      * @var \NostoAccount|null account if OAuth is to sync details.
      */
-    protected $account;
+    private $account;
 
     /**
      * @var string the client-identifier of the platform doing the OAuth
      */
-    protected $clientId;
+    private $clientId;
 
     /**
      * @var string the client-secret of the platform doing the OAuth
      */
-    protected $clientSecret;
+    private $clientSecret;
 
     /**
      * @inheritdoc

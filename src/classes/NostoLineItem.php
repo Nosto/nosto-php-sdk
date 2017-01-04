@@ -44,27 +44,27 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      * @var string the unique identifier of the purchased item.
      * If this item is for discounts or shipping cost, the id can be 0.
      */
-    protected $productId;
+    private $productId;
 
     /**
      * @var int the quantity of the item included in the order.
      */
-    protected $quantity;
+    private $quantity;
 
     /**
      * @var string the name of the item included in the order.
      */
-    protected $name;
+    private $name;
 
     /**
      * @var float The unit price of the item included in the order.
      */
-    protected $unitPrice;
+    private $unitPrice;
 
     /**
      * @var string the 3-letter ISO code (ISO 4217) for the item currency.
      */
-    protected $currencyCode;
+    private $currencyCode;
 
     /**
      * Loads a special item, e.g. shipping cost.

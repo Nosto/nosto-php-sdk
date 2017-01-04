@@ -43,12 +43,12 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
     /**
      * @var string the order status code.
      */
-    protected $code;
+    private $code;
 
     /**
      * @var string the order status label.
      */
-    protected $label;
+    private $label;
 
     /**
      * @inheritdoc
