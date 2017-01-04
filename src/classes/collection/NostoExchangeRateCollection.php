@@ -55,11 +55,8 @@ class NostoExchangeRateCollection extends NostoCollection
             );
         }
         if (empty($data['rates'])) {
-            Nosto::throwException(
-                sprintf(
-                    'Failed to update currencyCode exchange rates for account %s. No rates found in collection.',
-                    $this->account->getName()
-                )
+            throw new NostoException(
+                'Failed to update currencyCode exchange rates for account %s. No rates found in collection.'
             );
         }
         return $data;

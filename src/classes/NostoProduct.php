@@ -61,12 +61,12 @@ class NostoProduct extends NostoSerializableObject implements NostoProductInterf
     private $imageUrl; //@codingStandardsIgnoreLine
 
     /**
-     * @var string product price, discounted including vat.
+     * @var int product price, discounted including vat.
      */
     private $price; //@codingStandardsIgnoreLine
 
     /**
-     * @var string product list price, including vat.
+     * @var int product list price, including vat.
      */
     private $listPrice; //@codingStandardsIgnoreLine
 
@@ -468,12 +468,7 @@ class NostoProduct extends NostoSerializableObject implements NostoProductInterf
     /**
      * Sets the product ID from given product.
      *
-     * The product ID must be an integer above zero.
-     *
-     * Usage:
-     * $object->setProductId(1);
-     *
-     * @param int $id the product ID.
+     * @param string $id the product ID.
      */
     public function setProductId($id)
     {
@@ -649,11 +644,6 @@ class NostoProduct extends NostoSerializableObject implements NostoProductInterf
     /**
      * Sets the product list price.
      *
-     ** The price must be a numeric value
-     *
-     * Usage:
-     * $object->setListPrice(99.99);
-     *
      * @param integer $listPrice the price.
      */
     public function setListPrice($listPrice)
@@ -671,11 +661,6 @@ class NostoProduct extends NostoSerializableObject implements NostoProductInterf
 
     /**
      * Sets the brand name of the product manufacturer.
-     *
-     * The name must be a non-empty string.
-     *
-     * Usage:
-     * $object->setBrand('Example');
      *
      * @param string $brand the brand name.
      */

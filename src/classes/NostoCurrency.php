@@ -40,7 +40,7 @@
 final class NostoCurrency
 {
     /**
-     * @var string the currency ISO 4217 code.
+     * @var NostoCurrencyCode the currency ISO 4217 code.
      */
     private $code;
 

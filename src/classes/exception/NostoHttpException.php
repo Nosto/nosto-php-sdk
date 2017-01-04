@@ -52,7 +52,7 @@ class NostoHttpException extends NostoException
     /**
      * NostoHttpException constructor.
      * @param string $message
-     * @param null $code
+     * @param int|null $code
      * @param Exception|null $previous
      * @param NostoHttpRequest|null $request
      * @param NostoHttpResponse|null $response

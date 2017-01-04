@@ -57,7 +57,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     private $name;
 
     /**
-     * @var float The unit price of the item included in the order.
+     * @var double The unit price of the item included in the order.
      */
     private $unitPrice;
 
@@ -70,15 +70,15 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      * Loads a special item, e.g. shipping cost.
      *
      * @param string $name the name of the item.
-     * @param float|int|string $price the unit price of the item.
+     * @param float|int|double $price the unit price of the item.
      * @param string $currency the 3-letter ISO code (ISO 4217) for the item currency.
      */
     public function loadSpecialItemData($name, $price, $currency)
     {
-        $this->productId = -1;
+        $this->productId = '-1';
         $this->quantity = 1;
         $this->name = $name;
-        $this->unitPrice = NostoHelperDate::format($price);
+        $this->unitPrice = $price;
         $this->currencyCode = strtoupper($currency);
     }
 
@@ -92,12 +92,8 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
 
     /**
      * Sets the product ID for the given cart item.
-     * The product ID must be an integer above zero.
      *
-     * Usage:
-     * $object->setProductId(1);
-     *
-     * @param int $id the product ID.
+     * @param string $id the product ID.
      */
     public function setProductId($id)
     {

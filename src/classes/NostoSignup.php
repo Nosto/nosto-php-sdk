@@ -92,12 +92,12 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     /**
      * @var string default variation id
      */
-    private $defaultVariationId = false;
+    private $defaultVariationId = null;
 
     /**
      * @var string details
      */
-    private $details = false;
+    private $details = null;
 
     /**
      * @var NostoApiToken sign up api token

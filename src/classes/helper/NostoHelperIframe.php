@@ -120,7 +120,7 @@ final class NostoHelperIframe extends NostoHelper
      *
      * @return string the url.
      */
-    protected function getBaseUrl()
+    private static function getBaseUrl()
     {
         return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', NostoHttpRequest::$baseUrl);
     }

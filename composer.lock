@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f1df306b8cb086d13809ef6e55c1035d",
-    "content-hash": "5de5ef94a357232ffa0b2d119b60291a",
+    "hash": "4b0e7cc80912f860a210458fcee94605",
+    "content-hash": "f44cbf7588a7edbabf6fa9abe5a6dd51",
     "packages": [],
     "packages-dev": [
         {
@@ -179,6 +179,60 @@
                 "instantiate"
             ],
             "time": "2015-06-14 21:17:01"
+        },
+        {
+            "name": "etsy/phan",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/etsy/phan.git",
+                "reference": "24dc6e92d60acd2d5f31a80703de2a407b04c3a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/etsy/phan/zipball/24dc6e92d60acd2d5f31a80703de2a407b04c3a9",
+                "reference": "24dc6e92d60acd2d5f31a80703de2a407b04c3a9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ast": "*",
+                "php": ">=7.0",
+                "symfony/console": "~2.3|~3.0"
+            },
+            "require-dev": {
+                "phpdocumentor/phpdocumentor": "^2.9.0",
+                "phpunit/phpunit": "^5.7.2",
+                "squizlabs/php_codesniffer": "^2.7.1"
+            },
+            "bin": [
+                "phan",
+                "tocheckstyle"
+            ],
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Phan\\": "src/Phan"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rasmus Lerdorf"
+                },
+                {
+                    "name": "Andrew S. Morrison"
+                }
+            ],
+            "description": "A static analyzer for PHP",
+            "keywords": [
+                "analyzer",
+                "php",
+                "static"
+            ],
+            "time": "2017-01-03 15:10:14"
         },
         {
             "name": "facebook/webdriver",
@@ -1928,7 +1982,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "codeception/codeception": 0,
-        "codeception/specify": 0
+        "codeception/specify": 0,
+        "etsy/phan": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

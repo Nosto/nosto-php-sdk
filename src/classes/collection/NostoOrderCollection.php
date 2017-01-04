@@ -47,7 +47,7 @@ class NostoOrderCollection extends NostoCollection
     public function getArray()
     {
         $data = array();
-        foreach ($this->collection->getArrayCopy() as $item) {
+        foreach ($this->getArrayCopy() as $item) {
             /** @var NostoOrderInterface|NostoValidatableInterface|NostoSerializableInterface $item */
             $validator = new NostoValidator($item);
             if ($validator->validate()) {

@@ -58,17 +58,17 @@ class NostoOrder extends NostoSerializableObject implements NostoOrderInterface,
     private $paymentProvider;
 
     /**
-     * @var NostoOrderBuyer The user info of the buyer.
+     * @var NostoOrderBuyerInterface The user info of the buyer.
      */
     private $buyerInfo;
 
     /**
-     * @var NostoLineItem[] the items in the order.
+     * @var NostoLineItemInterface[] the items in the order.
      */
     private $purchasedItems = array();
 
     /**
-     * @var NostoOrderStatus the order status model.
+     * @var NostoOrderStatusInterface[] the order status model.
      */
     private $orderStatus;
 
@@ -102,11 +102,6 @@ class NostoOrder extends NostoSerializableObject implements NostoOrderInterface,
     /**
      * Add a purchased item for the order.
      *
-     * The line item must be an array of NostoOrderLineItem
-     *
-     * Usage:
-     * $object->addPurchasedItems(new NostoOrderLineItem());
-     *
      * @param NostoLineItemInterface $purchasedItems
      */
     public function addPurchasedItems(NostoLineItemInterface $purchasedItems)
@@ -116,11 +111,6 @@ class NostoOrder extends NostoSerializableObject implements NostoOrderInterface,
 
     /**
      * Sets the order status.
-     *
-     * The order status must be an instance of NostoOrderStatus.
-     *
-     * Usage:
-     * $object->addOrderStatus(new NostoOrderStatus());
      *
      * @param NostoOrderStatus $orderStatus the buyer info.
      */
@@ -222,11 +212,7 @@ class NostoOrder extends NostoSerializableObject implements NostoOrderInterface,
 
     /**
      * Sets the created date of the order.
-     *
      * The created date must be a non-empty string in format Y-m-d.
-     *
-     * Usage:
-     * $object->setCreatedDate('2016-01-20');
      *
      * @param string $createdDate the created date.
      */
@@ -246,11 +232,6 @@ class NostoOrder extends NostoSerializableObject implements NostoOrderInterface,
     /**
      * Sets the payment provider of the order.
      *
-     * The payment provider must be a non-empty string.
-     *
-     * Usage:
-     * $object->setPaymentProvider('invoice');
-     *
      * @param string $paymentProvider the payment provider.
      */
     public function setPaymentProvider($paymentProvider)
@@ -269,12 +250,7 @@ class NostoOrder extends NostoSerializableObject implements NostoOrderInterface,
     /**
      * Sets the order status.
      *
-     * The order status must be an instance of NostoOrderStatus.
-     *
-     * Usage:
-     * $object->setOrderStatus(new NostoOrderStatus());
-     *
-     * @param NostoOrderStatus $orderStatus the buyer info.
+     * @param NostoOrderStatusInterface[] $orderStatus the buyer info.
      */
     public function setOrderStatus($orderStatus)
     {
@@ -291,11 +267,6 @@ class NostoOrder extends NostoSerializableObject implements NostoOrderInterface,
 
     /**
      * Sets the purchased items for the order.
-     *
-     * The line items must be an array of NostoOrderLineItem
-     *
-     * Usage:
-     * $object->setPurchasedItems([new NostoOrderLineItem(), ...]);
      *
      * @param NostoLineItemInterface[] $purchasedItems the purchased items.
      */
@@ -315,12 +286,7 @@ class NostoOrder extends NostoSerializableObject implements NostoOrderInterface,
     /**
      * Sets the buyer information for the order.
      *
-     * The buyer information must be an instance of NostoOrderBuyer.
-     *
-     * Usage:
-     * $object->setBuyerInfo(new NostoOrderBuyer());
-     *
-     * @param NostoOrderBuyer $buyerInfo the buyer info.
+     * @param NostoOrderBuyerInterface $buyerInfo the buyer info.
      */
     public function setBuyerInfo($buyerInfo)
     {

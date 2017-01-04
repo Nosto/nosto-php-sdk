@@ -44,7 +44,7 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
     /**
      * @var string the user-agent to use if specified
      */
-    private $userAgent = false;
+    private $userAgent = null;
 
     /**
      * Constructor.

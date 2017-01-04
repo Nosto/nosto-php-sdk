@@ -40,7 +40,7 @@
 class NostoOperationExchangeRate extends NostoOperation
 {
     /**
-     * @var NostoSignupInterface the Nosto account to update the rates for.
+     * @var NostoAccountInterface the Nosto account to update the rates for.
      */
     private $account;
 

@@ -41,49 +41,15 @@
 class Nosto
 {
     /**
-     * @var array registry collection
-     */
-    private static $registry = array();
-
-    /**
      * Return environment variable.
      *
      * @param string $name the name of the variable.
-     * @param null $default the default value to return if the env variable cannot be found.
+     * @param mixed|null $default the default value to return if the env variable cannot be found.
      * @return mixed the env variable or null.
      */
     public static function getEnvVariable($name, $default = null)
     {
         return isset($_ENV[$name]) ? $_ENV[$name] : $default;
-    }
-
-    /**
-     * Retrieve a value from registry by a key.
-     *
-     * @param string $key the register key for the variable.
-     * @return mixed the registered variable or null if not found.
-     */
-    public static function registry($key)
-    {
-        if (isset(self::$registry[$key])) {
-            return self::$registry[$key];
-        }
-        return null;
-    }
-
-    /**
-     * Register a new variable.
-     *
-     * @param string $key the key to register the variable for.
-     * @param mixed $value the variable to register.
-     * @throws NostoException if the key is already registered.
-     */
-    public static function register($key, $value)
-    {
-        if (isset(self::$registry[$key])) {
-            throw new NostoException(sprintf('Nosto registry key %s already exists', $key));
-        }
-        self::$registry[$key] = $value;
     }
 
     /**
@@ -128,20 +94,5 @@ class Nosto
                 $response
             );
         }
-    }
-
-    /**
-     * Throws a new NostoException exception
-     *
-     * @param string $message the error message
-     * @param int $code the code
-     * @throws NostoException the exception
-     */
-    public static function throwException($message, $code = null)
-    {
-        throw new NostoException(
-            $message,
-            $code
-        );
     }
 }
