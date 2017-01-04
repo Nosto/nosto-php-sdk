@@ -37,13 +37,6 @@
 /**
  * Model for order information. This is used when compiling the info about an
  * order that is sent to Nosto.
- *
- * Extends Shopware_Plugins_Frontend_NostoTagging_Components_Model_Base.
- * Implements NostoOrderInterface.
- * Implements NostoValidatableModelInterface.
- *
- * @package Shopware
- * @subpackage Plugins_Frontend
  */
 class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValidatableInterface
 {

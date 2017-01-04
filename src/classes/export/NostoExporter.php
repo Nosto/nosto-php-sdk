@@ -36,11 +36,17 @@
 
 /**
  * Helper class for exporting historical product and order data from the shop.
- * This information is used to bootstrap recommendations and decreases the time needed to get accurate recommendations
- * showing in the shop.
+ * This information is used to bootstrap recommendations and decreases the time needed to get
+ * accurate recommendations showing in the shop.
  */
 class NostoExporter
 {
+
+    private function __construct()
+    {
+        // To prevent instantiation of utility classes
+    }
+
     /**
      * Encrypts and returns the data.
      *

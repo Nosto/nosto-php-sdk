@@ -114,7 +114,19 @@ class MockNostoProduct implements NostoProductInterface, NostoValidatableInterfa
     public function getValidationRules()
     {
         return array(
-            array(array('url', 'productId', 'name', 'imageUrl', 'price', 'listPrice', 'currencyCode', 'availability'), 'required')
+            array(
+                array(
+                    'url',
+                    'productId',
+                    'name',
+                    'imageUrl',
+                    'price',
+                    'listPrice',
+                    'currencyCode',
+                    'availability'
+                ),
+                'required'
+            )
         );
     }
 

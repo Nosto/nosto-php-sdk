@@ -66,7 +66,7 @@ class NostoIframe extends NostoObject implements NostoIframeInterface
      */
     private $languageIsoCodeShop;
     /**
-     * @var string unique ID that identifies the Magento installation.
+     * @var string unique ID that identifies the installation.
      */
     private $uniqueId;
     /**
