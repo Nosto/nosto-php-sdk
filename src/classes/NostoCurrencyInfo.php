@@ -36,6 +36,8 @@
 
 /**
  * Static data object with currency related info.
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassLength)
  */
 final class NostoCurrencyInfo
 {

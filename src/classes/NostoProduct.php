@@ -37,53 +37,59 @@
 /**
  * Model for product information. This is used when compiling the info about a
  * product that is sent to Nosto.
+ *
+ * @SuppressWarnings(PHPMD.ExcessivePublicCount)
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.NPathComplexity)
+ * @SuppressWarnings(PHPMD.TooManyFields)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class NostoProduct extends NostoSerializableObject implements NostoProductInterface, NostoValidatableInterface
 {
     /**
      * @var string absolute url to the product page.
      */
-    private $url; //@codingStandardsIgnoreLine
+    private $url;
 
     /**
      * @var string product object id.
      */
-    private $productId; //@codingStandardsIgnoreLine
+    private $productId;
 
     /**
      * @var string product name.
      */
-    private $name; //@codingStandardsIgnoreLine
+    private $name;
 
     /**
      * @var string absolute url to the product image.
      */
-    private $imageUrl; //@codingStandardsIgnoreLine
+    private $imageUrl;
 
     /**
      * @var int product price, discounted including vat.
      */
-    private $price; //@codingStandardsIgnoreLine
+    private $price;
 
     /**
      * @var int product list price, including vat.
      */
-    private $listPrice; //@codingStandardsIgnoreLine
+    private $listPrice;
 
     /**
      * @var string the currency iso code.
      */
-    private $currencyCode; //@codingStandardsIgnoreLine
+    private $currencyCode;
 
     /**
      * @var string product availability (use constants).
      */
-    private $availability; //@codingStandardsIgnoreLine
+    private $availability;
 
     /**
      * @var array list of product tags.
      */
-    private $tags = array( //@codingStandardsIgnoreLine
+    private $tags = array(
         'tag1' => array(),
         'tag2' => array(),
         'tag3' => array(),
@@ -92,22 +98,22 @@ class NostoProduct extends NostoSerializableObject implements NostoProductInterf
     /**
      * @var array list of product category strings.
      */
-    private $categories = array(); //@codingStandardsIgnoreLine
+    private $categories = array();
 
     /**
      * @var string the product short description.
      */
-    private $shortDescription; //@codingStandardsIgnoreLine
+    private $shortDescription;
 
     /**
      * @var string the product description.
      */
-    private $description; //@codingStandardsIgnoreLine
+    private $description;
 
     /**
      * @var string the product brand name.
      */
-    private $brand; //@codingStandardsIgnoreLine
+    private $brand;
 
     /**
      * @var string the default variation identifier of the shop
@@ -352,6 +358,9 @@ class NostoProduct extends NostoSerializableObject implements NostoProductInterf
         $this->tags['tag3'][] = $tag;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getArray()
     {
         $data = array(
@@ -365,7 +374,6 @@ class NostoProduct extends NostoSerializableObject implements NostoProductInterf
             'categories' => $this->getCategories(),
         );
 
-        // Optional properties.
         if ($this->getFullDescription()) {
             $data['description'] = $this->getFullDescription();
         }
@@ -486,11 +494,6 @@ class NostoProduct extends NostoSerializableObject implements NostoProductInterf
     /**
      * Sets the product name.
      *
-     * The name must be a non-empty string.
-     *
-     * Usage:
-     * $object->setName('Example');
-     *
      * @param string $name the name.
      */
     public function setName($name)
@@ -509,11 +512,6 @@ class NostoProduct extends NostoSerializableObject implements NostoProductInterf
     /**
      * Sets the image URL for the product.
      *
-     * The URL must be absolute, i.e. must include the protocol http or https.
-     *
-     * Usage:
-     * $object->setImageUrl("http://my.shop.com/media/example.jpg");
-     *
      * @param string $imageUrl the url.
      */
     public function setImageUrl($imageUrl)
@@ -531,11 +529,6 @@ class NostoProduct extends NostoSerializableObject implements NostoProductInterf
 
     /**
      * Sets the product price.
-     *
-     * The price must be a numeric value
-     *
-     * Usage:
-     * $object->setPrice(99.99);
      *
      * @param integer $price the price.
      */
@@ -577,11 +570,6 @@ class NostoProduct extends NostoSerializableObject implements NostoProductInterf
 
     /**
      * Sets the availability state of the product.
-     *
-     * The availability of the product must be either "InStock" or "OutOfStock"
-     *
-     * Usage:
-     * $object->setAvailability('InStock');
      *
      * @param string $availability the availability.
      */

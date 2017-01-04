@@ -5,7 +5,8 @@
   "require-dev": {
     "codeception/codeception": "@stable",
     "codeception/specify": "@stable",
-    "etsy/phan": "dev-master"
+    "etsy/phan": "dev-master",
+    "phpmd/phpmd": "^2.5"
   },
   "autoload": {
     "classmap": [
