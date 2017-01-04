@@ -54,6 +54,10 @@ abstract class NostoObject
         if (method_exists($this, $getter)) {
             return $this->{$getter}();
         }
-        throw new NostoException(sprintf('Property `%s.%s` is not defined.', get_class($this), $name));
+        throw new NostoException(sprintf(
+            'Property `%s.%s` is not defined.',
+            get_class($this),
+            $name
+        ));
     }
 }

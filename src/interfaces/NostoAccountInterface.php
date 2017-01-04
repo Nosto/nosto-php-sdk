@@ -91,5 +91,9 @@ interface NostoAccountInterface
      * @param array $params optional extra params to add to the iframe url.
      * @return bool|string the url or false if could not be fetched.
      */
-    public function getIframeUrl(NostoIframeInterface $iframe, NostoSignupOwnerInterface $user, array $params = array());
+    public function getIframeUrl(
+        NostoIframeInterface $iframe,
+        NostoSignupOwnerInterface $user,
+        array $params = array()
+    );
 }

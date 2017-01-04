@@ -51,33 +51,11 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
     protected $_label;
 
     /**
-     * Converts a human readable status description to a machine readable code,
-     * i.e. converts the description to a lower case alphanumeric string.
-     *
-     * @param string $description the description to convert.
-     * @return string the status code.
-     */
-    protected function convertDescriptionToCode($description)
-    {
-        $pattern = array('/[^a-zA-Z0-9]+/', '/_+/', '/^_+/', '/_+$/');
-        $replacement = array('_', '_', '', '');
-        return strtolower(preg_replace($pattern, $replacement, $description));
-    }
-
-    /**
      * @inheritdoc
      */
     public function getCode()
     {
         return $this->_code;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getLabel()
-    {
-        return $this->_label;
     }
 
     /**
@@ -100,6 +78,14 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getLabel()
+    {
+        return $this->_label;
+    }
+
+    /**
      * Sets the label of the order.
      *
      * The label must be a non-empty string.
@@ -116,5 +102,19 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
         $this->_label = $label;
 
         return $this;
+    }
+
+    /**
+     * Converts a human readable status description to a machine readable code,
+     * i.e. converts the description to a lower case alphanumeric string.
+     *
+     * @param string $description the description to convert.
+     * @return string the status code.
+     */
+    protected function convertDescriptionToCode($description)
+    {
+        $pattern = array('/[^a-zA-Z0-9]+/', '/_+/', '/^_+/', '/_+$/');
+        $replacement = array('_', '_', '', '');
+        return strtolower(preg_replace($pattern, $replacement, $description));
     }
 }

@@ -73,7 +73,11 @@ class NostoOperationAccount extends NostoOperation
         }
 
         $account = new NostoAccount($this->account->getPlatform() . '-' . $this->account->getName());
-        $account->setTokens(NostoApiToken::parseTokens($response->getJsonResult(true), '', '_token'));
+        $account->setTokens(NostoApiToken::parseTokens(
+            $response->getJsonResult(true),
+            '',
+            '_token'
+        ));
         return $account;
     }
 

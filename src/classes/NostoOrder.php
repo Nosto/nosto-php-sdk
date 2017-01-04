@@ -115,46 +115,6 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getCreatedDate()
-    {
-        return $this->_createdDate;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getPaymentProvider()
-    {
-        return $this->_paymentProvider;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getBuyerInfo()
-    {
-        return $this->_buyerInfo;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getPurchasedItems()
-    {
-        return $this->_purchasedItems;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getOrderStatus()
-    {
-        return $this->_orderStatus;
-    }
-
-    /**
      * Sets the ordernumber.
      *
      * The ordernumber must be a non-empty string.
@@ -171,6 +131,14 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
         $this->_orderNumber = $orderNumber;
 
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCreatedDate()
+    {
+        return $this->_createdDate;
     }
 
     /**
@@ -193,6 +161,14 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getPaymentProvider()
+    {
+        return $this->_paymentProvider;
+    }
+
+    /**
      * Sets the payment provider of the order.
      *
      * The payment provider must be a non-empty string.
@@ -209,6 +185,14 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
         $this->_paymentProvider = $paymentProvider;
 
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getBuyerInfo()
+    {
+        return $this->_buyerInfo;
     }
 
     /**
@@ -231,19 +215,54 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     }
 
     /**
- * Sets the purchased items for the order.
- *
- * The line items must be an array of NostoOrderLineItem
- *
- * Usage:
- * $object->setPurchasedItems([new NostoOrderLineItem(), ...]);
- *
- * @param NostoLineItemInterface[] $purchasedItems the purchased items.
- * @return $this Self for chaining
- */
+     * @inheritdoc
+     */
+    public function getPurchasedItems()
+    {
+        return $this->_purchasedItems;
+    }
+
+    /**
+     * Sets the purchased items for the order.
+     *
+     * The line items must be an array of NostoOrderLineItem
+     *
+     * Usage:
+     * $object->setPurchasedItems([new NostoOrderLineItem(), ...]);
+     *
+     * @param NostoLineItemInterface[] $purchasedItems the purchased items.
+     * @return $this Self for chaining
+     */
     public function setPurchasedItems($purchasedItems)
     {
         $this->_purchasedItems = $purchasedItems;
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getOrderStatus()
+    {
+        return $this->_orderStatus;
+    }
+
+    /**
+     * Sets the order status.
+     *
+     * The order status must be an instance of NostoOrderStatus.
+     *
+     * Usage:
+     * $object->setOrderStatus(new NostoOrderStatus());
+     *
+     * @param NostoOrderStatus $orderStatus the buyer info.
+     *
+     * @return $this Self for chaining
+     */
+    public function setOrderStatus($orderStatus)
+    {
+        $this->_orderStatus = $orderStatus;
 
         return $this;
     }
@@ -263,25 +282,6 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     public function addPurchasedItems(NostoLineItemInterface $purchasedItems)
     {
         $this->_purchasedItems[] = $purchasedItems;
-
-        return $this;
-    }
-
-    /**
-     * Sets the order status.
-     *
-     * The order status must be an instance of NostoOrderStatus.
-     *
-     * Usage:
-     * $object->setOrderStatus(new NostoOrderStatus());
-     *
-     * @param NostoOrderStatus $orderStatus the buyer info.
-     *
-     * @return $this Self for chaining
-     */
-    public function setOrderStatus($orderStatus)
-    {
-        $this->_orderStatus = $orderStatus;
 
         return $this;
     }

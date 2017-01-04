@@ -128,7 +128,7 @@ class NostoNotification extends NostoObject implements NostoNotificationInterfac
     /**
      * Setter for language id
      *
-     * @param int/string $languageId
+     * @param int /string $languageId
      */
     public function setLanguageId($languageId)
     {
@@ -150,24 +150,6 @@ class NostoNotification extends NostoObject implements NostoNotificationInterfac
     public function setLanguageName($languageName)
     {
         $this->languageName = $languageName;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
-
-    /**
-     * Setter for message
-     *
-     * @param mixed $message
-     */
-    public function setMessage($message)
-    {
-        $this->message = $message;
     }
 
     /**
@@ -209,24 +191,6 @@ class NostoNotification extends NostoObject implements NostoNotificationInterfac
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getMessageAttributes()
-    {
-        return $this->messageAttributes;
-    }
-
-    /**
-     * Sets all message attributes
-     *
-     * @param array $messageAttributes
-     */
-    public function setMessageAttributes(array $messageAttributes)
-    {
-        $this->messageAttributes = $messageAttributes;
-    }
-
-    /**
      * Adds a message attribute
      *
      * @param int|string $messageAttribute
@@ -253,4 +217,39 @@ class NostoNotification extends NostoObject implements NostoNotificationInterfac
         );
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * Setter for message
+     *
+     * @param mixed $message
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMessageAttributes()
+    {
+        return $this->messageAttributes;
+    }
+
+    /**
+     * Sets all message attributes
+     *
+     * @param array $messageAttributes
+     */
+    public function setMessageAttributes(array $messageAttributes)
+    {
+        $this->messageAttributes = $messageAttributes;
+    }
 }

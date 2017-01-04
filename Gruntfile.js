@@ -1,13 +1,13 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     // Project configuration.
     grunt.initConfig({
-      uglify: {
-        my_target: {
-          files: {
-            'src/js/NostoIframe.min.js': ['src/js/src/NostoIframe.js']
-          }
+        uglify: {
+            my_target: {
+                files: {
+                    'src/js/NostoIframe.min.js': ['src/js/src/NostoIframe.js']
+                }
+            }
         }
-      }
     });
 
     // Load the plugin that provides the "uglify" task.

@@ -69,9 +69,9 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     /**
      * Loads a special item, e.g. shipping cost.
      *
-     * @param string           $name the name of the item.
+     * @param string $name the name of the item.
      * @param float|int|string $price the unit price of the item.
-     * @param string           $currency the 3-letter ISO code (ISO 4217) for the item currency.
+     * @param string $currency the 3-letter ISO code (ISO 4217) for the item currency.
      */
     public function loadSpecialItemData($name, $price, $currency)
     {
@@ -88,38 +88,6 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     public function getProductId()
     {
         return $this->_productId;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getQuantity()
-    {
-        return $this->_quantity;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName()
-    {
-        return $this->_name;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getUnitPrice()
-    {
-        return $this->_unitPrice;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getCurrencyCode()
-    {
-        return $this->_currencyCode;
     }
 
     /**
@@ -141,6 +109,14 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getQuantity()
+    {
+        return $this->_quantity;
+    }
+
+    /**
      * Sets the quantity for the given cart item.
      * The quantity must be an integer above zero.
      *
@@ -156,6 +132,14 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
         $this->_quantity = $quantity;
 
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return $this->_name;
     }
 
     /**
@@ -178,22 +162,19 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     }
 
     /**
-     * Sets the unit price of the cart item.
-     *
-     * The price must be a numeric value
-     *
-     * Usage:
-     * $object->setPrice(99.99);
-     *
-     * @param double $unitPrice the price.
-     *
-     * @return $this Self for chaining
+     * @inheritdoc
      */
-    public function setPrice($unitPrice)
+    public function getUnitPrice()
     {
-        $this->_unitPrice = $unitPrice;
+        return $this->_unitPrice;
+    }
 
-        return $this;
+    /**
+     * @inheritdoc
+     */
+    public function getCurrencyCode()
+    {
+        return $this->_currencyCode;
     }
 
     /**
@@ -211,6 +192,25 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     public function setCurrencyCode($currency)
     {
         $this->_currencyCode = $currency;
+
+        return $this;
+    }
+
+    /**
+     * Sets the unit price of the cart item.
+     *
+     * The price must be a numeric value
+     *
+     * Usage:
+     * $object->setPrice(99.99);
+     *
+     * @param double $unitPrice the price.
+     *
+     * @return $this Self for chaining
+     */
+    public function setPrice($unitPrice)
+    {
+        $this->_unitPrice = $unitPrice;
 
         return $this;
     }

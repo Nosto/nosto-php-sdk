@@ -62,8 +62,11 @@ final class NostoCurrency
      * @param NostoCurrencySymbol $symbol the currency symbol.
      * @param NostoCurrencyFormat $format the currency formatting.
      */
-    public function __construct(NostoCurrencyCode $code, NostoCurrencySymbol $symbol, NostoCurrencyFormat $format)
-    {
+    public function __construct(
+        NostoCurrencyCode $code,
+        NostoCurrencySymbol $symbol,
+        NostoCurrencyFormat $format
+    ) {
         $this->code = $code;
         $this->symbol = $symbol;
         $this->format = $format;

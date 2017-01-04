@@ -72,29 +72,6 @@ class Nosto
     }
 
     /**
-     * Converts a helper class name reference name to a real class name.
-     *
-     * Examples:
-     *
-     * date => NostoHelperDate
-     * price_rule => NostoHelperPriceRule
-     * nosto/date => NostoHelperDate
-     * nosto/price_rule => NostoHelperPriceRule
-     * nosto_tagging/date => NostoTaggingHelperDate
-     * nosto_tagging/price_rule => NostoTaggingHelperPriceRule
-     *
-     * @param string $ref the helper reference name.
-     * @return string|bool the helper class name or false if it cannot be built.
-     */
-    protected static function getHelperClassName($ref)
-    {
-        if (strpos($ref, '/') === false) {
-            $ref = 'nosto/' . $ref;
-        }
-        return str_replace(' ', '', ucwords(str_replace('_', ' ', str_replace('/', ' Helper ', $ref))));
-    }
-
-    /**
      * Register a new variable.
      *
      * @param string $key the key to register the variable for.
@@ -118,8 +95,11 @@ class Nosto
      * @param NostoHttpResponse $response the response object to take additional info from.
      * @throws NostoHttpException|NostoApiResponseException the exception.
      */
-    public static function throwHttpException($message, NostoHttpRequest $request, NostoHttpResponse $response)
-    {
+    public static function throwHttpException(
+        $message,
+        NostoHttpRequest $request,
+        NostoHttpResponse $response
+    ) {
         $jsonResponse = $response->getJsonResult();
 
         if (
@@ -162,6 +142,33 @@ class Nosto
         throw new NostoException(
             $message,
             $code
+        );
+    }
+
+    /**
+     * Converts a helper class name reference name to a real class name.
+     *
+     * Examples:
+     *
+     * date => NostoHelperDate
+     * price_rule => NostoHelperPriceRule
+     * nosto/date => NostoHelperDate
+     * nosto/price_rule => NostoHelperPriceRule
+     * nosto_tagging/date => NostoTaggingHelperDate
+     * nosto_tagging/price_rule => NostoTaggingHelperPriceRule
+     *
+     * @param string $ref the helper reference name.
+     * @return string|bool the helper class name or false if it cannot be built.
+     */
+    protected static function getHelperClassName($ref)
+    {
+        if (strpos($ref, '/') === false) {
+            $ref = 'nosto/' . $ref;
+        }
+        return str_replace(
+            ' ',
+            '',
+            ucwords(str_replace('_', ' ', str_replace('/', ' Helper ', $ref)))
         );
     }
 }

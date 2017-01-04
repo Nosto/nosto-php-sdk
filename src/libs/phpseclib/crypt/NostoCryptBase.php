@@ -463,7 +463,8 @@ abstract class NostoCryptBase
         // Determining the availability of mcrypt support for the cipher
         if (!defined($constCryptMode)) {
             switch (true) {
-                case extension_loaded('mcrypt') && in_array($this->cipherNameMcrypt, mcrypt_list_algorithms()):
+                case extension_loaded('mcrypt') && in_array($this->cipherNameMcrypt,
+                        mcrypt_list_algorithms()):
                     define($constCryptMode, CRYPT_MODE_MCRYPT);
                     break;
                 default:
@@ -701,7 +702,8 @@ abstract class NostoCryptBase
                         $len %= $blockSize;
                     } else {
                         while ($len >= $blockSize) {
-                            $iv = mcrypt_generic($this->ecb, $iv) ^ substr($plaintext, $i, $blockSize);
+                            $iv = mcrypt_generic($this->ecb, $iv) ^ substr($plaintext, $i,
+                                    $blockSize);
                             $ciphertext .= $iv;
                             $len -= $blockSize;
                             $i += $blockSize;
@@ -773,7 +775,8 @@ abstract class NostoCryptBase
                     for ($i = 0; $i < $plaintext_len; $i += $blockSize) {
                         $block = substr($plaintext, $i, $blockSize);
                         if (strlen($block) > strlen($buffer['encrypted'])) {
-                            $buffer['encrypted'] .= $this->encryptBlock($this->generateXor($xor, $blockSize));
+                            $buffer['encrypted'] .= $this->encryptBlock($this->generateXor($xor,
+                                $blockSize));
                         }
                         $key = $this->stringShift($buffer['encrypted'], $blockSize);
                         $ciphertext .= $block ^ $key;
@@ -908,8 +911,10 @@ abstract class NostoCryptBase
                 CRYPT_MODE_STREAM => MCRYPT_MODE_STREAM,
             );
 
-            $this->deMcrypt = mcrypt_module_open($this->cipherNameMcrypt, '', $mcrypt_modes[$this->mode], '');
-            $this->enMcrypt = mcrypt_module_open($this->cipherNameMcrypt, '', $mcrypt_modes[$this->mode], '');
+            $this->deMcrypt = mcrypt_module_open($this->cipherNameMcrypt, '',
+                $mcrypt_modes[$this->mode], '');
+            $this->enMcrypt = mcrypt_module_open($this->cipherNameMcrypt, '',
+                $mcrypt_modes[$this->mode], '');
 
             // we need the $ecb mcrypt resource (only) in MODE_CFB with enableContinuousBuffer()
             // to workaround mcrypt's broken ncfb implementation in buffered mode
@@ -936,13 +941,24 @@ abstract class NostoCryptBase
      */
     public function clearBuffers()
     {
-        $this->enBuffer = array('encrypted' => '', 'xor' => '', 'pos' => 0, 'enmcrypt_init' => true);
-        $this->deBuffer = array('ciphertext' => '', 'xor' => '', 'pos' => 0, 'demcrypt_init' => true);
+        $this->enBuffer = array(
+            'encrypted' => '',
+            'xor' => '',
+            'pos' => 0,
+            'enmcrypt_init' => true
+        );
+        $this->deBuffer = array(
+            'ciphertext' => '',
+            'xor' => '',
+            'pos' => 0,
+            'demcrypt_init' => true
+        );
 
         // mcrypt's handling of invalid's $iv:
         // $this->encryptIV = $this->decryptIV =
         // strlen($this->iv) == $this->blockSize ? $this->iv : str_repeat("\0", $this->blockSize);
-        $this->encryptIV = $this->decryptIV = str_pad(substr($this->iv, 0, $this->blockSize), $this->blockSize, "\0");
+        $this->encryptIV = $this->decryptIV = str_pad(substr($this->iv, 0, $this->blockSize),
+            $this->blockSize, "\0");
     }
 
     /**
@@ -1299,7 +1315,8 @@ abstract class NostoCryptBase
                     for ($i = 0; $i < $cipher_text_len; $i += $block_size) {
                         $block = substr($ciphertext, $i, $block_size);
                         if (strlen($block) > strlen($buffer['ciphertext'])) {
-                            $buffer['ciphertext'] .= $this->encryptBlock($this->generateXor($xor, $block_size));
+                            $buffer['ciphertext'] .= $this->encryptBlock($this->generateXor($xor,
+                                $block_size));
                         }
                         $key = $this->stringShift($buffer['ciphertext'], $block_size);
                         $plaintext .= $block ^ $key;

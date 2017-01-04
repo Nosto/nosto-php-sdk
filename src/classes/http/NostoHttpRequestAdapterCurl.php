@@ -70,7 +70,7 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
                 CURLOPT_FRESH_CONNECT => 1,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_FORBID_REUSE => 1,
-           )
+            )
         );
     }
 

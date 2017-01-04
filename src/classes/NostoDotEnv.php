@@ -185,7 +185,11 @@ class NostoDotEnv
     protected function resolveNestedVariables($value)
     {
         if (strpos($value, '$') !== false) {
-            $value = preg_replace_callback('/{\$([a-zA-Z0-9_]+)}/', array($this, 'getMatchedVariable'), $value);
+            $value = preg_replace_callback(
+                '/{\$([a-zA-Z0-9_]+)}/',
+                array($this, 'getMatchedVariable'),
+                $value
+            );
         }
         return $value;
     }

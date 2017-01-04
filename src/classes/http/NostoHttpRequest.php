@@ -227,7 +227,12 @@ class NostoHttpRequest
      */
     public static function buildUserAgent($platformName, $platformVersion, $pluginVersion)
     {
-        self::$userAgent = sprintf('Nosto %s / %s %s', $pluginVersion, $platformName, $platformVersion);
+        self::$userAgent = sprintf(
+            'Nosto %s / %s %s',
+            $pluginVersion,
+            $platformName,
+            $platformVersion
+        );
     }
 
     /**

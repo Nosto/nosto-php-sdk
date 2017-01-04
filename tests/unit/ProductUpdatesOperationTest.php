@@ -60,7 +60,8 @@ class ProductOperationTest extends \Codeception\TestCase\Test
     public function testSendingProductUpsertWithoutProduct()
     {
         $account = new MockNostoAccount('platform-00000000');
-        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $token = new NostoApiToken('products',
+            '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
         $account->addApiToken($token);
 
         $this->expectException('NostoException');
@@ -75,7 +76,8 @@ class ProductOperationTest extends \Codeception\TestCase\Test
     {
         $account = new MockNostoAccount('platform-00000000');
         $product = new MockNostoProduct();
-        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $token = new NostoApiToken('products',
+            '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
         $account->addApiToken($token);
 
         $op = new NostoOperationProduct($account);
@@ -107,7 +109,8 @@ class ProductOperationTest extends \Codeception\TestCase\Test
     public function testSendingProductUpdateWithoutProduct()
     {
         $account = new MockNostoAccount('platform-00000000');
-        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $token = new NostoApiToken('products',
+            '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
         $account->addApiToken($token);
 
         $this->expectException('NostoException');
@@ -122,7 +125,8 @@ class ProductOperationTest extends \Codeception\TestCase\Test
     {
         $account = new MockNostoAccount('platform-00000000');
         $product = new MockNostoProduct();
-        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $token = new NostoApiToken('products',
+            '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
         $account->addApiToken($token);
 
         $op = new NostoOperationProduct($account);
@@ -155,7 +159,8 @@ class ProductOperationTest extends \Codeception\TestCase\Test
     public function testSendingProductCreateWithoutProduct()
     {
         $account = new MockNostoAccount('platform-00000000');
-        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $token = new NostoApiToken('products',
+            '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
         $account->addApiToken($token);
 
         $this->expectException('NostoException');
@@ -170,7 +175,8 @@ class ProductOperationTest extends \Codeception\TestCase\Test
     {
         $account = new MockNostoAccount('platform-00000000');
         $product = new MockNostoProduct();
-        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $token = new NostoApiToken('products',
+            '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
         $account->addApiToken($token);
 
         $op = new NostoOperationProduct($account);
@@ -203,7 +209,8 @@ class ProductOperationTest extends \Codeception\TestCase\Test
     public function testSendingProductDeleteWithoutProduct()
     {
         $account = new MockNostoAccount('platform-00000000');
-        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $token = new NostoApiToken('products',
+            '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
         $account->addApiToken($token);
 
         $this->expectException('NostoException');
@@ -218,7 +225,8 @@ class ProductOperationTest extends \Codeception\TestCase\Test
     {
         $account = new MockNostoAccount('platform-00000000');
         $product = new MockNostoProduct();
-        $token = new NostoApiToken('products', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $token = new NostoApiToken('products',
+            '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
         $account->addApiToken($token);
 
         $op = new NostoOperationProduct($account);

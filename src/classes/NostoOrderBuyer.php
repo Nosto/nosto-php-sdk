@@ -64,22 +64,6 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getLastName()
-    {
-        return $this->_lastName;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getEmail()
-    {
-        return $this->_email;
-    }
-
-    /**
      * Sets the firstname of the buyer.
      *
      * The name must be a non-empty string.
@@ -99,6 +83,14 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getLastName()
+    {
+        return $this->_lastName;
+    }
+
+    /**
      * Sets the lastname of the buyer.
      *
      * The name must be a non-empty string.
@@ -115,6 +107,14 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
         $this->_lastName = $lastName;
 
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEmail()
+    {
+        return $this->_email;
     }
 
     /**

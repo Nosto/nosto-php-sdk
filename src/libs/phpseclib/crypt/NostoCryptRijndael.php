@@ -3203,9 +3203,11 @@ class NostoCryptRijndael extends NostoCryptBase
 
         switch ($nb) {
             case 8:
-                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6], $temp[7]);
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5],
+                    $temp[6], $temp[7]);
             case 7:
-                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6]);
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5],
+                    $temp[6]);
             case 6:
                 return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5]);
             case 5:
@@ -3293,9 +3295,11 @@ class NostoCryptRijndael extends NostoCryptBase
 
         switch ($nb) {
             case 8:
-                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6], $temp[7]);
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5],
+                    $temp[6], $temp[7]);
             case 7:
-                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6]);
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5],
+                    $temp[6]);
             case 6:
                 return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5]);
             case 5:
@@ -3358,7 +3362,11 @@ class NostoCryptRijndael extends NostoCryptBase
             // already expanded
             return;
         }
-        $this->kl = array('key' => $this->key, 'keySize' => $this->keySize, 'blockSize' => $this->blockSize);
+        $this->kl = array(
+            'key' => $this->key,
+            'keySize' => $this->keySize,
+            'blockSize' => $this->blockSize
+        );
 
         $this->nk = $this->keySize >> 2;
         // see Rijndael-ammended.pdf#page=44
@@ -3500,7 +3508,8 @@ class NostoCryptRijndael extends NostoCryptBase
             $init_decrypt = '$dw = $self->dw;';
         }
 
-        $code_hash = md5(str_pad("NostoCryptRijndael, {$this->mode}, {$this->blockSize}, ", 32, "\0") . implode(',', $w));
+        $code_hash = md5(str_pad("NostoCryptRijndael, {$this->mode}, {$this->blockSize}, ", 32,
+                "\0") . implode(',', $w));
 
         if (!isset($lambda_functions[$code_hash])) {
             $nr = $this->nr;

@@ -263,16 +263,6 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     }
 
     /**
-     * Sets the account owner who is creating the account.
-     *
-     * @param $owner NostoSignupOwnerInterface the account owner
-     */
-    public function setOwner(NostoSignupOwnerInterface $owner)
-    {
-        $this->owner = $owner;
-    }
-
-    /**
      * Meta data model for the account owner who is creating the account.
      *
      * @return NostoSignupOwnerInterface the meta data model.
@@ -280,6 +270,16 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     public function getOwner()
     {
         return $this->owner;
+    }
+
+    /**
+     * Sets the account owner who is creating the account.
+     *
+     * @param $owner NostoSignupOwnerInterface the account owner
+     */
+    public function setOwner(NostoSignupOwnerInterface $owner)
+    {
+        $this->owner = $owner;
     }
 
     /**
