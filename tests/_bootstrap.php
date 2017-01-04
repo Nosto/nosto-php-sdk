@@ -43,6 +43,6 @@ require_once(dirname(__FILE__) . '/../src/config.inc.php');
 
 // Configure API, Web Hooks, and OAuth client to use Mock server when testing.
 NostoApiRequest::$baseUrl = 'http://localhost:3000';
-NostoOAuthClient::$baseUrl = 'http://localhost:3000';
+NostoOAuthClient::$baseUrl = 'http://localhost:3000/oauth';
 NostoHttpRequest::$baseUrl = 'http://localhost:3000';
 NostoHttpRequest::buildUserAgent('PHPUnit', '1.0.0', '1.0.0');

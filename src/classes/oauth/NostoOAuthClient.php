@@ -51,27 +51,27 @@ class NostoOAuthClient
     /**
      * @var string the client id the identify this application to the oauth2 server.
      */
-    protected $clientId = 'nosto';
+    private $clientId = 'nosto';
 
     /**
      * @var string the client secret the identify this application to the oauth2 server.
      */
-    protected $clientSecret = 'nosto';
+    private $clientSecret = 'nosto';
 
     /**
      * @var string the redirect url that will be used by the oauth2 server when authenticating the client.
      */
-    protected $redirectUrl;
+    private $redirectUrl;
 
     /**
      * @var string the language ISO code used for localization on the oauth2 server.
      */
-    protected $languageIsoCode;
+    private $languageIsoCode;
 
     /**
      * @var array list of scopes to request access for during "PATH_AUTH" request.
      */
-    protected $scopes = array();
+    private $scopes = array();
 
     /**
      * @param NostoOAuthClientMetaDataInterface $metaData
@@ -93,7 +93,7 @@ class NostoOAuthClient
     public function getAuthorizationUrl()
     {
         return NostoHttpRequest::buildUri(
-            self::$baseUrl.self::PATH_AUTH,
+            self::$baseUrl . self::PATH_AUTH,
             array(
                 '{cid}' => $this->clientId,
                 '{uri}' => urlencode($this->redirectUrl),
@@ -117,7 +117,7 @@ class NostoOAuthClient
         }
 
         $request = new NostoHttpRequest();
-        $request->setUrl(self::$baseUrl.self::PATH_TOKEN);
+        $request->setUrl(self::$baseUrl . self::PATH_TOKEN);
         $request->setReplaceParams(
             array(
                 '{cid}' => $this->clientId,

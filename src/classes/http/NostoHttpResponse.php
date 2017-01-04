@@ -42,17 +42,17 @@ class NostoHttpResponse
     /**
      * @var array the response headers if there are any.
      */
-    protected $headers;
+    private $headers;
 
     /**
      * @var mixed the request result raw body.
      */
-    protected $result;
+    private $result;
 
     /**
      * @var string possible request error message.
      */
-    protected $message;
+    private $message;
 
     /**
      * @var int runtime cache for the http response code.

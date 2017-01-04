@@ -34,7 +34,7 @@
  *
  */
 
-class NostoAccountMetaDataIframe implements NostoAccountMetaDataIframeInterface
+class NostoAccountIframe implements NostoAccountIframeInterface
 {
 	public function getFirstName()
 	{

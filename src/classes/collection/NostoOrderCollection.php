@@ -41,7 +41,12 @@
 class NostoOrderCollection extends NostoCollection
 {
     /**
-     * @inheritdoc
+     * Returns the type of items this collection can contain.
+     *
+     * @return string the type of items this collection can contain.
      */
-    protected $validItemType = 'NostoOrderInterface';
+    protected function getValidItemType()
+    {
+        return 'NostoOrderInterface';
+    }
 }

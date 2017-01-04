@@ -35,90 +35,119 @@
  */
 
 /**
- * Interface for the Nosto account model that handles creation, syncing and SSO access for the Nosto account.
+ * Interface for the meta data model used when creating new Nosto accounts.
  */
 interface NostoAccountInterface
 {
     /**
-     * Creates a new Nosto account with the specified data.
+     * The shops name for which the account is to be created for.
      *
-     * @param NostoAccountMetaDataInterface $meta the account data model.
-     * @return NostoAccount the newly created account.
-     * @throws NostoException if the account cannot be created.
+     * @return string the name.
      */
-    public static function create(NostoAccountMetaDataInterface $meta);
+    public function getTitle();
 
     /**
-     * Syncs an existing Nosto account via Oauth2.
-     * Requires that the oauth cycle has already completed the first step in getting the authorization code.
-     *
-     * @param NostoOAuthClientMetaDataInterface $meta the oauth2 client meta data to use for connection to Nosto.
-     * @param string $code the authorization code that grants access to transfer data from nosto.
-     * @return NostoAccount the synced account.
-     * @throws NostoException if the account cannot be synced.
-     */
-    public static function syncFromNosto(NostoOAuthClientMetaDataInterface $meta, $code);
-
-    /**
-     * Notifies Nosto that an account has been deleted.
-     *
-     * @throws NostoException if the API request to Nosto fails.
-     */
-    public function delete();
-
-    /**
-     * Gets the account name.
+     * The name of the Nosto account.
+     * This has to follow the pattern of "[platform name]-[8 character lowercase alpha numeric string]".
      *
      * @return string the account name.
      */
     public function getName();
 
     /**
-     * Checks if this account has been connected to Nosto,
-     * i.e. all mandatory API tokens exist.
+     * The name of the platform the account is used on.
+     * A list of valid platform names is issued by Nosto.
      *
-     * @return bool true if it is connected, false otherwise.
+     * @return string the platform names.
      */
-    public function isConnectedToNosto();
+    public function getPlatform();
 
     /**
-     * Checks if this account has all API tokens
+     * Absolute url to the front page of the shop for which the account is created for.
      *
-     * @return bool true if some token(s) are missing, false otherwise.
+     * @return string the url.
      */
-    public function hasMissingTokens();
+    public function getFrontPageUrl();
 
     /**
-     * Returns the missing API tokens
+     * The 3-letter ISO code (ISO 4217) for the currency used by the shop for which the account is created for.
      *
-     * @return array
+     * @return string the currency ISO code.
      */
-    public function getMissingTokens();
+    public function getCurrencyCode();
 
     /**
-     * Gets an api token associated with this account by it's name , e.g. "sso".
+     * The 2-letter ISO code (ISO 639-1) for the language used by the shop for which the account is created for.
      *
-     * @param string $name the api token name.
-     * @return NostoApiToken|null the token or null if not found.
+     * @return string the language ISO code.
      */
-    public function getApiToken($name);
+    public function getLanguageCode();
 
     /**
-     * Gets the secured iframe url for the account configuration page.
+     * The 2-letter ISO code (ISO 639-1) for the language of the account owner who is creating the account.
      *
-     * @param NostoAccountMetaDataIframeInterface $meta the iframe meta data to use for fetching the secured url.
-     * @param array $params optional extra params to add to the iframe url.
-     * @return bool|string the url or false if could not be fetched.
+     * @return string the language ISO code.
      */
-    public function getIframeUrl(NostoAccountMetaDataIframeInterface $meta, array $params = array());
+    public function getOwnerLanguageCode();
 
     /**
-     * Signs the user in to Nosto via SSO.
-     * Requires that the account has a valid sso token associated with it.
+     * Meta data model for the account owner who is creating the account.
      *
-     * @param NostoAccountMetaDataIframeInterface $meta the iframe meta data model.
-     * @return string a secure login url that can be used for example to build the config iframe url.
-     * @throws NostoException if SSO fails.
+     * @return NostoAccountOwnerInterface the meta data model.
      */
-    public function ssoLogin(NostoAccountMetaDataIframeInterface $meta);
+    public function getOwner();
+
+    /**
+     * Meta data model for the account billing details.
+     *
+     * @return NostoAccountBillingDetailsInterface the meta data model.
+     */
+    public function getBillingDetails();
+
+    /**
+     * The API token used to identify an account creation.
+     * This token is platform specific and issued by Nosto.
+     *
+     * @return NostoApiToken the API token.
+     */
+    public function getSignUpApiToken();
+
+    /**
+     * Optional partner code for Nosto partners.
+     * The code is issued by Nosto to partners only.
+     *
+     * @return string|null the partner code or null if none exist.
+     */
+    public function getPartnerCode();
+
+    /**
+     * Returns a list of currency objects supported by the store the account is to be created for.
+     *
+     * @return NostoCurrency[] the currencies.
+     */
+    public function getCurrencies();
+
+    /**
+     * Returns if exchange rates should be used for handling
+     * multiple currencies. Please note that the method only tells if the
+     * setting is active. Method does not take account whether multiple
+     * currencies actually exist or are used.
+     *
+     * @return boolean if multi variants are used
+     */
+    public function getUseCurrencyExchangeRates();
+
+    /**
+     * Returns the default variation id
+     *
+     * @return string
+     */
+    public function getDefaultVariationId();
+
+    /**
+     * Returns the account details
+     *
+     * @return string
+     */
+    public function getDetails();
 }

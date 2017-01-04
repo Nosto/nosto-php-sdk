@@ -40,13 +40,6 @@
 final class NostoCurrencyInfo
 {
     /**
-     * Private Constructor to disallow instantiation.
-     */
-    private function __construct()
-    {
-    }
-
-    /**
      * @var array currency data keyed on the currencies ISO 4217 codes.
      */
     private static $data = array(
@@ -1127,6 +1120,13 @@ final class NostoCurrencyInfo
     );
 
     /**
+     * Private Constructor to disallow instantiation.
+     */
+    private function __construct()
+    {
+    }
+
+    /**
      * Returns the currency fraction unit.
      *
      * @param NostoCurrencyCode $code the currency code.
@@ -1138,20 +1138,6 @@ final class NostoCurrencyInfo
     {
         self::assertCurrency($code);
         return self::$data[$code->getCode()]['fractionUnit'];
-    }
-
-    /**
-     * Returns the currency default fraction digit.
-     *
-     * @param NostoCurrencyCode $code the currency code.
-     * @return int the currency fraction digit.
-     *
-     * @throws NostoException
-     */
-    public static function getFractionDecimals(NostoCurrencyCode $code)
-    {
-        self::assertCurrency($code);
-        return self::$data[$code->getCode()]['fractionDecimals'];
     }
 
     /**
@@ -1170,5 +1156,19 @@ final class NostoCurrencyInfo
                 implode('", "', array_keys(self::$data))
             ));
         }
+    }
+
+    /**
+     * Returns the currency default fraction digit.
+     *
+     * @param NostoCurrencyCode $code the currency code.
+     * @return int the currency fraction digit.
+     *
+     * @throws NostoException
+     */
+    public static function getFractionDecimals(NostoCurrencyCode $code)
+    {
+        self::assertCurrency($code);
+        return self::$data[$code->getCode()]['fractionDecimals'];
     }
 }

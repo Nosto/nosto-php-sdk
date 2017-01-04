@@ -42,12 +42,12 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
     /**
      * @var string the name of the Nosto account.
      */
-    protected $name;
+    private $name;
 
     /**
      * @var NostoApiToken[] the Nosto API tokens associated with this account.
      */
-    protected $tokens = array();
+    private $tokens = array();
 
     /**
      * Constructor.
@@ -62,156 +62,18 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getValidationRules()
-    {
-        return array(
-            array(array('name'), 'required')
-        );
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function create(NostoAccountMetaDataInterface $meta)
-    {
-        $params = array(
-            'title' => $meta->getTitle(),
-            'name' => $meta->getName(),
-            'platform' => $meta->getPlatform(),
-            'front_page_url' => $meta->getFrontPageUrl(),
-            'currency_code' => strtoupper($meta->getCurrencyCode()),
-            'language_code' => strtolower($meta->getOwnerLanguageCode()),
-            'owner' => array(
-                'first_name' => $meta->getOwner()->getFirstName(),
-                'last_name' => $meta->getOwner()->getLastName(),
-                'email' => $meta->getOwner()->getEmail(),
-            ),
-            'api_tokens' => array(),
-        );
-
-        // Add optional billing details if the required data is set.
-        $billingDetails = array(
-            'country' => strtoupper($meta->getBillingDetails()->getCountry())
-        );
-        if (!empty($billingDetails['country'])) {
-            $params['billing_details'] = $billingDetails;
-        }
-
-        // Add optional partner code if one is set.
-        $partnerCode = $meta->getPartnerCode();
-        if (!empty($partnerCode)) {
-            $params['partner_code'] = $partnerCode;
-        }
-
-        // Request all available API tokens for the account.
-        foreach (NostoApiToken::$tokenNames as $name) {
-            $params['api_tokens'][] = 'api_'.$name;
-        }
-
-        if ($meta->getDetails()) {
-            $params['details'] = $meta->getDetails();
-        }
-
-        $params['use_exchange_rates'] = $meta->getUseCurrencyExchangeRates();
-        if ($meta->getDefaultVariationId()) {
-            $params['default_variant_id'] = $meta->getDefaultVariationId();
-        }
-
-        $request = new NostoApiRequest();
-        $request->setPath(NostoApiRequest::PATH_SIGN_UP);
-        $request->setReplaceParams(array('{lang}' => $meta->getLanguageCode()));
-        $request->setContentType('application/json');
-        $request->setAuthBasic('', $meta->getSignUpApiToken());
-        $response = $request->post(json_encode($params));
-
-        /* In case of no result we have not been able to make the API call */
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to create Nosto account', $request, $response);
-        }
-
-        $account = new self($meta->getPlatform().'-'.$meta->getName());
-        $account->tokens = NostoApiToken::parseTokens($response->getJsonResult(true), '', '_token');
-        return $account;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function syncFromNosto(NostoOAuthClientMetaDataInterface $meta, $code)
-    {
-        $oauthClient = new NostoOAuthClient($meta);
-        $token = $oauthClient->authenticate($code);
-
-        if (empty($token->accessToken)) {
-            throw new NostoException('No access token found when trying to sync account from Nosto');
-        }
-        if (empty($token->merchantName)) {
-            throw new NostoException('No merchant name found when trying to sync account from Nosto');
-        }
-
-        $request = new NostoHttpRequest();
-        // The request is currently not made according the the OAuth2 spec with the access token in the
-        // Authorization header. This is due to the authentication server not implementing the full OAuth2 spec yet.
-        $request->setUrl(NostoOAuthClient::$baseUrl.'/exchange');
-        $request->setQueryParams(array('access_token' => $token->accessToken));
-        $response = $request->get();
-        $result = $response->getJsonResult(true);
-
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to sync account from Nosto.', $request, $response);
-        }
-        if (empty($result)) {
-            throw new NostoException('Received invalid data from Nosto when trying to sync account');
-        }
-
-        $account = new self($token->merchantName);
-        $account->tokens = NostoApiToken::parseTokens($result, 'api_');
-        if (!$account->isConnectedToNosto()) {
-            throw new NostoException('Failed to sync all account details from Nosto');
-        }
-        return $account;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function delete()
-    {
-        $token = $this->getApiToken('sso');
-        if ($token === null) {
-            throw new NostoException('Failed to notify Nosto about deleted account, no "sso" token');
-        }
-
-        $request = new NostoHttpRequest();
-        $request->setUrl(NostoHttpRequest::$baseUrl.NostoHttpRequest::PATH_ACCOUNT_DELETED);
-        $request->setAuthBasic('', $token->getValue());
-        $response = $request->post('');
-
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to notify Nosto about deleted account.', $request, $response);
-        }
-    }
-
-    /**
-     * Returns the account name.
+     * Validates the account attributes.
      *
-     * @return string the name.
+     * @throws NostoException if any attribute is invalid.
      */
-    public function getName()
+    protected function validate()
     {
-        return $this->name;
-    }
-
-    /**
-     * Returns the account tokens.
-     *
-     * @return NostoApiToken[] the tokens.
-     */
-    public function getTokens()
-    {
-        return $this->tokens;
+        $validator = new NostoValidator($this);
+        if (!$validator->validate()) {
+            foreach ($validator->getErrors() as $errors) {
+                throw new NostoException(sprintf('Invalid Nosto account. %s', $errors[0]));
+            }
+        }
     }
 
     /**
@@ -228,6 +90,65 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
             }
         }
         return true;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getApiToken($name)
+    {
+        foreach ($this->tokens as $token) {
+            if ($token->getName() === $name) {
+                return $token;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getValidationRules()
+    {
+        return array(
+            array(array('name'), 'required')
+        );
+    }
+
+    /**
+     * Returns the account name.
+     *
+     * @return string the name.
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Returns the account tokens.
+     *
+     * @return NostoApiToken[] the tokens.
+     */
+    public function getTokens()
+    {
+        return $this->tokens;
+    }
+
+    /**
+     * @param NostoApiToken[] $tokens
+     */
+    public function setTokens($tokens)
+    {
+        $this->tokens = $tokens;
     }
 
     /**
@@ -259,94 +180,8 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
     /**
      * @inheritdoc
      */
-    public function getApiToken($name)
+    public function getIframeUrl(NostoIframeInterface $meta, NostoSignupOwnerInterface $user, array $params = array())
     {
-        foreach ($this->tokens as $token) {
-            if ($token->getName() === $name) {
-                return $token;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getIframeUrl(NostoAccountMetaDataIframeInterface $meta, array $params = array())
-    {
-        /* @var $iframeHelper NostoHelperIframe */
-        $iframeHelper = Nosto::helper('iframe');
-        return $iframeHelper->getUrl($meta, $this, $params);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function ssoLogin(NostoAccountMetaDataIframeInterface $meta)
-    {
-        $token = $this->getApiToken('sso');
-        if ($token === null) {
-            return false;
-        }
-
-        $request = new NostoHttpRequest();
-        $request->setUrl(NostoHttpRequest::$baseUrl.NostoHttpRequest::PATH_SSO_AUTH);
-        $request->setReplaceParams(
-            array(
-                '{platform}' => $meta->getPlatform(),
-                '{email}' => $meta->getEmail(),
-            )
-        );
-        $request->setContentType('application/x-www-form-urlencoded');
-        $request->setAuthBasic('', $token->getValue());
-        $response = $request->post(
-            http_build_query(
-                array(
-                    'fname' => $meta->getFirstName(),
-                    'lname' => $meta->getLastName(),
-                )
-            )
-        );
-        $result = $response->getJsonResult();
-
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Unable to login employee to Nosto with SSO token.', $request, $response);
-        }
-        if (empty($result->login_url)) {
-            throw new NostoException('No "login_url" returned when logging in employee to Nosto');
-        }
-
-        return $result->login_url;
-    }
-
-    /**
-     * Validates the account attributes.
-     *
-     * @throws NostoException if any attribute is invalid.
-     */
-    protected function validate()
-    {
-        $validator = new NostoValidator($this);
-        if (!$validator->validate()) {
-            foreach ($validator->getErrors() as $errors) {
-                throw new NostoException(sprintf('Invalid Nosto account. %s', $errors[0]));
-            }
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getMissingTokens()
-    {
-        $allTokens = NostoApiToken::getApiTokenNames();
-        $missingTokens = array();
-        foreach ($allTokens as $token) {
-            if (!$this->getApiToken($token)) {
-                $missingTokens[] = $token;
-            }
-        }
-
-        return $missingTokens;
+        return Nosto::helper('iframe')->getUrl($meta, $this, $user, $params);
     }
 }

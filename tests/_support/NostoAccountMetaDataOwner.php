@@ -34,7 +34,7 @@
  *
  */
 
-class NostoAccountMetaDataOwner implements NostoAccountMetaDataOwnerInterface
+class NostoAccountOwner implements NostoAccountOwnerInterface
 {
 	public function getFirstName()
 	{

@@ -63,6 +63,6 @@ class NostoApiRequest extends NostoHttpRequest
      */
     public function setPath($path)
     {
-        $this->setUrl(self::$baseUrl.$path);
+        $this->setUrl(self::$baseUrl . $path);
     }
 }

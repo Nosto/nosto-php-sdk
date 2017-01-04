@@ -1,0 +1,27 @@
+diff a/src/classes/http/NostoHttpRequestAdapterSocket.php b/src/classes/http/NostoHttpRequestAdapterSocket.php	(rejected hunks)
+@@ -137,25 +158,4 @@ class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
+             )
+         );
+     }
+-
+-    /**
+-     * Sends the request and creates a NostoHttpResponse instance containing the response headers and body.
+-     *
+-     * @param string $url the url for the request.
+-     * @param array $streamOptions options for stream_context_create().
+-     * @return NostoHttpResponse
+-     */
+-    protected function send($url, array $streamOptions)
+-    {
+-        if (!array_key_exists('user_agent', $streamOptions['http']) && $this->userAgent) {
+-            $streamOptions['http']['user_agent'] = $this->userAgent;
+-        }
+-        $context = stream_context_create($streamOptions);
+-        // We use file_get_contents() directly here as we need the http response headers which are automatically
+-        // populated into $headers, which is only available in the local scope where file_get_contents()
+-        // is executed (http://php.net/manual/en/reserved.variables.httpresponseheader.php).
+-        $http_response_header = array();
+-        $result = @file_get_contents($url, false, $context);
+-        return new NostoHttpResponse($http_response_header, $result);
+-    }
+ }

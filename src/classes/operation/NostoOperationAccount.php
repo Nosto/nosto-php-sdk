@@ -37,113 +37,94 @@
 /**
  * Handles sending currencyCode exchange rates through the Nosto API.
  */
-class NostoOperationAccount
+class NostoOperationAccount extends NostoOperation
 {
     /**
-     * @var NostoAccountInterface the Nosto account to update the rates for.
+     * @var NostoSignupInterface Nosto account meta
      */
-    protected $account;
-
-    /**
-     * @var NostoAccountMetaDataInterface Nosto account meta
-     */
-    protected $accountMeta;
+    private $account;
 
     /**
      * Constructor.
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoAccountInterface $account the Nosto account object.
-     * @param NostoAccountMetaDataInterface $accountMeta the Nosto account object.
+     * @param NostoSignupInterface $account the Nosto account object.
      */
-    public function __construct(
-        NostoAccountInterface $account,
-        NostoAccountMetaDataInterface $accountMeta
-    ) {
+    public function __construct(NostoSignupInterface $account)
+    {
         $this->account = $account;
-        $this->accountMeta = $accountMeta;
     }
 
     /**
-     * Updates account settings to Nosto
-     * @return bool
-     * @throws NostoException
-     */
-    public function update()
-    {
-        $request = $this->initApiRequest();
-        $response = $request->put($this->getSettingsJson());
-        if ($response->getCode() !== 200) {
-            throw new NostoException(
-                sprintf(
-                    'Update error for account %s: %s',
-                    $this->account->getName(),
-                    $response->getMessage()
-                )
-            );
-        }
-        return true;
-    }
-
-    /**
-     * Builds the API request and returns it.
+     * Sends a POST request to create a new account for a store in Nosto
      *
-     * @return NostoApiRequest the request object.
-     * @throws NostoException if the request object cannot be built.
+     * @return NostoAccountInterface if the request was successful.
+     * @throws NostoException on failure.
      */
-    protected function initApiRequest()
+    public function create()
     {
-        $token = $this->account->getApiToken(NostoApiToken::API_SETTINGS);
-        if (is_null($token)) {
-            throw new NostoException(
-                sprintf(
-                    'No `%s` API token found for account "%s".',
-                    NostoApiToken::API_SETTINGS,
-                    $this->account->getName()
-                )
-            );
+        $request = $this->initApiRequest($this->account->getSignUpApiToken());
+        $request->setPath(NostoApiRequest::PATH_SIGN_UP);
+        $request->setReplaceParams(array('{lang}' => $this->account->getLanguageCode()));
+        $response = $request->post($this->getJson());
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException('Failed to create Nosto account.', $request, $response);
         }
-        $request = new NostoApiRequest();
-        $request->setContentType('application/json');
-        $request->setAuthBasic('', $token->getValue());
-        $request->setPath(NostoApiRequest::PATH_SETTINGS);
-        return $request;
+
+        $account = new NostoAccount($this->account->getPlatform() . '-' . $this->account->getName());
+        $account->setTokens(NostoApiToken::parseTokens($response->getJsonResult(true), '', '_token'));
+        return $account;
     }
+
     /**
-     * Returns the settings in JSON format
+     * Returns the account in JSON format
      *
      * @return string the JSON structure.
      */
-    protected function getSettingsJson()
+    protected function getJson()
     {
         $data = array(
-            'title' => $this->accountMeta->getTitle(),
-            'front_page_url' => $this->accountMeta->getFrontPageUrl(),
-            'currency_code' => $this->accountMeta->getCurrencyCode(),
+            'title' => $this->account->getTitle(),
+            'name' => $this->account->getName(),
+            'platform' => $this->account->getPlatform(),
+            'front_page_url' => $this->account->getFrontPageUrl(),
+            'currency_code' => strtoupper($this->account->getCurrencyCode()),
+            'language_code' => strtolower($this->account->getOwnerLanguageCode()),
+            'owner' => array(
+                'first_name' => $this->account->getOwner()->getFirstName(),
+                'last_name' => $this->account->getOwner()->getLastName(),
+                'email' => $this->account->getOwner()->getEmail(),
+            ),
+            'api_tokens' => array(),
         );
 
-        // Currencies and currency options
-        $currencyCount = count($this->accountMeta->getCurrencies());
-        if ($currencyCount > 0) {
-            $data['currencies'] = array();
-            foreach ($this->accountMeta->getCurrencies() as $currency) {
-                $data['currencies'][$currency->getCode()->getCode()] = array(
-                    'currency_before_amount' => (
-                        $currency->getSymbol()->getPosition() === NostoCurrencySymbol::SYMBOL_POS_LEFT
-                    ),
-                    'currency_token' => $currency->getSymbol()->getSymbol(),
-                    'decimal_character' => $currency->getFormat()->getDecimalSymbol(),
-                    'grouping_separator' => $currency->getFormat()->getGroupSymbol(),
-                    'decimal_places' => $currency->getFormat()->getPrecision(),
-                );
-            }
+        // Add optional billing details if the required data is set.
+        $billingDetails = array(
+            'country' => strtoupper($this->account->getBillingDetails()->getCountry())
+        );
+        if (!empty($billingDetails['country'])) {
+            $data['billing_details'] = $billingDetails;
         }
-        $data['use_exchange_rates'] = $this->accountMeta->getUseCurrencyExchangeRates();
-        if ($this->accountMeta->getDefaultVariationId()) {
-            $data['default_variant_id'] = $this->accountMeta->getDefaultVariationId();
-        } else {
-            $data['default_variant_id'] = '';
+
+        // Add optional partner code if one is set.
+        $partnerCode = $this->account->getPartnerCode();
+        if (!empty($partnerCode)) {
+            $data['partner_code'] = $partnerCode;
+        }
+
+        // Request all available API tokens for the account.
+        foreach (NostoApiToken::$tokenNames as $name) {
+            $data['api_tokens'][] = 'api_' . $name;
+        }
+
+        if ($this->account->getDetails()) {
+            $data['details'] = $this->account->getDetails();
+        }
+
+        $data['use_exchange_rates'] = $this->account->getUseCurrencyExchangeRates();
+        if ($this->account->getDefaultVariationId()) {
+            $data['default_variant_id'] = $this->account->getDefaultVariationId();
         }
 
         return json_encode($data);
