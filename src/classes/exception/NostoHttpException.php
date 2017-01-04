@@ -53,14 +53,14 @@ class NostoHttpException extends NostoException
      * NostoHttpException constructor.
      * @param string $message
      * @param null $code
-     * @param Throwable|null $previous
+     * @param Exception|null $previous
      * @param NostoHttpRequest|null $request
      * @param NostoHttpResponse|null $response
      */
     public function __construct(
         $message = "",
         $code = null,
-        Throwable $previous = null,
+        Exception $previous = null,
         NostoHttpRequest $request = null,
         NostoHttpResponse $response = null
     )
