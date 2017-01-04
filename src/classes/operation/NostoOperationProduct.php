@@ -138,14 +138,12 @@ class NostoOperationProduct extends NostoOperation
      */
     public static function getProductAsArray(NostoProductInterface $product)
     {
-        /* @var NostoHelperPrice $nostoPriceHelper */
-        $nostoPriceHelper = Nosto::helper('price');
         $data = array(
             'url' => $product->getUrl(),
             'product_id' => $product->getProductId(),
             'name' => $product->getName(),
             'image_url' => $product->getImageUrl(),
-            'price' => $nostoPriceHelper->format($product->getPrice()),
+            'price' => NostoHelperPrice::format($product->getPrice()),
             'price_currency_code' => strtoupper($product->getCurrencyCode()),
             'availability' => $product->getAvailability(),
             'categories' => $product->getCategories(),
@@ -156,7 +154,7 @@ class NostoOperationProduct extends NostoOperation
             $data['description'] = $product->getFullDescription();
         }
         if ($product->getListPrice()) {
-            $data['list_price'] = $nostoPriceHelper->format(
+            $data['list_price'] = NostoHelperPrice::format(
                 $product->getListPrice()
             );
         }
@@ -172,7 +170,7 @@ class NostoOperationProduct extends NostoOperation
             $data['variation_id'] = $product->getVariationId();
         }
         if ($product->getSupplierCost()) {
-            $data['supplier_cost'] = $nostoPriceHelper->format(
+            $data['supplier_cost'] = NostoHelperPrice::format(
                 $product->getSupplierCost()
             );
         }
