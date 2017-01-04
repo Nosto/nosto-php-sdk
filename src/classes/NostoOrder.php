@@ -50,44 +50,44 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     /**
      * @var string|int the unique order number identifying the order.
      */
-    private $_orderNumber;
+    private $orderNumber;
 
     /**
      * @var string the date when the order was placed.
      */
-    private $_createdDate;
+    private $createdDate;
 
     /**
      * @var string the payment provider used for order.
      *
      * Formatted according to "[provider name] [provider version]".
      */
-    private $_paymentProvider;
+    private $paymentProvider;
 
     /**
      * @var NostoOrderBuyer The user info of the buyer.
      */
-    private $_buyerInfo;
+    private $buyerInfo;
 
     /**
      * @var NostoLineItem[] the items in the order.
      */
-    private $_purchasedItems = array();
+    private $purchasedItems = array();
 
     /**
      * @var NostoOrderStatus the order status model.
      */
-    private $_orderStatus;
+    private $orderStatus;
 
     /**
      * @var bool if special line items like shipping cost should be included.
      */
-    private $_includeSpecialLineItems = true;
+    private $includeSpecialLineItems = true;
 
     /**
      * @var string external order reference
      */
-    private $_externalOrderRef;
+    private $externalOrderRef;
 
     /**
      * @inheritdoc
@@ -103,7 +103,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function disableSpecialLineItems()
     {
-        $this->_includeSpecialLineItems = false;
+        $this->includeSpecialLineItems = false;
     }
 
     /**
@@ -111,7 +111,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function getOrderNumber()
     {
-        return $this->_orderNumber;
+        return $this->orderNumber;
     }
 
     /**
@@ -128,7 +128,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function setOrderNumber($orderNumber)
     {
-        $this->_orderNumber = $orderNumber;
+        $this->orderNumber = $orderNumber;
 
         return $this;
     }
@@ -138,7 +138,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function getCreatedDate()
     {
-        return $this->_createdDate;
+        return $this->createdDate;
     }
 
     /**
@@ -155,7 +155,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function setCreatedDate($createdDate)
     {
-        $this->_createdDate = $createdDate;
+        $this->createdDate = $createdDate;
 
         return $this;
     }
@@ -165,7 +165,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function getPaymentProvider()
     {
-        return $this->_paymentProvider;
+        return $this->paymentProvider;
     }
 
     /**
@@ -182,7 +182,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function setPaymentProvider($paymentProvider)
     {
-        $this->_paymentProvider = $paymentProvider;
+        $this->paymentProvider = $paymentProvider;
 
         return $this;
     }
@@ -192,7 +192,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function getBuyerInfo()
     {
-        return $this->_buyerInfo;
+        return $this->buyerInfo;
     }
 
     /**
@@ -209,7 +209,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function setBuyerInfo($buyerInfo)
     {
-        $this->_buyerInfo = $buyerInfo;
+        $this->buyerInfo = $buyerInfo;
 
         return $this;
     }
@@ -219,7 +219,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function getPurchasedItems()
     {
-        return $this->_purchasedItems;
+        return $this->purchasedItems;
     }
 
     /**
@@ -235,7 +235,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function setPurchasedItems($purchasedItems)
     {
-        $this->_purchasedItems = $purchasedItems;
+        $this->purchasedItems = $purchasedItems;
 
         return $this;
     }
@@ -245,7 +245,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function getOrderStatus()
     {
-        return $this->_orderStatus;
+        return $this->orderStatus;
     }
 
     /**
@@ -262,7 +262,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function setOrderStatus($orderStatus)
     {
-        $this->_orderStatus = $orderStatus;
+        $this->orderStatus = $orderStatus;
 
         return $this;
     }
@@ -281,7 +281,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function addPurchasedItems(NostoLineItemInterface $purchasedItems)
     {
-        $this->_purchasedItems[] = $purchasedItems;
+        $this->purchasedItems[] = $purchasedItems;
 
         return $this;
     }
@@ -300,7 +300,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function addOrderStatus($orderStatus)
     {
-        $this->_orderStatus[] = $orderStatus;
+        $this->orderStatus[] = $orderStatus;
 
         return $this;
     }
@@ -312,7 +312,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function getExternalOrderRef()
     {
-        return $this->_externalOrderRef;
+        return $this->externalOrderRef;
     }
 
     /**
@@ -322,6 +322,6 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function setExternalOrderRef($externalOrderRef)
     {
-        $this->_externalOrderRef = $externalOrderRef;
+        $this->externalOrderRef = $externalOrderRef;
     }
 }

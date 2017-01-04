@@ -43,24 +43,24 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
     /**
      * @var string the first name of the user who placed the order.
      */
-    protected $_firstName;
+    protected $firstName;
 
     /**
      * @var string the last name of the user who placed the order.
      */
-    protected $_lastName;
+    protected $lastName;
 
     /**
      * @var string the email address of the user who placed the order.
      */
-    protected $_email;
+    protected $email;
 
     /**
      * @inheritdoc
      */
     public function getFirstName()
     {
-        return $this->_firstName;
+        return $this->firstName;
     }
 
     /**
@@ -77,7 +77,7 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
      */
     public function setFirstName($firstName)
     {
-        $this->_firstName = $firstName;
+        $this->firstName = $firstName;
 
         return $this;
     }
@@ -87,7 +87,7 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
      */
     public function getLastName()
     {
-        return $this->_lastName;
+        return $this->lastName;
     }
 
     /**
@@ -104,7 +104,7 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
      */
     public function setLastName($lastName)
     {
-        $this->_lastName = $lastName;
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -114,7 +114,7 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
      */
     public function getEmail()
     {
-        return $this->_email;
+        return $this->email;
     }
 
     /**
@@ -131,7 +131,7 @@ class NostoOrderBuyer extends NostoObject implements NostoOrderBuyerInterface
      */
     public function setEmail($email)
     {
-        $this->_email = $email;
+        $this->email = $email;
 
         return $this;
     }

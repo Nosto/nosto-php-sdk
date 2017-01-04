@@ -44,27 +44,27 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      * @var string the unique identifier of the purchased item.
      * If this item is for discounts or shipping cost, the id can be 0.
      */
-    protected $_productId;
+    protected $productId;
 
     /**
      * @var int the quantity of the item included in the order.
      */
-    protected $_quantity;
+    protected $quantity;
 
     /**
      * @var string the name of the item included in the order.
      */
-    protected $_name;
+    protected $name;
 
     /**
      * @var float The unit price of the item included in the order.
      */
-    protected $_unitPrice;
+    protected $unitPrice;
 
     /**
      * @var string the 3-letter ISO code (ISO 4217) for the item currency.
      */
-    protected $_currencyCode;
+    protected $currencyCode;
 
     /**
      * Loads a special item, e.g. shipping cost.
@@ -75,11 +75,11 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      */
     public function loadSpecialItemData($name, $price, $currency)
     {
-        $this->_productId = -1;
-        $this->_quantity = 1;
-        $this->_name = $name;
-        $this->_unitPrice = NostoHelperDate::format($price);
-        $this->_currencyCode = strtoupper($currency);
+        $this->productId = -1;
+        $this->quantity = 1;
+        $this->name = $name;
+        $this->unitPrice = NostoHelperDate::format($price);
+        $this->currencyCode = strtoupper($currency);
     }
 
     /**
@@ -87,7 +87,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      */
     public function getProductId()
     {
-        return $this->_productId;
+        return $this->productId;
     }
 
     /**
@@ -103,7 +103,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      */
     public function setProductId($id)
     {
-        $this->_productId = $id;
+        $this->productId = $id;
 
         return $this;
     }
@@ -113,7 +113,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      */
     public function getQuantity()
     {
-        return $this->_quantity;
+        return $this->quantity;
     }
 
     /**
@@ -129,7 +129,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      */
     public function setQuantity($quantity)
     {
-        $this->_quantity = $quantity;
+        $this->quantity = $quantity;
 
         return $this;
     }
@@ -139,7 +139,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -156,7 +156,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      */
     public function setName($name)
     {
-        $this->_name = $name;
+        $this->name = $name;
 
         return $this;
     }
@@ -166,7 +166,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      */
     public function getUnitPrice()
     {
-        return $this->_unitPrice;
+        return $this->unitPrice;
     }
 
     /**
@@ -174,7 +174,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      */
     public function getCurrencyCode()
     {
-        return $this->_currencyCode;
+        return $this->currencyCode;
     }
 
     /**
@@ -191,7 +191,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      */
     public function setCurrencyCode($currency)
     {
-        $this->_currencyCode = $currency;
+        $this->currencyCode = $currency;
 
         return $this;
     }
@@ -210,7 +210,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      */
     public function setPrice($unitPrice)
     {
-        $this->_unitPrice = $unitPrice;
+        $this->unitPrice = $unitPrice;
 
         return $this;
     }

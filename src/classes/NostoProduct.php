@@ -112,75 +112,75 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     /**
      * @var string the default variation identifier of the shop
      */
-    private $_variationId;
+    private $variationId;
 
     /**
      * @var float the price paid for the supplier
      */
-    private $_supplierCost;
+    private $supplierCost;
 
     /**
      * @var int product stock
      */
-    private $_inventoryLevel;
+    private $inventoryLevel;
 
     /**
      * @var int the amount of reviews
      */
-    private $_reviewCount;
+    private $reviewCount;
 
     /**
      * @var float the value of the rating(s)
      */
-    private $_ratingValue;
+    private $ratingValue;
 
     /**
      * @var array alternative image urls
      */
-    private $_alternateImageUrls;
+    private $alternateImageUrls;
 
     /**
      * @var string the condition of the product
      */
-    private $_condition;
+    private $condition;
 
     /**
      * @var string the gender (target group) of the product
      */
-    private $_gender;
+    private $gender;
 
     /**
      * @var string the the age group
      */
-    private $_ageGroup;
+    private $ageGroup;
 
     /**
      * @var string the barcode
      */
-    private $_gtin;
+    private $gtin;
 
     /**
      * @var string category used in Google's services
      */
-    private $_googleCategory;
+    private $googleCategory;
 
     /**
      * @var string the pricing measure of the product. Pricing measure for a
      * 0.33 liter bottle for example is "0.33".
      */
-    private $_unitPricingMeasure;
+    private $unitPricingMeasure;
 
     /**
      * @var string the pricing base measure of the product. Pricing base measure
      * for a 0.33l bottle is "1".
      */
-    private $_unitPricingBaseMeasure;
+    private $unitPricingBaseMeasure;
 
     /**
      * @var string the pricing unit of the product. Pricing unit for a 0.33l
      * bottle is "l" (litre).
      */
-    private $_unitPricingUnit;
+    private $unitPricingUnit;
 
     /**
      * @inheritdoc
@@ -631,7 +631,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getVariationId()
     {
-        return $this->_variationId;
+        return $this->variationId;
     }
 
     /**
@@ -639,7 +639,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getSupplierCost()
     {
-        return $this->_supplierCost;
+        return $this->supplierCost;
     }
 
     /**
@@ -647,7 +647,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getInventoryLevel()
     {
-        return $this->_inventoryLevel;
+        return $this->inventoryLevel;
     }
 
     /**
@@ -655,7 +655,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getReviewCount()
     {
-        return $this->_reviewCount;
+        return $this->reviewCount;
     }
 
     /**
@@ -663,7 +663,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getRatingValue()
     {
-        return $this->_ratingValue;
+        return $this->ratingValue;
     }
 
     /**
@@ -671,7 +671,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getAlternateImageUrls()
     {
-        return $this->_alternateImageUrls;
+        return $this->alternateImageUrls;
     }
 
     /**
@@ -679,7 +679,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getCondition()
     {
-        return $this->_condition;
+        return $this->condition;
     }
 
     /**
@@ -687,7 +687,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getGender()
     {
-        return $this->_gender;
+        return $this->gender;
     }
 
     /**
@@ -695,7 +695,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getAgeGroup()
     {
-        return $this->_ageGroup;
+        return $this->ageGroup;
     }
 
     /**
@@ -703,7 +703,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getGtin()
     {
-        return $this->_gtin;
+        return $this->gtin;
     }
 
     /**
@@ -711,7 +711,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getGoogleCategory()
     {
-        return $this->_googleCategory;
+        return $this->googleCategory;
     }
 
     /**
@@ -719,7 +719,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getUnitPricingMeasure()
     {
-        return $this->_unitPricingMeasure;
+        return $this->unitPricingMeasure;
     }
 
     /**
@@ -727,7 +727,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getUnitPricingBaseMeasure()
     {
-        return $this->_unitPricingBaseMeasure;
+        return $this->unitPricingBaseMeasure;
     }
 
     /**
@@ -735,6 +735,6 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getUnitPricingUnit()
     {
-        return $this->_unitPricingUnit;
+        return $this->unitPricingUnit;
     }
 }

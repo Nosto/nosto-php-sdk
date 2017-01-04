@@ -43,19 +43,19 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
     /**
      * @var string the order status code.
      */
-    protected $_code;
+    protected $code;
 
     /**
      * @var string the order status label.
      */
-    protected $_label;
+    protected $label;
 
     /**
      * @inheritdoc
      */
     public function getCode()
     {
-        return $this->_code;
+        return $this->code;
     }
 
     /**
@@ -72,7 +72,7 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
      */
     public function setCode($code)
     {
-        $this->_code = $code;
+        $this->code = $code;
 
         return $this;
     }
@@ -82,7 +82,7 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
      */
     public function getLabel()
     {
-        return $this->_label;
+        return $this->label;
     }
 
     /**
@@ -99,7 +99,7 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
      */
     public function setLabel($label)
     {
-        $this->_label = $label;
+        $this->label = $label;
 
         return $this;
     }

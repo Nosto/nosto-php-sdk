@@ -41,24 +41,24 @@ class NostoOAuth implements NostoOAuthClientMetaDataInterface
     /**
      * @var array The scopes for the OAuth2 request.
      */
-    protected $_scopes = array();
+    protected $scopes = array();
 
     /**
      * @var string the url where the oauth2 server should redirect after
      * authorization is done.
      */
-    protected $_redirectUrl;
+    protected $redirectUrl;
 
     /**
      * @var string 2-letter ISO code (ISO 639-1) for localization
      * on oauth2 server.
      */
-    protected $_language;
+    protected $language;
 
     /**
      * @var \NostoAccount|null account if OAuth is to sync details.
      */
-    protected $_account;
+    protected $account;
 
     /**
      * @inheritdoc
@@ -81,7 +81,7 @@ class NostoOAuth implements NostoOAuthClientMetaDataInterface
      */
     public function getScopes()
     {
-        return $this->_scopes;
+        return $this->scopes;
     }
 
     /**
@@ -89,7 +89,7 @@ class NostoOAuth implements NostoOAuthClientMetaDataInterface
      */
     public function setScopes(array $scopes)
     {
-        $this->_scopes = $scopes;
+        $this->scopes = $scopes;
     }
 
     /**
@@ -97,7 +97,7 @@ class NostoOAuth implements NostoOAuthClientMetaDataInterface
      */
     public function getRedirectUrl()
     {
-        return $this->_redirectUrl;
+        return $this->redirectUrl;
     }
 
     /**
@@ -105,7 +105,7 @@ class NostoOAuth implements NostoOAuthClientMetaDataInterface
      */
     public function setRedirectUrl($redirectUrl)
     {
-        $this->_redirectUrl = $redirectUrl;
+        $this->redirectUrl = $redirectUrl;
     }
 
     /**
@@ -113,7 +113,7 @@ class NostoOAuth implements NostoOAuthClientMetaDataInterface
      */
     public function getLanguageIsoCode()
     {
-        return $this->_language;
+        return $this->language;
     }
 
     /**
@@ -121,7 +121,7 @@ class NostoOAuth implements NostoOAuthClientMetaDataInterface
      */
     public function setLanguageIsoCode($language)
     {
-        $this->_language = $language;
+        $this->language = $language;
     }
 
     /**
@@ -129,7 +129,7 @@ class NostoOAuth implements NostoOAuthClientMetaDataInterface
      */
     public function getAccount()
     {
-        return $this->_account;
+        return $this->account;
     }
 
     /**
@@ -137,6 +137,6 @@ class NostoOAuth implements NostoOAuthClientMetaDataInterface
      */
     public function setAccount(\NostoAccountInterface $account)
     {
-        $this->_account = $account;
+        $this->account = $account;
     }
 }
