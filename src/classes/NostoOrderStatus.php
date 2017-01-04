@@ -67,8 +67,6 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
      * $object->setCode('offen');
      *
      * @param string $code the code.
-     *
-     * @return $this Self for chaining
      */
     public function setCode($code)
     {
@@ -92,8 +90,6 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
      * $object->setLabel('Offen');
      *
      * @param string $label the label.
-     *
-     * @return $this Self for chaining
      */
     public function setLabel($label)
     {

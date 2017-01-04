@@ -98,8 +98,6 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      * $object->setProductId(1);
      *
      * @param int $id the product ID.
-     *
-     * @return $this Self for chaining
      */
     public function setProductId($id)
     {
@@ -122,8 +120,6 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      * $object->setQuantity(1);
      *
      * @param int $quantity the quantity.
-     *
-     * @return $this Self for chaining
      */
     public function setQuantity($quantity)
     {
@@ -147,8 +143,6 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      * $object->setName('My product');
      *
      * @param string $name the name.
-     *
-     * @return $this Self for chaining
      */
     public function setName($name)
     {
@@ -180,8 +174,6 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      * $object->setCurrency('USD');
      *
      * @param string $currency the currency code.
-     *
-     * @return $this Self for chaining
      */
     public function setCurrencyCode($currency)
     {
@@ -197,8 +189,6 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      * $object->setPrice(99.99);
      *
      * @param double $unitPrice the price.
-     *
-     * @return $this Self for chaining
      */
     public function setPrice($unitPrice)
     {
