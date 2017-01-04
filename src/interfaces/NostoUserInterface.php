@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -34,6 +33,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
+
 interface NostoUserInterface extends NostoSerializableInterface
 {
     /**
