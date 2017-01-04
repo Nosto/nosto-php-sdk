@@ -50,9 +50,7 @@ class IframeAuthTest extends \Codeception\TestCase\Test
         $iframe = new MockNostoIframe();
         $user = new MockNostoSignupOwner();
         $baseUrl = Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', NostoHttpRequest::$baseUrl);;
-        /* @var $iframeHelper NostoHelperIframe */
-        $iframeHelper = Nosto::helper('iframe');
-        $url = $iframeHelper->getUrl($iframe, $account, $user, array());
+        $url = NostoHelperIframe::getUrl($iframe, $account, $user, array());
         $this->specify('install iframe url was created', function () use ($url, $baseUrl) {
             $this->assertEquals(
                 $baseUrl . '/hub/platform/install?lang=en&ps_version=1.0.0&nt_version=1.0.0&product_pu=http%3A%2F%2Fmy.shop.com%2Fproducts%2Fproduct123%3Fnostodebug%3Dtrue&category_pu=http%3A%2F%2Fmy.shop.com%2Fproducts%2Fcategory123%3Fnostodebug%3Dtrue&search_pu=http%3A%2F%2Fmy.shop.com%2Fsearch%3Fquery%3Dred%3Fnostodebug%3Dtrue&cart_pu=http%3A%2F%2Fmy.shop.com%2Fcart%3Fnostodebug%3Dtrue&front_pu=http%3A%2F%2Fmy.shop.com%3Fnostodebug%3Dtrue&shop_lang=en&shop_name=Shop+Name&unique_id=123&fname=James&lname=Kirk&email=james.kirk%40example.com',

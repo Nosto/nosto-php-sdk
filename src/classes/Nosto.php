@@ -58,26 +58,6 @@ class Nosto
     }
 
     /**
-     * Gets a helper class instance by name.
-     *
-     * @param string $helper the name of the helper class to get.
-     * @return NostoHelper the helper instance.
-     * @throws NostoException if helper cannot be found.
-     */
-    public static function helper($helper)
-    {
-        $registryKey = '__helper__/' . $helper;
-        if (!self::registry($registryKey)) {
-            $helperClass = self::getHelperClassName($helper);
-            if (!class_exists($helperClass)) {
-                throw new NostoException(sprintf('Unknown helper class %s', $helperClass));
-            }
-            self::register($registryKey, new $helperClass);
-        }
-        return self::registry($registryKey);
-    }
-
-    /**
      * Retrieve a value from registry by a key.
      *
      * @param string $key the register key for the variable.

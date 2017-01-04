@@ -52,7 +52,7 @@ final class NostoHelperIframe extends NostoHelper
      * @param array $params additional parameters to add to the iframe url.
      * @return string the iframe url.
      */
-    public function getUrl(
+    public static function getUrl(
         NostoIframeInterface $iframe,
         NostoAccountInterface $account = null,
         NostoSignupOwnerInterface $user = null,
@@ -97,7 +97,7 @@ final class NostoHelperIframe extends NostoHelper
                 // The only case when this should happen is when the api token for some
                 // reason is invalid, which is the case when switching between environments.
                 $url = NostoHttpRequest::buildUri(
-                    $this->getBaseUrl() . self::IFRAME_URI_UNINSTALL . '?' . $queryParams,
+                    NostoHelperIframe::getBaseUrl() . self::IFRAME_URI_UNINSTALL . '?' . $queryParams,
                     array(
                         '{platform}' => $iframe->getPlatform(),
                     )
@@ -105,7 +105,7 @@ final class NostoHelperIframe extends NostoHelper
             }
         } else {
             $url = NostoHttpRequest::buildUri(
-                $this->getBaseUrl() . self::IFRAME_URI_INSTALL . '?' . $queryParams,
+                NostoHelperIframe::getBaseUrl() . self::IFRAME_URI_INSTALL . '?' . $queryParams,
                 array(
                     '{platform}' => $iframe->getPlatform(),
                 )
