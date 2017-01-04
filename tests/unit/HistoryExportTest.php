@@ -53,7 +53,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
     {
         $collection = new NostoProductCollection();
         $collection[] = new MockNostoProduct();
-        $cipher_text = NostoExporter::export($this->account, $collection);
+        $cipher_text = NostoHelperExporter::export($this->account, $collection);
 
         $this->specify('verify encrypted product export',
             function () use ($collection, $cipher_text) {
@@ -73,7 +73,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
     {
         $collection = new NostoOrderCollection();
         $collection->append(new MockNostoOrder());
-        $cipher_text = NostoExporter::export($this->account, $collection);
+        $cipher_text = NostoHelperExporter::export($this->account, $collection);
 
         $this->specify('verify encrypted order export',
             function () use ($collection, $cipher_text) {

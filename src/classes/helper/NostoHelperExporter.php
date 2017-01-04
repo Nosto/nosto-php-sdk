@@ -39,7 +39,7 @@
  * This information is used to bootstrap recommendations and decreases the time needed to get
  * accurate recommendations showing in the shop.
  */
-class NostoExporter
+class NostoHelperExporter
 {
 
     private function __construct()
