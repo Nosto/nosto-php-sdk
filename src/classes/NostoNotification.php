@@ -55,7 +55,7 @@ class NostoNotification extends NostoObject implements NostoNotificationInterfac
     protected $languageId;
 
     /*
-     * @var string the name of the langue
+     * @var string the name of the language
      */
     protected $languageName;
 

@@ -285,7 +285,7 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     /**
      * Sets the account billing details.
      *
-     * @param $billingDetails NostoSignupBillingDetailsInterface the account billing detals
+     * @param $billingDetails NostoSignupBillingDetailsInterface the account billing details
      */
     public function setBillingDetails(NostoSignupBillingDetailsInterface $billingDetails)
     {

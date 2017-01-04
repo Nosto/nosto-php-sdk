@@ -83,7 +83,7 @@ class NostoOperationOrderConfirmation extends NostoOperation
         $request->setReplaceParams($replaceParams);
         $response = $request->post($this->getJson($order));
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to send order confirmarion', $request, $response);
+            Nosto::throwHttpException('Failed to send order confirmation', $request, $response);
         }
 
         return true;

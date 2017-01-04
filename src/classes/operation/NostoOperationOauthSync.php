@@ -35,7 +35,7 @@
  */
 
 /**
- * Handles exchaning the authorization token for the API tokes from Nosto
+ * Handles exchanging the authorization token for the API tokes from Nosto
  */
 class NostoOperationOauthSync extends NostoOperation
 {

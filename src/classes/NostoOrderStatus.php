@@ -59,12 +59,12 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
     }
 
     /**
-     * Sets the code of the order.
+     * Sets the order status code.
      *
      * The code must be a non-empty string.
      *
      * Usage:
-     * $object->setCode('offen');
+     * $object->setCode('completed');
      *
      * @param string $code the code.
      *
@@ -91,7 +91,7 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
      * The label must be a non-empty string.
      *
      * Usage:
-     * $object->setLabel('Offen');
+     * $object->setLabel('Completed');
      *
      * @param string $label the label.
      *

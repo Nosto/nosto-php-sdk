@@ -94,7 +94,7 @@ class NostoIframe extends NostoObject implements NostoIframeInterface
      */
     private $shopName;
     /**
-     * @var string the version number of the moudule extension is running on.
+     * @var string the version number of the module extension is running on.
      */
     private $versionModule;
     /**
