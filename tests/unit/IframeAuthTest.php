@@ -48,7 +48,7 @@ class IframeAuthTest extends \Codeception\TestCase\Test
         /** @var NostoAccountInterface $account */
         $account = null;
         $iframe = new MockNostoIframe();
-        $user = new MockNostoSignupOwner();
+        $user = new MockNostoCurrentUser();
         $baseUrl = Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', NostoHttpRequest::$baseUrl);;
         $url = NostoHelperIframe::getUrl($iframe, $account, $user, array());
         $this->specify('install iframe url was created', function () use ($url, $baseUrl) {
@@ -67,7 +67,7 @@ class IframeAuthTest extends \Codeception\TestCase\Test
         /** @var NostoAccountInterface $account */
         $account = new MockNostoAccount('platform-00000000');
         $iframe = new MockNostoIframe();
-        $user = new MockNostoSignupOwner();
+        $user = new MockNostoCurrentUser();
 
         $url = $account->getIframeUrl($iframe, $user, array());
         $this->specify('auth iframe url was created', function () use ($url) {
