@@ -41,11 +41,6 @@ class AccountSyncOperationTest extends \Codeception\TestCase\Test
     use \Codeception\Specify;
 
     /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
      * Tests that existing accounts can be synced from Nosto.
      * Accounts are synced using OAuth2 Authorization Code method.
      * We are only testing that we can start and act on the steps in the OAuth request cycle.

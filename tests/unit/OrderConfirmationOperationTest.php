@@ -44,11 +44,6 @@ class OrderConfirmationTest extends \Codeception\TestCase\Test
     use \Codeception\Specify;
 
     /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
      * @var NostoOrderInterface
      */
     protected $order;

@@ -41,11 +41,6 @@ class AccountTest extends \Codeception\TestCase\Test
     use \Codeception\Specify;
 
     /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
      * Tests the "isConnectedToNosto" method for the NostoAccount class.
      */
     public function testAccountIsConnected()

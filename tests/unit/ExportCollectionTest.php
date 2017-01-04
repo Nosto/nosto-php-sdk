@@ -40,11 +40,6 @@ require_once(dirname(__FILE__) . '/../_support/MockNostoOrder.php');
 class ExportCollectionTest extends \Codeception\TestCase\Test
 {
     /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
      * Tests that the export collection does not accept string items.
      */
     public function testCollectionValidationForString()

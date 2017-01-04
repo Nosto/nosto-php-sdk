@@ -41,11 +41,6 @@ class ProductOperationTest extends \Codeception\TestCase\Test
     use \Codeception\Specify;
 
     /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
      * Tests that product upsert API requests cannot be made without an API token.
      */
     public function testSendingProductUpsertWithoutApiToken()

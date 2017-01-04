@@ -39,11 +39,6 @@ class AccountDeleteOperationTest extends \Codeception\TestCase\Test
     use \Codeception\Specify;
 
     /**
-     * @var UnitTester
-     */
-    protected $tester;
-
-    /**
      * Test the account deletion without the required SSO token.
      */
     public function testDeletingAccountWithoutToken()

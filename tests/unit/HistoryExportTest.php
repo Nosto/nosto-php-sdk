@@ -42,11 +42,6 @@ class HistoryExportTest extends \Codeception\TestCase\Test
     use \Codeception\Specify;
 
     /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
      * @var NostoAccountInterface
      */
     protected $account;

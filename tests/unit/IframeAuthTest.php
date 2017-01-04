@@ -41,11 +41,6 @@ class IframeAuthTest extends \Codeception\TestCase\Test
     use \Codeception\Specify;
 
     /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
      * Tests that we can build an non-authenticated url for the installation iframe.
      */
     public function testIframeUrlWithoutAccount()

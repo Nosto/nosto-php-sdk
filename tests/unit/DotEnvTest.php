@@ -39,11 +39,6 @@ class DotEnvTest extends \Codeception\TestCase\Test
     use \Codeception\Specify;
 
     /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
      * Tests a .env file.
      */
     public function testDotEnvFile()

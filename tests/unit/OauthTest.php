@@ -41,11 +41,6 @@ class OauthTest extends \Codeception\TestCase\Test
     use \Codeception\Specify;
 
     /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
      * Test the OAuth client authenticate without a authorize code.
      */
     public function testOauthAuthenticateWithoutCode()

@@ -43,11 +43,6 @@ class AccountCreateTest extends \Codeception\TestCase\Test
     use \Codeception\Specify;
 
     /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
      * Tests that new accounts can be created successfully.
      */
     public function testCreatingNewAccount()

@@ -43,11 +43,6 @@ class HttpRequestTest extends \Codeception\TestCase\Test
     const CURL_TEST_PORT = 9900;
 
     /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
      * Tests setting query params to the request.
      */
     public function testHttpRequestQueryParams()
