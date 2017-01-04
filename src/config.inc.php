@@ -42,7 +42,6 @@ require_once(dirname(__FILE__) . '/interfaces/signup/NostoSignupOwnerInterface.p
 
 require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderBuyerInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderInterface.php');
-require_once(dirname(__FILE__) . '/interfaces/order/NostoLineItemInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderStatusInterface.php');
 
 require_once(dirname(__FILE__) . '/interfaces/NostoIframeInterface.php');
@@ -54,6 +53,7 @@ require_once(dirname(__FILE__) . '/interfaces/NostoExchangeRateInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoAccountInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoNotificationInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoCurrentUserInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/NostoLineItemInterface.php');
 
 // Classes
 require_once(dirname(__FILE__) . '/classes/http/NostoHttpRequest.php'); // Must be loaded before `NostoApiRequest`
