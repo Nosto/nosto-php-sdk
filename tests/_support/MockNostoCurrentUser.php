@@ -34,20 +34,6 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class MockNostoCurrentUser implements NostoCurrentUserInterface
+class MockNostoCurrentUser extends MockNostoUser implements NostoCurrentUserInterface
 {
-    public function getFirstName()
-    {
-        return 'James';
-    }
-
-    public function getLastName()
-    {
-        return 'Kirk';
-    }
-
-    public function getEmail()
-    {
-        return 'james.kirk@example.com';
-    }
 }

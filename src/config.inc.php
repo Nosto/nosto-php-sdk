@@ -35,6 +35,7 @@
  */
 
 // Interfaces
+require_once(dirname(__FILE__) . '/interfaces/NostoSerializableInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoUserInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/signup/NostoSignupBillingDetailsInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/signup/NostoSignupInterface.php');

@@ -34,7 +34,7 @@
  *
  */
 
-class MockNostoOrder implements NostoOrderInterface
+class MockNostoOrder implements NostoOrderInterface, NostoValidatableInterface
 {
     public function getOrderNumber()
     {
@@ -66,8 +66,52 @@ class MockNostoOrder implements NostoOrderInterface
         return new MockNostoOrderStatus();
     }
 
+    public function getValidationRules()
+    {
+        return array();
+    }
+
     public function getExternalOrderRef()
     {
         return 'ext ref';
     }
+
+    public function getArray()
+    {
+        $data = array(
+            'order_number' => $this->getOrderNumber(),
+            'external_order_ref' => $this->getExternalOrderRef(),
+            'buyer' => array(),
+            'created_at' => NostoHelperDate::format($this->getCreatedDate()),
+            'payment_provider' => $this->getPaymentProvider(),
+            'purchased_items' => array(),
+        );
+        if ($this->getOrderStatus()) {
+            $data['order_status_code'] = $this->getOrderStatus()->getCode();
+            $data['order_status_label'] = $this->getOrderStatus()->getLabel();
+        }
+        foreach ($this->getPurchasedItems() as $item) {
+            $data['purchased_items'][] = array(
+                'product_id' => $item->getProductId(),
+                'quantity' => $item->getQuantity(),
+                'name' => $item->getName(),
+                'unit_price' => NostoHelperPrice::format($item->getUnitPrice()),
+                'price_currency_code' => strtoupper($item->getCurrencyCode()),
+            );
+        }
+        if ($this->getBuyerInfo()) {
+            if ($this->getBuyerInfo()->getFirstName()) {
+                $data['buyer']['first_name'] = $this->getBuyerInfo()->getFirstName();
+            }
+            if ($this->getBuyerInfo()->getLastName()) {
+                $data['buyer']['last_name'] = $this->getBuyerInfo()->getLastName();
+            }
+            if ($this->getBuyerInfo()->getEmail()) {
+                $data['buyer']['email'] = $this->getBuyerInfo()->getEmail();
+            }
+        }
+        
+        return $data;
+    }
+
 }

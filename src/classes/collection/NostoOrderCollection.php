@@ -57,6 +57,7 @@ class NostoOrderCollection extends NostoCollection
         if (empty($data)) {
             throw new NostoException('No orders found in collection.');
         }
+
         return $data;
     }
 
