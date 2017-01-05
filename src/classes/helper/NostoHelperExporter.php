@@ -34,6 +34,8 @@
  *
  */
 
+use phpseclib\Crypt\Random;
+
 /**
  * Helper class for exporting historical product and order data from the shop.
  * This information is used to bootstrap recommendations and decreases the time needed to get
@@ -63,7 +65,7 @@ class NostoHelperExporter
             $tokenValue = $token->getValue();
             $secret = substr($tokenValue, 0, 16);
             if (!empty($secret)) {
-                $iv = NostoCryptRandom::getRandomString(16);
+                $iv = Random::string(16);
                 $cipher = new NostoCipher();
                 $cipher->setSecret($secret);
                 $cipher->setIV($iv);
