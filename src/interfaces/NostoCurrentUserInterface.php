@@ -37,6 +37,6 @@
 /**
  * Interface for the account owner details when creating new Nosto accounts.
  */
-interface NostoCurrentUserInterface extends NostoUserInterface
+interface NostoCurrentUserInterface extends NostoPersonInterface
 {
 }

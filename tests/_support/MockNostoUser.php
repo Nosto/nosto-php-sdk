@@ -34,7 +34,7 @@
  *
  */
 
-class MockNostoUser implements NostoUserInterface
+class MockNostoPerson implements NostoUserInterface
 {
     public function getFirstName()
     {

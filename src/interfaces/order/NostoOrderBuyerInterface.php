@@ -37,6 +37,6 @@
 /**
  * Interface for buyer information of an order.
  */
-interface NostoOrderBuyerInterface extends NostoUserInterface
+interface NostoOrderBuyerInterface extends NostoPersonInterface
 {
 }

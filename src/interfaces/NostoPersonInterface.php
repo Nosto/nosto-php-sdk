@@ -34,7 +34,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-interface NostoUserInterface extends NostoSerializableInterface
+interface NostoPersonInterface extends NostoSerializableInterface
 {
     /**
      * The first name of the user

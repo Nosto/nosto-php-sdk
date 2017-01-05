@@ -34,7 +34,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class NostoUser extends NostoObject implements NostoUserInterface
+class NostoPerson extends NostoObject implements NostoPersonInterface
 {
     /**
      * @var string the account owner first name.

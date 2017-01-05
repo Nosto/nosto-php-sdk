@@ -38,6 +38,6 @@
  * Model for order buyer information. This is used when compiling the info about
  * an order that is sent to Nosto.
  */
-class NostoOrderBuyer extends NostoUser implements NostoOrderBuyerInterface
+class NostoOrderBuyer extends NostoPerson implements NostoOrderBuyerInterface
 {
 }
