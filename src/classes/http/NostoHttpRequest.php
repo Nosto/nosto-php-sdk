@@ -380,7 +380,7 @@ class NostoHttpRequest
             $url,
             array(
                 'headers' => $this->headers,
-                'content' => $content,
+                'content' => $this->content,
             )
         );
     }
@@ -414,7 +414,7 @@ class NostoHttpRequest
             $url,
             array(
                 'headers' => $this->headers,
-                'content' => $content,
+                'content' => $this->content,
             )
         );
     }

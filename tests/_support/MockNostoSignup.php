@@ -119,4 +119,51 @@ class MockNostoSignup implements NostoSignupInterface
     {
         return null;
     }
+
+    /**
+     * @return array the array representation of the object for serialization
+     */
+    public function getArray()
+    {
+        $data = array(
+            'title' => $this->getTitle(),
+            'name' => $this->getName(),
+            'platform' => $this->getPlatform(),
+            'front_page_url' => $this->getFrontPageUrl(),
+            'currency_code' => strtoupper($this->getCurrencyCode()),
+            'language_code' => strtolower($this->getOwnerLanguageCode()),
+            'owner' => $this->getOwner()->getArray(),
+            'api_tokens' => array(),
+        );
+
+        // Add optional billing details if the required data is set.
+        $billingDetails = array(
+            'country' => strtoupper($this->getBillingDetails()->getCountry())
+        );
+        if (!empty($billingDetails['country'])) {
+            $data['billing_details'] = $billingDetails;
+        }
+
+        // Add optional partner code if one is set.
+        $partnerCode = $this->getPartnerCode();
+        if (!empty($partnerCode)) {
+            $data['partner_code'] = $partnerCode;
+        }
+
+        // Request all available API tokens for the account.
+        foreach (NostoApiToken::$tokenNames as $name) {
+            $data['api_tokens'][] = 'api_' . $name;
+        }
+
+        if ($this->getDetails()) {
+            $data['details'] = $this->getDetails();
+        }
+
+        $data['use_exchange_rates'] = $this->getUseCurrencyExchangeRates();
+        if ($this->getDefaultVariationId()) {
+            $data['default_variant_id'] = $this->getDefaultVariationId();
+        }
+
+        return $data;
+    }
 }

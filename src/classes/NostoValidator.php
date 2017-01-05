@@ -68,6 +68,7 @@ class NostoValidator
      */
     public function validate()
     {
+        $valid = true;
         foreach ($this->object->getValidationRules() as $rule) {
             if (isset($rule[0], $rule[1])) {
                 $properties = $rule[0];
@@ -81,11 +82,12 @@ class NostoValidator
                 $params = array_merge(array($properties), array_slice($rule, 2));
                 $isValid = call_user_func_array(array($this, $validator), $params);
                 if (!$isValid) {
-                    return false;
+                    $valid = false;
                 }
             }
         }
-        return true;
+
+        return $valid;
     }
 
     /**
@@ -116,14 +118,15 @@ class NostoValidator
      */
     protected function validateRequired(array $properties)
     {
+        $valid = true;
         foreach ($properties as $property) {
             $value = $this->object->{$property};
             if (empty($value)) {
                 $this->addError($property, sprintf('Property "%s" must not be empty.', $property));
-                return false;
+                $valid = false;
             }
         }
-        return true;
+        return $valid;
     }
 
     /**
@@ -149,6 +152,7 @@ class NostoValidator
      */
     protected function validateIn(array $properties, array $values)
     {
+        $valid = true;
         $supported = implode('", "', $values);
         foreach ($properties as $property) {
             $value = $this->object->{$property};
@@ -161,9 +165,10 @@ class NostoValidator
                         $supported
                     )
                 );
-                return false;
+                $valid = false;
             }
         }
-        return true;
+
+        return $valid;
     }
 }

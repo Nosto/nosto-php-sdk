@@ -34,6 +34,29 @@
  *
  */
 
-class MockNostoSignupOwner extends MockNostoUser implements NostoSignupOwnerInterface
+class MockNostoUser implements NostoUserInterface
 {
+    public function getFirstName()
+    {
+        return 'James';
+    }
+
+    public function getLastName()
+    {
+        return 'Kirk';
+    }
+
+    public function getEmail()
+    {
+        return 'james.kirk@example.com';
+    }
+
+    public function getArray()
+    {
+        return [
+            'first_name' => $this->getFirstName(),
+            'last_name' => $this->getLastName(),
+            'email' => $this->getEmail(),
+        ];
+    }
 }
