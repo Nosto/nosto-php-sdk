@@ -35,8 +35,7 @@
  */
 
 // Interfaces
-require_once(dirname(__FILE__) . '/interfaces/NostoSerializableInterface.php');
-require_once(dirname(__FILE__) . '/interfaces/NostoUserInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/NostoPersonInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/signup/NostoSignupBillingDetailsInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/signup/NostoSignupInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/signup/NostoSignupOwnerInterface.php');
@@ -112,10 +111,11 @@ require_once(dirname(__FILE__) . '/classes/NostoCurrencyCode.php');
 require_once(dirname(__FILE__) . '/classes/NostoCurrencySymbol.php');
 require_once(dirname(__FILE__) . '/classes/NostoCurrencyFormat.php');
 require_once(dirname(__FILE__) . '/classes/NostoCurrencyInfo.php');
-require_once(dirname(__FILE__) . '/classes/NostoUser.php');
+require_once(dirname(__FILE__) . '/classes/NostoPerson.php');
 require_once(dirname(__FILE__) . '/classes/NostoSignupOwner.php');
 require_once(dirname(__FILE__) . '/classes/NostoCurrentUser.php');
 require_once(dirname(__FILE__) . '/classes/NostoNotification.php');
+require_once(dirname(__FILE__) . '/classes/NostoSerializer.php');
 
 // Libs
 require_once(dirname(__FILE__) . '/libs/phpseclib/crypt/NostoCryptBase.php');

@@ -37,7 +37,7 @@
 /**
  * Base class for Nosto objects to share basic functionality.
  */
-abstract class NostoSerializableObject extends NostoObject implements NostoSerializableInterface
+abstract class NostoSerializableObject extends NostoObject
 {
 
 }

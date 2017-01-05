@@ -41,26 +41,6 @@
 class NostoProductCollection extends NostoCollection
 {
     /**
-     * @return array the array representation of the object for serialization
-     * @throws NostoException when the collection is empty
-     */
-    public function getArray()
-    {
-        $data = array();
-        foreach ($this->getArrayCopy() as $item) {
-            /** @var NostoProductInterface|NostoValidatableInterface|NostoSerializableInterface $item */
-            $validator = new NostoValidator($item);
-            if ($validator->validate()) {
-                $data[] = $item->getArray();
-            }
-        }
-        if (empty($data)) {
-            throw new NostoException('No products found in collection.');
-        }
-        return $data;
-    }
-
-    /**
      * Returns the type of items this collection can contain.
      *
      * @return string the type of items this collection can contain.

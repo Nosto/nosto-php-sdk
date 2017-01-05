@@ -34,8 +34,6 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/MockNostoOAuthClientMetaData.php');
-
 class OauthTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;

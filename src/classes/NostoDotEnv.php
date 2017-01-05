@@ -39,6 +39,7 @@
  */
 class NostoDotEnv
 {
+    const AUTO_DETECT_LINE_ENDINGS = 'auto_detect_line_endings';
     /**
      * @var NostoDotEnv the runtime cache for the class instance.
      */
@@ -89,10 +90,10 @@ class NostoDotEnv
      */
     protected function parseFile($file)
     {
-        $autodetect = ini_get('auto_detect_line_endings');
-        ini_set('auto_detect_line_endings', '1');
+        $autodetect = ini_get(self::AUTO_DETECT_LINE_ENDINGS);
+        ini_set(self::AUTO_DETECT_LINE_ENDINGS, '1');
         $lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        ini_set('auto_detect_line_endings', $autodetect);
+        ini_set('' . self::AUTO_DETECT_LINE_ENDINGS . '', $autodetect);
         return is_array($lines) ? $lines : array();
     }
 

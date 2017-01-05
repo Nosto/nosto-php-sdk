@@ -34,9 +34,6 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/MockNostoProduct.php');
-require_once(dirname(__FILE__) . '/../_support/MockNostoOrder.php');
-
 class CollectionTest extends \Codeception\TestCase\Test
 {
     /**

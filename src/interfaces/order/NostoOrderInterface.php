@@ -38,7 +38,7 @@
  * Interface for the meta data of an placed order.
  * This is used when making order confirmation API requests and order history exports to Nosto.
  */
-interface NostoOrderInterface extends NostoSerializableInterface
+interface NostoOrderInterface
 {
     /**
      * The unique order number identifying the order.
@@ -71,7 +71,7 @@ interface NostoOrderInterface extends NostoSerializableInterface
     /**
      * The purchased items which were included in the order.
      *
-     * @return NostoLineItem[] the meta data models.
+     * @return NostoLineItemInterface[] the meta data models.
      */
     public function getPurchasedItems();
 

@@ -40,6 +40,7 @@
  */
 class NostoLineItem extends NostoObject implements NostoLineItemInterface
 {
+    const PSEUDO_PRODUCT_ID = '-1';
     /**
      * @var string the unique identifier of the purchased item.
      * If this item is for discounts or shipping cost, the id can be 0.
@@ -75,11 +76,26 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      */
     public function loadSpecialItemData($name, $price, $currency)
     {
-        $this->productId = '-1';
+        $this->productId = self::PSEUDO_PRODUCT_ID;
         $this->quantity = 1;
         $this->name = $name;
         $this->unitPrice = $price;
         $this->currencyCode = strtoupper($currency);
+    }
+
+    /**
+     * Sets the unit price of the cart item.
+     *
+     * The price must be a numeric value
+     *
+     * Usage:
+     * $object->setPrice(99.99);
+     *
+     * @param double $unitPrice the price.
+     */
+    public function setPrice($unitPrice)
+    {
+        $this->unitPrice = $unitPrice;
     }
 
     /**
@@ -174,20 +190,5 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     public function setCurrencyCode($currency)
     {
         $this->currencyCode = $currency;
-    }
-
-    /**
-     * Sets the unit price of the cart item.
-     *
-     * The price must be a numeric value
-     *
-     * Usage:
-     * $object->setPrice(99.99);
-     *
-     * @param double $unitPrice the price.
-     */
-    public function setPrice($unitPrice)
-    {
-        $this->unitPrice = $unitPrice;
     }
 }

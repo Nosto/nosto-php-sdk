@@ -41,27 +41,6 @@
 class NostoOrderCollection extends NostoCollection
 {
     /**
-     * @return array the array representation of the object for serialization
-     * @throws NostoException when the collection is empty
-     */
-    public function getArray()
-    {
-        $data = array();
-        foreach ($this->getArrayCopy() as $item) {
-            /** @var NostoOrderInterface|NostoValidatableInterface|NostoSerializableInterface $item */
-            $validator = new NostoValidator($item);
-            if ($validator->validate()) {
-                $data[] = $item->getArray();
-            }
-        }
-        if (empty($data)) {
-            throw new NostoException('No orders found in collection.');
-        }
-
-        return $data;
-    }
-
-    /**
      * Returns the type of items this collection can contain.
      *
      * @return string the type of items this collection can contain.

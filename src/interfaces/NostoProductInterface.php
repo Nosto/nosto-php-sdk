@@ -38,7 +38,7 @@
  * Interface for the meta data of a product.
  * This is used when making product re-crawl API requests and product history exports to Nosto.
  */
-interface NostoProductInterface extends NostoSerializableInterface
+interface NostoProductInterface
 {
     const IN_STOCK = 'InStock';
     const OUT_OF_STOCK = 'OutOfStock';

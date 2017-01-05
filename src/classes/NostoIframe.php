@@ -43,8 +43,7 @@ class NostoIframe extends NostoObject implements NostoIframeInterface
     /**
      * @var string the name of the platform the iframe is used on.
      */
-    private $platform = '';
-
+    private $platform;
     /**
      * @var string the admin user first name.
      */

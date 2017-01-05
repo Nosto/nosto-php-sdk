@@ -80,11 +80,11 @@ class NostoOperationProduct extends NostoOperation
      */
     public function upsert()
     {
-        $request = $this->initApiRequest($this->account->getApiToken('products'));
+        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_PRODUCTS));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPSERT);
         $response = $request->post($this->collection);
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to upsert Nosto product(s).', $request, $response);
+            Nosto::throwHttpException($request, $response);
         }
         return true;
     }
@@ -97,11 +97,11 @@ class NostoOperationProduct extends NostoOperation
      */
     public function create()
     {
-        $request = $this->initApiRequest($this->account->getApiToken('products'));
+        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_PRODUCTS));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_CREATE);
         $response = $request->post($this->collection);
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to create Nosto product(s).', $request, $response);
+            Nosto::throwHttpException($request, $response);
         }
         return true;
     }
@@ -114,11 +114,11 @@ class NostoOperationProduct extends NostoOperation
      */
     public function update()
     {
-        $request = $this->initApiRequest($this->account->getApiToken('products'));
+        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_PRODUCTS));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPDATE);
         $response = $request->put($this->collection);
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to update Nosto product(s).', $request, $response);
+            Nosto::throwHttpException($request, $response);
         }
         return true;
     }
@@ -131,11 +131,11 @@ class NostoOperationProduct extends NostoOperation
      */
     public function delete()
     {
-        $request = $this->initApiRequest($this->account->getApiToken('products'));
+        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_PRODUCTS));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_DISCONTINUE);
         $response = $request->post($this->collection);
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to delete Nosto product(s).', $request, $response);
+            Nosto::throwHttpException($request, $response);
         }
         return true;
     }

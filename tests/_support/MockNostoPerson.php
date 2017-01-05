@@ -34,7 +34,7 @@
  *
  */
 
-class MockNostoUser implements NostoUserInterface
+class MockNostoPerson implements NostoPersonInterface
 {
     public function getFirstName()
     {
@@ -49,14 +49,5 @@ class MockNostoUser implements NostoUserInterface
     public function getEmail()
     {
         return 'james.kirk@example.com';
-    }
-
-    public function getArray()
-    {
-        return [
-            'first_name' => $this->getFirstName(),
-            'last_name' => $this->getLastName(),
-            'email' => $this->getEmail(),
-        ];
     }
 }

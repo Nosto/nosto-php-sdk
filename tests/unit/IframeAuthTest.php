@@ -34,8 +34,6 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/MockNostoIframe.php');
-
 class IframeAuthTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;

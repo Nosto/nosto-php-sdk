@@ -46,6 +46,19 @@ class NostoHttpRequest
     const PATH_SSO_AUTH = '/hub/{platform}/load/{email}';
     const PATH_OAUTH_SYNC = '/oauth/exchange';
 
+    const HEADERS = 'headers';
+    const CONTENT = 'content';
+    const URL = 'url';
+    const BODY = 'body';
+
+    const METHOD_PUT = 'PUT';
+    const METHOD_POST = 'POST';
+    const METHOD_GET = 'GET';
+    const METHOD_DELETE = 'DELETE';
+    const HEADER_AUTHORIZATION = 'Authorization';
+    const HEADER_CONTENT_TYPE = 'Content-type';
+
+
     /**
      * @var string base url for the nosto web hook requests.
      */
@@ -242,7 +255,7 @@ class NostoHttpRequest
      */
     public function setContentType($contentType)
     {
-        $this->addHeader('Content-type', $contentType);
+        $this->addHeader(self::HEADER_CONTENT_TYPE, $contentType);
     }
 
     /**
@@ -320,11 +333,11 @@ class NostoHttpRequest
             case self::AUTH_BASIC:
                 // The use of base64 encoding for authorization headers follow the RFC 2617 standard for http
                 // authentication (https://www.ietf.org/rfc/rfc2617.txt).
-                $this->addHeader('Authorization', 'Basic ' . base64_encode(implode(':', $value)));
+                $this->addHeader(self::HEADER_AUTHORIZATION, 'Basic ' . base64_encode(implode(':', $value)));
                 break;
 
             case self::AUTH_BEARER:
-                $this->addHeader('Authorization', 'Bearer ' . $value);
+                $this->addHeader(self::HEADER_AUTHORIZATION, 'Bearer ' . $value);
                 break;
 
             default:
@@ -366,12 +379,12 @@ class NostoHttpRequest
     /**
      * Sends a POST request.
      *
-     * @param NostoSerializableInterface $content
+     * @param mixed $content
      * @return NostoHttpResponse
      */
-    public function post(NostoSerializableInterface $content)
+    public function post($content)
     {
-        $this->content = json_encode($content->getArray());
+        $this->content = NostoSerializer::serialize($content);
         $url = $this->url;
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);
@@ -379,8 +392,8 @@ class NostoHttpRequest
         return $this->adapter->post(
             $url,
             array(
-                'headers' => $this->headers,
-                'content' => $this->content,
+                self::HEADERS => $this->headers,
+                self::CONTENT => $this->content,
             )
         );
     }
@@ -400,12 +413,12 @@ class NostoHttpRequest
     /**
      * Sends a PUT request.
      *
-     * @param NostoSerializableInterface $content
+     * @param mixed $content
      * @return NostoHttpResponse
      */
-    public function put(NostoSerializableInterface $content)
+    public function put($content)
     {
-        $this->content = json_encode($content->getArray());
+        $this->content = NostoSerializer::serialize($content);
         $url = $this->url;
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);
@@ -413,8 +426,8 @@ class NostoHttpRequest
         return $this->adapter->put(
             $url,
             array(
-                'headers' => $this->headers,
-                'content' => $this->content,
+                self::HEADERS => $this->headers,
+                self::CONTENT => $this->content,
             )
         );
     }
@@ -436,7 +449,7 @@ class NostoHttpRequest
         return $this->adapter->get(
             $url,
             array(
-                'headers' => $this->headers,
+                self::HEADERS => $this->headers,
             )
         );
     }
@@ -455,7 +468,7 @@ class NostoHttpRequest
         return $this->adapter->delete(
             $url,
             array(
-                'headers' => $this->headers,
+                self::HEADERS => $this->headers,
             )
         );
     }
@@ -472,9 +485,9 @@ class NostoHttpRequest
         }
         return serialize(
             array(
-                'url' => $url,
-                'headers' => $this->headers,
-                'body' => $this->content,
+                self::URL => $url,
+                self::HEADERS => $this->headers,
+                self::BODY => $this->content,
             )
         );
     }

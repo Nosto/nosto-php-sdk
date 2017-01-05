@@ -98,7 +98,7 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
         curl_setopt_array($ch, $curlOptions);
         $result = curl_exec($ch);
         $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-        $headers = explode("\r\n", substr($result, 0, $headerSize));
+        $headers = explode(self::CRLF, substr($result, 0, $headerSize));
         $body = substr($result, $headerSize);
         $message = curl_error($ch);
         curl_close($ch);
@@ -134,7 +134,7 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
             array(
                 CURLOPT_URL => $url,
                 CURLOPT_POSTFIELDS => $this->getContent(),
-                CURLOPT_CUSTOMREQUEST => 'PUT',
+                CURLOPT_CUSTOMREQUEST => NostoHttpRequest::METHOD_PUT,
                 CURLOPT_HEADER => 1,
                 CURLOPT_FRESH_CONNECT => 1,
                 CURLOPT_RETURNTRANSFER => 1,
@@ -152,7 +152,7 @@ class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
         return $this->send(
             array(
                 CURLOPT_URL => $url,
-                CURLOPT_CUSTOMREQUEST => 'DELETE',
+                CURLOPT_CUSTOMREQUEST => NostoHttpRequest::METHOD_DELETE,
                 CURLOPT_HEADER => 1,
                 CURLOPT_FRESH_CONNECT => 1,
                 CURLOPT_RETURNTRANSFER => 1,

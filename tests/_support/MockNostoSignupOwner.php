@@ -34,6 +34,6 @@
  *
  */
 
-class MockNostoSignupOwner extends MockNostoUser implements NostoSignupOwnerInterface
+class MockNostoSignupOwner extends MockNostoPerson implements NostoSignupOwnerInterface
 {
 }

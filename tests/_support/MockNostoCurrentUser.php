@@ -34,6 +34,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class MockNostoCurrentUser extends MockNostoUser implements NostoCurrentUserInterface
+
+class MockNostoCurrentUser extends MockNostoPerson implements NostoCurrentUserInterface
 {
 }

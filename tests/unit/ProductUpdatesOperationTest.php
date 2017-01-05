@@ -34,8 +34,6 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/MockNostoProduct.php');
-
 class ProductOperationTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;

@@ -69,12 +69,12 @@ class NostoOperationOauthSync extends NostoOperation
         $oauthResponse = $oauthClient->authenticate($code);
 
         $request = new NostoHttpRequest();
-        $request->setContentType('application/x-www-form-urlencoded');
+        $request->setContentType(self::CONTENT_TYPE_URL_FORM_ENCODED);
         $request->setPath(NostoHttpRequest::PATH_OAUTH_SYNC);
         $request->setQueryParams(array('access_token' => $oauthResponse->getAccessToken()));
         $response = $request->get();
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to sync account from Nosto..', $request, $response);
+            Nosto::throwHttpException($request, $response);
         }
 
         $tokens = NostoApiToken::parseTokens($response->getJsonResult(true), 'api_');

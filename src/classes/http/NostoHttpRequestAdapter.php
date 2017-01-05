@@ -39,6 +39,8 @@
  */
 abstract class NostoHttpRequestAdapter
 {
+    const CRLF = '\r\n';
+
     /**
      * @var array the request headers.
      */

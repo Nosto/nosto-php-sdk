@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,11 +34,26 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
-interface NostoSerializableInterface
+interface NostoPersonInterface
 {
     /**
-     * @return array the array representation of the object for serialization
+     * The first name of the user
+     *
+     * @return string the first name.
      */
-    public function getArray();
+    public function getFirstName();
+
+    /**
+     * The last name of the user
+     *
+     * @return string the last name.
+     */
+    public function getLastName();
+
+    /**
+     * The email address of the user
+     *
+     * @return string the email address.
+     */
+    public function getEmail();
 }

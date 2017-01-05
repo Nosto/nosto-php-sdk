@@ -64,11 +64,11 @@ class NostoOperationUninstall extends NostoOperation
      */
     public function delete(NostoCurrentUserInterface $currentUser)
     {
-        $request = $this->initApiRequest($this->account->getApiToken('sso'));
+        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_SSO));
         $request->setPath(NostoApiRequest::PATH_ACCOUNT_DELETED);
         $response = $request->post($currentUser);
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to delete Nosto account.', $request, $response);
+            Nosto::throwHttpException($request, $response);
         }
 
         return true;

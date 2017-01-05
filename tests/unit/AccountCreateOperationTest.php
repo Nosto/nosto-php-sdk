@@ -34,10 +34,6 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/MockNostoSignupBilling.php');
-require_once(dirname(__FILE__) . '/../_support/MockNostoSignupOwner.php');
-require_once(dirname(__FILE__) . '/../_support/MockNostoSignup.php');
-
 class AccountCreateTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;

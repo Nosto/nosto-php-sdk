@@ -38,6 +38,6 @@
  * Meta data class which holds information about the Nosto account owner.
  * This is used during the Nosto account creation.
  */
-class NostoSignupOwner extends NostoUser implements NostoSignupOwnerInterface
+class NostoSignupOwner extends NostoPerson implements NostoSignupOwnerInterface
 {
 }

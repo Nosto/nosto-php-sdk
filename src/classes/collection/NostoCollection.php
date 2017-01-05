@@ -39,8 +39,10 @@
  * The base class provides the functionality to validate the items added to the collection.
  * The collection behaves like an array. making it easy to add items to it and iterate over it.
  */
-abstract class NostoCollection extends ArrayObject implements NostoSerializableInterface
+abstract class NostoCollection extends ArrayObject
 {
+    const OBJECT = 'object';
+
     /**
      * @inheritdoc
      */
@@ -61,7 +63,7 @@ abstract class NostoCollection extends ArrayObject implements NostoSerializableI
     {
         if (!is_a($value, $this->getValidItemType())) {
             $valueType = gettype($value);
-            if ($valueType === 'object') {
+            if ($valueType === self::OBJECT) {
                 $valueType = get_class($value);
             }
             throw new NostoException(sprintf(

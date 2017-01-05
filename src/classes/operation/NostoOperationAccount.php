@@ -69,7 +69,7 @@ class NostoOperationAccount extends NostoOperation
         $request->setReplaceParams(array('{lang}' => $this->account->getLanguageCode()));
         $response = $request->post($this->account);
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to create Nosto account.', $request, $response);
+            Nosto::throwHttpException($request, $response);
         }
 
         $account = new NostoAccount($this->account->getPlatform() . '-' . $this->account->getName());

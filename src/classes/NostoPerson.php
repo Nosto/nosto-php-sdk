@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,27 +34,76 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
-interface NostoUserInterface extends NostoSerializableInterface
+class NostoPerson extends NostoObject implements NostoPersonInterface
 {
     /**
-     * The first name of the user
+     * @var string the account owner first name.
+     */
+    private $firstName;
+
+    /**
+     * @var string the account owner last name.
+     */
+    private $lastName;
+
+    /**
+     * @var string the account owner email address.
+     */
+    private $email;
+
+    /**
+     * The first name of the account owner.
      *
      * @return string the first name.
      */
-    public function getFirstName();
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
 
     /**
-     * The last name of the user
+     * @param string $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * The last name of the account owner.
      *
      * @return string the last name.
      */
-    public function getLastName();
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
 
     /**
-     * The email address of the user
+     * @param string $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * The email address of the account owner.
      *
      * @return string the email address.
      */
-    public function getEmail();
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Sets the owner email address.
+     *
+     * @param string $email the email address.
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
 }
