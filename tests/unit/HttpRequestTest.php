@@ -89,7 +89,7 @@ class HttpRequestTest extends \Codeception\TestCase\Test
      */
     public function testHttpRequestAuthInvalid()
     {
-        $this->expectException('NostoException');
+        $this->setExpectedException('NostoException');
         $request = new NostoHttpRequest();
         $request->setAuth('test', 'test');
     }

@@ -47,7 +47,7 @@ class OauthTest extends \Codeception\TestCase\Test
         $client = new NostoOAuthClient($meta);
 
         $this->specify('failed oauth authenticate', function () use ($client) {
-            $this->expectException('NostoException');
+            $this->setExpectedException('NostoException');
             $client->authenticate('');
         });
     }

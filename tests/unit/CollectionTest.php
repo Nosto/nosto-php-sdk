@@ -41,7 +41,7 @@ class CollectionTest extends \Codeception\TestCase\Test
      */
     public function testCollectionValidationForString()
     {
-        $this->expectException('NostoException');
+        $this->setExpectedException('NostoException');
         $collection = new NostoProductCollection();
         $collection[] = 'invalid item type';
     }
@@ -51,7 +51,7 @@ class CollectionTest extends \Codeception\TestCase\Test
      */
     public function testCollectionValidationForInteger()
     {
-        $this->expectException('NostoException');
+        $this->setExpectedException('NostoException');
         $collection = new NostoProductCollection();
         $collection->append(1);
     }
@@ -61,7 +61,7 @@ class CollectionTest extends \Codeception\TestCase\Test
      */
     public function testCollectionValidationForFloat()
     {
-        $this->expectException('NostoException');
+        $this->setExpectedException('NostoException');
         $collection = new NostoProductCollection();
         $collection->append(99.99);
     }
@@ -71,7 +71,7 @@ class CollectionTest extends \Codeception\TestCase\Test
      */
     public function testCollectionValidationForArray()
     {
-        $this->expectException('NostoException');
+        $this->setExpectedException('NostoException');
         $collection = new NostoProductCollection();
         $collection[] = array('test');
     }
@@ -81,7 +81,7 @@ class CollectionTest extends \Codeception\TestCase\Test
      */
     public function testCollectionValidationForObject()
     {
-        $this->expectException('NostoException');
+        $this->setExpectedException('NostoException');
         $collection = new NostoProductCollection();
         $collection->append(new stdClass());
     }
