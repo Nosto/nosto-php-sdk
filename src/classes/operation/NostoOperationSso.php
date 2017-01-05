@@ -35,7 +35,7 @@
  */
 
 /**
- * Handles getting a single signon token from the Nosto API.
+ * Handles getting a single sign-on token from the Nosto API.
  */
 class NostoOperationSso extends NostoOperation
 {
@@ -67,11 +67,11 @@ class NostoOperationSso extends NostoOperation
     {
         $request = $this->initHttpRequest($this->account->getApiToken(NostoApiToken::API_SSO));
         $request->setPath(NostoApiRequest::PATH_SSO_AUTH);
-        $request->setContentType('application/x-www-form-urlencoded');
+        $request->setContentType(self::CONTENT_TYPE_URL_FORM_ENCODED);
         $request->setReplaceParams(array('{platform}' => $platform));
         $response = $request->post($user);
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to initiate Nosto SSO.', $request, $response);
+            Nosto::throwHttpException($request, $response);
         }
 
         return $response->getJsonResult()->login_url;

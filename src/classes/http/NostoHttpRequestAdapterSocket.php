@@ -43,6 +43,11 @@
  */
 class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
 {
+    const HEADER = 'header';
+    const METHOD = 'method';
+    const HTTP = 'http';
+    const CONTENT = 'content';
+    const IGNORE = 'ignore_errors';
 
     /**
      * @var string the user-agent to use if specified
@@ -69,11 +74,11 @@ class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
         return $this->send(
             $url,
             array(
-                'http' => array(
-                    'method' => 'GET',
-                    'header' => implode("\r\n", $this->getHeaders()),
+                self::HTTP => array(
+                    self::METHOD => NostoHttpRequest::METHOD_GET,
+                    self::HEADER => implode(self::CRLF, $this->getHeaders()),
                     // Fetch the content even on failure status codes.
-                    'ignore_errors' => true,
+                    self::IGNORE => true,
                 ),
             )
         );
@@ -112,12 +117,12 @@ class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
         return $this->send(
             $url,
             array(
-                'http' => array(
-                    'method' => 'POST',
-                    'header' => implode("\r\n", $this->getHeaders()),
-                    'content' => $this->getContent(),
+                self::HTTP => array(
+                    self::METHOD => NostoHttpRequest::METHOD_POST,
+                    self::HEADER => implode(self::CRLF, $this->getHeaders()),
+                    self::CONTENT => $this->getContent(),
                     // Fetch the content even on failure status codes.
-                    'ignore_errors' => true,
+                    self::IGNORE => true,
                 ),
             )
         );
@@ -132,12 +137,12 @@ class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
         return $this->send(
             $url,
             array(
-                'http' => array(
-                    'method' => 'PUT',
-                    'header' => implode("\r\n", $this->getHeaders()),
-                    'content' => $this->getContent(),
+                self::HTTP => array(
+                    self::METHOD => NostoHttpRequest::METHOD_PUT,
+                    self::HEADER => implode(self::CRLF, $this->getHeaders()),
+                    self::CONTENT => $this->getContent(),
                     // Fetch the content even on failure status codes.
-                    'ignore_errors' => true,
+                    self::IGNORE => true,
                 ),
             )
         );
@@ -152,11 +157,11 @@ class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
         return $this->send(
             $url,
             array(
-                'http' => array(
-                    'method' => 'DELETE',
-                    'header' => implode("\r\n", $this->getHeaders()),
+                self::HTTP => array(
+                    self::METHOD => NostoHttpRequest::METHOD_DELETE,
+                    self::HEADER => implode(self::CRLF, $this->getHeaders()),
                     // Fetch the content even on failure status codes.
-                    'ignore_errors' => true,
+                    self::IGNORE => true,
                 ),
             )
         );

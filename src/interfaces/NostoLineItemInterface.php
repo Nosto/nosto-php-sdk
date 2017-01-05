@@ -40,7 +40,7 @@
  *
  * The purchased item should also be used for shipping costs, discounts or other similar data.
  */
-interface NostoLineItemInterface
+interface NostoLineItemInterface extends NostoSerializableInterface
 {
     /**
      * The unique identifier of the purchased item.

@@ -71,7 +71,7 @@ interface NostoOrderInterface extends NostoSerializableInterface
     /**
      * The purchased items which were included in the order.
      *
-     * @return NostoLineItem[] the meta data models.
+     * @return NostoLineItemInterface[] the meta data models.
      */
     public function getPurchasedItems();
 

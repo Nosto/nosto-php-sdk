@@ -41,6 +41,8 @@
  */
 abstract class NostoCollection extends ArrayObject implements NostoSerializableInterface
 {
+    const OBJECT = 'object';
+
     /**
      * @inheritdoc
      */
@@ -61,7 +63,7 @@ abstract class NostoCollection extends ArrayObject implements NostoSerializableI
     {
         if (!is_a($value, $this->getValidItemType())) {
             $valueType = gettype($value);
-            if ($valueType === 'object') {
+            if ($valueType === self::OBJECT) {
                 $valueType = get_class($value);
             }
             throw new NostoException(sprintf(

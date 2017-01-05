@@ -68,7 +68,7 @@ class NostoOperationSettings extends NostoOperation
         $request->setPath(NostoApiRequest::PATH_SETTINGS);
         $response = $request->post($accountMeta);
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException('Failed to update Nosto settings.', $request, $response);
+            Nosto::throwHttpException($request, $response);
         }
         return true;
     }

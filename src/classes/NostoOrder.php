@@ -137,24 +137,10 @@ class NostoOrder extends NostoSerializableObject implements NostoOrderInterface,
             $data['order_status_label'] = $this->getOrderStatus()->getLabel();
         }
         foreach ($this->getPurchasedItems() as $item) {
-            $data['purchased_items'][] = array(
-                'product_id' => $item->getProductId(),
-                'quantity' => $item->getQuantity(),
-                'name' => $item->getName(),
-                'unit_price' => NostoHelperPrice::format($item->getUnitPrice()),
-                'price_currency_code' => strtoupper($item->getCurrencyCode()),
-            );
+            $data['purchased_items'][] = $item->getArray();
         }
         if ($this->getBuyerInfo()) {
-            if ($this->getBuyerInfo()->getFirstName()) {
-                $data['buyer']['first_name'] = $this->getBuyerInfo()->getFirstName();
-            }
-            if ($this->getBuyerInfo()->getLastName()) {
-                $data['buyer']['last_name'] = $this->getBuyerInfo()->getLastName();
-            }
-            if ($this->getBuyerInfo()->getEmail()) {
-                $data['buyer']['email'] = $this->getBuyerInfo()->getEmail();
-            }
+            $data['buyer'] = $this->getBuyerInfo()->getArray();
         }
         return $data;
     }
@@ -168,12 +154,7 @@ class NostoOrder extends NostoSerializableObject implements NostoOrderInterface,
     }
 
     /**
-     * Sets the ordernumber.
-     *
-     * The ordernumber must be a non-empty string.
-     *
-     * Usage:
-     * $object->setOrderNumber('123456');
+     * Sets the order number.
      *
      * @param string $orderNumber the ordernumber.
      */

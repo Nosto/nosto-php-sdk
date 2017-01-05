@@ -35,10 +35,8 @@
  */
 
 /**
- * Interface for the account owner details.
- * This is used by the NostoSignupInterface meta data model when creating new Nosto accounts.
+ * Interface for the account owner details when creating new Nosto accounts.
  */
 interface NostoCurrentUserInterface extends NostoUserInterface
 {
-
 }

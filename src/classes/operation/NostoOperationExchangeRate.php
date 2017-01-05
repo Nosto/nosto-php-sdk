@@ -67,14 +67,7 @@ class NostoOperationExchangeRate extends NostoOperation
         $request->setPath(NostoApiRequest::PATH_CURRENCY_EXCHANGE_RATE);
         $response = $request->post($collection);
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException(
-                sprintf(
-                    'Failed to update currencyCode exchange rates for account %s.',
-                    $this->account->getName()
-                ),
-                $request,
-                $response
-            );
+            Nosto::throwHttpException($request, $response);
         }
         return true;
     }

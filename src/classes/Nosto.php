@@ -40,6 +40,8 @@
  */
 class Nosto
 {
+
+
     /**
      * Return environment variable.
      *
@@ -56,16 +58,15 @@ class Nosto
      * Throws a new NostoHttpException exception with info about both the
      * request and response.
      *
-     * @param string $message the error message.
      * @param NostoHttpRequest $request the request object to take additional info from.
      * @param NostoHttpResponse $response the response object to take additional info from.
      * @throws NostoHttpException|NostoApiResponseException the exception.
      */
     public static function throwHttpException(
-        $message,
         NostoHttpRequest $request,
         NostoHttpResponse $response
     ) {
+        $message = '';
         $jsonResponse = $response->getJsonResult();
 
         if (

@@ -39,6 +39,9 @@
  */
 abstract class NostoOperation
 {
+    const CONTENT_TYPE_URL_FORM_ENCODED = 'application/x-www-form-urlencoded';
+    const CONTENT_TYPE_APPLICATION_JSON = 'application/json';
+
     /**
      * Create and returns a new API request object initialized with:
      * - content type
@@ -55,7 +58,7 @@ abstract class NostoOperation
         }
 
         $request = new NostoApiRequest();
-        $request->setContentType('application/json');
+        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
         $request->setAuthBasic('', $token->getValue());
         return $request;
     }
@@ -76,7 +79,7 @@ abstract class NostoOperation
         }
 
         $request = new NostoHttpRequest();
-        $request->setContentType('application/x-www-form-urlencoded');
+        $request->setContentType(self::CONTENT_TYPE_URL_FORM_ENCODED);
         $request->setAuthBasic('', $token->getValue());
         return $request;
     }
