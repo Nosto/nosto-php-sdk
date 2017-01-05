@@ -81,9 +81,7 @@ class NostoCryptRandom
              * @link https://github.com/php/php-src/blob/7014a0eb6d1611151a286c0ff4f2238f92c120d6/ext/mcrypt/mcrypt.c#L1392
              * @link https://github.com/php/php-src/blob/7014a0eb6d1611151a286c0ff4f2238f92c120d6/win32/winutil.c#L80
              */
-            if (function_exists('openssl_random_pseudo_bytes') && version_compare(PHP_VERSION,
-                    '5.3.4', '>=')
-            ) {
+            if (function_exists('openssl_random_pseudo_bytes') && version_compare(PHP_VERSION, '5.3.4', '>=')) {
                 $strong = null;
                 $rnd = openssl_random_pseudo_bytes($length, $strong);
                 if ($strong) {
@@ -153,12 +151,12 @@ class NostoCryptRandom
         $v = $seed = $_SESSION['seed'] = pack(
             'H*',
             sha1(
-                serialize($_SERVER) .
-                serialize($_POST) .
-                serialize($_GET) .
-                serialize($_COOKIE) .
-                serialize($GLOBALS) .
-                serialize($_SESSION) .
+                serialize($_SERVER).
+                serialize($_POST).
+                serialize($_GET).
+                serialize($_COOKIE).
+                serialize($GLOBALS).
+                serialize($_SESSION).
                 serialize($_OLD_SESSION)
             )
         );
@@ -193,8 +191,8 @@ class NostoCryptRandom
          * @link http://tools.ietf.org/html/rfc4253#section-7.2
          */
 
-        $key = pack('H*', sha1($seed . 'A'));
-        $iv = pack('H*', sha1($seed . 'C'));
+        $key = pack('H*', sha1($seed.'A'));
+        $iv = pack('H*', sha1($seed.'C'));
 
         /*
          * Ciphers are used as per the nist.gov.

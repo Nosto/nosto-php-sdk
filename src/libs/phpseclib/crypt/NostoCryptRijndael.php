@@ -796,7 +796,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-    public $t2 = array(
+	public $t2 = array(
         0x63A5C663,
         0x7C84F87C,
         0x7799EE77,
@@ -1062,7 +1062,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-    public $t3 = array(
+	public $t3 = array(
         0x6363A5C6,
         0x7C7C84F8,
         0x777799EE,
@@ -1328,7 +1328,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-    public $dt0 = array(
+	public $dt0 = array(
         0x51F4A750,
         0x7E416553,
         0x1A17A4C3,
@@ -1594,7 +1594,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-    public $dt1 = array(
+	public $dt1 = array(
         0x5051F4A7,
         0x537E4165,
         0xC31A17A4,
@@ -1860,7 +1860,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-    public $dt2 = array(
+	public $dt2 = array(
         0xA75051F4,
         0x65537E41,
         0xA4C31A17,
@@ -2126,7 +2126,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael:decryptBlock()
      * @var Array
      */
-    public $dt3 = array(
+	public $dt3 = array(
         0xF4A75051,
         0x4165537E,
         0x17A4C31A,
@@ -2391,7 +2391,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael::encryptBlock()
      * @var Array
      */
-    public $sbox = array(
+	public $sbox = array(
         0x63,
         0x7C,
         0x77,
@@ -2656,7 +2656,7 @@ class NostoCryptRijndael extends NostoCryptBase
      * @see NostoCryptRijndael::decryptBlock()
      * @var Array
      */
-    public $isbox = array(
+	public $isbox = array(
         0x52,
         0x09,
         0x6A,
@@ -2980,65 +2980,6 @@ class NostoCryptRijndael extends NostoCryptBase
     }
 
     /**
-     * Setup the fastest possible $engine
-     *
-     * Determines if the mcrypt (MODE_MCRYPT) $engine available
-     * and usable for the current $blockSize and $keySize.
-     *
-     * If not, the slower MODE_INTERNAL $engine will be set.
-     *
-     * @see setKey()
-     * @see setKeyLength()
-     * @see setBlockLength()
-     */
-    public function setupEngine()
-    {
-        if (constant('CRYPT_' . $this->constNamespace . '_MODE') == CRYPT_MODE_INTERNAL) {
-            // No mcrypt support at all for rijndael
-            return;
-        }
-
-        // The required mcrypt module name for the current $blockSize of rijndael
-        $cipherNameMcrypt = 'rijndael-' . ($this->blockSize << 3);
-
-        // Determining the availability/usability of $cipherNameMcrypt
-        switch (true) {
-            case $this->keySize % 8: // mcrypt is not usable for 160/224-bit keys, only for 128/192/256-bit keys
-            case !in_array(
-                $cipherNameMcrypt,
-                mcrypt_list_algorithms()
-            ): // $cipherNameMcrypt is not available for the current $blockSize
-                $engine = CRYPT_MODE_INTERNAL;
-                break;
-            default:
-                $engine = CRYPT_MODE_MCRYPT;
-        }
-
-        if ($this->engine == $engine && $this->cipherNameMcrypt == $cipherNameMcrypt) {
-            // already set, so we not unnecessary close $this->enMcrypt/deMcrypt/ecb
-            return;
-        }
-
-        // Set the $engine
-        $this->engine = $engine;
-        $this->cipherNameMcrypt = $cipherNameMcrypt;
-
-        if ($this->enMcrypt) {
-            // Closing the current mcrypt resource(s). _mcryptSetup() will, if needed,
-            // (re)open them with the module named in $this->cipherNameMcrypt
-            mcrypt_module_close($this->enMcrypt);
-            mcrypt_module_close($this->deMcrypt);
-            $this->enMcrypt = null;
-            $this->deMcrypt = null;
-
-            if ($this->ecb) {
-                mcrypt_module_close($this->ecb);
-                $this->ecb = null;
-            }
-        }
-    }
-
-    /**
      * Sets the key length
      *
      * Valid key lengths are 128, 160, 192, 224, and 256.  If the length is less than 128, it will be rounded up to
@@ -3101,6 +3042,65 @@ class NostoCryptRijndael extends NostoCryptBase
         $this->blockSize = $length << 2;
         $this->changed = true;
         $this->setupEngine();
+    }
+
+    /**
+     * Setup the fastest possible $engine
+     *
+     * Determines if the mcrypt (MODE_MCRYPT) $engine available
+     * and usable for the current $blockSize and $keySize.
+     *
+     * If not, the slower MODE_INTERNAL $engine will be set.
+     *
+     * @see setKey()
+     * @see setKeyLength()
+     * @see setBlockLength()
+     */
+    public function setupEngine()
+    {
+        if (constant('CRYPT_'.$this->constNamespace.'_MODE') == CRYPT_MODE_INTERNAL) {
+            // No mcrypt support at all for rijndael
+            return;
+        }
+
+        // The required mcrypt module name for the current $blockSize of rijndael
+        $cipherNameMcrypt = 'rijndael-'.($this->blockSize << 3);
+
+        // Determining the availability/usability of $cipherNameMcrypt
+        switch (true) {
+            case $this->keySize % 8: // mcrypt is not usable for 160/224-bit keys, only for 128/192/256-bit keys
+            case !in_array(
+                $cipherNameMcrypt,
+                mcrypt_list_algorithms()
+            ): // $cipherNameMcrypt is not available for the current $blockSize
+                $engine = CRYPT_MODE_INTERNAL;
+                break;
+            default:
+                $engine = CRYPT_MODE_MCRYPT;
+        }
+
+        if ($this->engine == $engine && $this->cipherNameMcrypt == $cipherNameMcrypt) {
+            // already set, so we not unnecessary close $this->enMcrypt/deMcrypt/ecb
+            return;
+        }
+
+        // Set the $engine
+        $this->engine = $engine;
+        $this->cipherNameMcrypt = $cipherNameMcrypt;
+
+        if ($this->enMcrypt) {
+            // Closing the current mcrypt resource(s). _mcryptSetup() will, if needed,
+            // (re)open them with the module named in $this->cipherNameMcrypt
+            mcrypt_module_close($this->enMcrypt);
+            mcrypt_module_close($this->deMcrypt);
+            $this->enMcrypt = null;
+            $this->deMcrypt = null;
+
+            if ($this->ecb) {
+                mcrypt_module_close($this->ecb);
+                $this->ecb = null;
+            }
+        }
     }
 
     /**
@@ -3203,11 +3203,9 @@ class NostoCryptRijndael extends NostoCryptBase
 
         switch ($nb) {
             case 8:
-                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5],
-                    $temp[6], $temp[7]);
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6], $temp[7]);
             case 7:
-                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5],
-                    $temp[6]);
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6]);
             case 6:
                 return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5]);
             case 5:
@@ -3295,11 +3293,9 @@ class NostoCryptRijndael extends NostoCryptBase
 
         switch ($nb) {
             case 8:
-                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5],
-                    $temp[6], $temp[7]);
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6], $temp[7]);
             case 7:
-                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5],
-                    $temp[6]);
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6]);
             case 6:
                 return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5]);
             case 5:
@@ -3362,11 +3358,7 @@ class NostoCryptRijndael extends NostoCryptBase
             // already expanded
             return;
         }
-        $this->kl = array(
-            'key' => $this->key,
-            'keySize' => $this->keySize,
-            'blockSize' => $this->blockSize
-        );
+        $this->kl = array('key' => $this->key, 'keySize' => $this->keySize, 'blockSize' => $this->blockSize);
 
         $this->nk = $this->keySize >> 2;
         // see Rijndael-ammended.pdf#page=44
@@ -3501,15 +3493,14 @@ class NostoCryptRijndael extends NostoCryptBase
             $init_decrypt = '';
         } else {
             for ($i = 0, $cw = count($this->w); $i < $cw; ++$i) {
-                $w[] = '$w[' . $i . ']';
-                $dw[] = '$dw[' . $i . ']';
+                $w[] = '$w['.$i.']';
+                $dw[] = '$dw['.$i.']';
             }
             $init_encrypt = '$w = $self->w;';
             $init_decrypt = '$dw = $self->dw;';
         }
 
-        $code_hash = md5(str_pad("NostoCryptRijndael, {$this->mode}, {$this->blockSize}, ", 32,
-                "\0") . implode(',', $w));
+        $code_hash = md5(str_pad("NostoCryptRijndael, {$this->mode}, {$this->blockSize}, ", 32, "\0").implode(',', $w));
 
         if (!isset($lambda_functions[$code_hash])) {
             $nr = $this->nr;
@@ -3535,9 +3526,9 @@ class NostoCryptRijndael extends NostoCryptBase
             $wc = $nb - 1;
 
             // Pre-round: addRoundKey
-            $encrypt_block = '$in = unpack("N*", $in);' . "\n";
+            $encrypt_block = '$in = unpack("N*", $in);'."\n";
             for ($i = 0; $i < $nb; ++$i) {
-                $encrypt_block .= '$s' . $i . ' = $in[' . ($i + 1) . '] ^ ' . $w[++$wc] . ";\n";
+                $encrypt_block .= '$s'.$i.' = $in['.($i + 1).'] ^ '.$w[++$wc].";\n";
             }
 
             // Main-rounds: shiftRows + subWord + mixColumns + addRoundKey
@@ -3545,32 +3536,32 @@ class NostoCryptRijndael extends NostoCryptBase
                 list($s, $e) = array($e, $s);
                 for ($i = 0; $i < $nb; ++$i) {
                     $encrypt_block .=
-                        '$' . $e . $i . ' =
-                        $t0[($' . $s . $i . ' >> 24) & 0xff] ^
-                        $t1[($' . $s . (($i + $c[1]) % $nb) . ' >> 16) & 0xff] ^
-                        $t2[($' . $s . (($i + $c[2]) % $nb) . ' >>  8) & 0xff] ^
-                        $t3[ $' . $s . (($i + $c[3]) % $nb) . '        & 0xff] ^
-                        ' . $w[++$wc] . ";\n";
+                        '$'.$e.$i.' =
+                        $t0[($'.$s.$i.' >> 24) & 0xff] ^
+                        $t1[($'.$s.(($i + $c[1]) % $nb).' >> 16) & 0xff] ^
+                        $t2[($'.$s.(($i + $c[2]) % $nb).' >>  8) & 0xff] ^
+                        $t3[ $'.$s.(($i + $c[3]) % $nb).'        & 0xff] ^
+                        '.$w[++$wc].";\n";
                 }
             }
 
             // Final-round: subWord + shiftRows + addRoundKey
             for ($i = 0; $i < $nb; ++$i) {
                 $encrypt_block .=
-                    '$' . $e . $i . ' =
-                     $sbox[ $' . $e . $i . '        & 0xff]        |
-                    ($sbox[($' . $e . $i . ' >>  8) & 0xff] <<  8) |
-                    ($sbox[($' . $e . $i . ' >> 16) & 0xff] << 16) |
-                    ($sbox[($' . $e . $i . ' >> 24) & 0xff] << 24);' . "\n";
+                    '$'.$e.$i.' =
+                     $sbox[ $'.$e.$i.'        & 0xff]        |
+                    ($sbox[($'.$e.$i.' >>  8) & 0xff] <<  8) |
+                    ($sbox[($'.$e.$i.' >> 16) & 0xff] << 16) |
+                    ($sbox[($'.$e.$i.' >> 24) & 0xff] << 24);'."\n";
             }
-            $encrypt_block .= '$in = pack("N*"' . "\n";
+            $encrypt_block .= '$in = pack("N*"'."\n";
             for ($i = 0; $i < $nb; ++$i) {
                 $encrypt_block .= ',
-                    ($' . $e . $i . ' & 0xFF000000) ^
-                    ($' . $e . (($i + $c[1]) % $nb) . ' & 0x00FF0000) ^
-                    ($' . $e . (($i + $c[2]) % $nb) . ' & 0x0000FF00) ^
-                    ($' . $e . (($i + $c[3]) % $nb) . ' & 0x000000FF) ^
-                    ' . $w[$i] . "\n";
+                    ($'.$e.$i.' & 0xFF000000) ^
+                    ($'.$e.(($i + $c[1]) % $nb).' & 0x00FF0000) ^
+                    ($'.$e.(($i + $c[2]) % $nb).' & 0x0000FF00) ^
+                    ($'.$e.(($i + $c[3]) % $nb).' & 0x000000FF) ^
+                    '.$w[$i]."\n";
             }
             $encrypt_block .= ');';
 
@@ -3593,9 +3584,9 @@ class NostoCryptRijndael extends NostoCryptBase
             $wc = $nb - 1;
 
             // Pre-round: addRoundKey
-            $decrypt_block = '$in = unpack("N*", $in);' . "\n";
+            $decrypt_block = '$in = unpack("N*", $in);'."\n";
             for ($i = 0; $i < $nb; ++$i) {
-                $decrypt_block .= '$s' . $i . ' = $in[' . ($i + 1) . '] ^ ' . $dw[++$wc] . ';' . "\n";
+                $decrypt_block .= '$s'.$i.' = $in['.($i + 1).'] ^ '.$dw[++$wc].';'."\n";
             }
 
             // Main-rounds: shiftRows + subWord + mixColumns + addRoundKey
@@ -3603,32 +3594,32 @@ class NostoCryptRijndael extends NostoCryptBase
                 list($s, $e) = array($e, $s);
                 for ($i = 0; $i < $nb; ++$i) {
                     $decrypt_block .=
-                        '$' . $e . $i . ' =
-                        $dt0[($' . $s . $i . ' >> 24) & 0xff] ^
-                        $dt1[($' . $s . (($nb + $i - $c[1]) % $nb) . ' >> 16) & 0xff] ^
-                        $dt2[($' . $s . (($nb + $i - $c[2]) % $nb) . ' >>  8) & 0xff] ^
-                        $dt3[ $' . $s . (($nb + $i - $c[3]) % $nb) . '        & 0xff] ^
-                        ' . $dw[++$wc] . ";\n";
+                        '$'.$e.$i.' =
+                        $dt0[($'.$s.$i.' >> 24) & 0xff] ^
+                        $dt1[($'.$s.(($nb + $i - $c[1]) % $nb).' >> 16) & 0xff] ^
+                        $dt2[($'.$s.(($nb + $i - $c[2]) % $nb).' >>  8) & 0xff] ^
+                        $dt3[ $'.$s.(($nb + $i - $c[3]) % $nb).'        & 0xff] ^
+                        '.$dw[++$wc].";\n";
                 }
             }
 
             // Finalround: subWord + shiftRows + addRoundKey
             for ($i = 0; $i < $nb; ++$i) {
                 $decrypt_block .=
-                    '$' . $e . $i . ' =
-                     $isbox[ $' . $e . $i . '        & 0xff]        |
-                    ($isbox[($' . $e . $i . ' >>  8) & 0xff] <<  8) |
-                    ($isbox[($' . $e . $i . ' >> 16) & 0xff] << 16) |
-                    ($isbox[($' . $e . $i . ' >> 24) & 0xff] << 24);' . "\n";
+                    '$'.$e.$i.' =
+                     $isbox[ $'.$e.$i.'        & 0xff]        |
+                    ($isbox[($'.$e.$i.' >>  8) & 0xff] <<  8) |
+                    ($isbox[($'.$e.$i.' >> 16) & 0xff] << 16) |
+                    ($isbox[($'.$e.$i.' >> 24) & 0xff] << 24);'."\n";
             }
-            $decrypt_block .= '$in = pack("N*"' . "\n";
+            $decrypt_block .= '$in = pack("N*"'."\n";
             for ($i = 0; $i < $nb; ++$i) {
                 $decrypt_block .= ',
-                    ($' . $e . $i . ' & 0xFF000000) ^
-                    ($' . $e . (($nb + $i - $c[1]) % $nb) . ' & 0x00FF0000) ^
-                    ($' . $e . (($nb + $i - $c[2]) % $nb) . ' & 0x0000FF00) ^
-                    ($' . $e . (($nb + $i - $c[3]) % $nb) . ' & 0x000000FF) ^
-                    ' . $dw[$i] . "\n";
+                    ($'.$e.$i.' & 0xFF000000) ^
+                    ($'.$e.(($nb + $i - $c[1]) % $nb).' & 0x00FF0000) ^
+                    ($'.$e.(($nb + $i - $c[2]) % $nb).' & 0x0000FF00) ^
+                    ($'.$e.(($nb + $i - $c[3]) % $nb).' & 0x000000FF) ^
+                    '.$dw[$i]."\n";
             }
             $decrypt_block .= ');';
 

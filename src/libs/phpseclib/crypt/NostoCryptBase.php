@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpDocSignatureInspection */
 /**
  * Base Class for all NostoCrypt* cipher classes
  *
@@ -458,13 +457,12 @@ abstract class NostoCryptBase
      */
     public function __construct($mode = CRYPT_MODE_CBC)
     {
-        $constCryptMode = 'CRYPT_' . $this->constNamespace . '_MODE';
+        $constCryptMode = 'CRYPT_'.$this->constNamespace.'_MODE';
 
         // Determining the availability of mcrypt support for the cipher
         if (!defined($constCryptMode)) {
             switch (true) {
-                case extension_loaded('mcrypt') && in_array($this->cipherNameMcrypt,
-                        mcrypt_list_algorithms()):
+                case extension_loaded('mcrypt') && in_array($this->cipherNameMcrypt, mcrypt_list_algorithms()):
                     define($constCryptMode, CRYPT_MODE_MCRYPT);
                     break;
                 default:
@@ -511,16 +509,6 @@ abstract class NostoCryptBase
     }
 
     /**
-     * Gets the initialization vector.
-     *
-     * @return String
-     */
-    public function getIV()
-    {
-        return $this->iv;
-    }
-
-    /**
      * Sets the initialization vector. (optional)
      *
      * SetIV is not required when CRYPT_MODE_ECB (or ie for AES: CRYPT_AES_MODE_ECB) is being used.
@@ -538,6 +526,16 @@ abstract class NostoCryptBase
 
         $this->iv = $iv;
         $this->changed = true;
+    }
+
+    /**
+     * Gets the initialization vector.
+     *
+     * @return String
+     */
+    public function getIV()
+    {
+        return $this->iv;
     }
 
     /**
@@ -667,8 +665,8 @@ abstract class NostoCryptBase
             // rewritten CFB implementation the above outputs the same thing twice.
             if ($this->mode == CRYPT_MODE_CFB && $this->continuousBuffer) {
                 $blockSize = $this->blockSize;
-                $iv = &$this->encryptIV;
-                $pos = &$this->enBuffer['pos'];
+                $iv = & $this->encryptIV;
+                $pos = & $this->enBuffer['pos'];
                 $len = strlen($plaintext);
                 $ciphertext = '';
                 $i = 0;
@@ -702,8 +700,7 @@ abstract class NostoCryptBase
                         $len %= $blockSize;
                     } else {
                         while ($len >= $blockSize) {
-                            $iv = mcrypt_generic($this->ecb, $iv) ^ substr($plaintext, $i,
-                                    $blockSize);
+                            $iv = mcrypt_generic($this->ecb, $iv) ^ substr($plaintext, $i, $blockSize);
                             $ciphertext .= $iv;
                             $len -= $blockSize;
                             $i += $blockSize;
@@ -746,7 +743,7 @@ abstract class NostoCryptBase
             $plaintext = $this->pad($plaintext);
         }
 
-        $buffer = &$this->enBuffer;
+        $buffer = & $this->enBuffer;
         $blockSize = $this->blockSize;
         $ciphertext = '';
         $plaintext_len = strlen($plaintext);
@@ -775,8 +772,7 @@ abstract class NostoCryptBase
                     for ($i = 0; $i < $plaintext_len; $i += $blockSize) {
                         $block = substr($plaintext, $i, $blockSize);
                         if (strlen($block) > strlen($buffer['encrypted'])) {
-                            $buffer['encrypted'] .= $this->encryptBlock($this->generateXor($xor,
-                                $blockSize));
+                            $buffer['encrypted'] .= $this->encryptBlock($this->generateXor($xor, $blockSize));
                         }
                         $key = $this->stringShift($buffer['encrypted'], $blockSize);
                         $ciphertext .= $block ^ $key;
@@ -791,7 +787,7 @@ abstract class NostoCryptBase
                 if ($this->continuousBuffer) {
                     $this->encryptIV = $xor;
                     if ($start = strlen($plaintext) % $blockSize) {
-                        $buffer['encrypted'] = substr($key, $start) . $buffer['encrypted'];
+                        $buffer['encrypted'] = substr($key, $start).$buffer['encrypted'];
                     }
                 }
                 break;
@@ -799,8 +795,8 @@ abstract class NostoCryptBase
                 // cfb loosely routines inspired by openssl's:
                 // {@link http://cvs.openssl.org/fileview?f=openssl/crypto/modes/cfb128.c&v=1.3.2.2.2.1}
                 if ($this->continuousBuffer) {
-                    $iv = &$this->encryptIV;
-                    $pos = &$buffer['pos'];
+                    $iv = & $this->encryptIV;
+                    $pos = & $buffer['pos'];
                 } else {
                     $iv = $this->encryptIV;
                     $pos = 0;
@@ -860,7 +856,7 @@ abstract class NostoCryptBase
                 if ($this->continuousBuffer) {
                     $this->encryptIV = $xor;
                     if ($start = strlen($plaintext) % $blockSize) {
-                        $buffer['xor'] = substr($key, $start) . $buffer['xor'];
+                        $buffer['xor'] = substr($key, $start).$buffer['xor'];
                     }
                 }
                 break;
@@ -870,320 +866,6 @@ abstract class NostoCryptBase
         }
 
         return $ciphertext;
-    }
-
-    /**
-     * Setup the CRYPT_MODE_MCRYPT $engine
-     *
-     * (re)init, if necessary, the (ext)mcrypt resources and flush all $buffers
-     * Used (only) if $engine = CRYPT_MODE_MCRYPT
-     *
-     * _setupMcrypt() will be called each time if $changed === true
-     * typically this happens when using one or more of following public methods:
-     *
-     * - setKey()
-     *
-     * - setIV()
-     *
-     * - disableContinuousBuffer()
-     *
-     * - First run of encrypt() / decrypt()
-     *
-     *
-     * Note: Could, but not must, extend by the child Crypt* class
-     *
-     * @see setKey()
-     * @see setIV()
-     * @see disableContinuousBuffer()
-     */
-    public function setupMcrypt()
-    {
-        $this->clearBuffers();
-        $this->enChanged = $this->deChanged = true;
-
-        if (!isset($this->enMcrypt)) {
-            static $mcrypt_modes = array(
-                CRYPT_MODE_CTR => 'ctr',
-                CRYPT_MODE_ECB => MCRYPT_MODE_ECB,
-                CRYPT_MODE_CBC => MCRYPT_MODE_CBC,
-                CRYPT_MODE_CFB => 'ncfb',
-                CRYPT_MODE_OFB => MCRYPT_MODE_NOFB,
-                CRYPT_MODE_STREAM => MCRYPT_MODE_STREAM,
-            );
-
-            $this->deMcrypt = mcrypt_module_open($this->cipherNameMcrypt, '',
-                $mcrypt_modes[$this->mode], '');
-            $this->enMcrypt = mcrypt_module_open($this->cipherNameMcrypt, '',
-                $mcrypt_modes[$this->mode], '');
-
-            // we need the $ecb mcrypt resource (only) in MODE_CFB with enableContinuousBuffer()
-            // to workaround mcrypt's broken ncfb implementation in buffered mode
-            // see: {@link http://phpseclib.sourceforge.net/cfb-demo.phps}
-            if ($this->mode == CRYPT_MODE_CFB) {
-                $this->ecb = mcrypt_module_open($this->cipherNameMcrypt, '', MCRYPT_MODE_ECB, '');
-            }
-
-        } // else should mcrypt_generic_deinit be called?
-
-        if ($this->mode == CRYPT_MODE_CFB) {
-            mcrypt_generic_init($this->ecb, $this->key, str_repeat("\0", $this->blockSize));
-        }
-    }
-
-    /**
-     * Clears internal buffers
-     *
-     * Clearing/resetting the internal buffers is done everytime
-     * after disableContinuousBuffer() or on cipher $engine (re)init
-     * ie after setKey() or setIV()
-     *
-     * Note: Could, but not must, extend by the child Crypt* class
-     */
-    public function clearBuffers()
-    {
-        $this->enBuffer = array(
-            'encrypted' => '',
-            'xor' => '',
-            'pos' => 0,
-            'enmcrypt_init' => true
-        );
-        $this->deBuffer = array(
-            'ciphertext' => '',
-            'xor' => '',
-            'pos' => 0,
-            'demcrypt_init' => true
-        );
-
-        // mcrypt's handling of invalid's $iv:
-        // $this->encryptIV = $this->decryptIV =
-        // strlen($this->iv) == $this->blockSize ? $this->iv : str_repeat("\0", $this->blockSize);
-        $this->encryptIV = $this->decryptIV = str_pad(substr($this->iv, 0, $this->blockSize),
-            $this->blockSize, "\0");
-    }
-
-    /**
-     * Pads a string
-     *
-     * Pads a string using the RSA PKCS padding standards so that its length is a multiple of the block size.
-     * $this->blockSize - (strlen($text) % $this->blockSize) bytes are added, each of which is equal to
-     * chr($this->blockSize - (strlen($text) % $this->blockSize)
-     *
-     * If padding is disabled and $text is not a multiple of the block size, the string will be padded regardless
-     * and padding will, hence forth, be enabled.
-     *
-     * @see NostoCryptBase::unpad()
-     * @param String $text
-     * @return String
-     * @throws NostoInvalidLengthException
-     */
-    public function pad($text)
-    {
-        $length = strlen($text);
-
-        if (!$this->padding) {
-            if ($length % $this->blockSize == 0) {
-                return $text;
-            } else {
-                throw new NostoInvalidLengthException(
-                    "The plaintext length ($length) is not a multiple of the block size ({$this->blockSize})"
-                );
-            }
-        }
-
-        $pad = $this->blockSize - ($length % $this->blockSize);
-
-        return str_pad($text, $length + $pad, chr($pad));
-    }
-
-    /**
-     * Setup the CRYPT_MODE_INTERNAL $engine
-     *
-     * (re)init, if necessary, the internal cipher $engine and flush all $buffers
-     * Used (only) if $engine == CRYPT_MODE_INTERNAL
-     *
-     * _setup() will be called each time if $changed === true
-     * typically this happens when using one or more of following public methods:
-     *
-     * - setKey()
-     *
-     * - setIV()
-     *
-     * - disableContinuousBuffer()
-     *
-     * - First run of encrypt() / decrypt() with no init-settings
-     *
-     * Internally: _setup() is called always before(!) en/decryption.
-     *
-     * Note: Could, but not must, extend by the child Crypt* class
-     *
-     * @see setKey()
-     * @see setIV()
-     * @see disableContinuousBuffer()
-     */
-    public function setup()
-    {
-        $this->clearBuffers();
-        $this->setupKey();
-
-        if ($this->useInlineCrypt) {
-            $this->setupInlineCrypt();
-        }
-    }
-
-    /**
-     * Setup the key (expansion)
-     *
-     * Only used if $engine == CRYPT_MODE_INTERNAL
-     *
-     * Note: Must extend by the child Crypt* class
-     *
-     * @see NostoCryptBase::setup()
-     * @throws NostoUndefinedMethodException
-     */
-    public function setupKey()
-    {
-        throw new NostoUndefinedMethodException(__METHOD__ . '() must extend by class ' . get_class($this));
-    }
-
-    /**
-     * Setup the performance-optimized function for de/encrypt()
-     *
-     * Stores the created (or existing) callback function-name
-     * in $this->inlineCrypt
-     *
-     * Internally for phpseclib developers:
-     *
-     *     _setupInlineCrypt() would be called only if:
-     *
-     *     - $engine == CRYPT_MODE_INTERNAL and
-     *
-     *     - $useInlineCrypt === true
-     *
-     *     - each time on _setup(), after(!) setupKey()
-     *
-     *
-     *     This ensures that _setupInlineCrypt() has allways a
-     *     full ready2go initializated internal cipher $engine state
-     *     where, for example, the keys allready expanded,
-     *     keys/blockSize calculated and such.
-     *
-     *     It is, each time if called, the responsibility of _setupInlineCrypt():
-     *
-     *     - to set $this->inlineCrypt to a valid and fully working callback function
-     *       as a (faster) replacement for encrypt() / decrypt()
-     *
-     *     - NOT to create unlimited callback functions (for memory reasons!)
-     *       no matter how often _setupInlineCrypt() would be called. At some
-     *       point of amount they must be generic re-useable.
-     *
-     *     - the code of _setupInlineCrypt() it self,
-     *       and the generated callback code,
-     *       must be, in following order:
-     *       - 100% safe
-     *       - 100% compatible to encrypt()/decrypt()
-     *       - using only php5+ features/lang-constructs/php-extensions if
-     *         compatibility (down to php4) or fallback is provided
-     *       - readable/maintainable/understandable/commented and... not-cryptic-styled-code :-)
-     *       - >= 10% faster than encrypt()/decrypt() [which is, by the way,
-     *         the reason for the existence of _setupInlineCrypt() :-)]
-     *       - memory-nice
-     *       - short (as good as possible)
-     *
-     * Note: - _setupInlineCrypt() is using _createInlineCryptFunction() to create the full callback function code.
-     *       - In case of using inline crypting, _setupInlineCrypt() must extend by the child Crypt* class.
-     *       - The following variable names are reserved:
-     *         - $_*  (all variable names prefixed with an underscore)
-     *         - $self (object reference to it self. Do not use $this, but $self instead)
-     *         - $in (the content of $in has to en/decrypt by the generated code)
-     *       - The callback function should not use the 'return' statement, but en/decrypt'ing the content of $in only
-     *
-     *
-     * @see NostoCryptBase::setup()
-     * @see NostoCryptBase::createInlineCryptFunction()
-     * @see NostoCryptBase::encrypt()
-     * @see NostoCryptBase::decrypt()
-     */
-    public function setupInlineCrypt()
-    {
-        // If a Crypt* class providing inline crypting it must extend _setupInlineCrypt()
-
-        // If, for any reason, an extending NostoCryptBase() Crypt* class
-        // not using inline crypting then it must be ensured that: $this->useInlineCrypt = false
-        // ie in the class var declaration of $useInlineCrypt in general for the Crypt* class,
-        // in the constructor at object instance-time
-        // or, if it's runtime-specific, at runtime
-
-        $this->useInlineCrypt = false;
-    }
-
-    /**
-     * Encrypts a block
-     *
-     * Note: Must extend by the child Crypt* class
-     *
-     * @param String $in
-     * @return String
-     * @throws NostoUndefinedMethodException
-     */
-    public function encryptBlock($in)
-    {
-        throw new NostoUndefinedMethodException(__METHOD__ . '() must extend by class ' . get_class($this));
-    }
-
-    /**
-     * Generate CTR XOR encryption key
-     *
-     * Encrypt the output of this and XOR it against the ciphertext / plaintext to get the
-     * plaintext / ciphertext in CTR mode.
-     *
-     * @see NostoCryptBase::decrypt()
-     * @see NostoCryptBase::encrypt()
-     * @param String $iv
-     * @param Integer $length
-     * @return String $xor
-     */
-    public function generateXor(&$iv, $length)
-    {
-        $xor = '';
-        $count = 0;
-        $block_size = $this->blockSize;
-        $num_blocks = floor(($length + ($block_size - 1)) / $block_size);
-        for ($i = 0; $i < $num_blocks; $i++) {
-            $xor .= $iv;
-            for ($j = 4; $j <= $block_size; $j += 4) {
-                $temp = substr($iv, -$j, 4);
-                switch ($temp) {
-                    case "\xFF\xFF\xFF\xFF":
-                        $iv = substr_replace($iv, "\x00\x00\x00\x00", -$j, 4);
-                        break;
-                    case "\x7F\xFF\xFF\xFF":
-                        $iv = substr_replace($iv, "\x80\x00\x00\x00", -$j, 4);
-                        break 2;
-                    default:
-                        extract(unpack('Ncount', $temp));
-                        $iv = substr_replace($iv, pack('N', $count + 1), -$j, 4);
-                        break 2;
-                }
-            }
-        }
-
-        return $xor;
-    }
-
-    /**
-     * String Shift
-     *
-     * Inspired by array_shift
-     *
-     * @param String $string
-     * @param optional Integer $index
-     * @return String
-     */
-    public function stringShift(&$string, $index = 1)
-    {
-        $substr = substr($string, 0, $index);
-        $string = substr($string, $index);
-        return $substr;
     }
 
     /**
@@ -1212,8 +894,8 @@ abstract class NostoCryptBase
             }
 
             if ($this->mode == CRYPT_MODE_CFB && $this->continuousBuffer) {
-                $iv = &$this->decryptIV;
-                $pos = &$this->deBuffer['pos'];
+                $iv = & $this->decryptIV;
+                $pos = & $this->deBuffer['pos'];
                 $len = strlen($ciphertext);
                 $plaintext = '';
                 $i = 0;
@@ -1235,7 +917,7 @@ abstract class NostoCryptBase
                 }
                 if ($len >= $block_size) {
                     $cb = substr($ciphertext, $i, $len - $len % $block_size);
-                    $plaintext .= mcrypt_generic($this->ecb, $iv . $cb) ^ $cb;
+                    $plaintext .= mcrypt_generic($this->ecb, $iv.$cb) ^ $cb;
                     $iv = substr($cb, -$block_size);
                     $len %= $block_size;
                 }
@@ -1288,7 +970,7 @@ abstract class NostoCryptBase
             );
         }
 
-        $buffer = &$this->deBuffer;
+        $buffer = & $this->deBuffer;
         $plaintext = '';
         $cipher_text_len = strlen($ciphertext);
         switch ($this->mode) {
@@ -1315,8 +997,7 @@ abstract class NostoCryptBase
                     for ($i = 0; $i < $cipher_text_len; $i += $block_size) {
                         $block = substr($ciphertext, $i, $block_size);
                         if (strlen($block) > strlen($buffer['ciphertext'])) {
-                            $buffer['ciphertext'] .= $this->encryptBlock($this->generateXor($xor,
-                                $block_size));
+                            $buffer['ciphertext'] .= $this->encryptBlock($this->generateXor($xor, $block_size));
                         }
                         $key = $this->stringShift($buffer['ciphertext'], $block_size);
                         $plaintext .= $block ^ $key;
@@ -1331,14 +1012,14 @@ abstract class NostoCryptBase
                 if ($this->continuousBuffer) {
                     $this->decryptIV = $xor;
                     if ($start = strlen($ciphertext) % $block_size) {
-                        $buffer['ciphertext'] = substr($key, $start) . $buffer['ciphertext'];
+                        $buffer['ciphertext'] = substr($key, $start).$buffer['ciphertext'];
                     }
                 }
                 break;
             case CRYPT_MODE_CFB:
                 if ($this->continuousBuffer) {
-                    $iv = &$this->decryptIV;
-                    $pos = &$buffer['pos'];
+                    $iv = & $this->decryptIV;
+                    $pos = & $buffer['pos'];
                 } else {
                     $iv = $this->decryptIV;
                     $pos = 0;
@@ -1399,7 +1080,7 @@ abstract class NostoCryptBase
                 if ($this->continuousBuffer) {
                     $this->decryptIV = $xor;
                     if ($start = strlen($ciphertext) % $block_size) {
-                        $buffer['xor'] = substr($key, $start) . $buffer['xor'];
+                        $buffer['xor'] = substr($key, $start).$buffer['xor'];
                     }
                 }
                 break;
@@ -1408,46 +1089,6 @@ abstract class NostoCryptBase
                 break;
         }
         return $this->paddable ? $this->unpad($plaintext) : $plaintext;
-    }
-
-    /**
-     * Un-pads a string.
-     *
-     * If padding is enabled and the reported padding length is invalid the encryption key will be assumed to be wrong
-     * and false will be returned.
-     *
-     * @see NostoCryptBase::pad()
-     * @param String $text
-     * @return String
-     * @throws NostoInvalidPaddingException
-     */
-    public function unpad($text)
-    {
-        if (!$this->padding) {
-            return $text;
-        }
-
-        $length = ord($text[strlen($text) - 1]);
-
-        if (!$length || $length > $this->blockSize) {
-            throw new NostoInvalidPaddingException("An illegal padding character ($length) has been detected");
-        }
-
-        return substr($text, 0, -$length);
-    }
-
-    /**
-     * Decrypts a block
-     *
-     * Note: Must extend by the child Crypt* class
-     *
-     * @param String $in
-     * @return String
-     * @throws NostoUndefinedMethodException
-     */
-    public function decryptBlock($in)
-    {
-        throw new NostoUndefinedMethodException(__METHOD__ . '() must extend by class ' . get_class($this));
     }
 
     /**
@@ -1546,6 +1187,347 @@ abstract class NostoCryptBase
 
         $this->continuousBuffer = false;
         $this->changed = true;
+    }
+
+    /**
+     * Encrypts a block
+     *
+     * Note: Must extend by the child Crypt* class
+     *
+     * @param String $in
+     * @return String
+     * @throws NostoUndefinedMethodException
+     */
+    public function encryptBlock($in)
+    {
+        throw new NostoUndefinedMethodException(__METHOD__.'() must extend by class '.get_class($this));
+    }
+
+    /**
+     * Decrypts a block
+     *
+     * Note: Must extend by the child Crypt* class
+     *
+     * @param String $in
+     * @return String
+     * @throws NostoUndefinedMethodException
+     */
+    public function decryptBlock($in)
+    {
+        throw new NostoUndefinedMethodException(__METHOD__.'() must extend by class '.get_class($this));
+    }
+
+    /**
+     * Setup the key (expansion)
+     *
+     * Only used if $engine == CRYPT_MODE_INTERNAL
+     *
+     * Note: Must extend by the child Crypt* class
+     *
+     * @see NostoCryptBase::setup()
+     * @throws NostoUndefinedMethodException
+     */
+    public function setupKey()
+    {
+        throw new NostoUndefinedMethodException(__METHOD__.'() must extend by class '.get_class($this));
+    }
+
+    /**
+     * Setup the CRYPT_MODE_INTERNAL $engine
+     *
+     * (re)init, if necessary, the internal cipher $engine and flush all $buffers
+     * Used (only) if $engine == CRYPT_MODE_INTERNAL
+     *
+     * _setup() will be called each time if $changed === true
+     * typically this happens when using one or more of following public methods:
+     *
+     * - setKey()
+     *
+     * - setIV()
+     *
+     * - disableContinuousBuffer()
+     *
+     * - First run of encrypt() / decrypt() with no init-settings
+     *
+     * Internally: _setup() is called always before(!) en/decryption.
+     *
+     * Note: Could, but not must, extend by the child Crypt* class
+     *
+     * @see setKey()
+     * @see setIV()
+     * @see disableContinuousBuffer()
+     */
+    public function setup()
+    {
+        $this->clearBuffers();
+        $this->setupKey();
+
+        if ($this->useInlineCrypt) {
+            $this->setupInlineCrypt();
+        }
+    }
+
+    /**
+     * Setup the CRYPT_MODE_MCRYPT $engine
+     *
+     * (re)init, if necessary, the (ext)mcrypt resources and flush all $buffers
+     * Used (only) if $engine = CRYPT_MODE_MCRYPT
+     *
+     * _setupMcrypt() will be called each time if $changed === true
+     * typically this happens when using one or more of following public methods:
+     *
+     * - setKey()
+     *
+     * - setIV()
+     *
+     * - disableContinuousBuffer()
+     *
+     * - First run of encrypt() / decrypt()
+     *
+     *
+     * Note: Could, but not must, extend by the child Crypt* class
+     *
+     * @see setKey()
+     * @see setIV()
+     * @see disableContinuousBuffer()
+     */
+    public function setupMcrypt()
+    {
+        $this->clearBuffers();
+        $this->enChanged = $this->deChanged = true;
+
+        if (!isset($this->enMcrypt)) {
+            static $mcrypt_modes = array(
+                CRYPT_MODE_CTR => 'ctr',
+                CRYPT_MODE_ECB => MCRYPT_MODE_ECB,
+                CRYPT_MODE_CBC => MCRYPT_MODE_CBC,
+                CRYPT_MODE_CFB => 'ncfb',
+                CRYPT_MODE_OFB => MCRYPT_MODE_NOFB,
+                CRYPT_MODE_STREAM => MCRYPT_MODE_STREAM,
+            );
+
+            $this->deMcrypt = mcrypt_module_open($this->cipherNameMcrypt, '', $mcrypt_modes[$this->mode], '');
+            $this->enMcrypt = mcrypt_module_open($this->cipherNameMcrypt, '', $mcrypt_modes[$this->mode], '');
+
+            // we need the $ecb mcrypt resource (only) in MODE_CFB with enableContinuousBuffer()
+            // to workaround mcrypt's broken ncfb implementation in buffered mode
+            // see: {@link http://phpseclib.sourceforge.net/cfb-demo.phps}
+            if ($this->mode == CRYPT_MODE_CFB) {
+                $this->ecb = mcrypt_module_open($this->cipherNameMcrypt, '', MCRYPT_MODE_ECB, '');
+            }
+
+        } // else should mcrypt_generic_deinit be called?
+
+        if ($this->mode == CRYPT_MODE_CFB) {
+            mcrypt_generic_init($this->ecb, $this->key, str_repeat("\0", $this->blockSize));
+        }
+    }
+
+    /**
+     * Pads a string
+     *
+     * Pads a string using the RSA PKCS padding standards so that its length is a multiple of the block size.
+     * $this->blockSize - (strlen($text) % $this->blockSize) bytes are added, each of which is equal to
+     * chr($this->blockSize - (strlen($text) % $this->blockSize)
+     *
+     * If padding is disabled and $text is not a multiple of the block size, the string will be padded regardless
+     * and padding will, hence forth, be enabled.
+     *
+     * @see NostoCryptBase::unpad()
+     * @param String $text
+     * @return String
+     * @throws NostoInvalidLengthException
+     */
+    public function pad($text)
+    {
+        $length = strlen($text);
+
+        if (!$this->padding) {
+            if ($length % $this->blockSize == 0) {
+                return $text;
+            } else {
+                throw new NostoInvalidLengthException(
+                    "The plaintext length ($length) is not a multiple of the block size ({$this->blockSize})"
+                );
+            }
+        }
+
+        $pad = $this->blockSize - ($length % $this->blockSize);
+
+        return str_pad($text, $length + $pad, chr($pad));
+    }
+
+    /**
+     * Un-pads a string.
+     *
+     * If padding is enabled and the reported padding length is invalid the encryption key will be assumed to be wrong
+     * and false will be returned.
+     *
+     * @see NostoCryptBase::pad()
+     * @param String $text
+     * @return String
+     * @throws NostoInvalidPaddingException
+     */
+    public function unpad($text)
+    {
+        if (!$this->padding) {
+            return $text;
+        }
+
+        $length = ord($text[strlen($text) - 1]);
+
+        if (!$length || $length > $this->blockSize) {
+            throw new NostoInvalidPaddingException("An illegal padding character ($length) has been detected");
+        }
+
+        return substr($text, 0, -$length);
+    }
+
+    /**
+     * Clears internal buffers
+     *
+     * Clearing/resetting the internal buffers is done everytime
+     * after disableContinuousBuffer() or on cipher $engine (re)init
+     * ie after setKey() or setIV()
+     *
+     * Note: Could, but not must, extend by the child Crypt* class
+     */
+    public function clearBuffers()
+    {
+        $this->enBuffer = array('encrypted' => '', 'xor' => '', 'pos' => 0, 'enmcrypt_init' => true);
+        $this->deBuffer = array('ciphertext' => '', 'xor' => '', 'pos' => 0, 'demcrypt_init' => true);
+
+        // mcrypt's handling of invalid's $iv:
+        // $this->encryptIV = $this->decryptIV =
+        // strlen($this->iv) == $this->blockSize ? $this->iv : str_repeat("\0", $this->blockSize);
+        $this->encryptIV = $this->decryptIV = str_pad(substr($this->iv, 0, $this->blockSize), $this->blockSize, "\0");
+    }
+
+    /**
+     * String Shift
+     *
+     * Inspired by array_shift
+     *
+     * @param String $string
+     * @param optional Integer $index
+     * @return String
+     */
+    public function stringShift(&$string, $index = 1)
+    {
+        $substr = substr($string, 0, $index);
+        $string = substr($string, $index);
+        return $substr;
+    }
+
+    /**
+     * Generate CTR XOR encryption key
+     *
+     * Encrypt the output of this and XOR it against the ciphertext / plaintext to get the
+     * plaintext / ciphertext in CTR mode.
+     *
+     * @see NostoCryptBase::decrypt()
+     * @see NostoCryptBase::encrypt()
+     * @param String $iv
+     * @param Integer $length
+     * @return String $xor
+     */
+    public function generateXor(&$iv, $length)
+    {
+        $xor = '';
+        $count = 0;
+        $block_size = $this->blockSize;
+        $num_blocks = floor(($length + ($block_size - 1)) / $block_size);
+        for ($i = 0; $i < $num_blocks; $i++) {
+            $xor .= $iv;
+            for ($j = 4; $j <= $block_size; $j += 4) {
+                $temp = substr($iv, -$j, 4);
+                switch ($temp) {
+                    case "\xFF\xFF\xFF\xFF":
+                        $iv = substr_replace($iv, "\x00\x00\x00\x00", -$j, 4);
+                        break;
+                    case "\x7F\xFF\xFF\xFF":
+                        $iv = substr_replace($iv, "\x80\x00\x00\x00", -$j, 4);
+                        break 2;
+                    default:
+                        extract(unpack('Ncount', $temp));
+                        $iv = substr_replace($iv, pack('N', $count + 1), -$j, 4);
+                        break 2;
+                }
+            }
+        }
+
+        return $xor;
+    }
+
+    /**
+     * Setup the performance-optimized function for de/encrypt()
+     *
+     * Stores the created (or existing) callback function-name
+     * in $this->inlineCrypt
+     *
+     * Internally for phpseclib developers:
+     *
+     *     _setupInlineCrypt() would be called only if:
+     *
+     *     - $engine == CRYPT_MODE_INTERNAL and
+     *
+     *     - $useInlineCrypt === true
+     *
+     *     - each time on _setup(), after(!) setupKey()
+     *
+     *
+     *     This ensures that _setupInlineCrypt() has allways a
+     *     full ready2go initializated internal cipher $engine state
+     *     where, for example, the keys allready expanded,
+     *     keys/blockSize calculated and such.
+     *
+     *     It is, each time if called, the responsibility of _setupInlineCrypt():
+     *
+     *     - to set $this->inlineCrypt to a valid and fully working callback function
+     *       as a (faster) replacement for encrypt() / decrypt()
+     *
+     *     - NOT to create unlimited callback functions (for memory reasons!)
+     *       no matter how often _setupInlineCrypt() would be called. At some
+     *       point of amount they must be generic re-useable.
+     *
+     *     - the code of _setupInlineCrypt() it self,
+     *       and the generated callback code,
+     *       must be, in following order:
+     *       - 100% safe
+     *       - 100% compatible to encrypt()/decrypt()
+     *       - using only php5+ features/lang-constructs/php-extensions if
+     *         compatibility (down to php4) or fallback is provided
+     *       - readable/maintainable/understandable/commented and... not-cryptic-styled-code :-)
+     *       - >= 10% faster than encrypt()/decrypt() [which is, by the way,
+     *         the reason for the existence of _setupInlineCrypt() :-)]
+     *       - memory-nice
+     *       - short (as good as possible)
+     *
+     * Note: - _setupInlineCrypt() is using _createInlineCryptFunction() to create the full callback function code.
+     *       - In case of using inline crypting, _setupInlineCrypt() must extend by the child Crypt* class.
+     *       - The following variable names are reserved:
+     *         - $_*  (all variable names prefixed with an underscore)
+     *         - $self (object reference to it self. Do not use $this, but $self instead)
+     *         - $in (the content of $in has to en/decrypt by the generated code)
+     *       - The callback function should not use the 'return' statement, but en/decrypt'ing the content of $in only
+     *
+     *
+     * @see NostoCryptBase::setup()
+     * @see NostoCryptBase::createInlineCryptFunction()
+     * @see NostoCryptBase::encrypt()
+     * @see NostoCryptBase::decrypt()
+     */
+    public function setupInlineCrypt()
+    {
+        // If a Crypt* class providing inline crypting it must extend _setupInlineCrypt()
+
+        // If, for any reason, an extending NostoCryptBase() Crypt* class
+        // not using inline crypting then it must be ensured that: $this->useInlineCrypt = false
+        // ie in the class var declaration of $useInlineCrypt in general for the Crypt* class,
+        // in the constructor at object instance-time
+        // or, if it's runtime-specific, at runtime
+
+        $this->useInlineCrypt = false;
     }
 
     /**
@@ -1675,28 +1657,28 @@ abstract class NostoCryptBase
         // for encrypt- and decryption.
         switch ($this->mode) {
             case CRYPT_MODE_ECB:
-                $encrypt = $init_encrypt . '
+                $encrypt = $init_encrypt.'
                     $_ciphertext = "";
                     $_text = $self->pad($_text);
                     $_plaintext_len = strlen($_text);
 
-                    for ($_i = 0; $_i < $_plaintext_len; $_i+= ' . $block_size . ') {
-                        $in = substr($_text, $_i, ' . $block_size . ');
-                        ' . $encrypt_block . '
+                    for ($_i = 0; $_i < $_plaintext_len; $_i+= '.$block_size.') {
+                        $in = substr($_text, $_i, '.$block_size.');
+                        '.$encrypt_block.'
                         $_ciphertext.= $in;
                     }
 
                     return $_ciphertext;
                     ';
 
-                $decrypt = $init_decrypt . '
+                $decrypt = $init_decrypt.'
                     $_plaintext = "";
-                    $_text = str_pad($_text, strlen($_text) + (' . $block_size . ' - strlen($_text) % ' . $block_size . ') % ' . $block_size . ', chr(0));
+                    $_text = str_pad($_text, strlen($_text) + ('.$block_size.' - strlen($_text) % '.$block_size.') % '.$block_size.', chr(0));
                     $_ciphertext_len = strlen($_text);
 
-                    for ($_i = 0; $_i < $_ciphertext_len; $_i+= ' . $block_size . ') {
-                        $in = substr($_text, $_i, ' . $block_size . ');
-                        ' . $decrypt_block . '
+                    for ($_i = 0; $_i < $_ciphertext_len; $_i+= '.$block_size.') {
+                        $in = substr($_text, $_i, '.$block_size.');
+                        '.$decrypt_block.'
                         $_plaintext.= $in;
                     }
 
@@ -1704,35 +1686,35 @@ abstract class NostoCryptBase
                     ';
                 break;
             case CRYPT_MODE_CTR:
-                $encrypt = $init_encrypt . '
+                $encrypt = $init_encrypt.'
                     $_ciphertext = "";
                     $_plaintext_len = strlen($_text);
                     $_xor = $self->encryptIV;
                     $_buffer = &$self->enBuffer;
 
                     if (strlen($_buffer["encrypted"])) {
-                        for ($_i = 0; $_i < $_plaintext_len; $_i+= ' . $block_size . ') {
-                            $_block = substr($_text, $_i, ' . $block_size . ');
+                        for ($_i = 0; $_i < $_plaintext_len; $_i+= '.$block_size.') {
+                            $_block = substr($_text, $_i, '.$block_size.');
                             if (strlen($_block) > strlen($_buffer["encrypted"])) {
-                                $in = $self->generateXor($_xor, ' . $block_size . ');
-                                ' . $encrypt_block . '
+                                $in = $self->generateXor($_xor, '.$block_size.');
+                                '.$encrypt_block.'
                                 $_buffer["encrypted"].= $in;
                             }
-                            $_key = $self->stringShift($_buffer["encrypted"], ' . $block_size . ');
+                            $_key = $self->stringShift($_buffer["encrypted"], '.$block_size.');
                             $_ciphertext.= $_block ^ $_key;
                         }
                     } else {
-                        for ($_i = 0; $_i < $_plaintext_len; $_i+= ' . $block_size . ') {
-                            $_block = substr($_text, $_i, ' . $block_size . ');
-                            $in = $self->generateXor($_xor, ' . $block_size . ');
-                            ' . $encrypt_block . '
+                        for ($_i = 0; $_i < $_plaintext_len; $_i+= '.$block_size.') {
+                            $_block = substr($_text, $_i, '.$block_size.');
+                            $in = $self->generateXor($_xor, '.$block_size.');
+                            '.$encrypt_block.'
                             $_key = $in;
                             $_ciphertext.= $_block ^ $_key;
                         }
                     }
                     if ($self->continuousBuffer) {
                         $self->encryptIV = $_xor;
-                        if ($_start = $_plaintext_len % ' . $block_size . ') {
+                        if ($_start = $_plaintext_len % '.$block_size.') {
                             $_buffer["encrypted"] = substr($_key, $_start) . $_buffer["encrypted"];
                         }
                     }
@@ -1740,35 +1722,35 @@ abstract class NostoCryptBase
                     return $_ciphertext;
                 ';
 
-                $decrypt = $init_encrypt . '
+                $decrypt = $init_encrypt.'
                     $_plaintext = "";
                     $_ciphertext_len = strlen($_text);
                     $_xor = $self->decryptIV;
                     $_buffer = &$self->deBuffer;
 
                     if (strlen($_buffer["ciphertext"])) {
-                        for ($_i = 0; $_i < $_ciphertext_len; $_i+= ' . $block_size . ') {
-                            $_block = substr($_text, $_i, ' . $block_size . ');
+                        for ($_i = 0; $_i < $_ciphertext_len; $_i+= '.$block_size.') {
+                            $_block = substr($_text, $_i, '.$block_size.');
                             if (strlen($_block) > strlen($_buffer["ciphertext"])) {
-                                $in = $self->generateXor($_xor, ' . $block_size . ');
-                                ' . $encrypt_block . '
+                                $in = $self->generateXor($_xor, '.$block_size.');
+                                '.$encrypt_block.'
                                 $_buffer["ciphertext"].= $in;
                             }
-                            $_key = $self->stringShift($_buffer["ciphertext"], ' . $block_size . ');
+                            $_key = $self->stringShift($_buffer["ciphertext"], '.$block_size.');
                             $_plaintext.= $_block ^ $_key;
                         }
                     } else {
-                        for ($_i = 0; $_i < $_ciphertext_len; $_i+= ' . $block_size . ') {
-                            $_block = substr($_text, $_i, ' . $block_size . ');
-                            $in = $self->generateXor($_xor, ' . $block_size . ');
-                            ' . $encrypt_block . '
+                        for ($_i = 0; $_i < $_ciphertext_len; $_i+= '.$block_size.') {
+                            $_block = substr($_text, $_i, '.$block_size.');
+                            $in = $self->generateXor($_xor, '.$block_size.');
+                            '.$encrypt_block.'
                             $_key = $in;
                             $_plaintext.= $_block ^ $_key;
                         }
                     }
                     if ($self->continuousBuffer) {
                         $self->decryptIV = $_xor;
-                        if ($_start = $_ciphertext_len % ' . $block_size . ') {
+                        if ($_start = $_ciphertext_len % '.$block_size.') {
                             $_buffer["ciphertext"] = substr($_key, $_start) . $_buffer["ciphertext"];
                         }
                     }
@@ -1777,7 +1759,7 @@ abstract class NostoCryptBase
                     ';
                 break;
             case CRYPT_MODE_CFB:
-                $encrypt = $init_encrypt . '
+                $encrypt = $init_encrypt.'
                     $_ciphertext = "";
                     $_buffer = &$self->enBuffer;
 
@@ -1792,7 +1774,7 @@ abstract class NostoCryptBase
                     $_i = 0;
                     if ($_pos) {
                         $_orig_pos = $_pos;
-                        $_max = ' . $block_size . ' - $_pos;
+                        $_max = '.$block_size.' - $_pos;
                         if ($_len >= $_max) {
                             $_i = $_max;
                             $_len-= $_max;
@@ -1805,17 +1787,17 @@ abstract class NostoCryptBase
                         $_ciphertext = substr($_iv, $_orig_pos) ^ $_text;
                         $_iv = substr_replace($_iv, $_ciphertext, $_orig_pos, $_i);
                     }
-                    while ($_len >= ' . $block_size . ') {
+                    while ($_len >= '.$block_size.') {
                         $in = $_iv;
-                        ' . $encrypt_block . ';
-                        $_iv = $in ^ substr($_text, $_i, ' . $block_size . ');
+                        '.$encrypt_block.';
+                        $_iv = $in ^ substr($_text, $_i, '.$block_size.');
                         $_ciphertext.= $_iv;
-                        $_len-= ' . $block_size . ';
-                        $_i+= ' . $block_size . ';
+                        $_len-= '.$block_size.';
+                        $_i+= '.$block_size.';
                     }
                     if ($_len) {
                         $in = $_iv;
-                        ' . $encrypt_block . '
+                        '.$encrypt_block.'
                         $_iv = $in;
                         $_block = $_iv ^ substr($_text, $_i);
                         $_iv = substr_replace($_iv, $_block, 0, $_len);
@@ -1825,7 +1807,7 @@ abstract class NostoCryptBase
                     return $_ciphertext;
                 ';
 
-                $decrypt = $init_encrypt . '
+                $decrypt = $init_encrypt.'
                     $_plaintext = "";
                     $_buffer = &$self->deBuffer;
 
@@ -1840,7 +1822,7 @@ abstract class NostoCryptBase
                     $_i = 0;
                     if ($_pos) {
                         $_orig_pos = $_pos;
-                        $_max = ' . $block_size . ' - $_pos;
+                        $_max = '.$block_size.' - $_pos;
                         if ($_len >= $_max) {
                             $_i = $_max;
                             $_len-= $_max;
@@ -1853,19 +1835,19 @@ abstract class NostoCryptBase
                         $_plaintext = substr($_iv, $_orig_pos) ^ $_text;
                         $_iv = substr_replace($_iv, substr($_text, 0, $_i), $_orig_pos, $_i);
                     }
-                    while ($_len >= ' . $block_size . ') {
+                    while ($_len >= '.$block_size.') {
                         $in = $_iv;
-                        ' . $encrypt_block . '
+                        '.$encrypt_block.'
                         $_iv = $in;
-                        $cb = substr($_text, $_i, ' . $block_size . ');
+                        $cb = substr($_text, $_i, '.$block_size.');
                         $_plaintext.= $_iv ^ $cb;
                         $_iv = $cb;
-                        $_len-= ' . $block_size . ';
-                        $_i+= ' . $block_size . ';
+                        $_len-= '.$block_size.';
+                        $_i+= '.$block_size.';
                     }
                     if ($_len) {
                         $in = $_iv;
-                        ' . $encrypt_block . '
+                        '.$encrypt_block.'
                         $_iv = $in;
                         $_plaintext.= $_iv ^ substr($_text, $_i);
                         $_iv = substr_replace($_iv, substr($_text, $_i), 0, $_len);
@@ -1876,72 +1858,72 @@ abstract class NostoCryptBase
                     ';
                 break;
             case CRYPT_MODE_OFB:
-                $encrypt = $init_encrypt . '
+                $encrypt = $init_encrypt.'
                     $_ciphertext = "";
                     $_plaintext_len = strlen($_text);
                     $_xor = $self->encryptIV;
                     $_buffer = &$self->enBuffer;
 
                     if (strlen($_buffer["xor"])) {
-                        for ($_i = 0; $_i < $_plaintext_len; $_i+= ' . $block_size . ') {
-                            $_block = substr($_text, $_i, ' . $block_size . ');
+                        for ($_i = 0; $_i < $_plaintext_len; $_i+= '.$block_size.') {
+                            $_block = substr($_text, $_i, '.$block_size.');
                             if (strlen($_block) > strlen($_buffer["xor"])) {
                                 $in = $_xor;
-                                ' . $encrypt_block . '
+                                '.$encrypt_block.'
                                 $_xor = $in;
                                 $_buffer["xor"].= $_xor;
                             }
-                            $_key = $self->stringShift($_buffer["xor"], ' . $block_size . ');
+                            $_key = $self->stringShift($_buffer["xor"], '.$block_size.');
                             $_ciphertext.= $_block ^ $_key;
                         }
                     } else {
-                        for ($_i = 0; $_i < $_plaintext_len; $_i+= ' . $block_size . ') {
+                        for ($_i = 0; $_i < $_plaintext_len; $_i+= '.$block_size.') {
                             $in = $_xor;
-                            ' . $encrypt_block . '
+                            '.$encrypt_block.'
                             $_xor = $in;
-                            $_ciphertext.= substr($_text, $_i, ' . $block_size . ') ^ $_xor;
+                            $_ciphertext.= substr($_text, $_i, '.$block_size.') ^ $_xor;
                         }
                         $_key = $_xor;
                     }
                     if ($self->continuousBuffer) {
                         $self->encryptIV = $_xor;
-                        if ($_start = $_plaintext_len % ' . $block_size . ') {
+                        if ($_start = $_plaintext_len % '.$block_size.') {
                              $_buffer["xor"] = substr($_key, $_start) . $_buffer["xor"];
                         }
                     }
                     return $_ciphertext;
                     ';
 
-                $decrypt = $init_encrypt . '
+                $decrypt = $init_encrypt.'
                     $_plaintext = "";
                     $_ciphertext_len = strlen($_text);
                     $_xor = $self->decryptIV;
                     $_buffer = &$self->deBuffer;
 
                     if (strlen($_buffer["xor"])) {
-                        for ($_i = 0; $_i < $_ciphertext_len; $_i+= ' . $block_size . ') {
-                            $_block = substr($_text, $_i, ' . $block_size . ');
+                        for ($_i = 0; $_i < $_ciphertext_len; $_i+= '.$block_size.') {
+                            $_block = substr($_text, $_i, '.$block_size.');
                             if (strlen($_block) > strlen($_buffer["xor"])) {
                                 $in = $_xor;
-                                ' . $encrypt_block . '
+                                '.$encrypt_block.'
                                 $_xor = $in;
                                 $_buffer["xor"].= $_xor;
                             }
-                            $_key = $self->stringShift($_buffer["xor"], ' . $block_size . ');
+                            $_key = $self->stringShift($_buffer["xor"], '.$block_size.');
                             $_plaintext.= $_block ^ $_key;
                         }
                     } else {
-                        for ($_i = 0; $_i < $_ciphertext_len; $_i+= ' . $block_size . ') {
+                        for ($_i = 0; $_i < $_ciphertext_len; $_i+= '.$block_size.') {
                             $in = $_xor;
-                            ' . $encrypt_block . '
+                            '.$encrypt_block.'
                             $_xor = $in;
-                            $_plaintext.= substr($_text, $_i, ' . $block_size . ') ^ $_xor;
+                            $_plaintext.= substr($_text, $_i, '.$block_size.') ^ $_xor;
                         }
                         $_key = $_xor;
                     }
                     if ($self->continuousBuffer) {
                         $self->decryptIV = $_xor;
-                        if ($_start = $_ciphertext_len % ' . $block_size . ') {
+                        if ($_start = $_ciphertext_len % '.$block_size.') {
                              $_buffer["xor"] = substr($_key, $_start) . $_buffer["xor"];
                         }
                     }
@@ -1949,29 +1931,29 @@ abstract class NostoCryptBase
                     ';
                 break;
             case CRYPT_MODE_STREAM:
-                $encrypt = $init_encrypt . '
+                $encrypt = $init_encrypt.'
                     $_ciphertext = "";
-                    ' . $encrypt_block . '
+                    '.$encrypt_block.'
                     return $_ciphertext;
                     ';
-                $decrypt = $init_decrypt . '
+                $decrypt = $init_decrypt.'
                     $_plaintext = "";
-                    ' . $decrypt_block . '
+                    '.$decrypt_block.'
                     return $_plaintext;
                     ';
                 break;
             // case CRYPT_MODE_CBC:
             default:
-                $encrypt = $init_encrypt . '
+                $encrypt = $init_encrypt.'
                     $_ciphertext = "";
                     $_text = $self->pad($_text);
                     $_plaintext_len = strlen($_text);
 
                     $in = $self->encryptIV;
 
-                    for ($_i = 0; $_i < $_plaintext_len; $_i+= ' . $block_size . ') {
-                        $in = substr($_text, $_i, ' . $block_size . ') ^ $in;
-                        ' . $encrypt_block . '
+                    for ($_i = 0; $_i < $_plaintext_len; $_i+= '.$block_size.') {
+                        $in = substr($_text, $_i, '.$block_size.') ^ $in;
+                        '.$encrypt_block.'
                         $_ciphertext.= $in;
                     }
 
@@ -1982,16 +1964,16 @@ abstract class NostoCryptBase
                     return $_ciphertext;
                     ';
 
-                $decrypt = $init_decrypt . '
+                $decrypt = $init_decrypt.'
                     $_plaintext = "";
-                    $_text = str_pad($_text, strlen($_text) + (' . $block_size . ' - strlen($_text) % ' . $block_size . ') % ' . $block_size . ', chr(0));
+                    $_text = str_pad($_text, strlen($_text) + ('.$block_size.' - strlen($_text) % '.$block_size.') % '.$block_size.', chr(0));
                     $_ciphertext_len = strlen($_text);
 
                     $_iv = $self->decryptIV;
 
-                    for ($_i = 0; $_i < $_ciphertext_len; $_i+= ' . $block_size . ') {
-                        $in = $_block = substr($_text, $_i, ' . $block_size . ');
-                        ' . $decrypt_block . '
+                    for ($_i = 0; $_i < $_ciphertext_len; $_i+= '.$block_size.') {
+                        $in = $_block = substr($_text, $_i, '.$block_size.');
+                        '.$decrypt_block.'
                         $_plaintext.= $in ^ $_iv;
                         $_iv = $_block;
                     }
@@ -2008,7 +1990,7 @@ abstract class NostoCryptBase
         // Create the $inline function and return its name as string. Ready to run!
         return create_function(
             '$_action, &$self, $_text',
-            $init_crypt . 'if ($_action == "encrypt") { ' . $encrypt . ' } else { ' . $decrypt . ' }'
+            $init_crypt.'if ($_action == "encrypt") { '.$encrypt.' } else { '.$decrypt.' }'
         );
     }
 
