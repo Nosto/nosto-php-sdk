@@ -39,7 +39,7 @@
  * The base class provides the functionality to validate the items added to the collection.
  * The collection behaves like an array. making it easy to add items to it and iterate over it.
  */
-abstract class NostoCollection extends ArrayObject implements NostoSerializableInterface
+abstract class NostoCollection extends ArrayObject
 {
     const OBJECT = 'object';
 

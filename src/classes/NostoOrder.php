@@ -120,32 +120,6 @@ class NostoOrder extends NostoSerializableObject implements NostoOrderInterface,
     }
 
     /**
-     * @return array the array representation of the object for serialization
-     */
-    public function getArray()
-    {
-        $data = array(
-            'order_number' => $this->getOrderNumber(),
-            'external_order_ref' => $this->getExternalOrderRef(),
-            'buyer' => array(),
-            'created_at' => NostoHelperDate::format($this->getCreatedDate()),
-            'payment_provider' => $this->getPaymentProvider(),
-            'purchased_items' => array(),
-        );
-        if ($this->getOrderStatus()) {
-            $data['order_status_code'] = $this->getOrderStatus()->getCode();
-            $data['order_status_label'] = $this->getOrderStatus()->getLabel();
-        }
-        foreach ($this->getPurchasedItems() as $item) {
-            $data['purchased_items'][] = $item->getArray();
-        }
-        if ($this->getBuyerInfo()) {
-            $data['buyer'] = $this->getBuyerInfo()->getArray();
-        }
-        return $data;
-    }
-
-    /**
      * @inheritdoc
      */
     public function getOrderNumber()

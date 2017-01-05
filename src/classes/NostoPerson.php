@@ -52,20 +52,6 @@ class NostoPerson extends NostoObject implements NostoPersonInterface
     private $email;
 
     /**
-     * @return array the array representation of the object for serialization
-     */
-    public function getArray()
-    {
-        $data = array(
-            'first_name' => $this->getFirstName(),
-            'last_name' => $this->getLastName(),
-            'email' => $this->getEmail(),
-        );
-
-        return $data;
-    }
-
-    /**
      * The first name of the account owner.
      *
      * @return string the first name.

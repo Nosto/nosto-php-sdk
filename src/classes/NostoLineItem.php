@@ -101,22 +101,6 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     /**
      * @inheritdoc
      */
-    public function getArray()
-    {
-        $data = array(
-            'product_id' => $this->getProductId(),
-            'quantity' => $this->getQuantity(),
-            'name' => $this->getName(),
-            'unit_price' => NostoHelperPrice::format($this->getUnitPrice()),
-            'price_currency_code' => strtoupper($this->getCurrencyCode()),
-        );
-
-        return $data;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getProductId()
     {
         return $this->productId;

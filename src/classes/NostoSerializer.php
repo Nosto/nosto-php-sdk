@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -34,10 +33,23 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-interface NostoSerializableInterface
+
+use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+class NostoSerializer
 {
-    /**
-     * @return array the array representation of the object for serialization
-     */
-    public function getArray();
+
+    private function __construct()
+    {
+    }
+
+    public static function serialize($object)
+    {
+        $normalizers = array(new ObjectNormalizer(null, new CamelCaseToSnakeCaseNameConverter()));
+        $serializer = new Serializer($normalizers, array(new JsonEncoder()));
+        return $serializer->serialize($object, 'json');
+    }
 }

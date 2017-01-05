@@ -50,13 +50,4 @@ class MockNostoPerson implements NostoUserInterface
     {
         return 'james.kirk@example.com';
     }
-
-    public function getArray()
-    {
-        return [
-            'first_name' => $this->getFirstName(),
-            'last_name' => $this->getLastName(),
-            'email' => $this->getEmail(),
-        ];
-    }
 }

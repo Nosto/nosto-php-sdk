@@ -379,12 +379,12 @@ class NostoHttpRequest
     /**
      * Sends a POST request.
      *
-     * @param NostoSerializableInterface $content
+     * @param mixed $content
      * @return NostoHttpResponse
      */
-    public function post(NostoSerializableInterface $content)
+    public function post($content)
     {
-        $this->content = json_encode($content->getArray());
+        $this->content = NostoSerializer::serialize($content);
         $url = $this->url;
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);
@@ -413,12 +413,12 @@ class NostoHttpRequest
     /**
      * Sends a PUT request.
      *
-     * @param NostoSerializableInterface $content
+     * @param mixed $content
      * @return NostoHttpResponse
      */
-    public function put(NostoSerializableInterface $content)
+    public function put($content)
     {
-        $this->content = json_encode($content->getArray());
+        $this->content = NostoSerializer::serialize($content);
         $url = $this->url;
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);
