@@ -38,7 +38,7 @@
  * Model for order information. This is used when compiling the info about an
  * order that is sent to Nosto.
  */
-class NostoOrder extends NostoSerializableObject implements NostoOrderInterface, NostoValidatableInterface
+class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValidatableInterface
 {
     /**
      * @var string|int the unique order number identifying the order.
@@ -81,6 +81,11 @@ class NostoOrder extends NostoSerializableObject implements NostoOrderInterface,
      * @var string external order reference
      */
     private $externalOrderRef;
+
+    public function __construct()
+    {
+        // Dummy
+    }
 
     /**
      * @inheritdoc

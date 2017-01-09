@@ -71,6 +71,11 @@ class NostoOAuth implements NostoOAuthClientMetaDataInterface
      */
     private $clientSecret;
 
+    public function __construct()
+    {
+        // Dummy
+    }
+
     /**
      * @inheritdoc
      */

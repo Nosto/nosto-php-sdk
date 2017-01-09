@@ -101,6 +101,11 @@ class NostoIframe extends NostoObject implements NostoIframeInterface
      */
     private $versionPlatform;
 
+    public function __construct()
+    {
+        // Dummy
+    }
+
     /**
      * The name of the platform the iframe is used on.
      * A list of valid platform names is issued by Nosto.

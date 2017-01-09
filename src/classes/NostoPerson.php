@@ -51,6 +51,11 @@ class NostoPerson extends NostoObject implements NostoPersonInterface
      */
     private $email;
 
+    public function __construct()
+    {
+        // Dummy
+    }
+
     /**
      * The first name of the account owner.
      *

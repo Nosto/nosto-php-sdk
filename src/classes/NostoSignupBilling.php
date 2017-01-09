@@ -45,6 +45,11 @@ class NostoSignupBilling extends NostoObject implements NostoSignupBillingDetail
      */
     private $country;
 
+    public function __construct()
+    {
+        // Dummy
+    }
+
     /**
      * The 2-letter ISO code (ISO 3166-1 alpha-2) for billing details country.
      *

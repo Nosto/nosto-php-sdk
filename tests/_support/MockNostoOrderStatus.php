@@ -34,15 +34,12 @@
  *
  */
 
-class MockNostoOrderStatus implements NostoOrderStatusInterface
+class MockNostoOrderStatus extends NostoOrderStatus
 {
-    public function getCode()
+    public function __construct()
     {
-        return 'completed';
-    }
-
-    public function getLabel()
-    {
-        return 'Completed';
+        parent::__construct();
+        $this->setCode('completed');
+        $this->setLabel('Completed');
     }
 }

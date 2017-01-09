@@ -34,30 +34,15 @@
  *
  */
 
-class MockNostoLineItem implements NostoLineItemInterface
+class MockNostoLineItem extends NostoLineItem
 {
-    public function getProductId()
+    public function __construct()
     {
-        return 1;
-    }
-
-    public function getQuantity()
-    {
-        return 2;
-    }
-
-    public function getName()
-    {
-        return 'Test Product';
-    }
-
-    public function getUnitPrice()
-    {
-        return 99.99;
-    }
-
-    public function getCurrencyCode()
-    {
-        return 'USD';
+        parent::__construct();
+        $this->setProductId(1);
+        $this->setQuantity(2);
+        $this->setName('Test Product');
+        $this->setPrice(99.99);
+        $this->setCurrencyCode('USD');
     }
 }

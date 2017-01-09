@@ -34,100 +34,27 @@
  *
  */
 
-class MockNostoProduct implements NostoProductInterface, NostoValidatableInterface
+class MockNostoProduct extends NostoProduct
 {
-    public function getUrl()
-    {
-        return 'http://my.shop.com/products/test_product.html';
-    }
 
-    public function getProductId()
+    public function __construct()
     {
-        return 1;
-    }
+        parent::__construct();
+        $this->setUrl('http://my.shop.com/products/test_product.html');
+        $this->setProductId(1);
+        $this->setName('Test Product');
+        $this->setImageUrl('http://my.shop.com/images/test_product.jpg');
+        $this->setPrice(99.99);
+        $this->setListPrice(110.99);
+        $this->setDescription('This is a full description');
+        $this->setCurrencyCode('USD');
+        $this->setAvailability('InStock');
+        $this->setTag1(array('tag1', 'tag2'));
+        $this->setCategories(array('/a/b', '/a/b/c'));
+        $this->setShortDescription('Lorem ipsum dolor sit amet');
+        $this->setAvailability('InStock');
+        $this->setBrand('Super Brand');
 
-    public function getName()
-    {
-        return 'Test Product';
-    }
-
-    public function getImageUrl()
-    {
-        return 'http://my.shop.com/images/test_product.jpg';
-    }
-
-    public function getPrice()
-    {
-        return 99.99;
-    }
-
-    public function getListPrice()
-    {
-        return 110.99;
-    }
-
-    public function getFullDescription()
-    {
-        return 'This is a full description';
-    }
-
-    public function getCurrencyCode()
-    {
-        return 'USD';
-    }
-
-    public function getAvailability()
-    {
-        return 'InStock';
-    }
-
-    public function getTags()
-    {
-        return array('tag1', 'tag2');
-    }
-
-    public function getCategories()
-    {
-        return array('/a/b', '/a/b/c');
-    }
-
-    public function getShortDescription()
-    {
-        return 'Lorem ipsum dolor sit amet';
-    }
-
-    public function getDescription()
-    {
-        return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris imperdiet ligula eu facilisis dignissim.';
-    }
-
-    public function getBrand()
-    {
-        return 'Super Brand';
-    }
-
-    public function getDatePublished()
-    {
-        return '2013-01-05';
-    }
-
-    public function getValidationRules()
-    {
-        return array(
-            array(
-                array(
-                    'url',
-                    'productId',
-                    'name',
-                    'imageUrl',
-                    'price',
-                    'listPrice',
-                    'currencyCode',
-                    'availability'
-                ),
-                'required'
-            )
-        );
     }
 
     public function __get($name)
@@ -137,75 +64,5 @@ class MockNostoProduct implements NostoProductInterface, NostoValidatableInterfa
             return $this->{$getter}();
         }
         throw new Exception(sprintf('Property `%s.%s` is not defined.', get_class($this), $name));
-    }
-
-    public function getVariationId()
-    {
-        return false;
-    }
-
-    public function getSupplierCost()
-    {
-        // TODO: Implement getSupplierCost() method.
-    }
-
-    public function getInventoryLevel()
-    {
-        // TODO: Implement getInventoryLevel() method.
-    }
-
-    public function getReviewCount()
-    {
-        // TODO: Implement getReviewCount() method.
-    }
-
-    public function getRatingValue()
-    {
-        // TODO: Implement getRatingValue() method.
-    }
-
-    public function getAlternateImageUrls()
-    {
-        // TODO: Implement getAlternateImageUrls() method.
-    }
-
-    public function getCondition()
-    {
-        // TODO: Implement getCondition() method.
-    }
-
-    public function getGender()
-    {
-        // TODO: Implement getGender() method.
-    }
-
-    public function getAgeGroup()
-    {
-        // TODO: Implement getAgeGroup() method.
-    }
-
-    public function getGtin()
-    {
-        // TODO: Implement getGtin() method.
-    }
-
-    public function getGoogleCategory()
-    {
-        // TODO: Implement getGoogleCategory() method.
-    }
-
-    public function getUnitPricingMeasure()
-    {
-        // TODO: Implement getUnitPricingMeasure() method.
-    }
-
-    public function getUnitPricingBaseMeasure()
-    {
-        // TODO: Implement getUnitPricingBaseMeasure() method.
-    }
-
-    public function getUnitPricingUnit()
-    {
-        // TODO: Implement getUnitPricingUnit() method.
     }
 }

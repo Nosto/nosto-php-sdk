@@ -34,6 +34,13 @@
  *
  */
 
-class MockNostoSignupOwner extends MockNostoPerson implements NostoSignupOwnerInterface
+class MockNostoSignupOwner extends NostoSignupOwner
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setFirstName('James');
+        $this->setLastName('Kirk');
+        $this->setEmail('james.kirk@example.com');
+    }
 }

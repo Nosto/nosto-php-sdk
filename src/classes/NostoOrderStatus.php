@@ -50,6 +50,11 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
      */
     private $label;
 
+    public function __construct()
+    {
+        // Dummy
+    }
+
     /**
      * @inheritdoc
      */

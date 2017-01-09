@@ -34,10 +34,11 @@
  *
  */
 
-class MockNostoSignupBilling implements NostoSignupBillingDetailsInterface
+class MockNostoSignupBilling extends NostoSignupBilling
 {
-    public function getCountry()
+    public function __construct()
     {
-        return 'us';
+        parent::__construct();
+        $this->setCountry('us');
     }
 }

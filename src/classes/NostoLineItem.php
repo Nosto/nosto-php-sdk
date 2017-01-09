@@ -67,6 +67,11 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      */
     private $currencyCode;
 
+    public function __construct()
+    {
+        // Dummy
+    }
+
     /**
      * Loads a special item, e.g. shipping cost.
      *

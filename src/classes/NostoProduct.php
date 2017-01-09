@@ -44,7 +44,7 @@
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class NostoProduct extends NostoSerializableObject implements NostoProductInterface, NostoValidatableInterface
+class NostoProduct extends NostoObject implements NostoProductInterface, NostoValidatableInterface
 {
     /**
      * @var string absolute url to the product page.
@@ -187,6 +187,11 @@ class NostoProduct extends NostoSerializableObject implements NostoProductInterf
      * bottle is "l" (litre).
      */
     private $unitPricingUnit;
+
+    public function __construct()
+    {
+        // Dummy
+    }
 
     /**
      * @inheritdoc

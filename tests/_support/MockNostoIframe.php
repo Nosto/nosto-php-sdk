@@ -34,80 +34,25 @@
  *
  */
 
-class MockNostoIframe implements NostoIframeInterface
+class MockNostoIframe extends NostoIframe
 {
-    public function getFirstName()
+    public function __construct()
     {
-        return 'James';
-    }
-
-    public function getLastName()
-    {
-        return 'Kirk';
-    }
-
-    public function getEmail()
-    {
-        return 'james.kirk@example.com';
-    }
-
-    public function getLanguageIsoCode()
-    {
-        return 'en';
-    }
-
-    public function getLanguageIsoCodeShop()
-    {
-        return 'en';
-    }
-
-    public function getUniqueId()
-    {
-        return '123';
-    }
-
-    public function getPlatform()
-    {
-        return 'platform';
-    }
-
-    public function getVersionPlatform()
-    {
-        return '1.0.0';
-    }
-
-    public function getVersionModule()
-    {
-        return '1.0.0';
-    }
-
-    public function getPreviewUrlProduct()
-    {
-        return 'http://my.shop.com/products/product123?nostodebug=true';
-    }
-
-    public function getPreviewUrlCategory()
-    {
-        return 'http://my.shop.com/products/category123?nostodebug=true';
-    }
-
-    public function getPreviewUrlSearch()
-    {
-        return 'http://my.shop.com/search?query=red?nostodebug=true';
-    }
-
-    public function getPreviewUrlCart()
-    {
-        return 'http://my.shop.com/cart?nostodebug=true';
-    }
-
-    public function getPreviewUrlFront()
-    {
-        return 'http://my.shop.com?nostodebug=true';
-    }
-
-    public function getShopName()
-    {
-        return 'Shop Name';
+        parent::__construct();
+        $this->setFirstName('James');
+        $this->setLastName('Kirk');
+        $this->setEmail('james.kirk@example.com');
+        $this->setLanguageIsoCode('en');
+        $this->setLanguageIsoCodeShop('en');
+        $this->setUniqueId('123');
+        $this->setPlatform('platform');
+        $this->setVersionPlatform('1.0.0');
+        $this->setVersionModule('1.0.0');
+        $this->setPreviewUrlProduct('http://my.shop.com/products/product123?nostodebug=true');
+        $this->setPreviewUrlCategory('http://my.shop.com/products/category123?nostodebug=true');
+        $this->setPreviewUrlSearch('http://my.shop.com/search?query=red?nostodebug=true');
+        $this->setPreviewUrlCart('http://my.shop.com/cart?nostodebug=true');
+        $this->setPreviewUrlFront('http://my.shop.com?nostodebug=true');
+        $this->setShopName('Shop Name');
     }
 }

@@ -34,89 +34,18 @@
  *
  */
 
-class MockNostoSignup implements NostoSignupInterface
+class MockNostoSignup extends NostoSignup
 {
-    protected $owner;
-    protected $billing;
-
     public function __construct()
     {
-        $this->owner = new MockNostoSignupOwner();
-        $this->billing = new MockNostoSignupBilling();
-    }
-
-    public function getTitle()
-    {
-        return 'My Shop';
-    }
-
-    public function getName()
-    {
-        return '00000000';
-    }
-
-    public function getPlatform()
-    {
-        return 'platform';
-    }
-
-    public function getFrontPageUrl()
-    {
-        return 'http://localhost';
-    }
-
-    public function getCurrencyCode()
-    {
-        return 'USD';
-    }
-
-    public function getLanguageCode()
-    {
-        return 'en';
-    }
-
-    public function getOwnerLanguageCode()
-    {
-        return 'en';
-    }
-
-    public function getOwner()
-    {
-        return $this->owner;
-    }
-
-    public function getBillingDetails()
-    {
-        return $this->billing;
-    }
-
-    public function getSignUpApiToken()
-    {
-        return new NostoApiToken('create', 'abc123');
-    }
-
-    public function getPartnerCode()
-    {
-        return '';
-    }
-
-    public function getCurrencies()
-    {
-        return array();
-    }
-
-    public function getUseCurrencyExchangeRates()
-    {
-        return array();
-    }
-
-    public function getDefaultVariationId()
-    {
-        return null;
-    }
-
-    public function getDetails()
-    {
-        return null;
+        parent::__construct('platform', 'abc123', null);
+        $this->setOwner(new MockNostoSignupOwner());
+        $this->setBilling(new MockNostoSignupBilling());
+        $this->setTitle('My Shop');
+        $this->setName('00000000');
+        $this->setFrontPageUrl('http://localhost');
+        $this->setCurrencyCode('USD');
+        $this->setLanguageCode('en');
+        $this->setOwnerLanguageCode('en');
     }
 }

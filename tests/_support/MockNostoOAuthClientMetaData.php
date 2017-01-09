@@ -34,30 +34,15 @@
  *
  */
 
-class MockNostoOAuthClientMetaData implements NostoOAuthClientMetaDataInterface
+class MockNostoOAuthClientMetaData extends NostoOAuth
 {
-    public function getClientId()
+    public function __construct()
     {
-        return 'client-id';
-    }
-
-    public function getClientSecret()
-    {
-        return 'client-secret';
-    }
-
-    public function getRedirectUrl()
-    {
-        return 'http://my.shop.com/nosto/oauth';
-    }
-
-    public function getScopes()
-    {
-        return array('sso', 'products');
-    }
-
-    public function getLanguageIsoCode()
-    {
-        return 'en';
+        parent::__construct();
+        $this->setClientId('client-id');
+        $this->setClientSecret('client-secret');
+        $this->setRedirectUrl('http://my.shop.com/nosto/oauth');
+        $this->setScopes(array('sso', 'products'));
+        $this->setLanguageIsoCode('en');
     }
 }

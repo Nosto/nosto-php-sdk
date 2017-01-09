@@ -35,6 +35,13 @@
  *
  */
 
-class MockNostoCurrentUser extends MockNostoPerson implements NostoCurrentUserInterface
+class MockNostoCurrentUser extends NostoCurrentUser
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setFirstName('James');
+        $this->setLastName('Kirk');
+        $this->setEmail('james.kirk@example.com');
+    }
 }

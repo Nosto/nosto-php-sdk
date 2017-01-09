@@ -34,20 +34,13 @@
  *
  */
 
-class MockNostoOrderBuyer implements NostoOrderBuyerInterface
+class MockNostoOrderBuyer extends NostoOrderBuyer
 {
-    public function getFirstName()
+    public function __construct()
     {
-        return 'James';
-    }
-
-    public function getLastName()
-    {
-        return 'Kirk';
-    }
-
-    public function getEmail()
-    {
-        return 'james.kirk@example.com';
+        parent::__construct();
+        $this->setFirstName('James');
+        $this->setLastName('Kirk');
+        $this->setEmail('james.kirk@example.com');
     }
 }

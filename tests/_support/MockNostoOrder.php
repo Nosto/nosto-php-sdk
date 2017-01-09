@@ -34,45 +34,17 @@
  *
  */
 
-class MockNostoOrder implements NostoOrderInterface, NostoValidatableInterface
+class MockNostoOrder extends NostoOrder
 {
-    public function getOrderNumber()
+    public function __construct()
     {
-        return 1;
-    }
-
-    public function getCreatedDate()
-    {
-        return '2014-12-12';
-    }
-
-    public function getPaymentProvider()
-    {
-        return 'test-gateway [1.0.0]';
-    }
-
-    public function getBuyerInfo()
-    {
-        return new MockNostoOrderBuyer();
-    }
-
-    public function getPurchasedItems()
-    {
-        return array(new MockNostoLineItem());
-    }
-
-    public function getOrderStatus()
-    {
-        return new MockNostoOrderStatus();
-    }
-
-    public function getValidationRules()
-    {
-        return array();
-    }
-
-    public function getExternalOrderRef()
-    {
-        return 'ext ref';
+        parent::__construct();
+        $this->setOrderStatus(1);
+        $this->setCreatedDate('2014-12-12');
+        $this->setPaymentProvider('test-gateway [1.0.0]');
+        $this->setBuyerInfo(new MockNostoOrderBuyer());
+        $this->setPurchasedItems(array(new MockNostoLineItem()));
+        $this->setOrderStatus(new MockNostoOrderStatus());
+        $this->setExternalOrderRef('ext ref');
     }
 }

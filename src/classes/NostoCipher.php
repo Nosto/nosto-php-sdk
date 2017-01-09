@@ -42,7 +42,7 @@ use phpseclib\Crypt\Base;
 class NostoCipher
 {
     /**
-     * @var Base the crypt library instance.
+     * @var AES the crypt library instance.
      */
     private $crypt;
 
