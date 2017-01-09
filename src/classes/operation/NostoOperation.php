@@ -83,4 +83,12 @@ abstract class NostoOperation
         $request->setAuthBasic('', $token->getValue());
         return $request;
     }
+
+    protected function checkResponse($request, $response)
+    {
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException($request, $response);
+        }
+        return true;
+    }
 }

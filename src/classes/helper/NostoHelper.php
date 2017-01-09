@@ -40,7 +40,6 @@
  */
 abstract class NostoHelper
 {
-
     private function __construct()
     {
         // To prevent instantiation of utility classes

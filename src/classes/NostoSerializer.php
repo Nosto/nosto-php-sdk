@@ -42,9 +42,12 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 class NostoSerializer
 {
 
+    // @codeCoverageIgnoreStart
     private function __construct()
     {
+        // To prevent instantiation of utility classes
     }
+    // @codeCoverageIgnoreStart
 
     public static function serialize($object)
     {

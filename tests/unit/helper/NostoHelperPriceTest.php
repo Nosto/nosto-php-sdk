@@ -34,39 +34,24 @@
  *
  */
 
-/**
- * Handles updating the common account settings to Nosto e.g. currency formats
- */
-class NostoOperationSettings extends NostoOperation
+namespace unit\helper;
+
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+use NostoHelperPrice;
+
+class NostoHelperPriceTest extends Test
 {
-    /**
-     * @var NostoAccountInterface Nosto configuration
-     */
-    private $account;
+    use Specify;
 
     /**
-     * Constructor.
-     *
-     * Accepts the Nosto account for which the service is to operate on.
-     *
-     * @param NostoAccountInterface $account the Nosto configuration object.
+     * Tests that the helper formats the price as expected
      */
-    public function __construct(NostoAccountInterface $account)
+    public function testHelperFormatting()
     {
-        $this->account = $account;
-    }
-
-    /**
-     * Sends a POST request to create a new account for a store in Nosto
-     *
-     * @param NostoSettingsInterface $settings
-     * @return bool if the request was successful.
-     */
-    public function update(NostoSettingsInterface $settings)
-    {
-        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_SETTINGS));
-        $request->setPath(NostoApiRequest::PATH_SETTINGS);
-        $response = $request->put($settings);
-        return $this->checkResponse($request, $response);
+        $this->assertEquals("10.00", NostoHelperPrice::format(10));
+        $this->assertEquals("6.23", NostoHelperPrice::format(6.23));
+        $this->assertEquals("0.00", NostoHelperPrice::format(0));
+        $this->assertEquals(null, NostoHelperPrice::format(null));
     }
 }

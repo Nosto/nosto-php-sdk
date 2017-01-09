@@ -41,14 +41,8 @@ use phpseclib\Crypt\Random;
  * This information is used to bootstrap recommendations and decreases the time needed to get
  * accurate recommendations showing in the shop.
  */
-class NostoHelperExporter
+class NostoHelperExporter extends NostoHelper
 {
-
-    private function __construct()
-    {
-        // To prevent instantiation of utility classes
-    }
-
     /**
      * Encrypts and returns the data.
      *

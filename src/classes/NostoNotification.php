@@ -36,6 +36,7 @@
 
 /**
  * Implementation for NostoNotificationInterface
+ * @codeCoverageIgnore
  */
 class NostoNotification extends NostoObject implements NostoNotificationInterface
 {

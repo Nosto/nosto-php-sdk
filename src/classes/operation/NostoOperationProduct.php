@@ -83,10 +83,7 @@ class NostoOperationProduct extends NostoOperation
         $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_PRODUCTS));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPSERT);
         $response = $request->post($this->collection);
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
-        }
-        return true;
+        return $this->checkResponse($request, $response);
     }
 
     /**
@@ -100,10 +97,7 @@ class NostoOperationProduct extends NostoOperation
         $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_PRODUCTS));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_CREATE);
         $response = $request->post($this->collection);
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
-        }
-        return true;
+        return $this->checkResponse($request, $response);
     }
 
     /**
@@ -117,10 +111,7 @@ class NostoOperationProduct extends NostoOperation
         $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_PRODUCTS));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPDATE);
         $response = $request->put($this->collection);
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
-        }
-        return true;
+        return $this->checkResponse($request, $response);
     }
 
     /**
@@ -134,9 +125,6 @@ class NostoOperationProduct extends NostoOperation
         $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_PRODUCTS));
         $request->setPath(NostoApiRequest::PATH_PRODUCTS_DISCONTINUE);
         $response = $request->post($this->collection);
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
-        }
-        return true;
+        return $this->checkResponse($request, $response);
     }
 }

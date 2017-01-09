@@ -100,18 +100,4 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
     {
         $this->label = $label;
     }
-
-    /**
-     * Converts a human readable status description to a machine readable code,
-     * i.e. converts the description to a lower case alphanumeric string.
-     *
-     * @param string $description the description to convert.
-     * @return string the status code.
-     */
-    protected function convertDescriptionToCode($description)
-    {
-        $pattern = array('/[^a-zA-Z0-9]+/', '/_+/', '/^_+/', '/_+$/');
-        $replacement = array('_', '_', '', '');
-        return strtolower(preg_replace($pattern, $replacement, $description));
-    }
 }

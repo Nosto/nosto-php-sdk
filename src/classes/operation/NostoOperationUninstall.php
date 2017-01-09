@@ -67,10 +67,6 @@ class NostoOperationUninstall extends NostoOperation
         $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_SSO));
         $request->setPath(NostoApiRequest::PATH_ACCOUNT_DELETED);
         $response = $request->post($currentUser);
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
-        }
-
-        return true;
+        return $this->checkResponse($request, $response);
     }
 }

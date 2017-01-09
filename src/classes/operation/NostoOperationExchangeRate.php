@@ -66,9 +66,6 @@ class NostoOperationExchangeRate extends NostoOperation
         $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_EXCHANGE_RATES));
         $request->setPath(NostoApiRequest::PATH_CURRENCY_EXCHANGE_RATE);
         $response = $request->post($collection);
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
-        }
-        return true;
+        return $this->checkResponse($request, $response);
     }
 }

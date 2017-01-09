@@ -82,10 +82,6 @@ class NostoOperationOrderConfirmation extends NostoOperation
         }
         $request->setReplaceParams($replaceParams);
         $response = $request->post($order);
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
-        }
-
-        return true;
+        return $this->checkResponse($request, $response);
     }
 }

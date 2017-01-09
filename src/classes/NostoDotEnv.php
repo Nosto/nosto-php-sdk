@@ -47,10 +47,10 @@ class NostoDotEnv
 
     /**
      * Constructor.
-     * Private; Singleton pattern.
      */
     private function __construct()
     {
+        // Singleton
     }
 
     /**
