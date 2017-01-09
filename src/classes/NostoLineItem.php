@@ -81,11 +81,11 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
      */
     public function loadSpecialItemData($name, $price, $currency)
     {
-        $this->productId = self::PSEUDO_PRODUCT_ID;
-        $this->quantity = 1;
-        $this->name = $name;
-        $this->unitPrice = $price;
-        $this->currencyCode = strtoupper($currency);
+        $this->setProductId(self::PSEUDO_PRODUCT_ID);
+        $this->setQuantity(1);
+        $this->setName($name);
+        $this->setPrice($price);
+        $this->setCurrencyCode($currency);
     }
 
     /**
@@ -185,15 +185,10 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     /**
      * Sets the currency code (ISO 4217) the cart item is sold in.
      *
-     * The currency must be in ISO 4217 format
-     *
-     * Usage:
-     * $object->setCurrency('USD');
-     *
      * @param string $currency the currency code.
      */
     public function setCurrencyCode($currency)
     {
-        $this->currencyCode = $currency;
+        $this->currencyCode = strtoupper($currency);
     }
 }

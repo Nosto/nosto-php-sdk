@@ -43,7 +43,7 @@ class MockNostoOrder extends NostoOrder
         $this->setCreatedDate('2014-12-12');
         $this->setPaymentProvider('test-gateway [1.0.0]');
         $this->setBuyerInfo(new MockNostoOrderBuyer());
-        $this->setPurchasedItems(array(new MockNostoLineItem()));
+        $this->setPurchasedItems(array(new MockNostoLineItem(), new MockNostoPseudoLineItem()));
         $this->setOrderStatus(new MockNostoOrderStatus());
         $this->setExternalOrderRef('ext ref');
     }
