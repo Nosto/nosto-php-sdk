@@ -50,12 +50,7 @@ class UpdateSettingsOperationTest extends \Codeception\TestCase\Test
 
         $settings = new MockNostoSettings();
         $op = new NostoOperationSettings($account);
-        try {
-            $result = $op->update($settings);
-        } catch (Exception $e) {
-            var_dump($e);
-        }
-        die();
+        $result = $op->update($settings);
 
         $this->specify('successful exchange rates sync', function () use ($result) {
             $this->assertTrue($result);
