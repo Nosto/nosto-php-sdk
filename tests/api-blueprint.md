@@ -368,6 +368,30 @@ Product related resources
 
         {}
 
+## Sync Rates [/exchangerates]
+
+### Sync exchange rates request [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
+    + Body
+
+            [
+                {
+                    "currency_code": "EUR",
+                    "exchange_rate":"0.1",
+                    "name":"Euros"
+                }
+            ]
+
++ Response 200 (application/json)
+
+        {}
+
 ## Single Sign On [/hub/{platform}/load/{email}]
 
 + Parameters
