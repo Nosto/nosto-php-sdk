@@ -37,15 +37,8 @@
 /**
  * Interface for the meta data model used when creating new Nosto accounts.
  */
-interface NostoSignupInterface
+interface NostoSignupInterface extends NostoSettingsInterface
 {
-    /**
-     * The shops name for which the account is to be created for.
-     *
-     * @return string the name.
-     */
-    public function getTitle();
-
     /**
      * The name of the Nosto account.
      * This has to follow the pattern of "[platform name]-[8 character lowercase alpha numeric string]".
@@ -61,27 +54,6 @@ interface NostoSignupInterface
      * @return string the platform names.
      */
     public function getPlatform();
-
-    /**
-     * Absolute url to the front page of the shop for which the account is created for.
-     *
-     * @return string the url.
-     */
-    public function getFrontPageUrl();
-
-    /**
-     * The 3-letter ISO code (ISO 4217) for the currency used by the shop for which the account is created for.
-     *
-     * @return string the currency ISO code.
-     */
-    public function getCurrencyCode();
-
-    /**
-     * The 2-letter ISO code (ISO 639-1) for the language used by the shop for which the account is created for.
-     *
-     * @return string the language ISO code.
-     */
-    public function getLanguageCode();
 
     /**
      * The 2-letter ISO code (ISO 639-1) for the language of the account owner who is creating the account.
@@ -119,30 +91,6 @@ interface NostoSignupInterface
      * @return string|null the partner code or null if none exist.
      */
     public function getPartnerCode();
-
-    /**
-     * Returns a list of currency objects supported by the store the account is to be created for.
-     *
-     * @return NostoCurrency[] the currencies.
-     */
-    public function getCurrencies();
-
-    /**
-     * Returns if exchange rates should be used for handling
-     * multiple currencies. Please note that the method only tells if the
-     * setting is active. Method does not take account whether multiple
-     * currencies actually exist or are used.
-     *
-     * @return boolean if multi variants are used
-     */
-    public function getUseCurrencyExchangeRates();
-
-    /**
-     * Returns the default variation id
-     *
-     * @return string
-     */
-    public function getDefaultVariationId();
 
     /**
      * Returns the account details

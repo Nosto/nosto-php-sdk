@@ -37,32 +37,12 @@
 /**
  * Meta data class for account related information needed when creating new accounts.
  */
-class NostoSignup extends NostoObject implements NostoSignupInterface
+class NostoSignup extends NostoSettings implements NostoSignupInterface
 {
-    /**
-     * @var string the store name.
-     */
-    private $title;
-
     /**
      * @var string the account name.
      */
     private $name;
-
-    /**
-     * @var string the store front end url.
-     */
-    private $frontPageUrl;
-
-    /**
-     * @var string the store currency ISO (ISO 4217) code.
-     */
-    private $currencyCode;
-
-    /**
-     * @var string the store language ISO (ISO 639-1) code.
-     */
-    private $languageCode;
 
     /**
      * @var string the owner language ISO (ISO 639-1) code.
@@ -78,21 +58,6 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
      * @var NostoSignupBillingDetailsInterface the billing meta model.
      */
     private $billing;
-
-    /**
-     * @var array list of NostoCurrency objects supported by the store .
-     */
-    private $currencies = array();
-
-    /**
-     * @var bool if the store uses exchange rates to manage multiple currencies.
-     */
-    private $useCurrencyExchangeRates = false;
-
-    /**
-     * @var string default variation id
-     */
-    private $defaultVariationId = null;
 
     /**
      * @var string details
@@ -137,27 +102,6 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     }
 
     /**
-     * The 2-letter ISO code (ISO 639-1) for the language used by the shop for
-     * which the account is created for.
-     *
-     * @return string the language ISO code.
-     */
-    public function getLanguageCode()
-    {
-        return $this->languageCode;
-    }
-
-    /**
-     * Sets the store language ISO (ISO 639-1) code.
-     *
-     * @param string $languageCode the language ISO code.
-     */
-    public function setLanguageCode($languageCode)
-    {
-        $this->languageCode = $languageCode;
-    }
-
-    /**
      * Sets the account billing details.
      *
      * @param $billingDetails NostoSignupBillingDetailsInterface the account billing details
@@ -165,26 +109,6 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     public function setBillingDetails(NostoSignupBillingDetailsInterface $billingDetails)
     {
         $this->billing = $billingDetails;
-    }
-
-    /**
-     * Returns an array of currencies used for this account
-     *
-     * @return array
-     */
-    public function getCurrencies()
-    {
-        return $this->currencies;
-    }
-
-    /**
-     * Sets the currencies
-     *
-     * @param $currencies
-     */
-    public function setCurrencies($currencies)
-    {
-        $this->currencies = $currencies;
     }
 
     /**
@@ -203,26 +127,6 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     public function setSignupApiToken(NostoApiToken $signupApiToken)
     {
         $this->signupApiToken = $signupApiToken;
-    }
-
-    /**
-     * The shops name for which the account is to be created for.
-     *
-     * @return string the name.
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Sets the store title.
-     *
-     * @param string $title the store title.
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
     }
 
     /**
@@ -263,48 +167,6 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     public function setPlatform($platform)
     {
         $this->platform = $platform;
-    }
-
-    /**
-     * Absolute url to the front page of the shop for which the account is
-     * created for.
-     *
-     * @return string the url.
-     */
-    public function getFrontPageUrl()
-    {
-        return $this->frontPageUrl;
-    }
-
-    /**
-     * Sets the store front page url.
-     *
-     * @param string $url the front page url.
-     */
-    public function setFrontPageUrl($url)
-    {
-        $this->frontPageUrl = $url;
-    }
-
-    /**
-     * The 3-letter ISO code (ISO 4217) for the currency used by the shop for
-     * which the account is created for.
-     *
-     * @return string the currency ISO code.
-     */
-    public function getCurrencyCode()
-    {
-        return $this->currencyCode;
-    }
-
-    /**
-     * Sets the store currency ISO (ISO 4217) code.
-     *
-     * @param string $code the currency ISO code.
-     */
-    public function setCurrencyCode($code)
-    {
-        $this->currencyCode = $code;
     }
 
     /**
@@ -393,45 +255,5 @@ class NostoSignup extends NostoObject implements NostoSignupInterface
     public function setDetails($details)
     {
         $this->details = $details;
-    }
-
-    /**
-     * Returns if the exchange rates are used
-     *
-     * @return boolean
-     */
-    public function getUseCurrencyExchangeRates()
-    {
-        return $this->useCurrencyExchangeRates;
-    }
-
-    /**
-     * Setter for useCurrencyExhangeRates
-     *
-     * @param boolean $useCurrencyExchangeRates
-     */
-    public function setUseCurrencyExchangeRates($useCurrencyExchangeRates)
-    {
-        $this->useCurrencyExchangeRates = $useCurrencyExchangeRates;
-    }
-
-    /**
-     * Return the default variation id
-     *
-     * @return string
-     */
-    public function getDefaultVariationId()
-    {
-        return $this->defaultVariationId;
-    }
-
-    /**
-     * Sets the default variation id
-     *
-     * @param string $defaultVariationId
-     */
-    public function setDefaultVariationId($defaultVariationId)
-    {
-        $this->defaultVariationId = $defaultVariationId;
     }
 }

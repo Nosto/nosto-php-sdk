@@ -37,7 +37,7 @@
 /**
  * Class representing a currency with all it's formatting details Nosto needs.
  */
-final class NostoCurrency
+class NostoCurrency
 {
     /**
      * @var NostoCurrencyCode the currency ISO 4217 code.

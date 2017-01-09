@@ -392,6 +392,51 @@ Product related resources
 
         {}
 
+## Sync Settings [/settings]
+
+### Update account settings request [PUT]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
+    + Body
+
+            {
+                "language_code":"en",
+                "currencies":[
+                    {
+                        "code":{
+                            "code":"EUR"
+                        },
+                        "symbol":{
+                            "position":"left",
+                            "symbol":"\u20ac"
+                        },
+                        "format":{
+                            "decimal_symbol":".",
+                            "group_length":3,
+                            "group_symbol":",",
+                            "precision":2
+                        },
+                        "fraction_unit":100,
+                        "default_fraction_decimals":2
+                    }
+                ],
+                "title":"My Shop",
+                "front_page_url":"http:\/\/localhost",
+                "currency_code":"USD",
+                "use_currency_exchange_rates":false,
+                "default_variation_id":null
+            }
+
++ Response 200 (application/json)
+
+        {}
+
+
 ## Single Sign On [/hub/{platform}/load/{email}]
 
 + Parameters

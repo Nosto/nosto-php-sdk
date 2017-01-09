@@ -34,7 +34,7 @@
  *
  */
 
-class ExchangeRatesOperationTest extends \Codeception\TestCase\Test
+class UpdateSettingsOperationTest extends \Codeception\TestCase\Test
 {
     use \Codeception\Specify;
 
@@ -44,14 +44,18 @@ class ExchangeRatesOperationTest extends \Codeception\TestCase\Test
     public function testSyncingExchangeRates()
     {
         $account = new MockNostoAccount('platform-00000000');
-        $token = new NostoApiToken('rates',
+        $token = new NostoApiToken('settings',
             '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
         $account->addApiToken($token);
 
-        $rates = new NostoExchangeRateCollection();
-        $rates->append(new MockNostoExchangeRate());
-        $op = new NostoOperationExchangeRate($account);
-        $result = $op->update($rates);
+        $settings = new MockNostoSettings();
+        $op = new NostoOperationSettings($account);
+        try {
+            $result = $op->update($settings);
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+        die();
 
         $this->specify('successful exchange rates sync', function () use ($result) {
             $this->assertTrue($result);

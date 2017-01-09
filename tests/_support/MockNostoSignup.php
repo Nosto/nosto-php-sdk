@@ -47,5 +47,6 @@ class MockNostoSignup extends NostoSignup
         $this->setCurrencyCode('USD');
         $this->setLanguageCode('en');
         $this->setOwnerLanguageCode('en');
+        $this->setCurrencies(array(new MockNostoCurrency()));
     }
 }

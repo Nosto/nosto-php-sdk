@@ -36,6 +36,7 @@
 
 // Interfaces
 require_once(dirname(__FILE__) . '/interfaces/NostoPersonInterface.php');
+require_once(dirname(__FILE__) . '/interfaces/NostoSettingsInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/signup/NostoSignupBillingDetailsInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/signup/NostoSignupInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/signup/NostoSignupOwnerInterface.php');
@@ -98,6 +99,7 @@ require_once(dirname(__FILE__) . '/classes/operation/NostoOperationOauthSync.php
 
 require_once(dirname(__FILE__) . '/classes/Nosto.php');
 require_once(dirname(__FILE__) . '/classes/NostoAccount.php');
+require_once(dirname(__FILE__) . '/classes/NostoSettings.php');
 require_once(dirname(__FILE__) . '/classes/NostoIframe.php');
 require_once(dirname(__FILE__) . '/classes/NostoSignupBilling.php');
 require_once(dirname(__FILE__) . '/classes/NostoSignup.php');

@@ -35,7 +35,7 @@
  */
 
 /**
- * Handles sending currencyCode exchange rates through the Nosto API.
+ * Handles updating the common account settings to Nosto e.g. currency formats
  */
 class NostoOperationSettings extends NostoOperation
 {
@@ -59,14 +59,14 @@ class NostoOperationSettings extends NostoOperation
     /**
      * Sends a POST request to create a new account for a store in Nosto
      *
-     * @param NostoSignupInterface $accountMeta
+     * @param NostoSettingsInterface $settings
      * @return bool if the request was successful.
      */
-    public function update(NostoSignupInterface $accountMeta)
+    public function update(NostoSettingsInterface $settings)
     {
         $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_SETTINGS));
         $request->setPath(NostoApiRequest::PATH_SETTINGS);
-        $response = $request->post($accountMeta);
+        $response = $request->put($settings);
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException($request, $response);
         }

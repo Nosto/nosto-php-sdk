@@ -34,27 +34,57 @@
  *
  */
 
-class ExchangeRatesOperationTest extends \Codeception\TestCase\Test
+interface NostoSettingsInterface
 {
-    use \Codeception\Specify;
+    /**
+     * The shops name for which the account is to be created for.
+     *
+     * @return string the name.
+     */
+    public function getTitle();
 
     /**
-     * Tests that exchange rates can be synced to Nosto.
+     * The 2-letter ISO code (ISO 639-1) for the language used by the shop for which the account is created for.
+     *
+     * @return string the language ISO code.
      */
-    public function testSyncingExchangeRates()
-    {
-        $account = new MockNostoAccount('platform-00000000');
-        $token = new NostoApiToken('rates',
-            '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
-        $account->addApiToken($token);
+    public function getLanguageCode();
 
-        $rates = new NostoExchangeRateCollection();
-        $rates->append(new MockNostoExchangeRate());
-        $op = new NostoOperationExchangeRate($account);
-        $result = $op->update($rates);
+    /**
+     * Absolute url to the front page of the shop for which the account is created for.
+     *
+     * @return string the url.
+     */
+    public function getFrontPageUrl();
 
-        $this->specify('successful exchange rates sync', function () use ($result) {
-            $this->assertTrue($result);
-        });
-    }
+    /**
+     * The 3-letter ISO code (ISO 4217) for the currency used by the shop for which the account is created for.
+     *
+     * @return string the currency ISO code.
+     */
+    public function getCurrencyCode();
+
+    /**
+     * Returns a list of currency objects supported by the store the account is to be created for.
+     *
+     * @return NostoCurrency[] the currencies.
+     */
+    public function getCurrencies();
+
+    /**
+     * Returns the default variation id
+     *
+     * @return string
+     */
+    public function getDefaultVariationId();
+
+    /**
+     * Returns if exchange rates should be used for handling
+     * multiple currencies. Please note that the method only tells if the
+     * setting is active. Method does not take account whether multiple
+     * currencies actually exist or are used.
+     *
+     * @return boolean if multi variants are used
+     */
+    public function getUseCurrencyExchangeRates();
 }
