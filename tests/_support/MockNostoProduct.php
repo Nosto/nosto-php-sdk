@@ -51,7 +51,6 @@ class MockNostoProduct extends NostoProduct
         $this->setAvailability('InStock');
         $this->setTag1(array('tag1', 'tag2'));
         $this->setCategories(array('/a/b', '/a/b/c'));
-        $this->setShortDescription('Lorem ipsum dolor sit amet');
         $this->setAvailability('InStock');
         $this->setBrand('Super Brand');
 
