@@ -66,6 +66,10 @@ class NostoDotEnv
         return self::$instance;
     }
 
+    public function initWithDefaults() {
+        $this->init(dirname(__FILE__) . '/../');
+    }
+
     /**
      * Initializes the environment variables from ".env" if it exists.
      *

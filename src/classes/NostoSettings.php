@@ -60,7 +60,7 @@ class NostoSettings extends NostoObject implements NostoSettingsInterface
     private $currencyCode;
 
     /**
-     * @var array list of NostoCurrency objects supported by the store .
+     * @var array list of currency codes and the currency formats objects supported by the store .
      */
     private $currencies = array();
 
@@ -110,7 +110,7 @@ class NostoSettings extends NostoObject implements NostoSettingsInterface
      */
     public function getCurrencies()
     {
-        return $this->currencies;
+        return empty($this->currencies) ? null : $this->currencies;
     }
 
     /**
@@ -118,9 +118,9 @@ class NostoSettings extends NostoObject implements NostoSettingsInterface
      *
      * @param $currencies
      */
-    public function setCurrencies($currencies)
+    public function addCurrency($currencyCode, $currencyFormat)
     {
-        $this->currencies = $currencies;
+        $this->currencies[$currencyCode] = $currencyFormat;
     }
 
     /**

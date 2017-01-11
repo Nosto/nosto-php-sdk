@@ -101,11 +101,6 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     private $categories = array();
 
     /**
-     * @var string the product short description.
-     */
-    private $shortDescription;
-
-    /**
      * @var string the product description.
      */
     private $description;
@@ -196,32 +191,9 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     /**
      * @inheritdoc
      */
-    public function getValidationRules()
+    public function validationRules()
     {
         return array();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getShortDescription()
-    {
-        return $this->shortDescription;
-    }
-
-    /**
-     * Sets the product `short` description.
-     *
-     * The description must be a non-empty string.
-     *
-     * Usage:
-     * $object->setShortDescription('Lorem ipsum dolor sit amet, ludus possim ut ius.');
-     *
-     * @param string $shortDescription the `short` description.
-     */
-    public function setShortDescription($shortDescription)
-    {
-        $this->shortDescription = $shortDescription;
     }
 
     /**
@@ -234,11 +206,6 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
 
     /**
      * Sets the product description.
-     *
-     * The description must be a non-empty string.
-     *
-     * Usage:
-     * $object->setDescription('Lorem ipsum dolor sit amet, ludus possim ut ius, bonorum ea. ... ');
      *
      * @param string $description the description.
      */
@@ -525,21 +492,6 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
         foreach ($categories as $category) {
             $this->addCategory($category);
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getFullDescription()
-    {
-        $descriptions = array();
-        if (!empty($this->shortDescription)) {
-            $descriptions[] = $this->shortDescription;
-        }
-        if (!empty($this->description)) {
-            $descriptions[] = $this->description;
-        }
-        return implode(' ', $descriptions);
     }
 
     /**

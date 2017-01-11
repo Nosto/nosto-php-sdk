@@ -137,7 +137,7 @@ class NostoApiToken extends NostoObject implements NostoValidatableInterface
     /**
      * @inheritdoc
      */
-    public function getValidationRules()
+    public function validationRules()
     {
         return array(
             array(array('name', 'value'), 'required'),

@@ -117,26 +117,11 @@ interface NostoProductInterface
     public function getCategories();
 
     /**
-     * Returns the product short description.
-     *
-     * @return string the short description.
-     */
-    public function getShortDescription();
-
-    /**
      * Returns the product description.
      *
      * @return string the description.
      */
     public function getDescription();
-
-    /**
-     * Returns the full product description,
-     * i.e. both the "short" and "normal" descriptions concatenated.
-     *
-     * @return string the full descriptions.
-     */
-    public function getFullDescription();
 
     /**
      * Returns the product brand name.

@@ -87,9 +87,10 @@ final class NostoHelperIframe extends NostoHelper
             )
         );
 
+
         if ($account !== null && $user !== null && $account->isConnectedToNosto()) {
             try {
-                $service = new NostoOperationSSO($account);
+                $service = new NostoOperationSso($account);
                 $url = $service->get($user, $iframe->getPlatform()) . '?' . $queryParams;
             } catch (NostoException $e) {
                 // If the SSO fails, we show a "remove account" page to the user in order to

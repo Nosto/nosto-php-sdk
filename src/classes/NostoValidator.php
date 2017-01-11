@@ -69,7 +69,7 @@ class NostoValidator
     public function validate()
     {
         $valid = true;
-        foreach ($this->object->getValidationRules() as $rule) {
+        foreach ($this->object->validationRules() as $rule) {
             if (isset($rule[0], $rule[1])) {
                 $properties = $rule[0];
                 $validator = 'validate' . $rule[1];

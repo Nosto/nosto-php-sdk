@@ -67,7 +67,6 @@ class NostoOperationSso extends NostoOperation
     {
         $request = $this->initHttpRequest($this->account->getApiToken(NostoApiToken::API_SSO));
         $request->setPath(NostoApiRequest::PATH_SSO_AUTH);
-        $request->setContentType(self::CONTENT_TYPE_URL_FORM_ENCODED);
         $request->setReplaceParams(array('{platform}' => $platform));
         $response = $request->post($user);
         if ($response->getCode() !== 200) {

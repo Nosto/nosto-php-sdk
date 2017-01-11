@@ -90,7 +90,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     /**
      * @inheritdoc
      */
-    public function getValidationRules()
+    public function validationRules()
     {
         return array();
     }

@@ -68,9 +68,7 @@ class NostoOperationAccount extends NostoOperation
         $request->setPath(NostoApiRequest::PATH_SIGN_UP);
         $request->setReplaceParams(array('{lang}' => $this->account->getLanguageCode()));
         $response = $request->post($this->account);
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
-        }
+        $this->checkResponse($request, $response);
 
         $account = new NostoAccount($this->account->getPlatform() . '-' . $this->account->getName());
         $account->setTokens(NostoApiToken::parseTokens(

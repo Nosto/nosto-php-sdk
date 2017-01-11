@@ -108,7 +108,7 @@ class NostoAccount extends NostoObject implements NostoAccountInterface, NostoVa
     /**
      * @inheritdoc
      */
-    public function getValidationRules()
+    public function validationRules()
     {
         return array(
             array(array('name'), 'required')

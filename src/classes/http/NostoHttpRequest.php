@@ -43,7 +43,7 @@ class NostoHttpRequest
     const AUTH_BEARER = 'bearer';
 
     const PATH_ACCOUNT_DELETED = '/hub/uninstall';
-    const PATH_SSO_AUTH = '/hub/{platform}/load/{email}';
+    const PATH_SSO_AUTH = '/hub/{platform}/load';
     const PATH_OAUTH_SYNC = '/oauth/exchange';
 
     const HEADERS = 'headers';

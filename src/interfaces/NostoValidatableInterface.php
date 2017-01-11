@@ -48,5 +48,5 @@ interface NostoValidatableInterface
      *
      * @return mixed
      */
-    public function getValidationRules();
+    public function validationRules();
 }

@@ -39,25 +39,27 @@
  */
 final class NostoCurrencyFormat
 {
+    private $currencyBeforeAmount = false;
+
     /**
      * @var string the grouping symbol/char.
      */
-    private $groupSymbol;
-
-    /**
-     * @var int the length of the group.
-     */
-    private $groupLength;
+    private $groupingSeparator;
 
     /**
      * @var string the decimal symbol/char.
      */
-    private $decimalSymbol;
+    private $decimalCharacter;
 
     /**
      * @var int the value precision.
      */
-    private $precision;
+    private $decimalPlaces;
+
+    /**
+     * @var string the currency symbol, e.g. "$".
+     */
+    private $currencyToken;
 
     /**
      * Constructor.
@@ -68,12 +70,23 @@ final class NostoCurrencyFormat
      * @param string $decimalSymbol the decimal symbol/char.
      * @param int $precision the value precision.
      */
-    public function __construct($groupSymbol, $groupLength, $decimalSymbol, $precision)
+    public function __construct($currencyBeforeAmount, $currencyToken, $decimalCharacter, $decimalSymbol, $precision)
     {
-        $this->groupSymbol = (string)$groupSymbol;
-        $this->groupLength = (int)$groupLength;
-        $this->decimalSymbol = (string)$decimalSymbol;
-        $this->precision = (int)$precision;
+        $this->currencyBeforeAmount = $currencyBeforeAmount;
+        $this->currencyToken = $currencyToken;
+        $this->decimalCharacter = $decimalCharacter;
+        $this->groupingSeparator = $groupingSeparator;
+        $this->decimalPlaces = (int)$decimalPlaces;
+    }
+
+    /**
+     * Returns the currency symbol position
+     *
+     * @return bool the currency symbol position
+     */
+    public function getCurrencyBeforeAmount()
+    {
+        return $this->currencyBeforeAmount;
     }
 
     /**
@@ -81,38 +94,38 @@ final class NostoCurrencyFormat
      *
      * @return string the decimal symbol/char.
      */
-    public function getDecimalSymbol()
+    public function getDecimalCharacter()
     {
-        return $this->decimalSymbol;
+        return $this->decimalCharacter;
     }
 
     /**
-     * Returns the length of the group.
+     * Returns the grouping separator
      *
-     * @return int the length of the group.
+     * @return string the grouping separator
      */
-    public function getGroupLength()
+    public function getGroupingSeparator()
     {
-        return $this->groupLength;
+        return $this->groupingSeparator;
     }
 
     /**
-     * Returns the grouping symbol/char.
+     * Returns the currency token
      *
-     * @return string the grouping symbol/char.
+     * @return string the currency token
      */
-    public function getGroupSymbol()
+    public function getCurrencyToken()
     {
-        return $this->groupSymbol;
+        return $this->currencyToken;
     }
 
     /**
-     * Returns the value precision.
+     * Returns the decimal places
      *
-     * @return int the value precision.
+     * @return int the decimal places
      */
-    public function getPrecision()
+    public function getDecimalPlaces()
     {
-        return $this->precision;
+        return $this->decimalPlaces;
     }
 }

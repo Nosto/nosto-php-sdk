@@ -80,6 +80,11 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     private $partnerCode;
 
     /**
+     * @var NostoApiToken[] the default set of api tokens
+     */
+    private $apiTokens;
+
+    /**
      * Constructor
      *
      * @param string $platform
@@ -91,6 +96,10 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
         $this->setPlatform($platform);
         $this->setSignupApiToken(new NostoApiToken(NostoApiToken::API_CREATE, $signupApiToken));
         $this->setPartnerCode($partnerCode);
+        $this->addApiToken(NostoApiToken::API_PRODUCTS);
+        $this->addApiToken(NostoApiToken::API_SSO);
+        $this->addApiToken(NostoApiToken::API_EXCHANGE_RATES);
+        $this->addApiToken(NostoApiToken::API_SETTINGS);
     }
 
     /**
@@ -247,5 +256,20 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     public function setDetails($details)
     {
         $this->details = $details;
+    }
+
+    /**
+     * Sets the API tokens
+     * @param $apiTokens NostoApiToken[] the API tokens
+     */
+    public function addApiToken($apiToken) {
+        $this->apiTokens[] = strtoupper('api_'.$apiToken);
+    }
+
+    /**
+     * Returns the API tokens
+     */
+    public function getApiTokens() {
+        return $this->apiTokens;
     }
 }
