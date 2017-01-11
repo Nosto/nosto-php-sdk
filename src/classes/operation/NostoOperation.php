@@ -84,6 +84,11 @@ abstract class NostoOperation
         return $request;
     }
 
+    /**
+     * @param $request
+     * @param $response NostoHttpResponse
+     * @return bool
+     */
     protected function checkResponse($request, $response)
     {
         if ($response->getCode() !== 200) {

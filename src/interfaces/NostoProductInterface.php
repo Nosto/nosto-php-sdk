@@ -103,11 +103,25 @@ interface NostoProductInterface
     public function getAvailability();
 
     /**
-     * Returns the tags for the product.
+     * Returns the first set of tags for the product.
      *
-     * @return array the tags array, e.g. array('tag1' => array("winter", "shoe")).
+     * @return array first set of the tags
      */
-    public function getTags();
+    public function getTag1();
+
+    /**
+     * Returns the second set of tags for the product.
+     *
+     * @return array second set of the tags
+     */
+    public function getTag2();
+
+    /**
+     * Returns the third set of tags for the product.
+     *
+     * @return array third set of the tags
+     */
+    public function getTag3();
 
     /**
      * Returns the categories the product is located in.

@@ -260,16 +260,18 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
 
     /**
      * Sets the API tokens
-     * @param $apiTokens NostoApiToken[] the API tokens
+     * @param $apiToken string the name of the API scope
      */
-    public function addApiToken($apiToken) {
+    public function addApiToken($apiToken)
+    {
         $this->apiTokens[] = strtoupper('api_'.$apiToken);
     }
 
     /**
      * Returns the API tokens
      */
-    public function getApiTokens() {
+    public function getApiTokens()
+    {
         return $this->apiTokens;
     }
 }

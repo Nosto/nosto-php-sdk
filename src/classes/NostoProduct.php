@@ -87,15 +87,6 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     private $availability;
 
     /**
-     * @var array list of product tags.
-     */
-    private $tags = array(
-        'tag1' => array(),
-        'tag2' => array(),
-        'tag3' => array(),
-    );
-
-    /**
      * @var array list of product category strings.
      */
     private $categories = array();
@@ -159,6 +150,21 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      * @var string the barcode
      */
     private $gtin;
+
+    /**
+     * @var array the first set of tags of the product
+     */
+    private $tag1 = array();
+
+    /**
+     * @var array the second set of tags of the product
+     */
+    private $tag2 = array();
+
+    /**
+     * @var array the third set of tags of the product
+     */
+    private $tag3 = array();
 
     /**
      * @var string category used in Google's services
@@ -243,10 +249,17 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function setTag1(array $tags)
     {
-        $this->tags['tag1'] = array();
         foreach ($tags as $tag) {
             $this->addTag1($tag);
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTag1()
+    {
+        return $this->tag1;
     }
 
     /**
@@ -261,7 +274,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function addTag1($tag)
     {
-        $this->tags['tag1'][] = $tag;
+        $this->tag1[] = $tag;
     }
 
     /**
@@ -276,10 +289,17 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function setTag2(array $tags)
     {
-        $this->tags['tag2'] = array();
         foreach ($tags as $tag) {
             $this->addTag2($tag);
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTag2()
+    {
+        return $this->tag2;
     }
 
     /**
@@ -294,7 +314,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function addTag2($tag)
     {
-        $this->tags['tag2'][] = $tag;
+        $this->tag2[] = $tag;
     }
 
     /**
@@ -309,7 +329,6 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function setTag3(array $tags)
     {
-        $this->tags['tag3'] = array();
         foreach ($tags as $tag) {
             $this->addTag3($tag);
         }
@@ -327,7 +346,15 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function addTag3($tag)
     {
-        $this->tags['tag3'][] = $tag;
+        $this->tag3[] = $tag;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTag3()
+    {
+        return $this->tag3;
     }
 
     /**
@@ -528,14 +555,6 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     public function setBrand($brand)
     {
         $this->brand = $brand;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getTags()
-    {
-        return $this->tags;
     }
 
     /**

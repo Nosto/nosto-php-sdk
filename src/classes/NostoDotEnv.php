@@ -66,7 +66,8 @@ class NostoDotEnv
         return self::$instance;
     }
 
-    public function initWithDefaults() {
+    public function initWithDefaults()
+    {
         $this->init(dirname(__FILE__) . '/../');
     }
 

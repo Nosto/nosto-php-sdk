@@ -116,7 +116,8 @@ class NostoSettings extends NostoObject implements NostoSettingsInterface
     /**
      * Sets the currencies
      *
-     * @param $currencies
+     * @param $currencyCode
+     * @param $currencyFormat
      */
     public function addCurrency($currencyCode, $currencyFormat)
     {

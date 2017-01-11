@@ -65,13 +65,19 @@ final class NostoCurrencyFormat
      * Constructor.
      * Sets up this Value Object with given data.
      *
-     * @param string $groupSymbol the grouping symbol/char.
-     * @param int $groupLength the length of the group.
-     * @param string $decimalSymbol the decimal symbol/char.
-     * @param int $precision the value precision.
+     * @param $currencyBeforeAmount
+     * @param $currencyToken
+     * @param $decimalCharacter
+     * @param string $groupingSeparator the decimal symbol/char.
+     * @param int $decimalPlaces the value precision.
      */
-    public function __construct($currencyBeforeAmount, $currencyToken, $decimalCharacter, $decimalSymbol, $precision)
-    {
+    public function __construct(
+        $currencyBeforeAmount,
+        $currencyToken,
+        $decimalCharacter,
+        $groupingSeparator,
+        $decimalPlaces
+    ) {
         $this->currencyBeforeAmount = $currencyBeforeAmount;
         $this->currencyToken = $currencyToken;
         $this->decimalCharacter = $decimalCharacter;

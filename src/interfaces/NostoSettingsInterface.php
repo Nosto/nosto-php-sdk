@@ -67,7 +67,7 @@ interface NostoSettingsInterface
     /**
      * Returns a list of currency objects supported by the store the account is to be created for.
      *
-     * @return NostoCurrency[] the currencies.
+     * @return array the currencies.
      */
     public function getCurrencies();
 
