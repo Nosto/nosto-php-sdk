@@ -94,14 +94,6 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
-     * @param NostoSignupBillingDetailsInterface $billing
-     */
-    public function setBilling(NostoSignupBillingDetailsInterface $billing)
-    {
-        $this->billing = $billing;
-    }
-
-    /**
      * Sets the account billing details.
      *
      * @param $billingDetails NostoSignupBillingDetailsInterface the account billing details

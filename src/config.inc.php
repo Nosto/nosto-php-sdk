@@ -48,7 +48,6 @@ require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderStatusInterface.ph
 require_once(dirname(__FILE__) . '/interfaces/NostoIframeInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoOAuthClientMetaDataInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoProductInterface.php');
-require_once(dirname(__FILE__) . '/interfaces/NostoExportCollectionInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoValidatableInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoExchangeRateInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoAccountInterface.php');

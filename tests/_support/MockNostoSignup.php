@@ -40,7 +40,7 @@ class MockNostoSignup extends NostoSignup
     {
         parent::__construct('platform', 'abc123', null);
         $this->setOwner(new MockNostoSignupOwner());
-        $this->setBilling(new MockNostoSignupBilling());
+        $this->setBillingDetails(new MockNostoSignupBilling());
         $this->setTitle('My Shop');
         $this->setName('00000000');
         $this->setFrontPageUrl('http://localhost');
