@@ -93,7 +93,7 @@ interface NostoProductInterface
      *
      * @return string the currency ISO code.
      */
-    public function getCurrencyCode();
+    public function getPriceCurrencyCode();
 
     /**
      * Returns the availability of the product, i.e. if it is in stock or not.

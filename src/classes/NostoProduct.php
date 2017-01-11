@@ -455,7 +455,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     /**
      * @inheritdoc
      */
-    public function getCurrencyCode()
+    public function getPriceCurrencyCode()
     {
         return $this->currencyCode;
     }
@@ -470,7 +470,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      *
      * @param string $currency the currency code.
      */
-    public function setCurrencyCode($currency)
+    public function setPriceCurrencyCode($currency)
     {
         $this->currencyCode = $currency;
     }

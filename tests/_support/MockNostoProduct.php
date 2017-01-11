@@ -47,7 +47,7 @@ class MockNostoProduct extends NostoProduct
         $this->setPrice(99.99);
         $this->setListPrice(110.99);
         $this->setDescription('This is a full description');
-        $this->setCurrencyCode('USD');
+        $this->setPriceCurrencyCode('USD');
         $this->setAvailability('InStock');
         $this->setTag1(array('tag1', 'tag2'));
         $this->setCategories(array('/a/b', '/a/b/c'));
