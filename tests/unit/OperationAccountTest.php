@@ -73,35 +73,4 @@ class OperationAccountTest extends Test
             $this->assertTrue($account->isConnectedToNosto());
         });
     }
-
-    /**
-     * Test the account deletion without the required SSO token.
-     */
-    public function testDeletingAccountWithoutToken()
-    {
-        $account = new NostoAccount('platform-test');
-
-        $this->specify('account is NOT deleted', function () use ($account) {
-            $this->setExpectedExceptionRegExp('NostoException');
-            $service = new NostoOperationUninstall($account);
-            $user = new MockNostoCurrentUser();
-            $service->delete($user);
-        });
-    }
-
-    /**
-     * Test the account deletion with the required SSO token.
-     */
-    public function testDeletingAccountWithToken()
-    {
-        $account = new NostoAccount('platform-test');
-        $token = new NostoApiToken('sso', 'token');
-        $account->addApiToken($token);
-
-        $this->specify('account is deleted', function () use ($account) {
-            $service = new NostoOperationUninstall($account);
-            $user = new MockNostoCurrentUser();
-            $service->delete($user);
-        });
-    }
 }
