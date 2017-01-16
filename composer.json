@@ -8,7 +8,8 @@
     "etsy/phan": "dev-master",
     "phpmd/phpmd": "^2.5",
     "sebastian/phpcpd": "*",
-    "phpdocumentor/reflection-docblock": "3.0.0"
+    "phpdocumentor/reflection-docblock": "3.0.0",
+    "phing/phing": "2.*"
   },
   "autoload": {
     "classmap": [

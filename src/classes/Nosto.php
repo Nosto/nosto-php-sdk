@@ -43,6 +43,41 @@ class Nosto
 
 
     /**
+     * Page type for front page
+     */
+    const PAGE_TYPE_FRONT_PAGE = 'front';
+
+    /**
+     * Page type for cart page
+     */
+    const PAGE_TYPE_CART = 'cart';
+
+    /**
+     * Page type for cart product page
+     */
+    const PAGE_TYPE_PRODUCT = 'product';
+
+    /**
+     * Page type for cart product category page
+     */
+    const PAGE_TYPE_CATEGORY = 'category';
+
+    /**
+     * Page type for search results category page
+     */
+    const PAGE_TYPE_SEARCH = 'search';
+
+    /**
+     * Page type for not found page
+     */
+    const PAGE_TYPE_NOTFOUND = 'notfound';
+
+    /**
+     * Page type for order confirmation page
+     */
+    const PAGE_TYPE_ORDER = 'order';
+
+    /**
      * Return environment variable.
      *
      * @param string $name the name of the variable.
