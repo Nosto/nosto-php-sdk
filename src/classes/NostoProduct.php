@@ -238,6 +238,14 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getTag1()
+    {
+        return $this->tag1;
+    }
+
+    /**
      * Sets all the tags to the `tag1` field.
      *
      * The tags must be an array of non-empty string values.
@@ -255,14 +263,6 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getTag1()
-    {
-        return $this->tag1;
-    }
-
-    /**
      * Adds a new tag to the `tag1` field.
      *
      * The tag must be a non-empty string value.
@@ -275,6 +275,14 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     public function addTag1($tag)
     {
         $this->tag1[] = $tag;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTag2()
+    {
+        return $this->tag2;
     }
 
     /**
@@ -295,14 +303,6 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getTag2()
-    {
-        return $this->tag2;
-    }
-
-    /**
      * Adds a new tag to the `tag2` field.
      *
      * The tag must be a non-empty string value.
@@ -315,6 +315,14 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     public function addTag2($tag)
     {
         $this->tag2[] = $tag;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTag3()
+    {
+        return $this->tag3;
     }
 
     /**
@@ -347,14 +355,6 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     public function addTag3($tag)
     {
         $this->tag3[] = $tag;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getTag3()
-    {
-        return $this->tag3;
     }
 
     /**
@@ -522,6 +522,22 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     }
 
     /**
+     * Adds a category to the product.
+     *
+     * The category must be a non-empty string and is expected to include the
+     * entire sub/parent category path, e.g. "clothes/winter/coats".
+     *
+     * Usage:
+     * $object->addCategory('clothes/winter/coats');
+     *
+     * @param string $category the category.
+     */
+    public function addCategory($category)
+    {
+        $this->categories[] = $category;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getListPrice()
@@ -566,11 +582,27 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     }
 
     /**
+     * @param string $variationId
+     */
+    public function setVariationId($variationId)
+    {
+        $this->variationId = $variationId;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getSupplierCost()
     {
         return $this->supplierCost;
+    }
+
+    /**
+     * @param float $supplierCost
+     */
+    public function setSupplierCost($supplierCost)
+    {
+        $this->supplierCost = $supplierCost;
     }
 
     /**
@@ -582,11 +614,27 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     }
 
     /**
+     * @param int $inventoryLevel
+     */
+    public function setInventoryLevel($inventoryLevel)
+    {
+        $this->inventoryLevel = $inventoryLevel;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getReviewCount()
     {
         return $this->reviewCount;
+    }
+
+    /**
+     * @param int $reviewCount
+     */
+    public function setReviewCount($reviewCount)
+    {
+        $this->reviewCount = $reviewCount;
     }
 
     /**
@@ -598,6 +646,14 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     }
 
     /**
+     * @param float $ratingValue
+     */
+    public function setRatingValue($ratingValue)
+    {
+        $this->ratingValue = $ratingValue;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getAlternateImageUrls()
@@ -606,11 +662,27 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     }
 
     /**
+     * @param array $alternateImageUrls
+     */
+    public function setAlternateImageUrls(array $alternateImageUrls)
+    {
+        $this->alternateImageUrls = $alternateImageUrls;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getCondition()
     {
         return $this->condition;
+    }
+
+    /**
+     * @param string $condition
+     */
+    public function setCondition($condition)
+    {
+        $this->condition = $condition;
     }
 
     /**
@@ -638,11 +710,27 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     }
 
     /**
+     * @param string $gtin
+     */
+    public function setGtin($gtin)
+    {
+        $this->gtin = $gtin;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getGoogleCategory()
     {
         return $this->googleCategory;
+    }
+
+    /**
+     * @param string $googleCategory
+     */
+    public function setGoogleCategory($googleCategory)
+    {
+        $this->googleCategory = $googleCategory;
     }
 
     /**
@@ -667,21 +755,5 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     public function getUnitPricingUnit()
     {
         return $this->unitPricingUnit;
-    }
-
-    /**
-     * Adds a category to the product.
-     *
-     * The category must be a non-empty string and is expected to include the
-     * entire sub/parent category path, e.g. "clothes/winter/coats".
-     *
-     * Usage:
-     * $object->addCategory('clothes/winter/coats');
-     *
-     * @param string $category the category.
-     */
-    public function addCategory($category)
-    {
-        $this->categories[] = $category;
     }
 }

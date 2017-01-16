@@ -85,32 +85,4 @@ class NostoOperationProduct extends NostoOperation
         $response = $request->post($this->collection);
         return $this->checkResponse($request, $response);
     }
-
-    /**
-     * Sends a POST request to create all the products currently in the collection.
-     *
-     * @return bool if the request was successful.
-     * @throws NostoException on failure.
-     */
-    public function create()
-    {
-        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_PRODUCTS));
-        $request->setPath(NostoApiRequest::PATH_PRODUCTS_CREATE);
-        $response = $request->post($this->collection);
-        return $this->checkResponse($request, $response);
-    }
-
-    /**
-     * Sends a PUT request to update all the products currently in the collection.
-     *
-     * @return bool if the request was successful.
-     * @throws NostoException on failure.
-     */
-    public function update()
-    {
-        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_PRODUCTS));
-        $request->setPath(NostoApiRequest::PATH_PRODUCTS_UPDATE);
-        $response = $request->put($this->collection);
-        return $this->checkResponse($request, $response);
-    }
 }

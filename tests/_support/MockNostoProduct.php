@@ -40,20 +40,29 @@ class MockNostoProduct extends NostoProduct
     public function __construct()
     {
         parent::__construct();
+        $this->setDescription('This is a full description');
+        $this->setTag1(array('first'));
+        $this->setTag2(array('second'));
+        $this->setTag3(array('third'));
         $this->setUrl('http://my.shop.com/products/test_product.html');
         $this->setProductId(1);
         $this->setName('Test Product');
         $this->setImageUrl('http://my.shop.com/images/test_product.jpg');
         $this->setPrice(99.99);
-        $this->setListPrice(110.99);
-        $this->setDescription('This is a full description');
         $this->setPriceCurrencyCode('USD');
         $this->setAvailability('InStock');
-        $this->setTag1(array('tag1', 'tag2'));
-        $this->setCategories(array('/a/b', '/a/b/c'));
-        $this->setAvailability('InStock');
+        $this->setCategories(array('/Mens', '/Mens/Shoes'));
+        $this->setListPrice(110.99);
         $this->setBrand('Super Brand');
-
+        $this->setVariationId("USD");
+        $this->setSupplierCost(22.33);
+        $this->setInventoryLevel(50);
+        $this->setReviewCount(99);
+        $this->setRatingValue(2.5);
+        $this->setAlternateImageUrls(array("http://shop.com/product_alt.jpg"));
+        $this->setCondition("Used");
+        $this->setGtin("gtin");
+        $this->setGoogleCategory("All");
     }
 
     public function __get($name)
