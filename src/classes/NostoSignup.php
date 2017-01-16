@@ -103,6 +103,15 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
+     * Sets the API tokens
+     * @param $apiToken string the name of the API scope
+     */
+    public function addApiToken($apiToken)
+    {
+        $this->apiTokens[] = strtoupper('api_' . $apiToken);
+    }
+
+    /**
      * Sets the account billing details.
      *
      * @param $billingDetails NostoSignupBillingDetailsInterface the account billing details
@@ -256,15 +265,6 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     public function setDetails($details)
     {
         $this->details = $details;
-    }
-
-    /**
-     * Sets the API tokens
-     * @param $apiToken string the name of the API scope
-     */
-    public function addApiToken($apiToken)
-    {
-        $this->apiTokens[] = strtoupper('api_'.$apiToken);
     }
 
     /**

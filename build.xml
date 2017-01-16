@@ -35,19 +35,27 @@
   -->
 <project name="nosto-php-sdk" default="dist">
 
-    <property name="package"  value="${phing.project.name}" override="true" />
+    <property name="package" value="${phing.project.name}" override="true"/>
 
     <target name="phpcs">
         <exec executable="phpcs" passthru="true">
-            <arg value="-v" />
-            <arg value="--standard=ruleset.xml" />
-            <arg value="." />
+            <arg value="-v"/>
+            <arg value="--standard=ruleset.xml"/>
+            <arg value="."/>
         </exec>
     </target>
 
-    <target name="dist" depends="phpcs">
+    <target name="phan">
+        <exec executable="phan" passthru="true">
+            <arg value="--signature-compatibility"/>
+            <arg value="--config-file=phan.php"/>
+            <arg value="."/>
+        </exec>
+    </target>
 
-        <echo msg="All done" />
+    <target name="dist" depends="phpcs, phan">
+
+        <echo msg="All done"/>
 
     </target>
 </project>

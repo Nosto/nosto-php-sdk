@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,18 +34,20 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
 class MockNostoExchangeRate extends NostoExchangeRate
 {
-    public static function EUR() {
+    public static function EUR()
+    {
         return new NostoExchangeRate('EUR', 0.1);
     }
 
-    public static function USD() {
+    public static function USD()
+    {
         return new NostoExchangeRate('USD', 1.29);
     }
 
-    public static function GBP() {
+    public static function GBP()
+    {
         return new NostoExchangeRate('GBP', 1.30);
     }
 }

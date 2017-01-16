@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,12 +34,12 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
 class MockNostoSignup extends NostoSignup
 {
     public function __construct()
     {
-        parent::__construct('magento', 'YBDKYwSqTCzSsU8Bwbg4im2pkHMcgTy9cCX7vevjJwON1UISJIwXOLMM0a8nZY7h', null);
+        parent::__construct('magento',
+            'YBDKYwSqTCzSsU8Bwbg4im2pkHMcgTy9cCX7vevjJwON1UISJIwXOLMM0a8nZY7h', null);
         $this->setOwner(new MockNostoSignupOwner());
         $this->setBillingDetails(new MockNostoSignupBilling());
         $this->setTitle('My Shop');

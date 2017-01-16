@@ -34,7 +34,6 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
 class MockNostoCurrentUser extends NostoCurrentUser
 {
     public function __construct()

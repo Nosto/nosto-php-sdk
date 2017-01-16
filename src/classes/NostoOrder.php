@@ -73,6 +73,11 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     private $orderStatus;
 
     /**
+     * @var NostoOrderStatusInterface[] the array of order status models.
+     */
+    private $orderStatuses;
+
+    /**
      * @var bool if special line items like shipping cost should be included.
      */
     private $includeSpecialLineItems = true;
@@ -121,7 +126,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function addOrderStatus($orderStatus)
     {
-        $this->orderStatus[] = $orderStatus;
+        $this->orderStatuses[] = $orderStatus;
     }
 
     /**

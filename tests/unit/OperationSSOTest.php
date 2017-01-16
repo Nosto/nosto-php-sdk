@@ -59,7 +59,8 @@ class OperationSSOTest extends Test
 
         $this->specify('account sso with an api token', function () use ($account, $user) {
             $service = new NostoOperationSso($account);
-            $this->assertEquals("http://platform-00000000.dev.nos.to:9010/hub/magento/platform-00000000/sso%2Bplatform-00000000@nostosolutions.com/", substr($service->get($user, 'magento'), 0, 114));
+            $this->assertEquals("http://platform-00000000.dev.nos.to:9010/hub/magento/platform-00000000/sso%2Bplatform-00000000@nostosolutions.com/",
+                substr($service->get($user, 'magento'), 0, 114));
         });
     }
 }

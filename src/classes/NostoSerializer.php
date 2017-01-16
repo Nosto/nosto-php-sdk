@@ -34,10 +34,10 @@
  *
  */
 
-use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class NostoSerializer
 {
@@ -47,6 +47,7 @@ class NostoSerializer
     {
         // To prevent instantiation of utility classes
     }
+
     // @codeCoverageIgnoreStart
 
     public static function serialize($object)
