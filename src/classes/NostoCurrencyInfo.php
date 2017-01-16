@@ -1132,30 +1132,28 @@ final class NostoCurrencyInfo
     /**
      * Returns the currency fraction unit.
      *
-     * @param NostoCurrencyCode $code the currency code.
+     * @param string $code the currency code.
      * @return int the currency fraction unit.
-     *
      * @throws NostoException
      */
-    public static function getFractionUnit(NostoCurrencyCode $code)
+    public static function getFractionUnit($code)
     {
         self::assertCurrency($code);
-        return self::$data[$code->getCode()]['fractionUnit'];
+        return self::$data[$code]['fractionUnit'];
     }
 
     /**
      * Asserts that the currency code is supported.
      *
-     * @param NostoCurrencyCode $code the currency code to test.
-     *
+     * @param string $code the currency code to test.
      * @throws NostoException
      */
-    private static function assertCurrency(NostoCurrencyCode $code)
+    private static function assertCurrency($code)
     {
-        if (!isset(self::$data[$code->getCode()])) {
+        if (!isset(self::$data[$code])) {
             throw new NostoException(sprintf(
                 'Currency (%s) must be one of the following ISO 4217 codes: "%s".',
-                $code->getCode(),
+                $code,
                 implode('", "', array_keys(self::$data))
             ));
         }
@@ -1164,14 +1162,13 @@ final class NostoCurrencyInfo
     /**
      * Returns the currency default fraction digit.
      *
-     * @param NostoCurrencyCode $code the currency code.
+     * @param string $code the currency code.
      * @return int the currency fraction digit.
-     *
      * @throws NostoException
      */
-    public static function getFractionDecimals(NostoCurrencyCode $code)
+    public static function getFractionDecimals($code)
     {
         self::assertCurrency($code);
-        return self::$data[$code->getCode()]['fractionDecimals'];
+        return self::$data[$code]['fractionDecimals'];
     }
 }

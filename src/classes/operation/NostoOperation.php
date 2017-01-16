@@ -85,11 +85,11 @@ abstract class NostoOperation
     }
 
     /**
-     * @param $request
+     * @param $request NostoHttpRequest
      * @param $response NostoHttpResponse
      * @return bool
      */
-    protected function checkResponse($request, $response)
+    protected function checkResponse(NostoHttpRequest $request, NostoHttpResponse $response)
     {
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException($request, $response);

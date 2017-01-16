@@ -49,7 +49,11 @@ class NostoSerializer
     }
 
     // @codeCoverageIgnoreStart
-
+    /** @noinspection PhpUndefinedClassInspection */
+    /**
+     * @param $object
+     * @return string|scalar
+     */
     public static function serialize($object)
     {
         $normalizers = array(new ObjectNormalizer(null, new CamelCaseToSnakeCaseNameConverter()));

@@ -80,7 +80,7 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     private $partnerCode;
 
     /**
-     * @var NostoApiToken[] the default set of api tokens
+     * @var array the default set of api tokens
      */
     private $apiTokens;
 
