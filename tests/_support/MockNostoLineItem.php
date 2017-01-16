@@ -43,6 +43,6 @@ class MockNostoLineItem extends NostoLineItem
         $this->setQuantity(2);
         $this->setName('Test Product');
         $this->setPrice(99.99);
-        $this->setCurrencyCode('USD');
+        $this->setPriceCurrencyCode('USD');
     }
 }

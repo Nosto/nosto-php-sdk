@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2016, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2016 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -39,10 +39,10 @@
 date_default_timezone_set('Europe/Helsinki');
 
 // Pre-load all sdk classes.
-require_once(dirname(__FILE__) . '/../vendor/autoload.php');
+require_once(dirname(__FILE__) . '/../src/config.inc.php');
 
 // Configure API, Web Hooks, and OAuth client to use Mock server when testing.
 NostoApiRequest::$baseUrl = 'http://localhost:3000';
-NostoOAuthClient::$baseUrl = 'http://localhost:3000/oauth';
+NostoOAuthClient::$baseUrl = 'http://localhost:3000';
 NostoHttpRequest::$baseUrl = 'http://localhost:3000';
 NostoHttpRequest::buildUserAgent('PHPUnit', '1.0.0', '1.0.0');

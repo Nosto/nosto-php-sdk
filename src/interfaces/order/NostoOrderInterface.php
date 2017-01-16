@@ -66,7 +66,7 @@ interface NostoOrderInterface
      *
      * @return NostoOrderBuyerInterface the meta data model.
      */
-    public function getBuyerInfo();
+    public function getCustomer();
 
     /**
      * The purchased items which were included in the order.
@@ -76,11 +76,18 @@ interface NostoOrderInterface
     public function getPurchasedItems();
 
     /**
-     * Returns the order status model.
+     * Returns the order status code.
      *
-     * @return NostoOrderStatusInterface the model.
+     * @return string the code of the order status
      */
-    public function getOrderStatus();
+    public function getOrderStatusCode();
+
+    /**
+     * Returns the order status label.
+     *
+     * @return string the label of the order status
+     */
+    public function getOrderStatusLabel();
 
     /**
      * Returns the external order ref.

@@ -1,4 +1,7 @@
 <?php
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -34,41 +37,37 @@
  *
  */
 
-class AccountCreateTest extends \Codeception\TestCase\Test
+class OperationOrderConfirmationTest extends Test
 {
-    use \Codeception\Specify;
+    use Specify;
 
     /**
-     * Tests that new accounts can be created successfully.
+     * Tests the matched order confirmation API call.
      */
-    public function testCreatingNewAccount()
+    public function testMatchedOrderConfirmation()
     {
-        /** @var NostoAccount $meta */
-        $meta = new MockNostoSignup();
-        $service = new NostoOperationAccount($meta);
-        $account = $service->create();
+        $order = new MockNostoOrder();
+        $account = new MockNostoAccount('platform-00000000');
+        $service = new NostoOperationOrderConfirmation($account);
+        $result = $service->send($order, '00000000d7288a9aa95c9e24');
 
-        $this->specify('account was created', function () use ($account, $meta) {
-            $this->assertInstanceOf('NostoAccount', $account);
-            $this->assertEquals($meta->getPlatform() . '-' . $meta->getName(), $account->getName());
+        $this->specify('successful matched order confirmation', function () use ($result) {
+            $this->assertTrue($result);
         });
+    }
 
-        $this->specify('account has api token sso', function () use ($account, $meta) {
-            $token = $account->getApiToken('sso');
-            $this->assertInstanceOf('NostoApiToken', $token);
-            $this->assertEquals('sso', $token->getName());
-            $this->assertNotEmpty($token->getValue());
-        });
+    /**
+     * Tests the un-matched order confirmation API call.
+     */
+    public function testUnMatchedOrderConfirmation()
+    {
+        $order = new MockNostoOrder();
+        $account = new MockNostoAccount('platform-00000000');
+        $service = new NostoOperationOrderConfirmation($account);
+        $result = $service->send($order, null);
 
-        $this->specify('account has api token products', function () use ($account, $meta) {
-            $token = $account->getApiToken('products');
-            $this->assertInstanceOf('NostoApiToken', $token);
-            $this->assertEquals('products', $token->getName());
-            $this->assertNotEmpty($token->getValue());
-        });
-
-        $this->specify('account is connected to nosto', function () use ($account, $meta) {
-            $this->assertTrue($account->isConnectedToNosto());
+        $this->specify('successful un-matched order confirmation', function () use ($result) {
+            $this->assertTrue($result);
         });
     }
 }

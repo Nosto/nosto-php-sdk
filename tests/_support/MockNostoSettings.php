@@ -43,6 +43,7 @@ class MockNostoSettings extends NostoSettings
         $this->setFrontPageUrl('http://localhost');
         $this->setCurrencyCode('USD');
         $this->setLanguageCode('en');
+        $this->setDefaultVariantId("XXX");
         $this->addCurrency("EUR", new NostoCurrencyFormat(true, "€", ".", "", 2));
     }
 }

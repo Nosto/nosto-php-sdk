@@ -76,7 +76,7 @@ interface NostoSettingsInterface
      *
      * @return string
      */
-    public function getDefaultVariationId();
+    public function getDefaultVariantId();
 
     /**
      * Returns if exchange rates should be used for handling
@@ -86,5 +86,5 @@ interface NostoSettingsInterface
      *
      * @return boolean if multi variants are used
      */
-    public function getUseCurrencyExchangeRates();
+    public function getUseExchangeRates();
 }

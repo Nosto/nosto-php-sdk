@@ -1,4 +1,7 @@
 <?php
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -34,9 +37,43 @@
  *
  */
 
-class AccountDeleteOperationTest extends \Codeception\TestCase\Test
+class OperationAccountTest extends Test
 {
-    use \Codeception\Specify;
+    use Specify;
+
+    /**
+     * Tests that new accounts can be created successfully.
+     */
+    public function testCreatingNewAccount()
+    {
+        /** @var NostoAccount $meta */
+        $meta = new MockNostoSignup();
+        $service = new NostoOperationAccount($meta);
+        $account = $service->create();
+
+        $this->specify('account was created', function () use ($account, $meta) {
+            $this->assertInstanceOf('NostoAccount', $account);
+            $this->assertEquals($meta->getPlatform() . '-' . $meta->getName(), $account->getName());
+        });
+
+        $this->specify('account has api token sso', function () use ($account, $meta) {
+            $token = $account->getApiToken('sso');
+            $this->assertInstanceOf('NostoApiToken', $token);
+            $this->assertEquals('sso', $token->getName());
+            $this->assertNotEmpty($token->getValue());
+        });
+
+        $this->specify('account has api token products', function () use ($account, $meta) {
+            $token = $account->getApiToken('products');
+            $this->assertInstanceOf('NostoApiToken', $token);
+            $this->assertEquals('products', $token->getName());
+            $this->assertNotEmpty($token->getValue());
+        });
+
+        $this->specify('account is connected to nosto', function () use ($account, $meta) {
+            $this->assertTrue($account->isConnectedToNosto());
+        });
+    }
 
     /**
      * Test the account deletion without the required SSO token.
@@ -59,7 +96,7 @@ class AccountDeleteOperationTest extends \Codeception\TestCase\Test
     public function testDeletingAccountWithToken()
     {
         $account = new NostoAccount('platform-test');
-        $token = new NostoApiToken('sso', '123');
+        $token = new NostoApiToken('sso', 'token');
         $account->addApiToken($token);
 
         $this->specify('account is deleted', function () use ($account) {

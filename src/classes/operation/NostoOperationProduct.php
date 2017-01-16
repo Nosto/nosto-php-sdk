@@ -113,18 +113,4 @@ class NostoOperationProduct extends NostoOperation
         $response = $request->put($this->collection);
         return $this->checkResponse($request, $response);
     }
-
-    /**
-     * Sends a POST request to delete all the products currently in the collection.
-     *
-     * @return bool if the request was successful.
-     * @throws NostoException on failure.
-     */
-    public function delete()
-    {
-        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_PRODUCTS));
-        $request->setPath(NostoApiRequest::PATH_PRODUCTS_DISCONTINUE);
-        $response = $request->post($this->collection);
-        return $this->checkResponse($request, $response);
-    }
 }

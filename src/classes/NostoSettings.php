@@ -67,12 +67,12 @@ class NostoSettings extends NostoObject implements NostoSettingsInterface
     /**
      * @var string default variation id
      */
-    private $defaultVariationId = null;
+    private $defaultVariantId = null;
 
     /**
      * @var bool if the store uses exchange rates to manage multiple currencies.
      */
-    private $useCurrencyExchangeRates = false;
+    private $useExchangeRates = false;
 
     /**
      * Constructor
@@ -191,19 +191,19 @@ class NostoSettings extends NostoObject implements NostoSettingsInterface
      *
      * @return boolean
      */
-    public function getUseCurrencyExchangeRates()
+    public function getUseExchangeRates()
     {
-        return $this->useCurrencyExchangeRates;
+        return $this->useExchangeRates;
     }
 
     /**
      * Setter for useCurrencyExchangeRates
      *
-     * @param boolean $useCurrencyExchangeRates
+     * @param boolean $useExchangeRates
      */
-    public function setUseCurrencyExchangeRates($useCurrencyExchangeRates)
+    public function setUseCurrencyExchangeRates($useExchangeRates)
     {
-        $this->useCurrencyExchangeRates = $useCurrencyExchangeRates;
+        $this->useExchangeRates = $useExchangeRates;
     }
 
     /**
@@ -211,18 +211,18 @@ class NostoSettings extends NostoObject implements NostoSettingsInterface
      *
      * @return string
      */
-    public function getDefaultVariationId()
+    public function getDefaultVariantId()
     {
-        return $this->defaultVariationId;
+        return $this->defaultVariantId;
     }
 
     /**
      * Sets the default variation id
      *
-     * @param string $defaultVariationId
+     * @param string $defaultVariantId
      */
-    public function setDefaultVariationId($defaultVariationId)
+    public function setDefaultVariantId($defaultVariantId)
     {
-        $this->defaultVariationId = $defaultVariationId;
+        $this->defaultVariantId = $defaultVariantId;
     }
 }

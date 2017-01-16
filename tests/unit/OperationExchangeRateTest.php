@@ -1,4 +1,7 @@
 <?php
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -34,9 +37,9 @@
  *
  */
 
-class UpdateSettingsOperationTest extends \Codeception\TestCase\Test
+class OperationExchangeRateTest extends Test
 {
-    use \Codeception\Specify;
+    use Specify;
 
     /**
      * Tests that exchange rates can be synced to Nosto.
@@ -44,13 +47,15 @@ class UpdateSettingsOperationTest extends \Codeception\TestCase\Test
     public function testSyncingExchangeRates()
     {
         $account = new MockNostoAccount('platform-00000000');
-        $token = new NostoApiToken('settings',
-            '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $token = new NostoApiToken('rates', 'token');
         $account->addApiToken($token);
 
-        $settings = new MockNostoSettings();
-        $op = new NostoOperationSettings($account);
-        $result = $op->update($settings);
+        $rates = new NostoExchangeRateCollection();
+        $rates->addRate("Euros", MockNostoExchangeRate::EUR());
+        $rates->addRate("Pounds", MockNostoExchangeRate::GBP());
+        $rates->addRate("Dollars", MockNostoExchangeRate::USD());
+        $op = new NostoOperationExchangeRate($account);
+        $result = $op->update($rates);
 
         $this->specify('successful exchange rates sync', function () use ($result) {
             $this->assertTrue($result);

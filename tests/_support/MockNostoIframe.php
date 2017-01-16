@@ -47,12 +47,12 @@ class MockNostoIframe extends NostoIframe
         $this->setUniqueId('123');
         $this->setPlatform('platform');
         $this->setVersionPlatform('1.0.0');
-        $this->setVersionModule('1.0.0');
-        $this->setPreviewUrlProduct('http://my.shop.com/products/product123?nostodebug=true');
-        $this->setPreviewUrlCategory('http://my.shop.com/products/category123?nostodebug=true');
-        $this->setPreviewUrlSearch('http://my.shop.com/search?query=red?nostodebug=true');
-        $this->setPreviewUrlCart('http://my.shop.com/cart?nostodebug=true');
-        $this->setPreviewUrlFront('http://my.shop.com?nostodebug=true');
+        $this->setVersionModule('0.1.0');
+        $this->setPreviewUrlProduct('http://shop.com/products?nostodebug=true');
+        $this->setPreviewUrlCategory('http://shop.com/category?nostodebug=true');
+        $this->setPreviewUrlSearch('http://shop.com/search?nostodebug=true');
+        $this->setPreviewUrlCart('http://shop.com/cart?nostodebug=true');
+        $this->setPreviewUrlFront('http://shop.com?nostodebug=true');
         $this->setShopName('Shop Name');
     }
 }

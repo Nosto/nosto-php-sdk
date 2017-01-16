@@ -65,7 +65,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     /**
      * @var string the 3-letter ISO code (ISO 4217) for the item currency.
      */
-    private $currencyCode;
+    private $priceCurrencyCode;
 
     public function __construct()
     {
@@ -85,7 +85,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
         $this->setQuantity(1);
         $this->setName($name);
         $this->setPrice($price);
-        $this->setCurrencyCode($currency);
+        $this->setPriceCurrencyCode($currency);
     }
 
     /**
@@ -177,18 +177,18 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     /**
      * @inheritdoc
      */
-    public function getCurrencyCode()
+    public function getPriceCurrencyCode()
     {
-        return $this->currencyCode;
+        return $this->priceCurrencyCode;
     }
 
     /**
      * Sets the currency code (ISO 4217) the cart item is sold in.
      *
-     * @param string $currency the currency code.
+     * @param string $priceCurrencyCode the currency code.
      */
-    public function setCurrencyCode($currency)
+    public function setPriceCurrencyCode($priceCurrencyCode)
     {
-        $this->currencyCode = strtoupper($currency);
+        $this->priceCurrencyCode = strtoupper($priceCurrencyCode);
     }
 }

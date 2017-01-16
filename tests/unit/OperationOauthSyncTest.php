@@ -1,4 +1,7 @@
 <?php
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -34,9 +37,9 @@
  *
  */
 
-class AccountSyncOperationTest extends \Codeception\TestCase\Test
+class OperationOauthSyncTest extends Test
 {
-    use \Codeception\Specify;
+    use Specify;
 
     /**
      * Tests that existing accounts can be synced from Nosto.

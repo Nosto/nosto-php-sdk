@@ -40,34 +40,27 @@
 class NostoExchangeRate extends NostoObject implements NostoExchangeRateInterface
 {
     /**
-     * @var string the name for the exchange rate (can be different than the ISO 4217).
-     */
-    private $name;
-
-    /**
      * @var string the currencyCode code for the exchange rate (ISO 4217).
      */
-    private $currencyCode;
+    private $priceCurrencyCode;
 
     /**
      * @var string the exchange rate value.
      */
-    private $exchangeRate;
+    private $rate;
 
     /**
      * Constructor.
      * Assigns exchange rate properties and validates them.
      *
-     * @param string $name the name of the exchange rate
-     * @param string $currencyCode the currencyCode code for the exchange rate.
-     * @param string $exchangeRate the exchange rate value.
+     * @param string $priceCurrencyCode the currencyCode code for the exchange rate.
+     * @param string $rate the exchange rate value.
      *
      */
-    public function __construct($name, $currencyCode, $exchangeRate)
+    public function __construct($priceCurrencyCode, $rate)
     {
-        $this->name = (string)$name;
-        $this->currencyCode = $currencyCode;
-        $this->exchangeRate = (string)$exchangeRate;
+        $this->priceCurrencyCode = $priceCurrencyCode;
+        $this->rate = $rate;
     }
 
     /**
@@ -75,9 +68,9 @@ class NostoExchangeRate extends NostoObject implements NostoExchangeRateInterfac
      *
      * @return string the currencyCode code.
      */
-    public function getCurrencyCode()
+    public function getPriceCurrencyCode()
     {
-        return $this->currencyCode;
+        return $this->priceCurrencyCode;
     }
 
     /**
@@ -85,16 +78,8 @@ class NostoExchangeRate extends NostoObject implements NostoExchangeRateInterfac
      *
      * @return string the exchange rate.
      */
-    public function getExchangeRate()
+    public function getRate()
     {
-        return $this->exchangeRate;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName()
-    {
-        return $this->name;
+        return $this->rate;
     }
 }

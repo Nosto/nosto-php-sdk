@@ -34,52 +34,32 @@
  *
  */
 
-class OrderConfirmationTest extends \Codeception\TestCase\Test
+namespace unit;
+
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+use MockNostoAccount;
+use MockNostoCurrentUser;
+use NostoApiToken;
+use NostoOperationSso;
+
+class OperationSSOTest extends Test
 {
-    use \Codeception\Specify;
+    use Specify;
 
     /**
-     * @var NostoOrderInterface
+     * Tests the "ssoLogin" method for the NostoAccount class.
      */
-    protected $order;
-
-    /**
-     * @var NostoAccountInterface
-     */
-    protected $account;
-
-    /**
-     * Tests the matched order confirmation API call.
-     */
-    public function testMatchedOrderConfirmation()
+    public function testAccountSingleSignOn()
     {
-        $service = new NostoOperationOrderConfirmation($this->account);
-        $result = $service->send($this->order, 'test123');
+        $account = new MockNostoAccount('platform-00000000');
+        $token = new NostoApiToken('sso', 'token');
+        $account->addApiToken($token);
+        $user = new MockNostoCurrentUser();
 
-        $this->specify('successful matched order confirmation', function () use ($result) {
-            $this->assertTrue($result);
+        $this->specify('account sso with an api token', function () use ($account, $user) {
+            $service = new NostoOperationSso($account);
+            $this->assertEquals("http://platform-00000000.dev.nos.to:9010/hub/magento/platform-00000000/sso%2Bplatform-00000000@nostosolutions.com/", substr($service->get($user, 'magento'), 0, 114));
         });
-    }
-
-    /**
-     * Tests the un-matched order confirmation API call.
-     */
-    public function testUnMatchedOrderConfirmation()
-    {
-        $service = new NostoOperationOrderConfirmation($this->account);
-        $result = $service->send($this->order, null);
-
-        $this->specify('successful un-matched order confirmation', function () use ($result) {
-            $this->assertTrue($result);
-        });
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function _before()
-    {
-        $this->order = new MockNostoOrder();
-        $this->account = new MockNostoAccount('platform-00000000');
     }
 }

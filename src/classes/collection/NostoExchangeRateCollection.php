@@ -38,15 +38,23 @@
  * Product object collection.
  * Supports only items implementing "NostoExchangeRateInterface".
  */
-class NostoExchangeRateCollection extends NostoCollection
+class NostoExchangeRateCollection extends NostoObject
 {
-    /**
-     * Returns the type of items this collection can contain.
-     *
-     * @return string the type of items this collection can contain.
-     */
-    protected function getValidItemType()
+
+    private $rates = array();
+
+    public function addRate($name, NostoExchangeRateInterface $rate)
     {
-        return 'NostoExchangeRateInterface';
+        $this->rates[$name] = $rate;
+    }
+
+    /**
+     * Returns the exchange rates contained within
+     *
+     * @return array the array of exchange rates
+     */
+    public function getRates()
+    {
+        return $this->rates;
     }
 }

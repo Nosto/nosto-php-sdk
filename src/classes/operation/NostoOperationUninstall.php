@@ -64,7 +64,7 @@ class NostoOperationUninstall extends NostoOperation
      */
     public function delete(NostoCurrentUserInterface $currentUser)
     {
-        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_SSO));
+        $request = $this->initHttpRequest($this->account->getApiToken(NostoApiToken::API_SSO));
         $request->setPath(NostoApiRequest::PATH_ACCOUNT_DELETED);
         $response = $request->post($currentUser);
         return $this->checkResponse($request, $response);

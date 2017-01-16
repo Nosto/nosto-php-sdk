@@ -76,5 +76,5 @@ interface NostoLineItemInterface
      *
      * @return string the currency ISO code.
      */
-    public function getCurrencyCode();
+    public function getPriceCurrencyCode();
 }

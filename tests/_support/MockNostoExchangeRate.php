@@ -36,8 +36,15 @@
 
 class MockNostoExchangeRate extends NostoExchangeRate
 {
-    public function __construct()
-    {
-        parent::__construct('Euros', 'EUR', 0.1);
+    public static function EUR() {
+        return new NostoExchangeRate('EUR', 0.1);
+    }
+
+    public static function USD() {
+        return new NostoExchangeRate('USD', 1.29);
+    }
+
+    public static function GBP() {
+        return new NostoExchangeRate('GBP', 1.30);
     }
 }

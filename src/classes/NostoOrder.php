@@ -60,7 +60,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     /**
      * @var NostoOrderBuyerInterface The user info of the buyer.
      */
-    private $buyerInfo;
+    private $customer;
 
     /**
      * @var NostoLineItemInterface[] the items in the order.
@@ -68,7 +68,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     private $purchasedItems = array();
 
     /**
-     * @var NostoOrderStatusInterface[] the order status model.
+     * @var NostoOrderStatusInterface the order status model.
      */
     private $orderStatus;
 
@@ -202,15 +202,23 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     /**
      * @inheritdoc
      */
-    public function getOrderStatus()
+    public function getOrderStatusCode()
     {
-        return $this->orderStatus;
+        return $this->orderStatus ? $this->orderStatus->getCode() : null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getOrderStatusLabel()
+    {
+        return $this->orderStatus ? $this->orderStatus->getLabel() : null;
     }
 
     /**
      * Sets the order status.
      *
-     * @param NostoOrderStatusInterface[] $orderStatus the buyer info.
+     * @param NostoOrderStatusInterface $orderStatus the buyer info.
      */
     public function setOrderStatus($orderStatus)
     {
@@ -238,18 +246,18 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     /**
      * @inheritdoc
      */
-    public function getBuyerInfo()
+    public function getCustomer()
     {
-        return $this->buyerInfo;
+        return $this->customer;
     }
 
     /**
      * Sets the buyer information for the order.
      *
-     * @param NostoOrderBuyerInterface $buyerInfo the buyer info.
+     * @param NostoOrderBuyerInterface $customer the buyer info.
      */
-    public function setBuyerInfo($buyerInfo)
+    public function setCustomer($customer)
     {
-        $this->buyerInfo = $buyerInfo;
+        $this->customer = $customer;
     }
 }

@@ -50,9 +50,4 @@ class MockNostoAccount extends NostoAccount
     {
         return false;
     }
-
-    public function getApiToken($name)
-    {
-        return new NostoApiToken($name, 'abc123');
-    }
 }
