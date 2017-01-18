@@ -35,7 +35,7 @@
  */
 
 /**
- * Price helper class for price related tasks.
+ * Price helper class for price related tasks such formatting prices in a standard way
  */
 final class NostoHelperPrice extends NostoHelper
 {
@@ -47,11 +47,6 @@ final class NostoHelperPrice extends NostoHelper
      */
     public static function format($price)
     {
-        $formatted = null;
-        if (is_numeric($price)) {
-            $formatted = number_format($price, 2, '.', '');
-        }
-
-        return $formatted;
+        return is_numeric($price) ? number_format($price, 2, '.', '') : null;
     }
 }

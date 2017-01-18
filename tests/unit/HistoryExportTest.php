@@ -59,7 +59,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
                 $cipher->setIV(substr($cipher_text, 0, 16));
                 $plain_text = $cipher->decrypt(substr($cipher_text, 16));
 
-                $this->assertEquals(NostoSerializer::serialize($collection), $plain_text);
+                $this->assertEquals(NostoHelperSerializer::serialize($collection), $plain_text);
             });
     }
 
@@ -79,7 +79,7 @@ class HistoryExportTest extends \Codeception\TestCase\Test
                 $cipher->setIV(substr($cipher_text, 0, 16));
                 $plain_text = $cipher->decrypt(substr($cipher_text, 16));
 
-                $this->assertEquals(NostoSerializer::serialize($collection), $plain_text);
+                $this->assertEquals(NostoHelperSerializer::serialize($collection), $plain_text);
             });
     }
 

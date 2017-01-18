@@ -156,7 +156,7 @@ class NostoApiToken extends NostoObject implements NostoValidatableInterface
     }
 
     /**
-     * Returns the tokens value.
+     * Returns the token value.
      *
      * @return string the token value.
      */

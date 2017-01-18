@@ -77,6 +77,7 @@ require_once(dirname(__FILE__) . '/classes/helper/NostoHelper.php');
 require_once(dirname(__FILE__) . '/classes/helper/NostoHelperDate.php');
 require_once(dirname(__FILE__) . '/classes/helper/NostoHelperIframe.php');
 require_once(dirname(__FILE__) . '/classes/helper/NostoHelperPrice.php');
+require_once(dirname(__FILE__) . '/classes/helper/NostoHelperSerializer.php');
 
 require_once(dirname(__FILE__) . '/classes/http/NostoHttpRequestAdapter.php');
 require_once(dirname(__FILE__) . '/classes/http/NostoHttpRequestAdapterCurl.php');
@@ -103,7 +104,6 @@ require_once(dirname(__FILE__) . '/classes/NostoIframe.php');
 require_once(dirname(__FILE__) . '/classes/NostoSignupBilling.php');
 require_once(dirname(__FILE__) . '/classes/NostoSignup.php');
 require_once(dirname(__FILE__) . '/classes/NostoCipher.php');
-require_once(dirname(__FILE__) . '/classes/NostoDotEnv.php');
 require_once(dirname(__FILE__) . '/classes/NostoMessage.php');
 require_once(dirname(__FILE__) . '/classes/NostoValidator.php');
 require_once(dirname(__FILE__) . '/classes/NostoExchangeRate.php');
@@ -113,16 +113,7 @@ require_once(dirname(__FILE__) . '/classes/NostoPerson.php');
 require_once(dirname(__FILE__) . '/classes/NostoSignupOwner.php');
 require_once(dirname(__FILE__) . '/classes/NostoCurrentUser.php');
 require_once(dirname(__FILE__) . '/classes/NostoNotification.php');
-require_once(dirname(__FILE__) . '/classes/NostoSerializer.php');
 
-// Parse .env if exists and assign configured environment variables.
-NostoDotEnv::getInstance()->init(dirname(__FILE__));
-if (isset($_ENV['NOSTO_API_BASE_URL'])) {
-    NostoApiRequest::$baseUrl = $_ENV['NOSTO_API_BASE_URL'];
-}
-if (isset($_ENV['NOSTO_OAUTH_BASE_URL'])) {
-    NostoOAuthClient::$baseUrl = $_ENV['NOSTO_OAUTH_BASE_URL'];
-}
-if (isset($_ENV['NOSTO_WEB_HOOK_BASE_URL'])) {
-    NostoHttpRequest::$baseUrl = $_ENV['NOSTO_WEB_HOOK_BASE_URL'];
-}
+
+$dotenv = new Dotenv\Dotenv(dirname(__FILE__));
+$dotenv->load();

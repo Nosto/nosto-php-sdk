@@ -35,8 +35,8 @@
  */
 
 /**
- * Order object collection.
- * Supports only items implementing "NostoOrderInterface".
+ * Collection class to store a collection of orders. Supports only items
+ * implementing "NostoOrderInterface".
  */
 class NostoOrderCollection extends NostoCollection
 {

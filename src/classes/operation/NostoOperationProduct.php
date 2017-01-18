@@ -35,7 +35,10 @@
  */
 
 /**
- * Handles create/update/delete of products through the Nosto API.
+ * Operation class for upserting and deleting products through the Nosto API.
+ * A product upsert will create the product if it doesn't exist or update it if
+ * it does, while a product delete also results in an upsert but flags the
+ * product's availability as 'Discontinued'
  */
 class NostoOperationProduct extends NostoOperation
 {
@@ -51,8 +54,6 @@ class NostoOperationProduct extends NostoOperation
 
     /**
      * Constructor.
-     *
-     * Accepts the account for which the product operation is to be performed on.
      *
      * @param NostoAccountInterface $account the account object.
      */

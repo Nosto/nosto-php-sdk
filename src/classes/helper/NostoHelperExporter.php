@@ -37,18 +37,20 @@
 use phpseclib\Crypt\Random;
 
 /**
- * Helper class for exporting historical product and order data from the shop.
- * This information is used to bootstrap recommendations and decreases the time needed to get
- * accurate recommendations showing in the shop.
+ * Helper class for exporting historical product and order data from the shop. This
+ * information is used to bootstrap recommendations and decreases the time needed to
+ * get accurate recommendations showing in the shop without the learning period.
  */
 class NostoHelperExporter extends NostoHelper
 {
     /**
-     * Encrypts and returns the data.
+     * Serializes the collection to JSON and uses the SSO token (as it is pre-shared
+     * secret) to encrypt the data using AES. Sixteen random characters are used as
+     * the IV and must be extracted out from the resultant payload before decrypting
      *
-     * @param NostoAccountInterface $account the account to export the data for.
-     * @param mixed $collection the data collection to export.
-     * @return string the encrypted data.
+     * @param NostoAccountInterface $account the account to export the data for
+     * @param mixed $collection the data collection to export
+     * @return string the AES encrypted data.
      */
     public static function export(NostoAccountInterface $account, $collection)
     {
@@ -63,7 +65,7 @@ class NostoHelperExporter extends NostoHelper
                 $cipher = new NostoCipher();
                 $cipher->setSecret($secret);
                 $cipher->setIV($iv);
-                $cipherText = $cipher->encrypt(NostoSerializer::serialize($collection));
+                $cipherText = $cipher->encrypt(NostoHelperSerializer::serialize($collection));
                 // Prepend the IV to the cipher string so that nosto can parse and use it.
                 // There is no security concern with sending the IV as plain text.
                 $data = $iv . $cipherText;

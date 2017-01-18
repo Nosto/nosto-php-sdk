@@ -35,11 +35,11 @@
  */
 
 /**
- * Adapter class for making http requests using php sockets.
- * This adapter uses file_get_contents() and stream_context_create() for creating http requests.
+ * Adapter class for making http requests using php sockets and uses file_get_contents()
+ * and stream_context_create() for creating http requests.
  *
- * Note that if php is compiled with "--with-curlwrappers" then headers are not sent properly in older php versions.
- * @link https://bugs.php.net/bug.php?id=55438
+ * Note that if php is compiled with "--with-curlwrappers" then headers are not sent
+ * properly in older php versions. @link https://bugs.php.net/bug.php?id=55438
  */
 class NostoHttpRequestAdapterSocket extends NostoHttpRequestAdapter
 {

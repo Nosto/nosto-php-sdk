@@ -35,22 +35,25 @@
  */
 
 /**
- * Meta data class for account related information needed when creating new accounts.
+ * Model class for containing basic account account related information used when
+ * creating new accounts or updating the settings. This is a subset of the information
+ * used when creating an account as information contained in this model is considered to
+ * be settings that may change over time.
  */
 class NostoSettings extends NostoObject implements NostoSettingsInterface
 {
     /**
-     * @var string the store name.
+     * @var string the name of the store to be used for identifying accounts
      */
     private $title;
 
     /**
-     * @var string the store language ISO (ISO 639-1) code.
+     * @var string the language ISO (ISO 639-1) code of the admin interface
      */
     private $languageCode;
 
     /**
-     * @var string the store front end url.
+     * @var string the store front end URL.
      */
     private $frontPageUrl;
 

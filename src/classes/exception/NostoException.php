@@ -35,7 +35,7 @@
  */
 
 /**
- * Nosto exception class for all errors within the sdk.
+ * Nosto exception class for all errors within the SDK.
  */
 class NostoException extends Exception
 {

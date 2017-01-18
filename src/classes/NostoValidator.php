@@ -40,12 +40,12 @@
 class NostoValidator
 {
     /**
-     * @var NostoValidatableInterface the object to validate.
+     * @var NostoValidatableInterface the object to validate
      */
     private $object;
 
     /**
-     * @var array map of validation errors per attribute.
+     * @var array map of validation errors per attribute
      */
     private $errors = array();
 

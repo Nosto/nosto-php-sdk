@@ -37,7 +37,8 @@ use phpseclib\Crypt\AES;
 use phpseclib\Crypt\Base;
 
 /**
- * Helper class for encrypting/decrypting strings.
+ * Helper class for encrypting/decrypting data (for product and order exports)
+ * using an AES algorithm.
  */
 class NostoCipher
 {

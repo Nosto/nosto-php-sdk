@@ -35,7 +35,7 @@
  */
 
 /**
- * Handles updating the common account settings to Nosto e.g. currency formats
+ * Operation class for updating common account settings through the Nosto API.
  */
 class NostoOperationSettings extends NostoOperation
 {
@@ -46,8 +46,6 @@ class NostoOperationSettings extends NostoOperation
 
     /**
      * Constructor.
-     *
-     * Accepts the Nosto account for which the service is to operate on.
      *
      * @param NostoAccountInterface $account the Nosto configuration object.
      */

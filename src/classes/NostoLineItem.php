@@ -35,15 +35,19 @@
  */
 
 /**
- * Model for order line item information. This is used when compiling the info
- * about an order that is sent to Nosto.
+ * Model class for containing a item in an order or a shopping cart. This is used as
+ * the model when rendering the cart and order tagging and also for in order confirmation
+ * API calls
  */
 class NostoLineItem extends NostoObject implements NostoLineItemInterface
 {
+    /**
+     * Product id for non saleable products such as shipping and discounts
+     */
     const PSEUDO_PRODUCT_ID = '-1';
+
     /**
      * @var string the unique identifier of the purchased item.
-     * If this item is for discounts or shipping cost, the id can be 0.
      */
     private $productId;
 
@@ -58,7 +62,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     private $name;
 
     /**
-     * @var double The unit price of the item included in the order.
+     * @var double the unit price of the item included in the order.
      */
     private $unitPrice;
 
@@ -90,11 +94,6 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
 
     /**
      * Sets the unit price of the cart item.
-     *
-     * The price must be a numeric value
-     *
-     * Usage:
-     * $object->setPrice(99.99);
      *
      * @param double $unitPrice the price.
      */
@@ -130,13 +129,9 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     }
 
     /**
-     * Sets the quantity for the given cart item.
-     * The quantity must be an integer above zero.
+     * Sets the quantity of the cart item
      *
-     * Usage:
-     * $object->setQuantity(1);
-     *
-     * @param int $quantity the quantity.
+     * @param int $quantity the quantity
      */
     public function setQuantity($quantity)
     {
@@ -152,12 +147,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     }
 
     /**
-     * Sets cart items name.
-     *
-     * The name must be a non-empty string.
-     *
-     * Usage:
-     * $object->setName('My product');
+     * Sets the name of the cart item
      *
      * @param string $name the name.
      */
@@ -183,7 +173,7 @@ class NostoLineItem extends NostoObject implements NostoLineItemInterface
     }
 
     /**
-     * Sets the currency code (ISO 4217) the cart item is sold in.
+     * Sets the currency code of the cart item
      *
      * @param string $priceCurrencyCode the currency code.
      */

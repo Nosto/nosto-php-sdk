@@ -33,6 +33,7 @@
   ~ @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
   ~
   -->
+<!--suppress XmlUnboundNsPrefix -->
 <project name="nosto-php-sdk" default="dist">
 
     <property name="package" value="${phing.project.name}" override="true"/>

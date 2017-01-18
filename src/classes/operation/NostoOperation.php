@@ -35,7 +35,8 @@
  */
 
 /**
- * Handles communications through the Nosto API.
+ * Base operation class for handling all communications through the Nosto API.
+ * Each endpoint is known as an operation in the SDK.
  */
 abstract class NostoOperation
 {
@@ -43,9 +44,8 @@ abstract class NostoOperation
     const CONTENT_TYPE_APPLICATION_JSON = 'application/json';
 
     /**
-     * Create and returns a new API request object initialized with:
-     * - content type
-     * - auth token
+     * Create and returns a new API request object initialized with a content-type
+     * of 'application/json' and the specified authentication token
      *
      * @param NostoApiToken $token the token to use for the endpoint
      * @return NostoApiRequest the newly created request object.
@@ -64,9 +64,8 @@ abstract class NostoOperation
     }
 
     /**
-     * Create and returns a new HTTP request object initialized with:
-     * - content type
-     * - auth token
+     * Create and returns a new API request object initialized with a content-type
+     * of 'application/x-www-form-urlencoded' and the specified authentication token
      *
      * @param NostoApiToken $token the token to use for the endpoint
      * @return NostoHttpRequest the newly created request object.
@@ -85,11 +84,15 @@ abstract class NostoOperation
     }
 
     /**
-     * @param $request NostoHttpRequest
-     * @param $response NostoHttpResponse
-     * @return bool
+     * Helper method to throw an exception when an API or HTTP endpoint responds
+     * with a non-200 status code.
+     *
+     * @param $request NostoHttpRequest the HTTP request
+     * @param $response NostoHttpResponse the HTTP response to check
+     * @return bool returns true when everything was okay
+     * @throws HttpException when the endpoint responds with non-200 status code
      */
-    protected function checkResponse(NostoHttpRequest $request, NostoHttpResponse $response)
+    protected static function checkResponse(NostoHttpRequest $request, NostoHttpResponse $response)
     {
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException($request, $response);

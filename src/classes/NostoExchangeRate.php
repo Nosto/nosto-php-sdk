@@ -35,27 +35,25 @@
  */
 
 /**
- * Class representing a currency exchange rate.
+ * Model class for containing the information of a single exchange rate
  */
 class NostoExchangeRate extends NostoObject implements NostoExchangeRateInterface
 {
     /**
-     * @var string the currencyCode code for the exchange rate (ISO 4217).
+     * @var string the 3-letter ISO 4217 currency code for exchange rate
      */
     private $priceCurrencyCode;
 
     /**
-     * @var string the exchange rate value.
+     * @var string the multiplier for the exchange rate
      */
     private $rate;
 
     /**
-     * Constructor.
-     * Assigns exchange rate properties and validates them.
+     * Constructor that assigns the exchange rate's currency code and multiplier
      *
-     * @param string $priceCurrencyCode the currencyCode code for the exchange rate.
-     * @param string $rate the exchange rate value.
-     *
+     * @param string $priceCurrencyCode the 3-letter ISO 4217 currency code for exchange rate
+     * @param string $rate the multiplier for the exchange rate
      */
     public function __construct($priceCurrencyCode, $rate)
     {
@@ -64,9 +62,7 @@ class NostoExchangeRate extends NostoObject implements NostoExchangeRateInterfac
     }
 
     /**
-     * Getter for the exchange rates currencyCode code.
-     *
-     * @return string the currencyCode code.
+     * @inheritdoc
      */
     public function getPriceCurrencyCode()
     {
@@ -74,9 +70,7 @@ class NostoExchangeRate extends NostoObject implements NostoExchangeRateInterfac
     }
 
     /**
-     * Getter for the exchange rate value.
-     *
-     * @return string the exchange rate.
+     * @inheritdoc
      */
     public function getRate()
     {

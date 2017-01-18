@@ -35,7 +35,7 @@
  */
 
 /**
- * Handles sending currencyCode exchange rates through the Nosto API.
+ * Operation class for handling the creation accounts through the Nosto API.
  */
 class NostoOperationAccount extends NostoOperation
 {
@@ -46,8 +46,6 @@ class NostoOperationAccount extends NostoOperation
 
     /**
      * Constructor.
-     *
-     * Accepts the Nosto account for which the service is to operate on.
      *
      * @param NostoSignupInterface $account the Nosto account object.
      */

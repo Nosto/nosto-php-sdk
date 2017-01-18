@@ -45,6 +45,7 @@ abstract class NostoHttpRequestAdapter
      * @var array the request headers.
      */
     protected $headers = array();
+
     /**
      * @var mixed the request content.
      */

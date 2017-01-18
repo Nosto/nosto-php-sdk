@@ -35,21 +35,23 @@
  */
 
 /**
- * Model for order status information. This is used when compiling the info
- * about an order that is sent to Nosto.
+ * Model class containing information about the order status of an order
  */
 class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
 {
     /**
-     * @var string the order status code.
+     * @var string the order status code as flagged via the payment provider
      */
     private $code;
 
     /**
-     * @var string the order status label.
+     * @var string the order status label as flagged via the payment provider
      */
     private $label;
 
+    /**
+     * NostoOrderStatus constructor
+     */
     public function __construct()
     {
         // Dummy
@@ -64,14 +66,10 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
     }
 
     /**
-     * Sets the order status code.
+     * Sets the code of the order status as flagged by the payment provider.
+     * The code is a normalised string i.e. lower-cased and underscored
      *
-     * The code must be a non-empty string.
-     *
-     * Usage:
-     * $object->setCode('completed');
-     *
-     * @param string $code the code.
+     * @param string $code the code
      */
     public function setCode($code)
     {
@@ -87,14 +85,10 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
     }
 
     /**
-     * Sets the label of the order.
+     * Sets the label of the order status as flagged by the payment provider.
+     * The label is the name of the order status for reporting purposes
      *
-     * The label must be a non-empty string.
-     *
-     * Usage:
-     * $object->setLabel('Completed');
-     *
-     * @param string $label the label.
+     * @param string $label the label
      */
     public function setLabel($label)
     {

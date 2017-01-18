@@ -35,12 +35,13 @@
  */
 
 /**
- * Meta data class for account related information needed when creating new accounts.
+ * Model class for containing information used when creating an account. This
+ * information along with the account settings are used to configure the Nosto account
  */
 class NostoSignup extends NostoSettings implements NostoSignupInterface
 {
     /**
-     * @var string the account name.
+     * @var string the unique identifier used for denoting the account
      */
     private $name;
 
@@ -65,17 +66,17 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     private $details = null;
 
     /**
-     * @var NostoApiToken sign up api token
+     * @var NostoApiToken the account creation API token used for opening accounts
      */
     private $signupApiToken;
 
     /**
-     * @var string platform name
+     * @var string the simple name of the platform opening the account as given
      */
     private $platform;
 
     /**
-     * @var string partner code
+     * @var string a partner code for revenue attribution if one has been given
      */
     private $partnerCode;
 
@@ -103,7 +104,12 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
-     * Sets the API tokens
+     * Set the list of API tokens that should be granted when creating the account.
+     * Depending upon the different endpoints that need to be access, the different
+     * scopes must be requested. For example, in order to use the API to upsert
+     * products, you must add the scope `products`. Scopes must be specified without
+     * the leading API_ prefix.
+     *
      * @param $apiToken string the name of the API scope
      */
     public function addApiToken($apiToken)
@@ -112,9 +118,11 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
-     * Sets the account billing details.
+     * Sets the billing details for the account to opened. The billing details
+     * primarily contain the country code used for deciding the charging currency i.e.
+     * EUR or USD
      *
-     * @param $billingDetails NostoSignupBillingDetailsInterface the account billing details
+     * @param $billingDetails NostoSignupBillingDetailsInterface the billing details
      */
     public function setBillingDetails(NostoSignupBillingDetailsInterface $billingDetails)
     {
@@ -122,9 +130,7 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
-     * Returns the signup api token
-     *
-     * @return NostoApiToken
+     * @inheritdoc
      */
     public function getSignupApiToken()
     {
@@ -132,6 +138,10 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
+     * Sets the account creation API token used for opening account. This token is
+     * unique for every platform and is issued by Nosto. This key is assumed to be
+     * public and therefore can bundled into the implementation source code.
+     *
      * @param NostoApiToken $signupApiToken
      */
     public function setSignupApiToken(NostoApiToken $signupApiToken)
@@ -140,11 +150,7 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
-     * The name of the account to create.
-     * This has to follow the pattern of
-     * "[platform name]-[8 character lowercase alpha numeric string]".
-     *
-     * @return string the account name.
+     * @inheritdoc
      */
     public function getName()
     {
@@ -152,7 +158,10 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
-     * Sets the account name.
+     * Sets the unique identifier used for denoting the account. This is normally
+     * an 8 character lower-cased random alphanumeric string. The resultant account
+     * name is a hyphenated combination of the name of the platform and the specified
+     * identifier. e.g. magento-12345678
      *
      * @param string $name the account name.
      */
@@ -162,9 +171,7 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
-     * Returns the name of the platform
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getPlatform()
     {
@@ -172,6 +179,10 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
+     * Sets the name of the platform using the SDK for opening an account. This is
+     * the normalized and lower-cased name of the platform for bootstrapping the new
+     * account with platform-specific configuration.
+     *
      * @param string $platform
      */
     public function setPlatform($platform)
@@ -180,10 +191,7 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
-     * The 2-letter ISO code (ISO 639-1) for the language of the account owner
-     * who is creating the account.
-     *
-     * @return string the language ISO code.
+     * @inheritdoc
      */
     public function getOwnerLanguageCode()
     {
@@ -201,9 +209,7 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
-     * Meta data model for the account owner who is creating the account.
-     *
-     * @return NostoSignupOwnerInterface the meta data model.
+     * @inheritdoc
      */
     public function getOwner()
     {
@@ -221,9 +227,7 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
-     * Meta data model for the account billing details.
-     *
-     * @return NostoSignupBillingDetailsInterface the meta data model.
+     * @inheritdoc
      */
     public function getBillingDetails()
     {
@@ -231,9 +235,7 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
-     * Returns the partner code
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getPartnerCode()
     {
@@ -241,6 +243,9 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
+     * Sets the partner code for revenue attribution if one has been given. If
+     * no partner code is specified, this may be omitted.
+     *
      * @param string $partnerCode
      */
     public function setPartnerCode($partnerCode)
@@ -249,9 +254,7 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
-     * Returns the account details
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getDetails()
     {
@@ -268,7 +271,7 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     }
 
     /**
-     * Returns the API tokens
+     * @inheritdoc
      */
     public function getApiTokens()
     {

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -34,32 +33,33 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class DotEnvTest extends \Codeception\TestCase\Test
+
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+
+/**
+ * Helper class for serialize objects to JSON using a snake-case naming convention.
+ * It is not necessary to use this class directly as all operation classes
+ * automatically use this helper to serialize objects to JSON
+ */
+class NostoHelperSerializer extends NostoHelper
 {
-    use \Codeception\Specify;
 
+    // @codeCoverageIgnoreStart
+    /** @noinspection PhpUndefinedClassInspection */
     /**
-     * Tests a .env file.
+     * Serializes the given object to JSON using a snake-case naming convention.
+     * Arrays and objects can both be passed normally.
+     *
+     * @param $object
+     * @return string|scalar
      */
-    public function testDotEnvFile()
+    public static function serialize($object)
     {
-        $dotEnv = NostoDotEnv::getInstance();
-        $dotEnv->init(__DIR__ . '/../_support', '.env-test');
-
-        $this->specify('dot-env variable TEST_VARIABLE assigned to $_ENV', function () {
-            $this->assertArrayHasKey('TEST_VARIABLE', $_ENV);
-            $this->assertEquals('test', $_ENV['TEST_VARIABLE']);
-        });
-
-        $this->specify('dot-env variable TEST_VARIABLE_QUOTED_VALUE assigned to $_ENV',
-            function () {
-                $this->assertArrayHasKey('TEST_VARIABLE_QUOTED_VALUE', $_ENV);
-                $this->assertEquals('test', $_ENV['TEST_VARIABLE_QUOTED_VALUE']);
-            });
-
-        $this->specify('dot-env variable TEST_VARIABLE_NESTED assigned to $_ENV', function () {
-            $this->assertArrayHasKey('TEST_VARIABLE_NESTED', $_ENV);
-            $this->assertEquals('test/test', $_ENV['TEST_VARIABLE_NESTED']);
-        });
+        $normalizers = array(new ObjectNormalizer(null, new CamelCaseToSnakeCaseNameConverter()));
+        $serializer = new Serializer($normalizers, array(new JsonEncoder()));
+        return $serializer->serialize($object, 'json');
     }
 }

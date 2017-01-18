@@ -35,7 +35,7 @@
  */
 
 /**
- * Represents a http request response returned by NostoHttpRequest.
+ * Represents a HTTP response returned by a HTTP request to a Nosto endpoint
  */
 class NostoHttpResponse
 {
@@ -60,7 +60,6 @@ class NostoHttpResponse
     private $code;
 
     /**
-     * Constructor.
      * Creates and populates the response object.
      *
      * @param array $headers the response headers.
@@ -135,8 +134,10 @@ class NostoHttpResponse
     }
 
     /**
-     * Converts the response to a string and returns it.
-     * Used when logging http request errors.
+     * Converts the response to a string and returns it used for logging HTTP
+     * request errors.
+     *
+     * @return string the string representation of the HTTP response
      */
     public function __toString()
     {

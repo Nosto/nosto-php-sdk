@@ -40,8 +40,6 @@
  */
 class Nosto
 {
-
-
     /**
      * Return environment variable.
      *

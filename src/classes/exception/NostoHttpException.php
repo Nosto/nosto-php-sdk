@@ -35,7 +35,7 @@
  */
 
 /**
- * Nosto exception class for http errors within the sdk.
+ * Nosto exception class for HTTP errors within the SDK.
  */
 class NostoHttpException extends NostoException
 {

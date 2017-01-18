@@ -35,19 +35,19 @@
  */
 
 /**
- * Cart DTO (Data Transfer Object).
+ * Model class containing the information about the particulars of a shopping cart.
  */
 class NostoCart
 {
     /**
-     * @var NostoLineItemInterface[] the cart items.
+     * @var NostoLineItemInterface[] the array of items in the shopping cart
      */
     private $items = array();
 
     /**
-     * Returns the items in the cart.
+     * Returns the items in the shopping cart
      *
-     * @return NostoLineItemInterface[] the items.
+     * @return NostoLineItemInterface[] the items in the shopping cart
      */
     public function getItems()
     {
@@ -55,14 +55,9 @@ class NostoCart
     }
 
     /**
-     * Sets the cart items.
+     * Sets the cart items in the shopping cart
      *
-     * The items need to implement the `NostoLineItemInterface` interface.
-     *
-     * Usage:
-     * $cart->setItems(array(NostoLineItemInterface $item, [...]));
-     *
-     * @param NostoLineItemInterface[] $items the items.
+     * @param NostoLineItemInterface[] $items the items of the shopping cart
      */
     public function setItems(array $items)
     {
@@ -73,14 +68,9 @@ class NostoCart
     }
 
     /**
-     * Adds a new item to the cart.
+     * Adds a new item to the shopping cart
      *
-     * The item needs to implement the `NostoLineItemInterface` interface.
-     *
-     * Usage:
-     * $cart->addItem(NostoLineItemInterface $item);
-     *
-     * @param NostoLineItemInterface $item
+     * @param NostoLineItemInterface $item the item to add to the shopping cart
      */
     public function addItem(NostoLineItemInterface $item)
     {

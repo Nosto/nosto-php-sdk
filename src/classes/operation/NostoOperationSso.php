@@ -35,7 +35,9 @@
  */
 
 /**
- * Handles getting a single sign-on token from the Nosto API.
+ * Operation class for fetching a single-sign-on link through the Nosto API.
+ * The operation results in a single-use URL that can be used for logging in
+ * to the Nosto administration interface.
  */
 class NostoOperationSso extends NostoOperation
 {
@@ -46,8 +48,6 @@ class NostoOperationSso extends NostoOperation
 
     /**
      * Constructor.
-     *
-     * Accepts the Nosto account for which the service is to operate on.
      *
      * @param NostoAccountInterface $account the Nosto configuration object.
      */

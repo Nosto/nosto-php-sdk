@@ -35,7 +35,9 @@
  */
 
 /**
- * Handles sending currencyCode exchange rates through the Nosto API.
+ * Operation class for posting uninstall notifications through the Nosto API.
+ * An uninstall notification leaves the account as-is on Nosto but revokes all
+ * the API tokens.
  */
 class NostoOperationUninstall extends NostoOperation
 {
@@ -46,8 +48,6 @@ class NostoOperationUninstall extends NostoOperation
 
     /**
      * Constructor.
-     *
-     * Accepts the Nosto account for which the service is to operate on.
      *
      * @param NostoAccountInterface $account the Nosto configuration object.
      */

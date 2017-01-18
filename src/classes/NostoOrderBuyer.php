@@ -35,8 +35,8 @@
  */
 
 /**
- * Model for order buyer information. This is used when compiling the info about
- * an order that is sent to Nosto.
+ * Model used for containing the customer making an order/purchase. This information
+ * creates a customer on Nosto.
  */
 class NostoOrderBuyer extends NostoPerson implements NostoOrderBuyerInterface
 {

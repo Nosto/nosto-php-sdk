@@ -35,8 +35,11 @@
  */
 
 /**
- * Meta data class which holds information about the Nosto account owner.
- * This is used during the Nosto account creation.
+ * Model class containing information about the person creating the account i.e.
+ * the owner of the account. This could be the person logged into the store admin
+ * or the user filling out the signup form.
+ * This is the user who will be account owner in Nosto and receive the welcome
+ * email.
  */
 class NostoSignupOwner extends NostoPerson implements NostoSignupOwnerInterface
 {

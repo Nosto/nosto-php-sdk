@@ -35,14 +35,15 @@
  */
 
 /**
- * Date helper class for date related tasks.
+ * Date helper class for date related tasks such formatting dates in a standard way
  */
 final class NostoHelperDate extends NostoHelper
 {
     /**
      * Formats date into Nosto format, i.e. Y-m-d.
      *
-     * @param string $date the date string to format (must be a datetime description valid to pass to `strtotime`).
+     * @param string $date the date string to format (must be a datetime description
+     * valid to pass to `strtotime`).
      * @return string the formatted date.
      */
     public static function format($date)

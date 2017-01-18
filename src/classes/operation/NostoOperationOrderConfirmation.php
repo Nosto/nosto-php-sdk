@@ -53,8 +53,6 @@ class NostoOperationOrderConfirmation extends NostoOperation
     /**
      * Constructor.
      *
-     * Accepts the account for which the product operation is to be performed on.
-     *
      * @param NostoAccountInterface $account the configuration object.
      */
     public function __construct(NostoAccountInterface $account)

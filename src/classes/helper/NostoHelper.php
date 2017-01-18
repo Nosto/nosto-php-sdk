@@ -35,8 +35,7 @@
  */
 
 /**
- * Base class that all Nosto helpers must extend.
- * Helper classes are used in the following manner:
+ * Base class that all Nosto helpers must extend to prevent instantiation.
  */
 abstract class NostoHelper
 {

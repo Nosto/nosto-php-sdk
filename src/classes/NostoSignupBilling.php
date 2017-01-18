@@ -35,13 +35,14 @@
  */
 
 /**
- * Meta data class which holds information about Nosto account billing.
- * This is used during the Nosto account creation.
+ * Model class containing information for the billing details for the account used
+ * during account-creation. The country code is used for deciding the billing
+ * currency
  */
 class NostoSignupBilling extends NostoObject implements NostoSignupBillingDetailsInterface
 {
     /**
-     * @var string country ISO (ISO 3166-1 alpha-2) code for billing details.
+     * @var string the 2-letter ISO 3166-1 country code for the billing details
      */
     private $country;
 
@@ -51,9 +52,7 @@ class NostoSignupBilling extends NostoObject implements NostoSignupBillingDetail
     }
 
     /**
-     * The 2-letter ISO code (ISO 3166-1 alpha-2) for billing details country.
-     *
-     * @return string the country ISO code.
+     * @inheritdoc
      */
     public function getCountry()
     {
@@ -61,7 +60,9 @@ class NostoSignupBilling extends NostoObject implements NostoSignupBillingDetail
     }
 
     /**
-     * @param string $country
+     * Sets the 2-letter ISO 3166-1 country code for the billing details
+     *
+     * @param string $country the 2-letter ISO 3166-1 country code
      */
     public function setCountry($country)
     {

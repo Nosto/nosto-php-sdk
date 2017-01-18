@@ -41,49 +41,42 @@
 class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValidatableInterface
 {
     /**
-     * @var string|int the unique order number identifying the order.
+     * @var string|int the unique order number identifying the order
      */
     private $orderNumber;
 
     /**
-     * @var string the date when the order was placed.
+     * @var string the date when the order was placed in the format Y-m-d
      */
     private $createdDate;
 
     /**
-     * @var string the payment provider used for order.
-     *
-     * Formatted according to "[provider name] [provider version]".
+     * @var string the name of the payment provider used for order
      */
     private $paymentProvider;
 
     /**
-     * @var NostoOrderBuyerInterface The user info of the buyer.
+     * @var NostoOrderBuyerInterface the details of the person placing the order
      */
     private $customer;
 
     /**
-     * @var NostoLineItemInterface[] the items in the order.
+     * @var NostoLineItemInterface[] the list of items in the order
      */
     private $purchasedItems = array();
 
     /**
-     * @var NostoOrderStatusInterface the order status model.
+     * @var NostoOrderStatusInterface the latest order status of the order
      */
     private $orderStatus;
 
     /**
-     * @var NostoOrderStatusInterface[] the array of order status models.
+     * @var NostoOrderStatusInterface[] the previous order statuses of the order
      */
     private $orderStatuses;
 
     /**
-     * @var bool if special line items like shipping cost should be included.
-     */
-    private $includeSpecialLineItems = true;
-
-    /**
-     * @var string external order reference
+     * @var string an external order reference used for reporting purposes
      */
     private $externalOrderRef;
 
@@ -101,28 +94,19 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     }
 
     /**
-     * Disables "special" line items when calling `loadData()`.
-     * Special items are shipping cost, cart based discounts etc.
+     * Add a unique purchased item to the order
+     *
+     * @param NostoLineItemInterface $purchasedItem the purchased item
      */
-    public function disableSpecialLineItems()
+    public function addPurchasedItems(NostoLineItemInterface $purchasedItem)
     {
-        $this->includeSpecialLineItems = false;
+        $this->purchasedItems[] = $purchasedItem;
     }
 
     /**
-     * Add a purchased item for the order.
+     * Add an previous order status to the order
      *
-     * @param NostoLineItemInterface $purchasedItems
-     */
-    public function addPurchasedItems(NostoLineItemInterface $purchasedItems)
-    {
-        $this->purchasedItems[] = $purchasedItems;
-    }
-
-    /**
-     * Sets the order status.
-     *
-     * @param NostoOrderStatus $orderStatus the buyer info.
+     * @param NostoOrderStatus $orderStatus the order status
      */
     public function addOrderStatus($orderStatus)
     {
@@ -138,9 +122,9 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     }
 
     /**
-     * Sets the order number.
+     * Sets the unique order number identifying the order
      *
-     * @param string $orderNumber the ordernumber.
+     * @param string $orderNumber the order number
      */
     public function setOrderNumber($orderNumber)
     {
@@ -148,9 +132,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     }
 
     /**
-     * Returns the external order reference
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getExternalOrderRef()
     {
@@ -158,9 +140,9 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     }
 
     /**
-     * Sets the external order reference
+     * Sets the external order reference for the order
      *
-     * @param string $externalOrderRef
+     * @param string $externalOrderRef the external order reference
      */
     public function setExternalOrderRef($externalOrderRef)
     {
@@ -176,8 +158,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     }
 
     /**
-     * Sets the created date of the order.
-     * The created date must be a non-empty string in format Y-m-d.
+     * Sets the date when the order was placed in the format Y-m-d
      *
      * @param string $createdDate the created date.
      */
@@ -195,9 +176,9 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     }
 
     /**
-     * Sets the payment provider of the order.
+     * Sets the name of the payment provider for the order
      *
-     * @param string $paymentProvider the payment provider.
+     * @param string $paymentProvider the payment provider
      */
     public function setPaymentProvider($paymentProvider)
     {
@@ -221,9 +202,9 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     }
 
     /**
-     * Sets the order status.
+     * Sets the latest order status for the order
      *
-     * @param NostoOrderStatusInterface $orderStatus the buyer info.
+     * @param NostoOrderStatusInterface $orderStatus the order status
      */
     public function setOrderStatus($orderStatus)
     {
@@ -239,9 +220,9 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     }
 
     /**
-     * Sets the purchased items for the order.
+     * Sets the purchased items for the order
      *
-     * @param NostoLineItemInterface[] $purchasedItems the purchased items.
+     * @param NostoLineItemInterface[] $purchasedItems the purchased items
      */
     public function setPurchasedItems($purchasedItems)
     {
@@ -257,9 +238,9 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     }
 
     /**
-     * Sets the buyer information for the order.
+     * Sets the buyer information for the order
      *
-     * @param NostoOrderBuyerInterface $customer the buyer info.
+     * @param NostoOrderBuyerInterface $customer the buyer information
      */
     public function setCustomer($customer)
     {

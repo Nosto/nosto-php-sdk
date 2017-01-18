@@ -35,14 +35,21 @@
  */
 
 /**
- * Product object collection.
- * Supports only items implementing "NostoExchangeRateInterface".
+ * Collection class to store a collection of exchange-rates
  */
 class NostoExchangeRateCollection extends NostoObject
 {
-
+    /**
+     * @var array the array if exchange rates keyed by the rate code
+     */
     private $rates = array();
 
+    /**
+     * Adds an exchange rate to the array of rates
+     *
+     * @param $name string the name of the exchange rate
+     * @param NostoExchangeRateInterface $rate the exchange-rate object
+     */
     public function addRate($name, NostoExchangeRateInterface $rate)
     {
         $this->rates[$name] = $rate;

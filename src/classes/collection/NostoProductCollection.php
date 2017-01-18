@@ -35,8 +35,8 @@
  */
 
 /**
- * Product object collection.
- * Supports only items implementing "NostoProductInterface".
+ * Collection class to store a collection of orders. Supports only items
+ * implementing "NostoProductInterface".
  */
 class NostoProductCollection extends NostoCollection
 {

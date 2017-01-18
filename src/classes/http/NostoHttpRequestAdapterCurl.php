@@ -35,8 +35,7 @@
  */
 
 /**
- * Adapter class for making http requests using curl.
- * This adapter requires curl to be installed.
+ * Adapter class for making http requests using cURL and requires curl to be installed.
  */
 class NostoHttpRequestAdapterCurl extends NostoHttpRequestAdapter
 {

@@ -58,12 +58,6 @@ class NostoHttpRequest
     const HEADER_AUTHORIZATION = 'Authorization';
     const HEADER_CONTENT_TYPE = 'Content-type';
 
-
-    /**
-     * @var string base url for the nosto web hook requests.
-     */
-    public static $baseUrl = 'https://my.nosto.com';
-
     /**
      * @var string user-agent to use for all requests
      */
@@ -333,8 +327,7 @@ class NostoHttpRequest
             case self::AUTH_BASIC:
                 // The use of base64 encoding for authorization headers follow the RFC 2617 standard for http
                 // authentication (https://www.ietf.org/rfc/rfc2617.txt).
-                $this->addHeader(self::HEADER_AUTHORIZATION,
-                    'Basic ' . base64_encode(implode(':', $value)));
+                $this->addHeader(self::HEADER_AUTHORIZATION, 'Basic ' . base64_encode(implode(':', $value)));
                 break;
 
             case self::AUTH_BEARER:
@@ -357,6 +350,17 @@ class NostoHttpRequest
     }
 
     /**
+     * Returns the base URL by reading the environment and system variables. This
+     * value can be overridden for testing purposes byt editing the .env file
+     *
+     * @return string the base URL for the endpoint
+     */
+    public static function getBaseURL()
+    {
+        return getenv('NOSTO_WEB_HOOK_BASE_URL');
+    }
+
+    /**
      * Setter for the end point path, e.g. one of the PATH_ constants.
      * The API base url is always prepended.
      *
@@ -364,7 +368,7 @@ class NostoHttpRequest
      */
     public function setPath($path)
     {
-        $this->setUrl(self::$baseUrl . $path);
+        $this->setUrl(self::getBaseURL() . $path);
     }
 
     /**
@@ -375,28 +379,6 @@ class NostoHttpRequest
     public function setUrl($url)
     {
         $this->url = $url;
-    }
-
-    /**
-     * Sends a POST request.
-     *
-     * @param mixed $content
-     * @return NostoHttpResponse
-     */
-    public function post($content)
-    {
-        $this->content = NostoSerializer::serialize($content);
-        $url = $this->url;
-        if (!empty($this->replaceParams)) {
-            $url = self::buildUri($url, $this->replaceParams);
-        }
-        return $this->adapter->post(
-            $url,
-            array(
-                self::HEADERS => $this->headers,
-                self::CONTENT => $this->content,
-            )
-        );
     }
 
     /**
@@ -412,14 +394,36 @@ class NostoHttpRequest
     }
 
     /**
-     * Sends a PUT request.
+     * Makes a POST request with the specified content to the configured endpoint
      *
-     * @param mixed $content
-     * @return NostoHttpResponse
+     * @param mixed $content the object to be serialized to JSON and sent
+     * @return NostoHttpResponse the response as returned by the endpoint
+     */
+    public function post($content)
+    {
+        $this->content = NostoHelperSerializer::serialize($content);
+        $url = $this->url;
+        if (!empty($this->replaceParams)) {
+            $url = self::buildUri($url, $this->replaceParams);
+        }
+        return $this->adapter->post(
+            $url,
+            array(
+                self::HEADERS => $this->headers,
+                self::CONTENT => $this->content,
+            )
+        );
+    }
+
+    /**
+     * Makes a PUT request with the specified content to the configured endpoint
+     *
+     * @param mixed $content the object to be serialized to JSON and sent
+     * @return NostoHttpResponse the response as returned by the endpoint
      */
     public function put($content)
     {
-        $this->content = NostoSerializer::serialize($content);
+        $this->content = NostoHelperSerializer::serialize($content);
         $url = $this->url;
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);
@@ -434,9 +438,9 @@ class NostoHttpRequest
     }
 
     /**
-     * Sends a GET request.
+     * Makes a GET request with the specified content to the configured endpoint
      *
-     * @return NostoHttpResponse
+     * @return NostoHttpResponse the response as returned by the endpoint
      */
     public function get()
     {
@@ -456,9 +460,9 @@ class NostoHttpRequest
     }
 
     /**
-     * Sends a DELETE request.
+     * Makes a DELETE request with the specified content to the configured endpoint
      *
-     * @return NostoHttpResponse
+     * @return NostoHttpResponse the response as returned by the endpoint
      */
     public function delete()
     {
@@ -475,8 +479,10 @@ class NostoHttpRequest
     }
 
     /**
-     * Converts the request to a string and returns it.
-     * Used when logging http request errors.
+     * Converts the request to a string and returns it used for logging HTTP
+     * request errors.
+     *
+     * @return string the string representation of the HTTP request
      */
     public function __toString()
     {

@@ -34,6 +34,12 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
+
+/**
+ * Model used for containing the currently logged in user of a system. Single sign-on
+ * and uninstall requests require the details of the currently logged in user
+ * for auditing purposes.
+ */
 class NostoCurrentUser extends NostoPerson implements NostoCurrentUserInterface
 {
 }

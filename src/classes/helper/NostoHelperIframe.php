@@ -87,7 +87,6 @@ final class NostoHelperIframe extends NostoHelper
             )
         );
 
-
         if ($account !== null && $user !== null && $account->isConnectedToNosto()) {
             try {
                 $service = new NostoOperationSso($account);
@@ -123,6 +122,6 @@ final class NostoHelperIframe extends NostoHelper
      */
     private static function getBaseUrl()
     {
-        return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', NostoHttpRequest::$baseUrl);
+        return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', NostoHttpRequest::getBaseURL());
     }
 }

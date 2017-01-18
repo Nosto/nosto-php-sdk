@@ -34,20 +34,25 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class NostoPerson extends NostoObject implements NostoPersonInterface
+
+/**
+ * Abstract model used for containing the basic details of person for purposes
+ * such as representing a customer or a logged-in user.
+ */
+abstract class NostoPerson extends NostoObject implements NostoPersonInterface
 {
     /**
-     * @var string the account owner first name.
+     * @var string the first name of the person
      */
     private $firstName;
 
     /**
-     * @var string the account owner last name.
+     * @var string the last name of the person
      */
     private $lastName;
 
     /**
-     * @var string the account owner email address.
+     * @var string the email address of the person
      */
     private $email;
 
@@ -57,7 +62,7 @@ class NostoPerson extends NostoObject implements NostoPersonInterface
     }
 
     /**
-     * The first name of the account owner.
+     * The first name of the person
      *
      * @return string the first name.
      */
@@ -67,6 +72,8 @@ class NostoPerson extends NostoObject implements NostoPersonInterface
     }
 
     /**
+     * Sets the first name of the person
+     *
      * @param string $firstName
      */
     public function setFirstName($firstName)
@@ -75,7 +82,7 @@ class NostoPerson extends NostoObject implements NostoPersonInterface
     }
 
     /**
-     * The last name of the account owner.
+     * The last name of the person
      *
      * @return string the last name.
      */
@@ -85,6 +92,8 @@ class NostoPerson extends NostoObject implements NostoPersonInterface
     }
 
     /**
+     * Sets the last name of the person
+     *
      * @param string $lastName
      */
     public function setLastName($lastName)
@@ -93,7 +102,7 @@ class NostoPerson extends NostoObject implements NostoPersonInterface
     }
 
     /**
-     * The email address of the account owner.
+     * The email address of the person.
      *
      * @return string the email address.
      */
@@ -103,7 +112,7 @@ class NostoPerson extends NostoObject implements NostoPersonInterface
     }
 
     /**
-     * Sets the owner email address.
+     * Sets the email address of the person
      *
      * @param string $email the email address.
      */

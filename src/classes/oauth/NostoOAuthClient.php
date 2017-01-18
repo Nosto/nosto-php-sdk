@@ -44,11 +44,6 @@ class NostoOAuthClient
     const PATH_TOKEN = '/token?code={cod}&client_id={cid}&client_secret={sec}&redirect_uri={uri}&grant_type=authorization_code'; // @codingStandardsIgnoreLine
 
     /**
-     * @var string the nosto oauth endpoint base url.
-     */
-    public static $baseUrl = 'https://my.nosto.com/oauth';
-
-    /**
      * @var string the client id the identify this application to the oauth2 server.
      */
     private $clientId = 'nosto';
@@ -86,6 +81,17 @@ class NostoOAuthClient
     }
 
     /**
+     * Returns the base URL by reading the environment and system variables. This
+     * value can be overridden for testing purposes byt editing the .env file
+     *
+     * @return string the base URL for the endpoint
+     */
+    final public static function getBaseURL()
+    {
+        return getenv('NOSTO_OAUTH_BASE_URL');
+    }
+
+    /**
      * Returns the authorize url to the oauth2 server.
      *
      * @return string the url.
@@ -93,7 +99,7 @@ class NostoOAuthClient
     public function getAuthorizationUrl()
     {
         return NostoHttpRequest::buildUri(
-            self::$baseUrl . self::PATH_AUTH,
+            self::getBaseURL() . self::PATH_AUTH,
             array(
                 '{cid}' => $this->clientId,
                 '{uri}' => urlencode($this->redirectUrl),
@@ -117,7 +123,7 @@ class NostoOAuthClient
         }
 
         $request = new NostoHttpRequest();
-        $request->setUrl(self::$baseUrl . self::PATH_TOKEN);
+        $request->setUrl(self::getBaseURL() . self::PATH_TOKEN);
         $request->setReplaceParams(
             array(
                 '{cid}' => $this->clientId,

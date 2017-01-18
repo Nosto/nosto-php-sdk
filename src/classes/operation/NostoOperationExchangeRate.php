@@ -35,7 +35,7 @@
  */
 
 /**
- * Handles sending currencyCode exchange rates through the Nosto API.
+ * Handles updating exchange rates through the Nosto API
  */
 class NostoOperationExchangeRate extends NostoOperation
 {
@@ -47,8 +47,6 @@ class NostoOperationExchangeRate extends NostoOperation
     /**
      * Constructor.
      *
-     * Accepts the Nosto account for which the service is to operate on.
-     *
      * @param NostoAccountInterface $account the Nosto configuration object.
      */
     public function __construct(NostoAccountInterface $account)
@@ -58,8 +56,9 @@ class NostoOperationExchangeRate extends NostoOperation
 
     /**
      * Updates exchange rates to Nosto
-     * @param NostoExchangeRateCollection $collection
-     * @return bool
+     *
+     * @param NostoExchangeRateCollection $collection the collection of exchange rates to update
+     * @return bool returns true when the operation was a success
      */
     public function update(NostoExchangeRateCollection $collection)
     {
