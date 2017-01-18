@@ -1,4 +1,5 @@
 <?php
+use Codeception\TestCase\Test;
 
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
@@ -34,7 +35,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class HttpRequestTest extends \Codeception\TestCase\Test
+class HttpRequestTest extends Test
 {
     /**
      * This must be a port that is not listening

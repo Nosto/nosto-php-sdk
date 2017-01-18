@@ -1,4 +1,7 @@
 <?php
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,53 +36,37 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
-/**
- * Handles sending the order confirmations to Nosto via the API.
- *
- * Order confirmations can be sent two different ways:
- * - matched orders; where we know the Nosto customer ID of the user who placed the order
- * - un-matched orders: where we do not know the Nosto customer ID of the user who placed the order
- *
- * The second option is a fallback and should be avoided as much as possible.
- */
-class NostoOperationOrderConfirmation extends NostoOperation
+class OperationOrderConfirmationTest extends Test
 {
-    /**
-     * @var NostoAccountInterface the account to perform the operation on.
-     */
-    private $account;
+    use Specify;
 
     /**
-     * Constructor.
-     *
-     * @param NostoAccountInterface $account the configuration object.
+     * Tests the matched order confirmation API call.
      */
-    public function __construct(NostoAccountInterface $account)
+    public function testMatchedOrderConfirmation()
     {
-        $this->account = $account;
+        $order = new MockNostoOrder();
+        $account = new MockNostoAccount('platform-00000000');
+        $service = new NostoOperationOrder($account);
+        $result = $service->send($order, '00000000d7288a9aa95c9e24');
+
+        $this->specify('successful matched order confirmation', function () use ($result) {
+            $this->assertTrue($result);
+        });
     }
 
     /**
-     * Sends the order confirmation to Nosto.
-     *
-     * @param NostoOrderInterface $order the placed order model.
-     * @param null $customerId the Nosto customer ID of the user who placed the order.
-     * @throws NostoException on failure.
-     * @return true on success.
+     * Tests the un-matched order confirmation API call.
      */
-    public function send(NostoOrderInterface $order, $customerId = null)
+    public function testUnMatchedOrderConfirmation()
     {
-        $request = new NostoApiRequest();
-        if (!empty($customerId)) {
-            $request->setPath(NostoApiRequest::PATH_ORDER_TAGGING);
-            $replaceParams = array('{m}' => $this->account->getName(), '{cid}' => $customerId);
-        } else {
-            $request->setPath(NostoApiRequest::PATH_UNMATCHED_ORDER_TAGGING);
-            $replaceParams = array('{m}' => $this->account->getName());
-        }
-        $request->setReplaceParams($replaceParams);
-        $response = $request->post($order);
-        return $this->checkResponse($request, $response);
+        $order = new MockNostoOrder();
+        $account = new MockNostoAccount('platform-00000000');
+        $service = new NostoOperationOrder($account);
+        $result = $service->send($order, null);
+
+        $this->specify('successful un-matched order confirmation', function () use ($result) {
+            $this->assertTrue($result);
+        });
     }
 }

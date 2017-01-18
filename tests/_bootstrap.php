@@ -35,10 +35,8 @@
  */
 
 date_default_timezone_set('Europe/Helsinki');
+$dotenv = new Dotenv\Dotenv(dirname(__FILE__));
+$dotenv->load();
 
 require_once(dirname(__FILE__) . '/../src/config.inc.php');
-
-$_ENV['NOSTO_API_BASE_URL'] = 'http://localhost:3000';
-$_ENV['NOSTO_OAUTH_BASE_URL'] = 'http://localhost:3000';
-$_ENV['NOSTO_WEB_HOOK_BASE_URL'] = 'http://localhost:3000';
 NostoHttpRequest::buildUserAgent('PHPUnit', '1.0.0', '1.0.0');

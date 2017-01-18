@@ -1,4 +1,6 @@
 <?php
+use Codeception\Specify;
+use Codeception\TestCase\Test;
 
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
@@ -34,9 +36,9 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class AccountTest extends \Codeception\TestCase\Test
+class AccountTest extends Test
 {
-    use \Codeception\Specify;
+    use Specify;
 
     /**
      * Tests the "isConnectedToNosto" method for the NostoAccount class.
@@ -76,20 +78,6 @@ class AccountTest extends \Codeception\TestCase\Test
 
         $this->specify('account has sso token', function () use ($account) {
             $this->assertEquals('123', $account->getApiToken('sso')->getValue());
-        });
-    }
-
-    /**
-     * Tests the "ssoLogin" method for the NostoAccount class.
-     */
-    public function testAccountSingleSignOn()
-    {
-        $account = new MockNostoAccount('platform-test');
-        $user = new MockNostoCurrentUser();
-
-        $this->specify('account sso with an api token', function () use ($account, $user) {
-            $service = new NostoOperationSso($account);
-            $this->assertEquals("https://", substr($service->get($user, 'platform'), 0, 8));
         });
     }
 }

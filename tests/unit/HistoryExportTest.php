@@ -1,4 +1,6 @@
 <?php
+use Codeception\Specify;
+use Codeception\TestCase\Test;
 
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
@@ -34,9 +36,9 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class HistoryExportTest extends \Codeception\TestCase\Test
+class HistoryExportTest extends Test
 {
-    use \Codeception\Specify;
+    use Specify;
 
     /**
      * @var NostoAccountInterface

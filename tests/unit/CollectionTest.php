@@ -1,4 +1,5 @@
 <?php
+use Codeception\TestCase\Test;
 
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
@@ -34,7 +35,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class CollectionTest extends \Codeception\TestCase\Test
+class CollectionTest extends Test
 {
     /**
      * Tests that the export collection does not accept string items.

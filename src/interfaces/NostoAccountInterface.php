@@ -82,18 +82,4 @@ interface NostoAccountInterface
      * @return NostoApiToken[] the tokens.
      */
     public function getTokens();
-
-    /**
-     * Gets the secured iframe url for the account configuration page.
-     *
-     * @param NostoIframeInterface $iframe the iframe meta data to use for fetching the secured url.
-     * @param NostoCurrentUserInterface $user
-     * @param array $params optional extra params to add to the iframe url.
-     * @return bool|string the url or false if could not be fetched.
-     */
-    public function getIframeUrl(
-        NostoIframeInterface $iframe,
-        NostoCurrentUserInterface $user,
-        array $params = array()
-    );
 }

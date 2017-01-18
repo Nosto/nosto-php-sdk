@@ -98,7 +98,7 @@ Account related resources
 + Response 200 (application/json)
 
         {
-            "login_url": "https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg"
+            "login_url": "http://platform-00000000.dev.nos.to:9010/hub/magento/platform-00000000/sso%2Bplatform-00000000@nostosolutions.com/"
         }
 
 ## Deleting Account [/hub/uninstall]
@@ -437,7 +437,7 @@ Product related resources
         {}
 
 
-## Single Sign On [/hub/{platform}/load/{email}]
+## Single Sign On [/hub/{platform}/load]
 
 + Parameters
 
@@ -446,7 +446,7 @@ Product related resources
 
 ### SSO login [POST]
 
-+ Request (application/x-www-form-urlencoded)
++ Request (application/json)
 
     + Headers
 
@@ -459,5 +459,5 @@ Product related resources
 + Response 200 (application/json)
 
         {
-            "login_url": "https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg"
+            "login_url": "http://platform-00000000.dev.nos.to:9010/hub/magento/platform-00000000/sso%2Bplatform-00000000@nostosolutions.com/"
         }

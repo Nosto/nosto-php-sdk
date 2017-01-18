@@ -1,4 +1,6 @@
 <?php
+use Codeception\Specify;
+use Codeception\TestCase\Test;
 
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
@@ -34,9 +36,9 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class OauthTest extends \Codeception\TestCase\Test
+class OauthTest extends Test
 {
-    use \Codeception\Specify;
+    use Specify;
 
     /**
      * Test the OAuth client authenticate without a authorize code.

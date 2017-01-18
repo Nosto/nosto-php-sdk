@@ -65,7 +65,7 @@ class NostoOperationSso extends NostoOperation
      */
     public function get(NostoCurrentUserInterface $user, $platform)
     {
-        $request = $this->initHttpRequest($this->account->getApiToken(NostoApiToken::API_SSO));
+        $request = $this->initApiRequest($this->account->getApiToken(NostoApiToken::API_SSO));
         $request->setPath(NostoApiRequest::PATH_SSO_AUTH);
         $request->setReplaceParams(array('{platform}' => $platform));
         $response = $request->post($user);

@@ -1,4 +1,6 @@
 <?php
+use Codeception\Specify;
+use Codeception\TestCase\Test;
 
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
@@ -34,9 +36,9 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class IframeAuthTest extends \Codeception\TestCase\Test
+class IframeAuthTest extends Test
 {
-    use \Codeception\Specify;
+    use Specify;
 
     /**
      * Tests that we can build an non-authenticated url for the installation iframe.
@@ -50,29 +52,24 @@ class IframeAuthTest extends \Codeception\TestCase\Test
         $baseUrl = Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', NostoHttpRequest::getBaseURL());;
         $url = NostoHelperIframe::getUrl($iframe, $account, $user, array());
         $this->specify('install iframe url was created', function () use ($url, $baseUrl) {
-            $this->assertEquals(
-                $baseUrl . '/hub/platform/install?lang=en&ps_version=1.0.0&nt_version=0.1.0&product_pu=http%3A%2F%2Fmy.shop.com%2Fproducts%2Fproduct123%3Fnostodebug%3Dtrue&category_pu=http%3A%2F%2Fmy.shop.com%2Fproducts%2Fcategory123%3Fnostodebug%3Dtrue&search_pu=http%3A%2F%2Fmy.shop.com%2Fsearch%3Fquery%3Dred%3Fnostodebug%3Dtrue&cart_pu=http%3A%2F%2Fmy.shop.com%2Fcart%3Fnostodebug%3Dtrue&front_pu=http%3A%2F%2Fmy.shop.com%3Fnostodebug%3Dtrue&shop_lang=en&shop_name=Shop+Name&unique_id=123&fname=James&lname=Kirk&email=james.kirk%40example.com',
-                $url
-            );
-        });
-    }
+            $url = parse_url($url);
+            parse_str($url['query'], $params);
 
-    /**
-     * Tests that we can build an authenticated url for the homepage iframe.
-     */
-    public function testIframeUrlWithAccount()
-    {
-        /** @var NostoAccountInterface $account */
-        $account = new MockNostoAccount('platform-00000000');
-        $iframe = new MockNostoIframe();
-        $user = new MockNostoCurrentUser();
-
-        $url = $account->getIframeUrl($iframe, $user, array());
-        $this->specify('auth iframe url was created', function () use ($url) {
-            $this->assertEquals(
-                'https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg?lang=en&ps_version=1.0.0&nt_version=1.0.0&product_pu=http%3A%2F%2Fmy.shop.com%2Fproducts%2Fproduct123%3Fnostodebug%3Dtrue&category_pu=http%3A%2F%2Fmy.shop.com%2Fproducts%2Fcategory123%3Fnostodebug%3Dtrue&search_pu=http%3A%2F%2Fmy.shop.com%2Fsearch%3Fquery%3Dred%3Fnostodebug%3Dtrue&cart_pu=http%3A%2F%2Fmy.shop.com%2Fcart%3Fnostodebug%3Dtrue&front_pu=http%3A%2F%2Fmy.shop.com%3Fnostodebug%3Dtrue&shop_lang=en&shop_name=Shop+Name&unique_id=123&fname=James&lname=Kirk&email=james.kirk%40example.com',
-                $url
-            );
+            $this->assertEquals($url['path'], '/hub/platform/install');
+            $this->assertEquals($params['lang'], 'en');
+            $this->assertEquals($params['ps_version'], '1.0.0');
+            $this->assertEquals($params['nt_version'], '0.1.0');
+            $this->assertEquals($params['product_pu'], 'http://shop.com/products?nostodebug=true');
+            $this->assertEquals($params['category_pu'], 'http://shop.com/category?nostodebug=true');
+            $this->assertEquals($params['search_pu'], 'http://shop.com/search?nostodebug=true');
+            $this->assertEquals($params['cart_pu'], 'http://shop.com/cart?nostodebug=true');
+            $this->assertEquals($params['front_pu'], 'http://shop.com?nostodebug=true');
+            $this->assertEquals($params['shop_lang'], 'en');
+            $this->assertEquals($params['shop_name'], 'Shop Name');
+            $this->assertEquals($params['unique_id'], '123');
+            $this->assertEquals($params['fname'], 'James');
+            $this->assertEquals($params['lname'], 'Kirk');
+            $this->assertEquals($params['email'], 'james.kirk@example.com');
         });
     }
 }
