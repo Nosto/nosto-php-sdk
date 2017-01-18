@@ -48,6 +48,7 @@ class MockNostoSignup extends NostoSignup
         $this->setCurrencyCode('USD');
         $this->setLanguageCode('en');
         $this->setOwnerLanguageCode('en');
+        $this->setDefaultVariantId("XXX");
         $this->addCurrency("EUR", new NostoCurrencyFormat(true, "€", ".", "", 2));
     }
 }
