@@ -327,8 +327,10 @@ class NostoHttpRequest
             case self::AUTH_BASIC:
                 // The use of base64 encoding for authorization headers follow the RFC 2617 standard for http
                 // authentication (https://www.ietf.org/rfc/rfc2617.txt).
-                $this->addHeader(self::HEADER_AUTHORIZATION,
-                    'Basic ' . base64_encode(implode(':', $value)));
+                $this->addHeader(
+                    self::HEADER_AUTHORIZATION,
+                    'Basic ' . base64_encode(implode(':', $value))
+                );
                 break;
 
             case self::AUTH_BEARER:
