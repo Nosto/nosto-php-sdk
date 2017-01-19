@@ -327,7 +327,8 @@ class NostoHttpRequest
             case self::AUTH_BASIC:
                 // The use of base64 encoding for authorization headers follow the RFC 2617 standard for http
                 // authentication (https://www.ietf.org/rfc/rfc2617.txt).
-                $this->addHeader(self::HEADER_AUTHORIZATION, 'Basic ' . base64_encode(implode(':', $value)));
+                $this->addHeader(self::HEADER_AUTHORIZATION,
+                    'Basic ' . base64_encode(implode(':', $value)));
                 break;
 
             case self::AUTH_BEARER:
@@ -347,17 +348,6 @@ class NostoHttpRequest
     public function setAuthBearer($token)
     {
         $this->setAuth(self::AUTH_BEARER, $token);
-    }
-
-    /**
-     * Returns the base URL by reading the environment and system variables. This
-     * value can be overridden for testing purposes byt editing the .env file
-     *
-     * @return string the base URL for the endpoint
-     */
-    public static function getBaseURL()
-    {
-        return getenv('NOSTO_WEB_HOOK_BASE_URL');
     }
 
     /**
@@ -382,15 +372,14 @@ class NostoHttpRequest
     }
 
     /**
-     * Builds an uri by replacing the param placeholders in $uri with the ones given in $$replaceParams.
+     * Returns the base URL by reading the environment and system variables. This
+     * value can be overridden for testing purposes byt editing the .env file
      *
-     * @param string $uri
-     * @param array $replaceParams
-     * @return string
+     * @return string the base URL for the endpoint
      */
-    public static function buildUri($uri, array $replaceParams)
+    public static function getBaseURL()
     {
-        return strtr($uri, $replaceParams);
+        return getenv('NOSTO_WEB_HOOK_BASE_URL');
     }
 
     /**
@@ -413,6 +402,18 @@ class NostoHttpRequest
                 self::CONTENT => $this->content,
             )
         );
+    }
+
+    /**
+     * Builds an uri by replacing the param placeholders in $uri with the ones given in $$replaceParams.
+     *
+     * @param string $uri
+     * @param array $replaceParams
+     * @return string
+     */
+    public static function buildUri($uri, array $replaceParams)
+    {
+        return strtr($uri, $replaceParams);
     }
 
     /**

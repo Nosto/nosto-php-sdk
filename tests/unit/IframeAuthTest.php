@@ -49,7 +49,8 @@ class IframeAuthTest extends Test
         $account = null;
         $iframe = new MockNostoIframe();
         $user = new MockNostoCurrentUser();
-        $baseUrl = Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', NostoHttpRequest::getBaseURL());;
+        $baseUrl = Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL',
+            NostoHttpRequest::getBaseURL());;
         $url = NostoHelperIframe::getUrl($iframe, $account, $user, array());
         $this->specify('install iframe url was created', function () use ($url, $baseUrl) {
             $url = parse_url($url);

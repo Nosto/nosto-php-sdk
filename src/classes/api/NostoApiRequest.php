@@ -51,17 +51,6 @@ class NostoApiRequest extends NostoHttpRequest
     const PATH_SETTINGS = '/settings';
 
     /**
-     * Returns the base URL by reading the environment and system variables. This
-     * value can be overridden for testing purposes byt editing the .env file
-     *
-     * @return string the base URL for the endpoint
-     */
-    final public static function getBaseURL()
-    {
-        return getenv('NOSTO_API_BASE_URL');
-    }
-
-    /**
      * Setter for the end point path, e.g. one of the PATH_ constants.
      * The API base url is always prepended.
      *
@@ -70,5 +59,16 @@ class NostoApiRequest extends NostoHttpRequest
     public function setPath($path)
     {
         $this->setUrl(self::getBaseURL() . $path);
+    }
+
+    /**
+     * Returns the base URL by reading the environment and system variables. This
+     * value can be overridden for testing purposes byt editing the .env file
+     *
+     * @return string the base URL for the endpoint
+     */
+    final public static function getBaseURL()
+    {
+        return getenv('NOSTO_API_BASE_URL');
     }
 }

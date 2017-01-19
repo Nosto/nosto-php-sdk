@@ -44,6 +44,23 @@ abstract class NostoOperation
     const CONTENT_TYPE_APPLICATION_JSON = 'application/json';
 
     /**
+     * Helper method to throw an exception when an API or HTTP endpoint responds
+     * with a non-200 status code.
+     *
+     * @param $request NostoHttpRequest the HTTP request
+     * @param $response NostoHttpResponse the HTTP response to check
+     * @return bool returns true when everything was okay
+     * @throws HttpException when the endpoint responds with non-200 status code
+     */
+    protected static function checkResponse(NostoHttpRequest $request, NostoHttpResponse $response)
+    {
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException($request, $response);
+        }
+        return true;
+    }
+
+    /**
      * Create and returns a new API request object initialized with a content-type
      * of 'application/json' and the specified authentication token
      *
@@ -81,22 +98,5 @@ abstract class NostoOperation
         $request->setContentType(self::CONTENT_TYPE_URL_FORM_ENCODED);
         $request->setAuthBasic('', $token->getValue());
         return $request;
-    }
-
-    /**
-     * Helper method to throw an exception when an API or HTTP endpoint responds
-     * with a non-200 status code.
-     *
-     * @param $request NostoHttpRequest the HTTP request
-     * @param $response NostoHttpResponse the HTTP response to check
-     * @return bool returns true when everything was okay
-     * @throws HttpException when the endpoint responds with non-200 status code
-     */
-    protected static function checkResponse(NostoHttpRequest $request, NostoHttpResponse $response)
-    {
-        if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
-        }
-        return true;
     }
 }

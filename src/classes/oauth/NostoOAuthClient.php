@@ -81,17 +81,6 @@ class NostoOAuthClient
     }
 
     /**
-     * Returns the base URL by reading the environment and system variables. This
-     * value can be overridden for testing purposes byt editing the .env file
-     *
-     * @return string the base URL for the endpoint
-     */
-    final public static function getBaseURL()
-    {
-        return getenv('NOSTO_OAUTH_BASE_URL');
-    }
-
-    /**
      * Returns the authorize url to the oauth2 server.
      *
      * @return string the url.
@@ -107,6 +96,17 @@ class NostoOAuthClient
                 '{iso}' => strtolower($this->languageIsoCode),
             )
         );
+    }
+
+    /**
+     * Returns the base URL by reading the environment and system variables. This
+     * value can be overridden for testing purposes byt editing the .env file
+     *
+     * @return string the base URL for the endpoint
+     */
+    final public static function getBaseURL()
+    {
+        return getenv('NOSTO_OAUTH_BASE_URL');
     }
 
     /**
