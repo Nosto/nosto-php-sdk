@@ -14,6 +14,9 @@
   "autoload": {
     "classmap": [
       "src/"
+    ],
+    "files": [
+      "bootstrap.php"
     ]
   },
   "autoload-dev": {
@@ -27,5 +30,8 @@
     "phpseclib/phpseclib": "~2.0",
     "codeception/c3": "^2.0",
     "vlucas/phpdotenv": "^2.4"
+  },
+  "suggested": {
+
   }
 }
