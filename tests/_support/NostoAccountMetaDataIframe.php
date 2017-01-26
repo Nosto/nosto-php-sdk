@@ -96,4 +96,8 @@ class NostoAccountMetaDataIframe implements NostoAccountMetaDataIframeInterface
 	{
 		return 'Shop Name';
 	}
+	public function getModules()
+	{
+		return array();
+	}
 }
