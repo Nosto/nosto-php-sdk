@@ -36,7 +36,7 @@
 
 date_default_timezone_set('Europe/Helsinki');
 $dotenv = new Dotenv\Dotenv(dirname(__FILE__));
-$dotenv->load();
+$dotenv->overload();
 
-require_once(dirname(__FILE__) . '/../src/config.inc.php');
+#require_once(dirname(__FILE__) . '/../src/config.inc.php');
 NostoHttpRequest::buildUserAgent('PHPUnit', '1.0.0', '1.0.0');

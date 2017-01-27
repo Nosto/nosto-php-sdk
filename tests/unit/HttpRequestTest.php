@@ -1,6 +1,4 @@
 <?php
-use Codeception\TestCase\Test;
-
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -35,6 +33,9 @@ use Codeception\TestCase\Test;
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
+
+use Codeception\TestCase\Test;
+
 class HttpRequestTest extends Test
 {
     /**

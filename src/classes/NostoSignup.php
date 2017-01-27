@@ -61,7 +61,7 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
     private $billing;
 
     /**
-     * @var string details
+     * @var array|stdClass details
      */
     private $details = null;
 

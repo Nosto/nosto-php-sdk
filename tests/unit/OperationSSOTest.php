@@ -34,14 +34,8 @@
  *
  */
 
-namespace unit;
-
 use Codeception\Specify;
 use Codeception\TestCase\Test;
-use MockNostoAccount;
-use MockNostoCurrentUser;
-use NostoApiToken;
-use NostoOperationSso;
 
 class OperationSSOTest extends Test
 {

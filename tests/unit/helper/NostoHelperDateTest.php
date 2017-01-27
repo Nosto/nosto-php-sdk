@@ -34,8 +34,6 @@
  *
  */
 
-namespace unit\helper;
-
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use NostoHelperDate;

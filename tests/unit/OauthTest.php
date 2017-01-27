@@ -1,7 +1,4 @@
 <?php
-use Codeception\Specify;
-use Codeception\TestCase\Test;
-
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -36,6 +33,10 @@ use Codeception\TestCase\Test;
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
+
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+
 class OauthTest extends Test
 {
     use Specify;
