@@ -5,8 +5,9 @@
   "require-dev": {
     "codeception/codeception": "@stable",
     "codeception/specify": "@stable",
-    "etsy/phan": "dev-master",
+    "etsy/phan": "0.8.0",
     "phpmd/phpmd": "^2.5",
+    "squizlabs/php_codesniffer": "2.*",
     "sebastian/phpcpd": "*",
     "phpdocumentor/reflection-docblock": "3.0.0",
     "phing/phing": "2.*"

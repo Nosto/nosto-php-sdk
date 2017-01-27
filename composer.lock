@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0f377486a81d88d9b1ba5708333ffdc3",
-    "content-hash": "81e2d8c7db996c6fa656e7d40d79dac8",
+    "hash": "9fac1729ce5877752c19212890f7f0d2",
+    "content-hash": "69ad2d20d9c572583b637afea052af0f",
     "packages": [
         {
             "name": "codeception/c3",
-            "version": "2.0.8",
+            "version": "2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/c3.git",
-                "reference": "d71e5d2b015169fce61c923bfbf41c3d83087604"
+                "reference": "85c8e405a03c1d5055f1977673b20377aaa0bd22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/c3/zipball/d71e5d2b015169fce61c923bfbf41c3d83087604",
-                "reference": "d71e5d2b015169fce61c923bfbf41c3d83087604",
+                "url": "https://api.github.com/repos/Codeception/c3/zipball/85c8e405a03c1d5055f1977673b20377aaa0bd22",
+                "reference": "85c8e405a03c1d5055f1977673b20377aaa0bd22",
                 "shasum": ""
             },
             "require": {
@@ -55,7 +55,7 @@
                 "code coverage",
                 "codecoverage"
             ],
-            "time": "2016-09-16 22:57:33"
+            "time": "2017-01-21 00:34:49"
         },
         {
             "name": "paragonie/random_compat",
@@ -679,21 +679,21 @@
         },
         {
             "name": "etsy/phan",
-            "version": "dev-master",
+            "version": "0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/etsy/phan.git",
-                "reference": "f30bd95bd8c4dc1a2dbf404176527478d6411f84"
+                "reference": "685bb56bf88a1485bb76a3e3cc2469357d1bd8e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/etsy/phan/zipball/f30bd95bd8c4dc1a2dbf404176527478d6411f84",
-                "reference": "f30bd95bd8c4dc1a2dbf404176527478d6411f84",
+                "url": "https://api.github.com/repos/etsy/phan/zipball/685bb56bf88a1485bb76a3e3cc2469357d1bd8e4",
+                "reference": "685bb56bf88a1485bb76a3e3cc2469357d1bd8e4",
                 "shasum": ""
             },
             "require": {
                 "ext-ast": "*",
-                "php": ">=7.0",
+                "php": "~7.0.0",
                 "symfony/console": "~2.3|~3.0"
             },
             "require-dev": {
@@ -729,7 +729,7 @@
                 "php",
                 "static"
             ],
-            "time": "2017-01-04 17:05:14"
+            "time": "2017-01-24 16:41:51"
         },
         {
             "name": "facebook/webdriver",
@@ -927,16 +927,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.5.5",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "399c1f9781e222f6eb6cc238796f5200d1b7f108"
+                "reference": "5a5a9fc8025a08d8919be87d6884d5a92520cefe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/399c1f9781e222f6eb6cc238796f5200d1b7f108",
-                "reference": "399c1f9781e222f6eb6cc238796f5200d1b7f108",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/5a5a9fc8025a08d8919be87d6884d5a92520cefe",
+                "reference": "5a5a9fc8025a08d8919be87d6884d5a92520cefe",
                 "shasum": ""
             },
             "require": {
@@ -965,20 +965,20 @@
                 "object",
                 "object graph"
             ],
-            "time": "2016-10-31 17:19:45"
+            "time": "2017-01-26 22:05:40"
         },
         {
             "name": "pdepend/pdepend",
-            "version": "2.4.1",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "3acfa4fcadbb8b65b8b2ec077408c5ef0e112e68"
+                "reference": "0c50874333149c0dad5a2877801aed148f2767ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/3acfa4fcadbb8b65b8b2ec077408c5ef0e112e68",
-                "reference": "3acfa4fcadbb8b65b8b2ec077408c5ef0e112e68",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/0c50874333149c0dad5a2877801aed148f2767ff",
+                "reference": "0c50874333149c0dad5a2877801aed148f2767ff",
                 "shasum": ""
             },
             "require": {
@@ -1005,7 +1005,7 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "time": "2017-01-11 16:15:35"
+            "time": "2017-01-19 14:23:36"
         },
         {
             "name": "phing/phing",
@@ -1248,20 +1248,21 @@
         },
         {
             "name": "phpmd/phpmd",
-            "version": "2.5.0",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpmd/phpmd.git",
-                "reference": "9298602a922cd8c46666df8d540a60bc5925ce55"
+                "reference": "4e9924b2c157a3eb64395460fcf56b31badc8374"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/9298602a922cd8c46666df8d540a60bc5925ce55",
-                "reference": "9298602a922cd8c46666df8d540a60bc5925ce55",
+                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/4e9924b2c157a3eb64395460fcf56b31badc8374",
+                "reference": "4e9924b2c157a3eb64395460fcf56b31badc8374",
                 "shasum": ""
             },
             "require": {
-                "pdepend/pdepend": "^2.0.4",
+                "ext-xml": "*",
+                "pdepend/pdepend": "^2.5",
                 "php": ">=5.3.9"
             },
             "require-dev": {
@@ -1309,7 +1310,7 @@
                 "phpmd",
                 "pmd"
             ],
-            "time": "2016-11-23 20:33:32"
+            "time": "2017-01-20 14:41:10"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2233,6 +2234,84 @@
             "time": "2015-06-21 13:59:46"
         },
         {
+            "name": "squizlabs/php_codesniffer",
+            "version": "2.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "9b324f3a1132459a7274a0ace2e1b766ba80930f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/9b324f3a1132459a7274a0ace2e1b766ba80930f",
+                "reference": "9b324f3a1132459a7274a0ace2e1b766ba80930f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.1.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "bin": [
+                "scripts/phpcs",
+                "scripts/phpcbf"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "CodeSniffer.php",
+                    "CodeSniffer/CLI.php",
+                    "CodeSniffer/Exception.php",
+                    "CodeSniffer/File.php",
+                    "CodeSniffer/Fixer.php",
+                    "CodeSniffer/Report.php",
+                    "CodeSniffer/Reporting.php",
+                    "CodeSniffer/Sniff.php",
+                    "CodeSniffer/Tokens.php",
+                    "CodeSniffer/Reports/",
+                    "CodeSniffer/Tokenizers/",
+                    "CodeSniffer/DocGenerators/",
+                    "CodeSniffer/Standards/AbstractPatternSniff.php",
+                    "CodeSniffer/Standards/AbstractScopeSniff.php",
+                    "CodeSniffer/Standards/AbstractVariableSniff.php",
+                    "CodeSniffer/Standards/IncorrectPatternException.php",
+                    "CodeSniffer/Standards/Generic/Sniffs/",
+                    "CodeSniffer/Standards/MySource/Sniffs/",
+                    "CodeSniffer/Standards/PEAR/Sniffs/",
+                    "CodeSniffer/Standards/PSR1/Sniffs/",
+                    "CodeSniffer/Standards/PSR2/Sniffs/",
+                    "CodeSniffer/Standards/Squiz/Sniffs/",
+                    "CodeSniffer/Standards/Zend/Sniffs/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "http://www.squizlabs.com/php-codesniffer",
+            "keywords": [
+                "phpcs",
+                "standards"
+            ],
+            "time": "2016-11-30 04:02:31"
+        },
+        {
             "name": "symfony/browser-kit",
             "version": "v2.8.16",
             "source": {
@@ -2993,8 +3072,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "codeception/codeception": 0,
-        "codeception/specify": 0,
-        "etsy/phan": 20
+        "codeception/specify": 0
     },
     "prefer-stable": false,
     "prefer-lowest": false,

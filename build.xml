@@ -38,8 +38,22 @@
 
     <property name="package" value="${phing.project.name}" override="true"/>
 
+    <target name="phpmd">
+        <exec executable="./vendor/bin/phpmd" passthru="true">
+            <arg value="."/>
+            <arg value="--exclude"/>
+            <arg value="vendor"/>
+            <arg value="text"/>
+            <arg value="codesize,"/>
+            <arg value="naming,"/>
+            <arg value="unusedcode,"/>
+            <arg value="controversial,"/>
+            <arg value="design"/>
+        </exec>
+    </target>
+
     <target name="phpcs">
-        <exec executable="phpcs" passthru="true">
+        <exec executable="./vendor/bin/phpcs" passthru="true">
             <arg value="-v"/>
             <arg value="--standard=ruleset.xml"/>
             <arg value="."/>
@@ -47,16 +61,15 @@
     </target>
 
     <target name="phan">
-        <exec executable="phan" passthru="true">
+        <exec executable="./vendor/bin/phan" passthru="true">
+            <arg value="--progress-bar"/>
             <arg value="--signature-compatibility"/>
             <arg value="--config-file=phan.php"/>
             <arg value="."/>
         </exec>
     </target>
 
-    <target name="dist" depends="phpcs, phan">
-
+    <target name="dist" depends="phpcs, phan, phpmd">
         <echo msg="All done"/>
-
     </target>
 </project>
