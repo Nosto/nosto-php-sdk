@@ -95,7 +95,7 @@ interface NostoSignupInterface extends NostoSettingsInterface
     /**
      * Returns the account details
      *
-     * @return string
+     * @return array|stdClass
      */
     public function getDetails();
 }

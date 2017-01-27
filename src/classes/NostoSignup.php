@@ -263,7 +263,7 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
 
     /**
      * Sets the details
-     * @param string $details
+     * @param array|stdClass $details
      */
     public function setDetails($details)
     {

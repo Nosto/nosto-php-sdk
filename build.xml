@@ -52,6 +52,13 @@
         </exec>
     </target>
 
+    <target name="phpcpd">
+        <exec executable="./vendor/bin/phpcpd" passthru="true">
+            <arg value="--min-lines=1"/>
+            <arg value="src"/>
+        </exec>
+    </target>
+
     <target name="phpcs">
         <exec executable="./vendor/bin/phpcs" passthru="true">
             <arg value="-v"/>
@@ -69,7 +76,7 @@
         </exec>
     </target>
 
-    <target name="dist" depends="phpcs, phan, phpmd">
+    <target name="dist" depends="phpcs, phan, phpmd, phpcpd">
         <echo msg="All done"/>
     </target>
 </project>
