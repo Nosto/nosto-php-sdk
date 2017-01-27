@@ -36,7 +36,6 @@
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
-use NostoHelperDate;
 
 class NostoHelperDateTest extends Test
 {

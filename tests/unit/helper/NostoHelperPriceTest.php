@@ -36,7 +36,6 @@
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
-use NostoHelperPrice;
 
 class NostoHelperPriceTest extends Test
 {
