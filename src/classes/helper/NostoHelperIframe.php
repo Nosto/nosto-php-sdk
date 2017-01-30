@@ -73,6 +73,7 @@ final class NostoHelperIframe extends NostoHelper
             'fname' => $iframe->getFirstName(),
             'lname' => $iframe->getLastName(),
             'email' => $iframe->getEmail(),
+            'modules' => $iframe->getModules()
         );
         if ($account instanceof NostoAccountInterface) {
             $missingScopes = $account->getMissingTokens();

@@ -100,6 +100,10 @@ class NostoIframe extends NostoObject implements NostoIframeInterface
      * @var string the version number of the platform extension is running on.
      */
     private $versionPlatform;
+    /**
+     * @var string the associative array with installed modules
+     */
+    private $modules = array();
 
     public function __construct()
     {
@@ -401,5 +405,33 @@ class NostoIframe extends NostoObject implements NostoIframeInterface
     public function setShopName($shopName)
     {
         $this->shopName = $shopName;
+    }
+
+    /**
+     * Add an installed module to the list of installed modules.
+     *
+     * @param $module array the installed modules
+     */
+    public function addModule(array $module)
+    {
+        $this->modules[] = $module;
+    }
+
+    /**
+     * Sets the associative array with installed modules.
+     *
+     * @param array $modules the array of installed modules
+     */
+    public function setModules(array $modules)
+    {
+        $this->modules = $modules;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getModules()
+    {
+        return $this->modules;
     }
 }

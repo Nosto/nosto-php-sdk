@@ -155,4 +155,11 @@ interface NostoIframeInterface
      * @return string the name.
      */
     public function getShopName();
+
+    /**
+     * Returns associative array with installed modules.
+     *
+     * @return array array(moduleName=1, moduleName=0)
+     */
+    public function getModules();
 }
