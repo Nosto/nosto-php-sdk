@@ -670,6 +670,14 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     }
 
     /**
+     * @param string $alternateImageUrl
+     */
+    public function addAlternateImageUrls($alternateImageUrl)
+    {
+        $this->alternateImageUrls[] = $alternateImageUrl;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getCondition()
