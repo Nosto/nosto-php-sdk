@@ -34,40 +34,6 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/vlucas/phpdotenv/src/Dotenv.php');
-require_once(dirname(__FILE__) . '/vlucas/phpdotenv/src/Exception/ExceptionInterface.php');
-require_once(dirname(__FILE__) . '/vlucas/phpdotenv/src/Exception/InvalidCallbackException.php');
-require_once(dirname(__FILE__) . '/vlucas/phpdotenv/src/Exception/InvalidFileException.php');
-require_once(dirname(__FILE__) . '/vlucas/phpdotenv/src/Exception/InvalidPathException.php');
-require_once(dirname(__FILE__) . '/vlucas/phpdotenv/src/Exception/ValidationException.php');
-require_once(dirname(__FILE__) . '/vlucas/phpdotenv/src/Loader.php');
-require_once(dirname(__FILE__) . '/vlucas/phpdotenv/src/Validator.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Crypt/AES.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Crypt/Base.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Crypt/Blowfish.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Crypt/DES.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Crypt/Hash.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Crypt/RC2.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Crypt/RC4.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Crypt/RSA.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Crypt/Random.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Crypt/Rijndael.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Crypt/TripleDES.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Crypt/Twofish.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/File/ANSI.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/File/ASN1.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/File/ASN1/Element.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/File/X509.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Math/BigInteger.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Net/SCP.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Net/SFTP.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Net/SFTP/Stream.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Net/SSH1.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/Net/SSH2.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/System/SSH/Agent.php');
-require_once(dirname(__FILE__) . '/phpseclib/phpseclib/phpseclib/System/SSH/Agent/Identity.php');
-
-// Interfaces
 require_once(dirname(__FILE__) . '/interfaces/NostoPersonInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoSettingsInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/signup/NostoSignupBillingDetailsInterface.php');
@@ -88,8 +54,7 @@ require_once(dirname(__FILE__) . '/interfaces/NostoNotificationInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoCurrentUserInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoLineItemInterface.php');
 
-// Classes
-require_once(dirname(__FILE__) . '/classes/http/NostoHttpRequest.php'); // Must be loaded before `NostoApiRequest`
+require_once(dirname(__FILE__) . '/classes/http/NostoHttpRequest.php');
 require_once(dirname(__FILE__) . '/classes/NostoObject.php');
 
 require_once(dirname(__FILE__) . '/classes/api/NostoApiRequest.php');
@@ -146,7 +111,3 @@ require_once(dirname(__FILE__) . '/classes/NostoPerson.php');
 require_once(dirname(__FILE__) . '/classes/NostoSignupOwner.php');
 require_once(dirname(__FILE__) . '/classes/NostoCurrentUser.php');
 require_once(dirname(__FILE__) . '/classes/NostoNotification.php');
-
-
-$dotenv = new Dotenv\Dotenv(dirname(__FILE__));
-$dotenv->load();
