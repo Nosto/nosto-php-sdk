@@ -129,7 +129,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     /**
      * @var array alternative image urls
      */
-    private $alternateImageUrls;
+    private $alternateImageUrls = array();
 
     /**
      * @var string the condition of the product
