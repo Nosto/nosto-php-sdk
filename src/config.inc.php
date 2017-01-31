@@ -96,6 +96,7 @@ require_once(dirname(__FILE__) . '/classes/operation/NostoOperationOrder.php');
 require_once(dirname(__FILE__) . '/classes/operation/NostoOperationOauthSync.php');
 
 require_once(dirname(__FILE__) . '/classes/Nosto.php');
+require_once(dirname(__FILE__) . '/classes/NostoProduct.php');
 require_once(dirname(__FILE__) . '/classes/NostoAccount.php');
 require_once(dirname(__FILE__) . '/classes/NostoSettings.php');
 require_once(dirname(__FILE__) . '/classes/NostoIframe.php');
