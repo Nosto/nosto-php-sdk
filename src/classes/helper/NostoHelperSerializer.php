@@ -41,6 +41,12 @@
  */
 class NostoHelperSerializer extends NostoHelper
 {
+
+    public static function serialize($object)
+    {
+        return json_encode(self::toArray($object));
+    }
+
     // @codeCoverageIgnoreStart
     /** @noinspection PhpUndefinedClassInspection */
     /**
@@ -50,7 +56,7 @@ class NostoHelperSerializer extends NostoHelper
      * @param $object
      * @return string|scalar
      */
-    public static function serialize($object)
+    private static function toArray($object)
     {
         $json = array();
         $props = self::getProperties($object);
@@ -72,13 +78,13 @@ class NostoHelperSerializer extends NostoHelper
 
             $key = self::toSnakeCase($key);
             if (is_object($object->$getter())) {
-                $json[$key] = self::serialize($object->$getter());
+                $json[$key] = self::toArray($object->$getter());
             } else {
                 if (is_array($object->$getter())) {
                     $json[$key] = array();
                     foreach ($object->$getter() as $anObject) {
                         if (is_object($anObject)) {
-                            $json[$key][] = self::serialize($anObject);
+                            $json[$key][] = self::toArray($anObject);
                         } else {
                             $json[$key][] = $anObject;
                         }
@@ -88,7 +94,7 @@ class NostoHelperSerializer extends NostoHelper
                 }
             }
         }
-        return json_encode($json);
+        return $json;
     }
 
     /**
@@ -98,7 +104,7 @@ class NostoHelperSerializer extends NostoHelper
      * @param $input string the input camel-cased string
      * @return string the converted snake-cased string
      */
-    public static function toSnakeCase($input)
+    private static function toSnakeCase($input)
     {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
         $ret = $matches[0];
@@ -114,7 +120,7 @@ class NostoHelperSerializer extends NostoHelper
      * @param $obj object the object whose properties to list
      * @return array the array of the keys and properties of the object
      */
-    public static function getProperties($obj)
+    private static function getProperties($obj)
     {
         $properties = array();
         try {
