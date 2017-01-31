@@ -82,11 +82,21 @@ class NostoHelperSerializer extends NostoHelper
             } else {
                 if (is_array($object->$getter())) {
                     $json[$key] = array();
-                    foreach ($object->$getter() as $anObject) {
-                        if (is_object($anObject)) {
-                            $json[$key][] = self::toArray($anObject);
-                        } else {
-                            $json[$key][] = $anObject;
+                    if (self::isAssoc($object->$getter())) {
+                        foreach ($object->$getter() as $k => $anObject) {
+                            if (is_object($anObject)) {
+                                $json[$key][$k] = self::toArray($anObject);
+                            } else {
+                                $json[$key][$k] = $anObject;
+                            }
+                        }
+                    } else {
+                        foreach ($object->$getter() as $anObject) {
+                            if (is_object($anObject)) {
+                                $json[$key][] = self::toArray($anObject);
+                            } else {
+                                $json[$key][] = $anObject;
+                            }
                         }
                     }
                 } else {
@@ -98,20 +108,18 @@ class NostoHelperSerializer extends NostoHelper
     }
 
     /**
-     * Converts a camel-cased string to a snake-cased string to comply with the JSON serialization
-     * strategy
+     * Checkes whether an array is associative or sequentially indexed as associative arrays are
+     * handled as objects
      *
-     * @param $input string the input camel-cased string
-     * @return string the converted snake-cased string
+     * @param array $arr the array to check
+     * @return bool true if the array is associative
      */
-    private static function toSnakeCase($input)
+    private static function isAssoc(array $arr)
     {
-        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
-        $ret = $matches[0];
-        foreach ($ret as &$match) {
-            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        if (array() === $arr) {
+            return false;
         }
-        return implode('_', $ret);
+        return array_keys($arr) !== range(0, count($arr) - 1);
     }
 
     /**
@@ -138,5 +146,22 @@ class NostoHelperSerializer extends NostoHelper
             //
         }
         return $properties;
+    }
+
+    /**
+     * Converts a camel-cased string to a snake-cased string to comply with the JSON serialization
+     * strategy
+     *
+     * @param $input string the input camel-cased string
+     * @return string the converted snake-cased string
+     */
+    private static function toSnakeCase($input)
+    {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+        $ret = $matches[0];
+        foreach ($ret as &$match) {
+            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        }
+        return implode('_', $ret);
     }
 }
