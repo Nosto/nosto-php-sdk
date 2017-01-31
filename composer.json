@@ -28,8 +28,7 @@
   },
   "require": {
     "phpseclib/phpseclib": "2.0.4",
-    "vlucas/phpdotenv": "2.4.0",
-    "league/fractal": "0.15.0"
+    "vlucas/phpdotenv": "2.4.0"
   },
   "suggested": {
 

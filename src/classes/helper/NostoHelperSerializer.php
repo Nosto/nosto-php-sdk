@@ -34,19 +34,13 @@
  *
  */
 
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-
 /**
  * Helper class for serialize objects to JSON using a snake-case naming convention.
- * It is not necessary to use this class directly as all operation classes
+ * It is not necessary to use this class directly, as all operation classes
  * automatically use this helper to serialize objects to JSON
  */
 class NostoHelperSerializer extends NostoHelper
 {
-
     // @codeCoverageIgnoreStart
     /** @noinspection PhpUndefinedClassInspection */
     /**
@@ -58,8 +52,85 @@ class NostoHelperSerializer extends NostoHelper
      */
     public static function serialize($object)
     {
-        $normalizers = array(new ObjectNormalizer(null, new CamelCaseToSnakeCaseNameConverter()));
-        $serializer = new Serializer($normalizers, array(new JsonEncoder()));
-        return $serializer->serialize($object, 'json');
+        $json = array();
+        $props = self::getProperties($object);
+        foreach ($props as $key => $value) {
+            $check_references = explode("_", $key);
+            $getter = "";
+            if (count($check_references) > 0) {
+                foreach ($check_references as $reference) {
+                    $getter .= ucfirst($reference);
+                }
+            } else {
+                $getter = ucfirst($key);
+            }
+            $getter = "get" . $getter;
+
+            if (!method_exists($object, $getter)) {
+                continue;
+            }
+
+            $key = self::toSnakeCase($key);
+            if (is_object($object->$getter())) {
+                $json[$key] = self::serialize($object->$getter());
+            } else {
+                if (is_array($object->$getter())) {
+                    $json[$key] = array();
+                    foreach ($object->$getter() as $anObject) {
+                        if (is_object($anObject)) {
+                            $json[$key][] = self::serialize($anObject);
+                        } else {
+                            $json[$key][] = $anObject;
+                        }
+                    }
+                } else {
+                    $json[$key] = $object->$getter();
+                }
+            }
+        }
+        return json_encode($json);
+    }
+
+    /**
+     * Converts a camel-cased string to a snake-cased string to comply with the JSON serialization
+     * strategy
+     *
+     * @param $input string the input camel-cased string
+     * @return string the converted snake-cased string
+     */
+    public static function toSnakeCase($input)
+    {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+        $ret = $matches[0];
+        foreach ($ret as &$match) {
+            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        }
+        return implode('_', $ret);
+    }
+
+    /**
+     * Recursively lists all the properties of the given class by traversing up the class hierarchy
+     *
+     * @param $obj object the object whose properties to list
+     * @return array the array of the keys and properties of the object
+     */
+    public static function getProperties($obj)
+    {
+        $properties = array();
+        try {
+            $rc = new ReflectionClass($obj);
+            do {
+                $rp = array();
+                /* @var $p \ReflectionProperty */
+                foreach ($rc->getProperties() as $p) {
+                    $p->setAccessible(true);
+                    $rp[$p->getName()] = $p->getValue($obj);
+                }
+                $properties = array_merge($rp, $properties);
+            } while ($rc = $rc->getParentClass());
+        } catch (ReflectionException $e) {
+            //
+        }
+        return $properties;
     }
 }
