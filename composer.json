@@ -10,7 +10,8 @@
     "squizlabs/php_codesniffer": "2.*",
     "sebastian/phpcpd": "*",
     "phpdocumentor/reflection-docblock": "3.0.0",
-    "phing/phing": "2.*"
+    "phing/phing": "2.*",
+    "codeception/c3": "^2.0"
   },
   "autoload": {
     "classmap": [
@@ -26,11 +27,9 @@
     ]
   },
   "require": {
-    "symfony/serializer": "3.1.8",
-    "symfony/property-access": "~3.0",
-    "phpseclib/phpseclib": "~2.0",
-    "codeception/c3": "^2.0",
-    "vlucas/phpdotenv": "^2.4"
+    "phpseclib/phpseclib": "2.0.4",
+    "vlucas/phpdotenv": "2.4.0",
+    "league/fractal": "0.15.0"
   },
   "suggested": {
 
