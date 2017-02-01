@@ -61,7 +61,8 @@
 
     <target name="phpcs">
         <exec executable="./vendor/bin/phpcs" passthru="true">
-            <arg value="-v"/>
+            <arg value="--colors"/>
+            <arg value="--report-width=auto"/>
             <arg value="--standard=ruleset.xml"/>
             <arg value="."/>
         </exec>

@@ -53,4 +53,11 @@ interface NostoOrderStatusInterface
      * @return string the label.
      */
     public function getLabel();
+
+    /**
+     * Returns the order status date.
+     *
+     * @return string the date.
+     */
+    public function getDate();
 }

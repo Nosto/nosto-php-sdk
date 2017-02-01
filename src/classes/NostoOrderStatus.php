@@ -50,6 +50,11 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
     private $label;
 
     /**
+     * @var string the order status date as set via the payment provider
+     */
+    private $date;
+
+    /**
      * NostoOrderStatus constructor
      */
     public function __construct()
@@ -93,5 +98,24 @@ class NostoOrderStatus extends NostoObject implements NostoOrderStatusInterface
     public function setLabel($label)
     {
         $this->label = $label;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Sets the date of the order status as flagged by the payment provider.
+     * The date should be in the Y-m-d format.
+     *
+     * @param string $date the date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
     }
 }

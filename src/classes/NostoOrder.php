@@ -106,9 +106,9 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     /**
      * Add an previous order status to the order
      *
-     * @param NostoOrderStatus $orderStatus the order status
+     * @param NostoOrderStatusInterface $orderStatus the order status
      */
-    public function addOrderStatus($orderStatus)
+    public function addOrderStatus(NostoOrderStatusInterface $orderStatus)
     {
         $this->orderStatuses[] = $orderStatus;
     }
@@ -206,7 +206,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      *
      * @param NostoOrderStatusInterface $orderStatus the order status
      */
-    public function setOrderStatus($orderStatus)
+    public function setOrderStatus(NostoOrderStatusInterface $orderStatus)
     {
         $this->orderStatus = $orderStatus;
     }
@@ -224,7 +224,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      *
      * @param NostoLineItemInterface[] $purchasedItems the purchased items
      */
-    public function setPurchasedItems($purchasedItems)
+    public function setPurchasedItems(array $purchasedItems)
     {
         $this->purchasedItems = $purchasedItems;
     }
@@ -242,7 +242,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      *
      * @param NostoOrderBuyerInterface $customer the buyer information
      */
-    public function setCustomer($customer)
+    public function setCustomer(NostoOrderBuyerInterface $customer)
     {
         $this->customer = $customer;
     }
