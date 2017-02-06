@@ -44,7 +44,15 @@ class NostoHelperSerializer extends NostoHelper
 
     public static function serialize($object)
     {
-        return json_encode(self::toArray($object));
+        $items = array();
+        if ($object instanceof Traversable) {
+            foreach ($object as $item) {
+                $items[] = self::toArray($item);
+            }
+            return json_encode($items);
+        } else {
+            return json_encode(self::toArray($object));
+        }
     }
 
     // @codeCoverageIgnoreStart

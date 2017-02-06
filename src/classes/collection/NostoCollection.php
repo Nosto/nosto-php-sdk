@@ -39,54 +39,50 @@
  * functionality to validate the items added to the collection. The collection behaves
  * like an array. making it easy to add items to it and iterate over it.
  */
-abstract class NostoCollection extends ArrayObject
+abstract class NostoCollection implements Iterator
 {
-    const OBJECT = 'object';
+
+    protected $var = array();
 
     /**
-     * @inheritdoc
+     * @see Iterator::rewind()
      */
-    public function offsetSet($index, $newval)
+    public function rewind()
     {
-        $this->validate($newval);
-        parent::offsetSet($index, $newval);
+        reset($this->var);
     }
 
     /**
-     * Validates that the given value is of correct type.
-     *
-     * @see NostoCollection::$validItemType
-     * @param mixed $value the value.
-     * @throws NostoException if the value is of invalid type.
+     * @see Iterator::current()
      */
-    protected function validate($value)
+    public function current()
     {
-        if (!is_a($value, $this->getValidItemType())) {
-            $valueType = gettype($value);
-            if ($valueType === self::OBJECT) {
-                $valueType = get_class($value);
-            }
-            throw new NostoException(sprintf(
-                'Collection supports items of type "%s" (type "%s" given)',
-                $this->getValidItemType(),
-                $valueType
-            ));
-        }
+        return current($this->var);
     }
 
     /**
-     * Returns the type of items this collection can contain.
-     *
-     * @return string the type of items this collection can contain.
+     * @see Iterator::key()
      */
-    abstract protected function getValidItemType();
+    public function key()
+    {
+        return key($this->var);
+    }
 
     /**
-     * @inheritdoc
+     * @see Iterator::next()
      */
-    public function append($value)
+    public function next()
     {
-        $this->validate($value);
-        parent::append($value);
+        return next($this->var);
+    }
+
+    /**
+     * @see Iterator::valid()
+     */
+    public function valid()
+    {
+        $key = key($this->var);
+        $var = ($key !== null && $key !== false);
+        return $var;
     }
 }

@@ -35,26 +35,17 @@
  */
 
 /**
- * Collection class to store a collection of orders. Supports only items
- * implementing "NostoProductInterface".
+ * Collection class to store a collection of products
  */
-class NostoProductCollection extends NostoCollection
+class NostoProductCollection extends ArrayObject
 {
     /**
-     * Returns the type of items this collection can contain.
+     * Appends a product to the collection of products
      *
-     * @return string the type of items this collection can contain.
+     * @param NostoProductInterface $product the product to append
      */
-    protected function getValidItemType()
+    public function append(NostoProductInterface $product)
     {
-        return 'NostoProductInterface';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function append(NostoProductInterface $value)
-    {
-        parent::append($value);
+        $this->var[] = $product;
     }
 }

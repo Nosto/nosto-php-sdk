@@ -35,26 +35,17 @@
  */
 
 /**
- * Collection class to store a collection of orders. Supports only items
- * implementing "NostoOrderInterface".
+ * Collection class to store a collection of orders.
  */
 class NostoOrderCollection extends NostoCollection
 {
     /**
-     * Returns the type of items this collection can contain.
+     * Appends an order to the collection of orders
      *
-     * @return string the type of items this collection can contain.
+     * @param NostoOrderInterface $order the order to append
      */
-    protected function getValidItemType()
+    public function append(NostoOrderInterface $order)
     {
-        return 'NostoOrderInterface';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function append(NostoOrderInterface $value)
-    {
-        parent::append($value);
+        $this->var[] = $order;
     }
 }
