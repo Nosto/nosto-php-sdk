@@ -59,6 +59,15 @@
         </exec>
     </target>
 
+    <target name="phpcbf">
+        <exec executable="./vendor/bin/phpcbf" passthru="true">
+            <arg value="--colors"/>
+            <arg value="--report-width=auto"/>
+            <arg value="--standard=ruleset.xml"/>
+            <arg value="."/>
+        </exec>
+    </target>
+
     <target name="phpcs">
         <exec executable="./vendor/bin/phpcs" passthru="true">
             <arg value="--colors"/>
@@ -77,7 +86,7 @@
         </exec>
     </target>
 
-    <target name="dist" depends="phpcs, phan, phpmd, phpcpd">
+    <target name="dist" depends="phpcbf, phpcs, phan, phpmd, phpcpd">
         <echo msg="All done"/>
     </target>
 </project>
