@@ -117,3 +117,4 @@ require_once(dirname(__FILE__) . '/classes/NostoNotification.php');
 require_once(dirname(__FILE__) . '/classes/NostoOrderBuyer.php');
 require_once(dirname(__FILE__) . '/classes/NostoOrderStatus.php');
 require_once(dirname(__FILE__) . '/classes/NostoOrder.php');
+require_once(dirname(__FILE__) . '/classes/NostoOAuth.php');
