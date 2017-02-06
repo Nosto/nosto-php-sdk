@@ -114,4 +114,6 @@ require_once(dirname(__FILE__) . '/classes/NostoPerson.php');
 require_once(dirname(__FILE__) . '/classes/NostoSignupOwner.php');
 require_once(dirname(__FILE__) . '/classes/NostoCurrentUser.php');
 require_once(dirname(__FILE__) . '/classes/NostoNotification.php');
+require_once(dirname(__FILE__) . '/classes/NostoOrderBuyer.php');
+require_once(dirname(__FILE__) . '/classes/NostoOrderStatus.php');
 require_once(dirname(__FILE__) . '/classes/NostoOrder.php');
