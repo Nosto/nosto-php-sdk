@@ -49,4 +49,12 @@ class NostoOrderCollection extends NostoCollection
     {
         return 'NostoOrderInterface';
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function append(NostoOrderInterface $value)
+    {
+        parent::append($value);
+    }
 }
