@@ -37,7 +37,7 @@
 /**
  * Collection class to store a collection of products
  */
-class NostoProductCollection extends ArrayObject
+class NostoProductCollection extends NostoCollection
 {
     /**
      * Appends a product to the collection of products
