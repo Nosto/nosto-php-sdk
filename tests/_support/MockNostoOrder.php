@@ -39,7 +39,6 @@ class MockNostoOrder extends NostoOrder
     public function __construct()
     {
         parent::__construct();
-        $this->setOrderStatus(1);
         $this->setCreatedDate('2014-12-12');
         $this->setPaymentProvider('test-gateway [1.0.0]');
         $this->setCustomer(new MockNostoOrderBuyer());

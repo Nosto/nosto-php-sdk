@@ -52,7 +52,7 @@ class HistoryExportTest extends Test
     public function testProductHistoryExport()
     {
         $collection = new NostoProductCollection();
-        $collection[] = new MockNostoProduct();
+        $collection->append(new MockNostoProduct());
         $cipher_text = NostoHelperExporter::export($this->account, $collection);
 
         $this->specify('verify encrypted product export',

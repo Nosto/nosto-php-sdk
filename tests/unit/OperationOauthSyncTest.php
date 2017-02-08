@@ -50,10 +50,18 @@ class OperationOauthSyncTest extends Test
     {
         $meta = new MockNostoOAuthClientMetaData();
         $client = new NostoOAuthClient($meta);
+        $baseUrl = Nosto::getEnvVariable('NOSTO_OAUTH_BASE_URL', NostoHttpRequest::getBaseURL());
+        $url = $client->getAuthorizationUrl();
+        $this->specify('oauth authorize url can be created', function () use ($url, $baseUrl) {
+            $url = parse_url($url);
+            parse_str($url['query'], $params);
 
-        $this->specify('oauth authorize url can be created', function () use ($client) {
-            $this->assertEquals('http://localhost:3000/oauth?client_id=client-id&redirect_uri=http%3A%2F%2Fmy.shop.com%2Fnosto%2Foauth&response_type=code&scope=sso products&lang=en',
-                $client->getAuthorizationUrl());
+            $this->assertEquals($url['path'], '/oauth');
+            $this->assertEquals($params['client_id'], 'client-id');
+            $this->assertEquals($params['redirect_uri'], 'http://my.shop.com/nosto/oauth');
+            $this->assertEquals($params['response_type'], 'code');
+            $this->assertEquals($params['scope'], 'sso products');
+            $this->assertEquals($params['lang'], 'en');
         });
 
         $service = new NostoOperationOauthSync($meta);
