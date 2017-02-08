@@ -70,7 +70,7 @@ class NostoOperationProduct extends NostoOperation
      */
     public function addProduct(NostoProductInterface $product)
     {
-        $this->collection[] = $product;
+        $this->collection->append($product);
     }
 
     /**

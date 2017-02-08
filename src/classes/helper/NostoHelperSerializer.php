@@ -62,7 +62,7 @@ class NostoHelperSerializer extends NostoHelper
      * Arrays and objects can both be passed normally.
      *
      * @param $object
-     * @return string|scalar
+     * @return array
      */
     private static function toArray($object)
     {

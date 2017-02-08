@@ -101,7 +101,7 @@ class NostoIframe extends NostoObject implements NostoIframeInterface
      */
     private $versionPlatform;
     /**
-     * @var string the associative array with installed modules
+     * @var array the associative array with installed modules
      */
     private $modules = array();
 
