@@ -86,7 +86,13 @@
         </exec>
     </target>
 
-    <target name="dist" depends="phpcbf, phpcs, phan, phpmd, phpcpd">
+    <target name="test">
+        <exec executable="./vendor/bin/codecept" passthru="true">
+            <arg value="run"/>
+        </exec>
+    </target>
+
+    <target name="dist" depends="phpcbf, phpcs, phan, phpmd, phpcpd, test">
         <echo msg="All done"/>
     </target>
 </project>
