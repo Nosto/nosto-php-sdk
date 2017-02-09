@@ -92,7 +92,7 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
      * @param string $signupApiToken
      * @param string $partnerCode
      */
-    public function __construct($platform, $signupApiToken, $partnerCode)
+    public function __construct($platform, $signupApiToken, $partnerCode = null)
     {
         $this->setPlatform($platform);
         $this->setSignupApiToken(new NostoApiToken(NostoApiToken::API_CREATE, $signupApiToken));
@@ -246,7 +246,7 @@ class NostoSignup extends NostoSettings implements NostoSignupInterface
      * Sets the partner code for revenue attribution if one has been given. If
      * no partner code is specified, this may be omitted.
      *
-     * @param string $partnerCode
+     * @param string|null $partnerCode
      */
     public function setPartnerCode($partnerCode)
     {

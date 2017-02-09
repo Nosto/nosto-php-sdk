@@ -229,8 +229,8 @@ class NostoHttpRequest
      * plugin version
      *
      * @param string $platformName the name of the platform using the SDK
-     * @param array $platformVersion the version of the platform using the SDK
-     * @param array $pluginVersion the version of the plugin using the SDK
+     * @param string $platformVersion the version of the platform using the SDK
+     * @param string $pluginVersion the version of the plugin using the SDK
      */
     public static function buildUserAgent($platformName, $platformVersion, $pluginVersion)
     {
