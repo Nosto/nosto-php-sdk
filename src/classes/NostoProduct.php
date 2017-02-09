@@ -79,7 +79,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     /**
      * @var string the currency iso code.
      */
-    private $currencyCode;
+    private $priceCurrencyCode;
 
     /**
      * @var string product availability (use constants).
@@ -457,7 +457,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function getPriceCurrencyCode()
     {
-        return $this->currencyCode;
+        return $this->priceCurrencyCode;
     }
 
     /**
@@ -472,7 +472,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     public function setPriceCurrencyCode($currency)
     {
-        $this->currencyCode = $currency;
+        $this->priceCurrencyCode = $currency;
     }
 
     /**
