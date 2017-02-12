@@ -67,12 +67,12 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     private $imageUrl;
 
     /**
-     * @var int product price, discounted including vat.
+     * @var int|float product price, discounted including vat.
      */
     private $price;
 
     /**
-     * @var int product list price, including vat.
+     * @var int|float product list price, including vat.
      */
     private $listPrice;
 
@@ -445,7 +445,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     /**
      * Sets the product price.
      *
-     * @param integer $price the price.
+     * @param int|float $price the price.
      */
     public function setPrice($price)
     {
@@ -548,7 +548,7 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     /**
      * Sets the product list price.
      *
-     * @param integer $listPrice the price.
+     * @param int|float $listPrice the price.
      */
     public function setListPrice($listPrice)
     {

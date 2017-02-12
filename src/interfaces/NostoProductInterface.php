@@ -77,14 +77,14 @@ interface NostoProductInterface
     /**
      * Returns the price of the product including possible discounts and taxes.
      *
-     * @return float the price with 2 decimals, e.g. 1000.99.
+     * @return int|float the price with 2 decimals, e.g. 1000.99.
      */
     public function getPrice();
 
     /**
      * Returns the list price of the product without discounts but including possible taxes.
      *
-     * @return float the price with 2 decimals, e.g. 1000.99.
+     * @return int|float the price with 2 decimals, e.g. 1000.99.
      */
     public function getListPrice();
 
