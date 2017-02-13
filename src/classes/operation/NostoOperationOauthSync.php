@@ -40,7 +40,7 @@
 class NostoOperationOauthSync extends NostoOperation
 {
     /**
-     * @var NostoOAuthClientMetaDataInterface the Oauth meta data params
+     * @var NostoOAuthInterface the Oauth meta data params
      */
     private $meta;
 
@@ -49,9 +49,9 @@ class NostoOperationOauthSync extends NostoOperation
      *
      * Accepts the Nosto account for which the service is to operate on.
      *
-     * @param NostoOAuthClientMetaDataInterface $meta the oauth meta data params
+     * @param NostoOAuthInterface $meta the oauth meta data params
      */
-    public function __construct(NostoOAuthClientMetaDataInterface $meta)
+    public function __construct(NostoOAuthInterface $meta)
     {
         $this->meta = $meta;
     }

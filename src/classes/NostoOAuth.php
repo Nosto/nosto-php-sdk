@@ -37,7 +37,7 @@
 /**
  * Oauth DTO (Data Transfer Object).
  */
-class NostoOAuth implements NostoOAuthClientMetaDataInterface
+class NostoOAuth implements NostoOAuthInterface
 {
     /**
      * @var array The scopes for the OAuth2 request.
