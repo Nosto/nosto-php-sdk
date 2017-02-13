@@ -46,7 +46,7 @@ trait NostoIframeMixin
      * @param array $params additional parameters to add to the iframe url.
      * @return string the iframe url.
      */
-    public function getUrl(array $params = array())
+    public function buildURL(array $params = array())
     {
         $iframe = self::getIframe();
         $defaultParameters = array(
@@ -87,13 +87,13 @@ trait NostoIframeMixin
                 // The only case when this should happen is when the api token for some
                 // reason is invalid, which is the case when switching between environments.
                 $url = NostoHttpRequest::buildUri(
-                    self::getBaseUrl() . '/hub/{platform}/uninstall' . '?' . $queryParams,
+                    self::getIframeBaseUrl() . '/hub/{platform}/uninstall' . '?' . $queryParams,
                     array('{platform}' => $iframe->getPlatform(),)
                 );
             }
         } else {
             $url = NostoHttpRequest::buildUri(
-                self::getBaseUrl() . '/hub/{platform}/install' . '?' . $queryParams,
+                self::getIframeBaseUrl() . '/hub/{platform}/install' . '?' . $queryParams,
                 array('{platform}' => $iframe->getPlatform())
             );
         }
@@ -127,7 +127,7 @@ trait NostoIframeMixin
      *
      * @return string the url.
      */
-    private static function getBaseUrl()
+    private static function getIframeBaseUrl()
     {
         return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', NostoHttpRequest::getBaseURL());
     }
