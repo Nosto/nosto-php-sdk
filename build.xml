@@ -89,6 +89,8 @@
     <target name="test">
         <exec executable="./vendor/bin/codecept" passthru="true">
             <arg value="run"/>
+            <arg value="--coverage"/>
+            <arg value="--coverage-html"/>
         </exec>
     </target>
 

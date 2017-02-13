@@ -3,13 +3,12 @@
   "description": "PHP SDK for developing Nosto modules for e-commerce platforms",
   "license": "BSD-3-Clause",
   "require-dev": {
-    "codeception/codeception": "@stable",
-    "codeception/specify": "@stable",
+    "codeception/base": "2.2.9",
+    "codeception/specify": "^0.4.6",
+    "phpmd/phpmd": "^2.6",
+    "squizlabs/php_codesniffer": "^2.8",
     "etsy/phan": "0.8.0",
-    "phpmd/phpmd": "^2.5",
-    "squizlabs/php_codesniffer": "2.*",
-    "sebastian/phpcpd": "*",
-    "phpdocumentor/reflection-docblock": "3.0.0",
+    "sebastian/phpcpd": "^3.0",
     "phing/phing": "2.*",
     "codeception/c3": "^2.0"
   },
