@@ -189,6 +189,13 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
      */
     private $unitPricingUnit;
 
+    /**
+     * SKUs / variations
+     *
+     * @var array of SKUs
+     */
+    private $skus;
+
     public function __construct()
     {
         // Dummy
@@ -805,5 +812,31 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
         $this->unitPricingUnit = $unitPricingUnit;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getSkus()
+    {
+        return $this->skus;
+    }
 
+    /**
+     * Sets the SKUs
+     *
+     * @param array $skus
+     */
+    public function setSkus($skus)
+    {
+        $this->skus = $skus;
+    }
+
+    /**
+     * Sets the SKUs
+     *
+     * @param NostoSkuInterface $sku
+     */
+    public function addSku(NostoSkuInterface $sku)
+    {
+        $this->skus[] = $sku;
+    }
 }

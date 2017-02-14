@@ -244,4 +244,11 @@ interface NostoProductInterface
      * @return string|null
      */
     public function getUnitPricingUnit();
+
+    /**
+     * Returns the product varations
+     *
+     * @returns
+     */
+    public function getSkus();
 }

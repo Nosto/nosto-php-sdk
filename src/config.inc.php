@@ -44,6 +44,7 @@ require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderBuyerInterface.php
 require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/order/NostoOrderStatusInterface.php');
 
+require_once(dirname(__FILE__) . '/interfaces/NostoSkuInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoIframeInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoOAuthInterface.php');
 require_once(dirname(__FILE__) . '/interfaces/NostoProductInterface.php');
@@ -105,6 +106,7 @@ require_once(dirname(__FILE__) . '/classes/NostoSettings.php');
 require_once(dirname(__FILE__) . '/classes/NostoIframe.php');
 require_once(dirname(__FILE__) . '/classes/NostoSignupBilling.php');
 require_once(dirname(__FILE__) . '/classes/NostoSignup.php');
+require_once(dirname(__FILE__) . '/classes/NostoSku.php');
 require_once(dirname(__FILE__) . '/classes/NostoCipher.php');
 require_once(dirname(__FILE__) . '/classes/NostoMessage.php');
 require_once(dirname(__FILE__) . '/classes/NostoValidator.php');
