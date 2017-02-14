@@ -764,4 +764,46 @@ class NostoProduct extends NostoObject implements NostoProductInterface, NostoVa
     {
         return $this->unitPricingUnit;
     }
+
+    /**
+     * @param string $gender
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    /**
+     * @param string $ageGroup
+     */
+    public function setAgeGroup($ageGroup)
+    {
+        $this->ageGroup = $ageGroup;
+    }
+
+    /**
+     * @param string $unitPricingMeasure
+     */
+    public function setUnitPricingMeasure($unitPricingMeasure)
+    {
+        $this->unitPricingMeasure = $unitPricingMeasure;
+    }
+
+    /**
+     * @param string $unitPricingBaseMeasure
+     */
+    public function setUnitPricingBaseMeasure($unitPricingBaseMeasure)
+    {
+        $this->unitPricingBaseMeasure = $unitPricingBaseMeasure;
+    }
+
+    /**
+     * @param string $unitPricingUnit
+     */
+    public function setUnitPricingUnit($unitPricingUnit)
+    {
+        $this->unitPricingUnit = $unitPricingUnit;
+    }
+
+
 }
