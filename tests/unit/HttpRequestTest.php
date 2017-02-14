@@ -91,7 +91,7 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestAuthInvalid()
     {
-        $this->setExpectedException('NostoException');
+        $this->expectException('NostoException');
         $request = new NostoHttpRequest();
         $request->setAuth('test', 'test');
     }

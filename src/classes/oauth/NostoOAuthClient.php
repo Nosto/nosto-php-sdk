@@ -69,9 +69,9 @@ class NostoOAuthClient
     private $scopes = array();
 
     /**
-     * @param NostoOAuthClientMetaDataInterface $metaData
+     * @param NostoOAuthInterface $metaData
      */
-    public function __construct(NostoOAuthClientMetaDataInterface $metaData)
+    public function __construct(NostoOAuthInterface $metaData)
     {
         $this->scopes = $metaData->getScopes();
         $this->clientId = $metaData->getClientId();

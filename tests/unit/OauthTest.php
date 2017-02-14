@@ -46,11 +46,11 @@ class OauthTest extends Test
      */
     public function testOauthAuthenticateWithoutCode()
     {
-        $meta = new MockNostoOAuthClientMetaData();
+        $meta = new MockNostoOAuth();
         $client = new NostoOAuthClient($meta);
 
         $this->specify('failed oauth authenticate', function () use ($client) {
-            $this->setExpectedException('NostoException');
+            $this->expectException('NostoException');
             $client->authenticate('');
         });
     }

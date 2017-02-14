@@ -23,7 +23,7 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoExportProductCollection** class for exporting historical product data
 * **NostoHelper** base class for all nosto helpers
 * **NostoHelperDate** helper class for date related operations
-* **NostoHelperIframe** helper class for iframe related operations
+* **NostoIframeMixin** helper class for iframe related operations
 * **NostoHelperPrice** helper class for price related operations
 * **NostoHttpRequest** class for making HTTP request, supports both curl and socket connections
 * **NostoHttpRequestAdapter** base class for creating http request adapters
@@ -95,7 +95,7 @@ First redirect to the Nosto OAuth2 server.
 
 ```php
     .....
-    /** @var NostoOAuthClientMetaDataInterface $meta */
+    /** @var NostoOAuthInterface $meta */
     $client = new NostoOAuthClient($meta);
   	header('Location: ' . $client->getAuthorizationUrl());
 ```
@@ -105,7 +105,7 @@ Then have a public endpoint ready to handle the return request.
 ```php
     if (isset($_GET['code'])) {
         try {
-            /** @var NostoOAuthClientMetaDataInterface $meta */
+            /** @var NostoOAuthInterface $meta */
             $account = NostoSignup::syncFromNosto($meta, $_GET['code']);
             // save the synced account according to the platforms requirements
         } catch (NostoException $e) {

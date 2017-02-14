@@ -35,29 +35,20 @@
  */
 
 /**
- * Iframe helper class for account administration iframe.
+ * Iframe mixin class for account administration iframe.
  */
-final class NostoHelperIframe extends NostoHelper
+trait NostoIframeMixin
 {
-    const IFRAME_URI_INSTALL = '/hub/{platform}/install';
-    const IFRAME_URI_UNINSTALL = '/hub/{platform}/uninstall';
-
     /**
      * Returns the url for the account administration iframe.
      * If the passed account is null, then the url will point to the start page where a new account can be created.
      *
-     * @param NostoIframeInterface $iframe the iframe meta data.
-     * @param NostoAccountInterface|null $account the configuration to return the url for.
-     * @param NostoCurrentUserInterface $user
      * @param array $params additional parameters to add to the iframe url.
      * @return string the iframe url.
      */
-    public static function getUrl(
-        NostoIframeInterface $iframe,
-        NostoAccountInterface $account = null,
-        NostoCurrentUserInterface $user = null,
-        array $params = array()
-    ) {
+    public function buildURL(array $params = array())
+    {
+        $iframe = self::getIframe();
         $defaultParameters = array(
             'lang' => strtolower($iframe->getLanguageIsoCode()),
             'ps_version' => $iframe->getVersionPlatform(),
@@ -75,19 +66,17 @@ final class NostoHelperIframe extends NostoHelper
             'email' => $iframe->getEmail(),
             'modules' => $iframe->getModules()
         );
+
+        $account = self::getAccount();
         if ($account instanceof NostoAccountInterface) {
             $missingScopes = $account->getMissingTokens();
             if (!empty($missingScopes)) {
                 $defaultParameters['missing_scopes'] = implode(',', $missingScopes);
             }
         }
-        $queryParams = http_build_query(
-            array_merge(
-                $defaultParameters,
-                $params
-            )
-        );
+        $queryParams = http_build_query(array_merge($defaultParameters, $params));
 
+        $user = self::getUser();
         if ($account !== null && $user !== null && $account->isConnectedToNosto()) {
             try {
                 $service = new NostoOperationSso($account);
@@ -98,18 +87,14 @@ final class NostoHelperIframe extends NostoHelper
                 // The only case when this should happen is when the api token for some
                 // reason is invalid, which is the case when switching between environments.
                 $url = NostoHttpRequest::buildUri(
-                    NostoHelperIframe::getBaseUrl() . self::IFRAME_URI_UNINSTALL . '?' . $queryParams,
-                    array(
-                        '{platform}' => $iframe->getPlatform(),
-                    )
+                    self::getIframeBaseUrl() . '/hub/{platform}/uninstall' . '?' . $queryParams,
+                    array('{platform}' => $iframe->getPlatform(),)
                 );
             }
         } else {
             $url = NostoHttpRequest::buildUri(
-                NostoHelperIframe::getBaseUrl() . self::IFRAME_URI_INSTALL . '?' . $queryParams,
-                array(
-                    '{platform}' => $iframe->getPlatform(),
-                )
+                self::getIframeBaseUrl() . '/hub/{platform}/install' . '?' . $queryParams,
+                array('{platform}' => $iframe->getPlatform())
             );
         }
 
@@ -117,11 +102,32 @@ final class NostoHelperIframe extends NostoHelper
     }
 
     /**
+     * Returns the iframe params with which to load the IFrame
+     *
+     * @return NostoIframeInterface the iframe params with which to load the iframe
+     */
+    public abstract function getIframe();
+
+    /**
+     * Returns the current for which to load the IFrame
+     *
+     * @return NostoCurrentUserInterface the current user for which to load the iframe
+     */
+    public abstract function getUser();
+
+    /**
+     * Returns the account for which to load the IFrame
+     *
+     * @return NostoAccountInterface the account for which to load the iframe
+     */
+    public abstract function getAccount();
+
+    /**
      * Returns the base url for the Nosto iframe.
      *
      * @return string the url.
      */
-    private static function getBaseUrl()
+    private static function getIframeBaseUrl()
     {
         return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', NostoHttpRequest::getBaseURL());
     }

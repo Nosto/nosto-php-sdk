@@ -48,7 +48,7 @@ class OperationOauthSyncTest extends Test
      */
     public function testSyncingExistingAccount()
     {
-        $meta = new MockNostoOAuthClientMetaData();
+        $meta = new MockNostoOAuth();
         $client = new NostoOAuthClient($meta);
         $baseUrl = Nosto::getEnvVariable('NOSTO_OAUTH_BASE_URL', NostoHttpRequest::getBaseURL());
         $url = $client->getAuthorizationUrl();

@@ -66,9 +66,14 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     private $purchasedItems = array();
 
     /**
-     * @var NostoOrderStatusInterface the latest order status of the order
+     * @var string the latest order status of the order
      */
-    private $orderStatus;
+    private $orderStatusCode;
+
+    /**
+     * @var string the latest order status of the order
+     */
+    private $orderStatusLabel;
 
     /**
      * @var NostoOrderStatusInterface[] the previous order statuses of the order
@@ -190,7 +195,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function getOrderStatusCode()
     {
-        return $this->orderStatus ? $this->orderStatus->getCode() : null;
+        return $this->orderStatusCode;
     }
 
     /**
@@ -198,7 +203,7 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function getOrderStatusLabel()
     {
-        return $this->orderStatus ? $this->orderStatus->getLabel() : null;
+        return $this->orderStatusLabel;
     }
 
     /**
@@ -208,7 +213,8 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
      */
     public function setOrderStatus(NostoOrderStatusInterface $orderStatus)
     {
-        $this->orderStatus = $orderStatus;
+        $this->orderStatusCode = $orderStatus->getCode();
+        $this->orderStatusLabel = $orderStatus->getLabel();
     }
 
     /**
