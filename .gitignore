@@ -1,5 +1,3 @@
-.env
-.env.*
 vendor
 tests/_output/*
 tests/_support/_generated/*
