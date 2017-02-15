@@ -62,7 +62,7 @@ function includeDependencies($dir)
     require_once($dir . '/phpseclib/phpseclib/phpseclib/System/SSH/Agent.php');
     require_once($dir . '/phpseclib/phpseclib/phpseclib/System/SSH/Agent/Identity.php');
 
-    require dirname(__FILE__) . '/src/config.inc.php';
+    require dirname(__FILE__) . '/config.inc.php';
     $dotenv = new Dotenv\Dotenv(dirname(__FILE__));
     $dotenv->load();
 }
