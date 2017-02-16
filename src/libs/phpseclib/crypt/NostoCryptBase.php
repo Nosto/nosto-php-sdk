@@ -116,39 +116,6 @@ if (!defined('CRYPT_MODE_MCRYPT')) {
 }
 
 /**
- * NostoUndefinedMethodException
- *
- * @author  Jim Wigginton <terrafrost@php.net>
- * @version 0.3.5
- * @package NostoCryptBase
- */
-class NostoUndefinedMethodException extends Exception
-{
-}
-
-/**
- * NostoInvalidLengthException
- *
- * @author  Jim Wigginton <terrafrost@php.net>
- * @version 0.3.5
- * @package NostoCryptBase
- */
-class NostoInvalidLengthException extends Exception
-{
-}
-
-/**
- * NostoInvalidPaddingException
- *
- * @author  Jim Wigginton <terrafrost@php.net>
- * @version 0.3.5
- * @package NostoCryptBase
- */
-class NostoInvalidPaddingException extends Exception
-{
-}
-
-/**
  * Base Class for all Crypt* cipher classes
  *
  * @author  Jim Wigginton <terrafrost@php.net>

@@ -34,18 +34,13 @@
  *
  */
 
-class NostoOrderBuyer implements NostoOrderBuyerInterface
+/**
+ * NostoInvalidPaddingException
+ *
+ * @author  Jim Wigginton <terrafrost@php.net>
+ * @version 0.3.5
+ * @package NostoCryptBase
+ */
+class NostoInvalidPaddingException extends Exception
 {
-	public function getFirstName()
-	{
-		return 'James';
-	}
-	public function getLastName()
-	{
-		return 'Kirk';
-	}
-	public function getEmail()
-	{
-		return 'james.kirk@example.com';
-	}
 }

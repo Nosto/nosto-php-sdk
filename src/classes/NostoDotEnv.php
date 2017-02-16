@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016, Nosto Solutions Ltd
+ * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2016 Nosto Solutions Ltd
+ * @copyright 2017 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -105,8 +105,9 @@ class NostoDotEnv
     {
         if (strpos(trim($var), '#') !== 0 && strpos($var, '=') !== false) {
             list($name, $value) = $this->normalizeEnvVariable($var);
-            if (!isset($_ENV[$name])) {
-                $_ENV[$name] = $value;
+            if (!getenv($name)) {
+                putenv($name=$value);
+                putenv($name=$value);
             }
         }
     }
@@ -198,6 +199,6 @@ class NostoDotEnv
      */
     protected function getMatchedVariable($match)
     {
-        return isset($_ENV[$match[1]]) ? $_ENV[$match[1]] : $match[0];
+        return getenv($match[1]) ? getenv($match[1]) : $match[0];
     }
 }
