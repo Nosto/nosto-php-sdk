@@ -106,8 +106,7 @@ class NostoDotEnv
         if (strpos(trim($var), '#') !== 0 && strpos($var, '=') !== false) {
             list($name, $value) = $this->normalizeEnvVariable($var);
             if (!getenv($name)) {
-                putenv($name=$value);
-                putenv($name=$value);
+                putenv("$name=$value");
             }
         }
     }
