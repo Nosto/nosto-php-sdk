@@ -252,4 +252,25 @@ class NostoOrder extends NostoObject implements NostoOrderInterface, NostoValida
     {
         $this->customer = $customer;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getOrderStatuses()
+    {
+        $formatted = array();
+        if (
+            $this->orderStatuses instanceof Traversable
+            || is_array($this->orderStatuses)
+        ) {
+            foreach ($this->orderStatuses as $orderStatus) {
+                if (!isset($formatted[$orderStatus->getCode()])) {
+                    $formatted[$orderStatus->getCode()] = array();
+                }
+                $formatted[$orderStatus->getCode()][] = $orderStatus->getDate();
+            }
+        }
+
+        return $formatted;
+    }
 }

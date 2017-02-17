@@ -95,4 +95,11 @@ interface NostoOrderInterface
      * @return string the external order ref.
      */
     public function getExternalOrderRef();
+
+    /**
+     * Returns the order status history
+     *
+     * @return array
+     */
+    public function getOrderStatuses();
 }
