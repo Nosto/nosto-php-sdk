@@ -101,5 +101,4 @@ interface NostoSkuInterface
      * @return array
      */
     public function getCustomAttributes();
-
 }

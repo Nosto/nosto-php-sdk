@@ -49,7 +49,7 @@ class Nosto
      */
     public static function getEnvVariable($name, $default = null)
     {
-        return isset($_ENV[$name]) ? $_ENV[$name] : $default;
+        return getenv($name) ? getenv($name) : $default;
     }
 
     /**
