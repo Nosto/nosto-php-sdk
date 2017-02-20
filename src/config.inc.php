@@ -74,6 +74,7 @@ require_once(dirname(__FILE__) . '/classes/exception/NostoApiResponseException.p
 require_once(dirname(__FILE__) . '/classes/helper/NostoHelper.php');
 require_once(dirname(__FILE__) . '/classes/helper/NostoHelperExporter.php');
 require_once(dirname(__FILE__) . '/classes/helper/NostoHelperDate.php');
+require_once(dirname(__FILE__) . '/classes/helper/NostoHelperIframe.php');
 require_once(dirname(__FILE__) . '/classes/helper/NostoHelperPrice.php');
 require_once(dirname(__FILE__) . '/classes/helper/NostoHelperSerializer.php');
 
