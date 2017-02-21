@@ -63,6 +63,10 @@ function includeDependencies($dir)
     require_once($dir . '/phpseclib/phpseclib/phpseclib/System/SSH/Agent/Identity.php');
 
     require dirname(__FILE__) . '/config.inc.php';
-    $dotenv = new Dotenv\Dotenv(dirname(__FILE__));
-    $dotenv->load();
+    try {
+        $dotenv = new Dotenv\Dotenv(dirname(__FILE__));
+        $dotenv->load();
+    } catch (Exception $e) {
+        // Could not load ENV using defaults
+    }
 }
