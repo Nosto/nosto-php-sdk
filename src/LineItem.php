@@ -33,6 +33,8 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Line item DTO (Data Transfer Object).
  * This is an abstract used by the cart and order items.

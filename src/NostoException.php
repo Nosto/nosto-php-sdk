@@ -33,9 +33,11 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Nosto exception class for all errors within the sdk.
  */
-class NostoException extends Exception
+class NostoException extends \Exception
 {
 }

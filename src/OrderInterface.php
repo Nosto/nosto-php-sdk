@@ -33,6 +33,8 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Interface for the meta data of an placed order.
  * This is used when making order confirmation API requests and order history exports to Nosto.

@@ -33,10 +33,12 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Owner DTO (Data Transfer Object).
  */
-class NostoOwner implements \NostoAccountMetaOwnerInterface
+class NostoOwner implements NostoAccountMetaOwnerInterface
 {
     /**
      * @var string the account owner first name.

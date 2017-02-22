@@ -33,6 +33,8 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Currency helper class for currency related actions.
  */
@@ -49,7 +51,7 @@ class NostoHelperCurrency extends NostoHelper
      *
      * @throws NostoInvalidArgumentException
      */
-    public function parseZendCurrencyFormat($currencyCode, Zend_Currency $zendCurrency)
+    public function parseZendCurrencyFormat($currencyCode, \Zend_Currency $zendCurrency)
     {
         try {
             $format = Zend_Locale_Data::getContent($zendCurrency->getLocale(), 'currencynumber');

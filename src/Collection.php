@@ -33,6 +33,8 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Base class for all Nosto object collection classes.
  * The base class provides the functionality to validate the items added to the collection.

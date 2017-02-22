@@ -33,10 +33,12 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * IFrame DTO (Data Transfer Object).
  */
-class NostoIframe implements \NostoAccountMetaIframeInterface
+class NostoIframe implements NostoAccountMetaIframeInterface
 {
     /**
      * @var string unique ID that identifies the Magento installation.
@@ -44,12 +46,12 @@ class NostoIframe implements \NostoAccountMetaIframeInterface
     protected $_uniqueId;
 
     /**
-     * @var \NostoLanguageCode the language code for oauth server locale.
+     * @var NostoLanguageCode the language code for oauth server locale.
      */
     protected $_language;
 
     /**
-     * @var \NostoLanguageCode the language code for the store view scope.
+     * @var NostoLanguageCode the language code for the store view scope.
      */
     protected $_shopLanguage;
 
@@ -120,7 +122,7 @@ class NostoIframe implements \NostoAccountMetaIframeInterface
     /**
      * @inheritdoc
      */
-    public function setLanguage(\NostoLanguageCode $language)
+    public function setLanguage(NostoLanguageCode $language)
     {
         $this->_language = $language;
     }
@@ -136,7 +138,7 @@ class NostoIframe implements \NostoAccountMetaIframeInterface
     /**
      * @inheritdoc
      */
-    public function setShopLanguage(\NostoLanguageCode $shopLanguage)
+    public function setShopLanguage(NostoLanguageCode $shopLanguage)
     {
         $this->_shopLanguage = $shopLanguage;
     }

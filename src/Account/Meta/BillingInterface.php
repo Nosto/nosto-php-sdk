@@ -33,6 +33,8 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Interface for account billing details.
  * This is used by the NostoAccountMetaInterface meta data model when creating new Nosto accounts.

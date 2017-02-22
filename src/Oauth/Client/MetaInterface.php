@@ -33,6 +33,8 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Interface for the OAuth2 client.
  * The client implements the "Authorization Code" OAuth2 spec.

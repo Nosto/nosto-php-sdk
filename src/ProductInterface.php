@@ -33,6 +33,8 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Interface for the meta data of a product.
  * This is used when making product re-crawl API requests and product history exports to Nosto.

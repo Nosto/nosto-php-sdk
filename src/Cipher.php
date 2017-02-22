@@ -33,13 +33,15 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Helper class for encrypting/decrypting strings.
  */
 class NostoCipher
 {
     /**
-     * @var phpseclib_Crypt_Base the crypt library instance.
+     * @var \Phpseclib\phpseclib_Crypt_Base the crypt library instance.
      */
     private $crypt;
 
@@ -48,7 +50,7 @@ class NostoCipher
      */
     public function __construct()
     {
-        $this->crypt = new phpseclib_Crypt_AES();
+        $this->crypt = new \Phpseclib\phpseclib_Crypt_AES();
     }
 
     /**

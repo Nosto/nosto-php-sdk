@@ -33,6 +33,8 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Value Object for representing a product availability.
  */
@@ -40,8 +42,6 @@ final class NostoProductAvailability
 {
     const IN_STOCK = 'InStock';
     const OUT_OF_STOCK = 'OutOfStock';
-    const INVISIBLE = 'Invisible';
-    const DISCONTINUED = 'Discontinued';
 
     /**
      * @var string the availability, i.e. either "InStock" or "OutOfStock".

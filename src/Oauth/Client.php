@@ -33,6 +33,8 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Helper class for doing OAuth2 authorization with Nosto.
  * The client implements the 'Authorization Code' grant type.

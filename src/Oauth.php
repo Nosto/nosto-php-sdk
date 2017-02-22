@@ -33,10 +33,12 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Oauth DTO (Data Transfer Object).
  */
-class NostoOauth implements \NostoOauthClientMetaInterface
+class NostoOauth implements NostoOauthClientMetaInterface
 {
     /**
      * @var array The scopes for the OAuth2 request.
@@ -50,13 +52,13 @@ class NostoOauth implements \NostoOauthClientMetaInterface
     protected $_redirectUrl;
 
     /**
-     * @var \NostoLanguageCode the 2-letter ISO code (ISO 639-1) for localization
+     * @var NostoLanguageCode the 2-letter ISO code (ISO 639-1) for localization
      * on oauth2 server.
      */
     protected $_language;
 
     /**
-     * @var \NostoAccount|null account if OAuth is to sync details.
+     * @var NostoAccount|null account if OAuth is to sync details.
      */
     protected $_account;
 
@@ -119,7 +121,7 @@ class NostoOauth implements \NostoOauthClientMetaInterface
     /**
      * @inheritdoc
      */
-    public function setLanguage(\NostoLanguageCode $language)
+    public function setLanguage(NostoLanguageCode $language)
     {
         $this->_language = $language;
     }
@@ -135,7 +137,7 @@ class NostoOauth implements \NostoOauthClientMetaInterface
     /**
      * @inheritdoc
      */
-    public function setAccount(\NostoAccountMetaInterface $account)
+    public function setAccount(NostoAccountMetaInterface $account)
     {
         $this->_account = $account;
     }

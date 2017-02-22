@@ -33,13 +33,15 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Billing DTO (Data Transfer Object).
  */
-class NostoBilling implements \NostoAccountMetaBillingInterface
+class NostoBilling implements NostoAccountMetaBillingInterface
 {
     /**
-     * @var \NostoCountryCode country ISO (ISO 3166-1 alpha-2) code for billing details.
+     * @var NostoCountryCode country ISO (ISO 3166-1 alpha-2) code for billing details.
      */
     protected $_country;
 
@@ -54,7 +56,7 @@ class NostoBilling implements \NostoAccountMetaBillingInterface
     /**
      * @inheritdoc
      */
-    public function setCountry(\NostoCountryCode $country)
+    public function setCountry(NostoCountryCode $country)
     {
         $this->_country = $country;
     }

@@ -33,6 +33,8 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Util class for providing message types and codes that are used for forwarding
  * information to the account administration iframe so we can show feedback to

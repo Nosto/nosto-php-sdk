@@ -33,6 +33,8 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Interface for the meta data of a product price variation.
  * This is used in product the tagging, when making product API requests and product history exports to Nosto.

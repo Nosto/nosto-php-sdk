@@ -33,6 +33,8 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Currency exchange rate object collection.
  * Supports only items extending "NostoCurrencyExchangeRate".

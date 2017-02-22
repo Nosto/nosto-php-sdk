@@ -33,10 +33,12 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * Account DTO (Data Transfer Object).
  */
-class NostoAccount implements \NostoAccountMetaInterface
+class NostoAccount implements NostoAccountMetaInterface
 {
     /**
      * @var string the store name.
@@ -54,32 +56,32 @@ class NostoAccount implements \NostoAccountMetaInterface
     protected $_frontPageUrl;
 
     /**
-     * @var \NostoCurrencyCode the store currency ISO (ISO 4217) code.
+     * @var NostoCurrencyCode the store currency ISO (ISO 4217) code.
      */
     protected $_currency;
 
     /**
-     * @var \NostoLanguageCode the store language ISO (ISO 639-1) code.
+     * @var NostoLanguageCode the store language ISO (ISO 639-1) code.
      */
     protected $_language;
 
     /**
-     * @var \NostoLanguageCode the owner language ISO (ISO 639-1) code.
+     * @var NostoLanguageCode the owner language ISO (ISO 639-1) code.
      */
     protected $_ownerLanguage;
 
     /**
-     * @var \NostoOwner the account owner meta model.
+     * @var NostoOwner the account owner meta model.
      */
     protected $_owner;
 
     /**
-     * @var \NostoAccountMetaBillingInterface the billing meta model.
+     * @var NostoAccountMetaBillingInterface the billing meta model.
      */
     protected $_billing;
 
     /**
-     * @var \NostoCurrency[] list of supported currencies by the store.
+     * @var NostoCurrency[] list of supported currencies by the store.
      */
     protected $_currencies = array();
 
@@ -179,7 +181,7 @@ class NostoAccount implements \NostoAccountMetaInterface
     /**
      * @inheritdoc
      */
-    public function setCurrency(\NostoCurrencyCode $currency)
+    public function setCurrency(NostoCurrencyCode $currency)
     {
         $this->_currency = $currency;
     }
@@ -195,7 +197,7 @@ class NostoAccount implements \NostoAccountMetaInterface
     /**
      * @inheritdoc
      */
-    public function setLanguage(\NostoLanguageCode $language)
+    public function setLanguage(NostoLanguageCode $language)
     {
         $this->_language = $language;
     }
@@ -211,7 +213,7 @@ class NostoAccount implements \NostoAccountMetaInterface
     /**
      * @inheritdoc
      */
-    public function setOwnerLanguage(\NostoLanguageCode $ownerLanguage)
+    public function setOwnerLanguage(NostoLanguageCode $ownerLanguage)
     {
         $this->_ownerLanguage = $ownerLanguage;
     }
@@ -227,7 +229,7 @@ class NostoAccount implements \NostoAccountMetaInterface
     /**
      * @inheritdoc
      */
-    public function setOwner(\NostoAccountMetaOwnerInterface $owner)
+    public function setOwner(NostoAccountMetaOwnerInterface $owner)
     {
         $this->_owner = $owner;
     }
@@ -299,7 +301,7 @@ class NostoAccount implements \NostoAccountMetaInterface
     /**
      * @inheritdoc
      */
-    public function setBilling(\NostoAccountMetaBillingInterface $billing)
+    public function setBilling(NostoAccountMetaBillingInterface $billing)
     {
         $this->_billing = $billing;
     }

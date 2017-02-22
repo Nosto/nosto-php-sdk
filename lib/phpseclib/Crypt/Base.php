@@ -33,6 +33,8 @@
  * @link      http://phpseclib.sourceforge.net
  */
 
+namespace Phpseclib;
+
 /**
  * Base Class for all \phpseclib\Crypt\* cipher classes
  *

@@ -21,6 +21,8 @@
  * @link      http://phpseclib.sourceforge.net
  */
 
+namespace Phpseclib;
+
 /**
  * Pure-PHP Random Number Generator
  *

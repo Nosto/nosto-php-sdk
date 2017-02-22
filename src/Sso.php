@@ -33,10 +33,12 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  */
 
+namespace Nosto\Sdk;
+
 /**
  * SSO DTO (Data Transfer Object).
  */
-class NostoSso implements \NostoAccountMetaSingleSignOnInterface
+class NostoSso implements NostoAccountMetaSingleSignOnInterface
 {
     /**
      * @var string the admin user first name.
