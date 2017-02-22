@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use stdClass;
+
 /**
  * Represents a http request response returned by NostoHttpRequest.
  */

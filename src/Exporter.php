@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use Phpseclib\phpseclib_Crypt_Random;
+
 /**
  * Helper class for exporting historical product and order data from the shop.
  * This information is used to bootstrap recommendations and decreases the time needed to get accurate recommendations
@@ -58,7 +60,7 @@ class NostoExporter
             $tokenValue = $token->getValue();
             $secret = substr($tokenValue, 0, 16);
             if (!empty($secret)) {
-                $iv = \Phpseclib\phpseclib_Crypt_Random::string(16);
+                $iv = phpseclib_Crypt_Random::string(16);
                 $cipher = new NostoCipher();
                 $cipher->setSecret($secret);
                 $cipher->setIV($iv);

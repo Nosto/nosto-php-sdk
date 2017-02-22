@@ -130,7 +130,7 @@ class Nosto
      *
      * @param string $name the name of the class.
      * @param string $type the type of the class, e.g. "Helper", "Formatter"
-     * @return NostoFormatter the instance.
+     * @return mixed the instance.
      * @throws NostoException if instance cannot be found.
      */
     private static function getInstanceFromRegistry($name, $type)

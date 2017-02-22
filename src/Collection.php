@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use ArrayObject;
+
 /**
  * Base class for all Nosto object collection classes.
  * The base class provides the functionality to validate the items added to the collection.

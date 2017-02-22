@@ -35,6 +35,10 @@
 
 namespace Nosto\Sdk;
 
+use Zend_Currency;
+use Zend_Exception;
+use Zend_Locale_Data;
+
 /**
  * Currency helper class for currency related actions.
  */

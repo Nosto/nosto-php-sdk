@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use Exception;
+
 /**
  * Helper class for doing http requests and returning unified response including header info.
  */

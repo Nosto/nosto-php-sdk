@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use Phpseclib\phpseclib_Crypt_AES;
+
 /**
  * Helper class for encrypting/decrypting strings.
  */
@@ -50,7 +52,7 @@ class NostoCipher
      */
     public function __construct()
     {
-        $this->crypt = new \Phpseclib\phpseclib_Crypt_AES();
+        $this->crypt = new phpseclib_Crypt_AES();
     }
 
     /**
