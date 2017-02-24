@@ -14,7 +14,7 @@ coverage:
     whitelist:
         include:
             - src/classes/*
-            - src/interfaces/*
+            - src/Types/*
     exclude:
         - src/classes/NostoCurrency.php
 

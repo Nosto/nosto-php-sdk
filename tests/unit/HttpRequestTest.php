@@ -35,6 +35,10 @@
  */
 
 use Codeception\TestCase\Test;
+use Nosto\Request\Http\Adapter\Curl;
+use Nosto\Request\Http\Adapter\Socket;
+use Nosto\Request\Http\HttpRequest;
+use Nosto\Request\Http\HttpResponse;
 
 class HttpRequestTest extends Test
 {
@@ -49,7 +53,7 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestQueryParams()
     {
-        $request = new NostoHttpRequest();
+        $request = new HttpRequest();
         $request->setQueryParams(array(
             'param1' => 'first',
             'param2' => 'second',
@@ -66,7 +70,7 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestAuthBasic()
     {
-        $request = new NostoHttpRequest();
+        $request = new HttpRequest();
         $request->setAuthBasic('test', 'test');
         $headers = $request->getHeaders();
         $this->assertContains(
@@ -80,7 +84,7 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestAuthBearer()
     {
-        $request = new NostoHttpRequest();
+        $request = new HttpRequest();
         $request->setAuthBearer('test');
         $headers = $request->getHeaders();
         $this->assertContains('Authorization: Bearer test', $headers);
@@ -91,8 +95,8 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestAuthInvalid()
     {
-        $this->expectException('NostoException');
-        $request = new NostoHttpRequest();
+        $this->expectException('Nosto\Exception\NostoException');
+        $request = new HttpRequest();
         $request->setAuth('test', 'test');
     }
 
@@ -101,7 +105,7 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestBuildUri()
     {
-        $uri = NostoHttpRequest::buildUri(
+        $uri = HttpRequest::buildUri(
             sprintf(
                 'http://localhost:%d?param1={p1}&param2={p2}',
                 self::CURL_TEST_PORT
@@ -125,13 +129,13 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestBuildUrl()
     {
-        $url_parts = NostoHttpRequest::parseUrl(
+        $url_parts = HttpRequest::parseUrl(
             sprintf(
                 'http://localhost:%d/tmp/?param1=first&param2=second#fragment1=test',
                 self::CURL_TEST_PORT
             )
         );
-        $url = NostoHttpRequest::buildUrl($url_parts);
+        $url = HttpRequest::buildUrl($url_parts);
         $this->assertEquals(
             sprintf(
                 'http://localhost:%d/tmp/?param1=first&param2=second#fragment1=test',
@@ -146,7 +150,7 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestParseQueryString()
     {
-        $query_string_parts = NostoHttpRequest::parseQueryString('param1=first&param2=second');
+        $query_string_parts = HttpRequest::parseQueryString('param1=first&param2=second');
         $this->assertArrayHasKey('param1', $query_string_parts);
         $this->assertContains('first', $query_string_parts);
         $this->assertArrayHasKey('param2', $query_string_parts);
@@ -158,7 +162,7 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestReplaceQueryParamInUrl()
     {
-        $url = NostoHttpRequest::replaceQueryParamInUrl(
+        $url = HttpRequest::replaceQueryParamInUrl(
             'param1',
             'replaced_first',
             sprintf(
@@ -180,7 +184,7 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestReplaceQueryParam()
     {
-        $query_string = NostoHttpRequest::replaceQueryParam(
+        $query_string = HttpRequest::replaceQueryParam(
             'param2',
             'replaced_second',
             'param1=first&param2=second'
@@ -196,7 +200,7 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestResponseResult()
     {
-        $response = new NostoHttpResponse(array(), json_encode(array('test' => true)));
+        $response = new HttpResponse(array(), json_encode(array('test' => true)));
         $this->assertEquals('{"test":true}', $response->getResult());
         $result = $response->getJsonResult(true);
         $this->assertArrayHasKey('test', $result);
@@ -208,7 +212,7 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestResponseErrorMessage()
     {
-        $response = new NostoHttpResponse(array(), '', 'error');
+        $response = new HttpResponse(array(), '', 'error');
         $this->assertEquals('error', $response->getMessage());
     }
 
@@ -217,11 +221,11 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestCurlAdapter()
     {
-        $request = new NostoHttpRequest(new NostoHttpRequestAdapterCurl(NostoHttpRequest::$userAgent));
+        $request = new HttpRequest(new Curl(HttpRequest::$userAgent));
         $request->setPath('/404');
         $response = $request->get();
         $this->assertEquals(404, $response->getCode());
-        $response = $request->post(new MockNostoCurrentUser());
+        $response = $request->post(new MockUser());
         $this->assertEquals(404, $response->getCode());
         $request->setUrl(
             sprintf(
@@ -244,11 +248,11 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestSocketAdapter()
     {
-        $request = new NostoHttpRequest(new NostoHttpRequestAdapterSocket(NostoHttpRequest::$userAgent));
+        $request = new HttpRequest(new Socket(HttpRequest::$userAgent));
         $request->setPath('/404');
         $response = $request->get();
         $this->assertEquals(404, $response->getCode());
-        $response = $request->post(new MockNostoCurrentUser());
+        $response = $request->post(new MockUser());
         $this->assertEquals(404, $response->getCode());
     }
 }

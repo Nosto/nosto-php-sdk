@@ -39,4 +39,4 @@ $dotenv = new Dotenv\Dotenv(dirname(__FILE__));
 $dotenv->overload();
 
 require_once(dirname(__FILE__) . '/../vendor/autoload.php');
-NostoHttpRequest::buildUserAgent('PHPUnit', '1.0.0', '1.0.0');
+Nosto\Request\Http\HttpRequest::buildUserAgent('PHPUnit', '1.0.0', '1.0.0');

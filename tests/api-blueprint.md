@@ -114,10 +114,10 @@ Account related resources
 
 + Response 200
 
-# Group Order
-Order related resources
+# Group OrderConfirm
+OrderConfirm related resources
 
-## Matched Order Confirmation [/visits/order/confirm/{m}/{cid}]
+## Matched OrderConfirm Confirmation [/visits/order/confirm/{m}/{cid}]
 
 + Parameters
 
@@ -154,7 +154,7 @@ Order related resources
 
         {}
 
-## Un-matched Order Confirmation [/visits/order/unmatched/{m}]
+## Un-matched OrderConfirm Confirmation [/visits/order/unmatched/{m}]
 
 + Parameters
 
@@ -392,7 +392,7 @@ Product related resources
 
         {}
 
-## Sync Settings [/settings]
+## Sync UpdateSettings [/settings]
 
 ### Update account settings request [PUT]
 

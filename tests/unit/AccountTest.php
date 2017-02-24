@@ -36,6 +36,8 @@
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
+use Nosto\Object\Signup\Account;
+use Nosto\Request\Api\Token;
 
 class AccountTest extends Test
 {
@@ -46,16 +48,16 @@ class AccountTest extends Test
      */
     public function testAccountIsConnected()
     {
-        $account = new NostoAccount('platform-test');
+        $account = new Account('platform-test');
 
         $this->specify('account is not connected', function () use ($account) {
             $this->assertFalse($account->isConnectedToNosto());
         });
 
-        $token = new NostoApiToken('sso', '123');
+        $token = new Token('sso', '123');
         $account->addApiToken($token);
 
-        $token = new NostoApiToken('products', '123');
+        $token = new Token('products', '123');
         $account->addApiToken($token);
 
         $this->specify('account is connected', function () use ($account) {
@@ -68,13 +70,13 @@ class AccountTest extends Test
      */
     public function testAccountApiToken()
     {
-        $account = new NostoAccount('platform-test');
+        $account = new Account('platform-test');
 
         $this->specify('account does not have sso token', function () use ($account) {
             $this->assertNull($account->getApiToken('sso'));
         });
 
-        $token = new NostoApiToken('sso', '123');
+        $token = new Token('sso', '123');
         $account->addApiToken($token);
 
         $this->specify('account has sso token', function () use ($account) {

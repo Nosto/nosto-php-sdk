@@ -13,9 +13,9 @@
     "codeception/c3": "^2.0"
   },
   "autoload": {
-    "classmap": [
-      "src/"
-    ],
+    "psr-4": {
+      "Nosto\\": "src"
+    },
     "files": [
       "src/bootstrap.php"
     ]
@@ -28,8 +28,5 @@
   "require": {
     "phpseclib/phpseclib": "2.0.4",
     "vlucas/phpdotenv": "2.4.0"
-  },
-  "suggested": {
-
   }
 }
