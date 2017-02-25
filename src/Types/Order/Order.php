@@ -40,7 +40,8 @@ use Nosto\Types\LineItemInterface;
 
 /**
  * Interface for the meta data of an placed OrderConfirm.
- * This is used when making OrderConfirm confirmation API requests and OrderConfirm history exports to Nosto.
+ * This is used when making OrderConfirm confirmation API requests and OrderConfirm history
+ * exports to Nosto.
  */
 interface OrderInterface
 {
@@ -59,7 +60,8 @@ interface OrderInterface
     public function getCreatedDate();
 
     /**
-     * The payment provider used for placing the OrderConfirm, formatted according to "[provider name] [provider version]".
+     * The payment provider used for placing the OrderConfirm, formatted according to
+     * "[provider name] [provider version]".
      *
      * @return string the payment provider.
      */

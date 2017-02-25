@@ -36,7 +36,7 @@
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
-use Nosto\Operation\OAuth\OAuthSync;
+use Nosto\Operation\OAuth\ExchangeTokens;
 
 class OperationOauthSyncTest extends Test
 {
@@ -50,7 +50,7 @@ class OperationOauthSyncTest extends Test
     public function testSyncingExistingAccount()
     {
         $meta = new MockOAuth();
-        $service = new OAuthSync($meta);
+        $service = new ExchangeTokens($meta);
         $account = $service->exchange("test123");
 
         $this->specify('account was created', function () use ($account, $meta) {

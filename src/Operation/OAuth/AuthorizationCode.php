@@ -40,15 +40,13 @@ use Nosto\Exception\NostoException;
 use Nosto\Nosto;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Types\OAuthInterface;
-use NostoOAuthToken;
 
 /**
  * Helper class for doing OAuth2 authorization with Nosto.
  * The client implements the 'Authorization Code' grant type.
  */
-class OAuthClient
+class AuthorizationCode
 {
-    const PATH_AUTH = '?client_id={cid}&redirect_uri={uri}&response_type=code&scope={sco}&lang={iso}'; // @codingStandardsIgnoreLine
     const PATH_TOKEN = '/token?code={cod}&client_id={cid}&client_secret={sec}&redirect_uri={uri}&grant_type=authorization_code'; // @codingStandardsIgnoreLine
 
     /**
@@ -86,24 +84,6 @@ class OAuthClient
         $this->clientSecret = $metaData->getClientSecret();
         $this->redirectUrl = $metaData->getRedirectUrl();
         $this->languageIsoCode = $metaData->getLanguageIsoCode();
-    }
-
-    /**
-     * Returns the authorize url to the oauth2 server.
-     *
-     * @return string the url.
-     */
-    public function getAuthorizationUrl()
-    {
-        return HttpRequest::buildUri(
-            self::getBaseURL() . self::PATH_AUTH,
-            array(
-                '{cid}' => $this->clientId,
-                '{uri}' => urlencode($this->redirectUrl),
-                '{sco}' => implode(' ', $this->scopes),
-                '{iso}' => strtolower($this->languageIsoCode),
-            )
-        );
     }
 
     /**

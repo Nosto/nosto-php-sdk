@@ -38,7 +38,6 @@ namespace Nosto\Operation\OAuth;
 
 use Nosto\Exception\NostoException;
 use Nosto\Nosto;
-use Nosto\OAuth\NostoOAuthToken;
 use Nosto\Object\Signup\Account;
 use Nosto\Operation\AbstractOperation;
 use Nosto\Request\Api\Token;
@@ -49,7 +48,7 @@ use Nosto\Types\Signup\AccountInterface;
 /**
  * Handles exchanging the authorization token for the API tokes from Nosto
  */
-class OAuthSync extends AbstractOperation
+class ExchangeTokens extends AbstractOperation
 {
     /**
      * @var OAuthInterface the Oauth meta data params

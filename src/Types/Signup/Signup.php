@@ -36,8 +36,8 @@
 
 namespace Nosto\Types\Signup;
 
+use Nosto\Request\Api\Token;
 use Nosto\Types\SettingsInterface;
-use Prophecy\Argument\Token\TokenInterface;
 use stdClass;
 
 /**
@@ -86,7 +86,7 @@ interface SignupInterface extends SettingsInterface
      * The API token used to identify an account creation.
      * This token is platform specific and issued by Nosto.
      *
-     * @return TokenInterface the API token.
+     * @return Token the API token.
      */
     public function getSignUpApiToken();
 
