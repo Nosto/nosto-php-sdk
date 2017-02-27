@@ -25,7 +25,11 @@
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-// Parse .env if exists and assign configured environment variables.
+use Nosto\Sdk\NostoApiRequest;
+use Nosto\Sdk\NostoDotEnv;
+use Nosto\Sdk\NostoHttpRequest;
+use Nosto\Sdk\NostoOAuthClient;
+
 $dotEnv = new NostoDotEnv();
 $dotEnv->init(dirname(__FILE__));
 if (isset($_ENV['NOSTO_API_BASE_URL'])) {
