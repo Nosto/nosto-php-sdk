@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1f254492e5ab91edf95c5e46c82a805f",
-    "content-hash": "1b652c62456ee9525e1db81040bc687a",
+    "hash": "01a740293a23380a9961b1b3f9eb7f89",
+    "content-hash": "7b2aef527b8d5bd59f54e869245bf31a",
     "packages": [
         {
             "name": "phpseclib/phpseclib",
@@ -562,6 +562,68 @@
                 "url"
             ],
             "time": "2017-02-21 01:20:32"
+        },
+        {
+            "name": "magento-ecg/coding-standard",
+            "version": "2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magento-ecg/coding-standard.git",
+                "reference": "eea9b1d1a21d844f28eb65b0d66a1a4c320e0d6b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magento-ecg/coding-standard/zipball/eea9b1d1a21d844f28eb65b0d66a1a4c320e0d6b",
+                "reference": "eea9b1d1a21d844f28eb65b0d66a1a4c320e0d6b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Magento Expert Consulting Group",
+                    "homepage": "http://magentocommerce.com/consulting",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A set of PHP_CodeSniffer rules and sniffs.",
+            "homepage": "https://github.com/magento-ecg/coding-standard",
+            "time": "2015-12-18 16:52:59"
+        },
+        {
+            "name": "magento/marketplace-eqp",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magento/marketplace-eqp.git",
+                "reference": "eb8ee8d9ecd39766d340a6d11cef0a3fb5d8e130"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magento/marketplace-eqp/zipball/eb8ee8d9ecd39766d340a6d11cef0a3fb5d8e130",
+                "reference": "eb8ee8d9ecd39766d340a6d11cef0a3fb5d8e130",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0",
+                "squizlabs/php_codesniffer": "2.6.2"
+            },
+            "type": "library",
+            "license": [
+                "MIT"
+            ],
+            "description": "A set of PHP_CodeSniffer rules and sniffs.",
+            "support": {
+                "source": "https://github.com/magento/marketplace-eqp/tree/1.0.4",
+                "issues": "https://github.com/magento/marketplace-eqp/issues"
+            },
+            "time": "2016-10-25 15:49:47"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2099,16 +2161,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "2.8.0",
+            "version": "2.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "86dd55a522238211f9f3631e3361703578941d9a"
+                "reference": "4edb770cb853def6e60c93abb088ad5ac2010c83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/86dd55a522238211f9f3631e3361703578941d9a",
-                "reference": "86dd55a522238211f9f3631e3361703578941d9a",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/4edb770cb853def6e60c93abb088ad5ac2010c83",
+                "reference": "4edb770cb853def6e60c93abb088ad5ac2010c83",
                 "shasum": ""
             },
             "require": {
@@ -2173,7 +2235,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-02-02 03:30:00"
+            "time": "2016-07-13 23:29:13"
         },
         {
             "name": "symfony/browser-kit",

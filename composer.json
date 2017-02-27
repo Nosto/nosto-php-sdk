@@ -6,12 +6,20 @@
     "codeception/base": "2.2.9",
     "codeception/specify": "^0.4.6",
     "phpmd/phpmd": "^2.6",
-    "squizlabs/php_codesniffer": "^2.8",
+    "squizlabs/php_codesniffer": "^2.6",
     "etsy/phan": "0.8.0",
     "sebastian/phpcpd": "^3.0",
     "phing/phing": "2.*",
-    "codeception/c3": "^2.0"
+    "codeception/c3": "^2.0",
+    "magento/marketplace-eqp": "1.0.4",
+    "magento-ecg/coding-standard": "*"
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/magento/marketplace-eqp"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "Nosto\\": "src"
