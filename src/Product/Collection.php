@@ -44,5 +44,5 @@ class NostoProductCollection extends NostoCollection
     /**
      * @inheritdoc
      */
-    protected $validItemType = 'NostoProductInterface';
+    protected $validItemType = '\Nosto\Sdk\NostoProductInterface';
 }

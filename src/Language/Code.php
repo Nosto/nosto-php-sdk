@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use Nosto\Sdk\NostoInvalidArgumentException;
+
 /**
  * Value Object representing a language code in ISO 639-1 format.
  */

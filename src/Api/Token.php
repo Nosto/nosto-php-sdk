@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use Nosto\Sdk\NostoInvalidArgumentException;
+
 /**
  * Class representing an API token for the Nosto API's.
  */

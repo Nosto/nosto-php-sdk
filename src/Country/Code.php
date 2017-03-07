@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use Nosto\Sdk\NostoInvalidArgumentException;
+
 /**
  * Value Object representing a country code in ISO 3166-1 alpha-2 format.
  */

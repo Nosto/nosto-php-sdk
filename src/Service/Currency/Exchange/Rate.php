@@ -35,6 +35,9 @@
 
 namespace Nosto\Sdk;
 
+use Nosto\Sdk\NostoInvalidArgumentException;
+use Nosto\Sdk\NostoException;
+
 /**
  * Handles sending currency exchange rates through the Nosto API.
  */

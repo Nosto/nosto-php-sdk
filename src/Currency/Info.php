@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use Nosto\Sdk\NostoInvalidArgumentException;
+
 /**
  * Static data object with currency related info.
  */

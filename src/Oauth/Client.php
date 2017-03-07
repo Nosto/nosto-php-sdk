@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use Nosto\Sdk\NostoException;
+
 /**
  * Helper class for doing OAuth2 authorization with Nosto.
  * The client implements the 'Authorization Code' grant type.

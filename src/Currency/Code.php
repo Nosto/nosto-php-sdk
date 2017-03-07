@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use Nosto\Sdk\NostoInvalidArgumentException;
+
 /**
  * Value Object representing a currency code in ISO 4217 format.
  */

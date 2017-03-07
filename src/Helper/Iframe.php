@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use Nosto\Sdk\NostoException;
+
 /**
  * Iframe helper class for account administration iframe.
  */

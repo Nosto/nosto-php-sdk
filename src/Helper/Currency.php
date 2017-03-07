@@ -35,6 +35,7 @@
 
 namespace Nosto\Sdk;
 
+use Nosto\Sdk\NostoInvalidArgumentException;
 use Zend_Currency;
 use Zend_Exception;
 use Zend_Locale_Data;

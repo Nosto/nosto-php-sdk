@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--suppress XmlUnboundNsPrefix -->
+<ruleset name="Magento">
+    <file>./src</file>
+    <exclude-pattern>*.js</exclude-pattern>
+    <config name="installed_paths" value="vendor/magento-ecg/coding-standard/,vendor/magento/marketplace-eqp/" />
+    <rule ref="MEQP2" />
+</ruleset>

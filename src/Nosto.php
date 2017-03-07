@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use Nosto\Sdk\NostoException;
+
 /**
  * Main SDK class.
  * Provides common functionality for the SDK.
@@ -55,7 +57,7 @@ class Nosto
      */
     public static function getEnvVariable($name, $default = null)
     {
-        return isset($_ENV[$name]) ? $_ENV[$name] : $default;
+        return getenv($name) ? getenv($name) : $default;
     }
 
     /**
@@ -167,6 +169,8 @@ class Nosto
         if (strpos($name, '/') === false) {
             $name = 'nosto/'.$name;
         }
-        return str_replace(' ', '', ucwords(str_replace('_', ' ', str_replace('/', ' '.$type.' ', $name))));
+        $name = str_replace(' ', '', ucwords(str_replace('_', ' ', str_replace('/', ' '.$type.' ', $name))));
+
+        return '\Nosto\Sdk\\' . $name;
     }
 }

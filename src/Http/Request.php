@@ -35,6 +35,7 @@
 
 namespace Nosto\Sdk;
 
+use Nosto\Sdk\NostoException;
 use Exception;
 
 /**

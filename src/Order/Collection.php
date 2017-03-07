@@ -44,5 +44,5 @@ class NostoOrderCollection extends NostoCollection
     /**
      * @inheritdoc
      */
-    protected $validItemType = 'NostoOrderInterface';
+    protected $validItemType = '\Nosto\Sdk\NostoOrderInterface';
 }

@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use Nosto\Sdk\NostoException;
+
 /**
  * Handles product re-crawl requests to Nosto via the API.
  */

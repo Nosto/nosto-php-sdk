@@ -35,6 +35,8 @@
 
 namespace Nosto\Sdk;
 
+use Nosto\Sdk\NostoException;
+
 /**
  * Handles sending account related requests though the Nosto API.
  */

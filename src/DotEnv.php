@@ -80,8 +80,8 @@ class NostoDotEnv
     {
         if (strpos(trim($var), '#') !== 0 && strpos($var, '=') !== false) {
             list($name, $value) = $this->normalizeEnvVariable($var);
-            if (!isset($_ENV[$name])) {
-                $_ENV[$name] = $value;
+            if (!getenv($name)) {
+                putenv("$name=$value");
             }
         }
     }
@@ -173,6 +173,6 @@ class NostoDotEnv
      */
     protected function getMatchedVariable($match)
     {
-        return isset($_ENV[$match[1]]) ? $_ENV[$match[1]] : $match[0];
+        return getenv($match[1]) ? getenv($match[1]) : $match[0];
     }
 }
