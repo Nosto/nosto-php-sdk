@@ -58,7 +58,7 @@ class Order extends AbstractObject implements OrderInterface, ValidatableInterfa
     /**
      * @var string the date when the OrderConfirm was placed in the format Y-m-d
      */
-    private $createdDate;
+    private $createdAt;
 
     /**
      * @var string the name of the payment provider used for OrderConfirm
@@ -169,17 +169,17 @@ class Order extends AbstractObject implements OrderInterface, ValidatableInterfa
      */
     public function getCreatedDate()
     {
-        return $this->createdDate;
+        return $this->createdAt;
     }
 
     /**
      * Sets the date when the OrderConfirm was placed in the format Y-m-d
      *
-     * @param string $createdDate the created date.
+     * @param string $createdAt the created date.
      */
-    public function setCreatedDate($createdDate)
+    public function setCreatedAt($createdAt)
     {
-        $this->createdDate = $createdDate;
+        $this->createdAt = strtotime($createdAt);
     }
 
     /**

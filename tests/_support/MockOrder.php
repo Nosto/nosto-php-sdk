@@ -40,7 +40,7 @@ class MockOrder extends Order
     public function __construct()
     {
         parent::__construct();
-        $this->setCreatedDate('2014-12-12');
+        $this->setCreatedAt('2014-12-12');
         $this->setPaymentProvider('test-gateway [1.0.0]');
         $this->setCustomer(new MockBuyer());
         $this->setPurchasedItems(array(new MockLineItem(), new MockPseudoItem()));
