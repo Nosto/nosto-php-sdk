@@ -57,7 +57,7 @@ interface OrderInterface
      *
      * @return string the creation date.
      */
-    public function getCreatedDate();
+    public function getCreatedAt();
 
     /**
      * The payment provider used for placing the OrderConfirm, formatted according to

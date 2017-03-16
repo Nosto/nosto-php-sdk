@@ -167,7 +167,7 @@ class Order extends AbstractObject implements OrderInterface, ValidatableInterfa
     /**
      * @inheritdoc
      */
-    public function getCreatedDate()
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }
