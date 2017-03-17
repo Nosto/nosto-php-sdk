@@ -43,7 +43,7 @@ use Nosto\OAuth\AuthorizationCode;
 use Nosto\Operation\OAuth\ExchangeTokens;
 use Nosto\Types\Signup\AccountInterface;
 
-trait Nosto_Mixins_OauthTrait
+trait OauthTrait
 {
 
     public abstract function getParam($name);
