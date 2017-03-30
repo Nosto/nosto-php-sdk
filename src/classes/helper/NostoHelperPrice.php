@@ -43,13 +43,14 @@ class NostoHelperPrice extends NostoHelper
      * Formats price into Nosto format, e.g. 1000.99.
      *
      * @param int|float $price the price string to format.
+     * @param int $precision
      * @return string the formatted price.
      */
-    public function format($price)
+    public function format($price, $precision = 4)
     {
         $formatted = null;
-        if (is_numeric($price)) {
-            $formatted = number_format($price, 2, '.', '');
+        if (is_numeric($price) && is_int($precision)) {
+            $formatted = number_format($price, $precision, '.', '');
         }
 
         return $formatted;
