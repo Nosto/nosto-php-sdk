@@ -195,7 +195,7 @@ class NostoOperationProduct
             'product_id' => $product->getProductId(),
             'name' => $product->getName(),
             'image_url' => $product->getImageUrl(),
-            'price' => $nostoPriceHelper->format($product->getPrice()),
+            'price' => $product->getPrice(),
             'price_currency_code' => strtoupper($product->getCurrencyCode()),
             'availability' => $product->getAvailability(),
             'categories' => $product->getCategories(),
@@ -206,9 +206,7 @@ class NostoOperationProduct
             $data['description'] = $product->getFullDescription();
         }
         if ($product->getListPrice()) {
-            $data['list_price'] = $nostoPriceHelper->format(
-                $product->getListPrice()
-            );
+            $data['list_price'] = $product->getListPrice();
         }
         if ($product->getBrand()) {
             $data['brand'] = $product->getBrand();

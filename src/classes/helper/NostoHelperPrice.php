@@ -46,7 +46,7 @@ class NostoHelperPrice extends NostoHelper
      * @param int $precision
      * @return string the formatted price.
      */
-    public function format($price, $precision = 4)
+    public function format($price, $precision = 2)
     {
         $formatted = null;
         if (is_numeric($price) && is_int($precision)) {
