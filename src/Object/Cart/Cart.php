@@ -45,6 +45,11 @@ use Nosto\Types\LineItemInterface;
 class Cart extends AbstractObject
 {
     /**
+     * @var string URL for restoring cart
+     */
+    private $restoreCartUrl;
+
+    /**
      * @var LineItemInterface[] the array of items in the shopping cart
      */
     private $items = array();
@@ -80,5 +85,25 @@ class Cart extends AbstractObject
     public function addItem(LineItemInterface $item)
     {
         $this->items[] = $item;
+    }
+
+    /**
+     * Returns the restore cart URL
+     *
+     * @return string
+     */
+    public function getRestoreCartUrl()
+    {
+        return $this->restoreCartUrl;
+    }
+
+    /**
+     * Sets the restore cart URL
+     *
+     * @param string $restoreCartUrl
+     */
+    public function setRestoreCartUrl($restoreCartUrl)
+    {
+        $this->restoreCartUrl = $restoreCartUrl;
     }
 }
