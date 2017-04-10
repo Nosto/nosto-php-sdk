@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 1.16.3
+* Remove price formatting from product serializer
+* Add optional precision attribute to price formatter
+
 ## 1.16.2
 * Remove usage is superglobals ($_ENV, $_SERVER, etc.)
 
