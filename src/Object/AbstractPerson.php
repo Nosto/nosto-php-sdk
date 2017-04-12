@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -34,93 +35,94 @@
  *
  */
 
-namespace Nosto\Object\Order;
+namespace Nosto\Object;
 
-use Nosto\Object\AbstractObject;
-use Nosto\Types\Order\StatusInterface;
+use Nosto\Types\PersonInterface;
+use Nosto\AbstractObject;
 
 /**
- * Model class containing information about the OrderConfirm status of an OrderConfirm
+ * Abstract model used for containing the basic details of person for purposes
+ * such as representing a customer or a logged-in user.
  */
-class OrderStatus extends AbstractObject implements StatusInterface
+abstract class AbstractPerson extends AbstractObject implements PersonInterface
 {
     /**
-     * @var string the OrderConfirm status code as flagged via the payment provider
+     * @var string the first name of the person
      */
-    private $code;
+    private $firstName;
 
     /**
-     * @var string the OrderConfirm status label as flagged via the payment provider
+     * @var string the last name of the person
      */
-    private $label;
+    private $lastName;
 
     /**
-     * @var string the OrderConfirm status date as set via the payment provider
+     * @var string the email address of the person
      */
-    private $date;
+    private $email;
 
-    /**
-     * OrderStatus constructor
-     */
     public function __construct()
     {
         // Dummy
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
-
-    /**
-     * Sets the code of the OrderConfirm status as flagged by the payment provider.
-     * The code is a normalised string i.e. lower-cased and underscored
+     * The first name of the person
      *
-     * @param string $code the code
+     * @return string the first name.
      */
-    public function setCode($code)
+    public function getFirstName()
     {
-        $this->code = $code;
+        return $this->firstName;
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getLabel()
-    {
-        return $this->label;
-    }
-
-    /**
-     * Sets the label of the OrderConfirm status as flagged by the payment provider.
-     * The label is the name of the OrderConfirm status for reporting purposes
+     * Sets the first name of the person
      *
-     * @param string $label the label
+     * @param string $firstName
      */
-    public function setLabel($label)
+    public function setFirstName($firstName)
     {
-        $this->label = $label;
+        $this->firstName = $firstName;
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * Sets the date of the OrderConfirm status as flagged by the payment provider.
-     * The date should be in the Y-m-d format.
+     * The last name of the person
      *
-     * @param string $date the date
+     * @return string the last name.
      */
-    public function setDate($date)
+    public function getLastName()
     {
-        $this->date = $date;
+        return $this->lastName;
+    }
+
+    /**
+     * Sets the last name of the person
+     *
+     * @param string $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * The email address of the person.
+     *
+     * @return string the email address.
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Sets the email address of the person
+     *
+     * @param string $email the email address.
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 }

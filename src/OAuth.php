@@ -34,7 +34,7 @@
  *
  */
 
-namespace Nosto\Object;
+namespace Nosto;
 
 use Nosto\Object\Signup\Account;
 use Nosto\Types\OAuthInterface;

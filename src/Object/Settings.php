@@ -37,6 +37,7 @@
 namespace Nosto\Object;
 
 use Nosto\Types\SettingsInterface;
+use Nosto\AbstractObject;
 
 /**
  * Model class for containing basic account account related information used when

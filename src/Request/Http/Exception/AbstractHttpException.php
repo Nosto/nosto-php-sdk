@@ -37,7 +37,7 @@
 namespace Nosto\Request\Http\Exception;
 
 use Exception;
-use Nosto\Exception\NostoException;
+use Nosto\NostoException;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
 

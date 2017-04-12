@@ -36,7 +36,7 @@
 
 namespace Nosto\Object\Order;
 
-use Nosto\Object\AbstractObject;
+use Nosto\AbstractObject;
 use Nosto\Types\LineItemInterface;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;

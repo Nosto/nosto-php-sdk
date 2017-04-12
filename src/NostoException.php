@@ -34,38 +34,13 @@
  *
  */
 
-namespace Nosto\Object;
+namespace Nosto;
 
-use Nosto\Types\ExchangeRateInterface;
+use Exception;
 
 /**
- * Collection class to store a collection of exchange-rates
+ * Nosto exception class for all errors within the SDK.
  */
-class ExchangeRateCollection extends AbstractObject
+class NostoException extends Exception
 {
-    /**
-     * @var array the array if exchange rates keyed by the rate code
-     */
-    private $rates = array();
-
-    /**
-     * Adds an exchange rate to the array of rates
-     *
-     * @param $name string the name of the exchange rate
-     * @param ExchangeRateInterface $rate the exchange-rate object
-     */
-    public function addRate($name, ExchangeRateInterface $rate)
-    {
-        $this->rates[$name] = $rate;
-    }
-
-    /**
-     * Returns the exchange rates contained within
-     *
-     * @return array the array of exchange rates
-     */
-    public function getRates()
-    {
-        return $this->rates;
-    }
 }

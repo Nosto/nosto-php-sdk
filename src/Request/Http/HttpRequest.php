@@ -37,7 +37,7 @@
 namespace Nosto\Request\Http;
 
 use Exception;
-use Nosto\Exception\NostoException;
+use Nosto\NostoException;
 use Nosto\Helper\SerializationHelper;
 use Nosto\Request\Http\Adapter\Adapter;
 use Nosto\Request\Http\Adapter\Curl;

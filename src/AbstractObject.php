@@ -34,13 +34,33 @@
  *
  */
 
-namespace Nosto\Exception;
-
-use Exception;
+namespace Nosto;
 
 /**
- * Nosto exception class for all errors within the SDK.
+ * Base class for Nosto objects to share basic functionality.
  */
-class NostoException extends Exception
+abstract class AbstractObject
 {
+    /**
+     * Returns a protected/private property value by invoking it's public getter.
+     *
+     * The getter names are assumed to be the property name in camel case with
+     * preceding word "get".
+     *
+     * @param string $name the property name.
+     * @return mixed the property value.
+     * @throws NostoException if a public getter does not exist.
+     */
+    public function __get($name)
+    {
+        $getter = 'get' . str_replace('_', '', $name);
+        if (method_exists($this, $getter)) {
+            return $this->{$getter}();
+        }
+        throw new NostoException(sprintf(
+            'Property `%s.%s` is not defined.',
+            get_class($this),
+            $name
+        ));
+    }
 }

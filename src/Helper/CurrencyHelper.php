@@ -36,7 +36,7 @@
 
 namespace Nosto\Helper;
 
-use Nosto\Exception\NostoException;
+use Nosto\NostoException;
 
 /**
  * Static data object with currency related info.
@@ -44,7 +44,7 @@ use Nosto\Exception\NostoException;
  * @SuppressWarnings(PHPMD.ExcessiveClassLength)
  * @codeCoverageIgnore
  */
-final class NostoCurrencyInfo extends AbstractHelper
+final class CurrencyHelper extends AbstractHelper
 {
     /**
      * @var array currency data keyed on the currencies ISO 4217 codes.

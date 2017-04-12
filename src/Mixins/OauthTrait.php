@@ -37,9 +37,9 @@
 namespace Nosto\Mixins;
 
 use Exception;
-use Nosto\Exception\NostoException;
+use Nosto\NostoException;
 use Nosto\Nosto;
-use Nosto\OAuth\AuthorizationCode;
+use Nosto\Operation\OAuth\AuthorizationCode;
 use Nosto\Operation\OAuth\ExchangeTokens;
 use Nosto\Types\Signup\AccountInterface;
 

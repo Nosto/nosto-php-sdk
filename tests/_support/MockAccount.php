@@ -1,4 +1,5 @@
 <?php
+
 use Nosto\Object\Signup\Account;
 
 /**

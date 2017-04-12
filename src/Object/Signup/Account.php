@@ -36,9 +36,9 @@
 
 namespace Nosto\Object\Signup;
 
-use Nosto\Exception\NostoException;
+use Nosto\NostoException;
 use Nosto\Helper\ValidationHelper;
-use Nosto\Object\AbstractObject;
+use Nosto\AbstractObject;
 use Nosto\Request\Api\Token;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\Types\ValidatableInterface;

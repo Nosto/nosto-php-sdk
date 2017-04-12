@@ -1,6 +1,7 @@
 <?php
+
 use Nosto\Object\Format;
-use Nosto\Object\Signup;
+use Nosto\Object\Signup\Signup;
 
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd

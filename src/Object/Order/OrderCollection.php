@@ -36,7 +36,7 @@
 
 namespace Nosto\Object\Order;
 
-use Nosto\Object\Collection\AbstractCollection;
+use Nosto\Object\AbstractCollection;
 use Nosto\Types\Order\OrderInterface;
 
 /**

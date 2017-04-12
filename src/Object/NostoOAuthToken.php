@@ -34,7 +34,7 @@
  *
  */
 
-namespace Nosto\OAuth;
+namespace Nosto\Object;
 
 /**
  * Helper class that represents a oauth2 access token.

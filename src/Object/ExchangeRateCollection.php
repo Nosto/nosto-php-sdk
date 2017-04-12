@@ -34,59 +34,39 @@
  *
  */
 
-namespace Nosto\Object\Collection;
+namespace Nosto\Object;
 
-use Iterator;
+use Nosto\Types\ExchangeRateInterface;
+use Nosto\AbstractObject;
 
 /**
- * Base class for all Nosto object collection classes. The base class provides the
- * functionality to validate the items added to the collection. The collection behaves
- * like an array. making it easy to add items to it and iterate over it.
+ * Collection class to store a collection of exchange-rates
  */
-abstract class AbstractCollection implements Iterator
+class ExchangeRateCollection extends AbstractObject
 {
-
-    protected $var = array();
+    /**
+     * @var array the array if exchange rates keyed by the rate code
+     */
+    private $rates = array();
 
     /**
-     * @see Iterator::rewind()
+     * Adds an exchange rate to the array of rates
+     *
+     * @param $name string the name of the exchange rate
+     * @param ExchangeRateInterface $rate the exchange-rate object
      */
-    public function rewind()
+    public function addRate($name, ExchangeRateInterface $rate)
     {
-        reset($this->var);
+        $this->rates[$name] = $rate;
     }
 
     /**
-     * @see Iterator::current()
+     * Returns the exchange rates contained within
+     *
+     * @return array the array of exchange rates
      */
-    public function current()
+    public function getRates()
     {
-        return current($this->var);
-    }
-
-    /**
-     * @see Iterator::key()
-     */
-    public function key()
-    {
-        return key($this->var);
-    }
-
-    /**
-     * @see Iterator::next()
-     */
-    public function next()
-    {
-        return next($this->var);
-    }
-
-    /**
-     * @see Iterator::valid()
-     */
-    public function valid()
-    {
-        $key = key($this->var);
-        $var = ($key !== null && $key !== false);
-        return $var;
+        return $this->rates;
     }
 }

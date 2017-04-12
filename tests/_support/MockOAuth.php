@@ -1,5 +1,6 @@
 <?php
-use Nosto\Object\OAuth;
+
+use Nosto\OAuth;
 
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd

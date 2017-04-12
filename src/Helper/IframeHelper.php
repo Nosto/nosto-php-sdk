@@ -36,7 +36,7 @@
 
 namespace Nosto\Helper;
 
-use Nosto\Exception\NostoException;
+use Nosto\NostoException;
 use Nosto\Nosto;
 use Nosto\Operation\InitiateSso;
 use Nosto\Request\Http\HttpRequest;

@@ -37,6 +37,7 @@
 namespace Nosto\Object;
 
 use Nosto\Types\IframeInterface;
+use Nosto\AbstractObject;
 
 /**
  * Meta data class which holds information to be sent to the Nosto account

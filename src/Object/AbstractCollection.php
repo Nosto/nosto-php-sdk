@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -37,91 +36,57 @@
 
 namespace Nosto\Object;
 
-use Nosto\Types\PersonInterface;
+use Iterator;
 
 /**
- * Abstract model used for containing the basic details of person for purposes
- * such as representing a customer or a logged-in user.
+ * Base class for all Nosto object collection classes. The base class provides the
+ * functionality to validate the items added to the collection. The collection behaves
+ * like an array. making it easy to add items to it and iterate over it.
  */
-abstract class AbstractPerson extends AbstractObject implements PersonInterface
+abstract class AbstractCollection implements Iterator
 {
-    /**
-     * @var string the first name of the person
-     */
-    private $firstName;
+
+    protected $var = array();
 
     /**
-     * @var string the last name of the person
+     * @see Iterator::rewind()
      */
-    private $lastName;
-
-    /**
-     * @var string the email address of the person
-     */
-    private $email;
-
-    public function __construct()
+    public function rewind()
     {
-        // Dummy
+        reset($this->var);
     }
 
     /**
-     * The first name of the person
-     *
-     * @return string the first name.
+     * @see Iterator::current()
      */
-    public function getFirstName()
+    public function current()
     {
-        return $this->firstName;
+        return current($this->var);
     }
 
     /**
-     * Sets the first name of the person
-     *
-     * @param string $firstName
+     * @see Iterator::key()
      */
-    public function setFirstName($firstName)
+    public function key()
     {
-        $this->firstName = $firstName;
+        return key($this->var);
     }
 
     /**
-     * The last name of the person
-     *
-     * @return string the last name.
+     * @see Iterator::next()
      */
-    public function getLastName()
+    public function next()
     {
-        return $this->lastName;
+        return next($this->var);
     }
 
     /**
-     * Sets the last name of the person
-     *
-     * @param string $lastName
+     * @see Iterator::valid()
      */
-    public function setLastName($lastName)
+    public function valid()
     {
-        $this->lastName = $lastName;
-    }
-
-    /**
-     * The email address of the person.
-     *
-     * @return string the email address.
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Sets the email address of the person
-     *
-     * @param string $email the email address.
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
+        $key = key($this->var);
+        $var = ($key !== null && $key !== false);
+        return $var;
     }
 }

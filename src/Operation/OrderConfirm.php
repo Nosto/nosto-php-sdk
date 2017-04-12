@@ -36,7 +36,7 @@
 
 namespace Nosto\Operation;
 
-use Nosto\Exception\NostoException;
+use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Types\Order\OrderInterface;
 use Nosto\Types\Signup\AccountInterface;

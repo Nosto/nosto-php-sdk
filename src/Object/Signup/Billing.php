@@ -36,7 +36,7 @@
 
 namespace Nosto\Object\Signup;
 
-use Nosto\Object\AbstractObject;
+use Nosto\AbstractObject;
 use Nosto\Types\Signup\BillingInterface;
 
 /**

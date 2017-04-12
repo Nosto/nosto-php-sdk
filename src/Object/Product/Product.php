@@ -36,7 +36,7 @@
 
 namespace Nosto\Object\Product;
 
-use Nosto\Object\AbstractObject;
+use Nosto\AbstractObject;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\ValidatableInterface;

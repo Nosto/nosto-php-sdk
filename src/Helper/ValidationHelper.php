@@ -36,7 +36,7 @@
 
 namespace Nosto\Helper;
 
-use Nosto\Exception\NostoException;
+use Nosto\NostoException;
 use Nosto\Types\ValidatableInterface;
 
 /**

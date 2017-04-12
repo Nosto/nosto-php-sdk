@@ -36,7 +36,7 @@
 
 namespace Nosto\Object\Cart;
 
-use Nosto\Object\AbstractObject;
+use Nosto\AbstractObject;
 use Nosto\Types\LineItemInterface;
 
 /**

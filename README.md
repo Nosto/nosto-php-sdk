@@ -167,7 +167,6 @@ The iframe can communicate with your module through window.postMessage
 file `src/js/NostoIframe.min.js` on the page where you show the iframe and just init the API.
 
 ```js
-    ...
     Nosto.iframe({
         iframeId: "nosto_iframe",
         urls: {

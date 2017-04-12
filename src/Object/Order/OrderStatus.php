@@ -34,55 +34,93 @@
  *
  */
 
-namespace Nosto\Operation;
+namespace Nosto\Object\Order;
 
-use Nosto\NostoException;
-use Nosto\Object\Signup\Account;
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Types\Signup\AccountInterface;
-use Nosto\Types\Signup\SignupInterface;
+use Nosto\AbstractObject;
+use Nosto\Types\Order\StatusInterface;
 
 /**
- * Operation class for handling the creation accounts through the Nosto API.
+ * Model class containing information about the OrderConfirm status of an OrderConfirm
  */
-class AccountSignup extends AbstractOperation
+class OrderStatus extends AbstractObject implements StatusInterface
 {
     /**
-     * @var SignupInterface Nosto account meta
+     * @var string the OrderConfirm status code as flagged via the payment provider
      */
-    private $account;
+    private $code;
 
     /**
-     * Constructor.
-     *
-     * @param SignupInterface $account the Nosto account object.
+     * @var string the OrderConfirm status label as flagged via the payment provider
      */
-    public function __construct(SignupInterface $account)
+    private $label;
+
+    /**
+     * @var string the OrderConfirm status date as set via the payment provider
+     */
+    private $date;
+
+    /**
+     * OrderStatus constructor
+     */
+    public function __construct()
     {
-        $this->account = $account;
+        // Dummy
     }
 
     /**
-     * Sends a POST request to create a new account for a store in Nosto
-     *
-     * @return AccountInterface if the request was successful.
-     * @throws NostoException on failure.
+     * @inheritdoc
      */
-    public function create()
+    public function getCode()
     {
-        $request = $this->initApiRequest($this->account->getSignUpApiToken());
-        $request->setPath(ApiRequest::PATH_SIGN_UP);
-        $request->setReplaceParams(array('{lang}' => $this->account->getLanguageCode()));
-        $response = $request->post($this->account);
-        $this->checkResponse($request, $response);
+        return $this->code;
+    }
 
-        $account = new Account($this->account->getPlatform() . '-' . $this->account->getName());
-        $account->setTokens(Token::parseTokens(
-            $response->getJsonResult(true),
-            '',
-            '_token'
-        ));
-        return $account;
+    /**
+     * Sets the code of the OrderConfirm status as flagged by the payment provider.
+     * The code is a normalised string i.e. lower-cased and underscored
+     *
+     * @param string $code the code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
+     * Sets the label of the OrderConfirm status as flagged by the payment provider.
+     * The label is the name of the OrderConfirm status for reporting purposes
+     *
+     * @param string $label the label
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Sets the date of the OrderConfirm status as flagged by the payment provider.
+     * The date should be in the Y-m-d format.
+     *
+     * @param string $date the date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
     }
 }

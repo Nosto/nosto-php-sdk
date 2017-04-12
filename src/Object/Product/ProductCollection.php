@@ -36,7 +36,7 @@
 
 namespace Nosto\Object\Product;
 
-use Nosto\Object\Collection\AbstractCollection;
+use Nosto\Object\AbstractCollection;
 use Nosto\Types\Product\ProductInterface;
 
 /**

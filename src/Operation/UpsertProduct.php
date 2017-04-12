@@ -36,7 +36,7 @@
 
 namespace Nosto\Operation;
 
-use Nosto\Exception\NostoException;
+use Nosto\NostoException;
 use Nosto\Object\Product\ProductCollection;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
