@@ -108,6 +108,7 @@ class Socket extends Adapter
         // We use file_get_contents() directly here as we need the http response headers which are automatically
         // populated into $headers, which is only available in the local scope where file_get_contents()
         // is executed (http://php.net/manual/en/reserved.variables.httpresponseheader.php).
+        /** @noinspection PhpVariableNamingConventionInspection */
         $http_response_header = array();
         $result = @file_get_contents($url, false, $context);
         return new HttpResponse($http_response_header, $result);
