@@ -67,7 +67,7 @@ trait OauthTrait
                 $token = $operation->authenticate($code);
 
                 $operation = new ExchangeTokens($meta);
-                $account = $operation->exchange($token->getAccessToken());
+                $account = $operation->exchange($token);
 
                 if (self::save($account)) {
                     self::redirect(

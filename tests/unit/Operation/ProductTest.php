@@ -52,7 +52,7 @@ class OperationProductTest extends Test
         $account = new Account('platform-00000000');
         $product = new MockProduct();
 
-        $this->expectException('Nosto\Exception\NostoException');
+        $this->expectException('Nosto\NostoException');
         $op = new UpsertProduct($account);
         $op->addProduct($product);
         $op->upsert();

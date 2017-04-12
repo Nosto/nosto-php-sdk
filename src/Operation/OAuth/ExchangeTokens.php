@@ -38,6 +38,7 @@ namespace Nosto\Operation\OAuth;
 
 use Nosto\NostoException;
 use Nosto\Nosto;
+use Nosto\Object\NostoOAuthToken;
 use Nosto\Object\Signup\Account;
 use Nosto\Operation\AbstractOperation;
 use Nosto\Request\Api\Token;
@@ -69,11 +70,11 @@ class ExchangeTokens extends AbstractOperation
     /**
      * Sends a POST request to delete an account for a store in Nosto
      *
-     * @param string $token string the oauth access code.
+     * @param NostoOAuthToken $token string the oauth access code.
      * @return AccountInterface the configured account
      * @throws NostoException on failure.
      */
-    public function exchange($token)
+    public function exchange(NostoOAuthToken $token)
     {
         $request = new HttpRequest();
         $request->setContentType(self::CONTENT_TYPE_URL_FORM_ENCODED);
@@ -85,7 +86,7 @@ class ExchangeTokens extends AbstractOperation
         }
 
         $tokens = Token::parseTokens($response->getJsonResult(true), 'api_');
-        $account = new Account($this->meta->getClientId());
+        $account = new Account($token->getMerchantName());
         $account->setTokens($tokens);
         return $account;
     }

@@ -50,11 +50,13 @@ class OperationOauthSyncTest extends Test
     public function testSyncingExistingAccount()
     {
         $meta = new MockOAuth();
+        $token = \Nosto\Object\NostoOAuthToken::create(['merchant_name' => 'platform-00000000']);
+
         $service = new ExchangeTokens($meta);
-        $account = $service->exchange("test123");
+        $account = $service->exchange($token);
 
         $this->specify('account was created', function () use ($account, $meta) {
-            $this->assertInstanceOf('Nosto\Types\Signup\Account', $account);
+            $this->assertInstanceOf('Nosto\Object\Signup\Account', $account);
             $this->assertEquals('platform-00000000', $account->getName());
         });
 

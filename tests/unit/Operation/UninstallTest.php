@@ -52,7 +52,7 @@ class OperationUninstallTest extends Test
         $account = new Account('platform-test');
 
         $this->specify('account is NOT deleted', function () use ($account) {
-            $this->expectException('Nosto\Exception\NostoException');
+            $this->expectException('Nosto\NostoException');
             $service = new UninstallAccount($account);
             $user = new MockUser();
             $service->delete($user);
