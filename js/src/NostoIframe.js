@@ -84,6 +84,9 @@ Nosto.iframe = function (options) {
         }
 
         var json = ("" + event.data).substr(7);
+        /**
+         * @param {{params}} data
+         */
         var data = JSON.parse(json);
         if (typeof data === "object" && data.type) {
             switch (data.type) {
