@@ -36,8 +36,8 @@
 
 namespace Nosto\Mixins;
 
-use Nosto\NostoException;
 use Nosto\Nosto;
+use Nosto\NostoException;
 use Nosto\Operation\InitiateSso;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Types\IframeInterface;
@@ -112,6 +112,16 @@ trait IframeTrait
     }
 
     /**
+     * Returns the base url for the Nosto iframe.
+     *
+     * @return string the url.
+     */
+    private static function getIframeBaseUrl()
+    {
+        return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', HttpRequest::getBaseURL());
+    }
+
+    /**
      * Returns the iframe params with which to load the IFrame
      *
      * @return IframeInterface the iframe params with which to load the iframe
@@ -131,14 +141,4 @@ trait IframeTrait
      * @return AccountInterface the account for which to load the iframe
      */
     public abstract function getAccount();
-
-    /**
-     * Returns the base url for the Nosto iframe.
-     *
-     * @return string the url.
-     */
-    private static function getIframeBaseUrl()
-    {
-        return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', HttpRequest::getBaseURL());
-    }
 }

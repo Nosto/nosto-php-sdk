@@ -36,9 +36,9 @@
 
 namespace Nosto\Object;
 
+use Nosto\AbstractObject;
 use Nosto\NostoException;
 use Nosto\Types\NotificationInterface;
-use Nosto\AbstractObject;
 
 /**
  * Implementation for NotificationInterface

@@ -36,8 +36,8 @@
 
 namespace Nosto\Object;
 
-use Nosto\Types\ExchangeRateInterface;
 use Nosto\AbstractObject;
+use Nosto\Types\ExchangeRateInterface;
 
 /**
  * Model class for containing the information of a single exchange rate

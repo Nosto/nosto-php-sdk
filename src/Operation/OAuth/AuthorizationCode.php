@@ -36,8 +36,8 @@
 
 namespace Nosto\Operation\OAuth;
 
-use Nosto\NostoException;
 use Nosto\Nosto;
+use Nosto\NostoException;
 use Nosto\Object\NostoOAuthToken;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Types\OAuthInterface;
@@ -88,17 +88,6 @@ class AuthorizationCode
     }
 
     /**
-     * Returns the base URL by reading the environment and system variables. This
-     * value can be overridden for testing purposes byt editing the .env file
-     *
-     * @return string the base URL for the endpoint
-     */
-    final public static function getBaseURL()
-    {
-        return getenv('NOSTO_OAUTH_BASE_URL');
-    }
-
-    /**
      * Authenticates the application with the given code to receive an access token.
      *
      * @param string $code code sent by the authorization server to exchange for an access token.
@@ -135,5 +124,16 @@ class AuthorizationCode
         }
 
         return NostoOAuthToken::create($result);
+    }
+
+    /**
+     * Returns the base URL by reading the environment and system variables. This
+     * value can be overridden for testing purposes byt editing the .env file
+     *
+     * @return string the base URL for the endpoint
+     */
+    final public static function getBaseURL()
+    {
+        return getenv('NOSTO_OAUTH_BASE_URL');
     }
 }

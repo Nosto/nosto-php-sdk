@@ -37,8 +37,8 @@
 namespace Nosto\Mixins;
 
 use Exception;
-use Nosto\NostoException;
 use Nosto\Nosto;
+use Nosto\NostoException;
 use Nosto\Operation\OAuth\AuthorizationCode;
 use Nosto\Operation\OAuth\ExchangeTokens;
 use Nosto\Types\Signup\AccountInterface;
@@ -46,19 +46,8 @@ use Nosto\Types\Signup\AccountInterface;
 trait OauthTrait
 {
 
-    public abstract function getParam($name);
-
-    public abstract function getMeta();
-
-    public abstract function save(AccountInterface $account);
-
-    public abstract function logError(Exception $e);
-
-    public abstract function notFound();
-
-    public abstract function redirect(array $params);
-
-    public final function connect() {
+    public final function connect()
+    {
         if (($code = self::getParam('code')) !== null) {
             try {
                 $meta = self::getMeta();
@@ -110,4 +99,16 @@ trait OauthTrait
             self::notFound();
         }
     }
+
+    public abstract function getParam($name);
+
+    public abstract function getMeta();
+
+    public abstract function save(AccountInterface $account);
+
+    public abstract function redirect(array $params);
+
+    public abstract function logError(Exception $e);
+
+    public abstract function notFound();
 }

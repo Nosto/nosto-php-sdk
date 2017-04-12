@@ -36,8 +36,8 @@
 
 namespace Nosto\Operation\OAuth;
 
-use Nosto\NostoException;
 use Nosto\Nosto;
+use Nosto\NostoException;
 use Nosto\Object\NostoOAuthToken;
 use Nosto\Object\Signup\Account;
 use Nosto\Operation\AbstractOperation;

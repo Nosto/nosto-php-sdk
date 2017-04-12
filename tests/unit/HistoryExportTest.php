@@ -60,16 +60,6 @@ class HistoryExportTest extends Test
     protected $account;
 
     /**
-     * @inheritdoc
-     */
-    protected function _before()
-    {
-        $this->account = new Account('platform-00000000');
-        $token = new Token('sso', '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
-        $this->account->addApiToken($token);
-    }
-
-    /**
      * Tests that product history data can be exported.
      */
     public function testProductHistoryExport()
@@ -105,5 +95,16 @@ class HistoryExportTest extends Test
 
             $this->assertEquals(SerializationHelper::serialize($collection), $plain_text);
         });
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function _before()
+    {
+        $this->account = new Account('platform-00000000');
+        $token = new Token('sso',
+            '01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783');
+        $this->account->addApiToken($token);
     }
 }

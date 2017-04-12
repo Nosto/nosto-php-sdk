@@ -68,8 +68,9 @@ class OperationOrderConfirmationTest extends Test
         $service = new OrderConfirm($account);
         $result = $service->send($order, null);
 
-        $this->specify('successful un-matched OrderConfirm confirmation', function () use ($result) {
-            $this->assertTrue($result);
-        });
+        $this->specify('successful un-matched OrderConfirm confirmation',
+            function () use ($result) {
+                $this->assertTrue($result);
+            });
     }
 }

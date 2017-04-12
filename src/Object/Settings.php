@@ -36,8 +36,8 @@
 
 namespace Nosto\Object;
 
-use Nosto\Types\SettingsInterface;
 use Nosto\AbstractObject;
+use Nosto\Types\SettingsInterface;
 
 /**
  * Model class for containing basic account account related information used when
@@ -130,6 +130,16 @@ class Settings extends AbstractObject implements SettingsInterface
     public function addCurrency($currencyCode, $currencyFormat)
     {
         $this->currencies[$currencyCode] = $currencyFormat;
+    }
+
+    /**
+     * Sets the currencies
+     *
+     * @param $currencies
+     */
+    public function setCurrencies(array $currencies)
+    {
+        $this->currencies = $currencies;
     }
 
     /**

@@ -36,8 +36,8 @@
 
 namespace Nosto\Object;
 
-use Nosto\Types\IframeInterface;
 use Nosto\AbstractObject;
+use Nosto\Types\IframeInterface;
 
 /**
  * Meta data class which holds information to be sent to the Nosto account
@@ -423,6 +423,14 @@ class Iframe extends AbstractObject implements IframeInterface
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getModules()
+    {
+        return $this->modules;
+    }
+
+    /**
      * Sets the associative array with installed modules.
      *
      * @param array $modules the array of installed modules
@@ -430,13 +438,5 @@ class Iframe extends AbstractObject implements IframeInterface
     public function setModules(array $modules)
     {
         $this->modules = $modules;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getModules()
-    {
-        return $this->modules;
     }
 }

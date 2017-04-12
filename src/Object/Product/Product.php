@@ -716,11 +716,27 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     }
 
     /**
+     * @param string $gender
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getAgeGroup()
     {
         return $this->ageGroup;
+    }
+
+    /**
+     * @param string $ageGroup
+     */
+    public function setAgeGroup($ageGroup)
+    {
+        $this->ageGroup = $ageGroup;
     }
 
     /**
@@ -764,38 +780,6 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getUnitPricingBaseMeasure()
-    {
-        return $this->unitPricingBaseMeasure;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getUnitPricingUnit()
-    {
-        return $this->unitPricingUnit;
-    }
-
-    /**
-     * @param string $gender
-     */
-    public function setGender($gender)
-    {
-        $this->gender = $gender;
-    }
-
-    /**
-     * @param string $ageGroup
-     */
-    public function setAgeGroup($ageGroup)
-    {
-        $this->ageGroup = $ageGroup;
-    }
-
-    /**
      * @param string $unitPricingMeasure
      */
     public function setUnitPricingMeasure($unitPricingMeasure)
@@ -804,11 +788,27 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getUnitPricingBaseMeasure()
+    {
+        return $this->unitPricingBaseMeasure;
+    }
+
+    /**
      * @param string $unitPricingBaseMeasure
      */
     public function setUnitPricingBaseMeasure($unitPricingBaseMeasure)
     {
         $this->unitPricingBaseMeasure = $unitPricingBaseMeasure;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUnitPricingUnit()
+    {
+        return $this->unitPricingUnit;
     }
 
     /**

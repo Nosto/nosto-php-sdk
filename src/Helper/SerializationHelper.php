@@ -122,21 +122,6 @@ class SerializationHelper extends AbstractHelper
     }
 
     /**
-     * Checks whether an array is associative or sequentially indexed as associative arrays are
-     * handled as objects
-     *
-     * @param array $arr the array to check
-     * @return bool true if the array is associative
-     */
-    private static function isAssoc(array $arr)
-    {
-        if (array() === $arr) {
-            return false;
-        }
-        return array_keys($arr) !== range(0, count($arr) - 1);
-    }
-
-    /**
      * Recursively lists all the properties of the given class by traversing up the class hierarchy
      *
      * @param $obj object the object whose properties to list
@@ -177,5 +162,20 @@ class SerializationHelper extends AbstractHelper
             $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
         }
         return implode('_', $ret);
+    }
+
+    /**
+     * Checks whether an array is associative or sequentially indexed as associative arrays are
+     * handled as objects
+     *
+     * @param array $arr the array to check
+     * @return bool true if the array is associative
+     */
+    private static function isAssoc(array $arr)
+    {
+        if (array() === $arr) {
+            return false;
+        }
+        return array_keys($arr) !== range(0, count($arr) - 1);
     }
 }

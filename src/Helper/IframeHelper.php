@@ -36,8 +36,8 @@
 
 namespace Nosto\Helper;
 
-use Nosto\NostoException;
 use Nosto\Nosto;
+use Nosto\NostoException;
 use Nosto\Operation\InitiateSso;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Types\IframeInterface;

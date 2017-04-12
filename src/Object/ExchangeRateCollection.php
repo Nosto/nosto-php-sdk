@@ -36,8 +36,8 @@
 
 namespace Nosto\Object;
 
-use Nosto\Types\ExchangeRateInterface;
 use Nosto\AbstractObject;
+use Nosto\Types\ExchangeRateInterface;
 
 /**
  * Collection class to store a collection of exchange-rates

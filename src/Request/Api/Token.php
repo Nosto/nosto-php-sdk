@@ -36,9 +36,9 @@
 
 namespace Nosto\Request\Api;
 
-use Nosto\NostoException;
-use Nosto\Helper\ValidationHelper;
 use Nosto\AbstractObject;
+use Nosto\Helper\ValidationHelper;
+use Nosto\NostoException;
 use Nosto\Types\ValidatableInterface;
 
 /**

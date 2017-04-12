@@ -37,8 +37,8 @@
 
 namespace Nosto\Object;
 
-use Nosto\Types\PersonInterface;
 use Nosto\AbstractObject;
+use Nosto\Types\PersonInterface;
 
 /**
  * Abstract model used for containing the basic details of person for purposes

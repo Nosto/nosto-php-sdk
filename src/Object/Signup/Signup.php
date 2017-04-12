@@ -36,11 +36,11 @@
 
 namespace Nosto\Object\Signup;
 
+use Nosto\Object\Settings;
 use Nosto\Request\Api\Token;
 use Nosto\Types\Signup\BillingInterface;
 use Nosto\Types\Signup\OwnerInterface;
 use Nosto\Types\Signup\SignupInterface;
-use Nosto\Object\Settings;
 use stdClass;
 
 /**
