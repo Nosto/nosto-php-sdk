@@ -248,7 +248,7 @@ interface ProductInterface
     public function getUnitPricingUnit();
 
     /**
-     * Returns the product varations
+     * Returns the product variations
      *
      * @returns
      */

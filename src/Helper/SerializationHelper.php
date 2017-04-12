@@ -122,7 +122,7 @@ class SerializationHelper extends AbstractHelper
     }
 
     /**
-     * Checkes whether an array is associative or sequentially indexed as associative arrays are
+     * Checks whether an array is associative or sequentially indexed as associative arrays are
      * handled as objects
      *
      * @param array $arr the array to check

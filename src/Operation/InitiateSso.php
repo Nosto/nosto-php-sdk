@@ -65,7 +65,7 @@ class InitiateSso extends AbstractOperation
     }
 
     /**
-     * Sends a POST request to get a single signon URL for a store
+     * Sends a POST request to get a single sign-on URL for a store
      *
      * @param UserInterface $user
      * @param $platform

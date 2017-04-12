@@ -144,7 +144,7 @@ interface IframeInterface
 
     /**
      * An absolute URL for the front page in the shop the account is linked to, with the nostodebug GET parameter
-     * enabled. e.g. http://myshop.com?nostodebug=true
+     * enabled. e.g. http://shop.com?nostodebug=true
      * This is used in the config iframe to allow the user to quickly preview the recommendations on the given page.
      *
      * @return string the url.
