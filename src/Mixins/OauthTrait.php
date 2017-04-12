@@ -94,7 +94,8 @@ trait OauthTrait
                     'message_type' => Nosto::TYPE_ERROR,
                     'message_code' => Nosto::CODE_ACCOUNT_CONNECT,
                     'message_text' => $desc
-                ));
+                )
+            );
         } else {
             self::notFound();
         }
