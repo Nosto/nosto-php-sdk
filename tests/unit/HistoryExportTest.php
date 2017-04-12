@@ -34,12 +34,8 @@
  *
  */
 
-namespace Nosto;
-
 use Codeception\Specify;
 use Codeception\TestCase\Test;
-use MockOrder;
-use MockProduct;
 use Nosto\Helper\ExportHelper;
 use Nosto\Helper\SerializationHelper;
 use Nosto\Object\Order\OrderCollection;

@@ -34,8 +34,6 @@
  *
  */
 
-namespace Nosto\Object;
-
 use Nosto\Object\Order\Order;
 
 /**
