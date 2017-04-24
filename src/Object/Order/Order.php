@@ -36,7 +36,6 @@
 
 namespace Nosto\Object\Order;
 
-use DateTime;
 use Nosto\AbstractObject;
 use Nosto\Types\LineItemInterface;
 use Nosto\Types\Order\BuyerInterface;
@@ -176,9 +175,9 @@ class Order extends AbstractObject implements OrderInterface, ValidatableInterfa
     /**
      * Sets the date when the OrderConfirm was placed in the format Y-m-d
      *
-     * @param DateTime $createdAt the created date.
+     * @param \DateTime $createdAt the created date.
      */
-    public function setCreatedAt(DateTime $createdAt)
+    public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt->format('Y-m-d');
     }

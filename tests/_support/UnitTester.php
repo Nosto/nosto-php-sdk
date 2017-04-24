@@ -54,7 +54,8 @@
  */
 class UnitTester extends \Codeception\Actor
 {
-    use _generated\UnitTesterActions;
+    use /** @noinspection PhpUndefinedNamespaceInspection */
+        _generated\UnitTesterActions;
 
     /**
      * Define custom actions here
