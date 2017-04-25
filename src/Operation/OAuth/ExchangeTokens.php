@@ -79,7 +79,7 @@ class ExchangeTokens extends AbstractOperation
         $request = new HttpRequest();
         $request->setContentType(self::CONTENT_TYPE_URL_FORM_ENCODED);
         $request->setPath(HttpRequest::PATH_OAUTH_SYNC);
-        $request->setQueryParams(array('access_token' => $token));
+        $request->setQueryParams(array('access_token' => $token->getAccessToken()));
         $response = $request->get();
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException($request, $response);
