@@ -180,7 +180,7 @@ class Order extends AbstractObject implements OrderInterface, ValidatableInterfa
      */
     public function setCreatedAt(DateTimeInterface $createdAt)
     {
-        $this->createdAt = $createdAt->format('Y-m-d');
+        $this->createdAt = $createdAt->format('Y-m-d H:i:s');
     }
 
     /**
