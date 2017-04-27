@@ -36,31 +36,42 @@
 
 namespace Nosto\Helper;
 
-use phpseclib\Crypt\AES;
-use phpseclib\Crypt\Base;
-use phpseclib\Crypt\Random;
+use Nosto\Types\Signup\AccountInterface;
 
 /**
  * Helper class for exporting historical product and OrderConfirm data from the shop. This
  * information is used to bootstrap recommendations and decreases the time needed to
  * get accurate recommendations showing in the shop without the learning period.
  */
-class ExportHelper extends AbstractExportHelper
+abstract class AbstractExportHelper extends AbstractHelper
 {
     /**
-     * @inheritdoc
+     * Serializes the collection to JSON and uses the SSO token (as it is pre-shared
+     * secret) to encrypt the data using AES. Sixteen random characters are used as
+     * the IV and must be extracted out from the resultant payload before decrypting
+     *
+     * @param AccountInterface $account the account to export the data for
+     * @param mixed $collection the data collection to export
+     * @return string the AES encrypted data.
      */
-    public static function encrypt($secret, $data)
+    public static function export(AccountInterface $account, $collection)
     {
-        $iv = Random::string(16);
-        $cipher = new AES(Base::MODE_CBC);
-        $cipher->setKey($secret);
-        $cipher->setIV($iv);
-        $cipherText = $cipher->encrypt(SerializationHelper::serialize($data));
-        // Prepend the IV to the cipher string so that nosto can parse and use it.
-        // There is no security concern with sending the IV as plain text.
-        $data = $iv . $cipherText;
+        $data = '';
+        // Use the first 16 chars of the SSO token as secret for encryption.
+        $token = $account->getApiToken('sso');
+        if (!empty($token)) {
+            $tokenValue = $token->getValue();
+            $secret = substr($tokenValue, 0, 16);
+            if (!empty($secret)) {
+                $data = static::encrypt($secret, $collection);
+            }
+        }
 
         return $data;
     }
+
+    /**
+     * @inheritdoc
+     */
+    abstract public static function encrypt($secret, $data);
 }
