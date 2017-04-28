@@ -71,7 +71,11 @@ abstract class AbstractExportHelper extends AbstractHelper
     }
 
     /**
-     * @inheritdoc
+     * Method for encrypting the data
+     *
+     * @param $secret
+     * @param $data
+     * @return string
      */
     abstract public static function encrypt($secret, $data);
 }

@@ -41,9 +41,7 @@ use phpseclib\Crypt\Base;
 use phpseclib\Crypt\Random;
 
 /**
- * Helper class for exporting historical product and OrderConfirm data from the shop. This
- * information is used to bootstrap recommendations and decreases the time needed to
- * get accurate recommendations showing in the shop without the learning period.
+ * Implementation for the export helper
  */
 class ExportHelper extends AbstractExportHelper
 {
