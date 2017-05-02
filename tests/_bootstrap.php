@@ -34,15 +34,9 @@
  *
  */
 
-// This is global bootstrap for autoloading
-
 date_default_timezone_set('Europe/Helsinki');
+$dotenv = new Dotenv\Dotenv(dirname(__FILE__));
+$dotenv->overload();
 
-// Pre-load all sdk classes.
-require_once(dirname(__FILE__) . '/../src/config.inc.php');
-
-// Configure API, Web Hooks, and OAuth client to use Mock server when testing.
-NostoApiRequest::$baseUrl = 'http://localhost:3000';
-NostoOAuthClient::$baseUrl = 'http://localhost:3000';
-NostoHttpRequest::$baseUrl = 'http://localhost:3000';
-NostoHttpRequest::buildUserAgent('PHPUnit', '1.0.0', '1.0.0');
+require_once(dirname(__FILE__) . '/../vendor/autoload.php');
+Nosto\Request\Http\HttpRequest::buildUserAgent('PHPUnit', '1.0.0', '1.0.0');
