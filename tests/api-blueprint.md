@@ -41,7 +41,7 @@ Account related resources
             "products_token": "01098d0fc84ded7c4226820d5d1207c69243cbb3637dc4bc2a216dafcf09d783"
         }
 
-## OAuth Access Token [/token{?code,client_id,client_secret,redirect_uri,grant_type}]
+## OAuth Access Token [/oauth/token{?code,client_id,client_secret,redirect_uri,grant_type}]
 
 + Parameters
 
@@ -59,7 +59,7 @@ Account related resources
             "merchant_name": "platform-00000000"
         }
 
-## Sync Account [/exchange{?access_token}]
+## Sync Account [/oauth/exchange{?access_token}]
 
 + Parameters
 
@@ -98,7 +98,7 @@ Account related resources
 + Response 200 (application/json)
 
         {
-            "login_url": "https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg"
+            "login_url": "http://platform-00000000.dev.nos.to:9010/hub/magento/platform-00000000/sso%2Bplatform-00000000@nostosolutions.com/"
         }
 
 ## Deleting Account [/hub/uninstall]
@@ -109,14 +109,15 @@ Account related resources
 
     + Headers
 
-            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+            Content-type: application/json
+            Authorization: Basic OjEyMw==
 
 + Response 200
 
-# Group Order
-Order related resources
+# Group OrderConfirm
+OrderConfirm related resources
 
-## Matched Order Confirmation [/visits/order/confirm/{m}/{cid}]
+## Matched OrderConfirm Confirmation [/visits/order/confirm/{m}/{cid}]
 
 + Parameters
 
@@ -153,7 +154,7 @@ Order related resources
 
         {}
 
-## Un-matched Order Confirmation [/visits/order/unmatched/{m}]
+## Un-matched OrderConfirm Confirmation [/visits/order/unmatched/{m}]
 
 + Parameters
 
@@ -367,7 +368,76 @@ Product related resources
 
         {}
 
-## Single Sign On [/hub/{platform}/load/{email}]
+## Sync Rates [/exchangerates]
+
+### Sync exchange rates request [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
+    + Body
+
+            [
+                {
+                    "currency_code": "EUR",
+                    "exchange_rate":"0.1",
+                    "name":"Euros"
+                }
+            ]
+
++ Response 200 (application/json)
+
+        {}
+
+## Sync UpdateSettings [/settings]
+
+### Update account settings request [PUT]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
+    + Body
+
+            {
+                "language_code":"en",
+                "currencies":[
+                    {
+                        "code":{
+                            "code":"EUR"
+                        },
+                        "symbol":{
+                            "position":"left",
+                            "symbol":"\u20ac"
+                        },
+                        "format":{
+                            "decimal_symbol":".",
+                            "group_length":3,
+                            "group_symbol":",",
+                            "precision":2
+                        },
+                        "fraction_unit":100,
+                        "default_fraction_decimals":2
+                    }
+                ],
+                "title":"My Shop",
+                "front_page_url":"http:\/\/localhost",
+                "currency_code":"USD",
+                "use_currency_exchange_rates":false,
+                "default_variation_id":null
+            }
+
++ Response 200 (application/json)
+
+        {}
+
+
+## Single Sign On [/hub/{platform}/load]
 
 + Parameters
 
@@ -376,7 +446,7 @@ Product related resources
 
 ### SSO login [POST]
 
-+ Request (application/x-www-form-urlencoded)
++ Request (application/json)
 
     + Headers
 
@@ -389,5 +459,5 @@ Product related resources
 + Response 200 (application/json)
 
         {
-            "login_url": "https://nosto.com/auth/sso/sso%2Bplatform-00000000@nostosolutions.com/xAd1RXcmTMuLINVYaIZJJg"
+            "login_url": "http://platform-00000000.dev.nos.to:9010/hub/magento/platform-00000000/sso%2Bplatform-00000000@nostosolutions.com/"
         }

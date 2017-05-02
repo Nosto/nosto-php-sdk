@@ -1,6 +1,5 @@
-.env
-.env.*
 vendor
 tests/_output/*
 tests/_support/_generated/*
 node_modules
+c3.php

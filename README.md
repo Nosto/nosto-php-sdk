@@ -23,7 +23,7 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoExportProductCollection** class for exporting historical product data
 * **NostoHelper** base class for all nosto helpers
 * **NostoHelperDate** helper class for date related operations
-* **NostoHelperIframe** helper class for iframe related operations
+* **IframeTrait** helper class for iframe related operations
 * **NostoHelperPrice** helper class for price related operations
 * **NostoHttpRequest** class for making HTTP request, supports both curl and socket connections
 * **NostoHttpRequestAdapter** base class for creating http request adapters
@@ -32,7 +32,7 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 * **NostoHttpResponse** class that represents a response for an http request made through the NostoHttpRequest class
 * **NostoOAuthClient** class for authorizing the module to act on the Nosto account owners behalf using OAuth2 Authorization Code method
 * **NostoOAuthToken** class that represents a token granted using the OAuth client
-* **NostoOperationProduct** class for performing create/update/delete operations on product object
+* **Product** class for performing create/update/delete operations on product object
 * **Nosto** main sdk class for common functionality
 * **NostoAccount** class that represents a Nosto account which can be used to create new accounts and connect to existing accounts using OAuth2
 * **NostoCipher** class for AES encrypting product/order information that can be exported for Nosto to improve recommendations from the get-go
@@ -45,12 +45,12 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 
 ### Interfaces
 
-* **NostoAccountInterface** interface defining methods needed to manage Nosto accounts
-* **NostoAccountMetaDataBillingDetailsInterface** interface defining getters for billing information needed during Nosto account creation over the API
-* **NostoAccountMetaDataIframeInterface** interface defining getters for information needed by the Nosto account configuration iframe
-* **NostoAccountMetaDataInterface** interface defining getters for information needed during Nosto account creation over the API
-* **NostoAccountMetaDataOwnerInterface** interface defining getters for account owner information needed during Nosto account creation over the API
-* **NostoOrderBuyerInterface** interface defining getters for buyer information needed during order confirmation requests
+* **NostoSignupInterface** interface defining methods needed to manage Nosto accounts
+* **NostoSignupBillingDetailsInterface** interface defining getters for billing information needed during Nosto account creation over the API
+* **NostoSignupIframeInterface** interface defining getters for information needed by the Nosto account configuration iframe
+* **NostoSignupInterface** interface defining getters for information needed during Nosto account creation over the API
+* **NostoSignupOwnerInterface** interface defining getters for account owner information needed during Nosto account creation over the API
+* **OrderBuyer** interface defining getters for buyer information needed during order confirmation requests
 * **NostoOrderInterface** interface defining getters for information needed during order confirmation requests
 * **NostoOrderPurchasedItemInterface** interface defining getters for purchased item information needed during order confirmation requests
 * **NostoOrderStatusInterface** interface defining getters for order status information needed during order confirmation requests
@@ -75,9 +75,9 @@ A Nosto account is needed for every shop and every language within each shop.
 ```php
     .....
     try {
-        /** @var NostoAccountMetaDataInterface $meta */
-        /** @var NostoAccount $account */
-        $account = NostoAccount::create($meta);
+        /** @var NostoSignupInterface $meta */
+        /** @var NostoSignup $account */
+        $account = NostoSignup::create($meta);
         // save newly created account according to the platforms requirements
         .....
     } catch (NostoException $e) {
@@ -95,7 +95,7 @@ First redirect to the Nosto OAuth2 server.
 
 ```php
     .....
-    /** @var NostoOAuthClientMetaDataInterface $meta */
+    /** @var OAuthInterface $meta */
     $client = new NostoOAuthClient($meta);
   	header('Location: ' . $client->getAuthorizationUrl());
 ```
@@ -105,8 +105,8 @@ Then have a public endpoint ready to handle the return request.
 ```php
     if (isset($_GET['code'])) {
         try {
-            /** @var NostoOAuthClientMetaDataInterface $meta */
-            $account = NostoAccount::syncFromNosto($meta, $_GET['code']);
+            /** @var OAuthInterface $meta */
+            $account = NostoSignup::syncFromNosto($meta, $_GET['code']);
             // save the synced account according to the platforms requirements
         } catch (NostoException $e) {
             // handle failures
@@ -130,7 +130,7 @@ This should be used when you delete a Nosto account for a shop. It will notify N
 
 ```php
     try {
-        /** @var NostoAccount $account */
+        /** @var NostoSignup $account */
         $account->delete();
     } catch (NostoException $e) {
         // handle failure
@@ -146,8 +146,8 @@ This iframe will load only content from nosto.com.
 ```php
     .....
     /**
-     * @var NostoAccount|null $account account with at least the 'SSO' token loaded or null if no account exists yet
-     * @var NostoAccountMetaDataIframeInterface $meta
+     * @var NostoSignup|null $account account with at least the 'SSO' token loaded or null if no account exists yet
+     * @var NostoSignupIframeInterface $meta
      * @var array $params (optional) extra params to add to the iframe url
      */
     try
@@ -167,7 +167,6 @@ The iframe can communicate with your module through window.postMessage
 file `src/js/NostoIframe.min.js` on the page where you show the iframe and just init the API.
 
 ```js
-    ...
     Nosto.iframe({
         iframeId: "nosto_iframe",
         urls: {
@@ -190,13 +189,13 @@ You do NOT need to use this JS API, but instead set up your own postMessage hand
 
 ### Sending order confirmations using the Nosto API
 
-Sending order confirmations to Nosto is a vital part of the functionality. Order confirmations should be sent when an
+Sending order confirmations to Nosto is a vital part of the functionality. OrderConfirm confirmations should be sent when an
 order has been completed in the shop. It is NOT recommended to do this when the "thank you" page is shown to the user,
 as payment gateways work differently and you cannot rely on the user always being redirected back to the shop after a
 payment has been made. Therefore, it is recommended to send the order conformation when the order is marked as payed
 in the shop.
 
-Order confirmations can be sent two different ways:
+OrderConfirm confirmations can be sent two different ways:
 
 * matched orders; where we know the Nosto customer ID of the user who placed the order
 * un-matched orders: where we do not know the Nosto customer ID of the user who placed the order
@@ -210,7 +209,7 @@ user ID, as the platform may support guest checkouts.
     try {
         /**
          * @var NostoOrderInterface $order
-         * @var NostoAccountInterface $account
+         * @var NostoSignupInterface $account
          * @var string $customerId
          */
         NostoOrderConfirmation::send($order, $account, $customerId);
@@ -235,7 +234,7 @@ Note: the $product model needs to include only `productId` and `url` properties,
     try {
         /**
          * @var NostoProductInterface $product
-         * @var NostoAccountInterface $account
+         * @var NostoSignupInterface $account
          */
         NostoProductReCrawl::send($product, $account);
     } catch (NostoException $e) {
@@ -252,7 +251,7 @@ Batch re-crawling is also possible by creating a collection of product models:
         /**
          * @var NostoExportProductCollection $collection
          * @var NostoProductInterface $product
-         * @var NostoAccountInterface $account
+         * @var NostoSignupInterface $account
          */
         $collection[] = $product;
         NostoProductReCrawl::sendBatch($collection, $account);
@@ -276,9 +275,9 @@ Creating new products:
     try {
         /**
          * @var NostoProductInterface $product
-         * @var NostoAccountInterface $account
+         * @var NostoSignupInterface $account
          */
-        $op = new NostoOperationProduct($account);
+        $op = new UpsertProduct($account);
         $op->addProduct($product);
         $op->create();
     } catch (NostoException $e) {
@@ -296,9 +295,9 @@ Updating existing products:
     try {
         /**
          * @var NostoProductInterface $product
-         * @var NostoAccountInterface $account
+         * @var NostoSignupInterface $account
          */
-        $op = new NostoOperationProduct($account);
+        $op = new UpsertProduct($account);
         $op->addProduct($product);
         $op->update();
     } catch (NostoException $e) {
@@ -316,9 +315,9 @@ Deleting existing products:
     try {
         /**
          * @var NostoProductInterface $product
-         * @var NostoAccountInterface $account
+         * @var NostoSignupInterface $account
          */
-        $op = new NostoOperationProduct($account);
+        $op = new UpsertProduct($account);
         $op->addProduct($product);
         $op->delete();
     } catch (NostoException $e) {
@@ -348,7 +347,7 @@ integer values and expected to be applied to the data set being exported.
     .....
     /**
      * @var NostoProductInterface[] $products
-     * @var NostoAccountInterface $account
+     * @var NostoSignupInterface $account
      */
     $collection = new NostoExportProductCollection();
     foreach ($products as $product) {
@@ -365,7 +364,7 @@ integer values and expected to be applied to the data set being exported.
     .....
     /**
      * @var NostoOrderInterface[] $orders
-     * @var NostoAccountInterface $account
+     * @var NostoSignupInterface $account
      */
     $collection = new NostoExportOrderCollection();
     foreach ($orders as $order) {

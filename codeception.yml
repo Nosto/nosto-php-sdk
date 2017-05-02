@@ -10,7 +10,11 @@ settings:
     memory_limit: 1024M
 coverage:
     enabled: true
+    remote: false
     whitelist:
-            include:
-                - src/classes/*
-                - src/interfaces/*
+        include:
+            - src/classes/*
+            - src/Types/*
+    exclude:
+        - src/classes/NostoCurrency.php
+

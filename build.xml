@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2017, Nosto Solutions Ltd
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without modification,
+  ~ are permitted provided that the following conditions are met:
+  ~
+  ~ 1. Redistributions of source code must retain the above copyright notice,
+  ~ this list of conditions and the following disclaimer.
+  ~
+  ~ 2. Redistributions in binary form must reproduce the above copyright notice,
+  ~ this list of conditions and the following disclaimer in the documentation
+  ~ and/or other materials provided with the distribution.
+  ~
+  ~ 3. Neither the name of the copyright holder nor the names of its contributors
+  ~ may be used to endorse or promote products derived from this software without
+  ~ specific prior written permission.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+  ~ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  ~ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  ~ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+  ~ ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  ~ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  ~ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+  ~ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ~ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  ~ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  ~
+  ~ @author Nosto Solutions Ltd <contact@nosto.com>
+  ~ @copyright 2017 Nosto Solutions Ltd
+  ~ @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
+  ~
+  -->
+<!--suppress XmlUnboundNsPrefix -->
+<project name="nosto-php-sdk" default="dist">
+
+    <property name="package" value="${phing.project.name}" override="true"/>
+
+    <target name="phpmd">
+        <exec executable="./vendor/bin/phpmd" passthru="true">
+            <arg value="."/>
+            <arg value="--exclude"/>
+            <arg value="vendor"/>
+            <arg value="text"/>
+            <arg value="codesize,"/>
+            <arg value="naming,"/>
+            <arg value="unusedcode,"/>
+            <arg value="controversial,"/>
+            <arg value="design"/>
+        </exec>
+    </target>
+
+    <target name="phpcpd">
+        <exec executable="./vendor/bin/phpcpd" passthru="true">
+            <arg value="--min-lines=1"/>
+            <arg value="src"/>
+        </exec>
+    </target>
+
+    <target name="phpcbf">
+        <exec executable="./vendor/bin/phpcbf" passthru="true">
+            <arg value="--colors"/>
+            <arg value="--report-width=auto"/>
+            <arg value="--standard=ruleset.xml"/>
+            <arg value="."/>
+        </exec>
+    </target>
+
+    <target name="phpcs" depends="phpcbf">
+        <exec executable="./vendor/bin/phpcs" passthru="true">
+            <arg value="--colors"/>
+            <arg value="--report-width=auto"/>
+            <arg value="--standard=ruleset.xml"/>
+            <arg value="."/>
+        </exec>
+    </target>
+
+    <target name="phan">
+        <exec executable="./vendor/bin/phan" passthru="true">
+            <arg value="--progress-bar"/>
+            <arg value="--signature-compatibility"/>
+            <arg value="--config-file=phan.php"/>
+            <arg value="."/>
+        </exec>
+    </target>
+
+    <target name="test">
+        <exec executable="./vendor/bin/codecept" passthru="true">
+            <arg value="--coverage"/>
+            <arg value="run"/>
+        </exec>
+    </target>
+
+    <target name="dist" depends="phpcbf, phpcs, phan, phpmd, phpcpd, test">
+        <echo msg="All done"/>
+    </target>
+</project>

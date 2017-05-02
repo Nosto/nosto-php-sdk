@@ -34,68 +34,53 @@
  *
  */
 
-require_once(dirname(__FILE__) . '/../_support/NostoAccountMetaDataIframe.php');
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+use Nosto\Object\Signup\Account;
+use Nosto\Request\Api\Token;
 
-class AccountTest extends \Codeception\TestCase\Test
+class AccountTest extends Test
 {
-	use \Codeception\Specify;
+    use Specify;
 
     /**
-     * @var \UnitTester
+     * Tests the "isConnectedToNosto" method for the NostoAccount class.
      */
-    protected $tester;
+    public function testAccountIsConnected()
+    {
+        $account = new Account('platform-test');
 
-	/**
-	 * Tests the "isConnectedToNosto" method for the NostoAccount class.
-	 */
-	public function testAccountIsConnected()
-	{
-		$account = new NostoAccount('platform-test');
+        $this->specify('account is not connected', function () use ($account) {
+            $this->assertFalse($account->isConnectedToNosto());
+        });
 
-		$this->specify('account is not connected', function() use ($account) {
-			$this->assertFalse($account->isConnectedToNosto());
-		});
+        $token = new Token('sso', '123');
+        $account->addApiToken($token);
 
-		$token = new NostoApiToken('sso', '123');
-		$account->addApiToken($token);
+        $token = new Token('products', '123');
+        $account->addApiToken($token);
 
-		$token = new NostoApiToken('products', '123');
-		$account->addApiToken($token);
+        $this->specify('account is connected', function () use ($account) {
+            $this->assertTrue($account->isConnectedToNosto());
+        });
+    }
 
-		$this->specify('account is connected', function() use ($account) {
-			$this->assertTrue($account->isConnectedToNosto());
-		});
-	}
+    /**
+     * Tests the "getApiToken" method for the NostoAccount class.
+     */
+    public function testAccountApiToken()
+    {
+        $account = new Account('platform-test');
 
-	/**
-	 * Tests the "getApiToken" method for the NostoAccount class.
-	 */
-	public function testAccountApiToken()
-	{
-		$account = new NostoAccount('platform-test');
+        $this->specify('account does not have sso token', function () use ($account) {
+            $this->assertNull($account->getApiToken('sso'));
+        });
 
-		$this->specify('account does not have sso token', function() use ($account) {
-			$this->assertNull($account->getApiToken('sso'));
-		});
+        $token = new Token('sso', '123');
+        $account->addApiToken($token);
 
-		$token = new NostoApiToken('sso', '123');
-		$account->addApiToken($token);
-
-		$this->specify('account has sso token', function() use ($account) {
-			$this->assertEquals('123', $account->getApiToken('sso')->getValue());
-		});
-	}
-
-	/**
-	 * Tests the "ssoLogin" method for the NostoAccount class.
-	 */
-	public function testAccountSingleSignOn()
-	{
-		$account = new NostoAccount('platform-test');
-		$meta = new NostoAccountMetaDataIframe();
-
-		$this->specify('account sso without api token', function() use ($account, $meta) {
-			$this->assertFalse($account->ssoLogin($meta));
-		});
-	}
+        $this->specify('account has sso token', function () use ($account) {
+            $this->assertEquals('123', $account->getApiToken('sso')->getValue());
+        });
+    }
 }
