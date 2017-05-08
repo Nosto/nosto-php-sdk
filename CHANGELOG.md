@@ -5,6 +5,7 @@ This project adheres to Semantic Versioning (http://semver.org/).
 ## 3.0.1
 * Add collection for SKUs
 * Add set availability method to SKU model
+* Make the serializer to handle collections (implementations of Iterable interface)
 
 ## 3.0.0
 * Add namespaces and comply to PSR-4
