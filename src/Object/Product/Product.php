@@ -830,9 +830,9 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     /**
      * Sets the SKUs
      *
-     * @param array $skus
+     * @param SkuCollection $skus
      */
-    public function setSkus($skus)
+    public function setSkus(SkuCollection $skus)
     {
         $this->skus = $skus;
     }

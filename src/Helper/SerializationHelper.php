@@ -89,15 +89,18 @@ class SerializationHelper extends AbstractHelper
             if (!method_exists($object, $getter)) {
                 continue;
             }
-
             $key = self::toSnakeCase($key);
-            if (is_object($object->$getter())) {
-                $json[$key] = self::toArray($object->$getter());
+            $value = $object->$getter();
+            if ($value instanceof \Iterator) {
+                $value = iterator_to_array($value);
+            }
+            if (is_object($value)) {
+                $json[$key] = self::toArray($value);
             } else {
-                if (is_array($object->$getter())) {
+                if (is_array($value)) {
                     $json[$key] = array();
-                    if (self::isAssoc($object->$getter())) {
-                        foreach ($object->$getter() as $k => $anObject) {
+                    if (self::isAssoc($value)) {
+                        foreach ($value as $k => $anObject) {
                             if (is_object($anObject)) {
                                 $json[$key][$k] = self::toArray($anObject);
                             } else {
@@ -105,7 +108,7 @@ class SerializationHelper extends AbstractHelper
                             }
                         }
                     } else {
-                        foreach ($object->$getter() as $anObject) {
+                        foreach ($value as $anObject) {
                             if (is_object($anObject)) {
                                 $json[$key][] = self::toArray($anObject);
                             } else {
@@ -114,10 +117,11 @@ class SerializationHelper extends AbstractHelper
                         }
                     }
                 } else {
-                    $json[$key] = $object->$getter();
+                    $json[$key] = $value;
                 }
             }
         }
+
         return $json;
     }
 

@@ -250,7 +250,7 @@ interface ProductInterface
     /**
      * Returns the product variations
      *
-     * @returns
+     * @return Nosto\Object\Product\SkuCollection
      */
     public function getSkus();
 }
