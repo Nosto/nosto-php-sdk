@@ -40,14 +40,14 @@ use Nosto\Object\AbstractCollection;
 use Nosto\Types\Product\SkuInterface;
 
 /**
- * Collection class to store a collection of products
+ * Collection class to store a collection of SKUs
  */
 class SkuCollection extends AbstractCollection
 {
     /**
      * Appends item to the collection of skus
      *
-     * @param SkuInterface $product the product to append
+     * @param SkuInterface $sku the product to append
      */
     public function append(SkuInterface $sku)
     {

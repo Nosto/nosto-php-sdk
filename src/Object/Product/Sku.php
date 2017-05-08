@@ -282,7 +282,7 @@ class Sku extends AbstractObject implements SkuInterface
     }
 
     /**
-     * Sets the availability state of the sku
+     * Sets the availability state of the SKU
      *
      * The availability of the sku as either "InStock" or "OutOfStock"
      * depending upon the true or false value of the availability
