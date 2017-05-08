@@ -672,7 +672,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function getAlternateImageUrls()
     {
-        return array_diff($this->alternateImageUrls, array($this->getImageUrl()));
+        return array_values(array_diff($this->alternateImageUrls, array($this->getImageUrl())));
     }
 
     /**
