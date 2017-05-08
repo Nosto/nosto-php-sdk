@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.0.1
+* Add collection for SKUs
+* Add set availability method to SKU model
+
 ## 3.0.0
 * Add namespaces and comply to PSR-4
 * Add support for SKUs (variations)

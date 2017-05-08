@@ -280,4 +280,18 @@ class Sku extends AbstractObject implements SkuInterface
     {
         $this->customAttributes[$attribute] = $value;
     }
+
+    /**
+     * Sets the availability state of the SKU
+     *
+     * The availability of the sku as either "InStock" or "OutOfStock"
+     * depending upon the true or false value of the availability
+     *
+     * @param bool $available the availability.
+     */
+    public function setAvailable($available)
+    {
+        $this->availability = $available ?
+            ProductInterface::IN_STOCK : ProductInterface::OUT_OF_STOCK;
+    }
 }
