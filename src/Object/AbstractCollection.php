@@ -36,6 +36,7 @@
 
 namespace Nosto\Object;
 
+use Countable;
 use Iterator;
 
 /**
@@ -43,7 +44,7 @@ use Iterator;
  * functionality to validate the items added to the collection. The collection behaves
  * like an array. making it easy to add items to it and iterate over it.
  */
-abstract class AbstractCollection implements Iterator
+abstract class AbstractCollection implements Iterator, Countable
 {
 
     protected $var = array();
@@ -78,6 +79,14 @@ abstract class AbstractCollection implements Iterator
     public function next()
     {
         return next($this->var);
+    }
+
+    /**
+     * @see Iterator::next()
+     */
+    public function count()
+    {
+        return count($this->var);
     }
 
     /**
