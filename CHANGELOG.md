@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.0.4
+* Fix handling the 100 (Continue) HTTP header
+
+## 3.0.3
+* Make the abstract collections countable
+
+## 3.0.2
+* Correct the de-duplication of the alternate image URLs
+
 ## 3.0.1
 * Add collection for SKUs
 * Add set availability method to SKU model
