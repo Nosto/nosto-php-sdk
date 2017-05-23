@@ -98,7 +98,7 @@ class Curl extends Adapter
         if (!in_array(CURLOPT_CONNECTTIMEOUT, $curlOptions)) {
             $curlOptions[CURLOPT_CONNECTTIMEOUT] = HttpRequest::$connectTimeout;
         }
-        if (!is_array($curlOptions[CURLOPT_HTTPHEADER])) {
+        if (empty($curlOptions[CURLOPT_HTTPHEADER]) || !is_array($curlOptions[CURLOPT_HTTPHEADER])) {
             $curlOptions[CURLOPT_HTTPHEADER] = array();
         }
         $curlOptions[CURLOPT_HTTPHEADER][] = 'Expect:';
