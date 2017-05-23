@@ -98,6 +98,10 @@ class Curl extends Adapter
         if (!in_array(CURLOPT_CONNECTTIMEOUT, $curlOptions)) {
             $curlOptions[CURLOPT_CONNECTTIMEOUT] = HttpRequest::$connectTimeout;
         }
+        if (empty($curlOptions[CURLOPT_HTTPHEADER]) || !is_array($curlOptions[CURLOPT_HTTPHEADER])) {
+            $curlOptions[CURLOPT_HTTPHEADER] = array();
+        }
+        $curlOptions[CURLOPT_HTTPHEADER][] = 'Expect:';
         $ch = curl_init();
         curl_setopt_array($ch, $curlOptions);
         $result = curl_exec($ch);
@@ -106,6 +110,7 @@ class Curl extends Adapter
         $body = substr($result, $headerSize);
         $message = curl_error($ch);
         curl_close($ch);
+
         return new HttpResponse($headers, $body, $message);
     }
 
