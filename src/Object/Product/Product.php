@@ -199,7 +199,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     /**
      * SKUs / variations
      *
-     * @var array of SKUs
+     * @var \Nosto\Object\Product\SkuCollection of SKUs
      */
     private $skus;
 
@@ -844,6 +844,6 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function addSku(SkuInterface $sku)
     {
-        $this->skus[] = $sku;
+        $this->skus->append($sku);
     }
 }

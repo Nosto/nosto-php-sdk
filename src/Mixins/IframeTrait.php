@@ -118,7 +118,7 @@ trait IframeTrait
      */
     private static function getIframeBaseUrl()
     {
-        return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', HttpRequest::getBaseURL());
+        return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', Nosto::DEFAULT_NOSTO_WEB_HOOK_BASE_URL);
     }
 
     /**

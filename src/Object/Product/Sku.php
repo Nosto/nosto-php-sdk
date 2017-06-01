@@ -38,6 +38,7 @@ namespace Nosto\Object\Product;
 
 use Nosto\AbstractObject;
 use Nosto\Types\Product\SkuInterface;
+use Nosto\Types\Product\ProductInterface;
 
 /**
  * Model for sku information

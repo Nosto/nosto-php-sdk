@@ -36,6 +36,7 @@
 
 namespace Nosto\Helper;
 
+use Nosto\Nosto;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Types\OAuthInterface;
 
@@ -55,8 +56,10 @@ class OAuthHelper extends AbstractHelper
      */
     public static function getAuthorizationUrl(OAuthInterface $params)
     {
+        $oauthBaseUrl = Nosto::getEnvVariable('NOSTO_OAUTH_BASE_URL', Nosto::DEFAULT_NOSTO_OAUTH_BASE_URL);
+
         return HttpRequest::buildUri(
-            getenv('NOSTO_OAUTH_BASE_URL') . self::PATH_AUTH,
+            $oauthBaseUrl . self::PATH_AUTH,
             array(
                 '{cid}' => $params->getClientId(),
                 '{uri}' => urlencode($params->getRedirectUrl()),
