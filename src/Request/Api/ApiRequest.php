@@ -36,6 +36,7 @@
 
 namespace Nosto\Request\Api;
 
+use Nosto\Nosto;
 use Nosto\Request\Http\HttpRequest;
 
 /**
@@ -73,6 +74,6 @@ class ApiRequest extends HttpRequest
      */
     final public static function getBaseURL()
     {
-        return getenv('NOSTO_API_BASE_URL');
+        return Nosto::getEnvVariable('NOSTO_API_BASE_URL', Nosto::DEFAULT_NOSTO_API_BASE_URL);
     }
 }

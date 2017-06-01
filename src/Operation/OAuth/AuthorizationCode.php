@@ -134,6 +134,6 @@ class AuthorizationCode
      */
     final public static function getBaseURL()
     {
-        return getenv('NOSTO_OAUTH_BASE_URL');
+        return Nosto::getEnvVariable('NOSTO_OAUTH_BASE_URL', Nosto::DEFAULT_NOSTO_OAUTH_BASE_URL);
     }
 }
