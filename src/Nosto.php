@@ -56,6 +56,10 @@ class Nosto
     const CODE_ACCOUNT_DELETE = 'account_delete';
     const CODE_ACCOUNT_CONNECT_REJECT = 'account_connect_reject';
 
+    const DEFAULT_NOSTO_WEB_HOOK_BASE_URL = 'https://my.nosto.com';
+    const DEFAULT_NOSTO_OAUTH_BASE_URL = 'https://my.nosto.com/oauth';
+    const DEFAULT_NOSTO_API_BASE_URL = 'https://api.nosto.com';
+
     /**
      * Return environment variable.
      *

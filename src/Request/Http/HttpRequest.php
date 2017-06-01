@@ -37,6 +37,7 @@
 namespace Nosto\Request\Http;
 
 use Exception;
+use Nosto\Nosto;
 use Nosto\Helper\SerializationHelper;
 use Nosto\NostoException;
 use Nosto\Request\Http\Adapter\Adapter;
@@ -390,7 +391,7 @@ class HttpRequest
      */
     public static function getBaseURL()
     {
-        return getenv('NOSTO_WEB_HOOK_BASE_URL');
+        return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', Nosto::DEFAULT_NOSTO_WEB_HOOK_BASE_URL);
     }
 
     /**

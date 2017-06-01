@@ -133,6 +133,6 @@ final class IframeHelper extends AbstractHelper
      */
     private static function getBaseUrl()
     {
-        return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', HttpRequest::getBaseURL());
+        return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', Nosto::DEFAULT_NOSTO_WEB_HOOK_BASE_URL);
     }
 }
