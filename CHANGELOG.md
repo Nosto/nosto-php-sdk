@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.0.5
+* Fix providing default nosto backend url
+
 ## 3.0.4
 * Fix handling the 100 (Continue) HTTP header
 
