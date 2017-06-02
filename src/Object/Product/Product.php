@@ -203,6 +203,11 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     private $skus;
 
+    /**
+     * @var string url to the product thumbnail image
+     */
+    private $thumbUrl;
+
     public function __construct()
     {
         $this->skus = new \Nosto\Object\Product\SkuCollection();
@@ -845,5 +850,23 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     public function addSku(SkuInterface $sku)
     {
         $this->skus->append($sku);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getThumbUrl()
+    {
+        return $this->thumbUrl;
+    }
+
+    /**
+     * Sets the thumb URL
+     *
+     * @param string $thumbUrl
+     */
+    public function setThumbUrl($thumbUrl)
+    {
+        $this->thumbUrl = $thumbUrl;
     }
 }
