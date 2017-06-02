@@ -47,6 +47,7 @@ interface ProductInterface
     const INVISIBLE = 'Invisible';
     const DISCONTINUED = 'Discontinued';
     const ADD_TO_CART = 'add-to-cart';
+    const LOW_STOCK = 'low-stock';
 
     /**
      * Returns the absolute url to the product page in the shop frontend.
@@ -253,4 +254,11 @@ interface ProductInterface
      * @return Nosto\Object\Product\SkuCollection
      */
     public function getSkus();
+
+    /**
+     * Returns the thumbnail URL for product image
+     *
+     * @return string
+     */
+    public function getThumbUrl();
 }
