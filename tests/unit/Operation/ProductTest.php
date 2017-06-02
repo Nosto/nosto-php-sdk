@@ -76,4 +76,31 @@ class OperationProductTest extends Test
             $this->assertTrue($result);
         });
     }
+
+    /**
+     * Tests that product upsert API requests can be made.
+     */
+    public function testSendingProductSku()
+    {
+        $account = new Account('platform-00000000');
+        $product = new MockProduct();
+        $sku = new MockSku();
+        $sku->setName("xxxx");
+        $product->addSku($sku);
+        $this->assertCount(1, $product->getSkus());
+        $sku = new MockSku();
+        $sku->setId(3);
+        $product->addSku($sku);
+        $this->assertCount(2, $product->getSkus());
+        $token = new Token('products', 'token');
+        $account->addApiToken($token);
+
+        $op = new UpsertProduct($account);
+        $op->addProduct($product);
+        $result = $op->upsert();
+
+        $this->specify('successful product upsert', function () use ($result) {
+            $this->assertTrue($result);
+        });
+    }
 }

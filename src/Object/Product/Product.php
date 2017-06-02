@@ -205,7 +205,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
 
     public function __construct()
     {
-        // Dummy
+        $this->skus = new \Nosto\Object\Product\SkuCollection();
     }
 
     /**
