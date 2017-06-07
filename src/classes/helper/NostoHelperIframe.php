@@ -74,6 +74,17 @@ class NostoHelperIframe extends NostoHelper
             'email' => $meta->getEmail(),
             'modules' => $meta->getModules(),
         );
+
+        if ($meta->getCurrency() != null) {
+            $defaultParameters['currency'] = $meta->getCurrency();
+        }
+        if ($meta->getRecentSales() != null) {
+            $defaultParameters['sales'] = $meta->getRecentSales();
+        }
+        if ($meta->getRecentVisits() != null) {
+            $defaultParameters['visits'] = $meta->getRecentVisits();
+        }
+
         if ($account instanceof NostoAccountInterface) {
             $missingScopes = $account->getMissingTokens();
             if (!empty($missingScopes)) {
