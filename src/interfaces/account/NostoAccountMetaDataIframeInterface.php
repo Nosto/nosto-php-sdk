@@ -162,4 +162,25 @@ interface NostoAccountMetaDataIframeInterface
      * @return array array(moduleName=1, moduleName=0)
      */
     public function getModules();
+
+    /**
+     * Return visits in last 30 days
+     *
+     * @return string
+     */
+    public function getRecentVisits();
+
+    /**
+     * Get sales in last 30 days
+     *
+     * @return string
+     */
+    public function getRecentSales();
+
+    /**
+     * Get shop main currency
+     *
+     * @return string
+     */
+    public function getCurrency();
 }

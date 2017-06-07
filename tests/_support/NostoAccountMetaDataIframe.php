@@ -100,4 +100,34 @@ class NostoAccountMetaDataIframe implements NostoAccountMetaDataIframeInterface
 	{
 		return array();
 	}
+
+    /**
+     * Return visits in last 30 days
+     *
+     * @return string
+     */
+    public function getRecentVisits()
+    {
+        return "20";
+    }
+
+    /**
+     * Get sales in last 30 days
+     *
+     * @return string
+     */
+    public function getRecentSales()
+    {
+        return "10,000";
+    }
+
+    /**
+     * Get shop main currency
+     *
+     * @return string
+     */
+    public function getCurrency()
+    {
+        return "EUR";
+    }
 }
