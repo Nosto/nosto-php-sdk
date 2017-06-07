@@ -102,5 +102,5 @@ interface SkuInterface
      *
      * @return array
      */
-    public function getCustomAttributes();
+    public function getCustomFields();
 }

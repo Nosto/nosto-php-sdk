@@ -106,7 +106,7 @@ class Sku extends AbstractObject implements SkuInterface
      * s
      * @var array
      */
-    private $customAttributes = array();
+    private $customFields = array();
 
     /**
      * @inheritdoc
@@ -255,19 +255,19 @@ class Sku extends AbstractObject implements SkuInterface
     /**
      * @inheritdoc
      */
-    public function getCustomAttributes()
+    public function getCustomFields()
     {
-        return $this->customAttributes;
+        return $this->customFields;
     }
 
     /**
      * Setter for custom attributes
      *
-     * @param array $customAttributes
+     * @param array $customFields
      */
-    public function setCustomAttributes(array $customAttributes)
+    public function setCustomFields(array $customFields)
     {
-        $this->customAttributes = $customAttributes;
+        $this->customFields = $customFields;
     }
 
     /**
@@ -275,11 +275,10 @@ class Sku extends AbstractObject implements SkuInterface
      *
      * @param $attribute
      * @param $value
-     * @internal param array $customAttributes
      */
-    public function addCustomAttribute($attribute, $value)
+    public function addCustomField($attribute, $value)
     {
-        $this->customAttributes[$attribute] = $value;
+        $this->customFields[$attribute] = $value;
     }
 
     /**
