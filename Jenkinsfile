@@ -34,8 +34,6 @@ node {
                     sh "./vendor/bin/codecept run --xml"
                 }
                 sh "tree tests"
-                sh "ls -lah tests/"
-                sh "ls -lah tests/_output/"
                 step([$class: 'JUnitResultArchiver', testResults: 'tests/_output/report.xml'])
         }
 
