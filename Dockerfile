@@ -5,7 +5,7 @@ ENV LANG en_US.UTF-8
 ENV TERM xterm
 
 RUN apt-get update && \
-    apt-get -y -qq install nano
+    apt-get -y -qq install nano tree
 
 RUN cd /tmp && \
     git clone https://github.com/nikic/php-ast.git && \
