@@ -26,7 +26,7 @@ node {
                 sh "ls -lah"
 
             stage 'Report'
-                step([$class: 'hudson.plugins.checkstyle.CheckStylePublisher', checkstyle: 'phpcs.xml'])
+                step([$class: 'hudson.plugins.checkstyle.CheckStylePublisher', checkstyle: 'phpcs.xml', unstableTotalAll:'0'])
                 step([$class: 'JUnitResultArchiver', testResults: 'tests/_output/report.xml'])
         }
 
