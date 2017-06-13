@@ -8,6 +8,7 @@ node {
   stage ('Build') {
     docker.image('composer/composer').inside() {
         sh 'echo test'
+        sh 'docker-php-ext-install ast'
         sh 'composer install'
     }
   }
