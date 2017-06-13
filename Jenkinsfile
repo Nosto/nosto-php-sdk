@@ -20,6 +20,9 @@ node {
 
             stage "Phan Analysis"
                 sh "./vendor/bin/phing phan"
+
+            stage "Unit Tests"
+                sh "./vendor/bin/codecept run --xml"
         }
 
     stage "Cleanup"
