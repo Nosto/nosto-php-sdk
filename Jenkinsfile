@@ -19,5 +19,4 @@ node {
 
     stage "Cleanup"
         deleteDir()
-  }
 }
