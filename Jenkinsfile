@@ -1,23 +1,23 @@
 #!/usr/bin/env groovy
 
 node {
-  stage ('Checkout') {
-    checkout scm
-  }
+    stage "Prepare environment"
+        checkout scm
+        def environment  = docker.build 'platforms-base'
 
-  stage ('Build') {
-    docker.image('composer/composer').inside() {
-        sh 'echo test'
-        sh 'sudo apt-get update'
-        sh 'sudo apt-get install -y php7.0 zip unzip php7.0-zip php7.0-curl'
-        sh 'docker-php-ext-install pcntl'
-        sh 'docker-php-ext-install ast'
-        sh 'composer install'
-    }
-  }
+        environment.inside {
+            stage "Checkout and build deps"
+                sh "composer install"
 
-  stage ('Test') {
-      sh 'composer install'
-      step([$class: 'JUnitResultArchiver', testResults: 'test/reports/sdk-report.xml'])
+            stage "Validate types"
+                sh "./node_modules/.bin/flow"
+
+            stage "Test and validate"
+                sh "npm install gulp-cli && ./node_modules/.bin/gulp"
+                junit 'reports/**/*.xml'
+        }
+
+    stage "Cleanup"
+        deleteDir()
   }
 }
