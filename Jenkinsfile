@@ -10,7 +10,7 @@ node {
                 sh "composer install"
 
             stage "Code Sniffer"
-                sh "./vendor/bin/phing phpcs"
+                sh "./vendor/bin/phpcs --standard=ruleset.xml --report=checkstyle --report-file=phpcs.xml ."
 
             stage "Copy-Paste Detection"
                 sh "./vendor/bin/phing phpcpd"
