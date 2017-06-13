@@ -33,7 +33,8 @@ node {
                 catchError {
                     sh "./vendor/bin/codecept run --xml"
                 }
-                sh "ls -lah"
+                sh "ls -lah tests/"
+                sh "ls -lah tests/_output/"
                 step([$class: 'JUnitResultArchiver', testResults: 'tests/_output/report.xml'])
         }
 
