@@ -9,17 +9,17 @@ node {
             stage "Update Dependencies"
                 sh "composer install"
 
-            stage "PHPCS"
+            stage "Code Sniffer"
                 sh "./vendor/bin/phing phpcs"
 
-            stage "PHPCBF"
-                sh "./vendor/bin/phing phpcbf"
-
-            stage "PHPCPD"
+            stage "Copy-Paste Detection"
                 sh "./vendor/bin/phing phpcpd"
 
-            stage "PHPMD"
+            stage "Mess Detection"
                 sh "./vendor/bin/phing phpmd"
+
+            stage "Phan Analysis"
+                sh "./vendor/bin/phing phan"
         }
 
     stage "Cleanup"
