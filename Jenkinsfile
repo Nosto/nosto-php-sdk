@@ -23,6 +23,9 @@ node {
 
             stage "Unit Tests"
                 sh "./vendor/bin/codecept run --xml"
+
+            stage 'Report'
+                step([$class: 'JUnitResultArchiver', testResults: 'tests/_output/report.xml'])
         }
 
     stage "Cleanup"
