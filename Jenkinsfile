@@ -8,6 +8,9 @@ node {
   stage ('Build') {
     docker.image('composer/composer').inside() {
         sh 'echo test'
+        sh 'apt-get update'
+        sh 'apt-get install -y php7.0 zip unzip php7.0-zip php7.0-curl'
+        sh 'docker-php-ext-install pcntl'
         sh 'docker-php-ext-install ast'
         sh 'composer install'
     }
