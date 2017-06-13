@@ -20,7 +20,10 @@ node {
                 sh "./vendor/bin/phing phpcpd"
 
             stage "Mess Detection"
-                sh "./vendor/bin/phing phpmd"
+                catchError {
+                    sh "./vendor/bin/phpmd . --exclude vendor,var,build,tests xml codesize,naming,unusedcode,controversial,design --reportfile=phpmd.xml"
+                }
+                sh 'cat phpmd.xml'
 
             stage "Phan Analysis"
                 sh "./vendor/bin/phing phan"
