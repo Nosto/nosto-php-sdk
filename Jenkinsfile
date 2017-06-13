@@ -30,10 +30,10 @@ node {
                 sh "./vendor/bin/phing phan"
 
             stage "Unit Tests"
-                sh "./vendor/bin/codecept run --xml"
+                catchError {
+                    sh "./vendor/bin/codecept run --xml"
+                }
                 sh "ls -lah"
-
-            stage 'Report'
                 step([$class: 'JUnitResultArchiver', testResults: 'tests/_output/report.xml'])
         }
 
