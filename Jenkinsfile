@@ -10,7 +10,7 @@ node {
                 sh "composer install"
 
             stage('Code Sniffer') {
-                steps {
+                step {
                     sh "./vendor/bin/phpcs --standard=ruleset.xml --report=checkstyle --report-file=phpcs.xml ."
                 }
             }
