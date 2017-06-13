@@ -6,15 +6,20 @@ node {
         def environment  = docker.build 'platforms-base'
 
         environment.inside {
-            stage "Checkout and build deps"
+            stage "Update Dependencies"
                 sh "composer install"
 
-            stage "Validate types"
-                sh "./node_modules/.bin/flow"
+            stage "PHPCS"
+                sh "./vendor/bin/phing phpcs"
 
-            stage "Test and validate"
-                sh "npm install gulp-cli && ./node_modules/.bin/gulp"
-                junit 'reports/**/*.xml'
+            stage "PHPCBF"
+                sh "./vendor/bin/phing phpcbf"
+
+            stage "PHPCPD"
+                sh "./vendor/bin/phing phpcpd"
+
+            stage "PHPMD"
+                sh "./vendor/bin/phing phpmd"
         }
 
     stage "Cleanup"
