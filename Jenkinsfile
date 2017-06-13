@@ -6,8 +6,9 @@ node {
   }
 
   stage ('Build') {
-    docker.image('php:7.0-cli').inside() {
+    docker.image('composer/composer').inside() {
         sh 'echo test'
+        sh 'composer install'
     }
   }
 
