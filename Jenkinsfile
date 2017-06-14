@@ -26,7 +26,7 @@ node {
                 //step([$class: 'PmdPublisher', pattern: 'phpmd.xml', unstableTotalAll:'0'])
 
             stage "Phan Analysis"
-                sh "./vendor/bin/phan --signature-compatibility --config-file=phan.php ."
+                sh "./vendor/bin/phan --signature-compatibility --config-file=phan.php"
 
             stage "Unit Tests"
                 catchError {
