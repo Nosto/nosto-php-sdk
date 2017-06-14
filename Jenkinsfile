@@ -33,7 +33,6 @@ node {
                 catchError {
                     sh "./vendor/bin/codecept run --xml"
                 }
-                sh "tree tests"
                 step([$class: 'JUnitResultArchiver', testResults: 'tests/_output/report.xml'])
         }
 
