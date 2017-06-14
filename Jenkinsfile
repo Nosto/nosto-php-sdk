@@ -13,7 +13,6 @@ node {
                 catchError {
                     sh "./vendor/bin/phpcs --standard=ruleset.xml --report=checkstyle --report-file=phpcs.xml . || true"
                 }
-                sh 'cat phpcs.xml'
                 step([$class: 'hudson.plugins.checkstyle.CheckStylePublisher', pattern: 'phpcs.xml', unstableTotalAll:'0'])
 
             stage "Copy-Paste Detection"
