@@ -11,6 +11,7 @@ node {
 
             stage "Code Sniffer"
                 catchError {
+                    sh "./vendor/bin/phpcbf --standard=ruleset.xml ."
                     sh "./vendor/bin/phpcs --standard=ruleset.xml --report=checkstyle --report-file=phpcs.xml . || true"
                 }
                 step([$class: 'hudson.plugins.checkstyle.CheckStylePublisher', pattern: 'phpcs.xml', unstableTotalAll:'0'])
@@ -22,11 +23,13 @@ node {
                 catchError {
                     sh "./vendor/bin/phpmd . xml codesize,naming,unusedcode,controversial,design --exclude vendor,var,build,tests --reportfile phpmd.xml"
                 }
-                sh 'cat phpmd.xml'
                 //step([$class: 'PmdPublisher', pattern: 'phpmd.xml', unstableTotalAll:'0'])
 
             stage "Phan Analysis"
-                sh "./vendor/bin/phan --signature-compatibility --config-file=phan.php"
+                catchError {
+                    sh "./vendor/bin/phan --signature-compatibility --config-file=phan.php --output-mode=checkstyle"
+                }
+                step([$class: 'hudson.plugins.checkstyle.CheckStylePublisher', pattern: 'phpcs.xml', unstableTotalAll:'0'])
 
             stage "Unit Tests"
                 catchError {
