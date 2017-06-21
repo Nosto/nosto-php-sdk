@@ -35,6 +35,7 @@
  */
 
 return [
+    'analyze_signature_compatibility' => false,
     'backward_compatibility_checks' => false,
     'exclude_file_regex' => '@^vendor/.*/(tests|test|Tests|Test)/@',
     'directory_list' => [
