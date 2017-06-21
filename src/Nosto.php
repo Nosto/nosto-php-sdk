@@ -59,7 +59,7 @@ class Nosto
     const DEFAULT_NOSTO_WEB_HOOK_BASE_URL = 'https://my.nosto.com';
     const DEFAULT_NOSTO_OAUTH_BASE_URL = 'https://my.nosto.com/oauth';
     const DEFAULT_NOSTO_API_BASE_URL = 'https://api.nosto.com';
-    const DEFAULT_NOSTO_IFRAME_ORIGIN_REGEXP = "(https:\/\/platform-([a-z0-9]+)\.hub\.nosto\.com)|(https:\/\/my\.nosto\.com)";
+    const DEFAULT_NOSTO_IFRAME_ORIGIN_REGEXP = "(https:\/\/platform-([a-z0-9]+)\.hub\.nosto\.com)|(https:\/\/my\.nosto\.com)"; //codingStandardsIgnoreLine
 
     /**
      * Return environment variable.
