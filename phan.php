@@ -36,7 +36,6 @@
 
 return [
     'backward_compatibility_checks' => false,
-    'signature-compatibility' => true,
     'exclude_file_regex' => '@^vendor/.*/(tests|test|Tests|Test)/@',
     'directory_list' => [
         'src',
