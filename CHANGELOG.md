@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.0.9
+* Fix the phpseclib dependency version
+
 ## 3.0.8
 * Rename custom_attributes to custom_fields for SKU
 
