@@ -44,6 +44,11 @@ use stdClass;
 class HttpResponse
 {
     /**
+     * Header prefix of request id
+     */
+    const HEADER_PREFIX_X_REQUEST_ID = 'X-Request-ID: ';
+
+    /**
      * @var array the response headers if there are any.
      */
     private $headers;
@@ -62,6 +67,11 @@ class HttpResponse
      * @var int runtime cache for the http response code.
      */
     private $code;
+
+    /**
+     * @var string request id reply from nosto backend
+     */
+    private $requestId;
 
     /**
      * Creates and populates the response object.
@@ -134,6 +144,29 @@ class HttpResponse
             }
             $this->code = $code;
         }
+        return $this->code;
+    }
+
+    /**
+     * Get the nosto request id reply from nosto backend
+     *
+     * @return string|null
+     */
+    public function getRequestId()
+    {
+        if (is_null($this->requestId)) {
+
+            if (!empty($this->headers)) {
+                foreach ($this->headers as $header) {
+                    $position = strpos($header, self::HEADER_PREFIX_X_REQUEST_ID);
+                    if ($position === 0) {
+                        $this->requestId = substr($header, count(self::HEADER_PREFIX_X_REQUEST_ID));
+                        break;
+                    }
+                }
+            }
+        }
+
         return $this->code;
     }
 
