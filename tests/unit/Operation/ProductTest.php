@@ -138,7 +138,6 @@ class OperationProductTest extends Test
 
         $variations = new VariationCollection();
         $variations->append($variation);
-
         $product->setVariations($variations);
         $this->assertCount(1, $product->getVariations());
     }
