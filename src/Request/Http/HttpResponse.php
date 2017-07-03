@@ -46,7 +46,7 @@ class HttpResponse
     /**
      * Header prefix of request id
      */
-    const HEADER_PREFIX_X_REQUEST_ID = 'X-Request-ID: ';
+    const HEADER_PREFIX_X_REQUEST_ID = 'x-request-id: ';
 
     /**
      * @var array the response headers if there are any.
@@ -157,7 +157,7 @@ class HttpResponse
         if (is_null($this->xRequestId)) {
             if (!empty($this->headers)) {
                 foreach ($this->headers as $header) {
-                    $position = strpos($header, self::HEADER_PREFIX_X_REQUEST_ID);
+                    $position = strpos(strtolower($header), self::HEADER_PREFIX_X_REQUEST_ID);
                     if ($position === 0) {
                         $this->xRequestId = substr($header, count(self::HEADER_PREFIX_X_REQUEST_ID));
                         break;
