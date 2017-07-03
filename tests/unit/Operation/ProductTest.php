@@ -39,6 +39,8 @@ use Codeception\TestCase\Test;
 use Nosto\Object\Signup\Account;
 use Nosto\Operation\UpsertProduct;
 use Nosto\Request\Api\Token;
+use Nosto\Types\Product\ProductInterface;
+use Nosto\Object\Product\VariationCollection;
 
 class OperationProductTest extends Test
 {
@@ -129,5 +131,15 @@ class OperationProductTest extends Test
         $this->specify('successful product upsert', function () use ($result) {
             $this->assertTrue($result);
         });
+
+        $variation = new MockVariation();
+        $variation->setAvailable(true);
+        $this->assertEquals(ProductInterface::IN_STOCK, $variation->getAvailability());
+
+        $variations = new VariationCollection();
+        $variations->append($variation);
+
+        $product->setVariations($variations);
+        $this->assertCount(1, $product->getVariations());
     }
 }
