@@ -69,9 +69,9 @@ class HttpResponse
     private $code;
 
     /**
-     * @var string request id reply from nosto backend
+     * @var string x request id reply from nosto backend
      */
-    private $requestId;
+    private $xRequestId;
 
     /**
      * Creates and populates the response object.
@@ -152,22 +152,21 @@ class HttpResponse
      *
      * @return string|null
      */
-    public function getRequestId()
+    public function getXRequestId()
     {
-        if (is_null($this->requestId)) {
-
+        if (is_null($this->xRequestId)) {
             if (!empty($this->headers)) {
                 foreach ($this->headers as $header) {
                     $position = strpos($header, self::HEADER_PREFIX_X_REQUEST_ID);
                     if ($position === 0) {
-                        $this->requestId = substr($header, count(self::HEADER_PREFIX_X_REQUEST_ID));
+                        $this->xRequestId = substr($header, count(self::HEADER_PREFIX_X_REQUEST_ID));
                         break;
                     }
                 }
             }
         }
 
-        return $this->code;
+        return $this->xRequestId;
     }
 
     /**
