@@ -107,4 +107,17 @@ abstract class AbstractHttpException extends NostoException
     {
         $this->response = $response;
     }
+
+    /**
+     * Get x request id from the response
+     * @return null|string
+     */
+    public function getXRequestId()
+    {
+        if ($this->response != null) {
+            return $this->response->getXRequestId();
+        }
+
+        return null;
+    }
 }
