@@ -159,7 +159,7 @@ class HttpResponse
                 foreach ($this->headers as $header) {
                     $position = strpos(strtolower($header), self::HEADER_PREFIX_X_REQUEST_ID);
                     if ($position === 0) {
-                        $this->xRequestId = substr($header, count(self::HEADER_PREFIX_X_REQUEST_ID));
+                        $this->xRequestId = substr($header, strlen(self::HEADER_PREFIX_X_REQUEST_ID));
                         break;
                     }
                 }
