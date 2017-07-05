@@ -13,8 +13,7 @@ coverage:
     remote: false
     whitelist:
         include:
-            - src/classes/*
-            - src/Types/*
+            - src/*
     exclude:
         - src/classes/NostoCurrency.php
 

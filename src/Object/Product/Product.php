@@ -39,6 +39,7 @@ namespace Nosto\Object\Product;
 use Nosto\AbstractObject;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Product\SkuInterface;
+use Nosto\Types\Product\VariationInterface;
 use Nosto\Types\ValidatableInterface;
 
 /**
@@ -197,11 +198,18 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     private $unitPricingUnit;
 
     /**
-     * SKUs / variations
+     * SKUs
      *
-     * @var \Nosto\Object\Product\SkuCollection of SKUs
+     * @var SkuCollection of SKUs
      */
     private $skus;
+
+    /**
+     * SKUs
+     *
+     * @var \Nosto\Object\Product\VariationCollection of variations
+     */
+    private $variations;
 
     /**
      * @var string url to the product thumbnail image
@@ -210,7 +218,8 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
 
     public function __construct()
     {
-        $this->skus = new \Nosto\Object\Product\SkuCollection();
+        $this->skus = new SkuCollection();
+        $this->variations = new VariationCollection();
     }
 
     /**
@@ -868,5 +877,33 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     public function setThumbUrl($thumbUrl)
     {
         $this->thumbUrl = $thumbUrl;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getVariations()
+    {
+        return $this->variations;
+    }
+
+    /**
+     * Sets the variations
+     *
+     * @param VariationCollection $variations
+     */
+    public function setVariations(VariationCollection $variations)
+    {
+        $this->variations = $variations;
+    }
+
+    /**
+     * Sets the variations
+     *
+     * @param VariationInterface $variation
+     */
+    public function addVariation(VariationInterface $variation)
+    {
+        $this->variations->append($variation);
     }
 }

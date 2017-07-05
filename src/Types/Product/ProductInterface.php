@@ -251,7 +251,7 @@ interface ProductInterface
     /**
      * Returns the product variations
      *
-     * @return Nosto\Object\Product\SkuCollection
+     * @return \Nosto\Object\Product\SkuCollection
      */
     public function getSkus();
 
@@ -261,4 +261,11 @@ interface ProductInterface
      * @return string
      */
     public function getThumbUrl();
+
+    /**
+     * Returns the product variations if any exist.
+     *
+     * @return VariationInterface[] the variations.
+     */
+    public function getVariations();
 }
