@@ -54,14 +54,14 @@ class Variation extends AbstractObject implements VariationInterface
     private $id;
 
     /**
-     * SKU price
+     * variation price
      *
      * @var float
      */
     private $price;
 
     /**
-     * SKU list price
+     * variation list price
      *
      * @var float
      */
@@ -73,7 +73,7 @@ class Variation extends AbstractObject implements VariationInterface
     private $priceCurrencyCode;
 
     /**
-     * Availability of the SKU
+     * Availability of the variation
      * @see VariationInterface
      * @var string
      */
@@ -152,9 +152,9 @@ class Variation extends AbstractObject implements VariationInterface
     }
 
     /**
-     * Sets the availability state of the SKU
+     * Sets the availability state of the variation
      *
-     * The availability of the sku as either "InStock" or "OutOfStock"
+     * The availability of the variation as either "InStock" or "OutOfStock"
      * depending upon the true or false value of the availability
      *
      * @param bool $available the availability.
@@ -166,7 +166,7 @@ class Variation extends AbstractObject implements VariationInterface
     }
 
     /**
-     * Sets the currency code (ISO 4217) the product is sold in.
+     * Sets the currency code (ISO 4217) the variation is sold in.
      *
      * The currency must be in ISO 4217 format
      *
