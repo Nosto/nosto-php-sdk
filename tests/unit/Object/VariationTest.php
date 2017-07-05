@@ -37,8 +37,10 @@
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Types\Product\ProductInterface;
+use Nosto\Object\Product\VariationCollection;
 
-class OperationVariationTest extends Test
+
+class ObjectVariationTest extends Test
 {
     use Specify;
 
@@ -53,5 +55,11 @@ class OperationVariationTest extends Test
 
         $variation->setAvailable(false);
         $this->assertEquals(ProductInterface::OUT_OF_STOCK, $variation->getAvailability());
+
+        $product = new MockProduct();
+        $variations = new VariationCollection();
+        $variations->append($variation);
+        $product->setVariations($variations);
+        $this->assertCount(1, $product->getVariations());
     }
 }
