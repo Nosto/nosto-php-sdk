@@ -51,6 +51,7 @@ class VariationCollection extends AbstractCollection
      */
     public function append(VariationInterface $variation)
     {
-        $this->var[] = $variation;
+        $this->var[$variation->getId()] = $variation;
     }
 }
+
