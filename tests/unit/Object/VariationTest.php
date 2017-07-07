@@ -34,16 +34,32 @@
  *
  */
 
-return [
-    'analyze_signature_compatibility' => false,
-    'backward_compatibility_checks' => false,
-    'exclude_file_regex' => '@^vendor/.*/(tests|test|Tests|Test)/@',
-    'directory_list' => [
-        'src',
-        'vendor'
-    ],
-    "exclude_analysis_directory_list" => [
-        'vendor/',
-        'src/libs/'
-    ],
-];
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+use Nosto\Types\Product\ProductInterface;
+use Nosto\Object\Product\VariationCollection;
+
+
+class ObjectVariationTest extends Test
+{
+    use Specify;
+
+    /**
+     * Tests that setAvailabile method
+     */
+    public function testSetAvailabile()
+    {
+        $variation = new MockVariation();
+        $variation->setAvailable(true);
+        $this->assertEquals(ProductInterface::IN_STOCK, $variation->getAvailability());
+
+        $variation->setAvailable(false);
+        $this->assertEquals(ProductInterface::OUT_OF_STOCK, $variation->getAvailability());
+
+        $product = new MockProduct();
+        $variations = new VariationCollection();
+        $variations->append($variation);
+        $product->setVariations($variations);
+        $this->assertCount(1, $product->getVariations());
+    }
+}

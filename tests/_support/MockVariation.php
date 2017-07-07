@@ -1,4 +1,6 @@
 <?php
+use Nosto\Object\Product\Variation;
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,17 +35,14 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
-return [
-    'analyze_signature_compatibility' => false,
-    'backward_compatibility_checks' => false,
-    'exclude_file_regex' => '@^vendor/.*/(tests|test|Tests|Test)/@',
-    'directory_list' => [
-        'src',
-        'vendor'
-    ],
-    "exclude_analysis_directory_list" => [
-        'vendor/',
-        'src/libs/'
-    ],
-];
+class MockVariation extends Variation
+{
+    public function __construct()
+    {
+        $this->setId(1);
+        $this->setPrice(99.99);
+        $this->setListPrice(110.99);
+        $this->setPriceCurrencyCode('USD');
+        $this->setAvailability('InStock');
+    }
+}

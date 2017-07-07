@@ -43,7 +43,7 @@ use Nosto\Request\Http\HttpResponse;
  */
 abstract class Adapter
 {
-    const CRLF = '\r\n';
+    const CRLF = "\r\n";
 
     /**
      * @var array the request headers.

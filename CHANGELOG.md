@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.0.10
+* Add support for variation
+* Add support for getting X-Request-ID from http response and http exception
+* Revert phpseclib dependency to 2.0.*
+
 ## 3.0.9
 * Fix the phpseclib dependency version
 

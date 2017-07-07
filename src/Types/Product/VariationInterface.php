@@ -34,16 +34,42 @@
  *
  */
 
-return [
-    'analyze_signature_compatibility' => false,
-    'backward_compatibility_checks' => false,
-    'exclude_file_regex' => '@^vendor/.*/(tests|test|Tests|Test)/@',
-    'directory_list' => [
-        'src',
-        'vendor'
-    ],
-    "exclude_analysis_directory_list" => [
-        'vendor/',
-        'src/libs/'
-    ],
-];
+namespace Nosto\Types\Product;
+
+interface VariationInterface
+{
+    /**
+     * Returns the variations's unique identifier.
+     *
+     * @return int|string the ID.
+     */
+    public function getId();
+
+    /**
+     * Returns the currency code (ISO 4217) the variaiton is sold in.
+     *
+     * @return string the currency ISO code.
+     */
+    public function getPriceCurrencyCode();
+
+    /**
+     * Returns the price of the variation including possible discounts and taxes.
+     *
+     * @return int|float the price with 2 decimals, e.g. 1000.99.
+     */
+    public function getPrice();
+
+    /**
+     * Returns the list price of the variation without discounts but including possible taxes.
+     *
+     * @return int|float the price with 2 decimals, e.g. 1000.99.
+     */
+    public function getListPrice();
+
+    /**
+     * Returns the availability of the variation, i.e. if it is in stock or not.
+     *
+     * @return string the availability, either "InStock" or "OutOfStock".
+     */
+    public function getAvailability();
+}
