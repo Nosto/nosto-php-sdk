@@ -12,7 +12,8 @@
     "phing/phing": "2.*",
     "codeception/c3": "^2.0",
     "magento/marketplace-eqp": "1.0.4",
-    "magento-ecg/coding-standard": "*"
+    "magento-ecg/coding-standard": "*",
+    "symfony/console": "3.2.8"
   },
   "repositories": [
     {
@@ -35,7 +36,6 @@
   },
   "require": {
     "phpseclib/phpseclib": "2.0.*",
-    "vlucas/phpdotenv": "2.4.0",
-    "symfony/console": "3.2.8"
+    "vlucas/phpdotenv": "2.4.0"
   }
 }
