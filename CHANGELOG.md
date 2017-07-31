@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.0.12
+* Add phone, post code and country fields to person object 
+
 ## 3.0.11
 * Fix the iframe regular expression
 * Move symfony console dependency under require-dev 
