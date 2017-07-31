@@ -58,4 +58,25 @@ interface PersonInterface
      * @return string the email address.
      */
     public function getEmail();
+
+    /**
+     * The phone number of the user
+     *
+     * @return string|null
+     */
+    public function getPhone();
+
+    /**
+     * The post code of the user
+     *
+     * @return string|null
+     */
+    public function getPostCode();
+
+    /**
+     * The country of the user
+     *
+     * @return string|null
+     */
+    public function getCountry();
 }
