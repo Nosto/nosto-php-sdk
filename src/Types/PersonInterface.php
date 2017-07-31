@@ -67,11 +67,11 @@ interface PersonInterface
     public function getPhone();
 
     /**
-     * The zipCode of the user
+     * The postcode of the user
      *
      * @return string
      */
-    public function getZipCode();
+    public function getPostcode();
 
     /**
      * The country of the user
