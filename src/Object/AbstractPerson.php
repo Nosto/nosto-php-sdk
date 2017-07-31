@@ -61,6 +61,21 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
      */
     private $email;
 
+    /**
+     * @var string the phone number of the person
+     */
+    private $phone;
+
+    /**
+     * @var string the post code of the person
+     */
+    private $postCode;
+
+    /**
+     * @var string the country of the person
+     */
+    private $country;
+
     public function __construct()
     {
         // Dummy
@@ -124,5 +139,53 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     public function setEmail($email)
     {
         $this->email = $email;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param string|null $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPostCode()
+    {
+        return $this->postCode;
+    }
+
+    /**
+     * @param string|null $postCode
+     */
+    public function setPostCode($postCode)
+    {
+        $this->postCode = $postCode;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param string|null $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
     }
 }
