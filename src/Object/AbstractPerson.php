@@ -142,7 +142,7 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getPhone()
     {
@@ -150,7 +150,7 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     }
 
     /**
-     * @param string $phone
+     * @param string|null $phone
      */
     public function setPhone($phone)
     {
@@ -158,7 +158,7 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getPostcode()
     {
@@ -166,7 +166,7 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     }
 
     /**
-     * @param string $postcode
+     * @param string|null $postcode
      */
     public function setPostcode($postcode)
     {
@@ -174,7 +174,7 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCountry()
     {
@@ -182,7 +182,7 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     }
 
     /**
-     * @param string $country
+     * @param string|null $country
      */
     public function setCountry($country)
     {

@@ -62,21 +62,21 @@ interface PersonInterface
     /**
      * The phone number of the user
      *
-     * @return string
+     * @return string|null
      */
     public function getPhone();
 
     /**
      * The postcode of the user
      *
-     * @return string
+     * @return string|null
      */
     public function getPostcode();
 
     /**
      * The country of the user
      *
-     * @return string
+     * @return string|null
      */
     public function getCountry();
 }
