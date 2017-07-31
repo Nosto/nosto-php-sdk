@@ -67,9 +67,9 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     private $phone;
 
     /**
-     * @var string the postcode of the person
+     * @var string the post code of the person
      */
-    private $postcode;
+    private $postCode;
 
     /**
      * @var string the country of the person
@@ -160,17 +160,17 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     /**
      * @return string|null
      */
-    public function getPostcode()
+    public function getPostCode()
     {
-        return $this->postcode;
+        return $this->postCode;
     }
 
     /**
-     * @param string|null $postcode
+     * @param string|null $postCode
      */
-    public function setPostcode($postcode)
+    public function setPostCode($postCode)
     {
-        $this->postcode = $postcode;
+        $this->postCode = $postCode;
     }
 
     /**

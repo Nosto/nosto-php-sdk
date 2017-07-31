@@ -80,6 +80,6 @@ class MockBuyer extends Buyer
         $this->setEmail('james.kirk@example.com');
         $this->setCountry('Fi');
         $this->setPhone('+3580415448451');
-        $this->setPostcode('00200');
+        $this->setPostCode('00200');
     }
 }

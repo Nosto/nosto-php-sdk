@@ -67,11 +67,11 @@ interface PersonInterface
     public function getPhone();
 
     /**
-     * The postcode of the user
+     * The post code of the user
      *
      * @return string|null
      */
-    public function getPostcode();
+    public function getPostCode();
 
     /**
      * The country of the user
