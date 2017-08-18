@@ -300,9 +300,4 @@ class Sku extends AbstractObject implements SkuInterface, Markupable
     {
         return 'nosto_sku';
     }
-
-    function getMarkupKeyForArrayPropertyItem($propertyName)
-    {
-        return null;
-    }
 }

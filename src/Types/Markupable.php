@@ -38,6 +38,5 @@ namespace Nosto\Types;
 
 interface Markupable
 {
-    function getMarkupKey();
-    function getMarkupKeyForArrayPropertyItem($propertyName);
+    public function getMarkupKey();
 }

@@ -59,9 +59,4 @@ class SkuCollection extends AbstractCollection implements Markupable
     {
         return 'skus';
     }
-
-    function getMarkupKeyForArrayPropertyItem($propertyName)
-    {
-        return null;
-    }
 }

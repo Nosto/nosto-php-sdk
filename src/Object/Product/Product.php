@@ -42,6 +42,7 @@ use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\Product\VariationInterface;
 use Nosto\Types\ValidatableInterface;
+use Nosto\Object\StringCollection;
 
 /**
  * Model for product information. This is used when compiling the info about a
@@ -98,7 +99,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     /**
      * @var array list of product category strings.
      */
-    private $categories = array();
+    private $categories;
 
     /**
      * @var string the product description.
@@ -138,7 +139,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     /**
      * @var array alternative image urls
      */
-    private $alternateImageUrls = array();
+    private $alternateImageUrls;
 
     /**
      * @var string the condition of the product
@@ -163,17 +164,17 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     /**
      * @var array the first set of tags of the product
      */
-    private $tag1 = array();
+    private $tag1;
 
     /**
      * @var array the second set of tags of the product
      */
-    private $tag2 = array();
+    private $tag2;
 
     /**
      * @var array the third set of tags of the product
      */
-    private $tag3 = array();
+    private $tag3;
 
     /**
      * @var string category used in Google's services
@@ -221,6 +222,11 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     {
         $this->skus = new SkuCollection();
         $this->variations = new VariationCollection();
+        $this->tag1 = new StringCollection('tag1', 'tag');
+        $this->tag2 = new StringCollection('tag2', 'tag');
+        $this->tag3 = new StringCollection('tag3', 'tag');
+        $this->alternateImageUrls = new StringCollection('alternate_image_urls', 'alternate_image_url');
+        $this->categories = new StringCollection('categories', 'category');
     }
 
     /**
@@ -303,7 +309,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function addTag1($tag)
     {
-        $this->tag1[] = $tag;
+        $this->tag1->append($tag);
     }
 
     /**
@@ -343,7 +349,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function addTag2($tag)
     {
-        $this->tag2[] = $tag;
+        $this->tag2->append($tag);
     }
 
     /**
@@ -383,7 +389,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function addTag3($tag)
     {
-        $this->tag3[] = $tag;
+        $this->tag3->append($tag);
     }
 
     /**
@@ -563,7 +569,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function addCategory($category)
     {
-        $this->categories[] = $category;
+        $this->categories->append($category);
     }
 
     /**
@@ -703,7 +709,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function addAlternateImageUrls($alternateImageUrl)
     {
-        $this->alternateImageUrls[] = $alternateImageUrl;
+        $this->alternateImageUrls->append($alternateImageUrl);
     }
 
     /**
@@ -911,23 +917,5 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     function getMarkupKey()
     {
         return 'nosto_product';
-    }
-
-    function getMarkupKeyForArrayPropertyItem($propertyName)
-    {
-        if (!$propertyName) {
-            return null;
-        }
-        $propertyName = strtolower($propertyName);
-
-        if ($propertyName === 'categories') {
-            return "category";
-        } else if ($propertyName === 'alternateimageurls') {
-            return 'alternate_image_url';
-        } else if ($propertyName === 'tag1' || $propertyName === 'tag2'|| $propertyName === 'tag3') {
-            return 'tag';
-        }
-
-        return null;
     }
 }

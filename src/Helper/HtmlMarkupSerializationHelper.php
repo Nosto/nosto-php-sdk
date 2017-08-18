@@ -38,6 +38,7 @@ namespace Nosto\Helper;
 
 use Nosto\Types\Markupable;
 use Nosto\Helper\SerializationHelper;
+use Nosto\Types\MarkupableCollection;
 use ReflectionClass;
 use ReflectionException;
 use Traversable;
@@ -49,52 +50,60 @@ use Traversable;
  */
 class HtmlMarkupSerializationHelper extends AbstractHelper
 {
-    public static function objectToMarkup($object, $key, $keyForArrayItem, $spaces = 0, $indent = 2)
+    public static function objectToMarkup($object, $key, $spaces = 0, $indent = 2)
     {
         if (!$object) {
             return "";
         }
 
-        $markup = '';
         $spacesStr = str_repeat(' ', $spaces);
-        if (is_array($object) ||  $object instanceof Traversable) {
-            $markup .= $spacesStr . sprintf("<span class=\"%s\">", SerializationHelper::toSnakeCase($key)) . PHP_EOL;
-            if(is_array($object) && SerializationHelper::isAssoc($object)) {
-                foreach ($object as $arrayKey => $arrayValue) {
-                    $markup .= self::objectToMarkup($arrayValue, $arrayKey, $arrayKey, $spaces + $indent, $indent);
+
+        if ($object instanceof Markupable) {
+            $key = $object->getMarkupKey();
+        }
+
+        if (is_scalar($object)) {
+            $markup = $spacesStr
+                . sprintf("<span class=\"%s\">", SerializationHelper::toSnakeCase($key))
+                . $object
+                . "</span>"
+                . PHP_EOL;
+        } else {
+            //begin block
+            $markup = $spacesStr . sprintf("<span class=\"%s\">", SerializationHelper::toSnakeCase($key)) . PHP_EOL;
+            $childMarkupKey = null;
+            $traversable = null;
+            if (is_array($object) || $object instanceof Traversable) {
+                $traversable = $object;
+            } elseif (is_object($object)) {
+                $traversable = SerializationHelper::getProperties($object);
+            }
+
+            if(is_array($traversable) && SerializationHelper::isAssoc($traversable)) {
+                foreach ($traversable as $index => $childValue) {
+                    $childMarkupKey = $index;
+                    if ($object instanceof MarkupableCollection) {
+                        if ($object->getChildMarkupKey()) {
+                            $childMarkupKey = $object->getChildMarkupKey();
+                        }
+                    }
+
+                    $markup .= self::objectToMarkup($childValue, $childMarkupKey, $spaces + $indent);
                 }
             } else {
-                foreach ($object as $arrayValue) {
-                    $markup .= self::objectToMarkup($arrayValue, $keyForArrayItem, $keyForArrayItem,$spaces + $indent, $indent);
-                }
-            }
-            $markup .= $spacesStr . "</span>" . PHP_EOL;
-        } elseif (is_object($object)) {
-            $cssClass = $key;
-            if ($object instanceof Markupable && $object->getMarkupKey()) {
-                $cssClass = $object->getMarkupKey();
-            }
-
-            $markup .= $spacesStr . sprintf("<span class=\"%s\">", SerializationHelper::toSnakeCase($cssClass)) . PHP_EOL;
-
-            $properties = SerializationHelper::getProperties($object);
-
-            foreach ($properties as $propertyKey => $propertyValue) {
-                $propertyKeyForArrayItem = $propertyKey;
-                if ($object instanceof Markupable) {
-                    if ($object->getMarkupKeyForArrayPropertyItem($propertyKey)) {
-                        $propertyKeyForArrayItem = $object->getMarkupKeyForArrayPropertyItem($propertyKey);
+                foreach ($traversable as $childValue) {
+                    $childMarkupKey = $key;
+                    if ($object instanceof MarkupableCollection) {
+                        if ($object->getChildMarkupKey()) {
+                            $childMarkupKey = $object->getChildMarkupKey();
+                        }
                     }
+
+                    $markup .= self::objectToMarkup($childValue, $childMarkupKey,$spaces + $indent, $indent);
                 }
-
-                $markup .= self::objectToMarkup($propertyValue, $propertyKey, $propertyKeyForArrayItem, $spaces + $indent, $indent);
             }
-
+            //end block
             $markup .= $spacesStr . "</span>" . PHP_EOL;
-        } else {
-            $span = sprintf("<span class=\"%s\">", SerializationHelper::toSnakeCase($key));
-            $endx = "</span>";
-            $markup = $markup . $spacesStr . $span . $object . $endx . PHP_EOL;
         }
 
         return $markup;

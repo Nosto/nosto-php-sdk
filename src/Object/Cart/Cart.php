@@ -38,11 +38,12 @@ namespace Nosto\Object\Cart;
 
 use Nosto\AbstractObject;
 use Nosto\Types\LineItemInterface;
+use Nosto\Types\Markupable;
 
 /**
  * Model class containing the information about the particulars of a shopping cart.
  */
-class Cart extends AbstractObject
+class Cart extends AbstractObject implements Markupable
 {
     /**
      * @var string URL for restoring cart
@@ -105,5 +106,10 @@ class Cart extends AbstractObject
     public function setRestoreCartUrl($restoreCartUrl)
     {
         $this->restoreCartUrl = $restoreCartUrl;
+    }
+
+    function getMarkupKey()
+    {
+        return "nosto_cart";
     }
 }

@@ -34,30 +34,36 @@
  *
  */
 
-namespace Nosto\Object\Product;
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+use Nosto\Object\Signup\Account;
+use Nosto\Operation\UpsertProduct;
+use Nosto\Request\Api\Token;
 
-use Nosto\Object\AbstractCollection;
-use Nosto\Types\Markupable;
-use Nosto\Types\Product\VariationInterface;
-
-/**
- * Collection class to store a collection of variations
- */
-class VariationCollection extends AbstractCollection implements Markupable
+class OperationExceptionTest extends Test
 {
+    use Specify;
+
     /**
-     * Appends item to the collection of variations
-     *
-     * @param VariationInterface $variation the product to append
+     * Tests that product upsert API requests can be made.
      */
-    public function append(VariationInterface $variation)
+    public function testSendingProductUpsert()
     {
-        $this->var[$variation->getId()] = $variation;
+        try {
+            $account = new Account('platform-00000000');
+            $product = new MockProduct();
+            $token = new Token('products', 'token');
+            $account->addApiToken($token);
+
+            $op = new UpsertProduct($account);
+            $op->addProduct($product);
+            $result = $op->upsert();
+
+            $this->fail("Exception expected.");
+        } catch(\Nosto\Request\Http\Exception\HttpResponseException $e) {
+            $this->assertEquals('testRequstId', $e->getXRequestId());
+        }
+
     }
 
-    function getMarkupKey()
-    {
-        return 'variations';
-    }
 }
-
