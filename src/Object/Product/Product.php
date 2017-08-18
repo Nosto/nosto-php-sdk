@@ -37,6 +37,7 @@
 namespace Nosto\Object\Product;
 
 use Nosto\AbstractObject;
+use Nosto\Types\Markupable;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\Product\VariationInterface;
@@ -52,7 +53,7 @@ use Nosto\Types\ValidatableInterface;
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class Product extends AbstractObject implements ProductInterface, ValidatableInterface
+class Product extends AbstractObject implements ProductInterface, ValidatableInterface, Markupable
 {
     /**
      * @var string absolute url to the product page.
@@ -905,5 +906,28 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     public function addVariation(VariationInterface $variation)
     {
         $this->variations->append($variation);
+    }
+
+    function getMarkupKey()
+    {
+        return 'nosto_product';
+    }
+
+    function getMarkupKeyForArrayPropertyItem($propertyName)
+    {
+        if (!$propertyName) {
+            return null;
+        }
+        $propertyName = strtolower($propertyName);
+
+        if ($propertyName === 'categories') {
+            return "category";
+        } else if ($propertyName === 'alternateimageurls') {
+            return 'alternate_image_url';
+        } else if ($propertyName === 'tag1' || $propertyName === 'tag2'|| $propertyName === 'tag3') {
+            return 'tag';
+        }
+
+        return null;
     }
 }
