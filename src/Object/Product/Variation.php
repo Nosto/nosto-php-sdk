@@ -189,7 +189,7 @@ class Variation extends AbstractObject implements VariationInterface, Markupable
         return $this->priceCurrencyCode;
     }
 
-    function getMarkupKey()
+    public function getMarkupKey()
     {
         return 'variation';
     }

@@ -55,7 +55,7 @@ class VariationCollection extends AbstractCollection implements Markupable
         $this->var[$variation->getId()] = $variation;
     }
 
-    function getMarkupKey()
+    public function getMarkupKey()
     {
         return 'variations';
     }

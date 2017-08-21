@@ -108,7 +108,7 @@ class Cart extends AbstractObject implements Markupable
         $this->restoreCartUrl = $restoreCartUrl;
     }
 
-    function getMarkupKey()
+    public function getMarkupKey()
     {
         return "nosto_cart";
     }

@@ -37,10 +37,7 @@
 namespace Nosto\Helper;
 
 use Nosto\Types\Markupable;
-use Nosto\Helper\SerializationHelper;
 use Nosto\Types\MarkupableCollection;
-use ReflectionClass;
-use ReflectionException;
 use Traversable;
 
 /**
@@ -79,7 +76,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
                 $traversable = SerializationHelper::getProperties($object);
             }
 
-            if(is_array($traversable) && SerializationHelper::isAssoc($traversable)) {
+            if (is_array($traversable) && SerializationHelper::isAssoc($traversable)) {
                 foreach ($traversable as $index => $childValue) {
                     $childMarkupKey = $index;
                     if ($object instanceof MarkupableCollection) {
@@ -99,7 +96,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
                         }
                     }
 
-                    $markup .= self::objectToMarkup($childValue, $childMarkupKey,$spaces + $indent, $indent);
+                    $markup .= self::objectToMarkup($childValue, $childMarkupKey, $spaces + $indent, $indent);
                 }
             }
             //end block
