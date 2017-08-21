@@ -37,10 +37,12 @@
 namespace Nosto\Object\Product;
 
 use Nosto\AbstractObject;
+use Nosto\Types\Markupable;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\Product\VariationInterface;
 use Nosto\Types\ValidatableInterface;
+use Nosto\Object\StringCollection;
 
 /**
  * Model for product information. This is used when compiling the info about a
@@ -52,7 +54,7 @@ use Nosto\Types\ValidatableInterface;
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class Product extends AbstractObject implements ProductInterface, ValidatableInterface
+class Product extends AbstractObject implements ProductInterface, ValidatableInterface, Markupable
 {
     /**
      * @var string absolute url to the product page.
@@ -95,9 +97,9 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     private $availability;
 
     /**
-     * @var array list of product category strings.
+     * @var StringCollection collection of product category strings.
      */
-    private $categories = array();
+    private $categories;
 
     /**
      * @var string the product description.
@@ -135,9 +137,9 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     private $ratingValue;
 
     /**
-     * @var array alternative image urls
+     * @var StringCollection collection of alternative image urls
      */
-    private $alternateImageUrls = array();
+    private $alternateImageUrls;
 
     /**
      * @var string the condition of the product
@@ -160,19 +162,19 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     private $gtin;
 
     /**
-     * @var array the first set of tags of the product
+     * @var StringCollection the first set of tags of the product
      */
-    private $tag1 = array();
+    private $tag1;
 
     /**
-     * @var array the second set of tags of the product
+     * @var StringCollection the second set of tags of the product
      */
-    private $tag2 = array();
+    private $tag2;
 
     /**
-     * @var array the third set of tags of the product
+     * @var StringCollection the third set of tags of the product
      */
-    private $tag3 = array();
+    private $tag3;
 
     /**
      * @var string category used in Google's services
@@ -220,6 +222,11 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     {
         $this->skus = new SkuCollection();
         $this->variations = new VariationCollection();
+        $this->tag1 = new StringCollection('tag1', 'tag');
+        $this->tag2 = new StringCollection('tag2', 'tag');
+        $this->tag3 = new StringCollection('tag3', 'tag');
+        $this->alternateImageUrls = new StringCollection('alternate_image_urls', 'alternate_image_url');
+        $this->categories = new StringCollection('categories', 'category');
     }
 
     /**
@@ -276,14 +283,11 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     /**
      * Sets all the tags to the `tag1` field.
      *
-     * The tags must be an array of non-empty string values.
+     * The tags must be a collection of non-empty string values.
      *
-     * Usage:
-     * $object->setTag1(array('customTag1', 'customTag2'));
-     *
-     * @param array $tags the tags.
+     * @param StringCollection $tags the tags.
      */
-    public function setTag1(array $tags)
+    public function setTag1(StringCollection $tags)
     {
         foreach ($tags as $tag) {
             $this->addTag1($tag);
@@ -302,7 +306,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function addTag1($tag)
     {
-        $this->tag1[] = $tag;
+        $this->tag1->append($tag);
     }
 
     /**
@@ -316,14 +320,11 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     /**
      * Sets all the tags to the `tag2` field.
      *
-     * The tags must be an array of non-empty string values.
+     * The tags must be a collection of non-empty string values.
      *
-     * Usage:
-     * $object->setTag2(array('customTag1', 'customTag2'));
-     *
-     * @param array $tags the tags.
+     * @param StringCollection $tags the tags.
      */
-    public function setTag2(array $tags)
+    public function setTag2(StringCollection $tags)
     {
         foreach ($tags as $tag) {
             $this->addTag2($tag);
@@ -342,7 +343,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function addTag2($tag)
     {
-        $this->tag2[] = $tag;
+        $this->tag2->append($tag);
     }
 
     /**
@@ -356,14 +357,11 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     /**
      * Sets all the tags to the `tag3` field.
      *
-     * The tags must be an array of non-empty string values.
+     * The tags must be a collection of non-empty string values.
      *
-     * Usage:
-     * $object->setTag3(array('customTag1', 'customTag2'));
-     *
-     * @param array $tags the tags.
+     * @param StringCollection $tags the tags.
      */
-    public function setTag3(array $tags)
+    public function setTag3(StringCollection $tags)
     {
         foreach ($tags as $tag) {
             $this->addTag3($tag);
@@ -382,7 +380,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function addTag3($tag)
     {
-        $this->tag3[] = $tag;
+        $this->tag3->append($tag);
     }
 
     /**
@@ -532,21 +530,15 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     /**
      * Sets the product categories.
      *
-     * The categories must be an array of non-empty string values. The
+     * The categories must be a collection of non-empty string values. The
      * categories are expected to include the entire sub/parent category path,
      * e.g. "clothes/winter/coats".
      *
-     * Usage:
-     * $object->setCategories(array('clothes/winter/coats' [, ... ] ));
-     *
-     * @param array $categories the categories.
+     * @param StringCollection $categories the categories.
      */
-    public function setCategories(array $categories)
+    public function setCategories(StringCollection $categories)
     {
-        $this->categories = array();
-        foreach ($categories as $category) {
-            $this->addCategory($category);
-        }
+        $this->categories = $categories;
     }
 
     /**
@@ -562,7 +554,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function addCategory($category)
     {
-        $this->categories[] = $category;
+        $this->categories->append($category);
     }
 
     /**
@@ -686,13 +678,13 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function getAlternateImageUrls()
     {
-        return array_values(array_diff($this->alternateImageUrls, array($this->getImageUrl())));
+        return $this->alternateImageUrls;
     }
 
     /**
-     * @param array $alternateImageUrls
+     * @param StringCollection $alternateImageUrls
      */
-    public function setAlternateImageUrls(array $alternateImageUrls)
+    public function setAlternateImageUrls(StringCollection $alternateImageUrls)
     {
         $this->alternateImageUrls = $alternateImageUrls;
     }
@@ -702,7 +694,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function addAlternateImageUrls($alternateImageUrl)
     {
-        $this->alternateImageUrls[] = $alternateImageUrl;
+        $this->alternateImageUrls->append($alternateImageUrl);
     }
 
     /**
@@ -905,5 +897,13 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     public function addVariation(VariationInterface $variation)
     {
         $this->variations->append($variation);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    function getMarkupKey()
+    {
+        return 'nosto_product';
     }
 }

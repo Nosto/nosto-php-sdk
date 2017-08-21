@@ -37,13 +37,14 @@
 namespace Nosto\Object\Product;
 
 use Nosto\AbstractObject;
+use Nosto\Types\Markupable;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Product\VariationInterface;
 
 /**
  * Model for variation information
  */
-class Variation extends AbstractObject implements VariationInterface
+class Variation extends AbstractObject implements VariationInterface, Markupable
 {
 
     /**
@@ -186,5 +187,10 @@ class Variation extends AbstractObject implements VariationInterface
     public function getPriceCurrencyCode()
     {
         return $this->priceCurrencyCode;
+    }
+
+    public function getMarkupKey()
+    {
+        return 'variation';
     }
 }
