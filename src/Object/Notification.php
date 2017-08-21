@@ -171,7 +171,7 @@ class Notification extends AbstractObject implements NotificationInterface
      * Setter for notification type
      *
      * @see NotificationInterface::TYPE_*
-     * @param int $notificationType
+     * @param string $notificationType
      */
     public function setNotificationType($notificationType)
     {
