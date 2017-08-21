@@ -40,6 +40,7 @@ use Nosto\AbstractObject;
 use Nosto\Helper\ValidationHelper;
 use Nosto\NostoException;
 use Nosto\Request\Api\Token;
+use Nosto\Types\Markupable;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\Types\ValidatableInterface;
 

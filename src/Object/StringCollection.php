@@ -34,29 +34,44 @@
  *
  */
 
-namespace Nosto\Object\Product;
+namespace Nosto\Object;
 
-use Nosto\Object\AbstractCollection;
 use Nosto\Types\Markupable;
-use Nosto\Types\Product\SkuInterface;
+use Nosto\Types\MarkupableCollection;
 
 /**
- * Collection class to store a collection of SKUs
+ * Collection class to store a collection of products
  */
-class SkuCollection extends AbstractCollection implements Markupable
+class StringCollection extends AbstractCollection implements MarkupableCollection, Markupable
 {
+    /** @var string|null */
+    private $markupKey;
+    /** @var string|null */
+    private $childMarkupKey;
+
     /**
-     * Appends item to the collection of skus
-     *
-     * @param SkuInterface $sku the product to append
+     * StringCollection constructor.
+     * @param string|null $markupKey
+     * @param string|null $childMarkupKey
      */
-    public function append(SkuInterface $sku)
+    public function __construct($markupKey = null, $childMarkupKey = null)
     {
-        $this->var[] = $sku;
+        $this->childMarkupKey = $childMarkupKey;
+        $this->markupKey = $markupKey;
     }
 
-    function getMarkupKey()
+    public function append($item)
     {
-        return 'skus';
+        $this->var[] = $item;
+    }
+
+    public function getMarkupKey()
+    {
+        return $this->markupKey;
+    }
+
+    public function getChildMarkupKey()
+    {
+        return $this->childMarkupKey;
     }
 }
