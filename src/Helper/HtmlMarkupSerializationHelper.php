@@ -64,13 +64,13 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
 
         if (is_scalar($object)) {
             $markup = $spacesStr
-                . sprintf("<span class=\"%s\">", SerializationHelper::toSnakeCase($key))
+                . sprintf('<span class="%s">', SerializationHelper::toSnakeCase($key))
                 . $object
-                . "</span>"
+                . '</span>'
                 . PHP_EOL;
         } else {
             //begin block
-            $markup = $spacesStr . sprintf("<span class=\"%s\">", SerializationHelper::toSnakeCase($key)) . PHP_EOL;
+            $markup = $spacesStr . sprintf('<span class="%s">', SerializationHelper::toSnakeCase($key)) . PHP_EOL;
             $childMarkupKey = null;
             $traversable = null;
             if (is_array($object) || $object instanceof Traversable) {
@@ -103,7 +103,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
                 }
             }
             //end block
-            $markup .= $spacesStr . "</span>" . PHP_EOL;
+            $markup .= $spacesStr . '</span>' . PHP_EOL;
         }
 
         return $markup;
