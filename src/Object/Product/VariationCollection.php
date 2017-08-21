@@ -60,4 +60,3 @@ class VariationCollection extends AbstractCollection implements Markupable
         return 'variations';
     }
 }
-
