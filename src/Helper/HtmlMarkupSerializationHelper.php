@@ -91,23 +91,23 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
             $key = $object->getMarkupKey();
         }
 
+        //begin block
+        $styleStatement = '';
+        if ($style) {
+            $styleStatement = sprintf(' style="%s"', $style);
+        }
+        $classStatement = sprintf(' class="%s"', SerializationHelper::toSnakeCase($key));
+        $markup = $spacesStr
+            . '<span'
+            . $classStatement
+            . $styleStatement
+            . '>';
         if (is_scalar($object)) {
-            $styleStatement = '';
-            if ($style) {
-                $styleStatement = sprintf(' style="%s"', $style);
-            }
-            $classStatement = sprintf(' class="%s"', SerializationHelper::toSnakeCase($key));
-            $markup = $spacesStr
-                . '<span'
-                . $classStatement
-                . $styleStatement
-                . '>'
-                . $object
+            $markup .= $object
                 . self::SPAN_END
                 . PHP_EOL;
         } else {
-            //begin block
-            $markup = $spacesStr . sprintf(self::SPAN_START, SerializationHelper::toSnakeCase($key)) . PHP_EOL;
+            $markup .= PHP_EOL;
             $childMarkupKey = null;
             $traversable = null;
             if (is_array($object) || $object instanceof Traversable) {
