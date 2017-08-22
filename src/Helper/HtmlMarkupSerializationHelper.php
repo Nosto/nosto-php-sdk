@@ -137,14 +137,13 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
 
         $isAssociative = is_array($traversable) && SerializationHelper::isAssoc($traversable);
         foreach ($traversable as $index => $childValue) {
-            if ($isAssociative) {
-                $childMarkupKey = $index;
+            if ($object instanceof MarkupableCollection && $object->getChildMarkupKey()) {
+                $childMarkupKey = $object->getChildMarkupKey();
             } else {
-                $childMarkupKey = $key;
-            }
-            if ($object instanceof MarkupableCollection) {
-                if ($object->getChildMarkupKey()) {
-                    $childMarkupKey = $object->getChildMarkupKey();
+                if ($isAssociative) {
+                    $childMarkupKey = $index;
+                } else {
+                    $childMarkupKey = $key;
                 }
             }
 
