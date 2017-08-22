@@ -48,6 +48,9 @@ use Traversable;
  */
 class HtmlMarkupSerializationHelper extends AbstractHelper
 {
+    const SPAN_START = '<span class="%s">';
+    const SPAN_END = '</span>';
+
     /**
      * Serialize the object to html
      *
@@ -100,11 +103,11 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
                 . $styleStatement
                 . '>'
                 . $object
-                . '</span>'
+                . self::SPAN_END
                 . PHP_EOL;
         } else {
             //begin block
-            $markup = $spacesStr . sprintf('<span class="%s">', SerializationHelper::toSnakeCase($key)) . PHP_EOL;
+            $markup = $spacesStr . sprintf(self::SPAN_START, SerializationHelper::toSnakeCase($key)) . PHP_EOL;
             $childMarkupKey = null;
             $traversable = null;
             if (is_array($object) || $object instanceof Traversable) {
@@ -137,7 +140,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
                 }
             }
             //end block
-            $markup .= $spacesStr . '</span>' . PHP_EOL;
+            $markup .= $spacesStr . self::SPAN_END . PHP_EOL;
         }
 
         return $markup;
