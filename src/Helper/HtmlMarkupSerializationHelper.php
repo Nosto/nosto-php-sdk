@@ -36,6 +36,7 @@
 
 namespace Nosto\Helper;
 
+use Nosto\Object\MarkupableString;
 use Nosto\Types\Markupable;
 use Nosto\Types\MarkupableCollection;
 use Nosto\Types\Sanitizable;
@@ -102,7 +103,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
             . $classStatement
             . $styleStatement
             . '>';
-        if (is_scalar($object)) {
+        if (is_scalar($object) || $object instanceof MarkupableString) {
             $markup .= $object
                 . self::SPAN_END
                 . PHP_EOL;
