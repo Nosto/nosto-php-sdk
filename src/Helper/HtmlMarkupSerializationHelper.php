@@ -148,7 +148,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
                 }
             }
 
-            $markup .= self::objectToMarkup($childValue, $childMarkupKey, $spaces + $indent);
+            $markup .= self::toHtml($childValue, $childMarkupKey, $spaces + $indent);
         }
         return $markup;
     }

@@ -74,6 +74,11 @@ class MarkupableString extends AbstractObject implements Markupable
 
     public function __toString()
     {
+        if ($this->value === null)
+        {
+            return '';
+        }
+
         return $this->value;
     }
 }

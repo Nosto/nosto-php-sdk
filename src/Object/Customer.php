@@ -36,12 +36,13 @@
 
 namespace Nosto\Object;
 
+use Nosto\Types\Markupable;
 use Nosto\Types\UserInterface;
 
 /**
  * Customer object for tagging
  */
-class Customer extends User implements UserInterface
+class Customer extends User implements UserInterface, Markupable
 {
     /**
      * @var string customer reference
@@ -87,5 +88,10 @@ class Customer extends User implements UserInterface
     public function setCustomerReference($customerReference)
     {
         $this->customerReference = $customerReference;
+    }
+
+    public function getMarkupKey()
+    {
+        return 'nosto_customer';
     }
 }
