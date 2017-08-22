@@ -37,12 +37,13 @@
 namespace Nosto\Object\Product;
 
 use Nosto\AbstractObject;
+use Nosto\Object\StringCollection;
 use Nosto\Types\Markupable;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\Product\VariationInterface;
+use Nosto\Types\Sanitizable;
 use Nosto\Types\ValidatableInterface;
-use Nosto\Object\StringCollection;
 
 /**
  * Model for product information. This is used when compiling the info about a
@@ -54,7 +55,7 @@ use Nosto\Object\StringCollection;
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class Product extends AbstractObject implements ProductInterface, ValidatableInterface, Markupable
+class Product extends AbstractObject implements ProductInterface, ValidatableInterface, Markupable, Sanitizable
 {
     /**
      * @var string absolute url to the product page.
@@ -117,12 +118,12 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     private $variationId;
 
     /**
-     * @var float the price paid for the supplier
+     * @var float|null the price paid for the supplier
      */
     private $supplierCost;
 
     /**
-     * @var int product stock
+     * @var int|null product stock
      */
     private $inventoryLevel;
 
@@ -905,5 +906,17 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     function getMarkupKey()
     {
         return 'nosto_product';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function sanitize()
+    {
+        $sanitized = clone $this;
+        $sanitized->setInventoryLevel(null);
+        $sanitized->setSupplierCost(null);
+
+        return $sanitized;
     }
 }

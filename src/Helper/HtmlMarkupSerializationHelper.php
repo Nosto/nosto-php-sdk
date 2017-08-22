@@ -38,6 +38,7 @@ namespace Nosto\Helper;
 
 use Nosto\Types\Markupable;
 use Nosto\Types\MarkupableCollection;
+use Nosto\Types\Sanitizable;
 use Traversable;
 
 /**
@@ -47,10 +48,38 @@ use Traversable;
  */
 class HtmlMarkupSerializationHelper extends AbstractHelper
 {
+    /**
+     * Serialize the object to html
+     *
+     * @param mixed $object to be serialized
+     * @param string $key the html element class
+     * @param int $spaces
+     * @param int $indent
+     * @return string html
+     */
     public static function objectToMarkup($object, $key, $spaces = 0, $indent = 2)
+    {
+        return self::_objectToMarkup($object, $key, $spaces, $indent, 'displace:none');
+    }
+
+    /**
+     * Servialize the object to html
+     *
+     * @param mixed $object to be serialized
+     * @param string $key $key the html element class
+     * @param int $spaces
+     * @param int $indent
+     * @param string|null $style for the root element, it should be something like 'display:none'
+     * @return string html
+     */
+    private static function _objectToMarkup($object, $key, $spaces = 0, $indent = 2, $style = null)
     {
         if (!$object) {
             return "";
+        }
+
+        if ($object instanceof Sanitizable) {
+            $object = $object->sanitize();
         }
 
         $spacesStr = str_repeat(' ', $spaces);
@@ -60,8 +89,16 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
         }
 
         if (is_scalar($object)) {
+            $styleStatement = '';
+            if ($style) {
+                $styleStatement = sprintf(' style="%s"', $style);
+            }
+            $classStatement = sprintf(' class="%s"', SerializationHelper::toSnakeCase($key));
             $markup = $spacesStr
-                . sprintf('<span class="%s">', SerializationHelper::toSnakeCase($key))
+                . '<span'
+                . $classStatement
+                . $styleStatement
+                . '>'
                 . $object
                 . '</span>'
                 . PHP_EOL;

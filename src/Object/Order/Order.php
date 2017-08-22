@@ -43,6 +43,7 @@ use Nosto\Types\Markupable;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;
 use Nosto\Types\Order\StatusInterface;
+use Nosto\Types\Sanitizable;
 use Nosto\Types\ValidatableInterface;
 use Traversable;
 
@@ -52,6 +53,11 @@ use Traversable;
  */
 class Order extends AbstractObject implements OrderInterface, ValidatableInterface, Markupable
 {
+    /**
+     * @var string visitor checksum
+     */
+    private $hcid;
+
     /**
      * @var string|int the unique OrderConfirm number identifying the OrderConfirm
      */
@@ -284,6 +290,26 @@ class Order extends AbstractObject implements OrderInterface, ValidatableInterfa
         }
 
         return $formatted;
+    }
+
+    /**
+     * Get the visitor checksum
+     *
+     * @return string
+     */
+    public function getHcid()
+    {
+        return $this->hcid;
+    }
+
+    /**
+     * Set the visitor checksum
+     *
+     * @param string $hcid
+     */
+    public function setHcid($hcid)
+    {
+        $this->hcid = $hcid;
     }
 
     /**
