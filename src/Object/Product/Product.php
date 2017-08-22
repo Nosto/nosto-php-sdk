@@ -619,7 +619,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     }
 
     /**
-     * @param float $supplierCost
+     * @param float|null $supplierCost
      */
     public function setSupplierCost($supplierCost)
     {
@@ -635,7 +635,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     }
 
     /**
-     * @param int $inventoryLevel
+     * @param int|null $inventoryLevel
      */
     public function setInventoryLevel($inventoryLevel)
     {
@@ -903,7 +903,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     /**
      * @inheritdoc
      */
-    function getMarkupKey()
+    public function getMarkupKey()
     {
         return 'nosto_product';
     }

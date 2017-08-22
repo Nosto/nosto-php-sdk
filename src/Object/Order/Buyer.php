@@ -50,7 +50,7 @@ class Buyer extends AbstractPerson implements BuyerInterface, Markupable, Saniti
     /**
      * @inheritdoc
      */
-    function getMarkupKey()
+    public function getMarkupKey()
     {
         return 'buyer';
     }

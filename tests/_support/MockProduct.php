@@ -77,9 +77,16 @@ class MockProduct extends Product
     {
         parent::__construct();
         $this->setDescription('This is a full description');
-        $this->setTag1(array('first'));
-        $this->setTag2(array('second'));
-        $this->setTag3(array('third'));
+        $first = new \Nosto\Object\StringCollection('tags', 'tag');
+        $first->append('first');
+        $second = new \Nosto\Object\StringCollection('tags', 'tag');
+        $second->append('second');
+        $third = new \Nosto\Object\StringCollection('tags', 'tag');
+        $third->append('third');
+
+        $this->setTag1($first);
+        $this->setTag2($second);
+        $this->setTag3($third);
         $this->setUrl('http://my.shop.com/products/test_product.html');
         $this->setProductId(1);
         $this->setName('Test Product');
@@ -87,7 +94,13 @@ class MockProduct extends Product
         $this->setPrice(99.99);
         $this->setPriceCurrencyCode('USD');
         $this->setAvailability('InStock');
-        $this->setCategories(array('/Mens', '/Mens/Shoes'));
+        $this->setCategories(
+            new \Nosto\Object\StringCollection(
+                'categories',
+                'category',
+                array('/Mens', '/Mens/Shoes')
+            )
+        );
         $this->setListPrice(110.99);
         $this->setBrand('Super Brand');
         $this->setVariationId("USD");
@@ -95,7 +108,12 @@ class MockProduct extends Product
         $this->setInventoryLevel(50);
         $this->setReviewCount(99);
         $this->setRatingValue(2.5);
-        $this->setAlternateImageUrls(array("http://shop.com/product_alt.jpg"));
+        $urls = new \Nosto\Object\StringCollection(
+            'alternate_image_urls',
+            'alternate_image_url',
+            array("http://shop.com/product_alt.jpg")
+        );
+        $this->setAlternateImageUrls($urls);
         $this->setCondition("Used");
         $this->setGtin("gtin");
         $this->setGoogleCategory("All");

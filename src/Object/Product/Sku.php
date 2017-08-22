@@ -296,7 +296,7 @@ class Sku extends AbstractObject implements SkuInterface, Markupable
             ProductInterface::IN_STOCK : ProductInterface::OUT_OF_STOCK;
     }
 
-    function getMarkupKey()
+    public function getMarkupKey()
     {
         return 'nosto_sku';
     }

@@ -43,7 +43,6 @@ use Nosto\Types\Markupable;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;
 use Nosto\Types\Order\StatusInterface;
-use Nosto\Types\Sanitizable;
 use Nosto\Types\ValidatableInterface;
 use Traversable;
 

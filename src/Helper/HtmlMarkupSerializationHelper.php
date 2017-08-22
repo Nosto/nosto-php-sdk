@@ -62,7 +62,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
      */
     public static function objectToMarkup($object, $key, $spaces = 0, $indent = 2)
     {
-        return self::_objectToMarkup($object, $key, $spaces, $indent, 'displace:none');
+        return self::toHtml($object, $key, $spaces, $indent, 'displace:none');
     }
 
     /**
@@ -75,7 +75,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
      * @param string|null $style for the root element, it should be something like 'display:none'
      * @return string html
      */
-    private static function _objectToMarkup($object, $key, $spaces = 0, $indent = 2, $style = null)
+    private static function toHtml($object, $key, $spaces = 0, $indent = 2, $style = null)
     {
         if (!$object) {
             return "";
@@ -117,32 +117,61 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
             }
 
             if (is_array($traversable) && SerializationHelper::isAssoc($traversable)) {
-                foreach ($traversable as $index => $childValue) {
-                    $childMarkupKey = $index;
-                    if ($object instanceof MarkupableCollection) {
-                        if ($object->getChildMarkupKey()) {
-                            $childMarkupKey = $object->getChildMarkupKey();
-                        }
-                    }
-
-                    $markup .= self::objectToMarkup($childValue, $childMarkupKey, $spaces + $indent);
-                }
+                $markup .= self::associativeArrayToHtml($object, $spaces, $indent, $traversable);
             } else {
-                foreach ($traversable as $childValue) {
-                    $childMarkupKey = $key;
-                    if ($object instanceof MarkupableCollection) {
-                        if ($object->getChildMarkupKey()) {
-                            $childMarkupKey = $object->getChildMarkupKey();
-                        }
-                    }
-
-                    $markup .= self::objectToMarkup($childValue, $childMarkupKey, $spaces + $indent, $indent);
-                }
+                $markup .= self::arrayToHtml($object, $key, $spaces, $indent, $traversable);
             }
             //end block
             $markup .= $spacesStr . self::SPAN_END . PHP_EOL;
         }
 
+        return $markup;
+    }
+
+    /**
+     * @param mixed $object the object
+     * @param int $spaces
+     * @param int $indent
+     * @param array|Traversable $traversable the array
+     * @return string
+     */
+    private static function associativeArrayToHtml($object, $spaces, $indent, $traversable)
+    {
+        $markup = '';
+        foreach ($traversable as $index => $childValue) {
+            $childMarkupKey = $index;
+            if ($object instanceof MarkupableCollection) {
+                if ($object->getChildMarkupKey()) {
+                    $childMarkupKey = $object->getChildMarkupKey();
+                }
+            }
+
+            $markup .= self::objectToMarkup($childValue, $childMarkupKey, $spaces + $indent);
+        }
+        return $markup;
+    }
+
+    /**
+     * @param mixed $object the object
+     * @param string $key the html element class
+     * @param int $spaces
+     * @param int $indent
+     * @param array|Traversable $traversable the array
+     * @return string
+     */
+    private static function arrayToHtml($object, $key, $spaces, $indent, $traversable)
+    {
+        $markup = '';
+        foreach ($traversable as $childValue) {
+            $childMarkupKey = $key;
+            if ($object instanceof MarkupableCollection) {
+                if ($object->getChildMarkupKey()) {
+                    $childMarkupKey = $object->getChildMarkupKey();
+                }
+            }
+
+            $markup .= self::objectToMarkup($childValue, $childMarkupKey, $spaces + $indent, $indent);
+        }
         return $markup;
     }
 }

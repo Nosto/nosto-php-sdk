@@ -53,11 +53,18 @@ class StringCollection extends AbstractCollection implements MarkupableCollectio
      * StringCollection constructor.
      * @param string $markupKey
      * @param string $childMarkupKey
+     * @param array $initArray array of string
      */
-    public function __construct($markupKey, $childMarkupKey)
+    public function __construct($markupKey, $childMarkupKey, $initArray = null)
     {
         $this->childMarkupKey = $childMarkupKey;
         $this->markupKey = $markupKey;
+
+        if ($initArray) {
+            foreach ($initArray as $item) {
+                $this->var[] = $item;
+            }
+        }
     }
 
     public function append($item)

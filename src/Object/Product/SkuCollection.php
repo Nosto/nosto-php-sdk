@@ -55,7 +55,7 @@ class SkuCollection extends AbstractCollection implements Markupable
         $this->var[] = $sku;
     }
 
-    function getMarkupKey()
+    public function getMarkupKey()
     {
         return 'skus';
     }
