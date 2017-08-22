@@ -36,6 +36,8 @@
 
 namespace Nosto\Types\Product;
 
+use Nosto\Object\StringCollection;
+
 /**
  * Interface for the meta data of a product.
  * This is used when making product re-crawl API requests and product history exports to Nosto.
@@ -108,28 +110,28 @@ interface ProductInterface
     /**
      * Returns the first set of tags for the product.
      *
-     * @return array first set of the tags
+     * @return StringCollection|null first set of the tags
      */
     public function getTag1();
 
     /**
      * Returns the second set of tags for the product.
      *
-     * @return array second set of the tags
+     * @return StringCollection|null second set of the tags
      */
     public function getTag2();
 
     /**
      * Returns the third set of tags for the product.
      *
-     * @return array third set of the tags
+     * @return StringCollection|null third set of the tags
      */
     public function getTag3();
 
     /**
      * Returns the categories the product is located in.
      *
-     * @return array list of category strings, e.g. array("/shoes/winter", "shoes/boots").
+     * @return StringCollection|null list of category strings.
      */
     public function getCategories();
 
@@ -185,7 +187,7 @@ interface ProductInterface
     /**
      * Returns the alternative images
      *
-     * @return array|null
+     * @return StringCollection|null
      */
     public function getAlternateImageUrls();
 

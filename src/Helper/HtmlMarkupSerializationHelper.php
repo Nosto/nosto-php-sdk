@@ -115,39 +115,11 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
             } elseif (is_object($object)) {
                 $traversable = SerializationHelper::getProperties($object);
             }
-
-            if (is_array($traversable) && SerializationHelper::isAssoc($traversable)) {
-                $markup .= self::associativeArrayToHtml($object, $spaces, $indent, $traversable);
-            } else {
-                $markup .= self::arrayToHtml($object, $key, $spaces, $indent, $traversable);
-            }
+            $markup .= self::arrayToHtml($object, $key, $spaces, $indent, $traversable);
             //end block
             $markup .= $spacesStr . self::SPAN_END . PHP_EOL;
         }
 
-        return $markup;
-    }
-
-    /**
-     * @param mixed $object the object
-     * @param int $spaces
-     * @param int $indent
-     * @param array|Traversable $traversable the array
-     * @return string
-     */
-    private static function associativeArrayToHtml($object, $spaces, $indent, $traversable)
-    {
-        $markup = '';
-        foreach ($traversable as $index => $childValue) {
-            $childMarkupKey = $index;
-            if ($object instanceof MarkupableCollection) {
-                if ($object->getChildMarkupKey()) {
-                    $childMarkupKey = $object->getChildMarkupKey();
-                }
-            }
-
-            $markup .= self::objectToMarkup($childValue, $childMarkupKey, $spaces + $indent);
-        }
         return $markup;
     }
 
@@ -162,15 +134,21 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
     private static function arrayToHtml($object, $key, $spaces, $indent, $traversable)
     {
         $markup = '';
-        foreach ($traversable as $childValue) {
-            $childMarkupKey = $key;
+
+        $isAssociative = is_array($traversable) && SerializationHelper::isAssoc($traversable);
+        foreach ($traversable as $index => $childValue) {
+            if ($isAssociative) {
+                $childMarkupKey = $index;
+            } else {
+                $childMarkupKey = $key;
+            }
             if ($object instanceof MarkupableCollection) {
                 if ($object->getChildMarkupKey()) {
                     $childMarkupKey = $object->getChildMarkupKey();
                 }
             }
 
-            $markup .= self::objectToMarkup($childValue, $childMarkupKey, $spaces + $indent, $indent);
+            $markup .= self::objectToMarkup($childValue, $childMarkupKey, $spaces + $indent);
         }
         return $markup;
     }

@@ -35,6 +35,7 @@
  */
 
 use Nosto\Object\Product\Product;
+use Nosto\Object\StringCollection;
 
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
@@ -77,16 +78,9 @@ class MockProduct extends Product
     {
         parent::__construct();
         $this->setDescription('This is a full description');
-        $first = new \Nosto\Object\StringCollection('tags', 'tag');
-        $first->append('first');
-        $second = new \Nosto\Object\StringCollection('tags', 'tag');
-        $second->append('second');
-        $third = new \Nosto\Object\StringCollection('tags', 'tag');
-        $third->append('third');
-
-        $this->setTag1($first);
-        $this->setTag2($second);
-        $this->setTag3($third);
+        $this->setTag1(new StringCollection('tags', 'tag', array('first')));
+        $this->setTag2(new StringCollection('tags', 'tag', array('second')));
+        $this->setTag3(new StringCollection('tags', 'tag', array('third')));
         $this->setUrl('http://my.shop.com/products/test_product.html');
         $this->setProductId(1);
         $this->setName('Test Product');
