@@ -37,14 +37,15 @@
 namespace Nosto\Object;
 
 use Nosto\Types\Markupable;
+use Nosto\AbstractObject;
 
-class MarkupableString implements Markupable
+class MarkupableString extends AbstractObject implements Markupable
 {
     /** @var string the markup key in the html */
-    private $markupKey;
+    protected $markupKey;
 
     /** @var string the value */
-    private $value;
+    protected $value;
 
     /**
      * MarkupableString constructor.
