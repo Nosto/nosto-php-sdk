@@ -62,7 +62,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
      */
     public static function objectToMarkup($object, $key, $spaces = 0, $indent = 2)
     {
-        return self::toHtml($object, $key, $spaces, $indent, 'displace:none');
+        return self::toHtml($object, $key, $spaces, $indent, 'display:none');
     }
 
     /**
