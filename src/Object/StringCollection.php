@@ -51,10 +51,10 @@ class StringCollection extends AbstractCollection implements MarkupableCollectio
 
     /**
      * StringCollection constructor.
-     * @param string|null $markupKey
-     * @param string|null $childMarkupKey
+     * @param string $markupKey
+     * @param string $childMarkupKey
      */
-    public function __construct($markupKey = null, $childMarkupKey = null)
+    public function __construct($markupKey, $childMarkupKey)
     {
         $this->childMarkupKey = $childMarkupKey;
         $this->markupKey = $markupKey;
