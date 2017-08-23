@@ -34,84 +34,25 @@
  *
  */
 
-namespace Nosto\Object\Cart;
+namespace Nosto\Object;
 
-use Nosto\AbstractObject;
-use Nosto\Types\LineItemInterface;
 use Nosto\Types\Markupable;
+use Nosto\Types\UserInterface;
 
 /**
- * Model class containing the information about the particulars of a shopping cart.
+ * Customer object for tagging
  */
-class Cart extends AbstractObject implements Markupable
+class Customer extends User implements UserInterface, Markupable
 {
+    /**
+     * @var string customer reference
+     */
+    private $customerReference;
+
     /**
      * @var string visitor checksum
      */
     private $hcid;
-
-    /**
-     * @var string URL for restoring cart
-     */
-    private $restoreCartUrl;
-
-    /**
-     * @var LineItemInterface[] the array of items in the shopping cart
-     */
-    private $items = array();
-
-    /**
-     * Returns the items in the shopping cart
-     *
-     * @return LineItemInterface[] the items in the shopping cart
-     */
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-    /**
-     * Sets the cart items in the shopping cart
-     *
-     * @param LineItemInterface[] $items the items of the shopping cart
-     */
-    public function setItems(array $items)
-    {
-        $this->items = array();
-        foreach ($items as $item) {
-            $this->addItem($item);
-        }
-    }
-
-    /**
-     * Adds a new item to the shopping cart
-     *
-     * @param LineItemInterface $item the item to add to the shopping cart
-     */
-    public function addItem(LineItemInterface $item)
-    {
-        $this->items[] = $item;
-    }
-
-    /**
-     * Returns the restore cart URL
-     *
-     * @return string
-     */
-    public function getRestoreCartUrl()
-    {
-        return $this->restoreCartUrl;
-    }
-
-    /**
-     * Sets the restore cart URL
-     *
-     * @param string $restoreCartUrl
-     */
-    public function setRestoreCartUrl($restoreCartUrl)
-    {
-        $this->restoreCartUrl = $restoreCartUrl;
-    }
 
     /**
      * Get the visitor checksum
@@ -133,8 +74,24 @@ class Cart extends AbstractObject implements Markupable
         $this->hcid = $hcid;
     }
 
+    /**
+     * @return string
+     */
+    public function getCustomerReference()
+    {
+        return $this->customerReference;
+    }
+
+    /**
+     * @param string $customerReference
+     */
+    public function setCustomerReference($customerReference)
+    {
+        $this->customerReference = $customerReference;
+    }
+
     public function getMarkupKey()
     {
-        return "nosto_cart";
+        return 'nosto_customer';
     }
 }

@@ -34,42 +34,51 @@
  *
  */
 
-namespace Nosto\Types\Product;
+namespace Nosto\Object;
 
-interface VariationInterface
+use Nosto\Types\Markupable;
+use Nosto\Types\MarkupableCollection;
+
+/**
+ * Collection class to store a collection of products
+ */
+class StringCollection extends AbstractCollection implements MarkupableCollection, Markupable
 {
-    /**
-     * Returns the variations's unique identifier.
-     *
-     * @return int|string the ID.
-     */
-    public function getId();
+    /** @var string|null */
+    private $markupKey;
+    /** @var string|null */
+    private $childMarkupKey;
 
     /**
-     * Returns the currency code (ISO 4217) the variaiton is sold in.
-     *
-     * @return string the currency ISO code.
+     * StringCollection constructor.
+     * @param string $markupKey
+     * @param string $childMarkupKey
+     * @param array $initArray array of string
      */
-    public function getPriceCurrencyCode();
+    public function __construct($markupKey, $childMarkupKey, $initArray = null)
+    {
+        $this->childMarkupKey = $childMarkupKey;
+        $this->markupKey = $markupKey;
 
-    /**
-     * Returns the price of the variation including possible discounts and taxes.
-     *
-     * @return int|float the price with 2 decimals, e.g. 1000.99.
-     */
-    public function getPrice();
+        if ($initArray) {
+            foreach ($initArray as $item) {
+                $this->var[] = $item;
+            }
+        }
+    }
 
-    /**
-     * Returns the list price of the variation without discounts but including possible taxes.
-     *
-     * @return int|float the price with 2 decimals, e.g. 1000.99.
-     */
-    public function getListPrice();
+    public function append($item)
+    {
+        $this->var[] = $item;
+    }
 
-    /**
-     * Returns the availability of the variation, i.e. if it is in stock or not.
-     *
-     * @return string the availability, either "InStock" or "OutOfStock".
-     */
-    public function getAvailability();
+    public function getMarkupKey()
+    {
+        return $this->markupKey;
+    }
+
+    public function getChildMarkupKey()
+    {
+        return $this->childMarkupKey;
+    }
 }

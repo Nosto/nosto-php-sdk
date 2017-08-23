@@ -36,6 +36,9 @@
 
 namespace Nosto;
 
+use Nosto\Helper\HtmlMarkupSerializationHelper;
+use Nosto\Helper\SerializationHelper;
+
 /**
  * Base class for Nosto objects to share basic functionality.
  */
@@ -62,5 +65,25 @@ abstract class AbstractObject
             get_class($this),
             $name
         ));
+    }
+
+    /**
+     * Serialize to html
+     *
+     * @return string html
+     */
+    public function toHtml()
+    {
+        return HtmlMarkupSerializationHelper::objectToMarkup($this, '', 0, 2);
+    }
+
+    /**
+     * Serialize to json
+     *
+     * @return string json
+     */
+    public function toJson()
+    {
+        return SerializationHelper::serialize($this);
     }
 }

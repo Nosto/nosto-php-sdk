@@ -37,12 +37,13 @@
 namespace Nosto\Object\Product;
 
 use Nosto\Object\AbstractCollection;
+use Nosto\Types\Markupable;
 use Nosto\Types\Product\SkuInterface;
 
 /**
  * Collection class to store a collection of SKUs
  */
-class SkuCollection extends AbstractCollection
+class SkuCollection extends AbstractCollection implements Markupable
 {
     /**
      * Appends item to the collection of skus
@@ -52,5 +53,10 @@ class SkuCollection extends AbstractCollection
     public function append(SkuInterface $sku)
     {
         $this->var[] = $sku;
+    }
+
+    public function getMarkupKey()
+    {
+        return 'skus';
     }
 }

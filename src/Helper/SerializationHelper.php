@@ -131,7 +131,7 @@ class SerializationHelper extends AbstractHelper
      * @param $obj object the object whose properties to list
      * @return array the array of the keys and properties of the object
      */
-    private static function getProperties($obj)
+    public static function getProperties($obj)
     {
         $properties = array();
         try {
@@ -158,7 +158,7 @@ class SerializationHelper extends AbstractHelper
      * @param $input string the input camel-cased string
      * @return string the converted snake-cased string
      */
-    private static function toSnakeCase($input)
+    public static function toSnakeCase($input)
     {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
         $ret = $matches[0];
@@ -175,7 +175,7 @@ class SerializationHelper extends AbstractHelper
      * @param array $arr the array to check
      * @return bool true if the array is associative
      */
-    private static function isAssoc(array $arr)
+    public static function isAssoc(array $arr)
     {
         if (array() === $arr) {
             return false;

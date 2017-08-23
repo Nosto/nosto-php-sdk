@@ -34,42 +34,50 @@
  *
  */
 
-namespace Nosto\Types\Product;
+namespace Nosto\Object;
 
-interface VariationInterface
+use Nosto\Types\Markupable;
+use Nosto\AbstractObject;
+
+class MarkupableString extends AbstractObject implements Markupable
 {
-    /**
-     * Returns the variations's unique identifier.
-     *
-     * @return int|string the ID.
-     */
-    public function getId();
+    /** @var string the markup key in the html */
+    protected $markupKey;
+
+    /** @var string the value */
+    protected $value;
 
     /**
-     * Returns the currency code (ISO 4217) the variaiton is sold in.
+     * MarkupableString constructor.
      *
-     * @return string the currency ISO code.
+     * @param string $value
+     * @param string $markupKey
      */
-    public function getPriceCurrencyCode();
+    public function __construct($value, $markupKey)
+    {
+        $this->value = $value;
+        $this->markupKey = $markupKey;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
 
     /**
-     * Returns the price of the variation including possible discounts and taxes.
-     *
-     * @return int|float the price with 2 decimals, e.g. 1000.99.
+     * @inheritdoc
      */
-    public function getPrice();
+    public function getMarkupKey()
+    {
+        return $this->markupKey;
+    }
 
-    /**
-     * Returns the list price of the variation without discounts but including possible taxes.
-     *
-     * @return int|float the price with 2 decimals, e.g. 1000.99.
-     */
-    public function getListPrice();
+    public function __toString()
+    {
+        if ($this->value === null) {
+            return '';
+        }
 
-    /**
-     * Returns the availability of the variation, i.e. if it is in stock or not.
-     *
-     * @return string the availability, either "InStock" or "OutOfStock".
-     */
-    public function getAvailability();
+        return $this->value;
+    }
 }

@@ -35,6 +35,7 @@
  */
 
 use Nosto\Object\Product\Product;
+use Nosto\Object\StringCollection;
 
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
@@ -77,9 +78,9 @@ class MockProduct extends Product
     {
         parent::__construct();
         $this->setDescription('This is a full description');
-        $this->setTag1(array('first'));
-        $this->setTag2(array('second'));
-        $this->setTag3(array('third'));
+        $this->setTag1(new StringCollection('tags', 'tag', array('first')));
+        $this->setTag2(new StringCollection('tags', 'tag', array('second')));
+        $this->setTag3(new StringCollection('tags', 'tag', array('third')));
         $this->setUrl('http://my.shop.com/products/test_product.html');
         $this->setProductId(1);
         $this->setName('Test Product');
@@ -87,7 +88,13 @@ class MockProduct extends Product
         $this->setPrice(99.99);
         $this->setPriceCurrencyCode('USD');
         $this->setAvailability('InStock');
-        $this->setCategories(array('/Mens', '/Mens/Shoes'));
+        $this->setCategories(
+            new StringCollection(
+                'categories',
+                'category',
+                array('/Mens', '/Mens/Shoes')
+            )
+        );
         $this->setListPrice(110.99);
         $this->setBrand('Super Brand');
         $this->setVariationId("USD");
@@ -95,7 +102,12 @@ class MockProduct extends Product
         $this->setInventoryLevel(50);
         $this->setReviewCount(99);
         $this->setRatingValue(2.5);
-        $this->setAlternateImageUrls(array("http://shop.com/product_alt.jpg"));
+        $urls = new StringCollection(
+            'alternate_image_urls',
+            'alternate_image_url',
+            array("http://shop.com/product_alt.jpg")
+        );
+        $this->setAlternateImageUrls($urls);
         $this->setCondition("Used");
         $this->setGtin("gtin");
         $this->setGoogleCategory("All");

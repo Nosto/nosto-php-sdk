@@ -37,12 +37,34 @@
 namespace Nosto\Object\Order;
 
 use Nosto\Object\AbstractPerson;
+use Nosto\Types\Markupable;
 use Nosto\Types\Order\BuyerInterface;
+use Nosto\Types\Sanitizable;
 
 /**
  * Model used for containing the customer making an OrderConfirm/purchase. This information
  * creates a customer on Nosto.
  */
-class Buyer extends AbstractPerson implements BuyerInterface
+class Buyer extends AbstractPerson implements BuyerInterface, Markupable, Sanitizable
 {
+    /**
+     * @inheritdoc
+     */
+    public function getMarkupKey()
+    {
+        return 'buyer';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function sanitize()
+    {
+        $sanitized = clone $this;
+        $sanitized->setPhone(null);
+        $sanitized->setPostCode(null);
+        $sanitized->setCountry(null);
+
+        return $sanitized;
+    }
 }
