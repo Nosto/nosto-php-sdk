@@ -89,7 +89,7 @@ class MockProduct extends Product
         $this->setPriceCurrencyCode('USD');
         $this->setAvailability('InStock');
         $this->setCategories(
-            new \Nosto\Object\StringCollection(
+            new StringCollection(
                 'categories',
                 'category',
                 array('/Mens', '/Mens/Shoes')
@@ -102,7 +102,7 @@ class MockProduct extends Product
         $this->setInventoryLevel(50);
         $this->setReviewCount(99);
         $this->setRatingValue(2.5);
-        $urls = new \Nosto\Object\StringCollection(
+        $urls = new StringCollection(
             'alternate_image_urls',
             'alternate_image_url',
             array("http://shop.com/product_alt.jpg")
