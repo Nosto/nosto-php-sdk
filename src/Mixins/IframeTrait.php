@@ -97,30 +97,19 @@ trait IframeTrait
                 // The only case when this should happen is when the api token for some
                 // reason is invalid, which is the case when switching between environments.
                 $url = HttpRequest::buildUri(
-                    self::getIframeBaseUrl() . '/hub/{platform}/uninstall' . '?' . $queryParams,
+                    Nosto::getBaseUrl() . '/hub/{platform}/uninstall' . '?' . $queryParams,
                     array('{platform}' => $iframe->getPlatform(),)
                 );
             }
         } else {
             $url = HttpRequest::buildUri(
-                self::getIframeBaseUrl() . '/hub/{platform}/install' . '?' . $queryParams,
+                Nosto::getBaseUrl() . '/hub/{platform}/install' . '?' . $queryParams,
                 array('{platform}' => $iframe->getPlatform())
             );
         }
 
         return $url;
     }
-
-    /**
-     * Returns the base url for the Nosto iframe.
-     *
-     * @return string the url.
-     */
-    private static function getIframeBaseUrl()
-    {
-        return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', Nosto::DEFAULT_NOSTO_WEB_HOOK_BASE_URL);
-    }
-
     /**
      * Returns the iframe params with which to load the IFrame
      *

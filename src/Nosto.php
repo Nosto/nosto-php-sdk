@@ -73,6 +73,26 @@ class Nosto
         return getenv($name) ? getenv($name) : $default;
     }
 
+    public static function getBaseUrl()
+    {
+        return self::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', self::DEFAULT_NOSTO_WEB_HOOK_BASE_URL);
+    }
+
+    public static function getOAuthBaseUrl()
+    {
+        return self::getEnvVariable('NOSTO_OAUTH_BASE_URL', self::DEFAULT_NOSTO_OAUTH_BASE_URL);
+    }
+
+    public static function getApiBaseUrl()
+    {
+        return self::getEnvVariable('NOSTO_API_BASE_URL', self::DEFAULT_NOSTO_API_BASE_URL);
+    }
+
+    public static function getIframeOriginRegex()
+    {
+        return self::getEnvVariable('NOSTO_IFRAME_ORIGIN_REGEXP', self::DEFAULT_NOSTO_IFRAME_ORIGIN_REGEXP);
+    }
+
     /**
      * Throws a new HttpException exception with info about both the
      * request and response.
