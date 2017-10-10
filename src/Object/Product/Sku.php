@@ -104,7 +104,6 @@ class Sku extends AbstractObject implements SkuInterface, Markupable
 
     /**
      * An array of custom attributes
-     * s
      * @var array
      */
     private $customFields = array();
@@ -279,6 +278,9 @@ class Sku extends AbstractObject implements SkuInterface, Markupable
      */
     public function addCustomField($attribute, $value)
     {
+        if ($this->customFields === null) {
+            $this->customFields = array();
+        }
         $this->customFields[$attribute] = $value;
     }
 

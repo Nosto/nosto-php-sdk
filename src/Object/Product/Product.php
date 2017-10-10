@@ -219,6 +219,12 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     private $thumbUrl;
 
+    /**
+     * An array of custom attributes
+     * @var array
+     */
+    private $customFields = array();
+
     public function __construct()
     {
         $this->skus = new SkuCollection();
@@ -920,6 +926,38 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
     public function getMarkupKey()
     {
         return 'nosto_product';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCustomFields()
+    {
+        return $this->customFields;
+    }
+
+    /**
+     * Setter for custom attributes
+     *
+     * @param array $customFields
+     */
+    public function setCustomFields(array $customFields)
+    {
+        $this->customFields = $customFields;
+    }
+
+    /**
+     * Add a custom attribute
+     *
+     * @param $attribute
+     * @param $value
+     */
+    public function addCustomField($attribute, $value)
+    {
+        if ($this->customFields === null) {
+            $this->customFields = array();
+        }
+        $this->customFields[$attribute] = $value;
     }
 
     /**
