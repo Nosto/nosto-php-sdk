@@ -74,14 +74,14 @@ class HttpRequest
     public static $userAgent = '';
 
     /**
-     * @var int timeout for waiting response from the api
+     * @var int timeout for waiting response from the api, in second
      */
-    public static $responseTimeout = 5;
+    private $responseTimeout = 5;
 
     /**
-     * @var int timeout for connecting to the api
+     * @var int timeout for connecting to the api, in second
      */
-    public static $connectTimeout = 5;
+    private $connectTimeout = 5;
 
     /**
      * @var string the request url.
@@ -489,6 +489,42 @@ class HttpRequest
                 self::HEADERS => $this->headers,
             )
         );
+    }
+
+    /**
+     * Get response timeout in second
+     * @return int response timeout in second
+     */
+    public function getResponseTimeout()
+    {
+        return $this->responseTimeout;
+    }
+
+    /**
+     * Set response timeout in second
+     * @param int $responseTimeout in second
+     */
+    public function setResponseTimeout($responseTimeout)
+    {
+        $this->responseTimeout = $responseTimeout;
+    }
+
+    /**
+     * connect timeout in second
+     * @return int connect timeout in second
+     */
+    public function getConnectTimeout()
+    {
+        return $this->connectTimeout;
+    }
+
+    /**
+     * Set connect timeout in second
+     * @param int $connectTimeout in second
+     */
+    public function setConnectTimeout($connectTimeout)
+    {
+        $this->connectTimeout = $connectTimeout;
     }
 
     /**
