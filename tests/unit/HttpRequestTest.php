@@ -222,6 +222,7 @@ class HttpRequestTest extends Test
     public function testHttpRequestCurlAdapter()
     {
         $request = new HttpRequest(new Curl(HttpRequest::$userAgent));
+        $request->setResponseTimeout(20);
         $request->setPath('/404');
         $response = $request->get();
         $this->assertEquals(404, $response->getCode());

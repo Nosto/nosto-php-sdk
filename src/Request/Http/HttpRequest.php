@@ -370,7 +370,7 @@ class HttpRequest
      */
     public function setPath($path)
     {
-        $this->setUrl(self::getBaseURL() . $path);
+        $this->setUrl(Nosto::getBaseURL() . $path);
     }
 
     /**
@@ -381,17 +381,6 @@ class HttpRequest
     public function setUrl($url)
     {
         $this->url = $url;
-    }
-
-    /**
-     * Returns the base URL by reading the environment and system variables. This
-     * value can be overridden for testing purposes byt editing the .env file
-     *
-     * @return string the base URL for the endpoint
-     */
-    public static function getBaseURL()
-    {
-        return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', Nosto::DEFAULT_NOSTO_WEB_HOOK_BASE_URL);
     }
 
     /**
