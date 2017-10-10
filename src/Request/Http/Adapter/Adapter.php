@@ -46,6 +46,16 @@ abstract class Adapter
     const CRLF = "\r\n";
 
     /**
+     * @var int timeout for waiting response from the api, in second
+     */
+    private $responseTimeout = 5;
+
+    /**
+     * @var int timeout for connecting to the api, in second
+     */
+    private $connectTimeout = 5;
+
+    /**
      * @var array the request headers.
      */
     protected $headers = array();
@@ -119,5 +129,41 @@ abstract class Adapter
                 $this->{$key} = $value;
             }
         }
+    }
+
+    /**
+     * Get response timeout in second
+     * @return int response timeout in second
+     */
+    public function getResponseTimeout()
+    {
+        return $this->responseTimeout;
+    }
+
+    /**
+     * Set response timeout in second
+     * @param int $responseTimeout in second
+     */
+    public function setResponseTimeout($responseTimeout)
+    {
+        $this->responseTimeout = $responseTimeout;
+    }
+
+    /**
+     * connect timeout in second
+     * @return int connect timeout in second
+     */
+    public function getConnectTimeout()
+    {
+        return $this->connectTimeout;
+    }
+
+    /**
+     * Set connect timeout in second
+     * @param int $connectTimeout in second
+     */
+    public function setConnectTimeout($connectTimeout)
+    {
+        $this->connectTimeout = $connectTimeout;
     }
 }

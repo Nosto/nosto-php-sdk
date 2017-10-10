@@ -93,10 +93,10 @@ class Curl extends Adapter
             $curlOptions[CURLOPT_USERAGENT] = $this->userAgent;
         }
         if (!in_array(CURLOPT_TIMEOUT, $curlOptions)) {
-            $curlOptions[CURLOPT_TIMEOUT] = HttpRequest::$responseTimeout;
+            $curlOptions[CURLOPT_TIMEOUT] = $this->getResponseTimeout();
         }
         if (!in_array(CURLOPT_CONNECTTIMEOUT, $curlOptions)) {
-            $curlOptions[CURLOPT_CONNECTTIMEOUT] = HttpRequest::$connectTimeout;
+            $curlOptions[CURLOPT_CONNECTTIMEOUT] = $this->getConnectTimeout();
         }
         if (empty($curlOptions[CURLOPT_HTTPHEADER]) || !is_array($curlOptions[CURLOPT_HTTPHEADER])) {
             $curlOptions[CURLOPT_HTTPHEADER] = array();

@@ -72,6 +72,8 @@ class AccountSignup extends AbstractOperation
     public function create()
     {
         $request = $this->initApiRequest($this->account->getSignUpApiToken());
+        //Account creation takes time
+        $request->setResponseTimeout(60);
         $request->setPath(ApiRequest::PATH_SIGN_UP);
         $request->setReplaceParams(array('{lang}' => $this->account->getLanguageCode()));
         $response = $request->post($this->account);
