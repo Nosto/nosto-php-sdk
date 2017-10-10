@@ -51,6 +51,9 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
 {
     const SPAN_START = '<span class="%s">';
     const SPAN_END = '</span>';
+    const DIV_START_NOTRANSLATE = '<div class="notranslate" style="display:none">';
+    const DIV_END = '</div>';
+    const STYLE_DISPLAY_NONE = 'display:none';
 
     /**
      * Serialize the object to html
@@ -63,7 +66,11 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
      */
     public static function objectToMarkup($object, $key, $spaces = 0, $indent = 2)
     {
-        return self::toHtml($object, $key, $spaces, $indent, 'display:none');
+        $spacesStr = str_repeat(' ', $spaces);
+        $markup = $spacesStr . self::DIV_START_NOTRANSLATE;
+        $markup .= self::toHtml($object, $key, $spaces + $indent, $indent, self::STYLE_DISPLAY_NONE);
+        $markup .= $spacesStr . self::DIV_END;
+        return $markup;
     }
 
     /**

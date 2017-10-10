@@ -396,6 +396,9 @@ class HttpRequest
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);
         }
+        $this->adapter->setResponseTimeout($this->getResponseTimeout());
+        $this->adapter->setConnectTimeout($this->getConnectTimeout());
+        
         return $this->adapter->post(
             $url,
             array(
@@ -430,6 +433,9 @@ class HttpRequest
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);
         }
+        $this->adapter->setResponseTimeout($this->getResponseTimeout());
+        $this->adapter->setConnectTimeout($this->getConnectTimeout());
+
         return $this->adapter->put(
             $url,
             array(
@@ -453,6 +459,9 @@ class HttpRequest
         if (!empty($this->queryParams)) {
             $url .= '?' . http_build_query($this->queryParams);
         }
+        $this->adapter->setResponseTimeout($this->getResponseTimeout());
+        $this->adapter->setConnectTimeout($this->getConnectTimeout());
+
         return $this->adapter->get(
             $url,
             array(
@@ -472,6 +481,9 @@ class HttpRequest
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);
         }
+        $this->adapter->setResponseTimeout($this->getResponseTimeout());
+        $this->adapter->setConnectTimeout($this->getConnectTimeout());
+
         return $this->adapter->delete(
             $url,
             array(
