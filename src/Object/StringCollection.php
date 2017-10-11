@@ -81,4 +81,22 @@ class StringCollection extends AbstractCollection implements MarkupableCollectio
     {
         return $this->childMarkupKey;
     }
+
+    public function getData()
+    {
+        return $this->var;
+    }
+
+    /**
+     * Set the data
+     * @param array $data It should be an array with string items
+     */
+    public function setData($data)
+    {
+        if ($data === null) {
+            $this->var = array();
+        } else {
+            $this->var = $data;
+        }
+    }
 }
