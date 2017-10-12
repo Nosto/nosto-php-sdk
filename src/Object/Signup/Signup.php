@@ -85,7 +85,7 @@ class Signup extends Settings implements SignupInterface
     private $platform;
 
     /**
-     * @var string a partner code for revenue attribution if one has been given
+     * @var string|null a partner code for revenue attribution if one has been given
      */
     private $partnerCode;
 
