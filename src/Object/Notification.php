@@ -72,7 +72,7 @@ class Notification extends AbstractObject implements NotificationInterface
     private $message;
 
     /**
-     * @var int type of the notification
+     * @var string type of the notification
      * @see NotificationInterface::TYPE_* constants
      */
     private $notificationType;

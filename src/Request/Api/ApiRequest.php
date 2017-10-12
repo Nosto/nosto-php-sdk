@@ -63,6 +63,6 @@ class ApiRequest extends HttpRequest
      */
     public function setPath($path)
     {
-        $this->setUrl(Nosto::getBaseURL() . $path);
+        $this->setUrl(Nosto::getApiBaseURL() . $path);
     }
 }

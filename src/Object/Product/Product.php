@@ -284,7 +284,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function getTag1()
     {
-        return $this->tag1;
+        return $this->tag1->getData();
     }
 
     /**
@@ -292,13 +292,11 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      *
      * The tags must be a collection of non-empty string values.
      *
-     * @param StringCollection $tags the tags.
+     * @param array $tags the tags.
      */
-    public function setTag1(StringCollection $tags)
+    public function setTag1($tags)
     {
-        foreach ($tags as $tag) {
-            $this->addTag1($tag);
-        }
+        $this->tag1->setData($tags);
     }
 
     /**
@@ -321,7 +319,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function getTag2()
     {
-        return $this->tag2;
+        return $this->tag2->getData();
     }
 
     /**
@@ -329,13 +327,11 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      *
      * The tags must be a collection of non-empty string values.
      *
-     * @param StringCollection $tags the tags.
+     * @param array $tags the tags.
      */
-    public function setTag2(StringCollection $tags)
+    public function setTag2($tags)
     {
-        foreach ($tags as $tag) {
-            $this->addTag2($tag);
-        }
+        $this->tag2->setData($tags);
     }
 
     /**
@@ -358,7 +354,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function getTag3()
     {
-        return $this->tag3;
+        return $this->tag3->getData();
     }
 
     /**
@@ -366,13 +362,11 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      *
      * The tags must be a collection of non-empty string values.
      *
-     * @param StringCollection $tags the tags.
+     * @param array $tags the tags.
      */
-    public function setTag3(StringCollection $tags)
+    public function setTag3($tags)
     {
-        foreach ($tags as $tag) {
-            $this->addTag3($tag);
-        }
+        $this->tag3->setData($tags);
     }
 
     /**
@@ -531,7 +525,7 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function getCategories()
     {
-        return $this->categories;
+        return $this->categories->getData();
     }
 
     /**
@@ -541,11 +535,11 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      * categories are expected to include the entire sub/parent category path,
      * e.g. "clothes/winter/coats".
      *
-     * @param StringCollection $categories the categories.
+     * @param array $categories the categories.
      */
-    public function setCategories(StringCollection $categories)
+    public function setCategories($categories)
     {
-        $this->categories = $categories;
+        $this->categories->setData($categories);
     }
 
     /**
@@ -685,29 +679,21 @@ class Product extends AbstractObject implements ProductInterface, ValidatableInt
      */
     public function getAlternateImageUrls()
     {
-        if ($this->alternateImageUrls === null) {
-            return null;
-        }
-
-        $urls = new StringCollection(
-            $this->alternateImageUrls->getMarkupKey(),
-            $this->alternateImageUrls->getChildMarkupKey()
-        );
+        $urls = array();
         foreach ($this->alternateImageUrls as $url) {
             if ($url !== $this->imageUrl) {
-                $urls->append($url);
+                $urls[] = $url;
             }
         }
-
         return $urls;
     }
 
     /**
-     * @param StringCollection $alternateImageUrls
+     * @param array $alternateImageUrls
      */
-    public function setAlternateImageUrls(StringCollection $alternateImageUrls)
+    public function setAlternateImageUrls($alternateImageUrls)
     {
-        $this->alternateImageUrls = $alternateImageUrls;
+        $this->alternateImageUrls->setData($alternateImageUrls);
     }
 
     /**
