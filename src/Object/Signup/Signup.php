@@ -99,7 +99,7 @@ class Signup extends Settings implements SignupInterface
      *
      * @param string $platform
      * @param string $signupApiToken
-     * @param string $partnerCode
+     * @param string|null $partnerCode
      */
     public function __construct($platform, $signupApiToken, $partnerCode = null)
     {
