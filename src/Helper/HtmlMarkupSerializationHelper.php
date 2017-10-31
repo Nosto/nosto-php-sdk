@@ -155,7 +155,9 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
                 }
             }
 
-            $markup .= self::toHtml($childValue, $childMarkupKey, $spaces + $indent);
+            if ($childValue !== null) {
+                $markup .= self::toHtml($childValue, $childMarkupKey, $spaces + $indent);
+            }
         }
         return $markup;
     }
