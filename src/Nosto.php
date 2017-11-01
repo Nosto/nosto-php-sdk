@@ -56,6 +56,7 @@ class Nosto
     const CODE_ACCOUNT_DELETE = 'account_delete';
     const CODE_ACCOUNT_CONNECT_REJECT = 'account_connect_reject';
 
+    const DEFAULT_NOSTO_SERVER_URL = 'connect.nosto.com';
     const DEFAULT_NOSTO_WEB_HOOK_BASE_URL = 'https://my.nosto.com';
     const DEFAULT_NOSTO_OAUTH_BASE_URL = 'https://my.nosto.com/oauth';
     const DEFAULT_NOSTO_API_BASE_URL = 'https://api.nosto.com';
@@ -71,6 +72,11 @@ class Nosto
     public static function getEnvVariable($name, $default = null)
     {
         return getenv($name) ? getenv($name) : $default;
+    }
+
+    public static function getServerUrl()
+    {
+        return self::getEnvVariable('NOSTO_SERVER_URL', self::DEFAULT_NOSTO_SERVER_URL);
     }
 
     public static function getBaseUrl()
