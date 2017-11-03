@@ -52,7 +52,7 @@ class Variation extends AbstractObject implements VariationInterface, Markupable
      *
      * @var mixed
      */
-    private $id;
+    private $variationId;
 
     /**
      * variation price
@@ -83,19 +83,19 @@ class Variation extends AbstractObject implements VariationInterface, Markupable
     /**
      * @inheritdoc
      */
-    public function getId()
+    public function getVariationId()
     {
-        return $this->id;
+        return $this->variationId;
     }
 
     /**
      * Setter for id
      *
-     * @param mixed $id
+     * @param mixed $variationId
      */
-    public function setId($id)
+    public function setVariationId($variationId)
     {
-        $this->id = $id;
+        $this->variationId = $variationId;
     }
 
     /**
