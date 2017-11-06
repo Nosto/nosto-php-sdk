@@ -43,7 +43,7 @@ interface VariationInterface
      *
      * @return int|string the ID.
      */
-    public function getId();
+    public function getVariationId();
 
     /**
      * Returns the currency code (ISO 4217) the variaiton is sold in.

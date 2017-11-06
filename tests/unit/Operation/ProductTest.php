@@ -118,7 +118,7 @@ class OperationProductTest extends Test
         $this->assertCount(1, $product->getVariations());
 
         $variation = new MockVariation();
-        $variation->setId('newID');
+        $variation->setVariationId('newID');
         $product->addVariation($variation);
         $this->assertCount(2, $product->getVariations());
 
