@@ -5,7 +5,8 @@ This project adheres to Semantic Versioning (http://semver.org/).
 ## 3.1.0
 * Support tagging html markup generation
 * Add "Custom Fields" property to product class
-* Add notranslate tag to avoid tagging being translated by browser plugin 
+* Add notranslate tag to avoid tagging being translated by browser plugin
+* Support setting response timeout on each request
 
 ## 3.0.12
 * Add phone, post code and country fields to person object
