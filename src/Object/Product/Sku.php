@@ -37,14 +37,14 @@
 namespace Nosto\Object\Product;
 
 use Nosto\AbstractObject;
-use Nosto\Types\Markupable;
+use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\Product\ProductInterface;
 
 /**
  * Model for sku information
  */
-class Sku extends AbstractObject implements SkuInterface, Markupable
+class Sku extends AbstractObject implements SkuInterface, MarkupableInterface
 {
     /**
      * The id of the SKU

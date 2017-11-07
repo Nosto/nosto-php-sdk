@@ -38,11 +38,11 @@ namespace Nosto\Object\Product;
 
 use Nosto\AbstractObject;
 use Nosto\Object\StringCollection;
-use Nosto\Types\Markupable;
+use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\Product\VariationInterface;
-use Nosto\Types\Sanitizable;
+use Nosto\Types\SanitizableInterface;
 use Nosto\Types\ValidatableInterface;
 
 /**
@@ -55,7 +55,11 @@ use Nosto\Types\ValidatableInterface;
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class Product extends AbstractObject implements ProductInterface, ValidatableInterface, Markupable, Sanitizable
+class Product extends AbstractObject implements
+    ProductInterface,
+    ValidatableInterface,
+    MarkupableInterface,
+    SanitizableInterface
 {
     /**
      * @var string absolute url to the product page.

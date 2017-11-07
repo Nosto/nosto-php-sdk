@@ -37,13 +37,13 @@
 namespace Nosto\Object\Product;
 
 use Nosto\Object\AbstractCollection;
-use Nosto\Types\Markupable;
+use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\SkuInterface;
 
 /**
  * Collection class to store a collection of SKUs
  */
-class SkuCollection extends AbstractCollection implements Markupable
+class SkuCollection extends AbstractCollection implements MarkupableInterface
 {
     /**
      * Appends item to the collection of skus

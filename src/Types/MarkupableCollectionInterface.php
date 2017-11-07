@@ -36,7 +36,7 @@
 
 namespace Nosto\Types;
 
-interface Markupable
+interface MarkupableCollectionInterface
 {
-    public function getMarkupKey();
+    public function getChildMarkupKey();
 }

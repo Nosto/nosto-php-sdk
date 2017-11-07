@@ -36,7 +36,10 @@
 
 namespace Nosto\Types;
 
-interface MarkupableCollection
+interface SanitizableInterface
 {
-    public function getChildMarkupKey();
+    /**
+     * @return mixed return a clean object that doesn't have sensitive information for tagging
+     */
+    public function sanitize();
 }

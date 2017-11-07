@@ -38,12 +38,12 @@ namespace Nosto\Object\Cart;
 
 use Nosto\AbstractObject;
 use Nosto\Types\LineItemInterface;
-use Nosto\Types\Markupable;
+use Nosto\Types\MarkupableInterface;
 
 /**
  * Model class containing the information about the particulars of a shopping cart.
  */
-class Cart extends AbstractObject implements Markupable
+class Cart extends AbstractObject implements MarkupableInterface
 {
     /**
      * @var string visitor checksum

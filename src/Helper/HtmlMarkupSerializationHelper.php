@@ -37,9 +37,9 @@
 namespace Nosto\Helper;
 
 use Nosto\Object\MarkupableString;
-use Nosto\Types\Markupable;
-use Nosto\Types\MarkupableCollection;
-use Nosto\Types\Sanitizable;
+use Nosto\Types\MarkupableInterface;
+use Nosto\Types\MarkupableCollectionInterface;
+use Nosto\Types\SanitizableInterface;
 use Traversable;
 
 /**
@@ -89,13 +89,13 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
             return "";
         }
 
-        if ($object instanceof Sanitizable) {
+        if ($object instanceof SanitizableInterface) {
             $object = $object->sanitize();
         }
 
         $spacesStr = str_repeat(' ', $spaces);
 
-        if ($object instanceof Markupable) {
+        if ($object instanceof MarkupableInterface) {
             $key = $object->getMarkupKey();
         }
 
@@ -145,7 +145,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
 
         $isAssociative = is_array($traversable) && SerializationHelper::isAssoc($traversable);
         foreach ($traversable as $index => $childValue) {
-            if ($object instanceof MarkupableCollection && $object->getChildMarkupKey()) {
+            if ($object instanceof MarkupableCollectionInterface && $object->getChildMarkupKey()) {
                 $childMarkupKey = $object->getChildMarkupKey();
             } else {
                 if ($isAssociative) {

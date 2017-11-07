@@ -39,7 +39,7 @@ namespace Nosto\Object\Order;
 use DateTimeInterface;
 use Nosto\AbstractObject;
 use Nosto\Types\LineItemInterface;
-use Nosto\Types\Markupable;
+use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;
 use Nosto\Types\Order\StatusInterface;
@@ -50,7 +50,7 @@ use Traversable;
  * Model for OrderConfirm information. This is used when compiling the info about an
  * OrderConfirm that is sent to Nosto.
  */
-class Order extends AbstractObject implements OrderInterface, ValidatableInterface, Markupable
+class Order extends AbstractObject implements OrderInterface, ValidatableInterface, MarkupableInterface
 {
     /**
      * @var string visitor checksum

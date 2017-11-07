@@ -38,14 +38,14 @@ namespace Nosto\Object\Cart;
 
 use Nosto\AbstractObject;
 use Nosto\Types\LineItemInterface;
-use Nosto\Types\Markupable;
+use Nosto\Types\MarkupableInterface;
 
 /**
  * Model class for containing a item in an OrderConfirm or a shopping cart. This is used as
  * the model when rendering the cart and OrderConfirm tagging and also for in OrderConfirm confirmation
  * API calls
  */
-class LineItem extends AbstractObject implements LineItemInterface, Markupable
+class LineItem extends AbstractObject implements LineItemInterface, MarkupableInterface
 {
     /**
      * Product id for non saleable products such as shipping and discounts

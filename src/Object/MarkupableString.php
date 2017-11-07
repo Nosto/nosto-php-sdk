@@ -36,10 +36,10 @@
 
 namespace Nosto\Object;
 
-use Nosto\Types\Markupable;
+use Nosto\Types\MarkupableInterface;
 use Nosto\AbstractObject;
 
-class MarkupableString extends AbstractObject implements Markupable
+class MarkupableString extends AbstractObject implements MarkupableInterface
 {
     /** @var string the markup key in the html */
     protected $markupKey;
