@@ -108,7 +108,7 @@ final class IframeHelper extends AbstractHelper
                 // The only case when this should happen is when the api token for some
                 // reason is invalid, which is the case when switching between environments.
                 $url = HttpRequest::buildUri(
-                    self::getBaseUrl() . self::IFRAME_URI_UNINSTALL . '?' . $queryParams,
+                    Nosto::getBaseUrl() . self::IFRAME_URI_UNINSTALL . '?' . $queryParams,
                     array(
                         '{platform}' => $iframe->getPlatform(),
                     )
@@ -116,7 +116,7 @@ final class IframeHelper extends AbstractHelper
             }
         } else {
             $url = HttpRequest::buildUri(
-                self::getBaseUrl() . self::IFRAME_URI_INSTALL . '?' . $queryParams,
+                Nosto::getBaseUrl() . self::IFRAME_URI_INSTALL . '?' . $queryParams,
                 array(
                     '{platform}' => $iframe->getPlatform(),
                 )
@@ -124,15 +124,5 @@ final class IframeHelper extends AbstractHelper
         }
 
         return $url;
-    }
-
-    /**
-     * Returns the base url for the Nosto iframe.
-     *
-     * @return string the url.
-     */
-    private static function getBaseUrl()
-    {
-        return Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', Nosto::DEFAULT_NOSTO_WEB_HOOK_BASE_URL);
     }
 }

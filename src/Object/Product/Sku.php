@@ -37,13 +37,14 @@
 namespace Nosto\Object\Product;
 
 use Nosto\AbstractObject;
+use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\Product\ProductInterface;
 
 /**
  * Model for sku information
  */
-class Sku extends AbstractObject implements SkuInterface
+class Sku extends AbstractObject implements SkuInterface, MarkupableInterface
 {
     /**
      * The id of the SKU
@@ -103,7 +104,6 @@ class Sku extends AbstractObject implements SkuInterface
 
     /**
      * An array of custom attributes
-     * s
      * @var array
      */
     private $customFields = array();
@@ -278,6 +278,9 @@ class Sku extends AbstractObject implements SkuInterface
      */
     public function addCustomField($attribute, $value)
     {
+        if ($this->customFields === null) {
+            $this->customFields = array();
+        }
         $this->customFields[$attribute] = $value;
     }
 
@@ -293,5 +296,10 @@ class Sku extends AbstractObject implements SkuInterface
     {
         $this->availability = $available ?
             ProductInterface::IN_STOCK : ProductInterface::OUT_OF_STOCK;
+    }
+
+    public function getMarkupKey()
+    {
+        return 'nosto_sku';
     }
 }

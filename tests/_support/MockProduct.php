@@ -95,7 +95,8 @@ class MockProduct extends Product
         $this->setInventoryLevel(50);
         $this->setReviewCount(99);
         $this->setRatingValue(2.5);
-        $this->setAlternateImageUrls(array("http://shop.com/product_alt.jpg"));
+        $urls = array("http://shop.com/product_alt.jpg");
+        $this->setAlternateImageUrls($urls);
         $this->setCondition("Used");
         $this->setGtin("gtin");
         $this->setGoogleCategory("All");

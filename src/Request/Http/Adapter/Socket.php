@@ -102,7 +102,7 @@ class Socket extends Adapter
             $streamOptions['http']['user_agent'] = $this->userAgent;
         }
         if (!array_key_exists('timeout', $streamOptions['http'])) {
-            $streamOptions['http']['timeout'] = HttpRequest::$responseTimeout;
+            $streamOptions['http']['timeout'] = $this->getResponseTimeout();
         }
         $context = stream_context_create($streamOptions);
         // We use file_get_contents() directly here as we need the http response headers which are automatically

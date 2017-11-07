@@ -37,12 +37,13 @@
 namespace Nosto\Object\Product;
 
 use Nosto\Object\AbstractCollection;
+use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\VariationInterface;
 
 /**
  * Collection class to store a collection of variations
  */
-class VariationCollection extends AbstractCollection
+class VariationCollection extends AbstractCollection implements MarkupableInterface
 {
     /**
      * Appends item to the collection of variations
@@ -51,7 +52,11 @@ class VariationCollection extends AbstractCollection
      */
     public function append(VariationInterface $variation)
     {
-        $this->var[$variation->getId()] = $variation;
+        $this->var[$variation->getVariationId()] = $variation;
+    }
+
+    public function getMarkupKey()
+    {
+        return 'variations';
     }
 }
-

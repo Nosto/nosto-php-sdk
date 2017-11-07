@@ -34,42 +34,69 @@
  *
  */
 
-namespace Nosto\Types\Product;
+namespace Nosto\Object;
 
-interface VariationInterface
+use Nosto\Types\MarkupableInterface;
+use Nosto\Types\MarkupableCollectionInterface;
+
+/**
+ * Collection class to store a collection of products
+ */
+class StringCollection extends AbstractCollection implements MarkupableCollectionInterface, MarkupableInterface
 {
-    /**
-     * Returns the variations's unique identifier.
-     *
-     * @return int|string the ID.
-     */
-    public function getVariationId();
+    /** @var string|null */
+    private $markupKey;
+    /** @var string|null */
+    private $childMarkupKey;
 
     /**
-     * Returns the currency code (ISO 4217) the variaiton is sold in.
-     *
-     * @return string the currency ISO code.
+     * StringCollection constructor.
+     * @param string $markupKey
+     * @param string $childMarkupKey
+     * @param array $initArray array of string
      */
-    public function getPriceCurrencyCode();
+    public function __construct($markupKey, $childMarkupKey, $initArray = null)
+    {
+        $this->childMarkupKey = $childMarkupKey;
+        $this->markupKey = $markupKey;
+
+        if ($initArray) {
+            foreach ($initArray as $item) {
+                $this->var[] = $item;
+            }
+        }
+    }
+
+    public function append($item)
+    {
+        $this->var[] = $item;
+    }
+
+    public function getMarkupKey()
+    {
+        return $this->markupKey;
+    }
+
+    public function getChildMarkupKey()
+    {
+        return $this->childMarkupKey;
+    }
+
+    public function getData()
+    {
+        return $this->var;
+    }
 
     /**
-     * Returns the price of the variation including possible discounts and taxes.
-     *
-     * @return int|float the price with 2 decimals, e.g. 1000.99.
+     * Set the data
+     * @param array $data It should be an array with string items
      */
-    public function getPrice();
-
-    /**
-     * Returns the list price of the variation without discounts but including possible taxes.
-     *
-     * @return int|float the price with 2 decimals, e.g. 1000.99.
-     */
-    public function getListPrice();
-
-    /**
-     * Returns the availability of the variation, i.e. if it is in stock or not.
-     *
-     * @return string the availability, either "InStock" or "OutOfStock".
-     */
-    public function getAvailability();
+    public function setData($data)
+    {
+        if ($data === null) {
+            $this->var = array();
+        } else {
+            $this->var = $data;
+        }
+    }
 }

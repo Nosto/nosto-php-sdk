@@ -108,28 +108,28 @@ interface ProductInterface
     /**
      * Returns the first set of tags for the product.
      *
-     * @return array first set of the tags
+     * @return array|null first set of the tags
      */
     public function getTag1();
 
     /**
      * Returns the second set of tags for the product.
      *
-     * @return array second set of the tags
+     * @return array|null second set of the tags
      */
     public function getTag2();
 
     /**
      * Returns the third set of tags for the product.
      *
-     * @return array third set of the tags
+     * @return array|null third set of the tags
      */
     public function getTag3();
 
     /**
      * Returns the categories the product is located in.
      *
-     * @return array list of category strings, e.g. array("/shoes/winter", "shoes/boots").
+     * @return array|null list of category strings.
      */
     public function getCategories();
 

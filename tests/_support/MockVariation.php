@@ -39,7 +39,7 @@ class MockVariation extends Variation
 {
     public function __construct()
     {
-        $this->setId(1);
+        $this->setVariationId(1);
         $this->setPrice(99.99);
         $this->setListPrice(110.99);
         $this->setPriceCurrencyCode('USD');

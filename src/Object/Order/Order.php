@@ -39,6 +39,7 @@ namespace Nosto\Object\Order;
 use DateTimeInterface;
 use Nosto\AbstractObject;
 use Nosto\Types\LineItemInterface;
+use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;
 use Nosto\Types\Order\StatusInterface;
@@ -49,8 +50,13 @@ use Traversable;
  * Model for OrderConfirm information. This is used when compiling the info about an
  * OrderConfirm that is sent to Nosto.
  */
-class Order extends AbstractObject implements OrderInterface, ValidatableInterface
+class Order extends AbstractObject implements OrderInterface, ValidatableInterface, MarkupableInterface
 {
+    /**
+     * @var string visitor checksum
+     */
+    private $hcid;
+
     /**
      * @var string|int the unique OrderConfirm number identifying the OrderConfirm
      */
@@ -283,5 +289,33 @@ class Order extends AbstractObject implements OrderInterface, ValidatableInterfa
         }
 
         return $formatted;
+    }
+
+    /**
+     * Get the visitor checksum
+     *
+     * @return string
+     */
+    public function getHcid()
+    {
+        return $this->hcid;
+    }
+
+    /**
+     * Set the visitor checksum
+     *
+     * @param string $hcid
+     */
+    public function setHcid($hcid)
+    {
+        $this->hcid = $hcid;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMarkupKey()
+    {
+        return 'nosto_purchase_order';
     }
 }

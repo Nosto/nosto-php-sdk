@@ -58,7 +58,7 @@ class IframeAuthTest extends Test
         $this->user = new MockUser();
         $this->account = null;
 
-        $baseUrl = Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', Nosto::DEFAULT_NOSTO_WEB_HOOK_BASE_URL);
+        $baseUrl = Nosto::getBaseUrl();
         $url = self::buildURL();
         $this->specify('install iframe url was created', function () use ($url, $baseUrl) {
             $url = parse_url($url);
@@ -97,7 +97,7 @@ class IframeAuthTest extends Test
         $token = new Token('sso', 'token');
         $this->account->addApiToken($token);
 
-        $baseUrl = Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', Nosto::DEFAULT_NOSTO_WEB_HOOK_BASE_URL);
+        $baseUrl = Nosto::getBaseUrl();
         $url = self::buildURL();
         $this->specify('install iframe url was created', function () use ($url, $baseUrl) {
             $url = parse_url($url);
@@ -133,7 +133,7 @@ class IframeAuthTest extends Test
         $this->user = new MockUser();
         $this->account = new MockAccount('platform-00000000');
 
-        $baseUrl = Nosto::getEnvVariable('NOSTO_WEB_HOOK_BASE_URL', Nosto::DEFAULT_NOSTO_WEB_HOOK_BASE_URL);
+        $baseUrl = Nosto::getBaseUrl();
         $url = self::buildURL();
         $this->specify('install iframe url was created', function () use ($url, $baseUrl) {
             $url = parse_url($url);

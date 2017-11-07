@@ -38,13 +38,14 @@ namespace Nosto\Object\Cart;
 
 use Nosto\AbstractObject;
 use Nosto\Types\LineItemInterface;
+use Nosto\Types\MarkupableInterface;
 
 /**
  * Model class for containing a item in an OrderConfirm or a shopping cart. This is used as
  * the model when rendering the cart and OrderConfirm tagging and also for in OrderConfirm confirmation
  * API calls
  */
-class LineItem extends AbstractObject implements LineItemInterface
+class LineItem extends AbstractObject implements LineItemInterface, MarkupableInterface
 {
     /**
      * Product id for non saleable products such as shipping and discounts
@@ -185,5 +186,10 @@ class LineItem extends AbstractObject implements LineItemInterface
     public function setPriceCurrencyCode($priceCurrencyCode)
     {
         $this->priceCurrencyCode = strtoupper($priceCurrencyCode);
+    }
+
+    public function getMarkupKey()
+    {
+        return "line_item";
     }
 }

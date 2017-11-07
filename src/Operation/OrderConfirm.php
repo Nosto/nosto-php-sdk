@@ -71,7 +71,7 @@ class OrderConfirm extends AbstractOperation
      * Sends the OrderConfirm confirmation to Nosto.
      *
      * @param OrderInterface $order the placed OrderConfirm model.
-     * @param null $customerId the Nosto customer ID of the user who placed the OrderConfirm.
+     * @param string|null $customerId the Nosto customer ID of the user who placed the OrderConfirm.
      * @throws NostoException on failure.
      * @return true on success.
      */

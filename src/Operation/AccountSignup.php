@@ -61,6 +61,8 @@ class AccountSignup extends AbstractOperation
     public function __construct(SignupInterface $account)
     {
         $this->account = $account;
+        //Account creation takes time
+        $this->setResponseTimeout(60);
     }
 
     /**

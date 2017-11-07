@@ -38,12 +38,18 @@ namespace Nosto\Object\Cart;
 
 use Nosto\AbstractObject;
 use Nosto\Types\LineItemInterface;
+use Nosto\Types\MarkupableInterface;
 
 /**
  * Model class containing the information about the particulars of a shopping cart.
  */
-class Cart extends AbstractObject
+class Cart extends AbstractObject implements MarkupableInterface
 {
+    /**
+     * @var string visitor checksum
+     */
+    private $hcid;
+
     /**
      * @var string URL for restoring cart
      */
@@ -105,5 +111,30 @@ class Cart extends AbstractObject
     public function setRestoreCartUrl($restoreCartUrl)
     {
         $this->restoreCartUrl = $restoreCartUrl;
+    }
+
+    /**
+     * Get the visitor checksum
+     *
+     * @return string
+     */
+    public function getHcid()
+    {
+        return $this->hcid;
+    }
+
+    /**
+     * Set the visitor checksum
+     *
+     * @param string $hcid
+     */
+    public function setHcid($hcid)
+    {
+        $this->hcid = $hcid;
+    }
+
+    public function getMarkupKey()
+    {
+        return "nosto_cart";
     }
 }

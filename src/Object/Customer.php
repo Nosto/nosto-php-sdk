@@ -34,42 +34,64 @@
  *
  */
 
-namespace Nosto\Types\Product;
+namespace Nosto\Object;
 
-interface VariationInterface
+use Nosto\Types\MarkupableInterface;
+use Nosto\Types\UserInterface;
+
+/**
+ * Customer object for tagging
+ */
+class Customer extends User implements UserInterface, MarkupableInterface
 {
     /**
-     * Returns the variations's unique identifier.
-     *
-     * @return int|string the ID.
+     * @var string customer reference
      */
-    public function getVariationId();
+    private $customerReference;
 
     /**
-     * Returns the currency code (ISO 4217) the variaiton is sold in.
-     *
-     * @return string the currency ISO code.
+     * @var string visitor checksum
      */
-    public function getPriceCurrencyCode();
+    private $hcid;
 
     /**
-     * Returns the price of the variation including possible discounts and taxes.
+     * Get the visitor checksum
      *
-     * @return int|float the price with 2 decimals, e.g. 1000.99.
+     * @return string
      */
-    public function getPrice();
+    public function getHcid()
+    {
+        return $this->hcid;
+    }
 
     /**
-     * Returns the list price of the variation without discounts but including possible taxes.
+     * Set the visitor checksum
      *
-     * @return int|float the price with 2 decimals, e.g. 1000.99.
+     * @param string $hcid
      */
-    public function getListPrice();
+    public function setHcid($hcid)
+    {
+        $this->hcid = $hcid;
+    }
 
     /**
-     * Returns the availability of the variation, i.e. if it is in stock or not.
-     *
-     * @return string the availability, either "InStock" or "OutOfStock".
+     * @return string
      */
-    public function getAvailability();
+    public function getCustomerReference()
+    {
+        return $this->customerReference;
+    }
+
+    /**
+     * @param string $customerReference
+     */
+    public function setCustomerReference($customerReference)
+    {
+        $this->customerReference = $customerReference;
+    }
+
+    public function getMarkupKey()
+    {
+        return 'nosto_customer';
+    }
 }
