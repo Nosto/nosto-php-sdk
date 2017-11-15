@@ -36,7 +36,6 @@
 
 namespace Nosto\Object\Order;
 
-use DateTimeInterface;
 use Nosto\AbstractObject;
 use Nosto\NostoException;
 use Nosto\Types\LineItemInterface;
@@ -189,7 +188,8 @@ class Order extends AbstractObject implements OrderInterface, ValidatableInterfa
      */
     public function setCreatedAt($createdAt)
     {
-        if ($createdAt instanceof DateTimeInterface || $createdAt instanceof \DateTime) {
+        if ($createdAt instanceof \DateTime
+            || (is_object($createdAt) && method_exists($createdAt, 'format'))) {
             $this->createdAt = $createdAt->format('Y-m-d H:i:s');
         } else {
             throw new NostoException('Invalid argumanet, expected DateTime or DateTimeInterface');
