@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.1.1
+* Remove DateTimeInterface type hint from Order class
+* Add PHP version compatibility checks
+
 ## 3.1.0
 * Support tagging html markup generation
 * Add "Custom Fields" property to product class
