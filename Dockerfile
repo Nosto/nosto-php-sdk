@@ -1,4 +1,4 @@
-FROM composer/composer:latest
+FROM php:7.0.25-cli-jessie
 
 ENV LANGUAGE en_US.UTF-8
 ENV LANG en_US.UTF-8
@@ -6,6 +6,8 @@ ENV TERM xterm
 
 RUN apt-get update && \
     apt-get -y -qq install nano tree
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN cd /tmp && \
     git clone https://github.com/nikic/php-ast.git && \

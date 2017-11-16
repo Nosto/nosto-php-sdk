@@ -449,12 +449,12 @@
             "version": "0.8.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/etsy/phan.git",
+                "url": "https://github.com/phan/phan.git",
                 "reference": "685bb56bf88a1485bb76a3e3cc2469357d1bd8e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/etsy/phan/zipball/685bb56bf88a1485bb76a3e3cc2469357d1bd8e4",
+                "url": "https://api.github.com/repos/phan/phan/zipball/685bb56bf88a1485bb76a3e3cc2469357d1bd8e4",
                 "reference": "685bb56bf88a1485bb76a3e3cc2469357d1bd8e4",
                 "shasum": ""
             },
@@ -496,6 +496,7 @@
                 "php",
                 "static"
             ],
+            "abandoned": "phan/phan",
             "time": "2017-01-24 16:41:51"
         },
         {
