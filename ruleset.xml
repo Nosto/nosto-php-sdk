@@ -43,6 +43,9 @@
         <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
         <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
     </rule>
+    <config name="installed_paths" value="vendor/wimg/php-compatibility/" />
+    <rule ref="PHPCompatibility"/>
+    <config name="testVersion" value="5.4"/>
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*/tests/*</exclude-pattern>
     <exclude-pattern>*/phpseclib/*</exclude-pattern>

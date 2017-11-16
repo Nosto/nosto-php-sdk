@@ -36,8 +36,8 @@
 
 namespace Nosto\Object\Order;
 
-use DateTimeInterface;
 use Nosto\AbstractObject;
+use Nosto\NostoException;
 use Nosto\Types\LineItemInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Order\BuyerInterface;
@@ -182,11 +182,18 @@ class Order extends AbstractObject implements OrderInterface, ValidatableInterfa
     /**
      * Sets the date when the OrderConfirm was placed in the format Y-m-d
      *
-     * @param DateTimeInterface $createdAt the created date.
+     * @param DateTimeInterface|\DateTime $createdAt the created date.
+     *
+     * @throws NostoException
      */
-    public function setCreatedAt(DateTimeInterface $createdAt)
+    public function setCreatedAt($createdAt)
     {
-        $this->createdAt = $createdAt->format('Y-m-d H:i:s');
+        if ($createdAt instanceof \DateTime
+            || (is_object($createdAt) && method_exists($createdAt, 'format'))) {
+            $this->createdAt = $createdAt->format('Y-m-d H:i:s');
+        } else {
+            throw new NostoException('Invalid argumanet, expected DateTime or DateTimeInterface');
+        }
     }
 
     /**
@@ -276,8 +283,7 @@ class Order extends AbstractObject implements OrderInterface, ValidatableInterfa
     public function getOrderStatuses()
     {
         $formatted = array();
-        if (
-            $this->orderStatuses instanceof Traversable
+        if ($this->orderStatuses instanceof Traversable
             || is_array($this->orderStatuses)
         ) {
             foreach ($this->orderStatuses as $orderStatus) {
