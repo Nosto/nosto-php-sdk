@@ -11,9 +11,6 @@ ENV GIT_COMMITTER_EMAIL "devnull@nosto.com"
 RUN apt-get update && \
     apt-get -y -qq install nano tree git
 
-RUN git config --global user.name "Nosto CI"
-RUN git config --global user.email "devnull@nosto.com"
-
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN cd /tmp && \
