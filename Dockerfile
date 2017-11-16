@@ -5,7 +5,7 @@ ENV LANG en_US.UTF-8
 ENV TERM xterm
 
 RUN apt-get update && \
-    apt-get -y -qq install nano tree
+    apt-get -y -qq install nano tree git
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
