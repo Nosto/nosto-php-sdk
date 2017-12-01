@@ -182,7 +182,7 @@ class Order extends AbstractObject implements OrderInterface, ValidatableInterfa
     /**
      * Sets the date when the OrderConfirm was placed in the format Y-m-d
      *
-     * @param DateTimeInterface|\DateTime $createdAt the created date.
+     * @param \DateTimeInterface|\DateTime $createdAt the created date.
      *
      * @throws NostoException
      */
