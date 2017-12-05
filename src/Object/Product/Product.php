@@ -233,9 +233,9 @@ class Product extends AbstractObject implements
     {
         $this->skus = new SkuCollection();
         $this->variations = new VariationCollection();
-        $this->tag1 = new StringCollection('tag1', 'tag');
-        $this->tag2 = new StringCollection('tag2', 'tag');
-        $this->tag3 = new StringCollection('tag3', 'tag');
+        $this->tag1 = new StringCollection('tags1', 'tag');
+        $this->tag2 = new StringCollection('tags2', 'tag');
+        $this->tag3 = new StringCollection('tags3', 'tag');
         $this->alternateImageUrls = new StringCollection('alternate_image_urls', 'alternate_image_url');
         $this->categories = new StringCollection('categories', 'category');
     }
