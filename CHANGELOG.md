@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.1.4
+* Rename Cart::restoreCartUrl to Cart::restoreLink for supporting html serializer
+
 ## 3.1.3
 * Change product tag1, tag2 and tag3 tagging to tags1, tags2 and tags3
 

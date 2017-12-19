@@ -53,7 +53,7 @@ class Cart extends AbstractObject implements MarkupableInterface
     /**
      * @var string URL for restoring cart
      */
-    private $restoreCartUrl;
+    private $restoreLink;
 
     /**
      * @var LineItemInterface[] the array of items in the shopping cart
@@ -98,9 +98,9 @@ class Cart extends AbstractObject implements MarkupableInterface
      *
      * @return string
      */
-    public function getRestoreCartUrl()
+    public function getRestoreLink()
     {
-        return $this->restoreCartUrl;
+        return $this->restoreLink;
     }
 
     /**
@@ -108,9 +108,31 @@ class Cart extends AbstractObject implements MarkupableInterface
      *
      * @param string $restoreCartUrl
      */
+    public function setRestoreLink($restoreCartUrl)
+    {
+        $this->restoreLink = $restoreCartUrl;
+    }
+
+    /**
+     * Returns the restore cart URL
+     *
+     * @return string
+     * @deprecated use getRestoreLink() instead
+     */
+    public function getRestoreCartUrl()
+    {
+        return $this->getRestoreLink();
+    }
+
+    /**
+     * Sets the restore cart URL
+     *
+     * @param string $restoreCartUrl
+     * @deprecated use setRestoreLink() instead
+     */
     public function setRestoreCartUrl($restoreCartUrl)
     {
-        $this->restoreCartUrl = $restoreCartUrl;
+        $this->setRestoreLink($restoreCartUrl);
     }
 
     /**
