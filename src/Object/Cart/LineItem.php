@@ -58,6 +58,11 @@ class LineItem extends AbstractObject implements LineItemInterface, MarkupableIn
     private $productId;
 
     /**
+     * @var string the unique identifier of the purchased sku.
+     */
+    private $skuId;
+
+    /**
      * @var int the quantity of the item included in the OrderConfirm.
      */
     private $quantity;
@@ -124,6 +129,24 @@ class LineItem extends AbstractObject implements LineItemInterface, MarkupableIn
     public function setProductId($id)
     {
         $this->productId = $id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSkuId()
+    {
+        return $this->skuId;
+    }
+
+    /**
+     * Sets the sku ID for the given cart item.
+     *
+     * @param string $id the product ID.
+     */
+    public function setSkuId($id)
+    {
+        $this->skuId = $id;
     }
 
     /**
