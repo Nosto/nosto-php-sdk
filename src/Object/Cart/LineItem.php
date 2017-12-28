@@ -97,7 +97,6 @@ class LineItem extends AbstractObject implements LineItemInterface, MarkupableIn
     public function loadSpecialItemData($name, $price, $currency)
     {
         $this->setProductId(self::PSEUDO_PRODUCT_ID);
-        $this->setSkuId(self::PSEUDO_PRODUCT_ID);
         $this->setQuantity(1);
         $this->setName($name);
         $this->setPrice($price);
