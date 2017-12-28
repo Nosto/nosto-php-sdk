@@ -123,7 +123,7 @@ class LineItem extends AbstractObject implements LineItemInterface, MarkupableIn
     }
 
     /**
-     * Sets the sku ID for the given cart item.
+     * Sets the product ID for the given cart item.
      *
      * @param string $id the product ID.
      */
