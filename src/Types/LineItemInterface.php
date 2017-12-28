@@ -46,11 +46,19 @@ interface LineItemInterface
 {
     /**
      * The unique identifier of the purchased item.
-     * If this item is for discounts or shipping cost, the id can be 0.
+     * If this item is for discounts or shipping cost, the id can be -1.
      *
      * @return string|int
      */
     public function getProductId();
+
+    /**
+     * The unique identifier of the purchased sku.
+     * If this item is for discounts or shipping cost, the id can be -1.
+     *
+     * @return string|int
+     */
+    public function getSkuId();
 
     /**
      * The quantity of the item included in the OrderConfirm.

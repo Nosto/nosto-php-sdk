@@ -58,6 +58,11 @@ class LineItem extends AbstractObject implements LineItemInterface, MarkupableIn
     private $productId;
 
     /**
+     * @var string the unique identifier of the purchased sku.
+     */
+    private $skuId;
+
+    /**
      * @var int the quantity of the item included in the OrderConfirm.
      */
     private $quantity;
@@ -92,6 +97,7 @@ class LineItem extends AbstractObject implements LineItemInterface, MarkupableIn
     public function loadSpecialItemData($name, $price, $currency)
     {
         $this->setProductId(self::PSEUDO_PRODUCT_ID);
+        $this->setSkuId(self::PSEUDO_PRODUCT_ID);
         $this->setQuantity(1);
         $this->setName($name);
         $this->setPrice($price);
@@ -117,13 +123,31 @@ class LineItem extends AbstractObject implements LineItemInterface, MarkupableIn
     }
 
     /**
-     * Sets the product ID for the given cart item.
+     * Sets the sku ID for the given cart item.
      *
      * @param string $id the product ID.
      */
     public function setProductId($id)
     {
         $this->productId = $id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSkuId()
+    {
+        return $this->skuId;
+    }
+
+    /**
+     * Sets the sku ID for the given cart item.
+     *
+     * @param string $id the product ID.
+     */
+    public function setSkuId($id)
+    {
+        $this->skuId = $id;
     }
 
     /**
