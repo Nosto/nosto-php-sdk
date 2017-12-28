@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
 ## 3.1.5
-* Add sku it to cart LineItem
+* Add sku id to cart LineItem
 
 ## 3.1.4
 * Rename Cart::restoreCartUrl to Cart::restoreLink for supporting html serializer
