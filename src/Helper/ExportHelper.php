@@ -48,7 +48,7 @@ class ExportHelper extends AbstractExportHelper
     /**
      * @inheritdoc
      */
-    public static function encrypt($secret, $data)
+    public function encrypt($secret, $data)
     {
         $iv = Random::string(16);
         $cipher = new AES(Base::MODE_CBC);
