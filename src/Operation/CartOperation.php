@@ -65,19 +65,22 @@ class CartOperation extends AbstractOperation
      *
      * @param Update $update the cart changes
      * @param string $nostoCustomerId
+     * @param string $accountId merchange id
      * @return bool if the request was successful.
      * @throws NostoException on failure.
      */
-    public function updateCart(Update $update, $nostoCustomerId)
+    public function updateCart(Update $update, $nostoCustomerId, $accountId)
     {
         $request = $this->initApiRequest($this->account->getApiToken(Token::API_PRODUCTS));
         $request->setPath(ApiRequest::PATH_CART_UPDATE);
         $updateJson = SerializationHelper::serialize($update);
         $data = '{"items":[{"channel":"cartUpdated-'
+            . $accountId
+            . '-'
             . $nostoCustomerId
-            . '","formats":{"json-object":"'
+            . '","formats":{"json-object":'
             . $updateJson
-            . '"}}]}';
+            . '}}]}';
         $response = $request->postRaw($data);
 
         return $this->checkResponse($request, $response);
