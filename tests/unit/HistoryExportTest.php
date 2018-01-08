@@ -62,7 +62,7 @@ class HistoryExportTest extends Test
     {
         $collection = new ProductCollection();
         $collection->append(new MockProduct());
-        $cipher_text = ExportHelper::export($this->account, $collection);
+        $cipher_text = (new ExportHelper())->export($this->account, $collection);
 
         $this->specify('check encrypted product data', function () use ($collection, $cipher_text) {
             $cipher = new AES(Base::MODE_CBC);
@@ -81,7 +81,7 @@ class HistoryExportTest extends Test
     {
         $collection = new OrderCollection();
         $collection->append(new MockOrder());
-        $cipher_text = ExportHelper::export($this->account, $collection);
+        $cipher_text = (new ExportHelper())->export($this->account, $collection);
 
         $this->specify('check encrypted order data', function () use ($collection, $cipher_text) {
             $cipher = new AES(Base::MODE_CBC);
