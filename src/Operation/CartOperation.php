@@ -74,9 +74,9 @@ class CartOperation extends AbstractOperation
         $request = $this->initApiRequest($this->account->getApiToken(Token::API_PRODUCTS));
         $request->setPath(ApiRequest::PATH_CART_UPDATE);
         $updateJson = SerializationHelper::serialize($update);
-        $data = '{"items":[{"channel":"cartUpdated-'
+        $data = '{"items":[{"channel":"cartUpdated/'
             . $accountId
-            . '-'
+            . '/'
             . $nostoCustomerId
             . '","formats":{"json-object":'
             . $updateJson
