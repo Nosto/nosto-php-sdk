@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2018, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,41 +29,60 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2018 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
 
-namespace Nosto\Request\Api;
+namespace Nosto\Operation;
 
-use Nosto\Nosto;
-use Nosto\Request\Http\HttpRequest;
+use Nosto\Helper\SerializationHelper;
+use Nosto\NostoException;
+use Nosto\Object\Event\Cart\Update;
+use Nosto\Request\Api\ApiRequest;
+use Nosto\Request\Api\Token;
+use Nosto\Types\Signup\AccountInterface;
 
-/**
- * API request class for making API requests to Nosto.
- */
-class ApiRequest extends HttpRequest
+class CartOperation extends AbstractOperation
 {
-    const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
-    const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
-    const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
-    const PATH_PRODUCTS_CREATE = '/v1/products/create';
-    const PATH_PRODUCTS_UPDATE = '/v1/products/update';
-    const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
-    const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
-    const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
-    const PATH_SETTINGS = '/settings';
-    const PATH_CART_UPDATE = '/v1/cart/update';
+    /**
+     * @var AccountInterface the account to perform the operation on.
+     */
+    private $account;
 
     /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
+     * Constructor.
      *
-     * @param string $path the endpoint path (use PATH_ constants).
+     * @param AccountInterface $account the account object.
      */
-    public function setPath($path)
+    public function __construct(AccountInterface $account)
     {
-        $this->setUrl(Nosto::getApiBaseURL() . $path);
+        $this->account = $account;
+    }
+
+    /**
+     * Sends a POST request to update the cart
+     *
+     * @param Update $update the cart changes
+     * @param string $nostoCustomerId
+     * @param string $accountId merchange id
+     * @return bool if the request was successful.
+     * @throws NostoException on failure.
+     */
+    public function updateCart(Update $update, $nostoCustomerId, $accountId)
+    {
+        $request = new ApiRequest();
+        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
+        $request->setPath(ApiRequest::PATH_CART_UPDATE);
+        $channelName = 'cartUpdated/' . $accountId . '/' . $nostoCustomerId;
+        $data = array();
+        $item = array();
+        $item['channel'] = $channelName;
+        $item['formats'] = array('json-object' => json_decode(SerializationHelper::serialize($update)));
+        $data['items'] = array($item);
+        $updateJson = json_encode($data);
+        $response = $request->postRaw($updateJson);
+
+        return $this->checkResponse($request, $response);
     }
 }
