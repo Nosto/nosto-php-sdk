@@ -78,6 +78,8 @@ class Category extends AbstractRecommendationOperation
     {
         $request = new ApiRequest();
         $request->setPath(ApiRequest::PATH_RECOMMENDATION_CATEGORY_PRODUCT_IDS);
+        $request->setResponseTimeout($this->getResponseTimeout());
+        $request->setConnectTimeout($this->getConnectTimeout());
         $request->setReplaceParams(array(
             '{m}' => $this->account->getName(),
             '{cat}' => $this->category,
