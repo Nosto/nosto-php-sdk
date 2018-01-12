@@ -54,7 +54,7 @@ class ApiRequest extends HttpRequest
     const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
     const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
     const PATH_SETTINGS = '/settings';
-    const PATH_RECOMMENDATION_CATEGORY_PRODUCT_IDS = '/api/recommendations/category/{m}/{cat}/{cid}';
+    const PATH_RECOMMENDATION_CATEGORY_PRODUCT_IDS = '/recommendations/category/{m}/{cat}/{cid}/{l}';
 
     /**
      * Setter for the end point path, e.g. one of the PATH_ constants.

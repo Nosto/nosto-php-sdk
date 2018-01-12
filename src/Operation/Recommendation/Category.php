@@ -39,11 +39,15 @@ namespace Nosto\Operation\Recommendation;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Types\Signup\AccountInterface;
 
+/**
+ * Operation class for getting product ids in a category
+ */
 class Category extends AbstractRecommendationOperation
 {
     private $account;
     private $category;
     private $customerId;
+    private $limit;
 
     /**
      * Category constructor
@@ -51,15 +55,18 @@ class Category extends AbstractRecommendationOperation
      * @param AccountInterface $account
      * @param string $category
      * @param string $customerId
+     * @param int $limit
      */
     public function __construct(
         AccountInterface $account,
         $category,
-        $customerId
+        $customerId,
+        $limit = 20
     ) {
         $this->account = $account;
         $this->category = $category;
         $this->customerId = $customerId;
+        $this->limit = $limit;
     }
 
     /**
@@ -74,7 +81,8 @@ class Category extends AbstractRecommendationOperation
         $request->setReplaceParams(array(
             '{m}' => $this->account->getName(),
             '{cat}' => $this->category,
-            '{cid}' => $this->customerId
+            '{cid}' => $this->customerId,
+            '{l}' => $this->limit
         ));
 
         return $request;

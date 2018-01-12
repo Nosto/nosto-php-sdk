@@ -39,6 +39,8 @@ namespace Nosto\Operation\Recommendation;
 use Nosto\Nosto;
 use Nosto\Operation\AbstractOperation;
 use Nosto\Request\Api\ApiRequest;
+use Nosto\Request\Http\HttpResponse;
+use Nosto\Request\Http\Exception\AbstractHttpException;
 
 /**
  * Base operation class for handling all recommendation related communications
@@ -55,8 +57,8 @@ abstract class AbstractRecommendationOperation extends AbstractOperation
     /**
      * Returns the result
      *
-     * @return \Nosto\Request\Http\HttpResponse
-     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
+     * @return HttpResponse
+     * @throws AbstractHttpException
      */
     public function get()
     {
