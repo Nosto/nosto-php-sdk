@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2018, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,41 +29,55 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2018 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
 
-namespace Nosto\Request\Api;
+namespace Nosto\Object\Event\Cart;
 
-use Nosto\Nosto;
-use Nosto\Request\Http\HttpRequest;
+use Nosto\AbstractObject;
+use Nosto\Object\Cart\Cart;
 
 /**
- * API request class for making API requests to Nosto.
+ * Model class containing the update of cart
  */
-class ApiRequest extends HttpRequest
+class Update extends AbstractObject
 {
-    const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
-    const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
-    const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
-    const PATH_PRODUCTS_CREATE = '/v1/products/create';
-    const PATH_PRODUCTS_UPDATE = '/v1/products/update';
-    const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
-    const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
-    const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
-    const PATH_SETTINGS = '/settings';
-    const PATH_CART_UPDATE = '/v1/cart/update';
+    private $cart;
+
+    /** @var array $addedItems list of LineItem */
+    private $addedItems;
 
     /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
-     *
-     * @param string $path the endpoint path (use PATH_ constants).
+     * @return Cart
      */
-    public function setPath($path)
+    public function getCart()
     {
-        $this->setUrl(Nosto::getApiBaseURL() . $path);
+        return $this->cart;
+    }
+
+    /**
+     * @param Cart $cart
+     */
+    public function setCart($cart)
+    {
+        $this->cart = $cart;
+    }
+
+    /**
+     * @return array of LineItem
+     */
+    public function getAddedItems()
+    {
+        return $this->addedItems;
+    }
+
+    /**
+     * @param array $addedItems
+     */
+    public function setAddedItems($addedItems)
+    {
+        $this->addedItems = $addedItems;
     }
 }
