@@ -71,7 +71,8 @@ class CartOperation extends AbstractOperation
      */
     public function updateCart(Update $update, $nostoCustomerId, $accountId)
     {
-        $request = $this->initApiRequest();
+        $request = new ApiRequest();
+        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
         $request->setPath(ApiRequest::PATH_CART_UPDATE);
         $channelName = 'cartUpdated/' . $accountId . '/' . $nostoCustomerId;
         $data = array();
