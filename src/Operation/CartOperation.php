@@ -71,17 +71,16 @@ class CartOperation extends AbstractOperation
      */
     public function updateCart(Update $update, $nostoCustomerId, $accountId)
     {
-        $request = $this->initApiRequest($this->account->getApiToken(Token::API_PRODUCTS));
+        $request = $this->initApiRequest();
         $request->setPath(ApiRequest::PATH_CART_UPDATE);
-        $updateJson = SerializationHelper::serialize($update);
-        $data = '{"items":[{"channel":"cartUpdated/'
-            . $accountId
-            . '/'
-            . $nostoCustomerId
-            . '","formats":{"json-object":'
-            . $updateJson
-            . '}}]}';
-        $response = $request->postRaw($data);
+        $channelName = 'cartUpdated/' . $accountId . '/' . $nostoCustomerId;
+        $data = array();
+        $item = array();
+        $item['channel'] = $channelName;
+        $item['formats'] = array('json-object' => json_decode(SerializationHelper::serialize($update)));
+        $data['items'] = array($item);
+        $updateJson = json_encode($data);
+        $response = $request->postRaw($updateJson);
 
         return $this->checkResponse($request, $response);
     }
