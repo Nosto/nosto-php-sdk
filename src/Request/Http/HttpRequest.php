@@ -416,7 +416,7 @@ class HttpRequest
      */
     public function post($content)
     {
-        $this->postRaw(SerializationHelper::serialize($content));
+        return $this->postRaw(SerializationHelper::serialize($content));
     }
 
     /**
