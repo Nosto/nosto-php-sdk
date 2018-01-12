@@ -34,12 +34,10 @@
  *
  */
 
-namespace Nosto\Object\Cart;
+namespace Nosto\Object\Event\Cart;
 
 use Nosto\AbstractObject;
-use Nosto\Types\LineItemInterface;
-use Nosto\Types\MarkupableInterface;
-use Nosto\Types\Product\ProductInterface;
+use Nosto\Object\Cart\Cart;
 
 /**
  * Model class containing the update of cart

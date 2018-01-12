@@ -38,7 +38,7 @@ namespace Nosto\Operation;
 
 use Nosto\Helper\SerializationHelper;
 use Nosto\NostoException;
-use Nosto\Object\Cart\Update;
+use Nosto\Object\Event\Cart\Update;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Types\Signup\AccountInterface;
