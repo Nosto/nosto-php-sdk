@@ -34,36 +34,38 @@
  *
  */
 
-namespace Nosto\Request\Api;
+namespace Nosto\Operation\Recommendation;
 
 use Nosto\Nosto;
-use Nosto\Request\Http\HttpRequest;
+use Nosto\Operation\AbstractOperation;
+use Nosto\Request\Api\ApiRequest;
 
 /**
- * API request class for making API requests to Nosto.
+ * Base operation class for handling all recommendation related communications
  */
-class ApiRequest extends HttpRequest
+abstract class AbstractRecommendationOperation extends AbstractOperation
 {
-    const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
-    const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
-    const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
-    const PATH_PRODUCTS_CREATE = '/v1/products/create';
-    const PATH_PRODUCTS_UPDATE = '/v1/products/update';
-    const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
-    const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
-    const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
-    const PATH_SETTINGS = '/settings';
-    const PATH_RECOMMENDATION_CATEGORY_PRODUCT_IDS = '/api/recommendations/category/{m}/{cat}/{cid}';
+    /**
+     * Builds the recommendation API request
+     *
+     * @return ApiRequest
+     */
+    abstract public function buildRequest();
 
     /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
+     * Returns the result
      *
-     * @param string $path the endpoint path (use PATH_ constants).
+     * @return \Nosto\Request\Http\HttpResponse
+     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
      */
-    public function setPath($path)
+    public function get()
     {
-        $this->setUrl(Nosto::getApiBaseURL() . $path);
+        $request = $this->buildRequest();
+        $response = $request->get();
+        if ($response->getCode() !== 200) {
+            Nosto::throwHttpException($request, $response);
+        }
+
+        return $response;
     }
 }

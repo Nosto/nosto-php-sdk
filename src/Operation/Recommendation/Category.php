@@ -34,36 +34,49 @@
  *
  */
 
-namespace Nosto\Request\Api;
+namespace Nosto\Operation\Recommendation;
 
-use Nosto\Nosto;
-use Nosto\Request\Http\HttpRequest;
+use Nosto\Request\Api\ApiRequest;
+use Nosto\Types\Signup\AccountInterface;
 
-/**
- * API request class for making API requests to Nosto.
- */
-class ApiRequest extends HttpRequest
+class Category extends AbstractRecommendationOperation
 {
-    const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
-    const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
-    const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
-    const PATH_PRODUCTS_CREATE = '/v1/products/create';
-    const PATH_PRODUCTS_UPDATE = '/v1/products/update';
-    const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
-    const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
-    const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
-    const PATH_SETTINGS = '/settings';
-    const PATH_RECOMMENDATION_CATEGORY_PRODUCT_IDS = '/api/recommendations/category/{m}/{cat}/{cid}';
+    private $account;
+    private $category;
+    private $customerId;
 
     /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
+     * Category constructor
      *
-     * @param string $path the endpoint path (use PATH_ constants).
+     * @param AccountInterface $account
+     * @param string $category
+     * @param string $customerId
      */
-    public function setPath($path)
+    public function __construct(
+        AccountInterface $account,
+        $category,
+        $customerId
+    ) {
+        $this->account = $account;
+        $this->category = $category;
+        $this->customerId = $customerId;
+    }
+
+    /**
+     * Returns the ApiRequest for category product ids request
+     *
+     * @return ApiRequest
+     */
+    public function buildRequest()
     {
-        $this->setUrl(Nosto::getApiBaseURL() . $path);
+        $request = new ApiRequest();
+        $request->setPath(ApiRequest::PATH_RECOMMENDATION_CATEGORY_PRODUCT_IDS);
+        $request->setReplaceParams(array(
+            '{m}' => $this->account->getName(),
+            '{cat}' => $this->category,
+            '{cid}' => $this->customerId
+        ));
+
+        return $request;
     }
 }
