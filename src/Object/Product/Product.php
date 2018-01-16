@@ -971,7 +971,7 @@ class Product extends AbstractObject implements
      *
      * @return bool
      */
-    protected function isValid()
+    public function isValid()
     {
         $validator = new ValidationHelper($this);
         try {
