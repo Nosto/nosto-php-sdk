@@ -37,6 +37,8 @@
 namespace Nosto\Object\Product;
 
 use Nosto\AbstractObject;
+use Nosto\Helper\ValidationHelper;
+use Nosto\NostoException;
 use Nosto\Object\StringCollection;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\ProductInterface;
@@ -245,7 +247,9 @@ class Product extends AbstractObject implements
      */
     public function validationRules()
     {
-        return array();
+        return array(
+            array(array('productId'), 'required')
+        );
     }
 
     /**
@@ -960,5 +964,20 @@ class Product extends AbstractObject implements
         $sanitized->setSupplierCost(null);
 
         return $sanitized;
+    }
+
+    /**
+     * Validates the that product can be used by Nosto
+     *
+     * @return bool
+     */
+    protected function isValid()
+    {
+        $validator = new ValidationHelper($this);
+        try {
+            return $validator->validate();
+        } catch (NostoException $e) {
+            return false;
+        }
     }
 }
