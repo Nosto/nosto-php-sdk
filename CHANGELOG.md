@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.1.8
+* Define productId as mandatory for product object
+
 ## 3.1.7
 * Add CartOperation to support sending cart update events to nosto
 
