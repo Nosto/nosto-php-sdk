@@ -51,7 +51,9 @@ class SerializationHelper extends AbstractHelper
     public static function serialize($object)
     {
         $items = array();
-        if ($object instanceof Traversable) {
+        if (is_array($object)) {
+            return json_encode($object);
+        } elseif ($object instanceof Traversable) {
             foreach ($object as $item) {
                 $items[] = self::toArray($item);
             }
