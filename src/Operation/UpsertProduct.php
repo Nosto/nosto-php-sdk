@@ -40,6 +40,7 @@ use Nosto\NostoException;
 use Nosto\Object\Product\ProductCollection;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
+use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Signup\AccountInterface;
 
@@ -82,7 +83,7 @@ class UpsertProduct extends AbstractAccountOperation
      *
      * @return bool if the request was successful.
      * @throws NostoException on failure.
-     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
+     * @throws AbstractHttpException
      */
     public function upsert()
     {

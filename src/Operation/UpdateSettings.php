@@ -36,10 +36,11 @@
 
 namespace Nosto\Operation;
 
+use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
+use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Types\SettingsInterface;
-use Nosto\Types\Signup\AccountInterface;
 
 /**
  * Operation class for updating common account settings through the Nosto API.
@@ -51,8 +52,8 @@ class UpdateSettings extends AbstractAccountOperation
      *
      * @param SettingsInterface $settings
      * @return bool if the request was successful.
-     * @throws \Nosto\NostoException
-     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
+     * @throws NostoException
+     * @throws AbstractHttpException
      */
     public function update(SettingsInterface $settings)
     {

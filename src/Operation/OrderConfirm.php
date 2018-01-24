@@ -36,10 +36,9 @@
 
 namespace Nosto\Operation;
 
-use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
+use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Types\Order\OrderInterface;
-use Nosto\Types\Signup\AccountInterface;
 
 /**
  * Handles sending the OrderConfirm confirmations to Nosto via the API.
@@ -58,7 +57,7 @@ class OrderConfirm extends AbstractAccountOperation
      * @param OrderInterface $order the placed OrderConfirm model.
      * @param string|null $customerId the Nosto customer ID of the user who placed the OrderConfirm.
      * @return true on success.
-     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
+     * @throws AbstractHttpException
      */
     public function send(OrderInterface $order, $customerId = null)
     {

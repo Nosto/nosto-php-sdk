@@ -39,8 +39,9 @@ namespace Nosto\Operation;
 use Nosto\Nosto;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
-use Nosto\Types\Signup\AccountInterface;
 use Nosto\Types\UserInterface;
+use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\NostoException;
 
 /**
  * Operation class for fetching a single-sign-on link through the Nosto API.
@@ -55,8 +56,8 @@ class InitiateSso extends AbstractAccountOperation
      * @param UserInterface $user
      * @param $platform
      * @return string the sso URL if the request was successful.
-     * @throws \Nosto\NostoException
-     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
+     * @throws NostoException
+     * @throws AbstractHttpException
      */
     public function get(UserInterface $user, $platform)
     {

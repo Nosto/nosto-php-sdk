@@ -36,9 +36,10 @@
 
 namespace Nosto\Operation;
 
+use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
-use Nosto\Types\Signup\AccountInterface;
+use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Types\UserInterface;
 
 /**
@@ -53,8 +54,8 @@ class UninstallAccount extends AbstractAccountOperation
      *
      * @param UserInterface $currentUser
      * @return bool if the request was successful.
-     * @throws \Nosto\NostoException
-     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
+     * @throws NostoException
+     * @throws AbstractHttpException
      */
     public function delete(UserInterface $currentUser)
     {

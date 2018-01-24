@@ -37,11 +37,9 @@
 namespace Nosto\Operation;
 
 use Nosto\Helper\SerializationHelper;
-use Nosto\NostoException;
 use Nosto\Object\Event\Cart\Update;
 use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Types\Signup\AccountInterface;
+use Nosto\Request\Http\Exception\AbstractHttpException;
 
 class CartOperation extends AbstractAccountOperation
 {
@@ -52,7 +50,7 @@ class CartOperation extends AbstractAccountOperation
      * @param string $nostoCustomerId
      * @param string $accountId merchange id
      * @return bool if the request was successful.
-     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
+     * @throws AbstractHttpException
      */
     public function updateCart(Update $update, $nostoCustomerId, $accountId)
     {
