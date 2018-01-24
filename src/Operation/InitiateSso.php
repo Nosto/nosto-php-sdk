@@ -47,29 +47,16 @@ use Nosto\Types\UserInterface;
  * The operation results in a single-use URL that can be used for logging in
  * to the Nosto administration interface.
  */
-class InitiateSso extends AbstractOperation
+class InitiateSso extends AbstractAccountOperation
 {
-    /**
-     * @var AccountInterface Nosto configuration
-     */
-    private $account;
-
-    /**
-     * Constructor.
-     *
-     * @param AccountInterface $account the Nosto configuration object.
-     */
-    public function __construct(AccountInterface $account)
-    {
-        $this->account = $account;
-    }
-
     /**
      * Sends a POST request to get a single sign-on URL for a store
      *
      * @param UserInterface $user
      * @param $platform
      * @return string the sso URL if the request was successful.
+     * @throws \Nosto\NostoException
+     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
      */
     public function get(UserInterface $user, $platform)
     {

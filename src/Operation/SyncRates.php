@@ -44,28 +44,15 @@ use Nosto\Types\Signup\AccountInterface;
 /**
  * Handles updating exchange rates through the Nosto API
  */
-class SyncRates extends AbstractOperation
+class SyncRates extends AbstractAccountOperation
 {
-    /**
-     * @var AccountInterface the Nosto account to update the rates for.
-     */
-    private $account;
-
-    /**
-     * Constructor.
-     *
-     * @param AccountInterface $account the Nosto configuration object.
-     */
-    public function __construct(AccountInterface $account)
-    {
-        $this->account = $account;
-    }
-
     /**
      * Updates exchange rates to Nosto
      *
      * @param ExchangeRateCollection $collection the collection of exchange rates to update
      * @return bool returns true when the operation was a success
+     * @throws \Nosto\NostoException
+     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
      */
     public function update(ExchangeRateCollection $collection)
     {

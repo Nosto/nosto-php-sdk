@@ -43,23 +43,8 @@ use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Types\Signup\AccountInterface;
 
-class CartOperation extends AbstractOperation
+class CartOperation extends AbstractAccountOperation
 {
-    /**
-     * @var AccountInterface the account to perform the operation on.
-     */
-    private $account;
-
-    /**
-     * Constructor.
-     *
-     * @param AccountInterface $account the account object.
-     */
-    public function __construct(AccountInterface $account)
-    {
-        $this->account = $account;
-    }
-
     /**
      * Sends a POST request to update the cart
      *
@@ -67,7 +52,7 @@ class CartOperation extends AbstractOperation
      * @param string $nostoCustomerId
      * @param string $accountId merchange id
      * @return bool if the request was successful.
-     * @throws NostoException on failure.
+     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
      */
     public function updateCart(Update $update, $nostoCustomerId, $accountId)
     {

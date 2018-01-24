@@ -49,13 +49,8 @@ use Nosto\Types\Signup\AccountInterface;
  * it does, while a product delete also results in an upsert but flags the
  * product's availability as 'Discontinued'
  */
-class UpsertProduct extends AbstractOperation
+class UpsertProduct extends AbstractAccountOperation
 {
-    /**
-     * @var AccountInterface the account to perform the operation on.
-     */
-    private $account;
-
     /**
      * @var ProductCollection collection object of products to perform the operation on.
      */
@@ -68,7 +63,7 @@ class UpsertProduct extends AbstractOperation
      */
     public function __construct(AccountInterface $account)
     {
-        $this->account = $account;
+        parent::__construct($account);
         $this->collection = new ProductCollection();
     }
 
@@ -87,6 +82,7 @@ class UpsertProduct extends AbstractOperation
      *
      * @return bool if the request was successful.
      * @throws NostoException on failure.
+     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
      */
     public function upsert()
     {

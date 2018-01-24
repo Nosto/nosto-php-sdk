@@ -44,28 +44,15 @@ use Nosto\Types\Signup\AccountInterface;
 /**
  * Operation class for updating common account settings through the Nosto API.
  */
-class UpdateSettings extends AbstractOperation
+class UpdateSettings extends AbstractAccountOperation
 {
-    /**
-     * @var AccountInterface Nosto configuration
-     */
-    private $account;
-
-    /**
-     * Constructor.
-     *
-     * @param AccountInterface $account the Nosto configuration object.
-     */
-    public function __construct(AccountInterface $account)
-    {
-        $this->account = $account;
-    }
-
     /**
      * Sends a POST request to create a new account for a store in Nosto
      *
      * @param SettingsInterface $settings
      * @return bool if the request was successful.
+     * @throws \Nosto\NostoException
+     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
      */
     public function update(SettingsInterface $settings)
     {

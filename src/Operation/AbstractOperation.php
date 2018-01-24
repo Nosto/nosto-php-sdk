@@ -70,7 +70,7 @@ abstract class AbstractOperation
      * @param $request HttpRequest the HTTP request
      * @param $response HttpResponse the HTTP response to check
      * @return bool returns true when everything was okay
-     * @throws HttpException when the endpoint responds with non-200 status code
+     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
      */
     protected static function checkResponse(HttpRequest $request, HttpResponse $response)
     {

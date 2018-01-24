@@ -36,42 +36,26 @@
 
 namespace Nosto\Operation;
 
-use Nosto\NostoException;
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Types\Order\OrderInterface;
-use Nosto\Types\Signup\AccountInterface;
-
 /**
- * Handles sending the OrderConfirm confirmations to Nosto via the API.
- *
- * OrderConfirm confirmations can be sent two different ways:
- * - matched orders; where we know the Nosto customer ID of the user who placed the OrderConfirm
- * - un-matched orders: where we do not know the Nosto customer ID of the user who placed the OrderConfirm
- *
- * The second option is a fallback and should be avoided as much as possible.
+ * Base operation class for handling Nosto API communications that require
+ * authentication or Nosto account.
  */
-class OrderConfirm extends AbstractAccountOperation
+abstract class AbstractAccountOperation extends AbstractOperation
 {
     /**
-     * Sends the OrderConfirm confirmation to Nosto.
-     *
-     * @param OrderInterface $order the placed OrderConfirm model.
-     * @param string|null $customerId the Nosto customer ID of the user who placed the OrderConfirm.
-     * @return true on success.
-     * @throws \Nosto\Request\Http\Exception\AbstractHttpException
+     * @var AccountInterface Nosto configuration
      */
-    public function send(OrderInterface $order, $customerId = null)
+    protected $account;
+
+    /**
+     * Constructor
+     *
+     * @param AccountInterface $account the account object.
+     */
+    public function __construct(AccountInterface $account)
     {
-        $request = new ApiRequest();
-        if (!empty($customerId)) {
-            $request->setPath(ApiRequest::PATH_ORDER_TAGGING);
-            $replaceParams = array('{m}' => $this->account->getName(), '{cid}' => $customerId);
-        } else {
-            $request->setPath(ApiRequest::PATH_UNMATCHED_ORDER_TAGGING);
-            $replaceParams = array('{m}' => $this->account->getName());
-        }
-        $request->setReplaceParams($replaceParams);
-        $response = $request->post($order);
-        return $this->checkResponse($request, $response);
+        $this->account = $account;
     }
+
+
 }
