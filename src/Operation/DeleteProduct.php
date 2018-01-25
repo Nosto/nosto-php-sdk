@@ -47,7 +47,7 @@ use Nosto\Request\Http\Exception\AbstractHttpException;
  * it does, while a product delete also results in an upsert but flags the
  * product's availability as 'Discontinued'
  */
-class DeleteProduct extends AbstractAccountOperation
+class DeleteProduct extends AbstractAuthenticatedOperation
 {
     /**
      * @var array
