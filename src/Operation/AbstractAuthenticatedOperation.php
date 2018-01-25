@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2018, Nosto Solutions Ltd
+ * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,43 +29,33 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2018 Nosto Solutions Ltd
+ * @copyright 2017 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
 
 namespace Nosto\Operation;
 
-use Nosto\Helper\SerializationHelper;
-use Nosto\Object\Event\Cart\Update;
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Types\Signup\AccountInterface;
 
-class CartOperation extends AbstractAuthenticatedOperation
+/**
+ * Base operation class for handling Nosto API communications that require
+ * authentication or Nosto account.
+ */
+abstract class AbstractAuthenticatedOperation extends AbstractOperation
 {
     /**
-     * Sends a POST request to update the cart
-     *
-     * @param Update $update the cart changes
-     * @param string $nostoCustomerId
-     * @param string $accountId merchange id
-     * @return bool if the request was successful.
-     * @throws AbstractHttpException
+     * @var AccountInterface Nosto configuration
      */
-    public function updateCart(Update $update, $nostoCustomerId, $accountId)
-    {
-        $request = new ApiRequest();
-        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
-        $request->setPath(ApiRequest::PATH_CART_UPDATE);
-        $channelName = 'cartUpdated/' . $accountId . '/' . $nostoCustomerId;
-        $data = array();
-        $item = array();
-        $item['channel'] = $channelName;
-        $item['formats'] = array('json-object' => json_decode(SerializationHelper::serialize($update)));
-        $data['items'] = array($item);
-        $updateJson = json_encode($data);
-        $response = $request->postRaw($updateJson);
+    protected $account;
 
-        return $this->checkResponse($request, $response);
+    /**
+     * Constructor
+     *
+     * @param AccountInterface $account the account object.
+     */
+    public function __construct(AccountInterface $account)
+    {
+        $this->account = $account;
     }
 }
