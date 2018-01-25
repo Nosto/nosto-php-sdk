@@ -50,7 +50,7 @@ use Nosto\Types\Signup\AccountInterface;
  * it does, while a product delete also results in an upsert but flags the
  * product's availability as 'Discontinued'
  */
-class UpsertProduct extends AbstractAccountOperation
+class UpsertProduct extends AbstractAuthenticatedOperation
 {
     /**
      * @var ProductCollection collection object of products to perform the operation on.

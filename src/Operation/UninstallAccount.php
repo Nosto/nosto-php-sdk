@@ -47,7 +47,7 @@ use Nosto\Types\UserInterface;
  * An uninstall notification leaves the account as-is on Nosto but revokes all
  * the API tokens.
  */
-class UninstallAccount extends AbstractAccountOperation
+class UninstallAccount extends AbstractAuthenticatedOperation
 {
     /**
      * Sends a POST request to delete an account for a store in Nosto

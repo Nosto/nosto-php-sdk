@@ -45,7 +45,7 @@ use Nosto\Request\Http\Exception\AbstractHttpException;
 /**
  * Handles updating exchange rates through the Nosto API
  */
-class SyncRates extends AbstractAccountOperation
+class SyncRates extends AbstractAuthenticatedOperation
 {
     /**
      * Updates exchange rates to Nosto
