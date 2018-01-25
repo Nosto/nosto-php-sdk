@@ -49,7 +49,7 @@ use Nosto\Types\Order\OrderInterface;
  *
  * The second option is a fallback and should be avoided as much as possible.
  */
-class OrderConfirm extends AbstractAccountOperation
+class OrderConfirm extends AbstractAuthenticatedOperation
 {
     /**
      * Sends the OrderConfirm confirmation to Nosto.

@@ -41,7 +41,7 @@ use Nosto\Object\Event\Cart\Update;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 
-class CartOperation extends AbstractAccountOperation
+class CartOperation extends AbstractAuthenticatedOperation
 {
     /**
      * Sends a POST request to update the cart

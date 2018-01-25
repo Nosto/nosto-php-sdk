@@ -48,7 +48,7 @@ use Nosto\NostoException;
  * The operation results in a single-use URL that can be used for logging in
  * to the Nosto administration interface.
  */
-class InitiateSso extends AbstractAccountOperation
+class InitiateSso extends AbstractAuthenticatedOperation
 {
     /**
      * Sends a POST request to get a single sign-on URL for a store

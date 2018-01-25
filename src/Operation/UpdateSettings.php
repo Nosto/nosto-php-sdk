@@ -45,7 +45,7 @@ use Nosto\Types\SettingsInterface;
 /**
  * Operation class for updating common account settings through the Nosto API.
  */
-class UpdateSettings extends AbstractAccountOperation
+class UpdateSettings extends AbstractAuthenticatedOperation
 {
     /**
      * Sends a POST request to create a new account for a store in Nosto
