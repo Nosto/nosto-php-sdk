@@ -36,36 +36,24 @@
 
 namespace Nosto\Operation;
 
+use Nosto\NostoException;
 use Nosto\Object\ExchangeRateCollection;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
-use Nosto\Types\Signup\AccountInterface;
+use Nosto\Request\Http\Exception\AbstractHttpException;
 
 /**
  * Handles updating exchange rates through the Nosto API
  */
-class SyncRates extends AbstractOperation
+class SyncRates extends AbstractAuthenticatedOperation
 {
-    /**
-     * @var AccountInterface the Nosto account to update the rates for.
-     */
-    private $account;
-
-    /**
-     * Constructor.
-     *
-     * @param AccountInterface $account the Nosto configuration object.
-     */
-    public function __construct(AccountInterface $account)
-    {
-        $this->account = $account;
-    }
-
     /**
      * Updates exchange rates to Nosto
      *
      * @param ExchangeRateCollection $collection the collection of exchange rates to update
      * @return bool returns true when the operation was a success
+     * @throws NostoException
+     * @throws AbstractHttpException
      */
     public function update(ExchangeRateCollection $collection)
     {

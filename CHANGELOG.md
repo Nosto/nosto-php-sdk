@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.2.0
+* Introduce operation class for deleting / discontinuing products
+* Refactor operation classes to use common authenticated abstract class
+* Fix array handling bug in serializer
+* Add few tests for serialization
+
 ## 3.1.9
 * Make the validator use getters instead of accessing attributes directly
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2018, Nosto Solutions Ltd
+ * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,43 +29,53 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2018 Nosto Solutions Ltd
+ * @copyright 2017 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
 
 namespace Nosto\Operation;
 
-use Nosto\Helper\SerializationHelper;
-use Nosto\Object\Event\Cart\Update;
+use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
+use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 
-class CartOperation extends AbstractAuthenticatedOperation
+/**
+ * Operation class for upserting and deleting products through the Nosto API.
+ * A product upsert will create the product if it doesn't exist or update it if
+ * it does, while a product delete also results in an upsert but flags the
+ * product's availability as 'Discontinued'
+ */
+class DeleteProduct extends AbstractAuthenticatedOperation
 {
     /**
-     * Sends a POST request to update the cart
+     * @var array
+     */
+    private $productIds;
+
+    /**
+     * Adds a product tho the collection on which the operation is the performed.
      *
-     * @param Update $update the cart changes
-     * @param string $nostoCustomerId
-     * @param string $accountId merchange id
+     * @param array $productIds
+     */
+    public function setProductIds(array $productIds)
+    {
+        $this->productIds = $productIds;
+    }
+
+    /**
+     * Sends a POST request to create or update all the products currently in the collection.
+     *
      * @return bool if the request was successful.
+     * @throws NostoException on failure.
      * @throws AbstractHttpException
      */
-    public function updateCart(Update $update, $nostoCustomerId, $accountId)
+    public function delete()
     {
-        $request = new ApiRequest();
-        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
-        $request->setPath(ApiRequest::PATH_CART_UPDATE);
-        $channelName = 'cartUpdated/' . $accountId . '/' . $nostoCustomerId;
-        $data = array();
-        $item = array();
-        $item['channel'] = $channelName;
-        $item['formats'] = array('json-object' => json_decode(SerializationHelper::serialize($update)));
-        $data['items'] = array($item);
-        $updateJson = json_encode($data);
-        $response = $request->postRaw($updateJson);
-
+        $request = $this->initApiRequest($this->account->getApiToken(Token::API_PRODUCTS));
+        $request->setPath(ApiRequest::PATH_PRODUCTS_DISCONTINUE);
+        $response = $request->post($this->productIds);
         return $this->checkResponse($request, $response);
     }
 }
