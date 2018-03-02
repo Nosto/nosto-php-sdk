@@ -4,6 +4,8 @@ This project adheres to Semantic Versioning (http://semver.org/).
 
 ## 3.2.1
 * Fix the issue that custom field keys were converted to snake case
+* Add helper method for serializing collection to json
+* Add more tests for serialization
 
 ## 3.2.0
 * Introduce operation class for deleting / discontinuing products
