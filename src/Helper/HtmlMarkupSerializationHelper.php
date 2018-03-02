@@ -101,7 +101,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
         $spacesStr = str_repeat(' ', $spaces);
 
         if ($object instanceof MarkupableInterface) {
-            $key = $object->getMarkupKey();
+            $key = SerializationHelper::toSnakeCase($object->getMarkupKey());
         }
 
         //begin block
