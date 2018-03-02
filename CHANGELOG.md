@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.2.1
+* Fix the issue that custom field keys were converted to snake case
+
 ## 3.2.0
 * Introduce operation class for deleting / discontinuing products
 * Refactor operation classes to use common authenticated abstract class
