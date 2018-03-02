@@ -38,7 +38,7 @@ use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Helper\SerializationHelper;
 
-class SerializationHelperTestSerializationHelperTest extends Test
+class SerializationHelperTest extends Test
 {
     use Specify;
 
