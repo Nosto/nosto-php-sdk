@@ -125,7 +125,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
             $traversable = null;
             if (is_array($object) || $object instanceof Traversable) {
                 $traversable = $object;
-                //Do not covert associative array keys to snake case. It is used for the custom fields
+                // Do not convert associative array keys to snake case. It is used for the custom fields
                 $markup .= self::arrayToHtml($object, $key, $spaces, $indent, $traversable, false);
             } elseif (is_object($object)) {
                 $traversable = SerializationHelper::getProperties($object);

@@ -78,4 +78,33 @@ class SerializationHelperTest extends Test
         $array = ['one', 1, 'two', 2];
         $this->assertEquals('["one",1,"two",2]', SerializationHelper::serialize($array));
     }
+
+    /**
+     * Tests that custom fields are not converted to snake case
+     */
+    public function testObjectWithCustomFields()
+    {
+        $object = new MockProduct();
+        $object->addCustomField('shouldNotBeSnakeCase', 'value');
+        $this->assertEquals('{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"condition":"Used","gender":null,"age_group":null,"gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","unit_pricing_measure":null,"unit_pricing_base_measure":null,"unit_pricing_unit":null,"skus":[],"variations":[],"thumb_url":null,"custom_fields":{"shouldNotBeSnakeCase":"value"}}', SerializationHelper::serialize($object));
+    }
+
+    /**
+     * Tests that custom fields with scandic characters are preserved
+     */
+    public function testObjectWithScandicCustomFields()
+    {
+        $object = new MockProduct();
+        $object->addCustomField('spesialCäåös', 'value');
+        $this->assertEquals('{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"condition":"Used","gender":null,"age_group":null,"gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","unit_pricing_measure":null,"unit_pricing_base_measure":null,"unit_pricing_unit":null,"skus":[],"variations":[],"thumb_url":null,"custom_fields":{"spesialC\u00e4\u00e5\u00f6s":"value"}}', SerializationHelper::serialize($object));
+    }
+
+    /**
+     * Tests that an object SKUs are serialized to HTML correctly
+     */
+    public function testObjectWithSkus()
+    {
+        $object = new MockProductWithSku();
+        $this->assertEquals('{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"condition":"Used","gender":null,"age_group":null,"gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","unit_pricing_measure":null,"unit_pricing_base_measure":null,"unit_pricing_unit":null,"skus":[{"id":100,"name":"Test Product","price":99.99,"list_price":110.99,"url":"http:\/\/my.shop.com\/products\/test_product.html","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","gtin":"gtin","availability":"InStock","custom_fields":[]},{"id":100,"name":"Test Product","price":99.99,"list_price":110.99,"url":"http:\/\/my.shop.com\/products\/test_product.html","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","gtin":"gtin","availability":"InStock","custom_fields":{"noSnakeCase":"value"}},{"id":100,"name":"Test Product","price":99.99,"list_price":110.99,"url":"http:\/\/my.shop.com\/products\/test_product.html","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","gtin":"gtin","availability":"InStock","custom_fields":{"\u00e5\u00e4\u00f6":"\u00e5\u00e4\u00f6"}}],"variations":[],"thumb_url":null,"custom_fields":[]}', SerializationHelper::serialize($object));
+    }
 }
