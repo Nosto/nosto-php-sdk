@@ -114,12 +114,15 @@ class Nosto
         $message = '';
         $jsonResponse = $response->getJsonResult();
 
-        if (
-            isset($jsonResponse->type)
+        $errors = self::parseErrorsFromResponse($response);
+        if (isset($jsonResponse->type)
             && isset($jsonResponse->message)
         ) {
             if (isset($jsonResponse->message)) {
-                $message .= '. ' . $jsonResponse->message;
+                $message .= $jsonResponse->message;
+            }
+            if (!empty($errors)) {
+                $message .= ' | ' . $errors;
             }
             throw new ApiResponseException(
                 $message,
@@ -130,7 +133,10 @@ class Nosto
             );
         } else {
             if ($response->getMessage()) {
-                $message .= '. ' . $response->getMessage();
+                $message .= $response->getMessage();
+            }
+            if (!empty($errors)) {
+                $message .= ' | ' . $errors;
             }
             throw new HttpResponseException(
                 $message,
@@ -140,5 +146,31 @@ class Nosto
                 $response
             );
         }
+    }
+
+    /**
+     * Parses errors from HttpResponse
+     * @param HttpResponse $response
+     * @return string
+     */
+    public static function parseErrorsFromResponse(HttpResponse $response)
+    {
+        $json = $response->getJsonResult();
+        $errorStr = '';
+        if (isset($json->errors)
+            && is_array($json->errors)
+            && !empty($json->errors)
+        ) {
+            foreach ($json->errors as $stdClassError) {
+                if (isset($stdClassError->errors)) {
+                    $errorStr .= $stdClassError->errors;
+                }
+                if (isset($stdClassError->product_id)) {
+                    $errorStr .= sprintf('(product #%s)', $stdClassError->product_id);
+                }
+            }
+        }
+
+        return $errorStr;
     }
 }
