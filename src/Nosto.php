@@ -62,6 +62,10 @@ class Nosto
     const DEFAULT_NOSTO_API_BASE_URL = 'https://api.nosto.com';
     const DEFAULT_NOSTO_IFRAME_ORIGIN_REGEXP = '(https:\/\/(.*)\.hub\.nosto\.com)|(https:\/\/my\.nosto\.com)'; //codingStandardsIgnoreLine
 
+    const URL_PARAM_MESSAGE_TYPE = 'message_type';
+    const URL_PARAM_MESSAGE_CODE = 'message_code';
+    const URL_PARAM_MESSAGE_TEXT = 'message_text';
+
     /**
      * Return environment variable.
      *
