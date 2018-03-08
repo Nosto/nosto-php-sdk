@@ -2,8 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
-## not released
+## 3.3.0
 * Add opt-in attribute to customer
+* Introduce ModelFilter class for filtering purposes
 
 ## 3.2.2
 * Improve the error handling in Oauth and in account uninstall
