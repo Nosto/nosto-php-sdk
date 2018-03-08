@@ -34,56 +34,39 @@
  *
  */
 
-namespace Nosto\Types;
+namespace Nosto\Object;
 
-interface PersonInterface
+/**
+ * Model class for filtering valid elements
+ */
+class ModelFilter
 {
     /**
-     * The first name of the user
-     *
-     * @return string the first name.
+     * @var bool validity parameter.
      */
-    public function getFirstName();
+    private $valid;
 
     /**
-     * The last name of the user
-     *
-     * @return string the last name.
+     * ModelFilter constructor.
      */
-    public function getLastName();
+    public function __construct()
+    {
+        $this->valid = true;
+    }
 
     /**
-     * The email address of the user
-     *
-     * @return string the email address.
+     * @param bool $valid
      */
-    public function getEmail();
+    public function setValid($valid)
+    {
+        $this->valid = (bool)$valid;
+    }
 
     /**
-     * The phone number of the user
-     *
-     * @return string|null
+     * @return bool
      */
-    public function getPhone();
-
-    /**
-     * The post code of the user
-     *
-     * @return string|null
-     */
-    public function getPostCode();
-
-    /**
-     * The country of the user
-     *
-     * @return string|null
-     */
-    public function getCountry();
-
-    /**
-     * The opt-in status for user
-     *
-     * @return boolean
-     */
-    public function getOptedIn();
+    public function isValid()
+    {
+        return (bool)$this->valid;
+    }
 }
