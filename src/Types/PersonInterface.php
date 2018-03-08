@@ -85,5 +85,5 @@ interface PersonInterface
      *
      * @return boolean
      */
-    public function getOptIn();
+    public function getOptedIn();
 }

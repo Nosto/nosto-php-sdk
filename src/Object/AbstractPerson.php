@@ -79,7 +79,7 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     /**
      * @var boolean the opt-in status for the person
      */
-    private $optIn;
+    private $optedIn;
 
     public function __construct()
     {
@@ -197,16 +197,16 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     /**
      * @return bool
      */
-    public function getOptIn()
+    public function getOptedIn()
     {
-        return $this->optIn;
+        return $this->optedIn;
     }
 
     /**
-     * @param bool $optIn
+     * @param bool $optedIn
      */
-    public function setOptIn($optIn)
+    public function setOptedIn($optedIn)
     {
-        $this->optIn = (bool)$optIn;
+        $this->optedIn = (bool)$optedIn;
     }
 }
