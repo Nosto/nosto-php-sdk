@@ -79,4 +79,11 @@ interface PersonInterface
      * @return string|null
      */
     public function getCountry();
+
+    /**
+     * The opt-in status for user
+     *
+     * @return boolean
+     */
+    public function getOptIn();
 }
