@@ -79,11 +79,11 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     /**
      * @var boolean the opt-in status for the person
      */
-    private $optedIn;
+    private $marketingPermission;
 
     public function __construct()
     {
-        // Dummy
+        $this->setMarketingPermission(false);
     }
 
     /**
@@ -197,16 +197,25 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     /**
      * @return bool
      */
-    public function getOptedIn()
+    public function getMarketingPermission()
     {
-        return $this->optedIn;
+        return $this->marketingPermission;
+    }
+
+    /**
+     * @param bool $marketingPermission
+     */
+    public function setMarketingPermission($marketingPermission)
+    {
+        $this->marketingPermission = (bool)$marketingPermission;
     }
 
     /**
      * @param bool $optedIn
+     * @deprecated will be removed in near future, use setMarketingPermission instead
      */
     public function setOptedIn($optedIn)
     {
-        $this->optedIn = (bool)$optedIn;
+        $this->setMarketingPermission($optedIn);
     }
 }
