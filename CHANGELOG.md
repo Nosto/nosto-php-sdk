@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.3.1
+* Rename opt-in attribute
+* Fix html serialization bug for attributes having boolean false as a value
+* Add tests for serializing Buyer object
+
 ## 3.3.0
 * Add opt-in attribute to customer
 * Introduce ModelFilter class for filtering purposes

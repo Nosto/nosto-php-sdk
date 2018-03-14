@@ -69,7 +69,8 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
         $spacesStr = str_repeat(' ', $spaces);
         $markup = $spacesStr . self::DIV_START_NOTRANSLATE;
         $markup .= self::toHtml(
-            $object, SerializationHelper::toSnakeCase($key),
+            $object,
+            SerializationHelper::toSnakeCase($key),
             $spaces + $indent,
             $indent,
             self::STYLE_DISPLAY_NONE
@@ -90,7 +91,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
      */
     private static function toHtml($object, $key, $spaces = 0, $indent = 2, $style = null)
     {
-        if (!$object) {
+        if (!$object && $object !== 0 && $object !== '0' && $object !== false) {
             return "";
         }
 
@@ -150,7 +151,6 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
     private static function arrayToHtml($object, $key, $spaces, $indent, $traversable, $snakeCaseKey)
     {
         $markup = '';
-
         $isAssociative = is_array($traversable) && SerializationHelper::isAssoc($traversable);
         foreach ($traversable as $index => $childValue) {
             if ($object instanceof MarkupableCollectionInterface && $object->getChildMarkupKey()) {

@@ -40,5 +40,12 @@ use Codeception\Module;
 
 class UnitHelper extends Module
 {
-
+    /**
+     * @param $string
+     * @return null|string|string[]
+     */
+    public static function stripLineBreaks($string)
+    {
+        return preg_replace("/\r|\n/", "", $string);
+    }
 }

@@ -34,56 +34,37 @@
  *
  */
 
-namespace Nosto\Types;
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+use Nosto\Types\Product\ProductInterface;
+use Nosto\Object\Product\VariationCollection;
 
-interface PersonInterface
+
+class BuyerTest extends Test
 {
-    /**
-     * The first name of the user
-     *
-     * @return string the first name.
-     */
-    public function getFirstName();
+    use Specify;
 
     /**
-     * The last name of the user
-     *
-     * @return string the last name.
+     * Tests that buyer is serialized correctly with marketing permission
      */
-    public function getLastName();
-
+    public function testSerializeWithMarketingPermission()
+    {
+        $person = new MockBuyer();
+        $person->setMarketingPermission(true);
+        $this->assertEquals(
+            \Codeception\Module\UnitHelper::stripLineBreaks($person->toHtml()),
+            '<div class="notranslate" style="display:none">  <span class="buyer" style="display:none">    <span class="first_name">James</span>    <span class="last_name">Kirk</span>    <span class="email">james.kirk@example.com</span>    <span class="marketing_permission">1</span>  </span></div>'
+        );
+    }
     /**
-     * The email address of the user
-     *
-     * @return string the email address.
+     * Tests that buyer is serialized correctly with marketing permission
      */
-    public function getEmail();
-
-    /**
-     * The phone number of the user
-     *
-     * @return string|null
-     */
-    public function getPhone();
-
-    /**
-     * The post code of the user
-     *
-     * @return string|null
-     */
-    public function getPostCode();
-
-    /**
-     * The country of the user
-     *
-     * @return string|null
-     */
-    public function getCountry();
-
-    /**
-     * The opt-in status for user
-     *
-     * @return boolean
-     */
-    public function getMarketingPermission();
+    public function testSerializeWithoutMarketingPermission()
+    {
+        $person = new MockBuyer();
+        $this->assertEquals(
+            \Codeception\Module\UnitHelper::stripLineBreaks($person->toHtml()),
+            '<div class="notranslate" style="display:none">  <span class="buyer" style="display:none">    <span class="first_name">James</span>    <span class="last_name">Kirk</span>    <span class="email">james.kirk@example.com</span>    <span class="marketing_permission"></span>  </span></div>'
+        );
+    }
 }
