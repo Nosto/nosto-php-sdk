@@ -50,7 +50,9 @@ class Token extends AbstractObject implements ValidatableInterface
     const API_PRODUCTS = 'products';
     const API_EXCHANGE_RATES = 'rates';
     const API_SETTINGS = 'settings';
+    const API_EMAIL = 'email';
     const API_CREATE = 'create'; // Special token related to the platform
+
     /**
      * @var array list of valid api tokens to request from Nosto.
      */
@@ -58,7 +60,8 @@ class Token extends AbstractObject implements ValidatableInterface
         self::API_SSO,
         self::API_PRODUCTS,
         self::API_EXCHANGE_RATES,
-        self::API_SETTINGS
+        self::API_SETTINGS,
+        self::API_EMAIL
     );
     /**
      * @var string the token name, must be one of the defined tokens from self::$tokenNames.
@@ -75,6 +78,7 @@ class Token extends AbstractObject implements ValidatableInterface
      *
      * @param string $name the token name (must be one of self::$tokenNames).
      * @param string $value the token value string.
+     * @throws NostoException
      */
     public function __construct($name, $value)
     {
