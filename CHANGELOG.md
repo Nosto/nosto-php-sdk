@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.3.2
+* Generate API_EMAIL token during signup
+
 ## 3.3.1
 * Rename opt-in attribute
 * Fix html serialization bug for attributes having boolean false as a value
