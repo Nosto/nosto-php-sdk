@@ -42,10 +42,11 @@ namespace Nosto\Object;
 class SearchTerm extends MarkupableString
 {
     /**
-     * @return string
+     * SearchTerm constructor.
+     * @param $value
      */
-    public function getMarkupKey()
+    public function __construct($value)
     {
-        return 'nosto_search_term';
+        parent::__construct($value, 'nosto_search_term');
     }
 }

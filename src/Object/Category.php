@@ -42,10 +42,11 @@ namespace Nosto\Object;
 class Category extends MarkupableString
 {
     /**
-     * @return string
+     * Category constructor.
+     * @param $value
      */
-    public function getMarkupKey()
+    public function __construct($value)
     {
-        return 'nosto_category';
+        parent::__construct($value, 'nosto_category');
     }
 }

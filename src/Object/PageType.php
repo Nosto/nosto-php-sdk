@@ -42,10 +42,11 @@ namespace Nosto\Object;
 class PageType extends MarkupableString
 {
     /**
-     * @return string
+     * PageType constructor.
+     * @param $value
      */
-    public function getMarkupKey()
+    public function __construct($value)
     {
-        return 'nosto_page_type';
+        parent::__construct($value, 'nosto_page_type');
     }
 }
