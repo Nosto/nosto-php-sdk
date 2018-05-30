@@ -36,44 +36,17 @@
 
 namespace Nosto\Object;
 
-use Nosto\AbstractObject;
-use Nosto\Types\MarkupableInterface;
-
 /**
  * PageType object for tagging
  */
-class PageType extends AbstractObject implements MarkupableInterface
+class PageType extends MarkupableString
 {
     /**
-     * @var string the page type
+     * PageType constructor.
+     * @param $value
      */
-    private $pageType;
-
-    /**
-     * Returns the page type
-     *
-     * @return string
-     */
-    public function getPageType()
+    public function __construct($value)
     {
-        return $this->pageType;
-    }
-
-    /**
-     * Sets the page type
-     *
-     * @param $pageType
-     */
-    public function setPageType($pageType)
-    {
-        $this->pageType = $pageType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMarkupKey()
-    {
-        return 'nosto_page_type';
+        parent::__construct($value, 'nosto_page_type');
     }
 }

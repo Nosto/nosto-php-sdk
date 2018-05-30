@@ -36,44 +36,17 @@
 
 namespace Nosto\Object;
 
-use Nosto\AbstractObject;
-use Nosto\Types\MarkupableInterface;
-
 /**
  * SearchTerm object for tagging
  */
-class SearchTerm extends AbstractObject implements MarkupableInterface
+class SearchTerm extends MarkupableString
 {
     /**
-     * @var string the search term
+     * SearchTerm constructor.
+     * @param $value
      */
-    private $searchTerm;
-
-    /**
-     * Returns the search term
-     *
-     * @return string
-     */
-    public function getSearchTerm()
+    public function __construct($value)
     {
-        return $this->searchTerm;
-    }
-
-    /**
-     * Sets the search term
-     *
-     * @param $searchTerm
-     */
-    public function setSearchTerm($searchTerm)
-    {
-        $this->searchTerm = $searchTerm;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMarkupKey()
-    {
-        return 'nosto_search_term';
+        parent::__construct($value, 'nosto_search_term');
     }
 }

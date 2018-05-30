@@ -59,6 +59,9 @@ class MarkupableString extends AbstractObject implements MarkupableInterface
         $this->markupKey = $markupKey;
     }
 
+    /**
+     * @return string the value
+     */
     public function getValue()
     {
         return $this->value;
