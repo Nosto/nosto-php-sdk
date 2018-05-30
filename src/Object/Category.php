@@ -36,39 +36,11 @@
 
 namespace Nosto\Object;
 
-use Nosto\AbstractObject;
-use Nosto\Types\MarkupableInterface;
-
 /**
  * Category object for tagging
  */
-class Category extends AbstractObject implements MarkupableInterface
+class Category extends MarkupableString
 {
-    /**
-     * @var string the category path
-     */
-    private $category;
-
-    /**
-     * Returns the category path
-     *
-     * @return string
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
-     * Sets the category path
-     *
-     * @param $category
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-    }
-
     /**
      * @return string
      */
