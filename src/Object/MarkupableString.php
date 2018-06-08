@@ -69,7 +69,7 @@ class MarkupableString extends AbstractObject implements MarkupableInterface
 
     /**
      * Setter for the value
-     * @param $value
+     * @param string $value
      */
     public function setValue($value)
     {
