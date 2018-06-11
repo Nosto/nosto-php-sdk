@@ -68,6 +68,15 @@ class MarkupableString extends AbstractObject implements MarkupableInterface
     }
 
     /**
+     * Setter for the value
+     * @param string $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getMarkupKey()
