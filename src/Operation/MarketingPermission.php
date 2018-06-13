@@ -49,7 +49,7 @@ class MarketingPermission extends AbstractAuthenticatedOperation
         $request = $this->initApiRequest($this->account->getApiToken(Token::API_EMAIL));
 
         $request->setPath(ApiRequest::PATH_MARKETING_PERMISSION);
-        $replaceParams = array('{email}' => $email, '{state}' => $hasPermission);
+        $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
         $request->setReplaceParams($replaceParams);
         $response = $request->postRaw('');
 
