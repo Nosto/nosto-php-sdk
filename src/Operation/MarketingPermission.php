@@ -44,6 +44,12 @@ use Nosto\Request\Api\Token;
  */
 class MarketingPermission extends AbstractAuthenticatedOperation
 {
+    /**
+     * Update customer marketing permission
+     * @param string $email
+     * @param bool $hasPermission
+     * @return bool
+     */
     public function update($email, $hasPermission)
     {
         $request = $this->initApiRequest($this->account->getApiToken(Token::API_EMAIL));
