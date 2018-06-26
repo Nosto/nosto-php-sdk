@@ -34,37 +34,31 @@
  *
  */
 
-namespace Nosto\Request\Api;
+namespace Nosto\Operation;
 
-use Nosto\Nosto;
-use Nosto\Request\Http\HttpRequest;
+use Nosto\Request\Api\ApiRequest;
+use Nosto\Request\Api\Token;
 
 /**
- * API request class for making API requests to Nosto.
+ * Operation class for updated customer's marketing permission
  */
-class ApiRequest extends HttpRequest
+class MarketingPermission extends AbstractAuthenticatedOperation
 {
-    const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
-    const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
-    const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
-    const PATH_PRODUCTS_CREATE = '/v1/products/create';
-    const PATH_PRODUCTS_UPDATE = '/v1/products/update';
-    const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
-    const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
-    const PATH_MARKETING_PERMISSION = '/v1/customers/consent/{email}/{state}';
-    const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
-    const PATH_SETTINGS = '/settings';
-    const PATH_CART_UPDATE = '/v1/cart/update';
-
     /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
-     *
-     * @param string $path the endpoint path (use PATH_ constants).
+     * Update customer marketing permission
+     * @param string $email
+     * @param bool $hasPermission
+     * @return bool
      */
-    public function setPath($path)
+    public function update($email, $hasPermission)
     {
-        $this->setUrl(Nosto::getApiBaseURL() . $path);
+        $request = $this->initApiRequest($this->account->getApiToken(Token::API_EMAIL));
+
+        $request->setPath(ApiRequest::PATH_MARKETING_PERMISSION);
+        $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
+        $request->setReplaceParams($replaceParams);
+        $response = $request->postRaw('');
+
+        return $this->checkResponse($request, $response);
     }
 }

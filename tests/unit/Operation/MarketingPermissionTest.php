@@ -34,37 +34,45 @@
  *
  */
 
-namespace Nosto\Request\Api;
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+use Nosto\Object\Signup\Account;
+use Nosto\Operation\MarketingPermission;
+use Nosto\Request\Api\Token;
 
-use Nosto\Nosto;
-use Nosto\Request\Http\HttpRequest;
 
-/**
- * API request class for making API requests to Nosto.
- */
-class ApiRequest extends HttpRequest
+class MarketingPermissionTest extends Test
 {
-    const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
-    const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
-    const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
-    const PATH_PRODUCTS_CREATE = '/v1/products/create';
-    const PATH_PRODUCTS_UPDATE = '/v1/products/update';
-    const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
-    const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
-    const PATH_MARKETING_PERMISSION = '/v1/customers/consent/{email}/{state}';
-    const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
-    const PATH_SETTINGS = '/settings';
-    const PATH_CART_UPDATE = '/v1/cart/update';
+    use Specify;
 
     /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
-     *
-     * @param string $path the endpoint path (use PATH_ constants).
+     * Test update permission
      */
-    public function setPath($path)
+    public function testUpdatePermission()
     {
-        $this->setUrl(Nosto::getApiBaseURL() . $path);
+        $account = new Account('platform-00000000');
+        $token = new Token('email', 'token');
+        $account->addApiToken($token);
+
+        $op = new MarketingPermission($account);
+
+        try {
+            $result = $op->update("platforms@nosto.com", true);
+            $this->specify('updated marketing permission successfully', function () use ($result) {
+                $this->assertTrue($result);
+            });
+
+            $result = $op->update("platforms@nosto.com", false);
+
+            $this->specify('updated marketing permission successfully', function () use ($result) {
+                $this->assertTrue($result);
+            });
+
+        } catch (\Exception $e) {
+            $this->specify('updated marketing permission failed', function () use ($e) {
+                $this->fail($e->getMessage());
+            });
+
+        }
     }
 }
