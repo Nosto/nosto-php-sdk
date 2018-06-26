@@ -70,7 +70,7 @@ class MarketingPermissionTest extends Test
 
         } catch (\Exception $e) {
             $this->specify('updated marketing permission failed', function () use ($e) {
-//                $this->assertTrue($e);
+                $this->fail($e->getMessage());
             });
 
         }
