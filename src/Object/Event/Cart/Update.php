@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2018, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,61 +29,55 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2018 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
 
-namespace Nosto\Types;
+namespace Nosto\Object\Event\Cart;
 
-interface PersonInterface
+use Nosto\AbstractObject;
+use Nosto\Object\Cart\Cart;
+
+/**
+ * Model class containing the update of cart
+ */
+class Update extends AbstractObject
 {
-    /**
-     * The first name of the user
-     *
-     * @return string the first name.
-     */
-    public function getFirstName();
+    private $cart;
+
+    /** @var array $addedItems list of LineItem */
+    private $addedItems;
 
     /**
-     * The last name of the user
-     *
-     * @return string the last name.
+     * @return Cart
      */
-    public function getLastName();
+    public function getCart()
+    {
+        return $this->cart;
+    }
 
     /**
-     * The email address of the user
-     *
-     * @return string the email address.
+     * @param Cart $cart
      */
-    public function getEmail();
+    public function setCart($cart)
+    {
+        $this->cart = $cart;
+    }
 
     /**
-     * The phone number of the user
-     *
-     * @return string|null
+     * @return array of LineItem
      */
-    public function getPhone();
+    public function getAddedItems()
+    {
+        return $this->addedItems;
+    }
 
     /**
-     * The post code of the user
-     *
-     * @return string|null
+     * @param array $addedItems
      */
-    public function getPostCode();
-
-    /**
-     * The country of the user
-     *
-     * @return string|null
-     */
-    public function getCountry();
-
-    /**
-     * The opt-in status for user
-     *
-     * @return boolean
-     */
-    public function getMarketingPermission();
+    public function setAddedItems($addedItems)
+    {
+        $this->addedItems = $addedItems;
+    }
 }

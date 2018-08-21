@@ -38,6 +38,7 @@ namespace Nosto\Object;
 
 use Countable;
 use Iterator;
+use Nosto\Helper\SerializationHelper;
 
 /**
  * Base class for all Nosto object collection classes. The base class provides the
@@ -97,5 +98,15 @@ abstract class AbstractCollection implements Iterator, Countable
         $key = key($this->var);
         $var = ($key !== null && $key !== false);
         return $var;
+    }
+
+    /**
+     * Serialize to json
+     *
+     * @return string json
+     */
+    public function toJson()
+    {
+        return SerializationHelper::serialize($this);
     }
 }

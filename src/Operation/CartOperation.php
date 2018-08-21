@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2018, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,61 +29,43 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2018 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
 
-namespace Nosto\Types;
+namespace Nosto\Operation;
 
-interface PersonInterface
+use Nosto\Helper\SerializationHelper;
+use Nosto\Object\Event\Cart\Update;
+use Nosto\Request\Api\ApiRequest;
+use Nosto\Request\Http\Exception\AbstractHttpException;
+
+class CartOperation extends AbstractAuthenticatedOperation
 {
     /**
-     * The first name of the user
+     * Sends a POST request to update the cart
      *
-     * @return string the first name.
+     * @param Update $update the cart changes
+     * @param string $nostoCustomerId
+     * @param string $accountId merchange id
+     * @return bool if the request was successful.
+     * @throws AbstractHttpException
      */
-    public function getFirstName();
+    public function updateCart(Update $update, $nostoCustomerId, $accountId)
+    {
+        $request = new ApiRequest();
+        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
+        $request->setPath(ApiRequest::PATH_CART_UPDATE);
+        $channelName = 'cartUpdated/' . $accountId . '/' . $nostoCustomerId;
+        $data = array();
+        $item = array();
+        $item['channel'] = $channelName;
+        $item['formats'] = array('json-object' => json_decode(SerializationHelper::serialize($update)));
+        $data['items'] = array($item);
+        $updateJson = json_encode($data);
+        $response = $request->postRaw($updateJson);
 
-    /**
-     * The last name of the user
-     *
-     * @return string the last name.
-     */
-    public function getLastName();
-
-    /**
-     * The email address of the user
-     *
-     * @return string the email address.
-     */
-    public function getEmail();
-
-    /**
-     * The phone number of the user
-     *
-     * @return string|null
-     */
-    public function getPhone();
-
-    /**
-     * The post code of the user
-     *
-     * @return string|null
-     */
-    public function getPostCode();
-
-    /**
-     * The country of the user
-     *
-     * @return string|null
-     */
-    public function getCountry();
-
-    /**
-     * The opt-in status for user
-     *
-     * @return boolean
-     */
-    public function getMarketingPermission();
+        return $this->checkResponse($request, $response);
+    }
 }

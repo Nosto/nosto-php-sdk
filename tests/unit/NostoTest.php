@@ -34,56 +34,33 @@
  *
  */
 
-namespace Nosto\Types;
+use Codeception\TestCase\Test;
+use Nosto\Nosto;
+use Nosto\Request\Http\HttpRequest;
+use Nosto\Request\Http\HttpResponse;
+use Nosto\Request\Api\Exception\ApiResponseException;
 
-interface PersonInterface
+class NostoTest extends Test
 {
     /**
-     * The first name of the user
-     *
-     * @return string the first name.
+     * Tests that errors are parsed correctly from http response
      */
-    public function getFirstName();
+    public function testExceptionErrors()
+    {
+        $request = new HttpRequest();
 
-    /**
-     * The last name of the user
-     *
-     * @return string the last name.
-     */
-    public function getLastName();
-
-    /**
-     * The email address of the user
-     *
-     * @return string the email address.
-     */
-    public function getEmail();
-
-    /**
-     * The phone number of the user
-     *
-     * @return string|null
-     */
-    public function getPhone();
-
-    /**
-     * The post code of the user
-     *
-     * @return string|null
-     */
-    public function getPostCode();
-
-    /**
-     * The country of the user
-     *
-     * @return string|null
-     */
-    public function getCountry();
-
-    /**
-     * The opt-in status for user
-     *
-     * @return boolean
-     */
-    public function getMarketingPermission();
+        $response = new HttpResponse(
+            [
+                'HTTP/1.1 400 Bad Request',
+                'Content-Type: text/plain; charset=utf-8'
+            ],
+            /** @lang text */
+            '{"type":"has_errors","message":"Failed to upsert some products; see errors","errors":[{"product_id":"1","errors":"image_url field is missing (imageUrl), Validation failed (), "}]}'
+        );
+        try {
+            Nosto::throwHttpException($request, $response);
+        } catch (ApiResponseException $exception) {
+            $this->assertEquals('Failed to upsert some products; see errors | image_url field is missing (imageUrl), Validation failed (), (product #1)', $exception->getMessage());
+        }
+    }
 }

@@ -96,6 +96,12 @@ trait IframeTrait
                 // allow to remove Nosto and start over.
                 // The only case when this should happen is when the api token for some
                 // reason is invalid, which is the case when switching between environments.
+                $errorParams = array(
+                    Nosto::URL_PARAM_MESSAGE_TYPE => Nosto::TYPE_ERROR,
+                    Nosto::URL_PARAM_MESSAGE_CODE => Nosto::CODE_ACCOUNT_DELETE,
+                    Nosto::URL_PARAM_MESSAGE_TEXT => $e->getMessage()
+                );
+                $queryParams = http_build_query(array_merge($defaultParameters, $params, $errorParams));
                 $url = HttpRequest::buildUri(
                     Nosto::getBaseUrl() . '/hub/{platform}/uninstall' . '?' . $queryParams,
                     array('{platform}' => $iframe->getPlatform(),)

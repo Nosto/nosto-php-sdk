@@ -34,56 +34,19 @@
  *
  */
 
-namespace Nosto\Types;
+namespace Nosto\Object;
 
-interface PersonInterface
+/**
+ * PageType object for tagging
+ */
+class PageType extends MarkupableString
 {
     /**
-     * The first name of the user
-     *
-     * @return string the first name.
+     * PageType constructor.
+     * @param $value
      */
-    public function getFirstName();
-
-    /**
-     * The last name of the user
-     *
-     * @return string the last name.
-     */
-    public function getLastName();
-
-    /**
-     * The email address of the user
-     *
-     * @return string the email address.
-     */
-    public function getEmail();
-
-    /**
-     * The phone number of the user
-     *
-     * @return string|null
-     */
-    public function getPhone();
-
-    /**
-     * The post code of the user
-     *
-     * @return string|null
-     */
-    public function getPostCode();
-
-    /**
-     * The country of the user
-     *
-     * @return string|null
-     */
-    public function getCountry();
-
-    /**
-     * The opt-in status for user
-     *
-     * @return boolean
-     */
-    public function getMarketingPermission();
+    public function __construct($value)
+    {
+        parent::__construct($value, 'nosto_page_type');
+    }
 }

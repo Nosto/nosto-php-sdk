@@ -68,7 +68,13 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
     {
         $spacesStr = str_repeat(' ', $spaces);
         $markup = $spacesStr . self::DIV_START_NOTRANSLATE;
-        $markup .= self::toHtml($object, $key, $spaces + $indent, $indent, self::STYLE_DISPLAY_NONE);
+        $markup .= self::toHtml(
+            $object,
+            SerializationHelper::toSnakeCase($key),
+            $spaces + $indent,
+            $indent,
+            self::STYLE_DISPLAY_NONE
+        );
         $markup .= $spacesStr . self::DIV_END;
         return $markup;
     }
@@ -85,7 +91,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
      */
     private static function toHtml($object, $key, $spaces = 0, $indent = 2, $style = null)
     {
-        if (!$object) {
+        if (!$object && $object !== 0 && $object !== '0' && $object !== false) {
             return "";
         }
 
@@ -96,7 +102,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
         $spacesStr = str_repeat(' ', $spaces);
 
         if ($object instanceof MarkupableInterface) {
-            $key = $object->getMarkupKey();
+            $key = SerializationHelper::toSnakeCase($object->getMarkupKey());
         }
 
         //begin block
@@ -104,7 +110,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
         if ($style) {
             $styleStatement = sprintf(' style="%s"', $style);
         }
-        $classStatement = sprintf(' class="%s"', SerializationHelper::toSnakeCase($key));
+        $classStatement = sprintf(' class="%s"', $key);
         $markup = $spacesStr
             . '<span'
             . $classStatement
@@ -120,10 +126,12 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
             $traversable = null;
             if (is_array($object) || $object instanceof Traversable) {
                 $traversable = $object;
+                // Do not convert associative array keys to snake case. It is used for the custom fields
+                $markup .= self::arrayToHtml($object, $key, $spaces, $indent, $traversable, false);
             } elseif (is_object($object)) {
                 $traversable = SerializationHelper::getProperties($object);
+                $markup .= self::arrayToHtml($object, $key, $spaces, $indent, $traversable, true);
             }
-            $markup .= self::arrayToHtml($object, $key, $spaces, $indent, $traversable);
             //end block
             $markup .= $spacesStr . self::SPAN_END . PHP_EOL;
         }
@@ -137,12 +145,12 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
      * @param int $spaces
      * @param int $indent
      * @param array|Traversable $traversable the array
+     * @param bool $snakeCaseKey convert the key to snake cases
      * @return string
      */
-    private static function arrayToHtml($object, $key, $spaces, $indent, $traversable)
+    private static function arrayToHtml($object, $key, $spaces, $indent, $traversable, $snakeCaseKey)
     {
         $markup = '';
-
         $isAssociative = is_array($traversable) && SerializationHelper::isAssoc($traversable);
         foreach ($traversable as $index => $childValue) {
             if ($object instanceof MarkupableCollectionInterface && $object->getChildMarkupKey()) {
@@ -153,6 +161,10 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
                 } else {
                     $childMarkupKey = $key;
                 }
+            }
+
+            if ($snakeCaseKey) {
+                $childMarkupKey = SerializationHelper::toSnakeCase($childMarkupKey);
             }
 
             if ($childValue !== null) {

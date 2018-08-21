@@ -2,6 +2,56 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.5.0
+* Add support for marketing permission api operation
+
+## 3.4.2
+* Make MarkupableString mutable
+
+## 3.4.1
+* Fix Serializable Objects
+
+## 3.4.0
+* Implements Markupable Category, Pagetype and SearchTerm Objects 
+
+## 3.3.2
+* Generate API_EMAIL token during signup
+
+## 3.3.1
+* Rename opt-in attribute
+* Fix html serialization bug for attributes having boolean false as a value
+* Add tests for serializing Buyer object
+
+## 3.3.0
+* Add opt-in attribute to customer
+* Introduce ModelFilter class for filtering purposes
+
+## 3.2.2
+* Improve the error handling in Oauth and in account uninstall
+
+## 3.2.2
+* Improve the error handling in Oauth and in account uninstall
+
+## 3.2.1
+* Fix the issue that custom field keys were converted to snake case
+* Add helper method for serializing collection to json
+* Add more tests for serialization
+
+## 3.2.0
+* Introduce operation class for deleting / discontinuing products
+* Refactor operation classes to use common authenticated abstract class
+* Fix array handling bug in serializer
+* Add few tests for serialization
+
+## 3.1.9
+* Make the validator use getters instead of accessing attributes directly
+
+## 3.1.8
+* Define productId as mandatory for product object
+
+## 3.1.7
+* Add CartOperation to support sending cart update events to nosto
+
 ## 3.1.6
 * Remove static abstract function because it is not allowed in php strict mode
 

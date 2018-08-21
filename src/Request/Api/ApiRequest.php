@@ -52,9 +52,11 @@ class ApiRequest extends HttpRequest
     const PATH_PRODUCTS_UPDATE = '/v1/products/update';
     const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
     const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
+    const PATH_MARKETING_PERMISSION = '/v1/customers/consent/{email}/{state}';
     const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
     const PATH_SETTINGS = '/settings';
     const PATH_RECOMMENDATION_CATEGORY_PRODUCT_IDS = '/recommendations/category/{m}/{cat}/{cid}/{l}';
+    const PATH_CART_UPDATE = '/v1/cart/update';
 
     /**
      * Setter for the end point path, e.g. one of the PATH_ constants.

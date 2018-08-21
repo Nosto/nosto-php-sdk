@@ -34,56 +34,45 @@
  *
  */
 
-namespace Nosto\Types;
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+use Nosto\Object\Signup\Account;
+use Nosto\Operation\MarketingPermission;
+use Nosto\Request\Api\Token;
 
-interface PersonInterface
+
+class MarketingPermissionTest extends Test
 {
-    /**
-     * The first name of the user
-     *
-     * @return string the first name.
-     */
-    public function getFirstName();
+    use Specify;
 
     /**
-     * The last name of the user
-     *
-     * @return string the last name.
+     * Test update permission
      */
-    public function getLastName();
+    public function testUpdatePermission()
+    {
+        $account = new Account('platform-00000000');
+        $token = new Token('email', 'token');
+        $account->addApiToken($token);
 
-    /**
-     * The email address of the user
-     *
-     * @return string the email address.
-     */
-    public function getEmail();
+        $op = new MarketingPermission($account);
 
-    /**
-     * The phone number of the user
-     *
-     * @return string|null
-     */
-    public function getPhone();
+        try {
+            $result = $op->update("platforms@nosto.com", true);
+            $this->specify('updated marketing permission successfully', function () use ($result) {
+                $this->assertTrue($result);
+            });
 
-    /**
-     * The post code of the user
-     *
-     * @return string|null
-     */
-    public function getPostCode();
+            $result = $op->update("platforms@nosto.com", false);
 
-    /**
-     * The country of the user
-     *
-     * @return string|null
-     */
-    public function getCountry();
+            $this->specify('updated marketing permission successfully', function () use ($result) {
+                $this->assertTrue($result);
+            });
 
-    /**
-     * The opt-in status for user
-     *
-     * @return boolean
-     */
-    public function getMarketingPermission();
+        } catch (\Exception $e) {
+            $this->specify('updated marketing permission failed', function () use ($e) {
+                $this->fail($e->getMessage());
+            });
+
+        }
+    }
 }

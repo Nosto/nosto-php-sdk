@@ -36,9 +36,10 @@
 
 namespace Nosto\Operation;
 
+use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
-use Nosto\Types\Signup\AccountInterface;
+use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Types\UserInterface;
 
 /**
@@ -46,28 +47,15 @@ use Nosto\Types\UserInterface;
  * An uninstall notification leaves the account as-is on Nosto but revokes all
  * the API tokens.
  */
-class UninstallAccount extends AbstractOperation
+class UninstallAccount extends AbstractAuthenticatedOperation
 {
-    /**
-     * @var AccountInterface Nosto configuration
-     */
-    private $account;
-
-    /**
-     * Constructor.
-     *
-     * @param AccountInterface $account the Nosto configuration object.
-     */
-    public function __construct(AccountInterface $account)
-    {
-        $this->account = $account;
-    }
-
     /**
      * Sends a POST request to delete an account for a store in Nosto
      *
      * @param UserInterface $currentUser
      * @return bool if the request was successful.
+     * @throws NostoException
+     * @throws AbstractHttpException
      */
     public function delete(UserInterface $currentUser)
     {

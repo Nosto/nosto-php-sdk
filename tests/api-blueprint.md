@@ -190,6 +190,23 @@ OrderConfirm related resources
 
         {}
 
+# Group Customer
+Customer related resources
+
+## Marketing permission [/v1/customers/consent/{email}/{state}]
+
+### Update customer marketing permission [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+
++ Response 200 (application/json)
+
+        {}
+
 # Group Product
 Product related resources
 

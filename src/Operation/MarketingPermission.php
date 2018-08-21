@@ -34,56 +34,31 @@
  *
  */
 
-namespace Nosto\Types;
+namespace Nosto\Operation;
 
-interface PersonInterface
+use Nosto\Request\Api\ApiRequest;
+use Nosto\Request\Api\Token;
+
+/**
+ * Operation class for updated customer's marketing permission
+ */
+class MarketingPermission extends AbstractAuthenticatedOperation
 {
     /**
-     * The first name of the user
-     *
-     * @return string the first name.
+     * Update customer marketing permission
+     * @param string $email
+     * @param bool $hasPermission
+     * @return bool
      */
-    public function getFirstName();
+    public function update($email, $hasPermission)
+    {
+        $request = $this->initApiRequest($this->account->getApiToken(Token::API_EMAIL));
 
-    /**
-     * The last name of the user
-     *
-     * @return string the last name.
-     */
-    public function getLastName();
+        $request->setPath(ApiRequest::PATH_MARKETING_PERMISSION);
+        $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
+        $request->setReplaceParams($replaceParams);
+        $response = $request->postRaw('');
 
-    /**
-     * The email address of the user
-     *
-     * @return string the email address.
-     */
-    public function getEmail();
-
-    /**
-     * The phone number of the user
-     *
-     * @return string|null
-     */
-    public function getPhone();
-
-    /**
-     * The post code of the user
-     *
-     * @return string|null
-     */
-    public function getPostCode();
-
-    /**
-     * The country of the user
-     *
-     * @return string|null
-     */
-    public function getCountry();
-
-    /**
-     * The opt-in status for user
-     *
-     * @return boolean
-     */
-    public function getMarketingPermission();
+        return $this->checkResponse($request, $response);
+    }
 }

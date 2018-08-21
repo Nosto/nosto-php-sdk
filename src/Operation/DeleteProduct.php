@@ -34,56 +34,48 @@
  *
  */
 
-namespace Nosto\Types;
+namespace Nosto\Operation;
 
-interface PersonInterface
+use Nosto\NostoException;
+use Nosto\Request\Api\ApiRequest;
+use Nosto\Request\Api\Token;
+use Nosto\Request\Http\Exception\AbstractHttpException;
+
+/**
+ * Operation class for upserting and deleting products through the Nosto API.
+ * A product upsert will create the product if it doesn't exist or update it if
+ * it does, while a product delete also results in an upsert but flags the
+ * product's availability as 'Discontinued'
+ */
+class DeleteProduct extends AbstractAuthenticatedOperation
 {
     /**
-     * The first name of the user
-     *
-     * @return string the first name.
+     * @var array
      */
-    public function getFirstName();
+    private $productIds;
 
     /**
-     * The last name of the user
+     * Adds a product tho the collection on which the operation is the performed.
      *
-     * @return string the last name.
+     * @param array $productIds
      */
-    public function getLastName();
+    public function setProductIds(array $productIds)
+    {
+        $this->productIds = $productIds;
+    }
 
     /**
-     * The email address of the user
+     * Sends a POST request to create or update all the products currently in the collection.
      *
-     * @return string the email address.
+     * @return bool if the request was successful.
+     * @throws NostoException on failure.
+     * @throws AbstractHttpException
      */
-    public function getEmail();
-
-    /**
-     * The phone number of the user
-     *
-     * @return string|null
-     */
-    public function getPhone();
-
-    /**
-     * The post code of the user
-     *
-     * @return string|null
-     */
-    public function getPostCode();
-
-    /**
-     * The country of the user
-     *
-     * @return string|null
-     */
-    public function getCountry();
-
-    /**
-     * The opt-in status for user
-     *
-     * @return boolean
-     */
-    public function getMarketingPermission();
+    public function delete()
+    {
+        $request = $this->initApiRequest($this->account->getApiToken(Token::API_PRODUCTS));
+        $request->setPath(ApiRequest::PATH_PRODUCTS_DISCONTINUE);
+        $response = $request->post($this->productIds);
+        return $this->checkResponse($request, $response);
+    }
 }

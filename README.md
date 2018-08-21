@@ -321,9 +321,8 @@ integer values and expected to be applied to the data set being exported.
 ## Testing
 
 The SDK is unit tested with Codeception (http://codeception.com/).
-API and OAuth2 requests are tested using api-mock server (https://www.npmjs.com/package/api-mock) running on Node.
 
-### Install Codeception & api-mock
+### Running tests
 
 First cd into the root directory.
 
@@ -333,15 +332,36 @@ Then install Codeception via composer:
     php composer.phar install
 ```
 
-And then install Node (http://nodejs.org/) and the npm package manager (https://www.npmjs.com/). After that you can install the api-mock server via npm:
+Then run the tests:
+
+```bash
+    vendor/bin/codecept run
+```
+
+### Testing new added operation
+
+The SDK unit test uses the apiary as the stub server. The apiary pulls the api-blueprint.md from master branch and builds fake api endpoints based on it.
+A way to test new added operation before merging it to master is using api-mock server (https://www.npmjs.com/package/api-mock) running on Node.
+
+First cd into the root directory.
+
+Then install Codeception via composer:
+
+```bash
+    php composer.phar install
+```
+
+And then install Node (http://nodejs.org/) and the npm package manager (https://www.npmjs.com/). the api-mock doesn't work with latest node. Use node 5.X instead.
+
+```bash
+    nvm install 5
+```
+
+After that you can install the api-mock server via npm:
 
 ```bash
     npm install -g api-mock
 ```
-
-### Running tests
-
-First cd into the root directory.
 
 Then start the api-mock server with the API blueprint:
 

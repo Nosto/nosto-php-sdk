@@ -34,56 +34,28 @@
  *
  */
 
-namespace Nosto\Types;
+namespace Nosto\Operation;
 
-interface PersonInterface
+use Nosto\Types\Signup\AccountInterface;
+
+/**
+ * Base operation class for handling Nosto API communications that require
+ * authentication or Nosto account.
+ */
+abstract class AbstractAuthenticatedOperation extends AbstractOperation
 {
     /**
-     * The first name of the user
-     *
-     * @return string the first name.
+     * @var AccountInterface Nosto configuration
      */
-    public function getFirstName();
+    protected $account;
 
     /**
-     * The last name of the user
+     * Constructor
      *
-     * @return string the last name.
+     * @param AccountInterface $account the account object.
      */
-    public function getLastName();
-
-    /**
-     * The email address of the user
-     *
-     * @return string the email address.
-     */
-    public function getEmail();
-
-    /**
-     * The phone number of the user
-     *
-     * @return string|null
-     */
-    public function getPhone();
-
-    /**
-     * The post code of the user
-     *
-     * @return string|null
-     */
-    public function getPostCode();
-
-    /**
-     * The country of the user
-     *
-     * @return string|null
-     */
-    public function getCountry();
-
-    /**
-     * The opt-in status for user
-     *
-     * @return boolean
-     */
-    public function getMarketingPermission();
+    public function __construct(AccountInterface $account)
+    {
+        $this->account = $account;
+    }
 }
