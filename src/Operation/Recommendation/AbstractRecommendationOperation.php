@@ -37,33 +37,91 @@
 namespace Nosto\Operation\Recommendation;
 
 use Nosto\Nosto;
+use Nosto\NostoException;
 use Nosto\Operation\AbstractOperation;
 use Nosto\Request\Api\ApiRequest;
+use Nosto\Request\Grapql\GraphqlRequest;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Types\Signup\AccountInterface;
+use Nosto\Request\Api\Token;
 
 /**
  * Base operation class for handling all recommendation related communications
  */
 abstract class AbstractRecommendationOperation extends AbstractOperation
 {
+    private $account;
+
+    /**
+     * Category constructor
+     *
+     * @param AccountInterface $account
+     */
+    public function __construct(
+        AccountInterface $account
+    ) {
+        $this->account = $account;
+    }
+
+
     /**
      * Builds the recommendation API request
      *
-     * @return ApiRequest
+     * @return array
      */
-    abstract public function buildRequest();
+    abstract public function getQuery();
+
+    /**
+     * Builds the recommendation API mutation
+     *
+     * @return array
+     */
+    abstract public function getMutation();
+
+    /**
+     * Create and returns a new Graphql request object initialized with a content-type
+     * of 'application/json' and the specified authentication token
+     *
+     * @return GraphqlRequest the newly created request object.
+     * @throws NostoException if the account does not have the correct token set.
+     */
+    protected function initGraphqlRequest()
+    {
+        $token = $this->account->getApiToken(Token::API_GRAPHQL);
+        if (is_null($token)) {
+            throw new NostoException('No API / Graphql token found for account.');
+        }
+
+        $request = new GraphqlRequest();
+        $request->setResponseTimeout($this->getResponseTimeout());
+        $request->setConnectTimeout($this->getConnectTimeout());
+        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
+        $request->setAuthBasic('', $token->getValue());
+
+        $request->setReplaceParams(
+            [
+                '{m}' => $this->account->getName(),
+                '{a}' => $token->getValue()
+            ]
+        );
+        $request->setUrl(Nosto::getGraphqlBaseUrl() . GraphqlRequest::PATH_GRAPH_QL);
+
+        return $request;
+    }
+
 
     /**
      * Returns the result
      *
      * @return HttpResponse
      * @throws AbstractHttpException
+     * @throws NostoException
      */
-    public function get()
+    public function execute()
     {
-        $request = $this->buildRequest();
-        $response = $request->get();
+        $request = $this->initGraphqlRequest();
+        $response = $request->postRaw($this->getQuery());
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException($request, $response);
         }

@@ -34,73 +34,15 @@
  *
  */
 
-namespace Nosto\Operation\Recommendation;
+namespace Nosto\Request\Grapql;
 
+use Nosto\Nosto;
 use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Grapql\GraphqlRequest;
-use Nosto\Types\Signup\AccountInterface;
-use Nosto\Request\Api\Token;
 
 /**
- * Operation class for getting product ids in a category
+ * API request class for making API requests to Nosto.
  */
-class Category extends AbstractRecommendationOperation
+class GraphqlRequest extends ApiRequest
 {
-    private $category;
-    private $customerId;
-    private $limit;
-
-    /**
-     * Category constructor
-     *
-     * @param AccountInterface $account
-     * @param string $category
-     * @param string $customerId
-     * @param int $limit
-     */
-    public function __construct(
-        AccountInterface $account,
-        $category,
-        $customerId,
-        $limit = 20
-    ) {
-        parent::__construct($account);
-        $this->category = $category;
-        $this->customerId = $customerId;
-        $this->limit = $limit;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getQuery()
-    {
-        $query = 'recos (preview: false, image: VERSION_7_200_200) {
-            toplist(hours: 168, sort: BUYS, params: {
-            minProducts: 1
-            maxProducts: 10
-        }) {
-                primary {
-                    name 
-                    productId
-                }
-            }
-        }';
-
-        return $query;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getMutation()
-    {
-        $query = [
-            'mutation' => [
-                'customer' => ['poks']
-            ]
-        ];
-
-        return $query;
-    }
+    const PATH_GRAPH_QL= '/{m}/graphql';
 }
