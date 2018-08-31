@@ -44,5 +44,5 @@ use Nosto\Request\Api\ApiRequest;
  */
 class GraphqlRequest extends ApiRequest
 {
-    const PATH_GRAPH_QL= '/{m}/graphql';
+    const PATH_GRAPH_QL= '/v1/graphql';
 }

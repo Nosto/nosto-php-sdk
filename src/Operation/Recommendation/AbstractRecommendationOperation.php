@@ -38,6 +38,7 @@ namespace Nosto\Operation\Recommendation;
 
 use Nosto\Nosto;
 use Nosto\NostoException;
+use Nosto\Operation\AbstractAuthenticatedOperation;
 use Nosto\Operation\AbstractOperation;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Grapql\GraphqlRequest;
@@ -49,35 +50,14 @@ use Nosto\Request\Api\Token;
 /**
  * Base operation class for handling all recommendation related communications
  */
-abstract class AbstractRecommendationOperation extends AbstractOperation
+abstract class AbstractRecommendationOperation extends AbstractAuthenticatedOperation
 {
-    private $account;
-
-    /**
-     * Category constructor
-     *
-     * @param AccountInterface $account
-     */
-    public function __construct(
-        AccountInterface $account
-    ) {
-        $this->account = $account;
-    }
-
-
     /**
      * Builds the recommendation API request
      *
-     * @return array
+     * @return string
      */
     abstract public function getQuery();
-
-    /**
-     * Builds the recommendation API mutation
-     *
-     * @return array
-     */
-    abstract public function getMutation();
 
     /**
      * Create and returns a new Graphql request object initialized with a content-type
@@ -98,34 +78,33 @@ abstract class AbstractRecommendationOperation extends AbstractOperation
         $request->setConnectTimeout($this->getConnectTimeout());
         $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
         $request->setAuthBasic('', $token->getValue());
-
-        $request->setReplaceParams(
-            [
-                '{m}' => $this->account->getName(),
-                '{a}' => $token->getValue()
-            ]
-        );
         $request->setUrl(Nosto::getGraphqlBaseUrl() . GraphqlRequest::PATH_GRAPH_QL);
 
         return $request;
     }
 
 
+    public function buildPayload() {
+        return preg_replace('/[\r\n]+/', "", $this->getQuery());
+    }
+
     /**
      * Returns the result
      *
-     * @return HttpResponse
+     * @return \stdClass
      * @throws AbstractHttpException
      * @throws NostoException
      */
     public function execute()
     {
         $request = $this->initGraphqlRequest();
-        $response = $request->postRaw($this->getQuery());
+        $response = $request->postRaw(
+            $this->buildPayload()
+        );
         if ($response->getCode() !== 200) {
             Nosto::throwHttpException($request, $response);
         }
 
-        return $response;
+        return json_decode($response->getResult());
     }
 }

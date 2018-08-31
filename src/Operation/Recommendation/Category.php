@@ -75,32 +75,50 @@ class Category extends AbstractRecommendationOperation
      */
     public function getQuery()
     {
-        $query = 'recos (preview: false, image: VERSION_7_200_200) {
-            toplist(hours: 168, sort: BUYS, params: {
-            minProducts: 1
-            maxProducts: 10
-        }) {
-                primary {
-                    name 
-                    productId
+        $query
+            = <<<QUERY
+        {
+            "query": "mutation MySession { 
+                updateSession(id: \"%s\",    params: {
+                    customer: {}
+                    event: { 
+                        type: VIEWED_CATEGORY
+                        target: \"%s\"
+                    }     
+                    cart: {}
+                }) {
+                    id,
+                    recos (preview: true, image: VERSION_8_400_400) {
+                        category_ids: toplist(
+                            hours: 168,
+                            sort: VIEWS
+                            params: {
+                                minProducts: 1,
+                                maxProducts: %d,
+                                include: {
+                                    categories: [\"%s\"]
+                                }
+                            }
+                        ) {
+                            primary {
+                                productId
+                                categories
+                            }     
+                        }
+                    }
                 }
-            }
-        }';
-
-        return $query;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getMutation()
-    {
-        $query = [
-            'mutation' => [
-                'customer' => ['poks']
-            ]
-        ];
-
-        return $query;
+            }",
+            "variables": null,
+            "operationName": "MySession"
+        }
+QUERY;
+        $formatted = sprintf(
+            $query,
+            $this->customerId,
+            $this->category,
+            $this->limit,
+            $this->category
+        );
+        return $formatted;
     }
 }
