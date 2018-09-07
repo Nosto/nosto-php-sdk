@@ -52,6 +52,8 @@ use Nosto\Request\Api\Token;
  */
 abstract class AbstractRecommendationOperation extends AbstractAuthenticatedOperation
 {
+    private $previewMode = false;
+
     /**
      * Builds the recommendation API request
      *
@@ -107,4 +109,30 @@ abstract class AbstractRecommendationOperation extends AbstractAuthenticatedOper
 
         return json_decode($response->getResult());
     }
+
+    /**
+     * Returns if recos should use preview mode. You can set asString to
+     * true and when the method returns true or false as a string. This is
+     * needed for constructing the query.
+     *
+     * @param bool $asString
+     * @return bool|string
+     */
+    public function isPreviewMode($asString = false)
+    {
+        if ($asString) {
+            return $this->previewMode ? 'true' : 'false';
+        }
+        return $this->previewMode;
+    }
+
+    /**
+     * @param bool $previewMode
+     */
+    public function setPreviewMode($previewMode)
+    {
+        $this->previewMode = $previewMode;
+    }
+
+
 }

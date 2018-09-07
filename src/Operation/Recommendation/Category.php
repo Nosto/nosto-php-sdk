@@ -78,38 +78,46 @@ class Category extends AbstractRecommendationOperation
         $query
             = <<<QUERY
         {
-            "query": "mutation MySession { 
-                updateSession(id: \"%s\",    params: {
+            "query": "mutation(
+                    \$customerId: String!,
+                    \$category: String!,
+                    \$limit: Int!,
+                    \$preview: Boolean!
+            ) { 
+                updateSession(by: BY_CID, id: \$customerId, params: {
                     customer: {}
                     event: { 
                         type: VIEWED_CATEGORY
-                        target: \"%s\"
+                        target: \$category
                     }     
                     cart: {}
                 }) {
                     id,
-                    recos (preview: true, image: VERSION_8_400_400) {
+                    recos (preview: \$preview, image: VERSION_8_400_400) {
                         category_ids: toplist(
                             hours: 168,
                             sort: VIEWS
                             params: {
                                 minProducts: 1,
-                                maxProducts: %d,
+                                maxProducts: \$limit,
                                 include: {
-                                    categories: [\"%s\"]
+                                    categories: [\$category]
                                 }
                             }
                         ) {
                             primary {
                                 productId
-                                categories
                             }     
                         }
                     }
                 }
             }",
-            "variables": null,
-            "operationName": "MySession"
+            "variables": {
+                "customerId": "%s",
+                "category": "%s", 
+                "limit": "%d",
+                "preview": %s
+            }
         }
 QUERY;
         $formatted = sprintf(
@@ -117,8 +125,9 @@ QUERY;
             $this->customerId,
             $this->category,
             $this->limit,
-            $this->category
+            $this->isPreviewMode(true)
         );
+
         return $formatted;
     }
 }
