@@ -44,31 +44,9 @@ use Nosto\Request\Api\Token;
 /**
  * Operation class for getting product ids in a category
  */
-class Category extends AbstractRecommendationOperation
+class CategoryTopList extends AbstractTopList
 {
     private $category;
-    private $customerId;
-    private $limit;
-
-    /**
-     * Category constructor
-     *
-     * @param AccountInterface $account
-     * @param string $category
-     * @param string $customerId
-     * @param int $limit
-     */
-    public function __construct(
-        AccountInterface $account,
-        $category,
-        $customerId,
-        $limit = 20
-    ) {
-        parent::__construct($account);
-        $this->category = $category;
-        $this->customerId = $customerId;
-        $this->limit = $limit;
-    }
 
     /**
      * @inheritdoc
@@ -82,21 +60,20 @@ class Category extends AbstractRecommendationOperation
                     \$customerId: String!,
                     \$category: String!,
                     \$limit: Int!,
-                    \$preview: Boolean!
+                    \$preview: Boolean!,
+                    \$hours: Int!
             ) { 
                 updateSession(by: BY_CID, id: \$customerId, params: {
-                    customer: {}
                     event: { 
                         type: VIEWED_CATEGORY
                         target: \$category
                     }     
-                    cart: {}
                 }) {
                     id,
                     recos (preview: \$preview, image: VERSION_8_400_400) {
                         category_ids: toplist(
-                            hours: 168,
-                            sort: VIEWS
+                            hours: \$hours,
+                            sort: %s
                             params: {
                                 minProducts: 1,
                                 maxProducts: \$limit,
@@ -116,18 +93,37 @@ class Category extends AbstractRecommendationOperation
                 "customerId": "%s",
                 "category": "%s", 
                 "limit": "%d",
-                "preview": %s
+                "preview": %s,
+                "hours": "%d"
             }
         }
 QUERY;
         $formatted = sprintf(
             $query,
-            $this->customerId,
+            $this->getSort(),
+            $this->getCustomerId(),
             $this->category,
-            $this->limit,
-            $this->isPreviewMode(true)
+            $this->getLimit(),
+            $this->isPreviewMode(true),
+            $this->getHours()
         );
 
         return $formatted;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
     }
 }

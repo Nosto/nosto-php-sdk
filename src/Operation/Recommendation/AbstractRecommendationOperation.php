@@ -53,6 +53,9 @@ use Nosto\Request\Api\Token;
 abstract class AbstractRecommendationOperation extends AbstractAuthenticatedOperation
 {
     private $previewMode = false;
+    private $customerId;
+    private $limit;
+
 
     /**
      * Builds the recommendation API request
@@ -134,5 +137,35 @@ abstract class AbstractRecommendationOperation extends AbstractAuthenticatedOper
         $this->previewMode = $previewMode;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCustomerId()
+    {
+        return $this->customerId;
+    }
 
+    /**
+     * @param mixed $customerId
+     */
+    public function setCustomerId($customerId)
+    {
+        $this->customerId = $customerId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @param int $limit
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+    }
 }
