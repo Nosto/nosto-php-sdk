@@ -69,7 +69,6 @@ class CategoryTopList extends AbstractTopList
                         target: \$category
                     }     
                 }) {
-                    id,
                     recos (preview: \$preview, image: VERSION_8_400_400) {
                         category_ids: toplist(
                             hours: \$hours,

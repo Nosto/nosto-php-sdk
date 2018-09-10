@@ -59,7 +59,6 @@ class CategoryBrowsingHistory extends AbstractHistory
                         target: \$category
                     }     
                 }) {
-                    id,
                     recos (preview: \$preview, image: VERSION_8_400_400) {
                         category_ids: history(
                             params: {

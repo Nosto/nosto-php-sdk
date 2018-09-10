@@ -35,9 +35,8 @@ use Nosto\Request\Api\Token;
 /**
  * Operation class for getting product ids in a category
  */
-abstract class AbstractTopList extends AbstractRecommendationOperation
+abstract class AbstractTopList extends AbstractOperation
 {
-
     const DEFAULT_LIMIT = 10;
     const DEFAULT_HOURS = 168;
     const DEFAULT_SORT = 'VIEWS';

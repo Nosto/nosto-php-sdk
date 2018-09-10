@@ -39,18 +39,14 @@ namespace Nosto\Operation\Recommendation;
 use Nosto\Nosto;
 use Nosto\NostoException;
 use Nosto\Operation\AbstractAuthenticatedOperation;
-use Nosto\Operation\AbstractOperation;
-use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Grapql\GraphqlRequest;
-use Nosto\Request\Http\HttpResponse;
 use Nosto\Request\Http\Exception\AbstractHttpException;
-use Nosto\Types\Signup\AccountInterface;
 use Nosto\Request\Api\Token;
 
 /**
  * Base operation class for handling all recommendation related communications
  */
-abstract class AbstractRecommendationOperation extends AbstractAuthenticatedOperation
+abstract class AbstractOperation extends AbstractAuthenticatedOperation
 {
     private $previewMode = false;
     private $customerId;
