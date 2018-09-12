@@ -50,7 +50,7 @@ class ImageUrl
     const URL_TEMPLATE = 'url_template';
     const CUSTOMER_EMAIL = 'customer_email';
     const RECOMMENDATION = 'recommendation';
-    const DEFAULT_URL_TEMPLATE_SUBFIX = '/image/v1/@NOSTO_ACCOUNT@/@RECOMMENDATION@/1?uid=@EMAIL@&version=2.0.8';
+    const DEFAULT_URL_TEMPLATE_SUFFIX = '/image/v1/@NOSTO_ACCOUNT@/@RECOMMENDATION@/1?uid=@EMAIL@&version=2.0.8';
     const DEFAULT_RECOMMENDATION = 'BestSeller';
 
     /**
@@ -154,12 +154,13 @@ class ImageUrl
      * @return string
      * @throws NostoException
      */
-    public function format() {
+    public function format()
+    {
         $urlTemplate = $this->urlTemplate;
         $recommendationType = $this->recommendationType;
 
         if (!$urlTemplate) {
-            $urlTemplate = Nosto::getEmailWidgetBaseUrl() . self::DEFAULT_URL_TEMPLATE_SUBFIX;
+            $urlTemplate = Nosto::getEmailWidgetBaseUrl() . self::DEFAULT_URL_TEMPLATE_SUFFIX;
         } elseif (stripos($urlTemplate, self::NOSTO_ACCOUNT_PLACEHOLDER) === false) {
             throw new NostoException(sprintf(
                 'Nosto account placeholder (@NOSTO_ACCOUNT@) is missing from url template: %s',
