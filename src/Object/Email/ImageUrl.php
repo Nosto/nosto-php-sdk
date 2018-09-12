@@ -67,7 +67,7 @@ class ImageUrl
     private $customerEmail;
     /**
      * @var string|null $recommendationType recommendation type.
-     * If it == null, EmailWidgetHelper::DEFAULT_RECOMMENDATION is used
+     * If it == null, ImageUrl::DEFAULT_RECOMMENDATION is used
      */
     private $recommendationType;
 
