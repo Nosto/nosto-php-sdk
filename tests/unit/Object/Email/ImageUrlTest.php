@@ -84,11 +84,10 @@ class ImageUrlTest extends Test
             'chen@nosto.com',
             null
         );
-        try {
+        $this->specify('Test exception', function () use ($imageUrl) {
+            $this->expectException('Nosto\NostoException');
             $imageUrl->format();
-            $this->fail('Exception expected');
-        } catch (\Nosto\NostoException $e) {
-        }
+        });
 
         $imageUrl = new ImageUrl(
             'http://localhost/image/v1/@NO-NOSTO_ACCOUNT@/@RECOMMENDATION@/1?uid=@EMAIL@&version=2.0.8',
@@ -96,10 +95,9 @@ class ImageUrlTest extends Test
             'chen@nosto.com',
             null
         );
-        try {
+        $this->specify('Test exception', function () use ($imageUrl) {
+            $this->expectException('Nosto\NosftoException');
             $imageUrl->format();
-            $this->fail('Exception expected');
-        } catch (\Nosto\NostoException $e) {
-        }
+        });
     }
 }

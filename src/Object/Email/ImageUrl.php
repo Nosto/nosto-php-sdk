@@ -40,7 +40,7 @@ use Nosto\Nosto;
 use Nosto\NostoException;
 
 /**
- * ImageUrl object formatting email widget image url
+ * ImageUrl object for formatting email widget image url
  */
 class ImageUrl
 {
@@ -51,7 +51,7 @@ class ImageUrl
     const CUSTOMER_EMAIL = 'customer_email';
     const RECOMMENDATION = 'recommendation';
     const DEFAULT_URL_TEMPLATE_SUFFIX = '/image/v1/@NOSTO_ACCOUNT@/@RECOMMENDATION@/1?uid=@EMAIL@&version=2.0.8';
-    const DEFAULT_RECOMMENDATION = 'BestSeller';
+    const DEFAULT_RECOMMENDATION = 'bestseller';
 
     /**
      * @var string|null $urlTemplate If it == null, a EmailWidgetHelper::DEFAULT_URL_TEMPLATE is used.
