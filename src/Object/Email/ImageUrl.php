@@ -105,7 +105,7 @@ class ImageUrl
     /**
      * @return string
      */
-    public function getNostoAccount(): string
+    public function getNostoAccount()
     {
         return $this->nostoAccount;
     }
@@ -113,7 +113,7 @@ class ImageUrl
     /**
      * @param string $nostoAccount
      */
-    public function setNostoAccount(string $nostoAccount)
+    public function setNostoAccount($nostoAccount)
     {
         $this->nostoAccount = $nostoAccount;
     }
@@ -121,7 +121,7 @@ class ImageUrl
     /**
      * @return string
      */
-    public function getCustomerEmail(): string
+    public function getCustomerEmail()
     {
         return $this->customerEmail;
     }
@@ -129,7 +129,7 @@ class ImageUrl
     /**
      * @param string $customerEmail
      */
-    public function setCustomerEmail(string $customerEmail)
+    public function setCustomerEmail($customerEmail)
     {
         $this->customerEmail = $customerEmail;
     }
