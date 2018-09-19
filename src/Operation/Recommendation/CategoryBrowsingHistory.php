@@ -69,7 +69,7 @@ class CategoryBrowsingHistory extends AbstractHistory
                                 }
                             }
                         ) {
-                            primary {
+                            %s {
                                 productId
                             }     
                         }
@@ -86,6 +86,7 @@ class CategoryBrowsingHistory extends AbstractHistory
 QUERY;
         $formatted = sprintf(
             $query,
+            self::GRAPHQL_DATA_KEY,
             $this->getCustomerId(),
             $this->category,
             $this->getLimit(),

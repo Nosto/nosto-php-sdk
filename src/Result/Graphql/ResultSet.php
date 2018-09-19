@@ -25,34 +25,24 @@
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-namespace Nosto\Operation\Recommendation;
+namespace Nosto\Result\Graphql;
 
+use Nosto\Nosto;
+use Nosto\Object\AbstractCollection;
 use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Grapql\GraphqlRequest;
-use Nosto\Types\Signup\AccountInterface;
-use Nosto\Request\Api\Token;
 
 /**
- * Operation class for getting product ids in a category
+ * API request class for making API requests to Nosto.
  */
-abstract class AbstractHistory extends AbstractOperation
+class ResultSet extends AbstractCollection
 {
-    const DEFAULT_LIMIT = 10;
-
     /**
-     * Category constructor
+     * Appends a result item into the collection
      *
-     * @param AccountInterface $account
-     * @param string $customerId
-     * @param int $limit
+     * @param ResultItem $item
      */
-    public function __construct(
-        AccountInterface $account,
-        $customerId,
-        $limit = self::DEFAULT_LIMIT
-    ) {
-        parent::__construct($account);
-        $this->setCustomerId($customerId);
-        $this->setLimit($limit);
+    public function append(ResultItem $item)
+    {
+        $this->var[] = $item;
     }
 }

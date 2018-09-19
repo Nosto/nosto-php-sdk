@@ -42,12 +42,16 @@ use Nosto\Operation\AbstractAuthenticatedOperation;
 use Nosto\Request\Grapql\GraphqlRequest;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Request\Api\Token;
+use Nosto\Result\Graphql\ResultSet;
+use Nosto\Result\Graphql\ResultSetBuilder;
 
 /**
  * Base operation class for handling all recommendation related communications
  */
 abstract class AbstractOperation extends AbstractAuthenticatedOperation
 {
+    const GRAPHQL_DATA_KEY = 'primary';
+
     private $previewMode = false;
     private $customerId;
     private $limit;
@@ -92,9 +96,10 @@ abstract class AbstractOperation extends AbstractAuthenticatedOperation
     /**
      * Returns the result
      *
-     * @return \stdClass
      * @throws AbstractHttpException
      * @throws NostoException
+     * @return ResultSet
+     *
      */
     public function execute()
     {
@@ -106,7 +111,7 @@ abstract class AbstractOperation extends AbstractAuthenticatedOperation
             Nosto::throwHttpException($request, $response);
         }
 
-        return json_decode($response->getResult());
+        return ResultSetBuilder::fromHttpResponse($response);
     }
 
     /**

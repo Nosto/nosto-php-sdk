@@ -81,7 +81,7 @@ class CategoryTopList extends AbstractTopList
                                 }
                             }
                         ) {
-                            primary {
+                            %s {
                                 productId
                             }     
                         }
@@ -100,6 +100,7 @@ QUERY;
         $formatted = sprintf(
             $query,
             $this->getSort(),
+            self::GRAPHQL_DATA_KEY,
             $this->getCustomerId(),
             $this->category,
             $this->getLimit(),

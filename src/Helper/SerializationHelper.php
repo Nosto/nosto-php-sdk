@@ -186,4 +186,15 @@ class SerializationHelper extends AbstractHelper
         }
         return array_keys($arr) !== range(0, count($arr) - 1);
     }
+
+    /**
+     * Converts stdClass to a map
+     *
+     * @param \stdClass $object
+     * @return mixed
+     */
+    public static function stdClassToArray(\stdClass $object)
+    {
+        return json_decode(json_encode($object), true);
+    }
 }
