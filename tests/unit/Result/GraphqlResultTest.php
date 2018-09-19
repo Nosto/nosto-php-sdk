@@ -38,6 +38,7 @@ use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Result\Graphql\ResultSetBuilder;
+use Nosto\NostoException;
 
 class GraphqlResultTest extends Test
 {
@@ -54,6 +55,24 @@ class GraphqlResultTest extends Test
 
         $this->specify('result set parsed', function () use ($resultSet) {
             $this->assertEquals($resultSet->count(), 10);
+        });
+    }
+
+    /**
+     * Tests that new accounts can be created successfully.
+     */
+    public function testBuildingMissingPrimary()
+    {
+        $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"nonprimary":[{"productId":"558"},{"productId":"386"},{"productId":"414"},{"productId":"435"},{"productId":"399"},{"productId":"382"},{"productId":"867"},{"productId":"383"},{"productId":"560"},{"productId":"551"}]}}}},"errors":[]}';
+        $response = new HttpResponse([], $responseBody);
+
+        $this->specify('result does not contain primary field', function () use ($response) {
+            try {
+                ResultSetBuilder::fromHttpResponse($response);
+                $this->fail('No exception was thrown');
+            } catch (NostoException $e) {
+                // All good
+            }
         });
     }
 }
