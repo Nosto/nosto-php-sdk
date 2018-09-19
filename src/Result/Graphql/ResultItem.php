@@ -37,6 +37,8 @@
 namespace Nosto\Result\Graphql;
 
 
+use Nosto\NostoException;
+
 class ResultItem
 {
     /**
@@ -51,23 +53,19 @@ class ResultItem
 
     /**
      * @param $name
-     * @param $value
-     */
-    public function __set($name, $value)
-    {
-        $this->data[$name] = $value;
-    }
-
-    /**
-     * @param $name
+     * @param $arguments
      * @return mixed|null
+     * @throws NostoException
      */
-    public function __get($name)
+    public function __call($name, $arguments)
     {
-        if (isset($this->data[$name])) {
-            return $this->data[$name];
+        if (strtolower(substr($name, 0, 3)) === 'get') {
+            $dataKey = lcfirst(substr($name, 3));
+            if (!empty($this->data[$dataKey])) {
+                return $this->data[$dataKey];
+            }
+            throw new NostoException(sprintf('Field %s does not exist', $dataKey));
         }
-
-        return null;
+        throw new NostoException(sprintf('Call to undefined method %s', $name));
     }
 }
