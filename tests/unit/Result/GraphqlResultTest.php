@@ -70,7 +70,7 @@ class GraphqlResultTest extends Test
         $response = new HttpResponse([], $responseBody);
         $resultSet = ResultSetBuilder::fromHttpResponse($response);
 
-        $this->specify('result set parsed', function () use ($resultSet) {
+        $this->specify('nested array parsing failed', function () use ($resultSet) {
             $this->assertEquals($resultSet->count(), 1);
             foreach ($resultSet as $item) {
                 $categories = $item->getCategories();
@@ -88,11 +88,11 @@ class GraphqlResultTest extends Test
         $response = new HttpResponse([], $responseBody);
         $resultSet = ResultSetBuilder::fromHttpResponse($response);
 
-        $this->specify('result set parsed', function () use ($resultSet) {
+        $this->specify('nested object failed', function () use ($resultSet) {
             $this->assertEquals($resultSet->count(), 1);
             foreach ($resultSet as $item) {
                 $object = $item->getCustomObject();
-                $this->assertTrue(is_object($object));
+                $this->assertTrue(is_array($object));
             }
         });
     }
