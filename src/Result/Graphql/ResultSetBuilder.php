@@ -86,8 +86,9 @@ class ResultSetBuilder
             }
         }
 
-        throw new NostoException(sprintf(
-            'Could not find primary data field (%s) from response',
+        throw new NostoException(
+            sprintf(
+                'Could not find primary data field (%s) from response',
                 AbstractOperation::GRAPHQL_DATA_KEY
             )
         );

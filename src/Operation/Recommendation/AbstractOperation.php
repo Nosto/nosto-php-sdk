@@ -56,7 +56,6 @@ abstract class AbstractOperation extends AbstractAuthenticatedOperation
     private $customerId;
     private $limit;
 
-
     /**
      * Builds the recommendation API request
      *
@@ -89,7 +88,13 @@ abstract class AbstractOperation extends AbstractAuthenticatedOperation
     }
 
 
-    public function buildPayload() {
+    /**
+     * Removes line breaks from the string
+     *
+     * @return null|string|string[]
+     */
+    public function buildPayload()
+    {
         return preg_replace('/[\r\n]+/', "", $this->getQuery());
     }
 

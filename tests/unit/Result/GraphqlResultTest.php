@@ -45,7 +45,7 @@ class GraphqlResultTest extends Test
     use Specify;
 
     /**
-     * Tests that new accounts can be created successfully.
+     * Tests that a valid result set can be built
      */
     public function testBuildingValidResultSet()
     {
@@ -59,7 +59,43 @@ class GraphqlResultTest extends Test
     }
 
     /**
-     * Tests that new accounts can be created successfully.
+     * Tests that valid result set with nested arrays can be built
+     */
+    public function testBuildingValidResultSetWithNestedArray()
+    {
+        $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"primary":[{"productId":"558", "categories":["Men/Stuff", "Men/Summer"]}]}}}},"errors":[]}';
+        $response = new HttpResponse([], $responseBody);
+        $resultSet = ResultSetBuilder::fromHttpResponse($response);
+
+        $this->specify('result set parsed', function () use ($resultSet) {
+            $this->assertEquals($resultSet->count(), 1);
+            foreach ($resultSet as $item) {
+                $categories = $item->getCategories();
+                $this->assertTrue(is_array($categories));
+            }
+        });
+    }
+
+    /**
+     * Tests that valid result set with nested objects can be built
+     */
+    public function testBuildingValidResultSetWithNestedObject()
+    {
+        $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"primary":[{"productId":"558", "categories":["Men/Stuff", "Men/Summer"], "customObject":{"id":1, "name":"test object"}}]}}}},"errors":[]}';
+        $response = new HttpResponse([], $responseBody);
+        $resultSet = ResultSetBuilder::fromHttpResponse($response);
+
+        $this->specify('result set parsed', function () use ($resultSet) {
+            $this->assertEquals($resultSet->count(), 1);
+            foreach ($resultSet as $item) {
+                $object = $item->getCustomObject();
+                $this->assertTrue(is_object($object));
+            }
+        });
+    }
+
+    /**
+     * Tests exception is thrown for invalid payload
      */
     public function testBuildingMissingPrimary()
     {
