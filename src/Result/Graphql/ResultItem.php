@@ -39,6 +39,9 @@ namespace Nosto\Result\Graphql;
 
 use Nosto\NostoException;
 
+/**
+ * Wrapper class for item returned by the GraphQL API
+ */
 class ResultItem
 {
     /**

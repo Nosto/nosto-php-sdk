@@ -40,6 +40,9 @@ use Nosto\Request\Http\HttpResponse;
 use Nosto\Result\Graphql\ResultSetBuilder;
 use Nosto\NostoException;
 
+/**
+ * Tests for GraphQL results
+ */
 class GraphqlResultTest extends Test
 {
     use Specify;

@@ -32,7 +32,7 @@ use Nosto\Object\AbstractCollection;
 use Nosto\Request\Api\ApiRequest;
 
 /**
- * API request class for making API requests to Nosto.
+ * Collection for GraphQL result
  */
 class ResultSet extends AbstractCollection
 {

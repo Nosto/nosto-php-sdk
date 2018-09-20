@@ -55,7 +55,6 @@ class ApiRequest extends HttpRequest
     const PATH_MARKETING_PERMISSION = '/v1/customers/consent/{email}/{state}';
     const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
     const PATH_SETTINGS = '/settings';
-    const PATH_RECOMMENDATION_CATEGORY_PRODUCT_IDS = '/recommendations/category/{m}/{cat}/{cid}/{l}';
     const PATH_CART_UPDATE = '/v1/cart/update';
 
     /**

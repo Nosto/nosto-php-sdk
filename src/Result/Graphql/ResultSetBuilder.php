@@ -42,6 +42,9 @@ use Nosto\NostoException;
 use Nosto\Operation\Recommendation\AbstractOperation;
 use Nosto\Request\Http\HttpResponse;
 
+/**
+ * Builder / parser class for GraphQL result and response
+ */
 class ResultSetBuilder
 {
     /**
@@ -54,9 +57,7 @@ class ResultSetBuilder
     public static function fromHttpResponse(HttpResponse $httpResponse)
     {
         $result = json_decode($httpResponse->getResult());
-
         $primaryData = self::parsePrimaryData($result);
-
         $resultSet = new ResultSet();
         foreach ($primaryData as $primaryDataItem) {
             if ($primaryDataItem instanceof \stdClass) {
@@ -72,7 +73,7 @@ class ResultSetBuilder
      * Finds the primary data field from stdClass
      *
      * @param \stdClass $class
-     * @return mixed
+     * @return array
      * @throws NostoException
      */
     public static function parsePrimaryData(\stdClass $class)

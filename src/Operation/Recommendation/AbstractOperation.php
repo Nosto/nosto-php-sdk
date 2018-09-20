@@ -46,7 +46,7 @@ use Nosto\Result\Graphql\ResultSet;
 use Nosto\Result\Graphql\ResultSetBuilder;
 
 /**
- * Base operation class for handling all recommendation related communications
+ * Abstract base operation class to be used in recommendation related operations
  */
 abstract class AbstractOperation extends AbstractAuthenticatedOperation
 {

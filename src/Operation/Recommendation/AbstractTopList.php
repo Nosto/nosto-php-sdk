@@ -33,7 +33,7 @@ use Nosto\Types\Signup\AccountInterface;
 use Nosto\Request\Api\Token;
 
 /**
- * Operation class for getting product ids in a category
+ * Abstract operation class for getting top list related recommendations
  */
 abstract class AbstractTopList extends AbstractOperation
 {
