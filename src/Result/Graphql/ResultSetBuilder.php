@@ -36,7 +36,6 @@
 
 namespace Nosto\Result\Graphql;
 
-
 use Nosto\Helper\SerializationHelper;
 use Nosto\NostoException;
 use Nosto\Operation\Recommendation\AbstractOperation;

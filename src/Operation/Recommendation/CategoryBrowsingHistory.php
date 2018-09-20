@@ -27,11 +27,6 @@
 
 namespace Nosto\Operation\Recommendation;
 
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Grapql\GraphqlRequest;
-use Nosto\Types\Signup\AccountInterface;
-use Nosto\Request\Api\Token;
-
 /**
  * Operation class for getting product ids in a category
  */

@@ -27,9 +27,7 @@
 
 namespace Nosto\Result\Graphql;
 
-use Nosto\Nosto;
 use Nosto\Object\AbstractCollection;
-use Nosto\Request\Api\ApiRequest;
 
 /**
  * Collection for GraphQL result

@@ -27,10 +27,7 @@
 
 namespace Nosto\Operation\Recommendation;
 
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Grapql\GraphqlRequest;
 use Nosto\Types\Signup\AccountInterface;
-use Nosto\Request\Api\Token;
 
 /**
  * Abstract operation class for getting history related recommendations
