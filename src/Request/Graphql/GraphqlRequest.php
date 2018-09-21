@@ -34,7 +34,7 @@
  *
  */
 
-namespace Nosto\Request\Grapql;
+namespace Nosto\Request\Graphql;
 
 use Nosto\Request\Api\ApiRequest;
 
