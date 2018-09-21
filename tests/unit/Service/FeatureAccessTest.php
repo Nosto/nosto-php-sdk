@@ -57,7 +57,6 @@ class FeatureAccessTest extends Test
         $account = new MockAccount();
         if ($token) {
             $account->addApiToken(new Token(Token::API_GRAPHQL, $token));
-            $account->addApiToken(new Token('wassaa', $token));
         }
         $service = new FeatureAccess($account);
         $this->specify(sprintf('test access with token %s', $token), function () use ($service, $bool) {
