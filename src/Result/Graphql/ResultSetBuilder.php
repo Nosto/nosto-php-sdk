@@ -34,37 +34,63 @@
  *
  */
 
-namespace Nosto\Helper;
+namespace Nosto\Result\Graphql;
 
-use Nosto\Nosto;
-use Nosto\Request\Http\HttpRequest;
-use Nosto\Types\OAuthInterface;
+use Nosto\Helper\SerializationHelper;
+use Nosto\NostoException;
+use Nosto\Operation\Recommendation\AbstractOperation;
+use Nosto\Request\Http\HttpResponse;
 
 /**
- * OAuth helper class for working with common OAuth related functionality
+ * Builder / parser class for GraphQL result and response
  */
-class OAuthHelper extends AbstractHelper
+class ResultSetBuilder
 {
-
-    const PATH_AUTH = '?client_id={cid}&redirect_uri={uri}&response_type=code&scope={sco}&lang={iso}'; // @codingStandardsIgnoreLine
+    /**
+     * Builds a result set from HttpResponse
+     *
+     * @param HttpResponse $httpResponse
+     * @return ResultSet
+     * @throws NostoException
+     */
+    public static function fromHttpResponse(HttpResponse $httpResponse)
+    {
+        $result = json_decode($httpResponse->getResult());
+        $primaryData = self::parsePrimaryData($result);
+        $resultSet = new ResultSet();
+        foreach ($primaryData as $primaryDataItem) {
+            if ($primaryDataItem instanceof \stdClass) {
+                $primaryDataItem = SerializationHelper::stdClassToArray($primaryDataItem);
+            }
+            $item = new ResultItem($primaryDataItem);
+            $resultSet->append($item);
+        }
+        return $resultSet;
+    }
 
     /**
-     * Returns the authorize url to the oauth2 server.
+     * Finds the primary data field from stdClass
      *
-     * @param OAuthInterface $params
-     * @return string the url.
+     * @param \stdClass $class
+     * @return array
+     * @throws NostoException
      */
-    public static function getAuthorizationUrl(OAuthInterface $params)
+    public static function parsePrimaryData(\stdClass $class)
     {
-        $oauthBaseUrl = Nosto::getOAuthBaseUrl();
+        $members = get_object_vars($class);
+        foreach ($members as $varName => $member) {
+            if ($varName == AbstractOperation::GRAPHQL_DATA_KEY) {
+                return $member;
+            }
+            if ($member instanceof \stdClass) {
+                return self::parsePrimaryData($member);
+            }
+        }
 
-        return HttpRequest::buildUri(
-            $oauthBaseUrl . self::PATH_AUTH,
-            array(
-                '{cid}' => $params->getClientId(),
-                '{uri}' => $params->getRedirectUrl(),
-                '{sco}' => implode(' ', $params->getScopes()),
-                '{iso}' => strtolower($params->getLanguageIsoCode()),
+        throw new NostoException(
+            sprintf(
+                'Could not find primary data field (%s) from response',
+                AbstractOperation::GRAPHQL_DATA_KEY
             )
         );
     }

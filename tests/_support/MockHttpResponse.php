@@ -1,4 +1,7 @@
 <?php
+use Nosto\Object\Product\Variation;
+use Nosto\Request\Http\HttpResponse;
+
 /**
  * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
@@ -33,39 +36,10 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-
-namespace Nosto\Helper;
-
-use Nosto\Nosto;
-use Nosto\Request\Http\HttpRequest;
-use Nosto\Types\OAuthInterface;
-
-/**
- * OAuth helper class for working with common OAuth related functionality
- */
-class OAuthHelper extends AbstractHelper
+class MockHttpResponse extends HttpResponse
 {
-
-    const PATH_AUTH = '?client_id={cid}&redirect_uri={uri}&response_type=code&scope={sco}&lang={iso}'; // @codingStandardsIgnoreLine
-
-    /**
-     * Returns the authorize url to the oauth2 server.
-     *
-     * @param OAuthInterface $params
-     * @return string the url.
-     */
-    public static function getAuthorizationUrl(OAuthInterface $params)
+    public function __construct()
     {
-        $oauthBaseUrl = Nosto::getOAuthBaseUrl();
-
-        return HttpRequest::buildUri(
-            $oauthBaseUrl . self::PATH_AUTH,
-            array(
-                '{cid}' => $params->getClientId(),
-                '{uri}' => $params->getRedirectUrl(),
-                '{sco}' => implode(' ', $params->getScopes()),
-                '{iso}' => strtolower($params->getLanguageIsoCode()),
-            )
-        );
+        parent::__construct([]);
     }
 }

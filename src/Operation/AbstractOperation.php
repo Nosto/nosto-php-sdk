@@ -41,6 +41,7 @@ use Nosto\Nosto;
 use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
+use Nosto\Request\Grapql\GraphqlRequest;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
 

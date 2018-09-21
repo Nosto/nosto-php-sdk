@@ -72,9 +72,9 @@ use Nosto\Object\Signup\Account;
  */
 class MockAccount extends Account
 {
-    public function getName()
+    public function __construct()
     {
-        return 'platform-00000000';
+        parent::__construct('platform-00000000');
     }
 
     public function isConnectedToNosto()

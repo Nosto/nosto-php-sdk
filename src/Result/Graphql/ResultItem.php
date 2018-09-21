@@ -34,38 +34,41 @@
  *
  */
 
-namespace Nosto\Helper;
+namespace Nosto\Result\Graphql;
 
-use Nosto\Nosto;
-use Nosto\Request\Http\HttpRequest;
-use Nosto\Types\OAuthInterface;
+
+use Nosto\NostoException;
 
 /**
- * OAuth helper class for working with common OAuth related functionality
+ * Wrapper class for item returned by the GraphQL API
  */
-class OAuthHelper extends AbstractHelper
+class ResultItem
 {
+    /**
+     * @var array
+     */
+    private $data = array();
 
-    const PATH_AUTH = '?client_id={cid}&redirect_uri={uri}&response_type=code&scope={sco}&lang={iso}'; // @codingStandardsIgnoreLine
+    public function __construct(array $data = array())
+    {
+        $this->data = $data;
+    }
 
     /**
-     * Returns the authorize url to the oauth2 server.
-     *
-     * @param OAuthInterface $params
-     * @return string the url.
+     * @param $name
+     * @param $arguments
+     * @return mixed|null
+     * @throws NostoException
      */
-    public static function getAuthorizationUrl(OAuthInterface $params)
+    public function __call($name, $arguments)
     {
-        $oauthBaseUrl = Nosto::getOAuthBaseUrl();
-
-        return HttpRequest::buildUri(
-            $oauthBaseUrl . self::PATH_AUTH,
-            array(
-                '{cid}' => $params->getClientId(),
-                '{uri}' => $params->getRedirectUrl(),
-                '{sco}' => implode(' ', $params->getScopes()),
-                '{iso}' => strtolower($params->getLanguageIsoCode()),
-            )
-        );
+        if (stripos($name, 'get') === 0) {
+            $dataKey = lcfirst(substr($name, 3));
+            if (!empty($this->data[$dataKey])) {
+                return $this->data[$dataKey];
+            }
+            throw new NostoException(sprintf('Field %s does not exist', $dataKey));
+        }
+        throw new NostoException(sprintf('Call to undefined method %s', $name));
     }
 }
