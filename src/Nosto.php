@@ -60,6 +60,7 @@ class Nosto
     const DEFAULT_NOSTO_WEB_HOOK_BASE_URL = 'https://my.nosto.com';
     const DEFAULT_NOSTO_OAUTH_BASE_URL = 'https://my.nosto.com/oauth';
     const DEFAULT_NOSTO_API_BASE_URL = 'https://api.nosto.com';
+    const DEFAULT_NOSTO_GRAPHQL_BASE_URL = 'https://my.nosto.com';
     const DEFAULT_NOSTO_IFRAME_ORIGIN_REGEXP = '(https:\/\/(.*)\.hub\.nosto\.com)|(https:\/\/my\.nosto\.com)'; //codingStandardsIgnoreLine
 
     const URL_PARAM_MESSAGE_TYPE = 'message_type';
@@ -96,6 +97,11 @@ class Nosto
     public static function getApiBaseUrl()
     {
         return self::getEnvVariable('NOSTO_API_BASE_URL', self::DEFAULT_NOSTO_API_BASE_URL);
+    }
+
+    public static function getGraphqlBaseUrl()
+    {
+        return self::getEnvVariable('NOSTO_GRAPHQL_BASE_URL', self::DEFAULT_NOSTO_GRAPHQL_BASE_URL);
     }
 
     public static function getIframeOriginRegex()

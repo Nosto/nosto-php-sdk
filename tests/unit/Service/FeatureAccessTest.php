@@ -34,38 +34,41 @@
  *
  */
 
-namespace Nosto\Helper;
-
-use Nosto\Nosto;
-use Nosto\Request\Http\HttpRequest;
-use Nosto\Types\OAuthInterface;
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+use Nosto\Request\Api\Token;
+use Nosto\Service\FeatureAccess;
 
 /**
- * OAuth helper class for working with common OAuth related functionality
+ * Tests for feature access
  */
-class OAuthHelper extends AbstractHelper
+class FeatureAccessTest extends Test
 {
-
-    const PATH_AUTH = '?client_id={cid}&redirect_uri={uri}&response_type=code&scope={sco}&lang={iso}'; // @codingStandardsIgnoreLine
+    use Specify;
 
     /**
-     * Returns the authorize url to the oauth2 server.
-     *
-     * @param OAuthInterface $params
-     * @return string the url.
+     * Tests access for graphql
+     * @dataProvider dataForGraphql
+     * @param $token
+     * @param $bool
      */
-    public static function getAuthorizationUrl(OAuthInterface $params)
+    public function testGraphqlAccess($token, $bool)
     {
-        $oauthBaseUrl = Nosto::getOAuthBaseUrl();
+        $account = new MockAccount();
+        if ($token) {
+            $account->addApiToken(new Token(Token::API_GRAPHQL, $token));
+        }
+        $service = new FeatureAccess($account);
+        $this->specify(sprintf('test access with token %s', $token), function () use ($service, $bool) {
+            $this->assertEquals($service->canUseGraphql(), $bool);
+        });
+    }
 
-        return HttpRequest::buildUri(
-            $oauthBaseUrl . self::PATH_AUTH,
-            array(
-                '{cid}' => $params->getClientId(),
-                '{uri}' => $params->getRedirectUrl(),
-                '{sco}' => implode(' ', $params->getScopes()),
-                '{iso}' => strtolower($params->getLanguageIsoCode()),
-            )
-        );
+    public function dataForGraphql()
+    {
+        return [
+            ['token-12345', true],
+            [null, false]
+        ];
     }
 }

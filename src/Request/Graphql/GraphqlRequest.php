@@ -34,38 +34,14 @@
  *
  */
 
-namespace Nosto\Helper;
+namespace Nosto\Request\Graphql;
 
-use Nosto\Nosto;
-use Nosto\Request\Http\HttpRequest;
-use Nosto\Types\OAuthInterface;
+use Nosto\Request\Api\ApiRequest;
 
 /**
- * OAuth helper class for working with common OAuth related functionality
+ * API request class for making API requests to Nosto.
  */
-class OAuthHelper extends AbstractHelper
+class GraphqlRequest extends ApiRequest
 {
-
-    const PATH_AUTH = '?client_id={cid}&redirect_uri={uri}&response_type=code&scope={sco}&lang={iso}'; // @codingStandardsIgnoreLine
-
-    /**
-     * Returns the authorize url to the oauth2 server.
-     *
-     * @param OAuthInterface $params
-     * @return string the url.
-     */
-    public static function getAuthorizationUrl(OAuthInterface $params)
-    {
-        $oauthBaseUrl = Nosto::getOAuthBaseUrl();
-
-        return HttpRequest::buildUri(
-            $oauthBaseUrl . self::PATH_AUTH,
-            array(
-                '{cid}' => $params->getClientId(),
-                '{uri}' => $params->getRedirectUrl(),
-                '{sco}' => implode(' ', $params->getScopes()),
-                '{iso}' => strtolower($params->getLanguageIsoCode()),
-            )
-        );
-    }
+    const PATH_GRAPH_QL= '/v1/graphql';
 }

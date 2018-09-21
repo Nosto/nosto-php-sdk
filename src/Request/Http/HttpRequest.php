@@ -428,7 +428,11 @@ class HttpRequest
      */
     public static function buildUri($uri, array $replaceParams)
     {
-        return strtr($uri, $replaceParams);
+        $encoded = array();
+        foreach ($replaceParams as $index => $param) {
+            $encoded[$index] = urlencode($param);
+        }
+        return strtr($uri, $encoded);
     }
 
     /**
