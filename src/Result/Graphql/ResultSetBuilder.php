@@ -81,7 +81,8 @@ class ResultSetBuilder
         foreach ($members as $varName => $member) {
             if ($varName == AbstractOperation::GRAPHQL_DATA_KEY) {
                 return $member;
-            } elseif ($member instanceof \stdClass) {
+            }
+            if ($member instanceof \stdClass) {
                 return self::parsePrimaryData($member);
             }
         }

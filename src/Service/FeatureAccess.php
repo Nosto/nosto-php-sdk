@@ -30,7 +30,7 @@ namespace Nosto\Service;
 use Nosto\Request\Api\Token;
 
 /**
- * Service class for determing which features can be accessed
+ * Service class for controlling which features an account has access to
  */
 class FeatureAccess extends AbstractAccount
 {

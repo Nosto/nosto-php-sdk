@@ -62,7 +62,7 @@ class ResultItem
      */
     public function __call($name, $arguments)
     {
-        if (strtolower(substr($name, 0, 3)) === 'get') {
+        if (stripos($name, 'get') === 0) {
             $dataKey = lcfirst(substr($name, 3));
             if (!empty($this->data[$dataKey])) {
                 return $this->data[$dataKey];

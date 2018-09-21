@@ -74,7 +74,7 @@ class GraphqlResultTest extends Test
             $this->assertEquals($resultSet->count(), 1);
             foreach ($resultSet as $item) {
                 $categories = $item->getCategories();
-                $this->assertTrue(is_array($categories));
+                $this->assertInternalType('array', $categories);
             }
         });
     }
@@ -92,7 +92,7 @@ class GraphqlResultTest extends Test
             $this->assertEquals($resultSet->count(), 1);
             foreach ($resultSet as $item) {
                 $object = $item->getCustomObject();
-                $this->assertTrue(is_array($object));
+                $this->assertInternalType('array', $object);
             }
         });
     }

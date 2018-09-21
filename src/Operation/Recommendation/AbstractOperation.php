@@ -95,7 +95,7 @@ abstract class AbstractOperation extends AbstractAuthenticatedOperation
      */
     public function buildPayload()
     {
-        return preg_replace('/[\r\n]+/', "", $this->getQuery());
+        return preg_replace('/[\r\n]+/', '', $this->getQuery());
     }
 
     /**

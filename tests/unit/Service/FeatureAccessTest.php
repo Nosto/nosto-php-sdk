@@ -37,9 +37,6 @@
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Request\Api\Token;
-use Nosto\Request\Http\HttpResponse;
-use Nosto\Result\Graphql\ResultSetBuilder;
-use Nosto\NostoException;
 use Nosto\Service\FeatureAccess;
 
 /**
@@ -57,10 +54,10 @@ class FeatureAccessTest extends Test
      */
     public function testGraphqlAccess($token, $bool)
     {
-
         $account = new MockAccount();
         if ($token) {
             $account->addApiToken(new Token(Token::API_GRAPHQL, $token));
+            $account->addApiToken(new Token('wassaa', $token));
         }
         $service = new FeatureAccess($account);
         $this->specify(sprintf('test access with token %s', $token), function () use ($service, $bool) {
