@@ -39,7 +39,7 @@ namespace Nosto\Operation\Recommendation;
 use Nosto\Nosto;
 use Nosto\NostoException;
 use Nosto\Operation\AbstractAuthenticatedOperation;
-use Nosto\Request\Grapql\GraphqlRequest;
+use Nosto\Request\Graphql\GraphqlRequest;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Request\Api\Token;
 use Nosto\Result\Graphql\ResultSet;
