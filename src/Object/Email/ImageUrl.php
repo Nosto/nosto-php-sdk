@@ -46,15 +46,13 @@ class ImageUrl
 {
     const NOSTO_ACCOUNT_PLACEHOLDER = '@NOSTO_ACCOUNT@';
     const EMAIL_PLACEHOLDER = '@EMAIL@';
-    const RECOMMENDATION_PLACEHOLDER = '@RECOMMENDATION@';
+    const CAMPAIGN_ID_PLACEHOLDER = '@CAMPAIGN_ID@';
     const URL_TEMPLATE = 'url_template';
     const CUSTOMER_EMAIL = 'customer_email';
-    const RECOMMENDATION = 'recommendation';
-    const DEFAULT_URL_TEMPLATE_SUFFIX = '/image/v1/@NOSTO_ACCOUNT@/@RECOMMENDATION@/1?uid=@EMAIL@&version=2.0.8';
-    const DEFAULT_RECOMMENDATION = 'bestseller';
+    const CAMPAIGN_ID = 'campaign_id';
 
     /**
-     * @var string|null $urlTemplate If it == null, a EmailWidgetHelper::DEFAULT_URL_TEMPLATE is used.
+     * @var string $urlTemplate
      */
     private $urlTemplate;
     /**
@@ -66,28 +64,27 @@ class ImageUrl
      */
     private $customerEmail;
     /**
-     * @var string|null $recommendationType recommendation type.
-     * If it == null, ImageUrl::DEFAULT_RECOMMENDATION is used
+     * @var string $campaignId
      */
-    private $recommendationType;
+    private $campaignId;
 
     /**
      * ImageUrl constructor.
-     * @param null|string $urlTemplate
+     * @param string $urlTemplate
      * @param string $nostoAccount
      * @param string $customerEmail
-     * @param null|string $recommendationType
+     * @param string $campaignId
      */
-    public function __construct($urlTemplate, $nostoAccount, $customerEmail, $recommendationType)
+    public function __construct($urlTemplate, $nostoAccount, $customerEmail, $campaignId)
     {
         $this->urlTemplate = $urlTemplate;
         $this->nostoAccount = $nostoAccount;
         $this->customerEmail = $customerEmail;
-        $this->recommendationType = $recommendationType;
+        $this->campaignId = $campaignId;
     }
 
     /**
-     * @return null|string
+     * @return string
      */
     public function getUrlTemplate()
     {
@@ -95,7 +92,7 @@ class ImageUrl
     }
 
     /**
-     * @param null|string $urlTemplate
+     * @param string $urlTemplate
      */
     public function setUrlTemplate($urlTemplate)
     {
@@ -135,19 +132,19 @@ class ImageUrl
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getRecommendationType()
+    public function getCampaignId()
     {
-        return $this->recommendationType;
+        return $this->campaignId;
     }
 
     /**
-     * @param null|string $recommendationType
+     * @param string $campaignId
      */
-    public function setRecommendationType($recommendationType)
+    public function setCampaignId($campaignId)
     {
-        $this->recommendationType = $recommendationType;
+        $this->campaignId = $campaignId;
     }
 
     /**
@@ -157,10 +154,12 @@ class ImageUrl
     public function format()
     {
         $urlTemplate = $this->urlTemplate;
-        $recommendationType = $this->recommendationType;
 
         if (!$urlTemplate) {
-            $urlTemplate = Nosto::getEmailWidgetBaseUrl() . self::DEFAULT_URL_TEMPLATE_SUFFIX;
+            throw new NostoException(sprintf(
+                'urlTemplate could not be empty',
+                $urlTemplate
+            ));
         } elseif (stripos($urlTemplate, self::NOSTO_ACCOUNT_PLACEHOLDER) === false) {
             throw new NostoException(sprintf(
                 'Nosto account placeholder (@NOSTO_ACCOUNT@) is missing from url template: %s',
@@ -173,13 +172,9 @@ class ImageUrl
             ));
         }
 
-        if (!$recommendationType) {
-            $recommendationType = self::DEFAULT_RECOMMENDATION;
-        }
-
         $src = str_replace(self::NOSTO_ACCOUNT_PLACEHOLDER, $this->nostoAccount, $urlTemplate);
         $src = str_replace(self::EMAIL_PLACEHOLDER, $this->customerEmail, $src);
-        $src = str_replace(self::RECOMMENDATION_PLACEHOLDER, $recommendationType, $src);
+        $src = str_replace(self::CAMPAIGN_ID_PLACEHOLDER, $this->campaignId, $src);
 
         return $src;
     }
