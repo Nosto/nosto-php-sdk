@@ -149,30 +149,10 @@ class ImageUrl
 
     /**
      * @return string
-     * @throws NostoException
      */
     public function format()
     {
-        $urlTemplate = $this->urlTemplate;
-
-        if (!$urlTemplate) {
-            throw new NostoException(sprintf(
-                'urlTemplate could not be empty',
-                $urlTemplate
-            ));
-        } elseif (stripos($urlTemplate, self::NOSTO_ACCOUNT_PLACEHOLDER) === false) {
-            throw new NostoException(sprintf(
-                'Nosto account placeholder (@NOSTO_ACCOUNT@) is missing from url template: %s',
-                $urlTemplate
-            ));
-        } elseif (stripos($urlTemplate, self::EMAIL_PLACEHOLDER) === false) {
-            throw new NostoException(sprintf(
-                'Email placeholder (@EMAIL@) is missing from url template: %s',
-                $urlTemplate
-            ));
-        }
-
-        $src = str_replace(self::NOSTO_ACCOUNT_PLACEHOLDER, $this->nostoAccount, $urlTemplate);
+        $src = str_replace(self::NOSTO_ACCOUNT_PLACEHOLDER, $this->nostoAccount, $this->urlTemplate);
         $src = str_replace(self::EMAIL_PLACEHOLDER, $this->customerEmail, $src);
         $src = str_replace(self::CAMPAIGN_ID_PLACEHOLDER, $this->campaignId, $src);
 

@@ -46,18 +46,7 @@ class ImageUrlTest extends Test
     public function testHelperFormatting()
     {
         $imageUrl = new ImageUrl(
-            null,
-            'magento-1',
-            'chen@nosto.com',
-            'BestSeller2'
-        );
-        $this->assertEquals(
-            "https://connect.nosto.com/image/v1/magento-1/BestSeller2/1?uid=chen@nosto.com&version=2.0.8",
-            $imageUrl->format()
-        );
-
-        $imageUrl = new ImageUrl(
-            'http://localhost/image/v1/@NOSTO_ACCOUNT@/@RECOMMENDATION@/1?uid=@EMAIL@&version=2.0.8',
+            'http://localhost/image/v1/@NOSTO_ACCOUNT@/@CAMPAIGN_ID@/1?uid=@EMAIL@&version=2.0.8',
             'magento-1',
             'chen@nosto.com',
             'BestSeller2'
@@ -66,38 +55,5 @@ class ImageUrlTest extends Test
             "http://localhost/image/v1/magento-1/BestSeller2/1?uid=chen@nosto.com&version=2.0.8",
             $imageUrl->format()
         );
-
-        $imageUrl = new ImageUrl(
-            'http://localhost/image/v1/@NOSTO_ACCOUNT@/@RECOMMENDATION@/1?uid=@EMAIL@&version=2.0.8',
-            'magento-1',
-            'chen@nosto.com',
-            null
-        );
-        $this->assertEquals(
-            'http://localhost/image/v1/magento-1/' . ImageUrl::DEFAULT_RECOMMENDATION . '/1?uid=chen@nosto.com&version=2.0.8',
-            $imageUrl->format()
-        );
-
-        $imageUrl = new ImageUrl(
-            'http://localhost/image/v1/@NOSTO_ACCOUNT@/@RECOMMENDATION@/1?uid=@no-email@&version=2.0.8',
-            'magento-1',
-            'chen@nosto.com',
-            null
-        );
-        $this->specify('Test exception', function () use ($imageUrl) {
-            $this->expectException('Nosto\NostoException');
-            $imageUrl->format();
-        });
-
-        $imageUrl = new ImageUrl(
-            'http://localhost/image/v1/@NO-NOSTO_ACCOUNT@/@RECOMMENDATION@/1?uid=@EMAIL@&version=2.0.8',
-            'magento-1',
-            'chen@nosto.com',
-            null
-        );
-        $this->specify('Test exception', function () use ($imageUrl) {
-            $this->expectException('Nosto\NosftoException');
-            $imageUrl->format();
-        });
     }
 }
