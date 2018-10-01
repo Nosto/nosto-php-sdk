@@ -43,7 +43,7 @@ class ImageUrlTest extends Test
 {
     use Specify;
 
-    public function testHelperFormatting()
+    public function testUrlFormatting()
     {
         $imageUrl = new ImageUrl(
             'http://localhost/image/v1/@NOSTO_ACCOUNT@/@CAMPAIGN_ID@/1?uid=@EMAIL@&version=2.0.8',
