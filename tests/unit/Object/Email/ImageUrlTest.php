@@ -34,45 +34,26 @@
  *
  */
 
+namespace Nosto\Object\Email;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
-use Nosto\Object\Signup\Account;
-use Nosto\Operation\MarketingPermission;
-use Nosto\Request\Api\Token;
 
-
-class MarketingPermissionTest extends Test
+class ImageUrlTest extends Test
 {
     use Specify;
 
-    /**
-     * Test update permission
-     */
-    public function testUpdatePermission()
+    public function testUrlFormatting()
     {
-        $account = new Account('platform-00000000');
-        $token = new Token('email', 'token');
-        $account->addApiToken($token);
-
-        $op = new MarketingPermission($account);
-
-        try {
-            $result = $op->update("platforms@nosto.com", true);
-            $this->specify('updated marketing permission successfully', function () use ($result) {
-                $this->assertTrue($result);
-            });
-
-            $result = $op->update("platforms@nosto.com", false);
-
-            $this->specify('updated marketing permission successfully', function () use ($result) {
-                $this->assertTrue($result);
-            });
-
-        } catch (\Exception $e) {
-            $this->specify('updated marketing permission failed', function () use ($e) {
-                $this->fail($e->getMessage());
-            });
-
-        }
+        $imageUrl = new ImageUrl(
+            'http://localhost/image/v1/@NOSTO_ACCOUNT@/@CAMPAIGN_ID@/1?uid=@EMAIL@&version=2.0.8',
+            'magento-1',
+            'chen@nosto.com',
+            'BestSeller2'
+        );
+        $this->assertEquals(
+            "http://localhost/image/v1/magento-1/BestSeller2/1?uid=chen@nosto.com&version=2.0.8",
+            $imageUrl->format()
+        );
     }
 }
