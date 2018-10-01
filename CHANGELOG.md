@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.7.0
+* Add support email widget url formatting 
+
 ## 3.6.1
 * Fix the import path for graphql request
 
