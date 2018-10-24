@@ -984,7 +984,7 @@ class Product extends AbstractObject implements
      */
     private function altImagesToUnique()
     {
-        if ($this->alternateImageUrls->count() == 0) {
+        if ($this->alternateImageUrls->count() === 0) {
             return;
         }
         $images = $this->getAlternateImageUrls();
@@ -997,7 +997,7 @@ class Product extends AbstractObject implements
                 break;
             }
         }
-        $key = array_search($this->getImageUrl(), $images);
+        $key = array_search($this->getImageUrl(), $images, true);
         if ($key !== false) {
             $resetImages = true;
             unset($images[$key]);

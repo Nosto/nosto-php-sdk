@@ -67,21 +67,33 @@ class StringCollection extends AbstractCollection implements MarkupableCollectio
         }
     }
 
+    /**
+     * @param $item
+     */
     public function append($item)
     {
         $this->var[] = $item;
     }
 
+    /**
+     * @return null|string
+     */
     public function getMarkupKey()
     {
         return $this->markupKey;
     }
 
+    /**
+     * @return null|string
+     */
     public function getChildMarkupKey()
     {
         return $this->childMarkupKey;
     }
 
+    /**
+     * @return array
+     */
     public function getData()
     {
         return $this->var;
