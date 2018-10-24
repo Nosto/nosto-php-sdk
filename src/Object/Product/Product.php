@@ -467,6 +467,7 @@ class Product extends AbstractObject implements
     public function setImageUrl($imageUrl)
     {
         $this->imageUrl = $imageUrl;
+        $this->altImagesToUnique();
     }
 
     /**
@@ -687,13 +688,7 @@ class Product extends AbstractObject implements
      */
     public function getAlternateImageUrls()
     {
-        $urls = array();
-        foreach ($this->alternateImageUrls as $url) {
-            if ($url !== $this->imageUrl) {
-                $urls[] = $url;
-            }
-        }
-        return $urls;
+        return $this->alternateImageUrls->getData();
     }
 
     /**
@@ -702,6 +697,7 @@ class Product extends AbstractObject implements
     public function setAlternateImageUrls($alternateImageUrls)
     {
         $this->alternateImageUrls->setData($alternateImageUrls);
+        $this->altImagesToUnique();
     }
 
     /**
@@ -710,6 +706,7 @@ class Product extends AbstractObject implements
     public function addAlternateImageUrls($alternateImageUrl)
     {
         $this->alternateImageUrls->append($alternateImageUrl);
+        $this->altImagesToUnique();
     }
 
     /**
@@ -978,6 +975,35 @@ class Product extends AbstractObject implements
             return $validator->validate();
         } catch (NostoException $e) {
             return false;
+        }
+    }
+
+    /**
+     * Makes the alternative images collection unique and removes
+     * the main product image from alt images if present
+     */
+    private function altImagesToUnique()
+    {
+        if ($this->alternateImageUrls->count() === 0) {
+            return;
+        }
+        $images = $this->getAlternateImageUrls();
+        $resetImages = false;
+        $duplicates = array_count_values($images);
+        foreach ($duplicates as $val => $count) {
+            if ($count > 1) {
+                $resetImages = true;
+                $images = array_unique($images);
+                break;
+            }
+        }
+        $key = array_search($this->getImageUrl(), $images, true);
+        if ($key !== false) {
+            $resetImages = true;
+            unset($images[$key]);
+        }
+        if ($resetImages) {
+            $this->setAlternateImageUrls(array_values($images));
         }
     }
 }
