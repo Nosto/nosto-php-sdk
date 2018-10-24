@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.7.1
+* Remove the main product image URL from the alternative images when serialized to HTML
+
 ## 3.7.0
 * Add support for email widget url formatting 
 
