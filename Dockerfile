@@ -9,7 +9,7 @@ ENV GIT_COMMITTER_NAME "Nosto CI"
 ENV GIT_COMMITTER_EMAIL "devnull@nosto.com"
 
 RUN apt-get update && \
-    apt-get -y -qq install nano tree git
+    apt-get -y -qq install nano tree git unzip php7.0-zip
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
