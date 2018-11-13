@@ -36,13 +36,13 @@
 
 namespace Nosto\Object;
 
+use Nosto\Types\CustomerInterface;
 use Nosto\Types\MarkupableInterface;
-use Nosto\Types\UserInterface;
 
 /**
  * Customer object for tagging
  */
-class Customer extends User implements UserInterface, MarkupableInterface
+class Customer extends User implements CustomerInterface, MarkupableInterface
 {
     /**
      * @var string customer reference
@@ -53,6 +53,16 @@ class Customer extends User implements UserInterface, MarkupableInterface
      * @var string visitor checksum
      */
     private $hcid;
+
+    /**
+     * @var string customer group
+     */
+    private $customerGroup;
+
+    /**
+     * @var Subscription subscription
+     */
+    private $subscription;
 
     /**
      * Get the visitor checksum
@@ -93,5 +103,42 @@ class Customer extends User implements UserInterface, MarkupableInterface
     public function getMarkupKey()
     {
         return 'nosto_customer';
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCustomerGroup()
+    {
+        return $this->customerGroup;
+    }
+
+    /**
+     * @param string $customerGroup
+     */
+    public function setCustomerGroup($customerGroup)
+    {
+        $this->customerGroup = $customerGroup;
+    }
+
+    /**
+     * @return Subscription
+     */
+    public function getSubscription()
+    {
+        return $this->subscription;
+    }
+
+    /**
+     * @param string $name
+     * @param \DateTime $startDate
+     * @throws \Nosto\NostoException
+     */
+    public function setSubscription($name, $startDate)
+    {
+        $subscription = new Subscription();
+        $subscription->setName($name);
+        $subscription->setStartDate($startDate);
+        $this->subscription = $subscription;
     }
 }
