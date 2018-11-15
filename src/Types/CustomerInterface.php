@@ -38,20 +38,17 @@ namespace Nosto\Types;
 
 use Nosto\Object\Subscription;
 
-/**
- * Interface for the account owner details when creating new Nosto accounts.
- */
 interface CustomerInterface extends UserInterface
 {
     /**
      * The reference of the customer
      *
-     * @return mixed
+     * @return string
      */
     public function getCustomerReference();
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMarkupKey();
 

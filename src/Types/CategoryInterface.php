@@ -41,63 +41,63 @@ interface CategoryInterface
     /**
      * The full path of the category
      *
-     * @return mixed
+     * @return string
      */
     public function getCategoryString();
 
     /**
      * Get the id of the category
      *
-     * @return mixed
+     * @return string
      */
     public function getId();
 
     /**
      * Get parent category id
      *
-     * @return mixed
+     * @return string
      */
     public function getParentId();
 
     /**
      * Get the name of the category
      *
-     * @return mixed
+     * @return string
      */
     public function getName();
 
     /**
      * Get the url
      *
-     * @return mixed
+     * @return string
      */
     public function getUrl();
 
     /**
      * Get the image url
      *
-     * @return mixed
+     * @return string
      */
     public function getImageUrl();
 
     /**
      * Get the image thumbnail url
      *
-     * @return mixed
+     * @return string
      */
     public function getThumbnailImageUrl();
 
     /**
      * Get the visibleInMenu var
      *
-     * @return mixed
+     * @return bool
      */
     public function getVisibleInMenu();
 
     /**
      * Get the level
      *
-     * @return mixed
+     * @return string
      */
     public function getLevel();
 }

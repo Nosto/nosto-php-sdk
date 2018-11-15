@@ -130,15 +130,10 @@ class Customer extends User implements CustomerInterface, MarkupableInterface
     }
 
     /**
-     * @param string $name
-     * @param \DateTime $startDate
-     * @throws \Nosto\NostoException
+     * @param Subscription $subscription
      */
-    public function setSubscription($name, $startDate)
+    public function setSubscription(Subscription $subscription)
     {
-        $subscription = new Subscription();
-        $subscription->setName($name);
-        $subscription->setStartDate($startDate);
         $this->subscription = $subscription;
     }
 }

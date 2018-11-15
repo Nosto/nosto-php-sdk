@@ -91,7 +91,7 @@ class Category extends AbstractObject implements CategoryInterface, MarkupableIn
     private $level;
 
     /**
-     * @return mixed|string
+     * @return string
      */
     public function getCategoryString()
     {
@@ -107,7 +107,7 @@ class Category extends AbstractObject implements CategoryInterface, MarkupableIn
     }
 
     /**
-     * @return mixed|string
+     * @return string
      */
     public function getId()
     {
@@ -123,7 +123,7 @@ class Category extends AbstractObject implements CategoryInterface, MarkupableIn
     }
 
     /**
-     * @return mixed|string\
+     * @return string
      */
     public function getParentId()
     {
@@ -139,7 +139,7 @@ class Category extends AbstractObject implements CategoryInterface, MarkupableIn
     }
 
     /**
-     * @return mixed|string
+     * @return string
      */
     public function getName()
     {
@@ -155,7 +155,7 @@ class Category extends AbstractObject implements CategoryInterface, MarkupableIn
     }
 
     /**
-     * @return mixed|string
+     * @return string
      */
     public function getUrl()
     {
@@ -171,7 +171,7 @@ class Category extends AbstractObject implements CategoryInterface, MarkupableIn
     }
 
     /**
-     * @return mixed|string
+     * @return string
      */
     public function getImageUrl()
     {
@@ -187,7 +187,7 @@ class Category extends AbstractObject implements CategoryInterface, MarkupableIn
     }
 
     /**
-     * @return mixed|string
+     * @return string
      */
     public function getThumbnailImageUrl()
     {
@@ -203,7 +203,7 @@ class Category extends AbstractObject implements CategoryInterface, MarkupableIn
     }
 
     /**
-     * @return bool|mixed
+     * @return bool
      */
     public function getVisibleInMenu()
     {
@@ -219,7 +219,7 @@ class Category extends AbstractObject implements CategoryInterface, MarkupableIn
     }
 
     /**
-     * @return mixed|string
+     * @return string
      */
     public function getLevel()
     {
