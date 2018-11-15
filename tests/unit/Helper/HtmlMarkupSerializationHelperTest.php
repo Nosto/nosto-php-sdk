@@ -59,7 +59,7 @@ class HtmlMarkupSerializationHelperTest extends Test
     {
         $object = new MockCategory();
         $markup = $object->toHtml();
-        $this->assertEquals(self::stripLineBreaks($markup), '<div class="notranslate" style="display:none">  <span class="nosto_category" style="display:none">    <span class="category_string">/Women/New Arrivals</span>    <span class="id">10</span>    <span class="parent_id">4</span>    <span class="name">New Arrivals</span>    <span class="url">http://magento1.dev.nos.to/women/women-new-arrivals.html</span>    <span class="image_url">http://magento1.dev.nos.to/media/catalog/category/plp-w-newarrivals_1.jpg</span>    <span class="visible_in_menu">1</span>    <span class="level">3</span>  </span></div>');
+        $this->assertEquals(self::stripLineBreaks($markup), '<div class="notranslate" style="display:none">  <span class="nosto_category" style="display:none">    <span class="category_string">/Women/New Arrivals</span>    <span class="id">10</span>    <span class="parent_id">4</span>    <span class="name">New Arrivals</span>    <span class="url">http://magento1.dev.nos.to/women/women-new-arrivals.html</span>    <span class="image_url">http://magento1.dev.nos.to/media/catalog/category/plp-w-newarrivals_1.jpg</span>    <span class="visible_in_menu">true</span>    <span class="level">3</span>  </span></div>');
     }
 
     /**
