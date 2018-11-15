@@ -43,9 +43,9 @@ class HtmlMarkupSerializationHelperTest extends Test
     use Specify;
 
     /**
-     * Tests that an object is serialized to HTML correctly
+     * Tests that a product object is serialized to HTML correctly
      */
-    public function testObject()
+    public function testProduct()
     {
         $object = new MockProduct();
         $markup = $object->toHtml();
@@ -53,9 +53,29 @@ class HtmlMarkupSerializationHelperTest extends Test
     }
 
     /**
+     * Tests that a category object is serialized to HTML correctly
+     */
+    public function testCategory()
+    {
+        $object = new MockCategory();
+        $markup = $object->toHtml();
+        $this->assertEquals(self::stripLineBreaks($markup), '<div class="notranslate" style="display:none">  <span class="nosto_category" style="display:none">    <span class="category_string">/Women/New Arrivals</span>    <span class="id">10</span>    <span class="parent_id">4</span>    <span class="name">New Arrivals</span>    <span class="url">http://magento1.dev.nos.to/women/women-new-arrivals.html</span>    <span class="image_url">http://magento1.dev.nos.to/media/catalog/category/plp-w-newarrivals_1.jpg</span>    <span class="visible_in_menu">1</span>    <span class="level">3</span>  </span></div>');
+    }
+
+    /**
+     * Tests that a customer object is serialized to HTML correctly
+     */
+    public function testCustomer()
+    {
+        $object = new MockCustomer();
+        $markup = $object->toHtml();
+        $this->assertEquals(self::stripLineBreaks($markup), '<div class="notranslate" style="display:none">  <span class="nosto_customer" style="display:none">    <span class="first_name">Olsi</span>    <span class="last_name">Qose</span>    <span class="email">olsiqose@gmail.com</span>    <span class="marketing_permission"></span>    <span class="gender">Male</span>    <span class="date_of_birth">1994-12-11</span>    <span class="customer_reference">f9b62f795be96d31b8fbf9.40894994</span>    <span class="hcid">8c390967d210cca5a3eeb2d0c4c7990be8ecaf3d9680b752df4b90f7c89937a9</span>    <span class="customer_group">General</span>  </span></div>');
+    }
+
+    /**
      * Tests that an object is serialized to HTML correctly
      */
-    public function testObjectWithAltImages()
+    public function testProductWithAltImages()
     {
         $object = new MockProduct();
         $mainImage = 'http://my.shop.com/images/test_product_image.jpg';
