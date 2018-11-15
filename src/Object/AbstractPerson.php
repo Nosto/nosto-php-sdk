@@ -88,7 +88,7 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     private $gender;
 
     /**
-     * @var \DateTime | \DateTimeInterface date of birth
+     * @var string date of birth
      */
     private $dateOfBirth;
 
@@ -247,7 +247,7 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     }
 
     /**
-     * @return \DateTime|null
+     * @return string|null
      */
     public function getDateOfBirth()
     {
