@@ -42,9 +42,9 @@ class MockCustomer extends Customer
     {
         parent::__construct();
 
-        $this->setFirstName("Olsi");
-        $this->setLastName("Qose");
-        $this->setEmail('olsiqose@gmail.com');
+        $this->setFirstName("Robot");
+        $this->setLastName("Test");
+        $this->setEmail('robot@test.com');
         $this->setGender("Male");
         $this->setDateOfBirth(DateTime::createFromFormat('Y-m-d', '1994-12-11'));
         $this->setCustomerReference('f9b62f795be96d31b8fbf9.40894994');

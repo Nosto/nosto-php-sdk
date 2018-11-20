@@ -97,7 +97,7 @@ interface PersonInterface
     /**
      * The date of birth of the customer
      *
-     * @return \DateTime|null
+     * @return string|null
      */
     public function getDateOfBirth();
 }

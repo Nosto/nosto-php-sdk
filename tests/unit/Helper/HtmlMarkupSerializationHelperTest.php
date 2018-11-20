@@ -69,7 +69,7 @@ class HtmlMarkupSerializationHelperTest extends Test
     {
         $object = new MockCustomer();
         $markup = $object->toHtml();
-        $this->assertEquals(self::stripLineBreaks($markup), '<div class="notranslate" style="display:none">  <span class="nosto_customer" style="display:none">    <span class="first_name">Olsi</span>    <span class="last_name">Qose</span>    <span class="email">olsiqose@gmail.com</span>    <span class="marketing_permission"></span>    <span class="gender">Male</span>    <span class="date_of_birth">1994-12-11</span>    <span class="customer_reference">f9b62f795be96d31b8fbf9.40894994</span>    <span class="hcid">8c390967d210cca5a3eeb2d0c4c7990be8ecaf3d9680b752df4b90f7c89937a9</span>    <span class="customer_group">General</span>  </span></div>');
+        $this->assertEquals(self::stripLineBreaks($markup), '<div class="notranslate" style="display:none">  <span class="nosto_customer" style="display:none">    <span class="first_name">Robot</span>    <span class="last_name">Test</span>    <span class="email">robot@test.com</span>    <span class="marketing_permission"></span>    <span class="gender">Male</span>    <span class="date_of_birth">1994-12-11</span>    <span class="customer_reference">f9b62f795be96d31b8fbf9.40894994</span>    <span class="hcid">8c390967d210cca5a3eeb2d0c4c7990be8ecaf3d9680b752df4b90f7c89937a9</span>    <span class="customer_group">General</span>  </span></div>');
     }
 
     /**
