@@ -34,70 +34,59 @@
  *
  */
 
-namespace Nosto\Types;
+namespace Nosto\Object;
 
-interface PersonInterface
+use Nosto\NostoException;
+
+
+class Subscription
 {
     /**
-     * The first name of the user
-     *
-     * @return string the first name.
+     * @var string name
      */
-    public function getFirstName();
+    private $name;
 
     /**
-     * The last name of the user
-     *
-     * @return string the last name.
+     * @var \DateTime startDate
      */
-    public function getLastName();
+    private $startDate;
 
     /**
-     * The email address of the user
-     *
-     * @return string the email address.
+     * @return string
      */
-    public function getEmail();
+    public function getName()
+    {
+        return $this->name;
+    }
 
     /**
-     * The phone number of the user
-     *
-     * @return string|null
+     * @param string $name
      */
-    public function getPhone();
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
     /**
-     * The post code of the user
-     *
-     * @return string|null
+     * @return \DateTime
      */
-    public function getPostCode();
+    public function getStartDate()
+    {
+        return $this->startDate;
+    }
 
     /**
-     * The country of the user
-     *
-     * @return string|null
+     * @param \DateTime $startDate
+     * @throws NostoException
      */
-    public function getCountry();
+    public function setStartDate($startDate)
+    {
+        if ($startDate instanceof \DateTime
+            || (is_object($startDate) && method_exists($startDate, 'format'))) {
+            $this->startDate = $startDate->format('Y-m-d');
+        } else {
+            throw new NostoException('Invalid argument, expected DateTime or DateTimeInterface');
+        }
+    }
 
-    /**
-     * The opt-in status for user
-     *
-     * @return boolean
-     */
-    public function getMarketingPermission();
-
-    /**
-     * The gender of the customer
-     *
-     * @return string|null
-     */
-    public function getGender();
-
-    /**
-     * The date of birth of the customer
-     *
-     * @return \DateTime|null
-     */
-    public function getDateOfBirth();
 }

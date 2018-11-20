@@ -36,68 +36,36 @@
 
 namespace Nosto\Types;
 
-interface PersonInterface
+use Nosto\Object\Subscription;
+
+/**
+ * Interface for the account owner details when creating new Nosto accounts.
+ */
+interface CustomerInterface extends UserInterface
 {
     /**
-     * The first name of the user
+     * The reference of the customer
      *
-     * @return string the first name.
+     * @return mixed
      */
-    public function getFirstName();
+    public function getCustomerReference();
 
     /**
-     * The last name of the user
-     *
-     * @return string the last name.
+     * @return mixed
      */
-    public function getLastName();
+    public function getMarkupKey();
 
     /**
-     * The email address of the user
-     *
-     * @return string the email address.
-     */
-    public function getEmail();
-
-    /**
-     * The phone number of the user
+     * The customer group of the user
      *
      * @return string|null
      */
-    public function getPhone();
+    public function getCustomerGroup();
 
     /**
-     * The post code of the user
+     *  The subscription of the customer
      *
-     * @return string|null
+     * @return Subscription
      */
-    public function getPostCode();
-
-    /**
-     * The country of the user
-     *
-     * @return string|null
-     */
-    public function getCountry();
-
-    /**
-     * The opt-in status for user
-     *
-     * @return boolean
-     */
-    public function getMarketingPermission();
-
-    /**
-     * The gender of the customer
-     *
-     * @return string|null
-     */
-    public function getGender();
-
-    /**
-     * The date of birth of the customer
-     *
-     * @return \DateTime|null
-     */
-    public function getDateOfBirth();
+    public function getSubscription();
 }
