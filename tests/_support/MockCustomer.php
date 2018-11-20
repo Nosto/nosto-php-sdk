@@ -34,70 +34,23 @@
  *
  */
 
-namespace Nosto\Types;
+use Nosto\Object\Customer;
 
-interface PersonInterface
+class MockCustomer extends Customer
 {
-    /**
-     * The first name of the user
-     *
-     * @return string the first name.
-     */
-    public function getFirstName();
+    public function __construct()
+    {
+        parent::__construct();
 
-    /**
-     * The last name of the user
-     *
-     * @return string the last name.
-     */
-    public function getLastName();
+        $this->setFirstName("Robot");
+        $this->setLastName("Test");
+        $this->setEmail('robot@test.com');
+        $this->setGender("Male");
+        $this->setDateOfBirth(DateTime::createFromFormat('Y-m-d', '1994-12-11'));
+        $this->setCustomerReference('f9b62f795be96d31b8fbf9.40894994');
+        $this->setHcid('8c390967d210cca5a3eeb2d0c4c7990be8ecaf3d9680b752df4b90f7c89937a9');
+        $this->setCustomerGroup('General');
 
-    /**
-     * The email address of the user
-     *
-     * @return string the email address.
-     */
-    public function getEmail();
+    }
 
-    /**
-     * The phone number of the user
-     *
-     * @return string|null
-     */
-    public function getPhone();
-
-    /**
-     * The post code of the user
-     *
-     * @return string|null
-     */
-    public function getPostCode();
-
-    /**
-     * The country of the user
-     *
-     * @return string|null
-     */
-    public function getCountry();
-
-    /**
-     * The opt-in status for user
-     *
-     * @return boolean
-     */
-    public function getMarketingPermission();
-
-    /**
-     * The gender of the customer
-     *
-     * @return string|null
-     */
-    public function getGender();
-
-    /**
-     * The date of birth of the customer
-     *
-     * @return string|null
-     */
-    public function getDateOfBirth();
 }

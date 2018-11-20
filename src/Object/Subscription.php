@@ -36,104 +36,57 @@
 
 namespace Nosto\Object;
 
-use Nosto\Types\CustomerInterface;
-use Nosto\Types\MarkupableInterface;
+use Nosto\NostoException;
 
-/**
- * Customer object for tagging
- */
-class Customer extends User implements CustomerInterface, MarkupableInterface
+
+class Subscription
 {
     /**
-     * @var string customer reference
+     * @var string name
      */
-    private $customerReference;
+    private $name;
 
     /**
-     * @var string visitor checksum
+     * @var string startDate
      */
-    private $hcid;
+    private $startDate;
 
     /**
-     * @var string customer group
-     */
-    private $customerGroup;
-
-    /**
-     * @var Subscription subscription
-     */
-    private $subscription;
-
-    /**
-     * Get the visitor checksum
-     *
      * @return string
      */
-    public function getHcid()
+    public function getName()
     {
-        return $this->hcid;
+        return $this->name;
     }
 
     /**
-     * Set the visitor checksum
-     *
-     * @param string $hcid
+     * @param string $name
      */
-    public function setHcid($hcid)
+    public function setName($name)
     {
-        $this->hcid = $hcid;
+        $this->name = $name;
     }
 
     /**
      * @return string
      */
-    public function getCustomerReference()
+    public function getStartDate()
     {
-        return $this->customerReference;
+        return $this->startDate;
     }
 
     /**
-     * @param string $customerReference
+     * @param \DateTime $startDate
+     * @throws NostoException
      */
-    public function setCustomerReference($customerReference)
+    public function setStartDate($startDate)
     {
-        $this->customerReference = $customerReference;
+        if ($startDate instanceof \DateTime
+            || (is_object($startDate) && method_exists($startDate, 'format'))) {
+            $this->startDate = $startDate->format('Y-m-d');
+        } else {
+            throw new NostoException('Invalid argument, expected DateTime or DateTimeInterface');
+        }
     }
 
-    public function getMarkupKey()
-    {
-        return 'nosto_customer';
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getCustomerGroup()
-    {
-        return $this->customerGroup;
-    }
-
-    /**
-     * @param string $customerGroup
-     */
-    public function setCustomerGroup($customerGroup)
-    {
-        $this->customerGroup = $customerGroup;
-    }
-
-    /**
-     * @return Subscription
-     */
-    public function getSubscription()
-    {
-        return $this->subscription;
-    }
-
-    /**
-     * @param Subscription $subscription
-     */
-    public function setSubscription(Subscription $subscription)
-    {
-        $this->subscription = $subscription;
-    }
 }

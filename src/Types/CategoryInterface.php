@@ -34,106 +34,70 @@
  *
  */
 
-namespace Nosto\Object;
+namespace Nosto\Types;
 
-use Nosto\Types\CustomerInterface;
-use Nosto\Types\MarkupableInterface;
-
-/**
- * Customer object for tagging
- */
-class Customer extends User implements CustomerInterface, MarkupableInterface
+interface CategoryInterface
 {
     /**
-     * @var string customer reference
-     */
-    private $customerReference;
-
-    /**
-     * @var string visitor checksum
-     */
-    private $hcid;
-
-    /**
-     * @var string customer group
-     */
-    private $customerGroup;
-
-    /**
-     * @var Subscription subscription
-     */
-    private $subscription;
-
-    /**
-     * Get the visitor checksum
+     * The full path of the category
      *
      * @return string
      */
-    public function getHcid()
-    {
-        return $this->hcid;
-    }
+    public function getCategoryString();
 
     /**
-     * Set the visitor checksum
+     * Get the id of the category
      *
-     * @param string $hcid
-     */
-    public function setHcid($hcid)
-    {
-        $this->hcid = $hcid;
-    }
-
-    /**
      * @return string
      */
-    public function getCustomerReference()
-    {
-        return $this->customerReference;
-    }
+    public function getId();
 
     /**
-     * @param string $customerReference
+     * Get parent category id
+     *
+     * @return string
      */
-    public function setCustomerReference($customerReference)
-    {
-        $this->customerReference = $customerReference;
-    }
-
-    public function getMarkupKey()
-    {
-        return 'nosto_customer';
-    }
+    public function getParentId();
 
     /**
-     * @return null|string
+     * Get the name of the category
+     *
+     * @return string
      */
-    public function getCustomerGroup()
-    {
-        return $this->customerGroup;
-    }
+    public function getName();
 
     /**
-     * @param string $customerGroup
+     * Get the url
+     *
+     * @return string
      */
-    public function setCustomerGroup($customerGroup)
-    {
-        $this->customerGroup = $customerGroup;
-    }
+    public function getUrl();
 
     /**
-     * @return Subscription
+     * Get the image url
+     *
+     * @return string
      */
-    public function getSubscription()
-    {
-        return $this->subscription;
-    }
+    public function getImageUrl();
 
     /**
-     * @param Subscription $subscription
+     * Get the image thumbnail url
+     *
+     * @return string
      */
-    public function setSubscription(Subscription $subscription)
-    {
-        $this->subscription = $subscription;
-    }
+    public function getThumbnailImageUrl();
+
+    /**
+     * Get the visibleInMenu var
+     *
+     * @return bool
+     */
+    public function getVisibleInMenu();
+
+    /**
+     * Get the level
+     *
+     * @return string
+     */
+    public function getLevel();
 }

@@ -39,6 +39,7 @@ namespace Nosto\Object;
 
 use Nosto\AbstractObject;
 use Nosto\Types\PersonInterface;
+use Nosto\NostoException;
 
 /**
  * Abstract model used for containing the basic details of person for purposes
@@ -80,6 +81,16 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
      * @var boolean the opt-in status for the person
      */
     private $marketingPermission;
+
+    /**
+     * @var string gender
+     */
+    private $gender;
+
+    /**
+     * @var string date of birth
+     */
+    private $dateOfBirth;
 
     public function __construct()
     {
@@ -217,5 +228,42 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     public function setOptedIn($optedIn)
     {
         $this->setMarketingPermission($optedIn);
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param string $gender
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDateOfBirth()
+    {
+        return $this->dateOfBirth;
+    }
+
+    /**
+     * @param \DateTime | \DateTimeInterface $dateOfBirth
+     */
+    public function setDateOfBirth($dateOfBirth)
+    {
+        if ($dateOfBirth instanceof \DateTime
+            || (is_object($dateOfBirth) && method_exists($dateOfBirth, 'format'))) {
+            $this->dateOfBirth = $dateOfBirth->format('Y-m-d');
+        } else {
+            throw new NostoException('Invalid argument, expected DateTime or DateTimeInterface');
+        }
     }
 }

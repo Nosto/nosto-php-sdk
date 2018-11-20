@@ -34,106 +34,35 @@
  *
  */
 
-namespace Nosto\Object;
+namespace Nosto\Types;
 
-use Nosto\Types\CustomerInterface;
-use Nosto\Types\MarkupableInterface;
+use Nosto\Object\Subscription;
 
-/**
- * Customer object for tagging
- */
-class Customer extends User implements CustomerInterface, MarkupableInterface
+interface CustomerInterface extends UserInterface
 {
     /**
-     * @var string customer reference
-     */
-    private $customerReference;
-
-    /**
-     * @var string visitor checksum
-     */
-    private $hcid;
-
-    /**
-     * @var string customer group
-     */
-    private $customerGroup;
-
-    /**
-     * @var Subscription subscription
-     */
-    private $subscription;
-
-    /**
-     * Get the visitor checksum
+     * The reference of the customer
      *
      * @return string
      */
-    public function getHcid()
-    {
-        return $this->hcid;
-    }
-
-    /**
-     * Set the visitor checksum
-     *
-     * @param string $hcid
-     */
-    public function setHcid($hcid)
-    {
-        $this->hcid = $hcid;
-    }
+    public function getCustomerReference();
 
     /**
      * @return string
      */
-    public function getCustomerReference()
-    {
-        return $this->customerReference;
-    }
+    public function getMarkupKey();
 
     /**
-     * @param string $customerReference
+     * The customer group of the user
+     *
+     * @return string|null
      */
-    public function setCustomerReference($customerReference)
-    {
-        $this->customerReference = $customerReference;
-    }
-
-    public function getMarkupKey()
-    {
-        return 'nosto_customer';
-    }
+    public function getCustomerGroup();
 
     /**
-     * @return null|string
-     */
-    public function getCustomerGroup()
-    {
-        return $this->customerGroup;
-    }
-
-    /**
-     * @param string $customerGroup
-     */
-    public function setCustomerGroup($customerGroup)
-    {
-        $this->customerGroup = $customerGroup;
-    }
-
-    /**
+     *  The subscription of the customer
+     *
      * @return Subscription
      */
-    public function getSubscription()
-    {
-        return $this->subscription;
-    }
-
-    /**
-     * @param Subscription $subscription
-     */
-    public function setSubscription(Subscription $subscription)
-    {
-        $this->subscription = $subscription;
-    }
+    public function getSubscription();
 }

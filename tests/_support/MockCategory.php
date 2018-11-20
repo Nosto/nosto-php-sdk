@@ -34,70 +34,19 @@
  *
  */
 
-namespace Nosto\Types;
+use Nosto\Object\Category;
 
-interface PersonInterface
+class MockCategory extends Category
 {
-    /**
-     * The first name of the user
-     *
-     * @return string the first name.
-     */
-    public function getFirstName();
-
-    /**
-     * The last name of the user
-     *
-     * @return string the last name.
-     */
-    public function getLastName();
-
-    /**
-     * The email address of the user
-     *
-     * @return string the email address.
-     */
-    public function getEmail();
-
-    /**
-     * The phone number of the user
-     *
-     * @return string|null
-     */
-    public function getPhone();
-
-    /**
-     * The post code of the user
-     *
-     * @return string|null
-     */
-    public function getPostCode();
-
-    /**
-     * The country of the user
-     *
-     * @return string|null
-     */
-    public function getCountry();
-
-    /**
-     * The opt-in status for user
-     *
-     * @return boolean
-     */
-    public function getMarketingPermission();
-
-    /**
-     * The gender of the customer
-     *
-     * @return string|null
-     */
-    public function getGender();
-
-    /**
-     * The date of birth of the customer
-     *
-     * @return string|null
-     */
-    public function getDateOfBirth();
+    public function __construct()
+    {
+        $this->setId("10");
+        $this->setUrl('http://magento1.dev.nos.to/women/women-new-arrivals.html');
+        $this->setLevel('3');
+        $this->setVisibleInMenu(true);
+        $this->setImageUrl('http://magento1.dev.nos.to/media/catalog/category/plp-w-newarrivals_1.jpg');
+        $this->setName('New Arrivals');
+        $this->setParentId(4);
+        $this->setCategoryString('/Women/New Arrivals');
+    }
 }
