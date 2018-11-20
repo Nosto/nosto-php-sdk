@@ -47,7 +47,7 @@ class Subscription
     private $name;
 
     /**
-     * @var \DateTime startDate
+     * @var string startDate
      */
     private $startDate;
 
@@ -68,7 +68,7 @@ class Subscription
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getStartDate()
     {

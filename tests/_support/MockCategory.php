@@ -34,35 +34,19 @@
  *
  */
 
-namespace Nosto\Types;
+use Nosto\Object\Category;
 
-use Nosto\Object\Subscription;
-
-interface CustomerInterface extends UserInterface
+class MockCategory extends Category
 {
-    /**
-     * The reference of the customer
-     *
-     * @return string
-     */
-    public function getCustomerReference();
-
-    /**
-     * @return string
-     */
-    public function getMarkupKey();
-
-    /**
-     * The customer group of the user
-     *
-     * @return string|null
-     */
-    public function getCustomerGroup();
-
-    /**
-     *  The subscription of the customer
-     *
-     * @return Subscription
-     */
-    public function getSubscription();
+    public function __construct()
+    {
+        $this->setId("10");
+        $this->setUrl('http://magento1.dev.nos.to/women/women-new-arrivals.html');
+        $this->setLevel('3');
+        $this->setVisibleInMenu(true);
+        $this->setImageUrl('http://magento1.dev.nos.to/media/catalog/category/plp-w-newarrivals_1.jpg');
+        $this->setName('New Arrivals');
+        $this->setParentId(4);
+        $this->setCategoryString('/Women/New Arrivals');
+    }
 }

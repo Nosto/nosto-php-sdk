@@ -34,35 +34,23 @@
  *
  */
 
-namespace Nosto\Types;
+use Nosto\Object\Customer;
 
-use Nosto\Object\Subscription;
-
-interface CustomerInterface extends UserInterface
+class MockCustomer extends Customer
 {
-    /**
-     * The reference of the customer
-     *
-     * @return string
-     */
-    public function getCustomerReference();
+    public function __construct()
+    {
+        parent::__construct();
 
-    /**
-     * @return string
-     */
-    public function getMarkupKey();
+        $this->setFirstName("Robot");
+        $this->setLastName("Test");
+        $this->setEmail('robot@test.com');
+        $this->setGender("Male");
+        $this->setDateOfBirth(DateTime::createFromFormat('Y-m-d', '1994-12-11'));
+        $this->setCustomerReference('f9b62f795be96d31b8fbf9.40894994');
+        $this->setHcid('8c390967d210cca5a3eeb2d0c4c7990be8ecaf3d9680b752df4b90f7c89937a9');
+        $this->setCustomerGroup('General');
 
-    /**
-     * The customer group of the user
-     *
-     * @return string|null
-     */
-    public function getCustomerGroup();
+    }
 
-    /**
-     *  The subscription of the customer
-     *
-     * @return Subscription
-     */
-    public function getSubscription();
 }

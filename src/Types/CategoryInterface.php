@@ -36,33 +36,68 @@
 
 namespace Nosto\Types;
 
-use Nosto\Object\Subscription;
-
-interface CustomerInterface extends UserInterface
+interface CategoryInterface
 {
     /**
-     * The reference of the customer
+     * The full path of the category
      *
      * @return string
      */
-    public function getCustomerReference();
+    public function getCategoryString();
 
     /**
+     * Get the id of the category
+     *
      * @return string
      */
-    public function getMarkupKey();
+    public function getId();
 
     /**
-     * The customer group of the user
+     * Get parent category id
      *
-     * @return string|null
+     * @return string
      */
-    public function getCustomerGroup();
+    public function getParentId();
 
     /**
-     *  The subscription of the customer
+     * Get the name of the category
      *
-     * @return Subscription
+     * @return string
      */
-    public function getSubscription();
+    public function getName();
+
+    /**
+     * Get the url
+     *
+     * @return string
+     */
+    public function getUrl();
+
+    /**
+     * Get the image url
+     *
+     * @return string
+     */
+    public function getImageUrl();
+
+    /**
+     * Get the image thumbnail url
+     *
+     * @return string
+     */
+    public function getThumbnailImageUrl();
+
+    /**
+     * Get the visibleInMenu var
+     *
+     * @return bool
+     */
+    public function getVisibleInMenu();
+
+    /**
+     * Get the level
+     *
+     * @return string
+     */
+    public function getLevel();
 }
