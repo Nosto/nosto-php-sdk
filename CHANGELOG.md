@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.8.0
+* Enrich customer tagging
+* Enrich category tagging
+
 ## 3.7.1
 * Remove the main product image URL from the alternative images when serialized to HTML
 
