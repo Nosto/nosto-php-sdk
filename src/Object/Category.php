@@ -131,7 +131,7 @@ class Category extends AbstractObject implements CategoryInterface, MarkupableIn
     }
 
     /**
-     * @param string $parentId
+     * @param int|string $parentId
      */
     public function setParentId($parentId)
     {
@@ -227,7 +227,7 @@ class Category extends AbstractObject implements CategoryInterface, MarkupableIn
     }
 
     /**
-     * @param string $level
+     * @param int|string $level
      */
     public function setLevel($level)
     {
