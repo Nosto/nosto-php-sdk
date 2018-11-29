@@ -5,7 +5,7 @@ Provides tools for building modules that integrate Nosto into your e-commerce pl
 
 ## Requirements
 
-* PHP 5.4+
+* The Nosto PHP SDK requires at least PHP version 5.4.0 and it's also compatible with PHP >= 7.0.0
 
 ## Getting started
 
