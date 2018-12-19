@@ -100,4 +100,25 @@ interface PersonInterface
      * @return string|null
      */
     public function getDateOfBirth();
+
+    /**
+     * The city of the customer
+     *
+     * @return string|null
+     */
+    public function getCity();
+
+    /**
+     * The region of the customer
+     *
+     * @return string|null
+     */
+    public function getRegion();
+
+    /**
+     * The street of the customer
+     *
+     * @return string|null
+     */
+    public function getStreet();
 }

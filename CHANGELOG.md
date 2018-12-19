@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
+    
+## 3.8.2
+* Enrich customer tagging with address related data
 
 ## 3.8.1
 * Fix annotation types in `src\Object\Category` class
