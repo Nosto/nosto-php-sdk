@@ -92,6 +92,21 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
      */
     private $dateOfBirth;
 
+    /**
+     * @var string the region of the person
+     */
+    private $region;
+
+    /**
+     * @var string the city of the person
+     */
+    private $city;
+
+    /**
+     * @var string the street of the person
+     */
+    private $street;
+
     public function __construct()
     {
         $this->setMarketingPermission(false);
@@ -265,5 +280,53 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
         } else {
             throw new NostoException('Invalid argument, expected DateTime or DateTimeInterface');
         }
+    }
+
+    /**
+     * @param string $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param string $region
+     */
+    public function setRegion($region)
+    {
+        $this->region = $region;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    /**
+     * @param string $street
+     */
+    public function setStreet($street)
+    {
+        $this->street = $street;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getStreet()
+    {
+        return $this->street;
     }
 }
