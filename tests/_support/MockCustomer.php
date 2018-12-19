@@ -50,6 +50,9 @@ class MockCustomer extends Customer
         $this->setCustomerReference('f9b62f795be96d31b8fbf9.40894994');
         $this->setHcid('8c390967d210cca5a3eeb2d0c4c7990be8ecaf3d9680b752df4b90f7c89937a9');
         $this->setCustomerGroup('General');
+        $this->setStreet('Bulevardi');
+        $this->setCity('Helsinki');
+        $this->setRegion('Uusima');
 
     }
 
