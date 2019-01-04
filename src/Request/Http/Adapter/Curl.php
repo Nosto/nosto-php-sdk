@@ -67,6 +67,10 @@ class Curl extends Adapter
     public function get($url, array $options = array())
     {
         $this->init($options);
+        $httpVersion = CURL_HTTP_VERSION_1_1;
+        if (array_key_exists(CURLOPT_HTTP_VERSION, $options) && !empty($options[CURLOPT_HTTP_VERSION])) {
+            $httpVersion = $options[CURLOPT_HTTP_VERSION];
+        }
         return $this->send(
             array(
                 CURLOPT_URL => $url,
@@ -74,6 +78,7 @@ class Curl extends Adapter
                 CURLOPT_FRESH_CONNECT => 1,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_FORBID_REUSE => 1,
+                CURLOPT_HTTP_VERSION => $httpVersion
             )
         );
     }
