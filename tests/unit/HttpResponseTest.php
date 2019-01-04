@@ -35,22 +35,29 @@
  */
 
 use Codeception\TestCase\Test;
-use Nosto\Request\Http\Adapter\Curl;
-use Nosto\Request\Http\HttpRequest;
+use Nosto\Request\Http\HttpResponse;
 
 class HttpResponseTest extends Test
 {
+    /**
+     * Tests the getCode method for http/1.1 response
+     */
     public function testResponseStatusCode()
     {
-        $curl = new Curl(HttpRequest::$userAgent);
-        $response = $curl->get('https://my.nosto.com/auth/login');
+        $headers = ['HTTP/1.1 200 OK'];
+        $body = '';
+        $response = new HttpResponse($headers, $body);
         $this->assertEquals(200, $response->getCode());
     }
 
+    /**
+     * Tests the getCode method for http/2 response
+     */
     public function testResponseStatusCodeWithHttp2()
     {
-        $curl = new Curl(HttpRequest::$userAgent);
-        $response = $curl->get('https://my.nosto.com/auth/login',[CURLOPT_HTTP_VERSION  => CURL_HTTP_VERSION_2_0]);
+        $headers = ['HTTP/2 200'];
+        $body = '';
+        $response = new HttpResponse($headers, $body);
         $this->assertEquals(200, $response->getCode());
     }
 }
