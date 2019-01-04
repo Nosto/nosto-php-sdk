@@ -136,9 +136,9 @@ class HttpResponse
             if (!empty($this->headers)) {
                 foreach ($this->headers as $header) {
                     $matches = array();
-                    preg_match('|HTTP/\d\.\d\s+(\d+)\s+.*|', $header, $matches);
-                    if (isset($matches[1])) {
-                        $code = (int)$matches[1];
+                    preg_match('|HTTP/\d(\.\d)?\s+(\d+)(\s+.*)?|', $header, $matches);
+                    if (isset($matches[2])) {
+                        $code = (int)$matches[2];
                     }
                 }
             }
