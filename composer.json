@@ -36,7 +36,7 @@
   "require": {
     "php": ">=5.4.0",
     "phpseclib/phpseclib": "2.0.*",
-    "vlucas/phpdotenv": "2.4.0"
+    "vlucas/phpdotenv": ">=2.4.0 <=2.6"
   },
   "scripts-dev": {
     "post-install-cmd": "if [ -f ./vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility; fi",
