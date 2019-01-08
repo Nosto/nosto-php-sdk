@@ -37,7 +37,7 @@
 namespace Nosto\Test\Support;
 
 use Nosto\Object\Customer;
-use DateTime;
+use \DateTime;
 
 class MockCustomer extends Customer
 {
