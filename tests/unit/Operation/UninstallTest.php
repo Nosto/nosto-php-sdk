@@ -40,7 +40,7 @@ use Nosto\Object\Signup\Account;
 use Nosto\Operation\UninstallAccount;
 use Nosto\Request\Api\Token;
 
-class OperationUninstallTest extends Test
+class UninstallTest extends Test
 {
     use Specify;
 

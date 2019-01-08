@@ -40,7 +40,7 @@ use Nosto\Object\Signup\Account;
 use Nosto\Operation\InitiateSso;
 use Nosto\Request\Api\Token;
 
-class OperationSSOTest extends Test
+class SSOTest extends Test
 {
     use Specify;
 

@@ -40,7 +40,7 @@ use Nosto\Types\Product\ProductInterface;
 use Nosto\Object\Product\VariationCollection;
 
 
-class ObjectVariationTest extends Test
+class VariationTest extends Test
 {
     use Specify;
 

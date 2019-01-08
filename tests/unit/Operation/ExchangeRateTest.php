@@ -41,7 +41,7 @@ use Nosto\Object\Signup\Account;
 use Nosto\Operation\SyncRates;
 use Nosto\Request\Api\Token;
 
-class OperationExchangeRateTest extends Test
+class ExchangeRateTest extends Test
 {
     use Specify;
 

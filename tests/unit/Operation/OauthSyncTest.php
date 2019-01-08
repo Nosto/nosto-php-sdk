@@ -38,7 +38,7 @@ use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Operation\OAuth\ExchangeTokens;
 
-class OperationOauthSyncTest extends Test
+class OauthSyncTest extends Test
 {
     use Specify;
 

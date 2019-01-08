@@ -41,7 +41,7 @@ use Nosto\Operation\UpsertProduct;
 use Nosto\Request\Api\Token;
 use Nosto\Types\Product\ProductInterface;
 
-class OperationProductTest extends Test
+class ProductTest extends Test
 {
     use Specify;
 

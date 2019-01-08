@@ -39,7 +39,7 @@ use Codeception\TestCase\Test;
 use Nosto\Object\Signup\Account;
 use Nosto\Operation\OrderConfirm;
 
-class OperationOrderConfirmationTest extends Test
+class OrderConfirmationTest extends Test
 {
     use Specify;
 

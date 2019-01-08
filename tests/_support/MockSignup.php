@@ -78,7 +78,7 @@ class MockSignup extends Signup
         parent::__construct('magento',
             'YBDKYwSqTCzSsU8Bwbg4im2pkHMcgTy9cCX7vevjJwON1UISJIwXOLMM0a8nZY7h', null);
         $this->setOwner(new MockOwner());
-        $this->setBillingDetails(new MockNostoSignupBilling());
+        $this->setBillingDetails(new MockBilling());
         $this->setTitle('My Shop');
         $this->setName('00000000');
         $this->setFrontPageUrl('http://localhost');

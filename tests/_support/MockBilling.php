@@ -70,7 +70,7 @@ use Nosto\Object\Signup\Billing;
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class MockNostoSignupBilling extends Billing
+class MockBilling extends Billing
 {
     public function __construct()
     {

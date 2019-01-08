@@ -39,7 +39,7 @@ use Codeception\TestCase\Test;
 use Nosto\Operation\UpdateSettings;
 use Nosto\Request\Api\Token;
 
-class OperationSettingsTest extends Test
+class SettingsTest extends Test
 {
     use Specify;
 
