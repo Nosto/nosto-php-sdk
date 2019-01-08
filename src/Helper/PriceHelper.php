@@ -49,6 +49,6 @@ final class PriceHelper extends AbstractHelper
      */
     public static function format($price)
     {
-        return is_numeric($price) ? number_format($price, 2, '.', '') : null;
+        return is_numeric($price) ? number_format($price, 2, '.', '') : '';
     }
 }
