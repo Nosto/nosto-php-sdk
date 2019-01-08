@@ -34,13 +34,16 @@
  *
  */
 
+namespace Nosto\Test\Unit\Operation;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Object\Signup\Account;
 use Nosto\Operation\InitiateSso;
 use Nosto\Request\Api\Token;
+use Nosto\Test\Support\MockUser;
 
-class OperationSSOTest extends Test
+class SSOTest extends Test
 {
     use Specify;
 

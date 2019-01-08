@@ -34,11 +34,14 @@
  *
  */
 
+namespace Nosto\Test\Unit;
+
 use Codeception\TestCase\Test;
 use Nosto\Request\Http\Adapter\Curl;
 use Nosto\Request\Http\Adapter\Socket;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
+use Nosto\Test\Support\MockUser;
 
 class HttpRequestTest extends Test
 {

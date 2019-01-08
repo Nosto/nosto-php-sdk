@@ -34,12 +34,15 @@
  *
  */
 
+namespace Nosto\Test\Unit\Operation;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Object\Signup\Account;
 use Nosto\Operation\OrderConfirm;
+use Nosto\Test\Support\MockOrder;
 
-class OperationOrderConfirmationTest extends Test
+class OrderConfirmationTest extends Test
 {
     use Specify;
 

@@ -34,13 +34,16 @@
  *
  */
 
+namespace Nosto\Test\Unit\Object;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Object\Product\VariationCollection;
+use Nosto\Test\Support\MockVariation;
+use Nosto\Test\Support\MockProduct;
 
-
-class ObjectVariationTest extends Test
+class VariationTest extends Test
 {
     use Specify;
 

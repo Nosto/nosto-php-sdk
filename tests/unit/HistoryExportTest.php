@@ -34,6 +34,8 @@
  *
  */
 
+namespace Nosto\Test\Unit;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Helper\ExportHelper;
@@ -45,6 +47,8 @@ use Nosto\Request\Api\Token;
 use Nosto\Types\Signup\AccountInterface;
 use phpseclib\Crypt\AES;
 use phpseclib\Crypt\Base;
+use Nosto\Test\Support\MockProduct;
+use Nosto\Test\Support\MockOrder;
 
 class HistoryExportTest extends Test
 {

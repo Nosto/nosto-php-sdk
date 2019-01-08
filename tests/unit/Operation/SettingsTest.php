@@ -34,12 +34,16 @@
  *
  */
 
+namespace Nosto\Test\Unit\Operation;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Operation\UpdateSettings;
 use Nosto\Request\Api\Token;
+use Nosto\Test\Support\MockSettings;
+use Nosto\Test\Support\MockAccount;
 
-class OperationSettingsTest extends Test
+class SettingsTest extends Test
 {
     use Specify;
 

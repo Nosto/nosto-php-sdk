@@ -34,9 +34,15 @@
  *
  */
 
+namespace Nosto\Test\Unit\Helper;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Helper\HtmlMarkupSerializationHelper;
+use Nosto\Test\Support\MockProduct;
+use Nosto\Test\Support\MockCategory;
+use Nosto\Test\Support\MockCustomer;
+use Nosto\Test\Support\MockProductWithSku;
 
 class HtmlMarkupSerializationHelperTest extends Test
 {

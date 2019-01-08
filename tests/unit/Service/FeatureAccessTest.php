@@ -34,10 +34,13 @@
  *
  */
 
+namespace Nosto\Test\Unit\Service;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Request\Api\Token;
 use Nosto\Service\FeatureAccess;
+use Nosto\Test\Support\MockAccount;
 
 /**
  * Tests for feature access

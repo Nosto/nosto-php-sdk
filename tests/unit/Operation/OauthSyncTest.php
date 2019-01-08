@@ -34,11 +34,14 @@
  *
  */
 
+namespace Nosto\Test\Unit\Operation;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Operation\OAuth\ExchangeTokens;
+use Nosto\Test\Support\MockOAuth;
 
-class OperationOauthSyncTest extends Test
+class OauthSyncTest extends Test
 {
     use Specify;
 

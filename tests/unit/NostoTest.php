@@ -34,6 +34,8 @@
  *
  */
 
+namespace Nosto\Test\Unit;
+
 use Codeception\TestCase\Test;
 use Nosto\Nosto;
 use Nosto\Request\Http\HttpRequest;
