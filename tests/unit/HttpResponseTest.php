@@ -34,32 +34,30 @@
  *
  */
 
-namespace Nosto\Operation;
+use Codeception\TestCase\Test;
+use Nosto\Request\Http\HttpResponse;
 
-use Nosto\NostoException;
-use Nosto\Object\ExchangeRateCollection;
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Request\Http\Exception\AbstractHttpException;
-
-/**
- * Handles updating exchange rates through the Nosto API
- */
-class SyncRates extends AbstractAuthenticatedOperation
+class HttpResponseTest extends Test
 {
     /**
-     * Updates exchange rates to Nosto
-     *
-     * @param ExchangeRateCollection $collection the collection of exchange rates to update
-     * @return bool returns true when the operation was a success
-     * @throws NostoException
-     * @throws AbstractHttpException
+     * Tests the getCode method for http/1.1 response
      */
-    public function update(ExchangeRateCollection $collection)
+    public function testResponseStatusCode()
     {
-        $request = $this->initApiRequest($this->account->getApiToken(Token::API_EXCHANGE_RATES));
-        $request->setPath(ApiRequest::PATH_CURRENCY_EXCHANGE_RATE);
-        $response = $request->post($collection);
-        return $this->checkResponse($request, $response);
+        $headers = ['HTTP/1.1 200 OK'];
+        $body = '';
+        $response = new HttpResponse($headers, $body);
+        $this->assertEquals(200, $response->getCode());
+    }
+
+    /**
+     * Tests the getCode method for http/2 response
+     */
+    public function testResponseStatusCodeWithHttp2()
+    {
+        $headers = ['HTTP/2 200'];
+        $body = '';
+        $response = new HttpResponse($headers, $body);
+        $this->assertEquals(200, $response->getCode());
     }
 }
