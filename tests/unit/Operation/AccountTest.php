@@ -34,10 +34,13 @@
  *
  */
 
+namespace Nosto\Test\Unit\Operation;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Object\Signup\Account;
 use Nosto\Operation\AccountSignup;
+use MockSignup;
 
 class AccountTest extends Test
 {
