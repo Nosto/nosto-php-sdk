@@ -34,6 +34,8 @@
  *
  */
 
+namespace Nosto\Test\Support;
+
 use Nosto\Object\Signup\Owner;
 
 class MockOwner extends Owner

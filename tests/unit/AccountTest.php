@@ -34,6 +34,8 @@
  *
  */
 
+namespace Nosto\Test\Unit;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Object\Signup\Account;

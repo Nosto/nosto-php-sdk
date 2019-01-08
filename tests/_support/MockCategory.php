@@ -34,6 +34,8 @@
  *
  */
 
+namespace Nosto\Test\Support;
+
 use Nosto\Object\Category;
 
 class MockCategory extends Category

@@ -34,10 +34,11 @@
  *
  */
 
-namespace Nosto\Object\Email;
+namespace Nosto\Test\Unit\Object\Email;
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
+use Nosto\Object\Email\ImageUrl;
 
 class ImageUrlTest extends Test
 {

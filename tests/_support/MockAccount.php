@@ -34,6 +34,8 @@
  *
  */
 
+namespace Nosto\Test\Support;
+
 use Nosto\Object\Signup\Account;
 
 class MockAccount extends Account

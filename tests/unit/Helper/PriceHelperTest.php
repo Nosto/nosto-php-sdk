@@ -34,6 +34,8 @@
  *
  */
 
+namespace Nosto\Test\Unit\Helper;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Helper\PriceHelper;

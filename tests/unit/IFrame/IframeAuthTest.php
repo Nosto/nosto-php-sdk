@@ -34,12 +34,17 @@
  *
  */
 
+namespace Nosto\Test\Unit\IFrame;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Mixins\IframeTrait;
 use Nosto\Nosto;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\HttpRequest;
+use Nosto\Test\Support\MockIframe;
+use Nosto\Test\Support\MockUser;
+use Nosto\Test\Support\MockAccount;
 
 class IframeAuthTest extends Test
 {

@@ -34,6 +34,8 @@
  *
  */
 
+namespace Nosto\Test\Support;
+
 use Nosto\Object\Format;
 use Nosto\Object\Signup\Signup;
 

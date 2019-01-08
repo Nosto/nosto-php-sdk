@@ -34,6 +34,8 @@
  *
  */
 
+namespace Nosto\Test\Support;
+
 use Nosto\Object\Order\OrderStatus;
 
 class MockOrderStatus extends OrderStatus

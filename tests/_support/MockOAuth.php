@@ -34,6 +34,8 @@
  *
  */
 
+namespace Nosto\Test\Support;
+
 use Nosto\OAuth;
 
 class MockOAuth extends OAuth

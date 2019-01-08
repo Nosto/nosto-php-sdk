@@ -34,12 +34,17 @@
  *
  */
 
+namespace Nosto\Test\Unit\Operation;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Object\Signup\Account;
 use Nosto\Operation\UpsertProduct;
 use Nosto\Request\Api\Token;
 use Nosto\Types\Product\ProductInterface;
+use Nosto\Test\Support\MockProduct;
+use Nosto\Test\Support\MockVariation;
+use Nosto\Test\Support\MockSku;
 
 class ProductTest extends Test
 {

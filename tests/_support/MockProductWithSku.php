@@ -34,7 +34,7 @@
  *
  */
 
-use Nosto\Object\Product\Product;
+namespace Nosto\Test\Support;
 
 class MockProductWithSku extends MockProduct
 {

@@ -34,9 +34,13 @@
  *
  */
 
+namespace Nosto\Test\Unit\Helper;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Helper\SerializationHelper;
+use Nosto\Test\Support\MockProduct;
+use Nosto\Test\Support\MockProductWithSku;
 
 class SerializationHelperTest extends Test
 {

@@ -34,6 +34,8 @@
  *
  */
 
+namespace Nosto\Test\Support;
+
 use Nosto\Object\Cart\LineItem;
 
 class MockPseudoItem extends LineItem
