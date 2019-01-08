@@ -36,12 +36,10 @@
 
 namespace Nosto\Operation;
 
-use HttpException;
 use Nosto\Nosto;
 use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
-use Nosto\Request\Grapql\GraphqlRequest;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
 
@@ -85,7 +83,7 @@ abstract class AbstractOperation
      * Create and returns a new API request object initialized with a content-type
      * of 'application/json' and the specified authentication token
      *
-     * @param Token $token the token to use for the endpoint
+     * @param Token|null $token the token to use for the endpoint
      * @return ApiRequest the newly created request object.
      * @throws NostoException if the account does not have the correct token set.
      */
@@ -107,7 +105,7 @@ abstract class AbstractOperation
      * Create and returns a new API request object initialized with a content-type
      * of 'application/x-www-form-urlencoded' and the specified authentication token
      *
-     * @param Token $token the token to use for the endpoint
+     * @param Token|null $token the token to use for the endpoint
      * @return HttpRequest the newly created request object.
      * @throws NostoException if the account does not have the correct token set.
      */
