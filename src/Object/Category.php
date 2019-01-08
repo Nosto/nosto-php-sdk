@@ -215,7 +215,7 @@ class Category extends AbstractObject implements CategoryInterface, MarkupableIn
      */
     public function setVisibleInMenu($visibleInMenu)
     {
-        $this->visibleInMenu = $visibleInMenu ? 'true' : 'false';
+        $this->visibleInMenu = $visibleInMenu ? true : false;
     }
 
     /**
