@@ -161,6 +161,9 @@ class IframeAuthTest extends Test
             $this->assertEquals($params['fname'], 'James');
             $this->assertEquals($params['lname'], 'Kirk');
             $this->assertEquals($params['email'], 'james.kirk@example.com');
+            $this->assertEquals($params['message_text'], 'No API token found for account.');
+            $this->assertEquals($params['message_type'], 'error');
+            $this->assertEquals($params['message_code'], 'account_delete');
         });
     }
 
