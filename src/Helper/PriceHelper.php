@@ -45,10 +45,10 @@ final class PriceHelper extends AbstractHelper
      * Formats price into Nosto format, e.g. 1000.99.
      *
      * @param int|float|string $price the price string to format.
-     * @return string the formatted price.
+     * @return string|null the formatted price.
      */
     public static function format($price)
     {
-        return is_numeric($price) ? number_format($price, 2, '.', '') : '';
+        return is_numeric($price) ? number_format($price, 2, '.', '') : null;
     }
 }

@@ -114,11 +114,11 @@ class Settings extends AbstractObject implements SettingsInterface
     /**
      * Returns an array of currencies used for this account
      *
-     * @return array
+     * @return array|null
      */
     public function getCurrencies()
     {
-        return empty($this->currencies) ? [] : $this->currencies;
+        return empty($this->currencies) ? null : $this->currencies;
     }
 
     /**
