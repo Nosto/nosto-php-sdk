@@ -36,9 +36,6 @@
 
 namespace Nosto\Object\Email;
 
-use Nosto\Nosto;
-use Nosto\NostoException;
-
 /**
  * ImageUrl object for formatting email widget image url
  */

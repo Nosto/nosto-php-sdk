@@ -47,6 +47,7 @@ class ExportHelper extends AbstractExportHelper
 {
     /**
      * @inheritdoc
+     * @suppress PhanAccessMethodInternal
      */
     public function encrypt($secret, $data)
     {

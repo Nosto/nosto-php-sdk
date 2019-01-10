@@ -135,7 +135,7 @@ class Notification extends AbstractObject implements NotificationInterface
     /**
      * Setter for language id
      *
-     * @param int /string $languageId
+     * @param int|string $languageId
      */
     public function setLanguageId($languageId)
     {

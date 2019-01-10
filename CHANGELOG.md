@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
+
+## 3.8.3
+* Fix dependency constraint causing issues with Magento 2.3 installations
     
 ## 3.8.2
 * Enrich customer tagging with address related data

@@ -192,9 +192,11 @@ class ValidationHelper extends AbstractHelper
         $getter = sprintf('get%s', $property);
         if (!method_exists($this->object, $getter)) {
             throw new NostoException(
-                'Class %s does not have getter for property %s',
-                get_class($this->object),
-                $property
+                sprintf(
+                    'Class %s does not have getter for property %s',
+                    get_class($this->object),
+                    $property
+                )
             );
         }
 

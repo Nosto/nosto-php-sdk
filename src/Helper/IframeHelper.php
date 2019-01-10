@@ -58,7 +58,7 @@ final class IframeHelper extends AbstractHelper
      *
      * @param IframeInterface $iframe the iframe meta data.
      * @param AccountInterface|null $account the configuration to return the url for.
-     * @param UserInterface $user
+     * @param UserInterface|null $user
      * @param array $params additional parameters to add to the iframe url.
      * @return string the iframe url.
      */
