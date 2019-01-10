@@ -58,7 +58,7 @@ class OAuthHelperTest extends Test
 
             $this->assertEquals($url['path'], '/oauth');
             $this->assertEquals($params['client_id'], 'client-id');
-            $this->assertEquals($params['redirect_uri'], 'http://my.shop.com/nosto/oauth');
+            $this->assertEquals($params['redirect_uri'], urlencode('http://my.shop.com/nosto/oauth'));
             $this->assertEquals($params['response_type'], 'code');
             $this->assertEquals($params['scope'], 'sso products');
             $this->assertEquals($params['lang'], 'en');

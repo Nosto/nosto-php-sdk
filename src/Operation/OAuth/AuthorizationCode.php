@@ -106,7 +106,7 @@ class AuthorizationCode
             array(
                 '{cid}' => $this->clientId,
                 '{sec}' => $this->clientSecret,
-                '{uri}' => $this->redirectUrl,
+                '{uri}' => urlencode($this->redirectUrl),
                 '{cod}' => $code
             )
         );
