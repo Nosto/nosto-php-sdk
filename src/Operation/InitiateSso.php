@@ -36,12 +36,12 @@
 
 namespace Nosto\Operation;
 
-use Nosto\Nosto;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Types\UserInterface;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\NostoException;
+use Nosto\Exception\Builder as ExceptionBuilder;
 
 /**
  * Operation class for fetching a single-sign-on link through the Nosto API.
@@ -67,7 +67,7 @@ class InitiateSso extends AbstractAuthenticatedOperation
         $request->setReplaceParams(array('{platform}' => $platform));
         $response = $request->post($user);
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
+            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         }
 
         return $response->getJsonResult()->login_url;

@@ -36,12 +36,12 @@
 
 namespace Nosto\Operation;
 
-use Nosto\Nosto;
 use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
+use Nosto\Exception\Builder as ExceptionBuilder;
 
 /**
  * Base operation class for handling all communications through the Nosto API.
@@ -74,7 +74,7 @@ abstract class AbstractOperation
     protected static function checkResponse(HttpRequest $request, HttpResponse $response)
     {
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
+            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         }
         return true;
     }
