@@ -41,6 +41,7 @@ use Nosto\NostoException;
 use Nosto\Object\NostoOAuthToken;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Types\OAuthInterface;
+use Nosto\Exception\Builder as ExceptionBuilder;
 
 /**
  * Helper class for doing OAuth2 authorization with Nosto.
@@ -114,7 +115,7 @@ class AuthorizationCode
         $result = $response->getJsonResult(true);
 
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
+            throw ExceptionBuilder::buildHttpException($request, $response);
         }
         if (empty($result['access_token'])) {
             throw new NostoException('No "access_token" returned after authenticating with code');

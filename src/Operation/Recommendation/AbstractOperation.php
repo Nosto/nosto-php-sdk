@@ -44,6 +44,7 @@ use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Request\Api\Token;
 use Nosto\Result\Graphql\ResultSet;
 use Nosto\Result\Graphql\ResultSetBuilder;
+use Nosto\Exception\Builder as ExceptionBuilder;
 
 /**
  * Abstract base operation class to be used in recommendation related operations
@@ -113,7 +114,7 @@ abstract class AbstractOperation extends AbstractAuthenticatedOperation
             $this->buildPayload()
         );
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
+            throw ExceptionBuilder::buildHttpException($request, $response);
         }
 
         return ResultSetBuilder::fromHttpResponse($response);
