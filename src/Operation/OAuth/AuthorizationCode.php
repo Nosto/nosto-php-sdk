@@ -115,7 +115,7 @@ class AuthorizationCode
         $result = $response->getJsonResult(true);
 
         if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::buildHttpException($request, $response);
+            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         }
         if (empty($result['access_token'])) {
             throw new NostoException('No "access_token" returned after authenticating with code');

@@ -53,17 +53,15 @@ class Builder
      * @param HttpResponse $response
      * @return AbstractHttpException|HttpResponseException
      */
-    public static function buildHttpException(
+    public static function fromHttpRequestAndResponse(
         HttpRequest $request,
-        HttpResponse $response)
-    {
+        HttpResponse $response
+    ) {
         $message = '';
         $jsonResponse = $response->getJsonResult();
 
         $errors = self::parseErrorsFromResponse($response);
-        if (isset($jsonResponse->type)
-            && isset($jsonResponse->message)
-        ) {
+        if (isset($jsonResponse->type, $jsonResponse->message)) {
             $message .= $jsonResponse->message;
             if (!empty($errors)) {
                 $message .= ' | ' . $errors;
@@ -75,21 +73,21 @@ class Builder
                 $request,
                 $response
             );
-        } else {
-            if ($response->getMessage()) {
-                $message .= $response->getMessage();
-            }
-            if (!empty($errors)) {
-                $message .= ' | ' . $errors;
-            }
-            return new HttpResponseException(
-                $message,
-                $response->getCode(),
-                null,
-                $request,
-                $response
-            );
         }
+
+        if ($response->getMessage()) {
+            $message .= $response->getMessage();
+        }
+        if (!empty($errors)) {
+            $message .= ' | ' . $errors;
+        }
+        return new HttpResponseException(
+            $message,
+            $response->getCode(),
+            null,
+            $request,
+            $response
+        );
     }
 
     /**

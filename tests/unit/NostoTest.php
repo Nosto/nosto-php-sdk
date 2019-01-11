@@ -61,7 +61,7 @@ class NostoTest extends Test
             '{"type":"has_errors","message":"Failed to upsert some products; see errors","errors":[{"product_id":"1","errors":"image_url field is missing (imageUrl), Validation failed (), "}]}'
         );
         try {
-            throw ExceptionBuilder::buildHttpException($request, $response);
+            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         } catch (ApiResponseException $exception) {
             $this->assertEquals('Failed to upsert some products; see errors | image_url field is missing (imageUrl), Validation failed (), (product #1)', $exception->getMessage());
         }

@@ -67,7 +67,7 @@ class InitiateSso extends AbstractAuthenticatedOperation
         $request->setReplaceParams(array('{platform}' => $platform));
         $response = $request->post($user);
         if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::buildHttpException($request, $response);
+            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         }
 
         return $response->getJsonResult()->login_url;

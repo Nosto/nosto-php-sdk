@@ -82,7 +82,7 @@ class ExchangeTokens extends AbstractOperation
         $request->setQueryParams(array('access_token' => $token->getAccessToken()));
         $response = $request->get();
         if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::buildHttpException($request, $response);
+            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         }
 
         $tokens = Token::parseTokens($response->getJsonResult(true), 'api_');

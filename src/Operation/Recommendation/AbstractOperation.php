@@ -114,7 +114,7 @@ abstract class AbstractOperation extends AbstractAuthenticatedOperation
             $this->buildPayload()
         );
         if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::buildHttpException($request, $response);
+            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         }
 
         return ResultSetBuilder::fromHttpResponse($response);

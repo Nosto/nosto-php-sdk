@@ -74,7 +74,7 @@ abstract class AbstractOperation
     protected static function checkResponse(HttpRequest $request, HttpResponse $response)
     {
         if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::buildHttpException($request, $response);
+            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         }
         return true;
     }
