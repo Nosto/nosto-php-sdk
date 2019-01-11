@@ -121,7 +121,8 @@ class Nosto
      * @param HttpRequest $request the request object to take additional info from.
      * @param HttpResponse $response the response object to take additional info from.
      * @throws AbstractHttpException the exception.
-     * @deprecated No longer used by internal code and not recommended. Use \Exception\Builder::fromHttpRequestAndResponse() instead
+     * @deprecated No longer used by internal code and not recommended.
+     * Use \Exception\Builder::fromHttpRequestAndResponse() instead
      */
     public static function throwHttpException(
         HttpRequest $request,
