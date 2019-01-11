@@ -62,7 +62,7 @@ class OAuthHelper extends AbstractHelper
             $oauthBaseUrl . self::PATH_AUTH,
             array(
                 '{cid}' => $params->getClientId(),
-                '{uri}' => $params->getRedirectUrl(),
+                '{uri}' => urlencode($params->getRedirectUrl()),
                 '{sco}' => implode(' ', $params->getScopes()),
                 '{iso}' => strtolower($params->getLanguageIsoCode()),
             )
