@@ -110,6 +110,17 @@ class HtmlMarkupSerializationHelperTest extends Test
     }
 
     /**
+     * Tests that an object with key that contains special characters is serialized to HTML correctly
+     */
+    public function testObjectWithSpecialCharacters()
+    {
+        $object = new MockProduct();
+        $object->addCustomField('key.with.\special?char s*','åäöø');
+        $markup = $object->toHtml();
+        $this->assertEquals(self::stripLineBreaks($markup), '<div class="notranslate" style="display:none">  <span class="nosto_product" style="display:none">    <span class="url">http://my.shop.com/products/test_product.html</span>    <span class="product_id">1</span>    <span class="name">Test Product</span>    <span class="image_url">http://my.shop.com/images/test_product.jpg</span>    <span class="price">99.99</span>    <span class="list_price">110.99</span>    <span class="price_currency_code">USD</span>    <span class="availability">InStock</span>    <span class="categories">      <span class="category">/Mens</span>      <span class="category">/Mens/Shoes</span>    </span>    <span class="description">This is a full description</span>    <span class="brand">Super Brand</span>    <span class="variation_id">USD</span>    <span class="review_count">99</span>    <span class="rating_value">2.5</span>    <span class="alternate_image_urls">      <span class="alternate_image_url">http://shop.com/product_alt.jpg</span>    </span>    <span class="condition">Used</span>    <span class="gtin">gtin</span>    <span class="tags1">      <span class="tag">first</span>    </span>    <span class="tags2">      <span class="tag">second</span>    </span>    <span class="tags3">      <span class="tag">third</span>    </span>    <span class="google_category">All</span>    <span class="skus">    </span>    <span class="variations">    </span>    <span class="custom_fields">      <span class="key.with.\special?char s*">åäöø</span>    </span>  </span></div>');
+    }
+
+    /**
      * Tests that an object with scandic custom fields is serialized to HTML correctly
      */
     public function testObjectWithScandicCustomFields()
