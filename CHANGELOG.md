@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.9.0
+* Handle HTTP/2 response codes correctly
+* Refactor test cases
+* Update copyrights year
+* Add pull request template
+* Update `Phan` version and vendor
+* Add test for correct error parsing
+* Encode the redirect URL
+* Add test for special character serialization
+* Refactor error throwing
+
 ## 3.8.3
 * Fix dependency constraint causing issues with Magento 2.3 installations
     
