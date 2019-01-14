@@ -1,9 +1,6 @@
 <?php
-use Nosto\Object\Product\Variation;
-use Nosto\Request\Http\HttpResponse;
-
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2019, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -32,14 +29,51 @@ use Nosto\Request\Http\HttpResponse;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2019 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
-class MockHttpResponse extends HttpResponse
+
+namespace Nosto\Test\Unit\Operation;
+
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+use Nosto\Object\Signup\Account;
+use Nosto\Operation\OrderConfirm;
+use Nosto\Test\Support\MockOrder;
+
+class OrderConfirmationTest extends Test
 {
-    public function __construct()
+    use Specify;
+
+    /**
+     * Tests the matched OrderConfirm confirmation API call.
+     */
+    public function testMatchedOrderConfirmation()
     {
-        parent::__construct([]);
+        $order = new MockOrder();
+        $account = new Account('platform-00000000');
+        $service = new OrderConfirm($account);
+        $result = $service->send($order, '00000000d7288a9aa95c9e24');
+
+        $this->specify('successful matched OrderConfirm confirmation', function () use ($result) {
+            $this->assertTrue($result);
+        });
+    }
+
+    /**
+     * Tests the un-matched OrderConfirm confirmation API call.
+     */
+    public function testUnMatchedOrderConfirmation()
+    {
+        $order = new MockOrder();
+        $account = new Account('platform-00000000');
+        $service = new OrderConfirm($account);
+        $result = $service->send($order, null);
+
+        $this->specify('successful un-matched OrderConfirm confirmation',
+            function () use ($result) {
+                $this->assertTrue($result);
+            });
     }
 }

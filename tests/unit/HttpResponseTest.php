@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2019, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,48 +29,37 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2019 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
 
-use Codeception\Specify;
+namespace Nosto\Test\Unit;
+
 use Codeception\TestCase\Test;
-use Nosto\Object\Signup\Account;
-use Nosto\Operation\OrderConfirm;
+use Nosto\Request\Http\HttpResponse;
 
-class OperationOrderConfirmationTest extends Test
+class HttpResponseTest extends Test
 {
-    use Specify;
-
     /**
-     * Tests the matched OrderConfirm confirmation API call.
+     * Tests the getCode method for http/1.1 response
      */
-    public function testMatchedOrderConfirmation()
+    public function testResponseStatusCode()
     {
-        $order = new MockOrder();
-        $account = new Account('platform-00000000');
-        $service = new OrderConfirm($account);
-        $result = $service->send($order, '00000000d7288a9aa95c9e24');
-
-        $this->specify('successful matched OrderConfirm confirmation', function () use ($result) {
-            $this->assertTrue($result);
-        });
+        $headers = ['HTTP/1.1 200 OK'];
+        $body = '';
+        $response = new HttpResponse($headers, $body);
+        $this->assertEquals(200, $response->getCode());
     }
 
     /**
-     * Tests the un-matched OrderConfirm confirmation API call.
+     * Tests the getCode method for http/2 response
      */
-    public function testUnMatchedOrderConfirmation()
+    public function testResponseStatusCodeWithHttp2()
     {
-        $order = new MockOrder();
-        $account = new Account('platform-00000000');
-        $service = new OrderConfirm($account);
-        $result = $service->send($order, null);
-
-        $this->specify('successful un-matched OrderConfirm confirmation',
-            function () use ($result) {
-                $this->assertTrue($result);
-            });
+        $headers = ['HTTP/2 200'];
+        $body = '';
+        $response = new HttpResponse($headers, $body);
+        $this->assertEquals(200, $response->getCode());
     }
 }

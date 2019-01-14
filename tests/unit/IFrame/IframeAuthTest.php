@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2019, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,10 +29,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2019 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
+
+namespace Nosto\Test\Unit\IFrame;
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
@@ -40,6 +42,9 @@ use Nosto\Mixins\IframeTrait;
 use Nosto\Nosto;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\HttpRequest;
+use Nosto\Test\Support\MockIframe;
+use Nosto\Test\Support\MockUser;
+use Nosto\Test\Support\MockAccount;
 
 class IframeAuthTest extends Test
 {
@@ -156,6 +161,9 @@ class IframeAuthTest extends Test
             $this->assertEquals($params['fname'], 'James');
             $this->assertEquals($params['lname'], 'Kirk');
             $this->assertEquals($params['email'], 'james.kirk@example.com');
+            $this->assertEquals($params['message_text'], 'No API token found for account.');
+            $this->assertEquals($params['message_type'], 'error');
+            $this->assertEquals($params['message_code'], 'account_delete');
         });
     }
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2019, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,18 +29,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2019 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
 
 namespace Nosto;
 
-use Nosto\Request\Api\Exception\ApiResponseException;
 use Nosto\Request\Http\Exception\AbstractHttpException;
-use Nosto\Request\Http\Exception\HttpResponseException;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
+use Nosto\Exception\Builder as ExceptionBuilder;
 
 /**
  * Main SDK class.
@@ -122,71 +121,14 @@ class Nosto
      * @param HttpRequest $request the request object to take additional info from.
      * @param HttpResponse $response the response object to take additional info from.
      * @throws AbstractHttpException the exception.
+     * @deprecated No longer used by internal code and not recommended.
+     * Use \Exception\Builder::fromHttpRequestAndResponse() instead
      */
     public static function throwHttpException(
         HttpRequest $request,
         HttpResponse $response
     ) {
-        $message = '';
-        $jsonResponse = $response->getJsonResult();
-
-        $errors = self::parseErrorsFromResponse($response);
-        if (isset($jsonResponse->type)
-            && isset($jsonResponse->message)
-        ) {
-            if (isset($jsonResponse->message)) {
-                $message .= $jsonResponse->message;
-            }
-            if (!empty($errors)) {
-                $message .= ' | ' . $errors;
-            }
-            throw new ApiResponseException(
-                $message,
-                $response->getCode(), // http status code
-                null,
-                $request,
-                $response
-            );
-        } else {
-            if ($response->getMessage()) {
-                $message .= $response->getMessage();
-            }
-            if (!empty($errors)) {
-                $message .= ' | ' . $errors;
-            }
-            throw new HttpResponseException(
-                $message,
-                $response->getCode(),
-                null,
-                $request,
-                $response
-            );
-        }
+        throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
     }
 
-    /**
-     * Parses errors from HttpResponse
-     * @param HttpResponse $response
-     * @return string
-     */
-    public static function parseErrorsFromResponse(HttpResponse $response)
-    {
-        $json = $response->getJsonResult();
-        $errorStr = '';
-        if (isset($json->errors)
-            && is_array($json->errors)
-            && !empty($json->errors)
-        ) {
-            foreach ($json->errors as $stdClassError) {
-                if (isset($stdClassError->errors)) {
-                    $errorStr .= $stdClassError->errors;
-                }
-                if (isset($stdClassError->product_id)) {
-                    $errorStr .= sprintf('(product #%s)', $stdClassError->product_id);
-                }
-            }
-        }
-
-        return $errorStr;
-    }
 }

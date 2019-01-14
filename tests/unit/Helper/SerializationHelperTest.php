@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2019, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,14 +29,18 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2019 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
 
+namespace Nosto\Test\Unit\Helper;
+
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Helper\SerializationHelper;
+use Nosto\Test\Support\MockProduct;
+use Nosto\Test\Support\MockProductWithSku;
 
 class SerializationHelperTest extends Test
 {
@@ -117,6 +121,16 @@ class SerializationHelperTest extends Test
         $object = new MockProduct();
         $object->addCustomField('spesialCäåös', 'value');
         $this->assertEquals('{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"condition":"Used","gender":null,"age_group":null,"gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","unit_pricing_measure":null,"unit_pricing_base_measure":null,"unit_pricing_unit":null,"skus":[],"variations":[],"thumb_url":null,"custom_fields":{"spesialC\u00e4\u00e5\u00f6s":"value"}}', SerializationHelper::serialize($object));
+    }
+
+    /**
+     * Tests that an object with key that contains special characters is serialized correctly
+     */
+    public function testObjectWithSpecialCharacters()
+    {
+        $object = new MockProduct();
+        $object->addCustomField('key.with.\special?char s*', 'åäöø');
+        $this->assertEquals('{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"condition":"Used","gender":null,"age_group":null,"gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","unit_pricing_measure":null,"unit_pricing_base_measure":null,"unit_pricing_unit":null,"skus":[],"variations":[],"thumb_url":null,"custom_fields":{"key.with.\\\special?char s*":"\u00e5\u00e4\u00f6\u00f8"}}', SerializationHelper::serialize($object));
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2019, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2019 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -58,7 +58,7 @@ final class IframeHelper extends AbstractHelper
      *
      * @param IframeInterface $iframe the iframe meta data.
      * @param AccountInterface|null $account the configuration to return the url for.
-     * @param UserInterface $user
+     * @param UserInterface|null $user
      * @param array $params additional parameters to add to the iframe url.
      * @return string the iframe url.
      */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2019, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2019 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -44,6 +44,7 @@ use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Request\Api\Token;
 use Nosto\Result\Graphql\ResultSet;
 use Nosto\Result\Graphql\ResultSetBuilder;
+use Nosto\Exception\Builder as ExceptionBuilder;
 
 /**
  * Abstract base operation class to be used in recommendation related operations
@@ -113,7 +114,7 @@ abstract class AbstractOperation extends AbstractAuthenticatedOperation
             $this->buildPayload()
         );
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
+            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         }
 
         return ResultSetBuilder::fromHttpResponse($response);

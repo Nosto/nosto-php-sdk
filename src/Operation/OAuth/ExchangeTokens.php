@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2019, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,14 +29,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2019 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
 
 namespace Nosto\Operation\OAuth;
 
-use Nosto\Nosto;
 use Nosto\NostoException;
 use Nosto\Object\NostoOAuthToken;
 use Nosto\Object\Signup\Account;
@@ -45,6 +44,7 @@ use Nosto\Request\Api\Token;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Types\OAuthInterface;
 use Nosto\Types\Signup\AccountInterface;
+use Nosto\Exception\Builder as ExceptionBuilder;
 
 /**
  * Handles exchanging the authorization token for the API tokes from Nosto
@@ -82,7 +82,7 @@ class ExchangeTokens extends AbstractOperation
         $request->setQueryParams(array('access_token' => $token->getAccessToken()));
         $response = $request->get();
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
+            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         }
 
         $tokens = Token::parseTokens($response->getJsonResult(true), 'api_');

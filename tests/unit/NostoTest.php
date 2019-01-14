@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2019, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,16 +29,19 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2019 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
+
+namespace Nosto\Test\Unit;
 
 use Codeception\TestCase\Test;
 use Nosto\Nosto;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Request\Api\Exception\ApiResponseException;
+use Nosto\Exception\Builder as ExceptionBuilder;
 
 class NostoTest extends Test
 {
@@ -58,7 +61,7 @@ class NostoTest extends Test
             '{"type":"has_errors","message":"Failed to upsert some products; see errors","errors":[{"product_id":"1","errors":"image_url field is missing (imageUrl), Validation failed (), "}]}'
         );
         try {
-            Nosto::throwHttpException($request, $response);
+            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         } catch (ApiResponseException $exception) {
             $this->assertEquals('Failed to upsert some products; see errors | image_url field is missing (imageUrl), Validation failed (), (product #1)', $exception->getMessage());
         }

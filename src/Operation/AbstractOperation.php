@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017, Nosto Solutions Ltd
+ * Copyright (c) 2019, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,21 +29,19 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2017 Nosto Solutions Ltd
+ * @copyright 2019 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
 
 namespace Nosto\Operation;
 
-use HttpException;
-use Nosto\Nosto;
 use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
-use Nosto\Request\Grapql\GraphqlRequest;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
+use Nosto\Exception\Builder as ExceptionBuilder;
 
 /**
  * Base operation class for handling all communications through the Nosto API.
@@ -76,7 +74,7 @@ abstract class AbstractOperation
     protected static function checkResponse(HttpRequest $request, HttpResponse $response)
     {
         if ($response->getCode() !== 200) {
-            Nosto::throwHttpException($request, $response);
+            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         }
         return true;
     }
@@ -85,7 +83,7 @@ abstract class AbstractOperation
      * Create and returns a new API request object initialized with a content-type
      * of 'application/json' and the specified authentication token
      *
-     * @param Token $token the token to use for the endpoint
+     * @param Token|null $token the token to use for the endpoint
      * @return ApiRequest the newly created request object.
      * @throws NostoException if the account does not have the correct token set.
      */
@@ -107,7 +105,7 @@ abstract class AbstractOperation
      * Create and returns a new API request object initialized with a content-type
      * of 'application/x-www-form-urlencoded' and the specified authentication token
      *
-     * @param Token $token the token to use for the endpoint
+     * @param Token|null $token the token to use for the endpoint
      * @return HttpRequest the newly created request object.
      * @throws NostoException if the account does not have the correct token set.
      */
