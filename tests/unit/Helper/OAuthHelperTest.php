@@ -54,11 +54,11 @@ class OAuthHelperTest extends Test
         $url = OAuthHelper::getAuthorizationUrl($meta);
         $this->specify('oauth authorize url can be created', function () use ($url) {
             $url = parse_url($url);
-            parse_str($url['query'], $params);
+            parse_str($url['query'], $params); // Please note that this function url decodes the values
 
             $this->assertEquals($url['path'], '/oauth');
             $this->assertEquals($params['client_id'], 'client-id');
-            $this->assertEquals($params['redirect_uri'], urlencode('http://my.shop.com/nosto/oauth'));
+            $this->assertEquals($params['redirect_uri'], 'http://my.shop.com/nosto/oauth');
             $this->assertEquals($params['response_type'], 'code');
             $this->assertEquals($params['scope'], 'sso products');
             $this->assertEquals($params['lang'], 'en');
