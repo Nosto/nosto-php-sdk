@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.9.1
+* Fix double URL encoding issue in Oauth URLs
+
 ## 3.9.0
 * Handle HTTP/2 response codes correctly
 * Refactor test cases
