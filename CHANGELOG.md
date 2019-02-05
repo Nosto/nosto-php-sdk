@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.9.2
+* Fix HTML serializer for values 0 of type float
+
 ## 3.9.1
 * Fix double URL encoding issue in Oauth URLs
 
