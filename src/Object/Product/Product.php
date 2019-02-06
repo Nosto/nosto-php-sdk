@@ -40,6 +40,7 @@ use Nosto\AbstractObject;
 use Nosto\Helper\ValidationHelper;
 use Nosto\NostoException;
 use Nosto\Object\StringCollection;
+use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Product\SkuInterface;
@@ -58,10 +59,10 @@ use Nosto\Types\ValidatableInterface;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Product extends AbstractObject implements
-    ProductInterface,
     ValidatableInterface,
     MarkupableInterface,
-    SanitizableInterface
+    SanitizableInterface,
+    HtmlEncodableInterface
 {
     /**
      * @var string absolute url to the product page.

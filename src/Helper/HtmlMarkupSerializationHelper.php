@@ -37,6 +37,7 @@
 namespace Nosto\Helper;
 
 use Nosto\Object\MarkupableString;
+use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\MarkupableCollectionInterface;
 use Nosto\Types\SanitizableInterface;
@@ -97,6 +98,10 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
 
         if ($object instanceof SanitizableInterface) {
             $object = $object->sanitize();
+        }
+
+        if ($object instanceof HtmlEncodableInterface) {
+            $object->htmlEncodeVars();
         }
 
         $spacesStr = str_repeat(' ', $spaces);
@@ -172,5 +177,24 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
             }
         }
         return $markup;
+    }
+
+    /**
+     * Checks if a class variable can be encoded.
+     * In practice checks that a getter and a setter for the property
+     * is found from the class.
+     *
+     * @param $class
+     * @param $variable
+     * @return bool
+     */
+    public static function encodableClassVariable($class, $variable) {
+        $getter = 'get' . str_replace('_', '', $variable);
+        $setter = 'set' . str_replace('_', '', $variable);
+        if (!method_exists($class, $getter) || !method_exists($class, $setter)) {
+            return false;
+        }
+
+        return true;
     }
 }
