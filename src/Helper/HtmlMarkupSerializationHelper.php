@@ -190,7 +190,8 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
      * @param $variable
      * @return bool
      */
-    public static function encodableClassVariable($class, $variable) {
+    public static function encodableClassVariable($class, $variable)
+    {
         $getter = 'get' . str_replace('_', '', $variable);
         $setter = 'set' . str_replace('_', '', $variable);
         if (!method_exists($class, $getter) || !method_exists($class, $setter)) {
@@ -205,7 +206,8 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
      * @return array|string|StringCollection
      * @throws NostoException
      */
-    public static function encodeHtmlEntities($val) {
+    public static function encodeHtmlEntities($val)
+    {
         if ($val instanceof StringCollection) {
             $encodedCollection = clone $val;
             $encodedCollection->setData(null);

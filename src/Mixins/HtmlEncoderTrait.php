@@ -35,6 +35,7 @@
  */
 
 namespace Nosto\Mixins;
+
 use Nosto\Helper\HtmlMarkupSerializationHelper;
 use Nosto\Helper\SerializationHelper;
 use Nosto\NostoException;

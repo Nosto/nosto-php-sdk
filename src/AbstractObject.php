@@ -74,8 +74,12 @@ abstract class AbstractObject
      */
     public function toHtml()
     {
-        $objectToMarkup = HtmlMarkupSerializationHelper::objectToMarkup($this,
-            '', 0, 2);
+        $objectToMarkup = HtmlMarkupSerializationHelper::objectToMarkup(
+            $this,
+            '',
+            0,
+            2
+        );
         return $objectToMarkup;
     }
 
