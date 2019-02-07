@@ -38,7 +38,6 @@ namespace Nosto\Object\Order;
 
 use Nosto\AbstractObject;
 use Nosto\Mixins\HtmlEncoderTrait;
-use Nosto\NostoException;
 use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\LineItemInterface;
 use Nosto\Types\MarkupableInterface;

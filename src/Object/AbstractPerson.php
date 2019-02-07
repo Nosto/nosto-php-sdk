@@ -39,7 +39,6 @@ namespace Nosto\Object;
 
 use Nosto\AbstractObject;
 use Nosto\Types\PersonInterface;
-use Nosto\NostoException;
 
 /**
  * Abstract model used for containing the basic details of person for purposes

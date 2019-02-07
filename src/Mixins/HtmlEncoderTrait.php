@@ -38,7 +38,6 @@ namespace Nosto\Mixins;
 use Nosto\Helper\HtmlMarkupSerializationHelper;
 use Nosto\Helper\SerializationHelper;
 use Nosto\NostoException;
-use Nosto\Object\StringCollection;
 
 /**
  * Iframe mixin class for account administration iframe.

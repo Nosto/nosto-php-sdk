@@ -36,9 +36,6 @@
 
 namespace Nosto\Object;
 
-use Nosto\NostoException;
-
-
 class Subscription
 {
     /**
