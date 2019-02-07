@@ -76,8 +76,7 @@ class Subscription
     }
 
     /**
-     * @param \DateTime $startDate
-     * @throws NostoException
+     * @param \DateTimeInterface|\DateTime|string $startDate
      */
     public function setStartDate($startDate)
     {
@@ -85,8 +84,7 @@ class Subscription
             || (is_object($startDate) && method_exists($startDate, 'format'))) {
             $this->startDate = $startDate->format('Y-m-d');
         } else {
-            throw new NostoException('Invalid argument, expected DateTime or DateTimeInterface');
+            $this->startDate = $startDate;
         }
     }
-
 }

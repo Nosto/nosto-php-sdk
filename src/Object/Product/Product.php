@@ -38,6 +38,7 @@ namespace Nosto\Object\Product;
 
 use Nosto\AbstractObject;
 use Nosto\Helper\ValidationHelper;
+use Nosto\Mixins\HtmlEncoderTrait;
 use Nosto\NostoException;
 use Nosto\Object\StringCollection;
 use Nosto\Types\HtmlEncodableInterface;
@@ -64,6 +65,9 @@ class Product extends AbstractObject implements
     SanitizableInterface,
     HtmlEncodableInterface
 {
+
+    use HtmlEncoderTrait;
+
     /**
      * @var string absolute url to the product page.
      */

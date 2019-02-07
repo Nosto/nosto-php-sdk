@@ -38,18 +38,12 @@ namespace Nosto;
 
 use Nosto\Helper\HtmlMarkupSerializationHelper;
 use Nosto\Helper\SerializationHelper;
-use Nosto\Types\HtmlEncodableInterface;
 
 /**
  * Base class for Nosto objects to share basic functionality.
  */
-abstract class AbstractObject implements HtmlEncodableInterface
+abstract class AbstractObject
 {
-    /**
-     * @var array
-     */
-    private $fieldsToEncode = array();
-
     /**
      * Returns a protected/private property value by invoking it's public getter.
      *
@@ -93,59 +87,5 @@ abstract class AbstractObject implements HtmlEncodableInterface
     public function toJson()
     {
         return SerializationHelper::serialize($this);
-    }
-
-    public function fieldsToEncode()
-    {
-        return $this->fieldsToEncode;
-    }
-
-    /**
-     * @param array $fieldsToEncode
-     */
-    public function setFieldsToEncode(array $fieldsToEncode)
-    {
-        $this->fieldsToEncode = $fieldsToEncode;
-    }
-
-    /**
-     * @param $field
-     * @throws NostoException
-     */
-    public function addFieldToEncode($field)
-    {
-        if (!HtmlMarkupSerializationHelper::encodableClassVariable($this, $field)) {
-            throw new NostoException(sprintf(
-                'Property `%s.%s` is not defined.',
-                get_class($this),
-                $field
-            ));
-        }
-
-        // Add check that the class var exists
-        $this->fieldsToEncode[] = $field;
-    }
-
-    /**
-     * @return void
-     * @throws NostoException
-     */
-    public function htmlEncodeVars()
-    {
-        foreach ($this->fieldsToEncode() as $field) {
-            if (!HtmlMarkupSerializationHelper::encodableClassVariable($this, $field)) {
-                throw new NostoException(sprintf(
-                    'Property `%s.%s` is not defined.',
-                    get_class($this),
-                    $field
-                ));
-            }
-
-            $getter = 'get' . str_replace('_', '', $field);
-            $setter = 'set' . str_replace('_', '', $field);
-            $origVal = $this->{$getter}();
-            $encodedVal = htmlentities($origVal);
-            $this->{$setter}($encodedVal);
-        }
     }
 }

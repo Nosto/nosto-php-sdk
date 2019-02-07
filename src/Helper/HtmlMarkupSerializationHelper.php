@@ -36,7 +36,9 @@
 
 namespace Nosto\Helper;
 
+use Nosto\NostoException;
 use Nosto\Object\MarkupableString;
+use Nosto\Object\StringCollection;
 use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\MarkupableCollectionInterface;
@@ -196,5 +198,52 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
         }
 
         return true;
+    }
+
+    /**
+     * @param array|string|StringCollection $val
+     * @return array|string|StringCollection
+     * @throws NostoException
+     */
+    public static function encodeHtmlEntities($val) {
+        if ($val instanceof StringCollection) {
+            $encodedCollection = new StringCollection();
+            foreach ($val as $key => $item) {
+                 $encodedCollection->append(self::encodeHtmlEntities($item));
+            }
+            return $encodedCollection;
+        } elseif (is_array($val)) {
+            $encodedArray = array();
+            foreach ($val as $key => $item) {
+                $encodedArray[$key] = self::encodeHtmlEntities($item);
+            }
+            return $encodedArray;
+        } elseif (is_string($val)) {
+            return htmlentities($val);
+        }
+        throw new NostoException('This method only supports encoding string and array types');
+    }
+
+    /**
+     * Checks if value can be encoded with self::encodeHtmlEntities()
+     *
+     * @param $value
+     * @return bool
+     */
+    public static function canEncoded($value)
+    {
+        if (is_string($value) || $value instanceof StringCollection) {
+            return true;
+        }
+        // We need to check that the array contains only scalar values or other arrays
+        if (is_array($value)) {
+            foreach ($value as $item) {
+                if (!self::canEncoded($item)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

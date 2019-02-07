@@ -37,6 +37,8 @@
 namespace Nosto\Object\Product;
 
 use Nosto\AbstractObject;
+use Nosto\Mixins\HtmlEncoderTrait;
+use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\Product\ProductInterface;
@@ -44,8 +46,13 @@ use Nosto\Types\Product\ProductInterface;
 /**
  * Model for sku information
  */
-class Sku extends AbstractObject implements SkuInterface, MarkupableInterface
+class Sku extends AbstractObject implements
+    SkuInterface,
+    MarkupableInterface,
+    HtmlEncodableInterface
 {
+    use HtmlEncoderTrait;
+
     /**
      * The id of the SKU
      *
