@@ -142,8 +142,22 @@ class SerializationHelper extends AbstractHelper
             $rc = new ReflectionClass($obj);
             do {
                 $rp = array();
+
+                // Note that we will not include any properties in traits
+                $traits = $rc->getTraits();
+                $skipProperties = array();
+                if (!empty($traits)) {
+                    foreach ($traits as $trait) {
+                        foreach ($trait->getProperties() as $traitProperty) {
+                            $skipProperties[] = $traitProperty->getName();
+                        }
+                    }
+                }
                 /* @var $p \ReflectionProperty */
                 foreach ($rc->getProperties() as $p) {
+                    if (in_array($p->getName(), $skipProperties)) {
+                        continue;
+                    }
                     $p->setAccessible(true);
                     $rp[$p->getName()] = $p->getValue($obj);
                 }
