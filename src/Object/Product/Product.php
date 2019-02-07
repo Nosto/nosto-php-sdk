@@ -60,6 +60,7 @@ use Nosto\Types\ValidatableInterface;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Product extends AbstractObject implements
+    ProductInterface,
     ValidatableInterface,
     MarkupableInterface,
     SanitizableInterface,
