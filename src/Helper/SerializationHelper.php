@@ -36,8 +36,8 @@
 
 namespace Nosto\Helper;
 
-use ReflectionClass;
-use ReflectionException;
+use \ReflectionClass;
+use \ReflectionException;
 use Traversable;
 
 /**
@@ -155,7 +155,7 @@ class SerializationHelper extends AbstractHelper
                 }
                 /* @var $p \ReflectionProperty */
                 foreach ($rc->getProperties() as $p) {
-                    if (in_array($p->getName(), $skipProperties)) {
+                    if (in_array($p->getName(), $skipProperties, true)) {
                         continue;
                     }
                     $p->setAccessible(true);

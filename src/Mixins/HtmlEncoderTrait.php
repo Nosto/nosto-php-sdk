@@ -96,8 +96,6 @@ trait HtmlEncoderTrait
                 $field
             ));
         }
-
-        // Add check that the class var exists
         $this->varsToEncode[] = $field;
     }
 

@@ -210,7 +210,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
     {
         if ($val instanceof StringCollection) {
             $encodedCollection = clone $val;
-            $encodedCollection->setData(null);
+            $encodedCollection->clear();
             foreach ($val as $key => $item) {
                  $encodedCollection->append(self::encodeHtmlEntities($item));
             }
