@@ -222,7 +222,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
             }
             return $encodedArray;
         } elseif (is_string($val)) {
-            return htmlspecialchars($val);
+            return htmlspecialchars($val, ENT_QUOTES);
         }
         throw new NostoException('This method only supports encoding string and array types');
     }

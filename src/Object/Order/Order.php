@@ -229,11 +229,31 @@ class Order extends AbstractObject implements
     }
 
     /**
+     * Set the status code of the order
+     *
+     * @param string $orderStatusCode
+     */
+    public function setOrderStatusCode($orderStatusCode)
+    {
+        $this->orderStatusCode = $orderStatusCode;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getOrderStatusLabel()
     {
         return $this->orderStatusLabel;
+    }
+
+    /**
+     * Set the status label of the order
+     *
+     * @param string $orderStatusLabel
+     */
+    public function setOrderStatusLabel($orderStatusLabel)
+    {
+        $this->orderStatusLabel = $orderStatusLabel;
     }
 
     /**
