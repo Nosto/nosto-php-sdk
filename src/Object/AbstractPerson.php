@@ -39,7 +39,6 @@ namespace Nosto\Object;
 
 use Nosto\AbstractObject;
 use Nosto\Types\PersonInterface;
-use Nosto\NostoException;
 
 /**
  * Abstract model used for containing the basic details of person for purposes
@@ -270,7 +269,7 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     }
 
     /**
-     * @param \DateTime | \DateTimeInterface $dateOfBirth
+     * @param \DateTime|\DateTimeInterface|string $dateOfBirth
      */
     public function setDateOfBirth($dateOfBirth)
     {
@@ -278,7 +277,7 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
             || (is_object($dateOfBirth) && method_exists($dateOfBirth, 'format'))) {
             $this->dateOfBirth = $dateOfBirth->format('Y-m-d');
         } else {
-            throw new NostoException('Invalid argument, expected DateTime or DateTimeInterface');
+            $this->dateOfBirth = $dateOfBirth;
         }
     }
 

@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.10.0
+* Implement automatic HTML entity encoding for objects 
+
 ## 3.9.2
 * Fix HTML serializer for values 0 of type float
 

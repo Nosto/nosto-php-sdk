@@ -36,7 +36,10 @@
 
 namespace Nosto\Helper;
 
+use Nosto\NostoException;
 use Nosto\Object\MarkupableString;
+use Nosto\Object\StringCollection;
+use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\MarkupableCollectionInterface;
 use Nosto\Types\SanitizableInterface;
@@ -97,6 +100,10 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
 
         if ($object instanceof SanitizableInterface) {
             $object = $object->sanitize();
+        }
+
+        if ($object instanceof HtmlEncodableInterface) {
+            $object->htmlEncodeVars();
         }
 
         $spacesStr = str_repeat(' ', $spaces);
@@ -172,5 +179,74 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
             }
         }
         return $markup;
+    }
+
+    /**
+     * Checks if a class variable can be encoded.
+     * In practice checks that a getter and a setter for the property
+     * is found from the class.
+     *
+     * @param $class
+     * @param $variable
+     * @return bool
+     */
+    public static function encodableClassVariable($class, $variable)
+    {
+        $getter = 'get' . str_replace('_', '', $variable);
+        $setter = 'set' . str_replace('_', '', $variable);
+        if (!method_exists($class, $getter) || !method_exists($class, $setter)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param array|string|StringCollection $val
+     * @return array|string|StringCollection
+     * @throws NostoException
+     */
+    public static function encodeHtmlEntities($val)
+    {
+        if ($val instanceof StringCollection) {
+            $encodedCollection = clone $val;
+            $encodedCollection->clear();
+            foreach ($val as $key => $item) {
+                 $encodedCollection->append(self::encodeHtmlEntities($item));
+            }
+            return $encodedCollection;
+        } elseif (is_array($val)) {
+            $encodedArray = array();
+            foreach ($val as $key => $item) {
+                $encodedArray[$key] = self::encodeHtmlEntities($item);
+            }
+            return $encodedArray;
+        } elseif (is_string($val)) {
+            return htmlspecialchars($val, ENT_QUOTES);
+        }
+        throw new NostoException('This method only supports encoding string and array types');
+    }
+
+    /**
+     * Checks if value can be encoded with self::encodeHtmlEntities()
+     *
+     * @param $value
+     * @return bool
+     */
+    public static function canEncoded($value)
+    {
+        if (is_string($value) || $value instanceof StringCollection) {
+            return true;
+        }
+        // We need to check that the array contains only scalar values or other arrays
+        if (is_array($value)) {
+            foreach ($value as $item) {
+                if (!self::canEncoded($item)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

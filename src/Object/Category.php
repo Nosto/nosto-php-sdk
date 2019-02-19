@@ -36,15 +36,22 @@
 
 namespace Nosto\Object;
 
+use Nosto\Mixins\HtmlEncoderTrait;
 use Nosto\Types\CategoryInterface;
 use Nosto\AbstractObject;
+use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 
 /**
  * Category object for tagging
  */
-class Category extends AbstractObject implements CategoryInterface, MarkupableInterface
+class Category extends AbstractObject implements
+    CategoryInterface,
+    MarkupableInterface,
+    HtmlEncodableInterface
 {
+    use HtmlEncoderTrait;
+
     /**
      * @var string categoryString
      */

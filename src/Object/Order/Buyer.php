@@ -36,7 +36,9 @@
 
 namespace Nosto\Object\Order;
 
+use Nosto\Mixins\HtmlEncoderTrait;
 use Nosto\Object\AbstractPerson;
+use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\SanitizableInterface;
@@ -45,8 +47,14 @@ use Nosto\Types\SanitizableInterface;
  * Model used for containing the customer making an OrderConfirm/purchase. This information
  * creates a customer on Nosto.
  */
-class Buyer extends AbstractPerson implements BuyerInterface, MarkupableInterface, SanitizableInterface
+class Buyer extends AbstractPerson implements
+    BuyerInterface,
+    MarkupableInterface,
+    SanitizableInterface,
+    HtmlEncodableInterface
 {
+    use HtmlEncoderTrait;
+
     /**
      * @inheritdoc
      */

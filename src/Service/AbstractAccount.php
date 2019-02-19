@@ -71,6 +71,4 @@ abstract class AbstractAccount
     {
         $this->account = $account;
     }
-
-
 }

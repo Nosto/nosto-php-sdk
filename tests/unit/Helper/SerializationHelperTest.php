@@ -76,6 +76,18 @@ class SerializationHelperTest extends Test
     }
 
     /**
+     * Tests that a customer object containing inline html is serialized correctly
+     */
+    public function testObjectWithHtmlTags()
+    {
+        $object = new MockProduct();
+        $object->addCustomField('customFieldOne', '<div class="customClassOne">Custom field one</div>');
+        $object->addCustomField('customFieldTwo', "<div class='customClassTwo'>Custom field two</div>");
+        $serializedObject = SerializationHelper::serialize($object);
+        $this->assertEquals('{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"condition":"Used","gender":null,"age_group":null,"gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","unit_pricing_measure":null,"unit_pricing_base_measure":null,"unit_pricing_unit":null,"skus":[],"variations":[],"thumb_url":null,"custom_fields":{"customFieldOne":"<div class=\"customClassOne\">Custom field one<\/div>","customFieldTwo":"<div class=\'customClassTwo\'>Custom field two<\/div>"}}', $serializedObject);
+    }
+
+    /**
      * Tests that a collection with objects is serialized correctly
      */
     public function testObjectCollection()

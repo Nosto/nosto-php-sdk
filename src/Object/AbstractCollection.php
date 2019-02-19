@@ -109,4 +109,12 @@ abstract class AbstractCollection implements Iterator, Countable
     {
         return SerializationHelper::serialize($this);
     }
+
+    /**
+     * Clears / resets the collection (empties the collection)
+     */
+    public function clear()
+    {
+        $this->var = array();
+    }
 }

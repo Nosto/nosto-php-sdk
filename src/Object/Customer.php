@@ -36,14 +36,21 @@
 
 namespace Nosto\Object;
 
+use Nosto\Mixins\HtmlEncoderTrait;
 use Nosto\Types\CustomerInterface;
+use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 
 /**
  * Customer object for tagging
  */
-class Customer extends User implements CustomerInterface, MarkupableInterface
+class Customer extends User implements
+    CustomerInterface,
+    MarkupableInterface,
+    HtmlEncodableInterface
 {
+    use HtmlEncoderTrait;
+
     /**
      * @var string customer reference
      */

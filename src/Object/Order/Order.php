@@ -37,7 +37,8 @@
 namespace Nosto\Object\Order;
 
 use Nosto\AbstractObject;
-use Nosto\NostoException;
+use Nosto\Mixins\HtmlEncoderTrait;
+use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\LineItemInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Order\BuyerInterface;
@@ -50,8 +51,14 @@ use Traversable;
  * Model for OrderConfirm information. This is used when compiling the info about an
  * OrderConfirm that is sent to Nosto.
  */
-class Order extends AbstractObject implements OrderInterface, ValidatableInterface, MarkupableInterface
+class Order extends AbstractObject implements
+    OrderInterface,
+    ValidatableInterface,
+    MarkupableInterface,
+    HtmlEncodableInterface
 {
+    use HtmlEncoderTrait;
+
     /**
      * @var string visitor checksum
      */
@@ -182,9 +189,8 @@ class Order extends AbstractObject implements OrderInterface, ValidatableInterfa
     /**
      * Sets the date when the OrderConfirm was placed in the format Y-m-d
      *
-     * @param \DateTimeInterface|\DateTime $createdAt the created date.
+     * @param \DateTimeInterface|\DateTime|string $createdAt the created date.
      *
-     * @throws NostoException
      */
     public function setCreatedAt($createdAt)
     {
@@ -192,7 +198,7 @@ class Order extends AbstractObject implements OrderInterface, ValidatableInterfa
             || (is_object($createdAt) && method_exists($createdAt, 'format'))) {
             $this->createdAt = $createdAt->format('Y-m-d H:i:s');
         } else {
-            throw new NostoException('Invalid argumanet, expected DateTime or DateTimeInterface');
+            $this->createdAt = $createdAt;
         }
     }
 
@@ -223,11 +229,31 @@ class Order extends AbstractObject implements OrderInterface, ValidatableInterfa
     }
 
     /**
+     * Set the status code of the order
+     *
+     * @param string $orderStatusCode
+     */
+    public function setOrderStatusCode($orderStatusCode)
+    {
+        $this->orderStatusCode = $orderStatusCode;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getOrderStatusLabel()
     {
         return $this->orderStatusLabel;
+    }
+
+    /**
+     * Set the status label of the order
+     *
+     * @param string $orderStatusLabel
+     */
+    public function setOrderStatusLabel($orderStatusLabel)
+    {
+        $this->orderStatusLabel = $orderStatusLabel;
     }
 
     /**
