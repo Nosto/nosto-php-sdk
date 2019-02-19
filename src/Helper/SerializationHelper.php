@@ -38,7 +38,7 @@ namespace Nosto\Helper;
 
 use \ReflectionClass;
 use \ReflectionException;
-use Traversable;
+use \Traversable;
 
 /**
  * Helper class for serialize objects to JSON using a snake-case naming convention.
