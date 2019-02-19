@@ -37,6 +37,8 @@
 namespace Nosto\Object\Product;
 
 use Nosto\AbstractObject;
+use Nosto\Mixins\HtmlEncoderTrait;
+use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Product\VariationInterface;
@@ -44,8 +46,12 @@ use Nosto\Types\Product\VariationInterface;
 /**
  * Model for variation information
  */
-class Variation extends AbstractObject implements VariationInterface, MarkupableInterface
+class Variation extends AbstractObject implements
+    VariationInterface,
+    MarkupableInterface,
+    HtmlEncodableInterface
 {
+    use HtmlEncoderTrait;
 
     /**
      * The id of the variation

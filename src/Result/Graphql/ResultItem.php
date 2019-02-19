@@ -36,7 +36,6 @@
 
 namespace Nosto\Result\Graphql;
 
-
 use Nosto\NostoException;
 
 /**

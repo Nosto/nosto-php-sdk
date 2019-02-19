@@ -37,13 +37,19 @@
 namespace Nosto\Object\Order;
 
 use Nosto\AbstractObject;
+use Nosto\Mixins\HtmlEncoderTrait;
+use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\Order\StatusInterface;
 
 /**
  * Model class containing information about the OrderConfirm status of an OrderConfirm
  */
-class OrderStatus extends AbstractObject implements StatusInterface
+class OrderStatus extends AbstractObject implements
+    StatusInterface,
+    HtmlEncodableInterface
 {
+    use HtmlEncoderTrait;
+
     /**
      * @var string the OrderConfirm status code as flagged via the payment provider
      */

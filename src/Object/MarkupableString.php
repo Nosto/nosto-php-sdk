@@ -36,11 +36,17 @@
 
 namespace Nosto\Object;
 
+use Nosto\Mixins\HtmlEncoderTrait;
+use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\AbstractObject;
 
-class MarkupableString extends AbstractObject implements MarkupableInterface
+class MarkupableString extends AbstractObject implements
+    MarkupableInterface,
+    HtmlEncodableInterface
 {
+    use HtmlEncoderTrait;
+
     /** @var string the markup key in the html */
     protected $markupKey;
 

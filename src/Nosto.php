@@ -130,5 +130,4 @@ class Nosto
     ) {
         throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
     }
-
 }

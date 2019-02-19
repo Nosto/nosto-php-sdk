@@ -34,54 +34,14 @@
  *
  */
 
-namespace Nosto\Object;
+namespace Nosto\Types;
 
-class Subscription
+interface HtmlEncodableInterface
 {
     /**
-     * @var string name
+     * Encodes object variables
+     *
+     * @return void
      */
-    private $name;
-
-    /**
-     * @var string startDate
-     */
-    private $startDate;
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStartDate()
-    {
-        return $this->startDate;
-    }
-
-    /**
-     * @param \DateTimeInterface|\DateTime|string $startDate
-     */
-    public function setStartDate($startDate)
-    {
-        if ($startDate instanceof \DateTime
-            || (is_object($startDate) && method_exists($startDate, 'format'))) {
-            $this->startDate = $startDate->format('Y-m-d');
-        } else {
-            $this->startDate = $startDate;
-        }
-    }
+    public function htmlEncodeVars();
 }

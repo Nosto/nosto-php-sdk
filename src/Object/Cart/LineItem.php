@@ -37,6 +37,8 @@
 namespace Nosto\Object\Cart;
 
 use Nosto\AbstractObject;
+use Nosto\Mixins\HtmlEncoderTrait;
+use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\LineItemInterface;
 use Nosto\Types\MarkupableInterface;
 
@@ -45,8 +47,13 @@ use Nosto\Types\MarkupableInterface;
  * the model when rendering the cart and OrderConfirm tagging and also for in OrderConfirm confirmation
  * API calls
  */
-class LineItem extends AbstractObject implements LineItemInterface, MarkupableInterface
+class LineItem extends AbstractObject implements
+    LineItemInterface,
+    MarkupableInterface,
+    HtmlEncodableInterface
 {
+    use HtmlEncoderTrait;
+
     /**
      * Product id for non saleable products such as shipping and discounts
      */
