@@ -42,6 +42,7 @@ use Nosto\Operation\AbstractAuthenticatedOperation;
 use Nosto\Request\Graphql\GraphqlRequest;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Request\Api\Token;
+use Nosto\Request\Http\Exception\HttpResponseException;
 use Nosto\Result\Graphql\ResultSet;
 use Nosto\Result\Graphql\ResultSetBuilder;
 use Nosto\Exception\Builder as ExceptionBuilder;
@@ -70,6 +71,7 @@ abstract class AbstractOperation extends AbstractAuthenticatedOperation
      *
      * @return GraphqlRequest the newly created request object.
      * @throws NostoException if the account does not have the correct token set.
+     * @throws NostoException
      */
     protected function initGraphqlRequest()
     {
@@ -102,10 +104,10 @@ abstract class AbstractOperation extends AbstractAuthenticatedOperation
     /**
      * Returns the result
      *
+     * @return ResultSet
      * @throws AbstractHttpException
      * @throws NostoException
-     * @return ResultSet
-     *
+     * @throws HttpResponseException
      */
     public function execute()
     {
