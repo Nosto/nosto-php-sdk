@@ -54,7 +54,7 @@ class Memory
      * Returns the runtime memory consumption for the whole PHP
      *
      * @param bool $mb (if true the memory consumption is returned in megabytes)
-     * @return string
+     * @return float|int
      */
     public static function getRealConsumption($mb = true)
     {
@@ -70,7 +70,7 @@ class Memory
      * Returns the runtime memory consumption for the current PHP script
      *
      * @param bool $mb (if true the memory consumption is returned in megabytes)
-     * @return string
+     * @return float|int
      */
     public static function getConsumption($mb = true)
     {
