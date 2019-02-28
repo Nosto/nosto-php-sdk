@@ -41,12 +41,23 @@ use Nosto\Object\ExchangeRateCollection;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Types\Signup\AccountInterface;
 
 /**
  * Handles updating exchange rates through the Nosto API
  */
 class SyncRates extends AbstractAuthenticatedOperation
 {
+    /**
+     * SyncRates constructor.
+     * @param AccountInterface $account
+     * @param string $activeDomain
+     */
+    public function __construct(AccountInterface $account, $activeDomain = '')
+    {
+        parent::__construct($account, $activeDomain);
+    }
+
     /**
      * Updates exchange rates to Nosto
      *
@@ -57,9 +68,13 @@ class SyncRates extends AbstractAuthenticatedOperation
      */
     public function update(ExchangeRateCollection $collection)
     {
-        $request = $this->initApiRequest($this->account->getApiToken(Token::API_EXCHANGE_RATES));
+        $request = $this->initApiRequest(
+            $this->account->getApiToken(Token::API_EXCHANGE_RATES),
+            $this->account->getName(),
+            $this->activeDomain
+        );
         $request->setPath(ApiRequest::PATH_CURRENCY_EXCHANGE_RATE);
         $response = $request->post($collection);
-        return $this->checkResponse($request, $response);
+        return self::checkResponse($request, $response);
     }
 }

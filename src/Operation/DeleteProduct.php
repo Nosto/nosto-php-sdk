@@ -40,6 +40,7 @@ use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Types\Signup\AccountInterface;
 
 /**
  * Operation class for upserting and deleting products through the Nosto API.
@@ -53,6 +54,16 @@ class DeleteProduct extends AbstractAuthenticatedOperation
      * @var array
      */
     private $productIds;
+
+    /**
+     * DeleteProduct constructor.
+     * @param AccountInterface $account
+     * @param string $activeDomain
+     */
+    public function __construct(AccountInterface $account, $activeDomain = '')
+    {
+        parent::__construct($account, $activeDomain);
+    }
 
     /**
      * Adds a product tho the collection on which the operation is the performed.
@@ -73,9 +84,13 @@ class DeleteProduct extends AbstractAuthenticatedOperation
      */
     public function delete()
     {
-        $request = $this->initApiRequest($this->account->getApiToken(Token::API_PRODUCTS));
+        $request = $this->initApiRequest(
+            $this->account->getApiToken(Token::API_PRODUCTS),
+            $this->account->getName(),
+            $this->activeDomain
+        );
         $request->setPath(ApiRequest::PATH_PRODUCTS_DISCONTINUE);
         $response = $request->post($this->productIds);
-        return $this->checkResponse($request, $response);
+        return self::checkResponse($request, $response);
     }
 }
