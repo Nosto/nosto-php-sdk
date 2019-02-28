@@ -41,6 +41,6 @@ use Exception;
 /**
  * Nosto exception class for out of memory errors.
  */
-class OutOfMemoryException extends Exception
+class MemoryOutOfBoundsException extends Exception
 {
 }
