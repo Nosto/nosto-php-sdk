@@ -34,70 +34,67 @@
  *
  */
 
-namespace Nosto\Operation;
+namespace Nosto\Util;
 
-use Nosto\NostoException;
-use Nosto\Object\Product\ProductCollection;
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Request\Http\Exception\AbstractHttpException;
-use Nosto\Types\Product\ProductInterface;
-use Nosto\Types\Signup\AccountInterface;
-
-/**
- * Operation class for upserting and deleting products through the Nosto API.
- * A product upsert will create the product if it doesn't exist or update it if
- * it does, while a product delete also results in an upsert but flags the
- * product's availability as 'Discontinued'
- */
-class UpsertProduct extends AbstractAuthenticatedOperation
+class Memory
 {
-    /**
-     * @var ProductCollection collection object of products to perform the operation on.
-     */
-    private $collection;
+    const MB_DIVIDER = 1048576;
 
     /**
-     * Constructor.
+     * Returns the runtime memory limit
      *
-     * @param AccountInterface $account the account object.
+     * @return string
      */
-    public function __construct(AccountInterface $account)
+    public static function getTotalMemoryLimit()
     {
-        parent::__construct($account);
-        $this->collection = new ProductCollection();
+        return ini_get('memory_limit');
     }
 
     /**
-     * Adds a product tho the collection on which the operation is the performed.
+     * Returns the runtime memory consumption for the whole PHP
      *
-     * @param ProductInterface $product
+     * @param bool $mb (if true the memory consumption is returned in megabytes)
+     * @return float|int
      */
-    public function addProduct(ProductInterface $product)
+    public static function getRealConsumption($mb = true)
     {
-        $this->collection->append($product);
+        $mem = memory_get_usage(true);
+        if ($mb === true) {
+            $mem = round($mem/self::MB_DIVIDER, 2);
+        }
+
+        return $mem;
     }
 
     /**
-     * Wrapper to call clear collection
+     * Returns the runtime memory consumption for the current PHP script
+     *
+     * @param bool $mb (if true the memory consumption is returned in megabytes)
+     * @return float|int
      */
-    public function clearCollection()
+    public static function getConsumption($mb = true)
     {
-        $this->collection->clear();
+        $mem = memory_get_usage(false);
+        if ($mb === true) {
+            $mem = round($mem/self::MB_DIVIDER, 2);
+        }
+
+        return $mem;
     }
 
     /**
-     * Sends a POST request to create or update all the products currently in the collection.
-     *
-     * @return bool if the request was successful.
-     * @throws NostoException on failure.
-     * @throws AbstractHttpException
+     * @return float The percentage of used memory by the script
      */
-    public function upsert()
+    public static function getPercentageUsedMem()
     {
-        $request = $this->initApiRequest($this->account->getApiToken(Token::API_PRODUCTS));
-        $request->setPath(ApiRequest::PATH_PRODUCTS_UPSERT);
-        $response = $request->post($this->collection);
-        return self::checkResponse($request, $response);
+        $memLimit = self::getTotalMemoryLimit();
+        // ini_get returns a string as it is defined in the php.ini file
+        // It is possible to use M or G to define the amount of memory
+        if (strpos($memLimit, 'G')) {
+            $memLimit = (int)$memLimit * 1024; // Cast to remove 'G' and 'GB'
+        } else { // Else we assume it is in Megabytes
+            $memLimit = (int)$memLimit;
+        }
+        return (float)(self::getConsumption() / $memLimit) * 100;
     }
 }
