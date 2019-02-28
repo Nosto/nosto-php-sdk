@@ -79,7 +79,7 @@ class UpsertProduct extends AbstractAuthenticatedOperation
     }
 
     /**
-     *
+     * Wrapper to call clear collection
      */
     public function clearCollection()
     {
