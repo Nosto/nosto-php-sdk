@@ -59,7 +59,12 @@ class OrderConfirm extends AbstractAuthenticatedOperation
      * @return true on success.
      * @throws AbstractHttpException
      */
-    public function send(OrderInterface $order, $customerId = null)
+    public function send(
+        OrderInterface $order,
+        $customerId = null,
+        $nostoAccount = null,
+        $activeDomain = null
+    )
     {
         $request = new ApiRequest();
         if (!empty($customerId)) {
@@ -69,8 +74,14 @@ class OrderConfirm extends AbstractAuthenticatedOperation
             $request->setPath(ApiRequest::PATH_UNMATCHED_ORDER_TAGGING);
             $replaceParams = array('{m}' => $this->account->getName());
         }
+        if (is_string($activeDomain)) {
+            $request->setActiveDomainHeader($activeDomain);
+        }
+        if (is_string($nostoAccount)) {
+            $request->setNostoAccountHeader($nostoAccount);
+        }
         $request->setReplaceParams($replaceParams);
         $response = $request->post($order);
-        return $this->checkResponse($request, $response);
+        return self::checkResponse($request, $response);
     }
 }
