@@ -38,12 +38,23 @@ namespace Nosto\Operation;
 
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
+use Nosto\Types\Signup\AccountInterface;
 
 /**
  * Operation class for updated customer's marketing permission
  */
 class MarketingPermission extends AbstractAuthenticatedOperation
 {
+    /**
+     * MarketingPermission constructor.
+     * @param AccountInterface $account
+     * @param string $activeDomain
+     */
+    public function __construct(AccountInterface $account, $activeDomain = '')
+    {
+        parent::__construct($account, $activeDomain);
+    }
+
     /**
      * Update customer marketing permission
      * @param string $email
@@ -52,13 +63,17 @@ class MarketingPermission extends AbstractAuthenticatedOperation
      */
     public function update($email, $hasPermission)
     {
-        $request = $this->initApiRequest($this->account->getApiToken(Token::API_EMAIL));
+        $request = $this->initApiRequest(
+            $this->account->getApiToken(Token::API_EMAIL),
+            $this->account->getName(),
+            $this->activeDomain
+        );
 
         $request->setPath(ApiRequest::PATH_MARKETING_PERMISSION);
         $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
         $request->setReplaceParams($replaceParams);
         $response = $request->postRaw('');
 
-        return $this->checkResponse($request, $response);
+        return self::checkResponse($request, $response);
     }
 }

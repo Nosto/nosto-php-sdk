@@ -34,47 +34,27 @@
  *
  */
 
-namespace Nosto\Operation;
+namespace Nosto\Helper;
 
 use Nosto\NostoException;
-use Nosto\Object\ExchangeRateCollection;
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Request\Http\Exception\AbstractHttpException;
-use Nosto\Types\Signup\AccountInterface;
 
-/**
- * Handles updating exchange rates through the Nosto API
- */
-class SyncRates extends AbstractAuthenticatedOperation
+
+class UrlHelper extends AbstractHelper
 {
-    /**
-     * SyncRates constructor.
-     * @param AccountInterface $account
-     * @param string $activeDomain
-     */
-    public function __construct(AccountInterface $account, $activeDomain = '')
-    {
-        parent::__construct($account, $activeDomain);
-    }
 
     /**
-     * Updates exchange rates to Nosto
+     * Returns the host
      *
-     * @param ExchangeRateCollection $collection the collection of exchange rates to update
-     * @return bool returns true when the operation was a success
+     * @param string $url
+     * @return string
      * @throws NostoException
-     * @throws AbstractHttpException
      */
-    public function update(ExchangeRateCollection $collection)
+    public static function parseUrl($url)
     {
-        $request = $this->initApiRequest(
-            $this->account->getApiToken(Token::API_EXCHANGE_RATES),
-            $this->account->getName(),
-            $this->activeDomain
-        );
-        $request->setPath(ApiRequest::PATH_CURRENCY_EXCHANGE_RATE);
-        $response = $request->post($collection);
-        return self::checkResponse($request, $response);
+        if (filter_var($url, FILTER_VALIDATE_URL)) {
+            return parse_url($url, PHP_URL_HOST);
+        }
+
+        throw new NostoException('The string is not a valid URL');
     }
 }

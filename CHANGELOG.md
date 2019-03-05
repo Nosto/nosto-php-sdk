@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.10.1
+* Add Nosto account & active domain to the API calls 
+
 ## 3.10.0
 * Implement automatic HTML entity encoding for objects 
 
