@@ -49,7 +49,7 @@ class UrlHelper extends AbstractHelper
      * @return string
      * @throws NostoException
      */
-    public static function parseUrl($url)
+    public static function parseDomain($url)
     {
         if (filter_var($url, FILTER_VALIDATE_URL)) {
             return parse_url($url, PHP_URL_HOST);
