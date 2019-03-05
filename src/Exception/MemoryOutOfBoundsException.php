@@ -34,27 +34,13 @@
  *
  */
 
-namespace Nosto\Helper;
+namespace Nosto\Exception;
 
-use Nosto\NostoException;
+use Exception;
 
-
-class UrlHelper extends AbstractHelper
+/**
+ * Nosto exception class for out of memory errors.
+ */
+class MemoryOutOfBoundsException extends Exception
 {
-
-    /**
-     * Returns the host
-     *
-     * @param string $url
-     * @return string
-     * @throws NostoException
-     */
-    public static function parseDomain($url)
-    {
-        if (filter_var($url, FILTER_VALIDATE_URL)) {
-            return parse_url($url, PHP_URL_HOST);
-        }
-
-        throw new NostoException('The string is not a valid URL');
-    }
 }

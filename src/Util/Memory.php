@@ -34,27 +34,67 @@
  *
  */
 
-namespace Nosto\Helper;
+namespace Nosto\Util;
 
-use Nosto\NostoException;
-
-
-class UrlHelper extends AbstractHelper
+class Memory
 {
+    const MB_DIVIDER = 1048576;
 
     /**
-     * Returns the host
+     * Returns the runtime memory limit
      *
-     * @param string $url
      * @return string
-     * @throws NostoException
      */
-    public static function parseDomain($url)
+    public static function getTotalMemoryLimit()
     {
-        if (filter_var($url, FILTER_VALIDATE_URL)) {
-            return parse_url($url, PHP_URL_HOST);
+        return ini_get('memory_limit');
+    }
+
+    /**
+     * Returns the runtime memory consumption for the whole PHP
+     *
+     * @param bool $mb (if true the memory consumption is returned in megabytes)
+     * @return float|int
+     */
+    public static function getRealConsumption($mb = true)
+    {
+        $mem = memory_get_usage(true);
+        if ($mb === true) {
+            $mem = round($mem/self::MB_DIVIDER, 2);
         }
 
-        throw new NostoException('The string is not a valid URL');
+        return $mem;
+    }
+
+    /**
+     * Returns the runtime memory consumption for the current PHP script
+     *
+     * @param bool $mb (if true the memory consumption is returned in megabytes)
+     * @return float|int
+     */
+    public static function getConsumption($mb = true)
+    {
+        $mem = memory_get_usage(false);
+        if ($mb === true) {
+            $mem = round($mem/self::MB_DIVIDER, 2);
+        }
+
+        return $mem;
+    }
+
+    /**
+     * @return float The percentage of used memory by the script
+     */
+    public static function getPercentageUsedMem()
+    {
+        $memLimit = self::getTotalMemoryLimit();
+        // ini_get returns a string as it is defined in the php.ini file
+        // It is possible to use M or G to define the amount of memory
+        if (strpos($memLimit, 'G')) {
+            $memLimit = (int)$memLimit * 1024; // Cast to remove 'G' and 'GB'
+        } else { // Else we assume it is in Megabytes
+            $memLimit = (int)$memLimit;
+        }
+        return (float)(self::getConsumption() / $memLimit) * 100;
     }
 }

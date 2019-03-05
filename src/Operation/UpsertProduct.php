@@ -80,6 +80,14 @@ class UpsertProduct extends AbstractAuthenticatedOperation
     }
 
     /**
+     * Wrapper to call clear collection
+     */
+    public function clearCollection()
+    {
+        $this->collection->clear();
+    }
+
+    /**
      * Sends a POST request to create or update all the products currently in the collection.
      *
      * @return bool if the request was successful.
@@ -96,6 +104,6 @@ class UpsertProduct extends AbstractAuthenticatedOperation
         );
         $request->setPath(ApiRequest::PATH_PRODUCTS_UPSERT);
         $response = $request->post($this->collection);
-        return $this->checkResponse($request, $response);
+        return self::checkResponse($request, $response);
     }
 }
