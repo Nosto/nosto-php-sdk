@@ -67,6 +67,8 @@ class HttpRequest
     const METHOD_DELETE = 'DELETE';
     const HEADER_AUTHORIZATION = 'Authorization';
     const HEADER_CONTENT_TYPE = 'Content-type';
+    const HEADER_NOSTO_ACCOUNT= 'X-Nosto-account';
+    const HEADER_ACTIVE_DOMAIN = 'X-Nosto-active-domain';
 
     /**
      * @var string user-agent to use for all requests
@@ -119,7 +121,6 @@ class HttpRequest
      * Curl is preferred if available.
      *
      * @param Adapter|null $adapter the http request adapter to use
-     * @throws NostoException
      */
     public function __construct(Adapter $adapter = null)
     {
@@ -263,6 +264,22 @@ class HttpRequest
     }
 
     /**
+     * Adds Nosto account to the headers
+     * @param $nostoAccount
+     */
+    public function setNostoAccountHeader($nostoAccount) {
+        $this->addHeader(self::HEADER_NOSTO_ACCOUNT, $nostoAccount);
+    }
+
+    /**
+     * Adds active domain to the headers
+     * @param $activeDomain
+     */
+    public function setActiveDomainHeader($activeDomain) {
+        $this->addHeader(self::HEADER_ACTIVE_DOMAIN, $activeDomain);
+    }
+
+    /**
      * Adds a new header to the request.
      *
      * @param string $key the header key, e.g. 'Content-type'.
@@ -318,6 +335,7 @@ class HttpRequest
      *
      * @param string $username the user name.
      * @param string $password the password.
+     * @throws NostoException
      */
     public function setAuthBasic($username, $password)
     {
@@ -329,7 +347,7 @@ class HttpRequest
      *
      * @param string $type the auth type (use AUTH_ constants).
      * @param mixed $value the auth header value, format depending on the auth type.
-     * @throws Exception if an incorrect auth type is given.
+     * @throws NostoException if an incorrect auth type is given.
      */
     public function setAuth($type, $value)
     {
@@ -356,6 +374,7 @@ class HttpRequest
      * Convenience method for setting the bearer auth type.
      *
      * @param string $token the access token.
+     * @throws Exception
      */
     public function setAuthBearer($token)
     {

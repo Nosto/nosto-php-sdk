@@ -61,7 +61,10 @@ class InitiateSso extends AbstractAuthenticatedOperation
      */
     public function get(UserInterface $user, $platform)
     {
-        $request = $this->initHttpRequest($this->account->getApiToken(Token::API_SSO));
+        $request = $this->initHttpRequest(
+            $this->account->getApiToken(Token::API_SSO),
+            $this->account->getName()
+        );
         $request->setPath(ApiRequest::PATH_SSO_AUTH);
         $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
         $request->setReplaceParams(array('{platform}' => $platform));

@@ -50,12 +50,19 @@ abstract class AbstractAuthenticatedOperation extends AbstractOperation
     protected $account;
 
     /**
+     * @var string active domain
+     */
+    protected $activeDomain;
+
+    /**
      * Constructor
      *
      * @param AccountInterface $account the account object.
+     * @param string $activeDomain
      */
-    public function __construct(AccountInterface $account)
+    public function __construct(AccountInterface $account, $activeDomain = '')
     {
         $this->account = $account;
+        $this->activeDomain = $activeDomain;
     }
 }

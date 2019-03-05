@@ -39,6 +39,7 @@ namespace Nosto\Operation;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Types\Order\OrderInterface;
+use Nosto\Types\Signup\AccountInterface;
 
 /**
  * Handles sending the OrderConfirm confirmations to Nosto via the API.
@@ -51,6 +52,16 @@ use Nosto\Types\Order\OrderInterface;
  */
 class OrderConfirm extends AbstractAuthenticatedOperation
 {
+    /**
+     * OrderConfirm constructor.
+     * @param AccountInterface $account
+     * @param string $activeDomain
+     */
+    public function __construct(AccountInterface $account, $activeDomain = '')
+    {
+        parent::__construct($account, $activeDomain);
+    }
+
     /**
      * Sends the OrderConfirm confirmation to Nosto.
      *
@@ -69,8 +80,14 @@ class OrderConfirm extends AbstractAuthenticatedOperation
             $request->setPath(ApiRequest::PATH_UNMATCHED_ORDER_TAGGING);
             $replaceParams = array('{m}' => $this->account->getName());
         }
+        if (is_string($this->activeDomain)) {
+            $request->setActiveDomainHeader($this->activeDomain);
+        }
+        if (is_string($this->account->getName())) {
+            $request->setNostoAccountHeader($this->account->getName());
+        }
         $request->setReplaceParams($replaceParams);
         $response = $request->post($order);
-        return $this->checkResponse($request, $response);
+        return self::checkResponse($request, $response);
     }
 }

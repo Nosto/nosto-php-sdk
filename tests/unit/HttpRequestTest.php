@@ -83,6 +83,34 @@ class HttpRequestTest extends Test
     }
 
     /**
+     * Tests that domain header is correct
+     */
+    public function testHttpRequestDomainHeader()
+    {
+        $request = new HttpRequest();
+        $request->setActiveDomainHeader('test.nos.to');
+        $headers = $request->getHeaders();
+        $this->assertContains(
+            'X-Nosto-active-domain: test.nos.to'
+            , $headers
+        );
+    }
+
+    /**
+     * Test that account header is correct
+     */
+    public function testHttpRequestAccountHeader()
+    {
+        $request = new HttpRequest();
+        $request->setNostoAccountHeader('test-account');
+        $headers = $request->getHeaders();
+        $this->assertContains(
+            'X-Nosto-account: test-account'
+            , $headers
+        );
+    }
+
+    /**
      * Tests setting the bearer auth type.
      */
     public function testHttpRequestAuthBearer()

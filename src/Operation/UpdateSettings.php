@@ -41,12 +41,23 @@ use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Types\SettingsInterface;
+use Nosto\Types\Signup\AccountInterface;
 
 /**
  * Operation class for updating common account settings through the Nosto API.
  */
 class UpdateSettings extends AbstractAuthenticatedOperation
 {
+    /**
+     * UpdateSettings constructor.
+     * @param AccountInterface $account
+     * @param string $activeDomain
+     */
+    public function __construct(AccountInterface $account, $activeDomain = '')
+    {
+        parent::__construct($account, $activeDomain);
+    }
+
     /**
      * Sends a POST request to create a new account for a store in Nosto
      *
@@ -57,9 +68,13 @@ class UpdateSettings extends AbstractAuthenticatedOperation
      */
     public function update(SettingsInterface $settings)
     {
-        $request = $this->initApiRequest($this->account->getApiToken(Token::API_SETTINGS));
+        $request = $this->initApiRequest(
+            $this->account->getApiToken(Token::API_SETTINGS),
+            $this->account->getName(),
+            $this->activeDomain
+        );
         $request->setPath(ApiRequest::PATH_SETTINGS);
         $response = $request->put($settings);
-        return $this->checkResponse($request, $response);
+        return self::checkResponse($request, $response);
     }
 }

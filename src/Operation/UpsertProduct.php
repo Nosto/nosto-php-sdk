@@ -61,10 +61,11 @@ class UpsertProduct extends AbstractAuthenticatedOperation
      * Constructor.
      *
      * @param AccountInterface $account the account object.
+     * @param string $activeDomain
      */
-    public function __construct(AccountInterface $account)
+    public function __construct(AccountInterface $account, $activeDomain = '')
     {
-        parent::__construct($account);
+        parent::__construct($account, $activeDomain);
         $this->collection = new ProductCollection();
     }
 
@@ -82,12 +83,17 @@ class UpsertProduct extends AbstractAuthenticatedOperation
      * Sends a POST request to create or update all the products currently in the collection.
      *
      * @return bool if the request was successful.
-     * @throws NostoException on failure.
      * @throws AbstractHttpException
+     * @throws NostoException on failure.
+     * @throws \Exception
      */
     public function upsert()
     {
-        $request = $this->initApiRequest($this->account->getApiToken(Token::API_PRODUCTS));
+        $request = $this->initApiRequest(
+            $this->account->getApiToken(Token::API_PRODUCTS),
+            $this->account->getName(),
+            $this->activeDomain
+        );
         $request->setPath(ApiRequest::PATH_PRODUCTS_UPSERT);
         $response = $request->post($this->collection);
         return $this->checkResponse($request, $response);
