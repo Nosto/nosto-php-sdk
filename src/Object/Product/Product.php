@@ -70,6 +70,13 @@ class Product extends AbstractObject implements
     use HtmlEncoderTrait;
 
     /**
+     * Product tag options
+     */
+    const TAG1 = 'tag1';
+    const TAG2 = 'tag2';
+    const TAG3 = 'tag3';
+
+    /**
      * @var string absolute url to the product page.
      */
     private $url;
