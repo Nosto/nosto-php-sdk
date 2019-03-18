@@ -42,6 +42,7 @@ node {
       catchError {
         sh "./vendor/bin/codecept run --xml"
       }
+      archiveArtifacts "tests/_output/report.xml"
       junit 'tests/_output/report.xml'
     }
   }
