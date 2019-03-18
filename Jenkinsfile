@@ -46,7 +46,7 @@ pipeline {
       steps {
         script {
           version = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-          sh 'composer archive --file=${version} --format=zip'
+          sh "composer archive --file=${version} --format=zip"
           sh 'chmod 644 *.zip'
         }
         archiveArtifacts "${version}.zip"
