@@ -158,7 +158,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
     private static function arrayToHtml($object, $key, $spaces, $indent, $traversable, $snakeCaseKey)
     {
         $markup = '';
-        $isAssociative = is_array($traversable) && SerializationHelper::isAssoc($traversable);
+        $isAssociative = is_array($traversable) && ArrayHelper::isAssoc($traversable);
         foreach ($traversable as $index => $childValue) {
             if ($object instanceof MarkupableCollectionInterface && $object->getChildMarkupKey()) {
                 $childMarkupKey = $object->getChildMarkupKey();
