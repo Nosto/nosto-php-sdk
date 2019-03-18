@@ -60,16 +60,15 @@ pipeline {
         }
       }
     }
-  }
 
-  stage('Unit Tests') {
-    catchError {
-      sh "./vendor/bin/codecept run --xml"
+    stage('Unit Tests') {
+      catchError {
+        sh "./vendor/bin/codecept run --xml"
+      }
+      archiveArtifacts "tests/_output/report.xml"
+      junit 'tests/_output/report.xml'
     }
-    archiveArtifacts "tests/_output/report.xml"
-    junit 'tests/_output/report.xml'
   }
-
   post {
     always {
       checkstyle pattern: 'chk*.xml', unstableTotalAll:'0'
