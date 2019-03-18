@@ -9,36 +9,41 @@ node {
     stage "Update Dependencies"
     sh "composer install"
 
-    stage "Code Sniffer"
-    catchError {
-      sh "./vendor/bin/phpcbf --standard=ruleset.xml . || true"
-      sh "./vendor/bin/phpcs --standard=ruleset.xml --report=checkstyle --report-file=chkphpcs.xml . || true"
+    stage "Code Sniffer" {
+      catchError {
+        sh "./vendor/bin/phpcbf --standard=ruleset.xml . || true"
+        sh "./vendor/bin/phpcs --standard=ruleset.xml --report=checkstyle --report-file=chkphpcs.xml . || true"
+      }
+      archiveArtifacts "chkphpcs.xml"
     }
-    archiveArtifacts "chkphpcs.xml"
 
-    stage "Copy-Paste Detection"
-    catchError {
-      sh "./vendor/bin/phpcpd --exclude=vendor --exclude=build --log-pmd=phdpcpd.xml src || true"
+    stage "Copy-Paste Detection" {
+      catchError {
+        sh "./vendor/bin/phpcpd --exclude=vendor --exclude=build --log-pmd=phdpcpd.xml src || true"
+      }
+      archiveArtifacts "phdpcpd.xml"
     }
-    archiveArtifacts "phdpcpd.xml"
 
-    stage "Mess Detection"
-    catchError {
-      sh "./vendor/bin/phpmd . xml codesize,naming,unusedcode,controversial,design --exclude vendor,var,build,tests --reportfile pmdphpmd.xml || true"
+    stage "Mess Detection" {
+      catchError {
+        sh "./vendor/bin/phpmd . xml codesize,naming,unusedcode,controversial,design --exclude vendor,var,build,tests --reportfile pmdphpmd.xml || true"
+      }
+      archiveArtifacts "pmdphpmd.xml"
     }
-    archiveArtifacts "pmdphpmd.xml"
 
-    stage "Phan Analysis"
-    catchError {
-      sh "./vendor/bin/phan --config-file=phan.php --output-mode=checkstyle --output=chkphan.xml || true"
+    stage "Phan Analysis" {
+      catchError {
+        sh "./vendor/bin/phan --config-file=phan.php --output-mode=checkstyle --output=chkphan.xml || true"
+      }
+      archiveArtifacts "chkphan.xml"
     }
-    archiveArtifacts "chkphan.xml"
 
-    stage "Unit Tests"
-    catchError {
-      sh "./vendor/bin/codecept run --xml"
+    stage "Unit Tests" {
+      catchError {
+        sh "./vendor/bin/codecept run --xml"
+      }
+      junit 'tests/_output/report.xml'
     }
-    junit 'tests/_output/report.xml'
   }
 
   post {
