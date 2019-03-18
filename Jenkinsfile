@@ -23,6 +23,7 @@ pipeline {
           sh "./vendor/bin/phpcbf --standard=ruleset.xml . || true"
           sh "./vendor/bin/phpcs --standard=ruleset.xml --report=checkstyle --report-file=chkphpcs.xml . || true"
         }
+        archiveArtifacts 'chkphpcs.xml'
       }
     }
 
@@ -31,6 +32,7 @@ pipeline {
         catchError {
           sh "./vendor/bin/phpcpd --exclude=vendor --exclude=build --log-pmd=phdpcpd.xml src || true"
         }
+        archiveArtifacts 'phdpcpd.xml'
       }
     }
 
@@ -39,6 +41,7 @@ pipeline {
         catchError {
           sh "./vendor/bin/phpmd . xml codesize,naming,unusedcode,controversial,design --exclude vendor,var,build,tests --reportfile pmdphpmd.xml || true"
         }
+        archiveArtifacts 'pmdphpmd.xml'
       }
     }
 
@@ -58,6 +61,7 @@ pipeline {
         catchError {
           sh "./vendor/bin/phan --config-file=phan.php --output-mode=checkstyle --output=chkphan.xml || true"
         }
+        archiveArtifacts 'chkphan.xml'
       }
     }
 
