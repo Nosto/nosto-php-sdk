@@ -62,11 +62,13 @@ pipeline {
     }
 
     stage('Unit Tests') {
-      catchError {
-        sh "./vendor/bin/codecept run --xml"
+      steps {
+        catchError {
+          sh "./vendor/bin/codecept run --xml"
+        }
+        archiveArtifacts "tests/_output/report.xml"
+        junit 'tests/_output/report.xml'
       }
-      archiveArtifacts "tests/_output/report.xml"
-      junit 'tests/_output/report.xml'
     }
   }
   post {
