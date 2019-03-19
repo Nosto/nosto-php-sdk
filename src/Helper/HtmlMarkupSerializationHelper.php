@@ -233,7 +233,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
      * @param $value
      * @return bool
      */
-    public static function canEncoded($value)
+    public static function canBeEncoded($value)
     {
         if (is_string($value) || $value instanceof StringCollection) {
             return true;
@@ -241,7 +241,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
         // We need to check that the array contains only scalar values or other arrays
         if (is_array($value)) {
             foreach ($value as $item) {
-                if (!self::canEncoded($item)) {
+                if (!self::canBeEncoded($item)) {
                     return false;
                 }
             }
