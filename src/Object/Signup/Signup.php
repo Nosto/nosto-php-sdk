@@ -106,11 +106,17 @@ class Signup extends Settings implements SignupInterface
         $this->setPlatform($platform);
         $this->setSignupApiToken(new Token(Token::API_CREATE, $signupApiToken));
         $this->setPartnerCode($partnerCode);
-        $this->addApiToken(Token::API_PRODUCTS);
-        $this->addApiToken(Token::API_SSO);
-        $this->addApiToken(Token::API_EXCHANGE_RATES);
-        $this->addApiToken(Token::API_SETTINGS);
-        $this->addApiToken(Token::API_EMAIL);
+        $tokens  = [
+            Token::API_PRODUCTS,
+            Token::API_SSO,
+            Token::API_EXCHANGE_RATES,
+            Token::API_SETTINGS,
+            Token::API_EMAIL,
+            Token::API_GRAPHQL
+        ];
+        foreach ($tokens as $token) {
+            $this->addApiToken($token);
+        }
     }
 
     /**
