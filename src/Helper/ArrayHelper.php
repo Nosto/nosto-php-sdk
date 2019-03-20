@@ -42,10 +42,10 @@ class ArrayHelper extends AbstractHelper
     /**
      * Check if the array contains only strings or numeric values
      *
-     * @param $array
+     * @param array $array
      * @return bool
      */
-    public static function onlyScalarValues($array)
+    public static function onlyScalarValues(array $array)
     {
         foreach ($array as $elem) {
             if (!is_scalar($elem)) {
