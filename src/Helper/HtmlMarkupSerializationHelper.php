@@ -158,7 +158,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
     private static function arrayToHtml($object, $key, $spaces, $indent, $traversable, $snakeCaseKey)
     {
         $markup = '';
-        $isAssociative = is_array($traversable) && SerializationHelper::isAssoc($traversable);
+        $isAssociative = is_array($traversable) && ArrayHelper::isAssoc($traversable);
         foreach ($traversable as $index => $childValue) {
             if ($object instanceof MarkupableCollectionInterface && $object->getChildMarkupKey()) {
                 $childMarkupKey = $object->getChildMarkupKey();
@@ -233,7 +233,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
      * @param $value
      * @return bool
      */
-    public static function canEncoded($value)
+    public static function canBeEncoded($value)
     {
         if (is_string($value) || $value instanceof StringCollection) {
             return true;
@@ -241,7 +241,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
         // We need to check that the array contains only scalar values or other arrays
         if (is_array($value)) {
             foreach ($value as $item) {
-                if (!self::canEncoded($item)) {
+                if (!self::canBeEncoded($item)) {
                     return false;
                 }
             }

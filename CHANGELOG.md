@@ -1,10 +1,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
-    
+
+## 3.12.0    
+* Add `APPS` token as a default token to be generated on account creation
+* Add helper method to check array contains only scalar values
+* Rename `HtmlMarkupSerializationHelper::canEndoded` to `HtmlMarkupSerializationHelper::canBeEncoded` 
+
 ## 3.11.1
-- Fix Jenkins checkstyle reports
-- Rewrite Jenkinsfile to use modern format 
+* Fix Jenkins checkstyle reports
+* Rewrite Jenkinsfile to use modern format 
 
 ## 3.11.0
 * Add memory utility class to SDK

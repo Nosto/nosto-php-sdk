@@ -103,7 +103,7 @@ class SerializationHelper extends AbstractHelper
             } else {
                 if (is_array($value)) {
                     $json[$key] = array();
-                    if (self::isAssoc($value)) {
+                    if (ArrayHelper::isAssoc($value)) {
                         foreach ($value as $k => $anObject) {
                             if (is_object($anObject)) {
                                 $json[$key][$k] = self::toArray($anObject);
@@ -184,31 +184,5 @@ class SerializationHelper extends AbstractHelper
             $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
         }
         return implode('_', $ret);
-    }
-
-    /**
-     * Checks whether an array is associative or sequentially indexed as associative arrays are
-     * handled as objects
-     *
-     * @param array $arr the array to check
-     * @return bool true if the array is associative
-     */
-    public static function isAssoc(array $arr)
-    {
-        if (array() === $arr) {
-            return false;
-        }
-        return array_keys($arr) !== range(0, count($arr) - 1);
-    }
-
-    /**
-     * Converts stdClass to a map
-     *
-     * @param \stdClass $object
-     * @return mixed
-     */
-    public static function stdClassToArray(\stdClass $object)
-    {
-        return json_decode(json_encode($object), true);
     }
 }

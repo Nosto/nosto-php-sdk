@@ -116,7 +116,7 @@ trait HtmlEncoderTrait
             $getter = 'get' . str_replace('_', '', $field);
             $setter = 'set' . str_replace('_', '', $field);
             $origVal = $this->{$getter}();
-            if (HtmlMarkupSerializationHelper::canEncoded($origVal)) {
+            if (HtmlMarkupSerializationHelper::canBeEncoded($origVal)) {
                 $encodedVal = HtmlMarkupSerializationHelper::encodeHtmlEntities($origVal);
                 $this->{$setter}($encodedVal);
             }

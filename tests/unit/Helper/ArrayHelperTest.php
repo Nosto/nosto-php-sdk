@@ -34,64 +34,22 @@
  *
  */
 
-namespace Nosto\Result\Graphql;
+namespace Nosto\Test\Unit\Helper;
 
+use Codeception\TestCase\Test;
 use Nosto\Helper\ArrayHelper;
-use Nosto\NostoException;
-use Nosto\Operation\Recommendation\AbstractOperation;
-use Nosto\Request\Http\HttpResponse;
 
-/**
- * Builder / parser class for GraphQL result and response
- */
-class ResultSetBuilder
+class ArrayHelperTest extends Test
 {
-    /**
-     * Builds a result set from HttpResponse
-     *
-     * @param HttpResponse $httpResponse
-     * @return ResultSet
-     * @throws NostoException
+    /*
+     *  Test that onlyScalarValues() method return the correct bool value
      */
-    public static function fromHttpResponse(HttpResponse $httpResponse)
+    public function testOnlyScalarValues()
     {
-        $result = json_decode($httpResponse->getResult());
-        $primaryData = self::parsePrimaryData($result);
-        $resultSet = new ResultSet();
-        foreach ($primaryData as $primaryDataItem) {
-            if ($primaryDataItem instanceof \stdClass) {
-                $primaryDataItem = ArrayHelper::stdClassToArray($primaryDataItem);
-            }
-            $item = new ResultItem($primaryDataItem);
-            $resultSet->append($item);
-        }
-        return $resultSet;
-    }
+        $scalarArray = [ 1, 2, 3, 4, 'five' ];
+        $nonScalarArray = [ [2,3,4], ['test', 'string'], 2 ];
 
-    /**
-     * Finds the primary data field from stdClass
-     *
-     * @param \stdClass $class
-     * @return array
-     * @throws NostoException
-     */
-    public static function parsePrimaryData(\stdClass $class)
-    {
-        $members = get_object_vars($class);
-        foreach ($members as $varName => $member) {
-            if ($varName == AbstractOperation::GRAPHQL_DATA_KEY) {
-                return $member;
-            }
-            if ($member instanceof \stdClass) {
-                return self::parsePrimaryData($member);
-            }
-        }
-
-        throw new NostoException(
-            sprintf(
-                'Could not find primary data field (%s) from response',
-                AbstractOperation::GRAPHQL_DATA_KEY
-            )
-        );
+        $this->assertTrue(ArrayHelper::onlyScalarValues($scalarArray));
+        $this->assertFalse(ArrayHelper::onlyScalarValues($nonScalarArray));
     }
 }

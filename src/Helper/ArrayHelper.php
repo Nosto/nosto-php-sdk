@@ -34,64 +34,49 @@
  *
  */
 
-namespace Nosto\Result\Graphql;
+namespace Nosto\Helper;
 
-use Nosto\Helper\ArrayHelper;
-use Nosto\NostoException;
-use Nosto\Operation\Recommendation\AbstractOperation;
-use Nosto\Request\Http\HttpResponse;
-
-/**
- * Builder / parser class for GraphQL result and response
- */
-class ResultSetBuilder
+class ArrayHelper extends AbstractHelper
 {
     /**
-     * Builds a result set from HttpResponse
+     * Check if the array contains only strings or numeric values
      *
-     * @param HttpResponse $httpResponse
-     * @return ResultSet
-     * @throws NostoException
+     * @param array $array
+     * @return bool
      */
-    public static function fromHttpResponse(HttpResponse $httpResponse)
+    public static function onlyScalarValues(array $array)
     {
-        $result = json_decode($httpResponse->getResult());
-        $primaryData = self::parsePrimaryData($result);
-        $resultSet = new ResultSet();
-        foreach ($primaryData as $primaryDataItem) {
-            if ($primaryDataItem instanceof \stdClass) {
-                $primaryDataItem = ArrayHelper::stdClassToArray($primaryDataItem);
+        foreach ($array as $elem) {
+            if (!is_scalar($elem)) {
+                return false;
             }
-            $item = new ResultItem($primaryDataItem);
-            $resultSet->append($item);
         }
-        return $resultSet;
+        return true;
     }
 
     /**
-     * Finds the primary data field from stdClass
+     * Checks whether an array is associative or sequentially indexed as associative arrays are
+     * handled as objects
      *
-     * @param \stdClass $class
-     * @return array
-     * @throws NostoException
+     * @param array $arr the array to check
+     * @return bool true if the array is associative
      */
-    public static function parsePrimaryData(\stdClass $class)
+    public static function isAssoc(array $arr)
     {
-        $members = get_object_vars($class);
-        foreach ($members as $varName => $member) {
-            if ($varName == AbstractOperation::GRAPHQL_DATA_KEY) {
-                return $member;
-            }
-            if ($member instanceof \stdClass) {
-                return self::parsePrimaryData($member);
-            }
+        if (array() === $arr) {
+            return false;
         }
+        return array_keys($arr) !== range(0, count($arr) - 1);
+    }
 
-        throw new NostoException(
-            sprintf(
-                'Could not find primary data field (%s) from response',
-                AbstractOperation::GRAPHQL_DATA_KEY
-            )
-        );
+    /**
+     * Converts stdClass to a map
+     *
+     * @param \stdClass $object
+     * @return mixed
+     */
+    public static function stdClassToArray(\stdClass $object)
+    {
+        return json_decode(json_encode($object), true);
     }
 }
