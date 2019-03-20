@@ -36,7 +36,6 @@
 
 namespace Nosto\Helper;
 
-
 class ArrayHelper extends AbstractHelper
 {
     /**
