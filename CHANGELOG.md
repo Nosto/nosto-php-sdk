@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 3.12.1
+* Fix GraphQL url
+
 ## 3.12.0    
 * Add `APPS` token as a default token to be generated on account creation
 * Add helper method to check array contains only scalar values
