@@ -247,7 +247,7 @@ class Product extends AbstractObject implements
 
     /**
      * Product publication date in shop
-     * @var \DateTime
+     * @var string
      */
     private $datePublished;
 
@@ -635,7 +635,7 @@ class Product extends AbstractObject implements
      * Sets the product publication date in the shop
      * in the Y-m-d format.
      *
-     * @param \DateTime $datePublished
+     * @param $datePublished
      * @throws NostoException
      */
     public function setDatePublished($datePublished)
