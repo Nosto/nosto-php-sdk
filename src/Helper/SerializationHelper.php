@@ -95,6 +95,9 @@ class SerializationHelper extends AbstractHelper
             }
             $key = self::toSnakeCase($key);
             $value = $object->$getter();
+            if (self::isNull($value)) {
+                continue;
+            }
             if ($value instanceof \Iterator) {
                 $value = iterator_to_array($value);
             }
@@ -184,5 +187,16 @@ class SerializationHelper extends AbstractHelper
             $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
         }
         return implode('_', $ret);
+    }
+
+    /**
+     * Check for multiple types of invalid values in a variable and returns.
+     *
+     * @param $var
+     * @return bool
+     */
+    public static function isNull($var)
+    {
+        return (!$var && $var !== 0 && $var !== '0' && $var !== false && $var !== 0.00);
     }
 }

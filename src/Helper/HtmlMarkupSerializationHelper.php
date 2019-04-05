@@ -94,8 +94,8 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
      */
     private static function toHtml($object, $key, $spaces = 0, $indent = 2, $style = null)
     {
-        if (!$object && $object !== 0 && $object !== '0' && $object !== false && $object !== 0.00) {
-            return "";
+        if (SerializationHelper::isNull($object)) {
+            return '';
         }
 
         if ($object instanceof SanitizableInterface) {
