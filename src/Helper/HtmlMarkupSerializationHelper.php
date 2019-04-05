@@ -83,7 +83,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
     }
 
     /**
-     * Servialize the object to html
+     * Serialize the object to html
      *
      * @param mixed $object to be serialized
      * @param string $key $key the html element class
