@@ -633,6 +633,7 @@ class Product extends AbstractObject implements
 
     /**
      * Sets the product publication date in the shop
+     * in the Y-m-d format.
      *
      * @param \DateTime $datePublished
      * @throws NostoException
