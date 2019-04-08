@@ -48,6 +48,7 @@ use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\Product\VariationInterface;
 use Nosto\Types\SanitizableInterface;
 use Nosto\Types\ValidatableInterface;
+use Nosto\Helper\DateHelper;
 
 /**
  * Model for product information. This is used when compiling the info about a
@@ -640,7 +641,7 @@ class Product extends AbstractObject implements
     public function setDatePublished($datePublished)
     {
         try {
-            $this->datePublished = \Nosto\Helper\DateHelper::format($datePublished);
+            $this->datePublished = DateHelper::format($datePublished);
         } catch (\Exception $e) {
             throw new NostoException($e->getMessage());
         }
