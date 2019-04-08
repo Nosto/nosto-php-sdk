@@ -48,6 +48,7 @@ use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\Product\VariationInterface;
 use Nosto\Types\SanitizableInterface;
 use Nosto\Types\ValidatableInterface;
+use Nosto\Helper\DateHelper;
 
 /**
  * Model for product information. This is used when compiling the info about a
@@ -243,6 +244,12 @@ class Product extends AbstractObject implements
      * @var array
      */
     private $customFields = array();
+
+    /**
+     * Product publication date in shop
+     * @var string
+     */
+    private $datePublished;
 
     public function __construct()
     {
@@ -614,6 +621,30 @@ class Product extends AbstractObject implements
     public function setBrand($brand)
     {
         $this->brand = $brand;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDatePublished()
+    {
+        return $this->datePublished;
+    }
+
+    /**
+     * Sets the product publication date in the shop
+     * in the Y-m-d format.
+     *
+     * @param $datePublished
+     * @throws NostoException
+     */
+    public function setDatePublished($datePublished)
+    {
+        try {
+            $this->datePublished = DateHelper::format($datePublished);
+        } catch (\Exception $e) {
+            throw new NostoException($e->getMessage());
+        }
     }
 
     /**

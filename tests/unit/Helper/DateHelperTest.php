@@ -49,9 +49,14 @@ class DateHelperTest extends Test
      */
     public function testHelperFormatting()
     {
-        $this->assertEquals("2009-01-31", DateHelper::format("2009-01-31"));
-        $this->assertEquals("2016-01-01", DateHelper::format("01.01.2016"));
-        $this->assertEquals("1970-01-01", DateHelper::format("01.24.2016"));
-        $this->assertEquals("1970-01-01", DateHelper::format(null));
+        $this->assertEquals('2009-01-31', DateHelper::format('2009-01-31'));
+        $this->assertEquals('2016-01-01', DateHelper::format('01.01.2016'));
+        $this->assertEquals('1970-01-01', DateHelper::format('01.24.2016'));
+        $this->assertEquals('1970-01-01', DateHelper::format(null));
+        $this->assertEquals('2013-03-05', DateHelper::format('2013-03-05T08:25:10+02:00'));
+        $this->assertEquals('2013-03-05', DateHelper::format('5-3-2013'));
+        $this->assertEquals('2015-07-13', DateHelper::format('15-7-13'));
+        $this->assertEquals('1970-01-01', DateHelper::format('5-13-2013'));
+        $this->assertEquals('1970-01-01', DateHelper::format('15-17-3'));
     }
 }

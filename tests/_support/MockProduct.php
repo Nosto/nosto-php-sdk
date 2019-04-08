@@ -68,6 +68,7 @@ class MockProduct extends Product
         $this->setCondition("Used");
         $this->setGtin("gtin");
         $this->setGoogleCategory("All");
+        $this->setDatePublished('2013-03-05T08:25:10+02:00');
     }
 
     public function __get($name)
