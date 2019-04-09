@@ -35,7 +35,7 @@
  */
 
 try {
-    $dotenv = new Dotenv\Dotenv(dirname(__FILE__));
+    $dotenv = Dotenv\Dotenv::create(dirname(__FILE__));
     $dotenv->load();
 } catch (Exception $e) {
     // Could not load ENV using defaults
