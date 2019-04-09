@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.14.0
+* Bump vlucas/phpdotenv to version 3.* 
+
 ## 3.13.0
 * Add date published to product interface and product object
 
