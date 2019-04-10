@@ -35,7 +35,7 @@
  */
 
 date_default_timezone_set('Europe/Helsinki');
-$dotenv = Dotenv\Dotenv::create(dirname(__FILE__));
+$dotenv = new Dotenv\Dotenv(dirname(__FILE__));
 $dotenv->overload();
 
 require_once(dirname(__FILE__) . '/../vendor/autoload.php');
