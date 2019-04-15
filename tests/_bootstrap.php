@@ -35,8 +35,18 @@
  */
 
 date_default_timezone_set('Europe/Helsinki');
-$dotenv = new Dotenv\Dotenv(dirname(__FILE__));
-$dotenv->overload();
+try {
+    $reflectDotEnv = new ReflectionMethod('Dotenv\Dotenv', '__construct');
+    $params = $reflectDotEnv->getParameters();
+    if ($params[0]->getName() === 'path' && $params[1]->getName() === 'file') {
+        $dotenv = new Dotenv\Dotenv(dirname(__FILE__));
+    } else {
+        $dotenv = Dotenv\Dotenv::create(dirname(__FILE__));
+    }
+    $dotenv->overload();
+} catch (Exception $e) {
+    // Could not load ENV using defaults
+}
 
 require_once(dirname(__FILE__) . '/../vendor/autoload.php');
 Nosto\Request\Http\HttpRequest::buildUserAgent('PHPUnit', '1.0.0', '1.0.0');
