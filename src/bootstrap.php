@@ -40,7 +40,7 @@ try {
     if ($params[0]->getName() === 'path' && $params[1]->getName() === 'file') {
         $dotenv = new Dotenv\Dotenv(dirname(__FILE__));
     } else {
-        $dotenv = Dotenv\Dotenv::create(dirname(__FILE__));
+        $dotenv = Dotenv\Dotenv::create(dirname(__FILE__)); // @phan-suppress-current-line PhanUndeclaredStaticMethod
     }
     $dotenv->load();
 } catch (Exception $e) {
