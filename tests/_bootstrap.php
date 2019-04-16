@@ -46,6 +46,8 @@ try {
     $dotenv->overload();
 } catch (Exception $e) {
     // Could not load ENV using defaults
+    /** @noinspection PhpUnhandledExceptionInspection */
+    throw $e;
 }
 
 require_once(dirname(__FILE__) . '/../vendor/autoload.php');
