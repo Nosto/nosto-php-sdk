@@ -68,23 +68,7 @@ final class IframeHelper extends AbstractHelper
         UserInterface $user = null,
         array $params = array()
     ) {
-        $defaultParameters = array(
-            'lang' => strtolower($iframe->getLanguageIsoCode()),
-            'ps_version' => $iframe->getVersionPlatform(),
-            'nt_version' => $iframe->getVersionModule(),
-            'product_pu' => $iframe->getPreviewUrlProduct(),
-            'category_pu' => $iframe->getPreviewUrlCategory(),
-            'search_pu' => $iframe->getPreviewUrlSearch(),
-            'cart_pu' => $iframe->getPreviewUrlCart(),
-            'front_pu' => $iframe->getPreviewUrlFront(),
-            'shop_lang' => strtolower($iframe->getLanguageIsoCodeShop()),
-            'shop_name' => $iframe->getShopName(),
-            'unique_id' => $iframe->getUniqueId(),
-            'fname' => $iframe->getFirstName(),
-            'lname' => $iframe->getLastName(),
-            'email' => $iframe->getEmail(),
-            'modules' => $iframe->getModules()
-        );
+        $defaultParameters = self::getDefaultParams($iframe);
         if ($account instanceof AccountInterface) {
             $missingScopes = $account->getMissingTokens();
             if (!empty($missingScopes)) {
@@ -124,5 +108,30 @@ final class IframeHelper extends AbstractHelper
         }
 
         return $url;
+    }
+
+    /**
+     * @param IframeInterface $iframe
+     * @return array
+     */
+    public static function getDefaultParams(IframeInterface $iframe)
+    {
+        return array(
+            'lang' => strtolower($iframe->getLanguageIsoCode()),
+            'ps_version' => $iframe->getVersionPlatform(),
+            'nt_version' => $iframe->getVersionModule(),
+            'product_pu' => $iframe->getPreviewUrlProduct(),
+            'category_pu' => $iframe->getPreviewUrlCategory(),
+            'search_pu' => $iframe->getPreviewUrlSearch(),
+            'cart_pu' => $iframe->getPreviewUrlCart(),
+            'front_pu' => $iframe->getPreviewUrlFront(),
+            'shop_lang' => strtolower($iframe->getLanguageIsoCodeShop()),
+            'shop_name' => $iframe->getShopName(),
+            'unique_id' => $iframe->getUniqueId(),
+            'fname' => $iframe->getFirstName(),
+            'lname' => $iframe->getLastName(),
+            'email' => $iframe->getEmail(),
+            'modules' => $iframe->getModules()
+        );
     }
 }

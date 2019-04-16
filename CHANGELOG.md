@@ -2,11 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
-### 3.13.0
+## 3.14.0
+* Make DotEnv dependency compatible with 2.x and 3.x versions 
+
+## 3.13.0
 * Add date published to product interface and product object
 
-### 3.12.1
-* Fix GraphQL url
+## 3.12.1
+* Fix GraphQL URL
 
 ## 3.12.0    
 * Add `APPS` token as a default token to be generated on account creation
