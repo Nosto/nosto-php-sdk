@@ -36,6 +36,7 @@
 
 namespace Nosto\Mixins;
 
+use Nosto\Helper\IframeHelper;
 use Nosto\Nosto;
 use Nosto\NostoException;
 use Nosto\Operation\InitiateSso;
@@ -59,23 +60,7 @@ trait IframeTrait
     public function buildURL(array $params = array())
     {
         $iframe = self::getIframe();
-        $defaultParameters = array(
-            'lang' => strtolower($iframe->getLanguageIsoCode()),
-            'ps_version' => $iframe->getVersionPlatform(),
-            'nt_version' => $iframe->getVersionModule(),
-            'product_pu' => $iframe->getPreviewUrlProduct(),
-            'category_pu' => $iframe->getPreviewUrlCategory(),
-            'search_pu' => $iframe->getPreviewUrlSearch(),
-            'cart_pu' => $iframe->getPreviewUrlCart(),
-            'front_pu' => $iframe->getPreviewUrlFront(),
-            'shop_lang' => strtolower($iframe->getLanguageIsoCodeShop()),
-            'shop_name' => $iframe->getShopName(),
-            'unique_id' => $iframe->getUniqueId(),
-            'fname' => $iframe->getFirstName(),
-            'lname' => $iframe->getLastName(),
-            'email' => $iframe->getEmail(),
-            'modules' => $iframe->getModules()
-        );
+        $defaultParameters = IframeHelper::getDefaultParams($iframe);
 
         $account = self::getAccount();
         if ($account instanceof AccountInterface) {
