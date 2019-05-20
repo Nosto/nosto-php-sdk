@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 3.14.1
+* Set vlucas/phpdotenv to be compatible with any version below 3.0
+
 ## 3.14.0
 * Make DotEnv dependency compatible with 2.x and 3.x versions 
 
