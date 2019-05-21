@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf0e850df74688c14ed5b59422fbbdc5",
+    "content-hash": "7a0d6693c752d520d2ab2474e5062e00",
     "packages": [
         {
             "name": "phpseclib/phpseclib",
@@ -1645,6 +1645,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2017-06-30T09:13:00+00:00"
         },
         {
