@@ -158,7 +158,7 @@ class SerializationHelperTest extends Test
     /**
      * Tests that an object SKUs are serialized to HTML correctly
      */
-    public function testObjectWithSkusAreSanitized()
+    public function testSkuIsSanitized()
     {
         $object = new MockSku();
         $object = $object->sanitize();
