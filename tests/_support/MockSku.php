@@ -51,6 +51,7 @@ class MockSku extends Sku
         $this->setUrl('http://my.shop.com/products/test_product.html');
         $this->setName('Test Product');
         $this->setImageUrl('http://my.shop.com/images/test_product.jpg');
+        $this->setInventoryLevel(20);
     }
 
     public function __get($name)

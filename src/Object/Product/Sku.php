@@ -42,6 +42,7 @@ use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\Product\ProductInterface;
+use Nosto\Types\SanitizableInterface;
 
 /**
  * Model for sku information
@@ -49,7 +50,8 @@ use Nosto\Types\Product\ProductInterface;
 class Sku extends AbstractObject implements
     SkuInterface,
     MarkupableInterface,
-    HtmlEncodableInterface
+    HtmlEncodableInterface,
+    SanitizableInterface
 {
     use HtmlEncoderTrait;
 
@@ -114,6 +116,11 @@ class Sku extends AbstractObject implements
      * @var array
      */
     private $customFields = array();
+
+    /**
+     * @var int|null product stock level
+     */
+    private $inventoryLevel;
 
     /**
      * @inheritdoc
@@ -308,5 +315,34 @@ class Sku extends AbstractObject implements
     public function getMarkupKey()
     {
         return 'nosto_sku';
+    }
+
+    /**
+     * Returns the inventory stock level
+     *
+     * @return int|null
+     */
+    public function getInventoryLevel()
+    {
+        return $this->inventoryLevel;
+    }
+
+    /**
+     * @param int|null $inventoryLevel
+     */
+    public function setInventoryLevel($inventoryLevel)
+    {
+        $this->inventoryLevel = $inventoryLevel;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function sanitize()
+    {
+        $sanitized = clone $this;
+        $sanitized->setInventoryLevel(null);
+
+        return $sanitized;
     }
 }
