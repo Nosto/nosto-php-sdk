@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **PHP-SDK version(s) used**: x.y.z
-**Platform where SDK is used name and version(s) affected**: Name - x.y.z
+**Platform where SDK is used. Provide the name of the platform and version(s) affected**: Name - x.y.z
 
 **Description**  
 <!-- A clear and concise description of the problem. -->
