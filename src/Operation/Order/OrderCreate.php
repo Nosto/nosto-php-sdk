@@ -42,35 +42,33 @@ class OrderCreate extends AbstractOrderCreate
     public function getQuery()
     {
         $query = <<<QUERY
-            {
-                "query":"mutation {
-                    placeOrder(by:BY_REF, id: "514421fce84abcb61bd45241", params: {
-                        customer: {
-                            firstName: {$this->customer->getFirstName()}
-                            lastName: {$this->customer->getLastName()}
-                            email: {$this->customer->getEmail()}
-                            marketingPermission: {$this->customer->getMarketingPermission()}
-                        }
-                        order: {
-                            number: {$this->orderNumber}
-                            orderStatus: {$this->statusCode}
-                            paymentProvider: {$this->paymentProvider}
-                            ref: {$this->orderReference}
-                            purchasedItems: [
-                                {
-                                    name: "Shoe"
-                                    productId: "1"
-                                    skuId: "11"
-                                    priceCurrencyCode: "EUR"
-                                    unitPrice: 22.43
-                                    quantity: 1
-                                }
-                            ]
-                        }
-                    }) {
+            mutation {
+                placeOrder(by:BY_CID, id: "5d15f81ec10e382017902858", params: {
+                    customer: {
+                        firstName: "{$this->customer->getFirstName()}"
+                        lastName: "{$this->customer->getLastName()}"
+                        email: "{$this->customer->getEmail()}"
+                        marketingPermission: false
+                    }
+                    order: {
+                        number: "{$this->orderNumber}"
+                        orderStatus: "{$this->statusCode}"
+                        paymentProvider: "{$this->paymentProvider}"
+                        ref: "{$this->orderReference}"
+                        purchasedItems: [
+                            {
+                                name: "Pierce Gym Short"
+                                productId: "1034"
+                                skuId: "1025"
+                                priceCurrencyCode: "EUR"
+                                unitPrice: 27.0
+                                quantity: 1
+                            }
+                        ]
+                    }
+                }) {
                     id
-                   }
-                }"
+                }
             }
 QUERY;
 

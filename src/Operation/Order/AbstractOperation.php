@@ -64,7 +64,7 @@ abstract class AbstractOperation extends AbstractAuthenticatedOperation
         $request = new GraphqlRequest();
         $request->setResponseTimeout($this->getResponseTimeout());
         $request->setConnectTimeout($this->getConnectTimeout());
-        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
+        $request->setContentType(self::CONTENT_TYPE_APPLICATION_GRAPHQL);
         $request->setAuthBasic('', $token->getValue());
         $request->setUrl(Nosto::getGraphqlBaseUrl() . GraphqlRequest::PATH_GRAPH_QL);
 

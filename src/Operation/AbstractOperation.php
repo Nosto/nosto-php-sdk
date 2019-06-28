@@ -52,6 +52,7 @@ abstract class AbstractOperation
 {
     const CONTENT_TYPE_URL_FORM_ENCODED = 'application/x-www-form-urlencoded';
     const CONTENT_TYPE_APPLICATION_JSON = 'application/json';
+    const CONTENT_TYPE_APPLICATION_GRAPHQL = 'application/graphql';
 
     /**
      * @var int timeout for waiting response from the api, in second
