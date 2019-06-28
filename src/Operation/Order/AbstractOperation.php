@@ -42,6 +42,8 @@ use Nosto\Nosto;
 use Nosto\NostoException;
 use Nosto\Request\Graphql\GraphqlRequest;
 use Nosto\Request\Api\Token;
+use Nosto\Result\Graphql\ResultSetBuilder;
+use Nosto\Exception\Builder as ExceptionBuilder;
 
 abstract class AbstractOperation extends AbstractAuthenticatedOperation
 {
@@ -69,8 +71,30 @@ abstract class AbstractOperation extends AbstractAuthenticatedOperation
         return $request;
     }
 
+    /**
+     * @throws NostoException
+     */
     public function execute()
     {
-        //ToDo execute the query
+        $request = $this->initGraphqlRequest();
+        $response = $request->postRaw(
+            $this->buildPayload()
+        );
+        if ($response->getCode() !== 200) {
+            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
+        }
+
+        return ResultSetBuilder::fromHttpResponse($response);
+
+    }
+
+    /**
+     * Removes line breaks from the string
+     *
+     * @return null|string|string[]
+     */
+    public function buildPayload()
+    {
+        return preg_replace('/[\r\n]+/', '', $this->getQuery());
     }
 }

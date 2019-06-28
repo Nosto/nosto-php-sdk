@@ -51,6 +51,12 @@ abstract class AbstractOrderCreate extends AbstractOperation
     /** @var string */
     protected $orderReference;
 
+    /** @var string */
+    protected $paymentProvider;
+
+    /** @var string */
+    protected $statusCode;
+
     /**
      * @throws NostoException
      */
@@ -59,6 +65,8 @@ abstract class AbstractOrderCreate extends AbstractOperation
         $this->setCustomer($order->getCustomer());
         $this->setOrderNumber($order->getOrderNumber());
         $this->setOrderReference($order->getExternalOrderRef());
+        $this->setPaymentProvider($order->getPaymentProvider());
+        $this->setStatusCode($order->getOrderStatusCode());
     }
 
     /**
@@ -69,13 +77,35 @@ abstract class AbstractOrderCreate extends AbstractOperation
         $this->customer = $customer;
     }
 
+    /**
+     * @param string $orderNumber
+     */
     private function setOrderNumber($orderNumber)
     {
         $this->orderNumber = $orderNumber;
     }
 
+    /**
+     * @param string $orderReference
+     */
     private function setOrderReference($orderReference)
     {
         $this->orderReference = $orderReference;
+    }
+
+    /**
+     * @param string $paymentProvider
+     */
+    private function setPaymentProvider($paymentProvider)
+    {
+        $this->paymentProvider = $paymentProvider;
+    }
+
+    /**
+     * @param string $statusCode
+     */
+    private function setStatusCode($statusCode)
+    {
+        $this->statusCode = $statusCode;
     }
 }

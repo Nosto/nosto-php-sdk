@@ -53,9 +53,9 @@ class OrderCreate extends AbstractOrderCreate
                         }
                         order: {
                             number: {$this->orderNumber}
-                            orderStatus: "paid"
-                            paymentProvider: "klarna"
-                            ref: "0010"
+                            orderStatus: {$this->statusCode}
+                            paymentProvider: {$this->paymentProvider}
+                            ref: {$this->orderReference}
                             purchasedItems: [
                                 {
                                     name: "Shoe"
@@ -74,6 +74,6 @@ class OrderCreate extends AbstractOrderCreate
             }
 QUERY;
 
-
+    return $query;
     }
 }
