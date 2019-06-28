@@ -36,35 +36,28 @@
 
 namespace Nosto\Operation\Order;
 
-class OrderCreate extends AbstractOrderCreate
+use Nosto\Types\LineItemInterface;
+
+class PurchasedItem
 {
 
-    public function getQuery()
+    /**
+     * @param LineItemInterface $item
+     * @return string;
+     */
+    public static function toGraphqlString(LineItemInterface $item)
     {
-        $query = <<<QUERY
-            mutation {
-                placeOrder(by:BY_CID, id: "5d15f81ec10e382017902858", params: {
-                    customer: {
-                        firstName: "{$this->customer->getFirstName()}"
-                        lastName: "{$this->customer->getLastName()}"
-                        email: "{$this->customer->getEmail()}"
-                        marketingPermission: {$this->customer->getMarketingPermission()}
-                    }
-                    order: {
-                        number: "{$this->orderNumber}"
-                        orderStatus: "{$this->statusCode}"
-                        paymentProvider: "{$this->paymentProvider}"
-                        ref: "{$this->orderReference}"
-                        purchasedItems: [
-                            {$this->purchasedItems}
-                        ]
-                    }
-                }) {
-                    id
-                }
-            }
+        $string = <<<QUERY
+        {
+            name: "{$item->getName()}"
+            productId: "{$item->getProductId()}"
+            skuId: "{$item->getSkuId()}"
+            priceCurrencyCode: "{$item->getPriceCurrencyCode()}"
+            unitPrice: {$item->getUnitPrice()}
+            quantity: {$item->getQuantity()}
+        }
 QUERY;
-
-    return $query;
+        return $string;
     }
+
 }

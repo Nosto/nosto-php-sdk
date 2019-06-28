@@ -37,6 +37,7 @@
 namespace Nosto\Operation\Order;
 
 use Nosto\NostoException;
+use Nosto\Types\LineItemInterface;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;
 
@@ -57,6 +58,12 @@ abstract class AbstractOrderCreate extends AbstractOperation
     /** @var string */
     protected $statusCode;
 
+    /** @var string */
+    protected $purchasedItems;
+
+    /** @var bool */
+    protected $marketingPermission;
+
     /**
      * @throws NostoException
      */
@@ -67,6 +74,7 @@ abstract class AbstractOrderCreate extends AbstractOperation
         $this->setOrderReference($order->getExternalOrderRef());
         $this->setPaymentProvider($order->getPaymentProvider());
         $this->setStatusCode($order->getOrderStatusCode());
+        $this->setPurchasedItems($order->getPurchasedItems());
     }
 
     /**
@@ -107,5 +115,26 @@ abstract class AbstractOrderCreate extends AbstractOperation
     private function setStatusCode($statusCode)
     {
         $this->statusCode = $statusCode;
+    }
+
+    /**
+     * @param array $item
+     */
+    private function setPurchasedItems(array $items)
+    {
+        $purchasedItemString = '';
+        /** @var LineItemInterface $item */
+        foreach ($items as $item) {
+            $purchasedItemString .= PurchasedItem::toGraphqlString($item);
+        }
+        $this->purchasedItems = $purchasedItemString;
+    }
+
+    /**
+     * @param bool $marketingPermission
+     */
+    private function setMarketingPermissions($marketingPermission)
+    {
+        $this->marketingPermission = $marketingPermission;
     }
 }
