@@ -14,9 +14,8 @@ use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Exception\Builder as ExceptionBuilder;
 use Nosto\Request\Http\Exception\HttpResponseException;
-use Nosto\Result\Graphql\ResultSet;
-use Nosto\Result\Graphql\ResultSetBuilder;
 use Nosto\Request\Graphql\GraphqlRequest;
+use Nosto\Request\Http\HttpResponse;
 
 abstract class AbstractGraphqlOperation extends AbstractAuthenticatedOperation
 {
@@ -34,10 +33,10 @@ abstract class AbstractGraphqlOperation extends AbstractAuthenticatedOperation
     /**
      * Returns the result
      *
-     * @return ResultSet
+     * @return HttpResponse
      * @throws AbstractHttpException
-     * @throws NostoException
      * @throws HttpResponseException
+     * @throws NostoException
      */
     public function execute()
     {
@@ -49,7 +48,7 @@ abstract class AbstractGraphqlOperation extends AbstractAuthenticatedOperation
             throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         }
 
-        return ResultSetBuilder::fromHttpResponse($response);
+        return $response;
     }
 
     /**
@@ -70,7 +69,6 @@ abstract class AbstractGraphqlOperation extends AbstractAuthenticatedOperation
         $request = new GraphqlRequest();
         $request->setResponseTimeout($this->getResponseTimeout());
         $request->setConnectTimeout($this->getConnectTimeout());
-        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
         $request->setAuthBasic('', $token->getValue());
         $request->setUrl(Nosto::getGraphqlBaseUrl() . GraphqlRequest::PATH_GRAPH_QL);
 

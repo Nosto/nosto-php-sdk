@@ -37,6 +37,11 @@
 namespace Nosto\Operation\Recommendation;
 
 use Nosto\Operation\AbstractGraphqlOperation;
+use Nosto\Result\Graphql\ResultSet;
+use Nosto\Result\Graphql\ResultSetBuilder;
+use Nosto\NostoException;
+use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Request\Http\Exception\HttpResponseException;
 
 /**
  * Abstract base operation class to be used in recommendation related operations
@@ -48,6 +53,28 @@ abstract class AbstractOperation extends AbstractGraphqlOperation
     private $previewMode = false;
     private $customerId;
     private $limit;
+
+    /**
+     * @inheritdoc
+     */
+    public function initGraphqlRequest()
+    {
+        $request = parent::initGraphqlRequest();
+        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
+        return $request;
+    }
+
+    /**
+     * @return ResultSet
+     * @throws NostoException
+     * @throws AbstractHttpException
+     * @throws HttpResponseException
+     */
+    public function execute()
+    {
+        $response =  parent::execute();
+        return ResultSetBuilder::fromHttpResponse($response);
+    }
 
     /**
      * Returns if recos should use preview mode. You can set asString to

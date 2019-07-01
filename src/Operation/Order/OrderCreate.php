@@ -85,6 +85,12 @@ class OrderCreate extends AbstractGraphqlOperation
         return $request;
     }
 
+    public function execute()
+    {
+        $response =  parent::execute();
+        return true;
+    }
+
     /**
      * @throws NostoException
      */
