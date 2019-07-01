@@ -43,6 +43,9 @@ use Nosto\Types\Order\OrderInterface;
 
 abstract class AbstractOrderCreate extends AbstractOperation
 {
+    const IDENTIFIER_BY_ID = 'BY_CID';
+    const IDENTIFIER_BY_REF = 'BY_REF';
+
     /** @var BuyerInterface */
     protected $customer;
 
@@ -64,6 +67,12 @@ abstract class AbstractOrderCreate extends AbstractOperation
     /** @var bool */
     protected $marketingPermission;
 
+    /** @var string */
+    protected $identifierMethod;
+
+    /** @var string */
+    protected $customerIdentifier;
+
     /**
      * @throws NostoException
      */
@@ -75,6 +84,22 @@ abstract class AbstractOrderCreate extends AbstractOperation
         $this->setPaymentProvider($order->getPaymentProvider());
         $this->setStatusCode($order->getOrderStatusCode());
         $this->setPurchasedItems($order->getPurchasedItems());
+    }
+
+    /**
+     * @param string $identifierMethod
+     */
+    public function setIdentifierMethod($identifierMethod)
+    {
+        $this->identifierMethod = $identifierMethod;
+    }
+
+    /**
+     * @param string $customerIdentifier
+     */
+    public function setCustomerIdentifier($customerIdentifier)
+    {
+        $this->customerIdentifier = $customerIdentifier;
     }
 
     /**

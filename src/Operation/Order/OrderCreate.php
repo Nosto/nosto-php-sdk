@@ -43,7 +43,7 @@ class OrderCreate extends AbstractOrderCreate
     {
         $query = <<<QUERY
             mutation {
-                placeOrder(by:BY_CID, id: "5d15f81ec10e382017902858", params: {
+                placeOrder(by:{$this->identifierMethod}, id: "{$this->customerIdentifier}", params: {
                     customer: {
                         firstName: "{$this->customer->getFirstName()}"
                         lastName: "{$this->customer->getLastName()}"
