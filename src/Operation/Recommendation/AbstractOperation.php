@@ -36,12 +36,12 @@
 
 namespace Nosto\Operation\Recommendation;
 
-use Nosto\Operation\AbstractAuthenticatedOperation;
+use Nosto\Operation\AbstractGraphqlOperation;
 
 /**
  * Abstract base operation class to be used in recommendation related operations
  */
-abstract class AbstractOperation extends AbstractAuthenticatedOperation
+abstract class AbstractOperation extends AbstractGraphqlOperation
 {
     const GRAPHQL_DATA_KEY = 'primary';
 

@@ -43,10 +43,6 @@ use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Exception\Builder as ExceptionBuilder;
-use Nosto\Request\Http\Exception\HttpResponseException;
-use Nosto\Result\Graphql\ResultSet;
-use Nosto\Result\Graphql\ResultSetBuilder;
-use Nosto\Request\Graphql\GraphqlRequest;
 
 /**
  * Base operation class for handling all communications through the Nosto API.
@@ -149,54 +145,6 @@ abstract class AbstractOperation
         $request->setAuthBasic('', $token->getValue());
         return $request;
     }
-
-    /**
-     * Removes line breaks from the string
-     *
-     * @return null|string|string[]
-     */
-    public function buildPayload()
-    {
-        return preg_replace('/[\r\n]+/', '', $this->getQuery());
-    }
-
-    /**
-     * Returns the result
-     *
-     * @return ResultSet
-     * @throws AbstractHttpException
-     * @throws NostoException
-     * @throws HttpResponseException
-     */
-    public function execute()
-    {
-        $request = $this->initGraphqlRequest();
-        $response = $request->postRaw(
-            $this->buildPayload()
-        );
-        if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
-        }
-
-        return ResultSetBuilder::fromHttpResponse($response);
-    }
-
-    /**
-     * Builds the recommendation API request
-     *
-     * @return string
-     */
-    abstract public function getQuery();
-
-    /**
-     * Create and returns a new Graphql request object initialized with a content-type
-     * of 'application/json' and the specified authentication token
-     *
-     * @return GraphqlRequest the newly created request object.
-     * @throws NostoException if the account does not have the correct token set.
-     * @throws NostoException
-     */
-    abstract public function initGraphqlRequest();
 
     /**
      * Get response timeout in second
