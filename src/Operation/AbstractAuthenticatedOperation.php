@@ -36,7 +36,11 @@
 
 namespace Nosto\Operation;
 
+use Nosto\Nosto;
+use Nosto\NostoException;
+use Nosto\Request\Api\Token;
 use Nosto\Types\Signup\AccountInterface;
+use Nosto\Request\Graphql\GraphqlRequest;
 
 /**
  * Base operation class for handling Nosto API communications that require
@@ -64,5 +68,25 @@ abstract class AbstractAuthenticatedOperation extends AbstractOperation
     {
         $this->account = $account;
         $this->activeDomain = $activeDomain;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function initGraphqlRequest()
+    {
+        $token = $this->account->getApiToken(Token::API_GRAPHQL);
+        if (is_null($token)) {
+            throw new NostoException('No API / Graphql token found for account.');
+        }
+
+        $request = new GraphqlRequest();
+        $request->setResponseTimeout($this->getResponseTimeout());
+        $request->setConnectTimeout($this->getConnectTimeout());
+        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
+        $request->setAuthBasic('', $token->getValue());
+        $request->setUrl(Nosto::getGraphqlBaseUrl() . GraphqlRequest::PATH_GRAPH_QL);
+
+        return $request;
     }
 }

@@ -36,8 +36,145 @@
 
 namespace Nosto\Operation\Order;
 
-class OrderCreate extends AbstractOrderCreate
+use Nosto\NostoException;
+use Nosto\Types\LineItemInterface;
+use Nosto\Types\Order\BuyerInterface;
+use Nosto\Types\Order\OrderInterface;
+use Nosto\Operation\AbstractAuthenticatedOperation;
+
+class OrderCreate extends AbstractAuthenticatedOperation
 {
+    const IDENTIFIER_BY_ID = 'BY_CID';
+    const IDENTIFIER_BY_REF = 'BY_REF';
+
+    /** @var BuyerInterface */
+    protected $customer;
+
+    /** @var string */
+    protected $orderNumber;
+
+    /** @var string */
+    protected $orderReference;
+
+    /** @var string */
+    protected $paymentProvider;
+
+    /** @var string */
+    protected $statusCode;
+
+    /** @var string */
+    protected $purchasedItems;
+
+    /** @var bool */
+    protected $marketingPermission;
+
+    /** @var string */
+    protected $identifierMethod;
+
+    /** @var string */
+    protected $customerIdentifier;
+
+    /**
+     * @return \Nosto\Request\Graphql\GraphqlRequest
+     * @throws NostoException
+     */
+    public function initGraphqlRequest()
+    {
+        $request = parent::initGraphqlRequest();
+        $request->setContentType(self::CONTENT_TYPE_APPLICATION_GRAPHQL);
+        return $request;
+    }
+
+    /**
+     * @throws NostoException
+     */
+    public function setOrder(OrderInterface $order)
+    {
+        $this->setCustomer($order->getCustomer());
+        $this->setOrderNumber($order->getOrderNumber());
+        $this->setOrderReference($order->getExternalOrderRef());
+        $this->setPaymentProvider($order->getPaymentProvider());
+        $this->setStatusCode($order->getOrderStatusCode());
+        $this->setPurchasedItems($order->getPurchasedItems());
+    }
+
+    /**
+     * @param string $identifierMethod
+     */
+    public function setIdentifierMethod($identifierMethod)
+    {
+        $this->identifierMethod = $identifierMethod;
+    }
+
+    /**
+     * @param string $customerIdentifier
+     */
+    public function setCustomerIdentifier($customerIdentifier)
+    {
+        $this->customerIdentifier = $customerIdentifier;
+    }
+
+    /**
+     * @param BuyerInterface $customer
+     */
+    private function setCustomer(BuyerInterface $customer)
+    {
+        $this->customer = $customer;
+        $this->setMarketingPermissions($customer->getMarketingPermission());
+    }
+
+    /**
+     * @param string $orderNumber
+     */
+    private function setOrderNumber($orderNumber)
+    {
+        $this->orderNumber = $orderNumber;
+    }
+
+    /**
+     * @param string $orderReference
+     */
+    private function setOrderReference($orderReference)
+    {
+        $this->orderReference = $orderReference;
+    }
+
+    /**
+     * @param string $paymentProvider
+     */
+    private function setPaymentProvider($paymentProvider)
+    {
+        $this->paymentProvider = $paymentProvider;
+    }
+
+    /**
+     * @param string $statusCode
+     */
+    private function setStatusCode($statusCode)
+    {
+        $this->statusCode = $statusCode;
+    }
+
+    /**
+     * @param array $item
+     */
+    private function setPurchasedItems(array $items)
+    {
+        $purchasedItemString = '';
+        /** @var LineItemInterface $item */
+        foreach ($items as $item) {
+            $purchasedItemString .= PurchasedItem::toGraphqlString($item);
+        }
+        $this->purchasedItems = $purchasedItemString;
+    }
+
+    /**
+     * @param bool $marketingPermission
+     */
+    private function setMarketingPermissions($marketingPermission)
+    {
+        $this->marketingPermission = $marketingPermission ? 'true' : 'false' ;
+    }
 
     public function getQuery()
     {
