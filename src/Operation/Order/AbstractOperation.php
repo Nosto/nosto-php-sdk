@@ -42,7 +42,6 @@ use Nosto\Nosto;
 use Nosto\NostoException;
 use Nosto\Request\Graphql\GraphqlRequest;
 use Nosto\Request\Api\Token;
-use Nosto\Result\Graphql\ResultSetBuilder;
 use Nosto\Exception\Builder as ExceptionBuilder;
 
 abstract class AbstractOperation extends AbstractAuthenticatedOperation
@@ -84,7 +83,7 @@ abstract class AbstractOperation extends AbstractAuthenticatedOperation
             throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         }
 
-        return ResultSetBuilder::fromHttpResponse($response);
+        return true;
 
     }
 
