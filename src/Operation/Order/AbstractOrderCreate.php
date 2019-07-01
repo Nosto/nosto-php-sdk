@@ -83,6 +83,7 @@ abstract class AbstractOrderCreate extends AbstractOperation
     private function setCustomer(BuyerInterface $customer)
     {
         $this->customer = $customer;
+        $this->setMarketingPermissions($customer->getMarketingPermission());
     }
 
     /**
@@ -135,6 +136,6 @@ abstract class AbstractOrderCreate extends AbstractOperation
      */
     private function setMarketingPermissions($marketingPermission)
     {
-        $this->marketingPermission = $marketingPermission;
+        $this->marketingPermission = $marketingPermission ? 'true' : 'false' ;
     }
 }

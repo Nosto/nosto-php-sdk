@@ -48,7 +48,7 @@ class OrderCreate extends AbstractOrderCreate
                         firstName: "{$this->customer->getFirstName()}"
                         lastName: "{$this->customer->getLastName()}"
                         email: "{$this->customer->getEmail()}"
-                        marketingPermission: {$this->customer->getMarketingPermission()}
+                        marketingPermission: {$this->marketingPermission}
                     }
                     order: {
                         number: "{$this->orderNumber}"
