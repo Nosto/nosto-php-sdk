@@ -65,7 +65,7 @@ class OrderCreate extends AbstractGraphqlOperation
     /** @var string */
     protected $purchasedItems;
 
-    /** @var bool */
+    /** @var string */
     protected $marketingPermission;
 
     /** @var string */
@@ -162,7 +162,7 @@ class OrderCreate extends AbstractGraphqlOperation
     }
 
     /**
-     * @param array $item
+     * @param array $items
      */
     private function setPurchasedItems(array $items)
     {
@@ -184,30 +184,54 @@ class OrderCreate extends AbstractGraphqlOperation
 
     public function getQuery()
     {
-        $query = <<<QUERY
-            mutation {
-                placeOrder(by:{$this->identifierMethod}, id: "{$this->customerIdentifier}", params: {
-                    customer: {
-                        firstName: "{$this->customer->getFirstName()}"
-                        lastName: "{$this->customer->getLastName()}"
-                        email: "{$this->customer->getEmail()}"
-                        marketingPermission: {$this->marketingPermission}
-                    }
-                    order: {
-                        number: "{$this->orderNumber}"
-                        orderStatus: "{$this->statusCode}"
-                        paymentProvider: "{$this->paymentProvider}"
-                        ref: "{$this->orderReference}"
-                        purchasedItems: [
-                            {$this->purchasedItems}
-                        ]
-                    }
-                }) {
+        $query =
+            <<<QUERY
+        {
+            "query":"mutation{
+                 placeOrder(
+                    by: \$by,
+                    id: \$customerIdentifier,
+                    params: {
+                        customer: {
+                            firstName: \$firstName
+                            lastName: \$lastName
+                            email: \$email
+                            marketingPermission: \$marketingPermission
+                        }
+                        order: {
+                            number: \$orderNumber
+                            orderStatus: \$orderStatus
+                            paymentProvider: \$paymentProvider
+                            ref: \$ref
+                            purchasedItems: [
+                                \$purchasedItems
+                            ]
+                        }
+                    } 
+                 )
+                 {
                     id
-                }
-            }
+                 }
+             }"
+        }
 QUERY;
+        return $query;
 
-    return $query;
+    }
+
+    public function getVariables()
+    {
+        $variables = new \stdClass();
+        $variables->by = $this->identifierMethod;
+        $variables->customerIdentifier = $this->customerIdentifier;
+        $variables->firstName = $this->customer->getFirstName();
+        $variables->lastName = $this->customer->getLastName();
+        $variables->email = $this->customer->getEmail();
+        $variables->marketingPermission = $this->marketingPermission;
+        $variables->orderNumber = $this->orderNumber;
+        $variables->orderStatus = $this->statusCode;
+        $variables->paymentProvider = $this->paymentProvider;
+        $variables->ref = $this->orderReference;
+        $variables->purchasedItems = $this->purchasedItems;
     }
 }

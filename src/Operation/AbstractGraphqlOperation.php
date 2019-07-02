@@ -16,6 +16,7 @@ use Nosto\Exception\Builder as ExceptionBuilder;
 use Nosto\Request\Http\Exception\HttpResponseException;
 use Nosto\Request\Graphql\GraphqlRequest;
 use Nosto\Request\Http\HttpResponse;
+use Nosto\Operation\GraphQLRequest as GraphQLQuery;
 
 abstract class AbstractGraphqlOperation extends AbstractAuthenticatedOperation
 {
@@ -41,8 +42,10 @@ abstract class AbstractGraphqlOperation extends AbstractAuthenticatedOperation
     public function execute()
     {
         $request = $this->initGraphqlRequest();
+        $payload = new GraphQLQuery($this->getQuery(), $this->getVariables());
+        $payload = $payload->getRequest();
         $response = $request->postRaw(
-            $this->buildPayload()
+            $payload
         );
         if ($response->getCode() !== 200) {
             throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
@@ -81,4 +84,9 @@ abstract class AbstractGraphqlOperation extends AbstractAuthenticatedOperation
      * @return string
      */
     abstract public function getQuery();
+
+    /**
+     * @return mixed
+     */
+    abstract public function getVariables();
 }

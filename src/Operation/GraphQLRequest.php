@@ -34,30 +34,23 @@
  *
  */
 
-namespace Nosto\Operation\Order;
+namespace Nosto\Operation;
 
-use Nosto\Types\LineItemInterface;
 
-class PurchasedItem
+class GraphQLRequest
 {
+    private $query;
 
-    /**
-     * @param LineItemInterface $item
-     * @return string
-     */
-    public static function toGraphqlString(LineItemInterface $item)
+    private $variables;
+
+    public function __construct($query, $variables)
     {
-        $string = <<<QUERY
-        {
-            name: "{$item->getName()}"
-            productId: "{$item->getProductId()}"
-            skuId: "{$item->getSkuId()}"
-            priceCurrencyCode: "{$item->getPriceCurrencyCode()}"
-            unitPrice: {$item->getUnitPrice()}
-            quantity: {$item->getQuantity()}
-        }
-QUERY;
-        return $string;
+        $this->query = $query;
+        $this->variables = $variables;
     }
 
+    public function getRequest()
+    {
+        return json_encode($this);
+    }
 }
