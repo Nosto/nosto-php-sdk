@@ -47,43 +47,14 @@ class OrderCreate extends AbstractGraphqlOperation
     const IDENTIFIER_BY_ID = 'BY_CID';
     const IDENTIFIER_BY_REF = 'BY_REF';
 
-    /** @var BuyerInterface */
-    protected $customer;
-
-    /** @var string */
-    protected $orderNumber;
-
-    /** @var string */
-    protected $orderReference;
-
-    /** @var string */
-    protected $paymentProvider;
-
-    /** @var string */
-    protected $statusCode;
-
-    /** @var string */
-    protected $purchasedItems;
-
-    /** @var string */
-    protected $marketingPermission;
+    /** @var OrderInterface */
+    private $order;
 
     /** @var string */
     protected $identifierMethod;
 
     /** @var string */
     protected $customerIdentifier;
-
-    /**
-     * @return \Nosto\Request\Graphql\GraphqlRequest
-     * @throws NostoException
-     */
-    public function initGraphqlRequest()
-    {
-        $request = parent::initGraphqlRequest();
-        $request->setContentType(self::CONTENT_TYPE_APPLICATION_GRAPHQL);
-        return $request;
-    }
 
     public function execute()
     {
@@ -96,12 +67,92 @@ class OrderCreate extends AbstractGraphqlOperation
      */
     public function setOrder(OrderInterface $order)
     {
-        $this->setCustomer($order->getCustomer());
-        $this->setOrderNumber($order->getOrderNumber());
-        $this->setOrderReference($order->getExternalOrderRef());
-        $this->setPaymentProvider($order->getPaymentProvider());
-        $this->setStatusCode($order->getOrderStatusCode());
-        $this->setPurchasedItems($order->getPurchasedItems());
+        $this->order = $order;
+    }
+
+    /**
+     * @return BuyerInterface
+     */
+    public function getCustomer()
+    {
+        return $this->order->getCustomer();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerFirstName()
+    {
+        return $this->getCustomer()->getFirstName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerLastName()
+    {
+        return $this->getCustomer()->getLastName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerEmail()
+    {
+        return $this->getCustomer()->getEmail();
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCustomerMarketingPermission()
+    {
+        return $this->getCustomer()->getMarketingPermission();
+    }
+
+    /**
+     * @return int|string
+     */
+    public function getOrderNumber()
+    {
+        return $this->order->getOrderNumber();
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderReference()
+    {
+        return $this->order->getExternalOrderRef();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentProvider()
+    {
+        return $this->order->getPaymentProvider();
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusCode()
+    {
+        return $this->order->getOrderStatusCode();
+    }
+
+
+    public function getPurchasedItems()
+    {
+        $items = $this->order->getPurchasedItems();
+
+        $itemsArray = [];
+        /** @var LineItemInterface $item */
+        foreach ($items as $item) {
+            $itemsArray[] = PurchasedItem::toArray($item);
+        }
+        return $itemsArray;
     }
 
     /**
@@ -113,6 +164,14 @@ class OrderCreate extends AbstractGraphqlOperation
     }
 
     /**
+     * @return string
+     */
+    public function getIdentifierMethod()
+    {
+        return $this->identifierMethod;
+    }
+
+    /**
      * @param string $customerIdentifier
      */
     public function setCustomerIdentifier($customerIdentifier)
@@ -121,65 +180,11 @@ class OrderCreate extends AbstractGraphqlOperation
     }
 
     /**
-     * @param BuyerInterface $customer
+     * @return string
      */
-    private function setCustomer(BuyerInterface $customer)
+    public function getCustomerIdentifier()
     {
-        $this->customer = $customer;
-        $this->setMarketingPermissions($customer->getMarketingPermission());
-    }
-
-    /**
-     * @param string $orderNumber
-     */
-    private function setOrderNumber($orderNumber)
-    {
-        $this->orderNumber = $orderNumber;
-    }
-
-    /**
-     * @param string $orderReference
-     */
-    private function setOrderReference($orderReference)
-    {
-        $this->orderReference = $orderReference;
-    }
-
-    /**
-     * @param string $paymentProvider
-     */
-    private function setPaymentProvider($paymentProvider)
-    {
-        $this->paymentProvider = $paymentProvider;
-    }
-
-    /**
-     * @param string $statusCode
-     */
-    private function setStatusCode($statusCode)
-    {
-        $this->statusCode = $statusCode;
-    }
-
-    /**
-     * @param array $items
-     */
-    private function setPurchasedItems(array $items)
-    {
-        $purchasedItemString = '';
-        /** @var LineItemInterface $item */
-        foreach ($items as $item) {
-            $purchasedItemString .= PurchasedItem::toGraphqlString($item);
-        }
-        $this->purchasedItems = $purchasedItemString;
-    }
-
-    /**
-     * @param bool $marketingPermission
-     */
-    private function setMarketingPermissions($marketingPermission)
-    {
-        $this->marketingPermission = $marketingPermission ? 'true' : 'false' ;
+        return $this->customerIdentifier;
     }
 
     public function getQuery()
@@ -187,14 +192,26 @@ class OrderCreate extends AbstractGraphqlOperation
         $query =
             <<<QUERY
         {
-            "query":"mutation{
+            "query":"mutation(
+                \$by: LookupParams!,
+                \$customerIdentifier: String!
+                \$firstname:String!,
+                \$lastname: String!,
+                \$email: String!,
+                \$marketingPermission: Boolean!,
+                \$orderNumber: String!,
+                \$orderStatus: String!,
+                \$paymentProvider: String!,
+                \$ref: String!,
+                \$purchasedItems:[InputItem]!
+            ){
                  placeOrder(
                     by: \$by,
                     id: \$customerIdentifier,
                     params: {
                         customer: {
-                            firstName: \$firstName
-                            lastName: \$lastName
+                            firstName: \$firstname
+                            lastName: \$lastname
                             email: \$email
                             marketingPermission: \$marketingPermission
                         }
@@ -203,9 +220,7 @@ class OrderCreate extends AbstractGraphqlOperation
                             orderStatus: \$orderStatus
                             paymentProvider: \$paymentProvider
                             ref: \$ref
-                            purchasedItems: [
-                                \$purchasedItems
-                            ]
+                            purchasedItems: \$purchasedItems
                         }
                     } 
                  )
@@ -219,19 +234,25 @@ QUERY;
 
     }
 
+    /**
+     * @return array|mixed
+     */
     public function getVariables()
     {
-        $variables = new \stdClass();
-        $variables->by = $this->identifierMethod;
-        $variables->customerIdentifier = $this->customerIdentifier;
-        $variables->firstName = $this->customer->getFirstName();
-        $variables->lastName = $this->customer->getLastName();
-        $variables->email = $this->customer->getEmail();
-        $variables->marketingPermission = $this->marketingPermission;
-        $variables->orderNumber = $this->orderNumber;
-        $variables->orderStatus = $this->statusCode;
-        $variables->paymentProvider = $this->paymentProvider;
-        $variables->ref = $this->orderReference;
-        $variables->purchasedItems = $this->purchasedItems;
+        $array = [
+            'by' => $this->identifierMethod,
+            'customerIdentifier' => $this->customerIdentifier,
+            'firstname' => $this->getCustomerFirstName(),
+            'lastname' => $this->getCustomerLastName(),
+            'email' => $this->getCustomerEmail(),
+            'marketingPermission' => $this->getCustomerMarketingPermission(),
+            'orderNumber' => $this->getOrderNumber(),
+            'orderStatus' => $this->getStatusCode(),
+            'paymentProvider' => $this->getPaymentProvider(),
+            'ref' => $this->getOrderReference(),
+            'purchasedItems' => $this->getPurchasedItems(),
+        ];
+
+        return ['variables' => $array];
     }
 }

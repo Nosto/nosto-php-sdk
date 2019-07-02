@@ -40,24 +40,21 @@ use Nosto\Types\LineItemInterface;
 
 class PurchasedItem
 {
-
     /**
      * @param LineItemInterface $item
-     * @return string
+     * @return array
      */
-    public static function toGraphqlString(LineItemInterface $item)
+    public static function toArray(LineItemInterface $item)
     {
-        $string = <<<QUERY
-        {
-            name: "{$item->getName()}"
-            productId: "{$item->getProductId()}"
-            skuId: "{$item->getSkuId()}"
-            priceCurrencyCode: "{$item->getPriceCurrencyCode()}"
-            unitPrice: {$item->getUnitPrice()}
-            quantity: {$item->getQuantity()}
-        }
-QUERY;
-        return $string;
+        $array = [
+            'name' => $item->getName(),
+            'productId' => $item->getProductId(),
+            'skuId' => $item->getSkuId(),
+            'priceCurrencyCode' => $item->getPriceCurrencyCode(),
+            'unitPrice' => $item->getUnitPrice(),
+            'quantity' => $item->getQuantity()
+        ];
+        return $array;
     }
 
 }

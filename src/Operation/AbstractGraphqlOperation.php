@@ -26,9 +26,9 @@ abstract class AbstractGraphqlOperation extends AbstractAuthenticatedOperation
      *
      * @return null|string|string[]
      */
-    public function buildPayload()
+    public function removeLineBreaks($string)
     {
-        return preg_replace('/[\r\n]+/', '', $this->getQuery());
+        return preg_replace('/[\r\n]+/', '', $string);
     }
 
     /**
@@ -42,7 +42,10 @@ abstract class AbstractGraphqlOperation extends AbstractAuthenticatedOperation
     public function execute()
     {
         $request = $this->initGraphqlRequest();
-        $payload = new GraphQLQuery($this->getQuery(), $this->getVariables());
+        $payload = new GraphQLQuery(
+            $this->removeLineBreaks($this->getQuery()),
+            $this->getVariables()
+        );
         $payload = $payload->getRequest();
         $response = $request->postRaw(
             $payload
@@ -73,6 +76,7 @@ abstract class AbstractGraphqlOperation extends AbstractAuthenticatedOperation
         $request->setResponseTimeout($this->getResponseTimeout());
         $request->setConnectTimeout($this->getConnectTimeout());
         $request->setAuthBasic('', $token->getValue());
+        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
         $request->setUrl(Nosto::getGraphqlBaseUrl() . GraphqlRequest::PATH_GRAPH_QL);
 
         return $request;

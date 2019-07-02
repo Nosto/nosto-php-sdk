@@ -55,16 +55,6 @@ abstract class AbstractOperation extends AbstractGraphqlOperation
     private $limit;
 
     /**
-     * @inheritdoc
-     */
-    public function initGraphqlRequest()
-    {
-        $request = parent::initGraphqlRequest();
-        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
-        return $request;
-    }
-
-    /**
      * @return ResultSet
      * @throws NostoException
      * @throws AbstractHttpException
