@@ -90,4 +90,29 @@ class ExchangeTokens extends AbstractOperation
         $account->setTokens($tokens);
         return $account;
     }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new HttpRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getMimoType()
+    {
+        return self::CONTENT_TYPE_URL_FORM_ENCODED;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return HttpRequest::PATH_OAUTH_SYNC;
+    }
+
 }
