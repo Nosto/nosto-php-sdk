@@ -46,7 +46,7 @@ use Nosto\Types\Signup\SignupInterface;
 /**
  * Operation class for handling the creation accounts through the Nosto API.
  */
-class AccountSignup extends AbstractOperation
+class AccountSignup extends AbstractRESTOperation
 {
     /**
      * @var SignupInterface Nosto account meta
@@ -77,7 +77,7 @@ class AccountSignup extends AbstractOperation
         $request->setPath(ApiRequest::PATH_SIGN_UP);
         $request->setReplaceParams(array('{lang}' => $this->account->getLanguageCode()));
         $response = $request->post($this->account);
-        $this->checkResponse($request, $response);
+        self::checkResponse($request, $response);
 
         $account = new Account($this->account->getPlatform() . '-' . $this->account->getName());
         $account->setTokens(Token::parseTokens(

@@ -36,7 +36,7 @@
 
 namespace Nosto\Operation\Recommendation;
 
-use Nosto\Operation\AbstractGraphqlOperation;
+use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Result\Graphql\ResultSet;
 use Nosto\Result\Graphql\ResultSetBuilder;
 use Nosto\NostoException;
@@ -46,7 +46,7 @@ use Nosto\Request\Http\Exception\HttpResponseException;
 /**
  * Abstract base operation class to be used in recommendation related operations
  */
-abstract class AbstractOperation extends AbstractGraphqlOperation
+abstract class AbstractOperation extends AbstractGraphQLOperation
 {
     const GRAPHQL_DATA_KEY = 'primary';
 

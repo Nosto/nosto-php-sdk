@@ -39,10 +39,7 @@ namespace Nosto\Operation;
 use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
-use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Request\Http\HttpRequest;
-use Nosto\Request\Http\HttpResponse;
-use Nosto\Exception\Builder as ExceptionBuilder;
 
 /**
  * Base operation class for handling all communications through the Nosto API.
@@ -63,88 +60,6 @@ abstract class AbstractOperation
      * @var int timeout for connecting to the api, in second
      */
     private $connectTimeout = 5;
-
-    /**
-     * Helper method to throw an exception when an API or HTTP endpoint responds
-     * with a non-200 status code.
-     *
-     * @param $request HttpRequest the HTTP request
-     * @param $response HttpResponse the HTTP response to check
-     * @return bool returns true when everything was okay
-     * @throws AbstractHttpException
-     */
-    protected static function checkResponse(HttpRequest $request, HttpResponse $response)
-    {
-        if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
-        }
-        return true;
-    }
-
-    /**
-     * Create and returns a new API request object initialized with a content-type
-     * of 'application/json' and the specified authentication token
-     *
-     * @param Token|null $token the token to use for the endpoint
-     * @param string|null $nostoAccount
-     * @param string|null $domain
-     * @return ApiRequest the newly created request object.
-     * @throws NostoException if the account does not have the correct token set.
-     */
-    protected function initApiRequest(
-        Token $token = null,
-        $nostoAccount = null,
-        $domain = null
-    ) {
-        if (is_null($token)) {
-            throw new NostoException('No API token found for account.');
-        }
-        $request = new ApiRequest();
-        if (is_string($domain)) {
-            $request->setActiveDomainHeader($domain);
-        }
-        if (is_string($nostoAccount)) {
-            $request->setNostoAccountHeader($nostoAccount);
-        }
-
-        $request->setResponseTimeout($this->getResponseTimeout());
-        $request->setConnectTimeout($this->getConnectTimeout());
-        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
-        $request->setAuthBasic('', $token->getValue());
-        return $request;
-    }
-
-    /**
-     * Create and returns a new API request object initialized with a content-type
-     * of 'application/x-www-form-urlencoded' and the specified authentication token
-     *
-     * @param Token|null $token the token to use for the endpoint
-     * @param string|null $nostoAccount
-     * @param string|null $domain
-     * @return HttpRequest the newly created request object.
-     * @throws NostoException if the account does not have the correct token set.
-     */
-    protected function initHttpRequest(
-        Token $token = null,
-        $nostoAccount = null,
-        $domain = null
-    ) {
-        if (is_null($token)) {
-            throw new NostoException('No API token found for account.');
-        }
-        $request = new HttpRequest();
-        if (is_string($domain)) {
-            $request->setActiveDomainHeader($domain);
-        }
-        if (is_string($nostoAccount)) {
-            $request->setNostoAccountHeader($nostoAccount);
-        }
-        $request->setResponseTimeout($this->getResponseTimeout());
-        $request->setConnectTimeout($this->getConnectTimeout());
-        $request->setContentType(self::CONTENT_TYPE_URL_FORM_ENCODED);
-        $request->setAuthBasic('', $token->getValue());
-        return $request;
-    }
 
     /**
      * Get response timeout in second

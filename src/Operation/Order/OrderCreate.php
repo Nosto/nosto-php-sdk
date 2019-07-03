@@ -40,9 +40,9 @@ use Nosto\NostoException;
 use Nosto\Types\LineItemInterface;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;
-use Nosto\Operation\AbstractGraphqlOperation;
+use Nosto\Operation\AbstractGraphQLOperation;
 
-class OrderCreate extends AbstractGraphqlOperation
+class OrderCreate extends AbstractGraphQLOperation
 {
     const IDENTIFIER_BY_ID = 'BY_CID';
     const IDENTIFIER_BY_REF = 'BY_REF';

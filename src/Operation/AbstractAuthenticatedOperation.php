@@ -42,7 +42,7 @@ use Nosto\Types\Signup\AccountInterface;
  * Base operation class for handling Nosto API communications that require
  * authentication or Nosto account.
  */
-abstract class AbstractAuthenticatedOperation extends AbstractOperation
+abstract class AbstractAuthenticatedOperation extends AbstractRESTOperation
 {
     /**
      * @var AccountInterface Nosto configuration
