@@ -94,7 +94,7 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
     {
         $request = $this->initGraphqlRequest();
         $payload = new GraphQLQuery(
-            $this->removeLineBreaks($this->getQuery()),
+            $this->getQuery(),
             $this->getVariables()
         );
         $payload = $payload->getRequest();

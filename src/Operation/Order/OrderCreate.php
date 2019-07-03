@@ -41,20 +41,35 @@ use Nosto\Types\LineItemInterface;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;
 use Nosto\Operation\AbstractGraphQLOperation;
+use Nosto\Types\Signup\AccountInterface;
+use Nosto\Object\LookupParams;
 
 class OrderCreate extends AbstractGraphQLOperation
 {
-    const IDENTIFIER_BY_ID = 'BY_CID';
-    const IDENTIFIER_BY_REF = 'BY_REF';
 
     /** @var OrderInterface */
     private $order;
 
-    /** @var string */
-    protected $identifierMethod;
+    /** @var LookupParams */
+    private $lookupParams;
 
-    /** @var string */
-    protected $customerIdentifier;
+    /**
+     * OrderCreate constructor.
+     * @param OrderInterface $order
+     * @param AccountInterface $account
+     * @param LookupParams $lookupParams
+     * @param string $activeDomain
+     */
+    public function __construct(
+        OrderInterface $order,
+        AccountInterface $account,
+        LookupParams $lookupParams,
+        string $activeDomain = ''
+    ) {
+        $this->order = $order;
+        $this->lookupParams = $lookupParams;
+        parent::__construct($account, $activeDomain);
+    }
 
     public function execute()
     {
@@ -63,51 +78,11 @@ class OrderCreate extends AbstractGraphQLOperation
     }
 
     /**
-     * @throws NostoException
-     */
-    public function setOrder(OrderInterface $order)
-    {
-        $this->order = $order;
-    }
-
-    /**
      * @return BuyerInterface
      */
     public function getCustomer()
     {
         return $this->order->getCustomer();
-    }
-
-    /**
-     * @return string
-     */
-    public function getCustomerFirstName()
-    {
-        return $this->getCustomer()->getFirstName();
-    }
-
-    /**
-     * @return string
-     */
-    public function getCustomerLastName()
-    {
-        return $this->getCustomer()->getLastName();
-    }
-
-    /**
-     * @return string
-     */
-    public function getCustomerEmail()
-    {
-        return $this->getCustomer()->getEmail();
-    }
-
-    /**
-     * @return bool
-     */
-    public function getCustomerMarketingPermission()
-    {
-        return $this->getCustomer()->getMarketingPermission();
     }
 
     /**
@@ -156,43 +131,13 @@ class OrderCreate extends AbstractGraphQLOperation
     }
 
     /**
-     * @param string $identifierMethod
-     */
-    public function setIdentifierMethod($identifierMethod)
-    {
-        $this->identifierMethod = $identifierMethod;
-    }
-
-    /**
      * @return string
      */
-    public function getIdentifierMethod()
-    {
-        return $this->identifierMethod;
-    }
-
-    /**
-     * @param string $customerIdentifier
-     */
-    public function setCustomerIdentifier($customerIdentifier)
-    {
-        $this->customerIdentifier = $customerIdentifier;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCustomerIdentifier()
-    {
-        return $this->customerIdentifier;
-    }
-
     public function getQuery()
     {
         $query =
             <<<QUERY
-        {
-            "query":"mutation(
+            mutation(
                 \$by: LookupParams!,
                 \$customerIdentifier: String!
                 \$firstname:String!,
@@ -227,9 +172,9 @@ class OrderCreate extends AbstractGraphQLOperation
                  {
                     id
                  }
-             }"
-        }
+            }
 QUERY;
+
         return $query;
 
     }
@@ -240,12 +185,12 @@ QUERY;
     public function getVariables()
     {
         $array = [
-            'by' => $this->identifierMethod,
-            'customerIdentifier' => $this->customerIdentifier,
-            'firstname' => $this->getCustomerFirstName(),
-            'lastname' => $this->getCustomerLastName(),
-            'email' => $this->getCustomerEmail(),
-            'marketingPermission' => $this->getCustomerMarketingPermission(),
+            'by' => $this->lookupParams->getIdentifierMethod(),
+            'customerIdentifier' => $this->lookupParams->getIdentifierString(),
+            'firstname' => $this->getCustomer()->getFirstName(),
+            'lastname' => $this->getCustomer()->getLastName(),
+            'email' => $this->getCustomer()->getEmail(),
+            'marketingPermission' => $this->getCustomer()->getMarketingPermission(),
             'orderNumber' => $this->getOrderNumber(),
             'orderStatus' => $this->getStatusCode(),
             'paymentProvider' => $this->getPaymentProvider(),
@@ -253,6 +198,6 @@ QUERY;
             'purchasedItems' => $this->getPurchasedItems(),
         ];
 
-        return ['variables' => $array];
+        return $array;
     }
 }

@@ -39,15 +39,9 @@ namespace Nosto\Operation;
 
 class GraphQLRequest
 {
-    /**
-     * @var string
-     */
-    private $query;
 
-    /**
-     * @var array
-     */
-    private $variables;
+    /** @var array */
+    private $request;
 
     /**
      * GraphQLRequest constructor.
@@ -56,8 +50,7 @@ class GraphQLRequest
      */
     public function __construct($query,array $variables)
     {
-        $this->query = $query;
-        $this->variables = $variables;
+        $this->request = ['query' => $query, 'variables' => $variables];
     }
 
     /**
@@ -67,7 +60,6 @@ class GraphQLRequest
      */
     public function getRequest()
     {
-        $queryArray = (array)json_decode($this->query);
-        return json_encode(array_merge($queryArray,$this->variables));
+        return json_encode($this->request);
     }
 }

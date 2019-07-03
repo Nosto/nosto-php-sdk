@@ -34,61 +34,50 @@
  *
  */
 
-namespace Nosto\Operation;
+namespace Nosto\Object;
 
 /**
- * Base operation class for handling all communications through the Nosto API.
- * Each endpoint is known as an operation in the SDK.
+ * Class LookupParams
+ *
+ * This class is used to setup up parameters to identify the customer when making an order
+ *
+ * @package Nosto\Object
  */
-abstract class AbstractOperation
+class LookupParams
 {
-    const CONTENT_TYPE_URL_FORM_ENCODED = 'application/x-www-form-urlencoded';
-    const CONTENT_TYPE_APPLICATION_JSON = 'application/json';
-    const CONTENT_TYPE_APPLICATION_GRAPHQL = 'application/graphql';
+    const IDENTIFIER_BY_CID = 'BY_CID';
+    const IDENTIFIER_BY_REF = 'BY_REF';
+
+    /** @var string */
+    private $identifierMethod;
+
+    /** @var string */
+    private $identifierString;
 
     /**
-     * @var int timeout for waiting response from the api, in second
+     * LookupParams constructor.
+     * @param string $identifierMethod
+     * @param string $identifierString
      */
-    private $responseTimeout = 5;
-
-    /**
-     * @var int timeout for connecting to the api, in second
-     */
-    private $connectTimeout = 5;
-
-    /**
-     * Get response timeout in second
-     * @return int response timeout in second
-     */
-    public function getResponseTimeout()
+    public function __construct(string $identifierMethod, string $identifierString)
     {
-        return $this->responseTimeout;
+        $this->identifierMethod = $identifierMethod;
+        $this->identifierString = $identifierString;
     }
 
     /**
-     * Set response timeout in second
-     * @param int $responseTimeout in second
+     * @return string
      */
-    public function setResponseTimeout($responseTimeout)
+    public function getIdentifierMethod(): string
     {
-        $this->responseTimeout = $responseTimeout;
+        return $this->identifierMethod;
     }
 
     /**
-     * connect timeout in second
-     * @return int connect timeout in second
+     * @return string
      */
-    public function getConnectTimeout()
+    public function getIdentifierString(): string
     {
-        return $this->connectTimeout;
-    }
-
-    /**
-     * Set connect timeout in second
-     * @param int $connectTimeout in second
-     */
-    public function setConnectTimeout($connectTimeout)
-    {
-        $this->connectTimeout = $connectTimeout;
+        return $this->identifierString;
     }
 }
