@@ -50,8 +50,7 @@ class CategoryTopList extends AbstractTopList
     {
         $query
             = <<<QUERY
-        {
-            "query": "mutation(
+            mutation(
                     \$customerId: String!,
                     \$category: String!,
                     \$limit: Int!,
@@ -82,8 +81,7 @@ class CategoryTopList extends AbstractTopList
                         }
                     }
                 }
-            }"
-        }
+            }
 QUERY;
         $formatted = sprintf(
             $query,
@@ -94,6 +92,9 @@ QUERY;
         return $formatted;
     }
 
+    /**
+     * @return array
+     */
     public function getVariables()
     {
         $array = [
@@ -104,7 +105,7 @@ QUERY;
             'hours' => $this->getHours()
         ];
 
-        return ['variables' => $array];
+        return $array;
     }
 
     /**

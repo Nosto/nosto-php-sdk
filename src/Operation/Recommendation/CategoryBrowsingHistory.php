@@ -50,8 +50,7 @@ class CategoryBrowsingHistory extends AbstractHistory
     {
         $query
             = <<<QUERY
-        {
-            "query": "mutation(
+            mutation(
                     \$customerId: String!,
                     \$limit: Int!,
                     \$preview: Boolean!
@@ -79,8 +78,7 @@ class CategoryBrowsingHistory extends AbstractHistory
                         }
                     }
                 }
-            }"
-        }
+            }
 QUERY;
         $formatted = sprintf(
             $query,
@@ -90,6 +88,9 @@ QUERY;
         return $formatted;
     }
 
+    /**
+     * @return array
+     */
     public function getVariables()
     {
         $array = [
@@ -99,7 +100,7 @@ QUERY;
             'preview' => $this->isPreviewMode(true)
         ];
 
-        return ['variables' => $array];
+        return $array;
     }
 
     /**

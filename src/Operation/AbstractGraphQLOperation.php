@@ -111,31 +111,6 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
     }
 
     /**
-     * Create and returns a new Graphql request object initialized with a content-type
-     * of 'application/json' and the specified authentication token
-     *
-     * @return GraphqlRequest the newly created request object.
-     * @throws NostoException if the account does not have the correct token set.
-     * @throws NostoException
-     */
-    public function initGraphqlRequest()
-    {
-        $token = $this->account->getApiToken(Token::API_GRAPHQL);
-        if (is_null($token)) {
-            throw new NostoException('No API / Graphql token found for account.');
-        }
-
-        $request = new GraphqlRequest();
-        $request->setResponseTimeout($this->getResponseTimeout());
-        $request->setConnectTimeout($this->getConnectTimeout());
-        $request->setAuthBasic('', $token->getValue());
-        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
-        $request->setUrl(Nosto::getGraphqlBaseUrl() . GraphqlRequest::PATH_GRAPH_QL);
-
-        return $request;
-    }
-
-    /**
      * Builds the recommendation API request
      *
      * @return string
