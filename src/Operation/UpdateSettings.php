@@ -68,13 +68,37 @@ class UpdateSettings extends AbstractAuthenticatedOperation
      */
     public function update(SettingsInterface $settings)
     {
-        $request = $this->initApiRequest(
+        $request = $this->initRequest(
             $this->account->getApiToken(Token::API_SETTINGS),
             $this->account->getName(),
             $this->activeDomain
         );
-        $request->setPath(ApiRequest::PATH_SETTINGS);
         $response = $request->put($settings);
         return self::checkResponse($request, $response);
     }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new ApiRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getMimoType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return ApiRequest::PATH_SETTINGS;
+    }
+
 }

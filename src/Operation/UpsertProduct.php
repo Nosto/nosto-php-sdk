@@ -97,13 +97,38 @@ class UpsertProduct extends AbstractAuthenticatedOperation
      */
     public function upsert()
     {
-        $request = $this->initApiRequest(
+        $request = $this->initRequest(
             $this->account->getApiToken(Token::API_PRODUCTS),
             $this->account->getName(),
             $this->activeDomain
         );
-        $request->setPath(ApiRequest::PATH_PRODUCTS_UPSERT);
         $response = $request->post($this->collection);
         return self::checkResponse($request, $response);
     }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new ApiRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getMimoType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return ApiRequest::PATH_PRODUCTS_UPSERT;
+    }
+
+
 }

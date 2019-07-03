@@ -73,8 +73,7 @@ class AccountSignup extends AbstractRESTOperation
      */
     public function create()
     {
-        $request = $this->initApiRequest($this->account->getSignUpApiToken());
-        $request->setPath(ApiRequest::PATH_SIGN_UP);
+        $request = $this->initRequest($this->account->getSignUpApiToken());
         $request->setReplaceParams(array('{lang}' => $this->account->getLanguageCode()));
         $response = $request->post($this->account);
         self::checkResponse($request, $response);
@@ -86,5 +85,29 @@ class AccountSignup extends AbstractRESTOperation
             '_token'
         ));
         return $account;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return ApiRequest::PATH_SIGN_UP;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getRequestType()
+    {
+        return new ApiRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMimoType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
     }
 }

@@ -90,4 +90,21 @@ class OrderConfirm extends AbstractAuthenticatedOperation
         $response = $request->post($order);
         return self::checkResponse($request, $response);
     }
+
+    protected function getRequestType()
+    {
+        // TODO: Implement getRequestType() method.
+    }
+
+    protected function getMimoType()
+    {
+        // TODO: Implement getMimoType() method.
+    }
+
+    protected function getPath()
+    {
+        // TODO: Implement getPath() method.
+    }
+
+
 }

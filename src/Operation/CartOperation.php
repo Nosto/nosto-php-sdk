@@ -66,6 +66,31 @@ class CartOperation extends AbstractAuthenticatedOperation
         $updateJson = json_encode($data);
         $response = $request->postRaw($updateJson);
 
-        return $this->checkResponse($request, $response);
+        return self::checkResponse($request, $response);
     }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new ApiRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getMimoType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return ApiRequest::PATH_CART_UPDATE;
+    }
+
 }

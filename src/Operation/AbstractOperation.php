@@ -36,6 +36,12 @@
 
 namespace Nosto\Operation;
 
+use Nosto\Request\Api\ApiRequest;
+use Nosto\Request\Api\Token;
+use Nosto\NostoException;
+use Nosto\Request\Http\HttpRequest;
+use Nosto\Request\Graphql\GraphqlRequest;
+
 /**
  * Base operation class for handling all communications through the Nosto API.
  * Each endpoint is known as an operation in the SDK.
@@ -55,6 +61,55 @@ abstract class AbstractOperation
      * @var int timeout for connecting to the api, in second
      */
     private $connectTimeout = 5;
+
+    /**
+     * @param Token|null $token
+     * @param null $nostoAccount
+     * @param null $domain
+     * @return ApiRequest|GraphqlRequest|HttpRequest
+     * @throws NostoException
+     */
+    protected function initRequest(
+        Token $token = null,
+        $nostoAccount = null,
+        $domain = null
+    ) {
+        if (is_null($token)) {
+            throw new NostoException('No API token found for account.');
+        }
+        $request = $this->getRequestType();
+        if (is_string($domain)) {
+            $request->setActiveDomainHeader($domain);
+        }
+        if (is_string($nostoAccount)) {
+            $request->setNostoAccountHeader($nostoAccount);
+        }
+        $request->setResponseTimeout($this->getResponseTimeout());
+        $request->setConnectTimeout($this->getConnectTimeout());
+        $request->setContentType($this->getMimoType());
+        $request->setAuthBasic('', $token->getValue());
+        $request->setPath($this->getPath());
+        return $request;
+    }
+
+    /**
+     * Return type of request object
+     *
+     * @return HttpRequest|ApiRequest|GraphqlRequest;
+     */
+    abstract protected function getRequestType();
+
+    /**
+     * Return content type
+     *
+     * @return string
+     */
+    abstract protected function getMimoType();
+
+    /**
+     * @return string
+     */
+    abstract protected  function getPath();
 
     /**
      * Get response timeout in second

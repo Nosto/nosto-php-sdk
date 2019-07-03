@@ -68,13 +68,37 @@ class SyncRates extends AbstractAuthenticatedOperation
      */
     public function update(ExchangeRateCollection $collection)
     {
-        $request = $this->initApiRequest(
+        $request = $this->initRequest(
             $this->account->getApiToken(Token::API_EXCHANGE_RATES),
             $this->account->getName(),
             $this->activeDomain
         );
-        $request->setPath(ApiRequest::PATH_CURRENCY_EXCHANGE_RATE);
         $response = $request->post($collection);
         return self::checkResponse($request, $response);
     }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new ApiRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getMimoType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return ApiRequest::PATH_CURRENCY_EXCHANGE_RATE;
+    }
+
 }

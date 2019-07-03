@@ -39,6 +39,8 @@ namespace Nosto\Operation;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Types\Signup\AccountInterface;
+use Nosto\NostoException;
+use Nosto\Request\Http\Exception\AbstractHttpException;
 
 /**
  * Operation class for updated customer's marketing permission
@@ -57,23 +59,50 @@ class MarketingPermission extends AbstractAuthenticatedOperation
 
     /**
      * Update customer marketing permission
-     * @param string $email
-     * @param bool $hasPermission
+     *
+     * @param $email
+     * @param $hasPermission
      * @return bool
+     * @throws NostoException
+     * @throws AbstractHttpException
      */
     public function update($email, $hasPermission)
     {
-        $request = $this->initApiRequest(
+        $request = $this->initRequest(
             $this->account->getApiToken(Token::API_EMAIL),
             $this->account->getName(),
             $this->activeDomain
         );
 
-        $request->setPath(ApiRequest::PATH_MARKETING_PERMISSION);
         $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
         $request->setReplaceParams($replaceParams);
         $response = $request->postRaw('');
 
         return self::checkResponse($request, $response);
     }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new ApiRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getMimoType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return ApiRequest::PATH_MARKETING_PERMISSION;
+    }
+
 }
