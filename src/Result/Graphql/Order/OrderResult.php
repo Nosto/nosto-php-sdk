@@ -15,6 +15,7 @@ class OrderResult
 {
     const GRAPHQL_RESPONSE_ERROR = 'errors';
     const GRAPHQL_RESPONSE_SUCCESS = 'data';
+    const GRAPHQL_RESPONSE_UPDATE_STATUS = 'updateStatus';
     const GRAPHQL_ORDER_ID = 'id';
 
     /**
@@ -26,11 +27,21 @@ class OrderResult
     {
         $result = json_decode($response->getResult());
         $members = get_object_vars($result);
+
+        //Check for errors
+        if (array_key_exists(self::GRAPHQL_RESPONSE_ERROR, $members)) {
+            foreach ($members as $varName => $member)
+            {
+                if ($varName === self::GRAPHQL_RESPONSE_ERROR) {
+                    self::parseErrorMessage($member);
+                }
+            }
+            return null;
+        }
+
+        //Parse results
         foreach ($members as $varName => $member)
         {
-            if ($varName === self::GRAPHQL_RESPONSE_ERROR) {
-                self::parseErrorMessage($member);
-            }
             if ($varName === self::GRAPHQL_RESPONSE_SUCCESS) {
                 return self::parseSuccessMessage($member);
             }
@@ -58,7 +69,8 @@ class OrderResult
     {
         $members = get_object_vars($stdClass);
         foreach ($members as $varName => $member) {
-            if ($varName === self::GRAPHQL_ORDER_ID) {
+            if ($varName === self::GRAPHQL_ORDER_ID ||
+                $varName === self::GRAPHQL_RESPONSE_UPDATE_STATUS) {
                 return $member;
             }
             if ($member instanceof \stdClass) {

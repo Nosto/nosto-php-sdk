@@ -36,7 +36,6 @@
 
 namespace Nosto\Operation\Order;
 
-use Nosto\NostoException;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Result\Graphql\Order\OrderResult;
 use Nosto\Types\LineItemInterface;

@@ -34,31 +34,33 @@
  *
  */
 
-namespace Nosto\Operation;
+namespace Nosto\Operation\Order;
 
-use Nosto\Operation\Recommendation\AbstractOperation;
-use Nosto\Object\Order\Order as NostoOrder;
+use Nosto\Operation\AbstractGraphQLOperation;
+use Nosto\Object\Order\GraphQL\OrderStatus as OrderStatusModel;
 use Nosto\Types\Signup\AccountInterface;
+use Nosto\Request\Http\HttpResponse;
+use Nosto\Result\Graphql\Order\OrderResult;
 
 /**
  * Operation class for sending order status updates
  */
-class OrderStatus extends AbstractOperation
+class OrderStatus extends AbstractGraphQLOperation
 {
-    /* @var NostoOrder $order */
-    private $nostoOrder;
+    /* @var OrderStatusModel $order */
+    private $orderStatus;
 
     /**
      * OrderStatus constructor.
      * @param AccountInterface $account
-     * @param NostoOrder $nostoOrder
+     * @param OrderStatusModel $orderStatus
      */
     public function __construct(
         AccountInterface $account,
-        NostoOrder $nostoOrder
+        OrderStatusModel $orderStatus
     ) {
         parent::__construct($account);
-        $this->setOrder($nostoOrder);
+        $this->orderStatus = $orderStatus;
     }
 
     /**
@@ -68,8 +70,7 @@ class OrderStatus extends AbstractOperation
     {
         $query
             = <<<QUERY
-    {
-        "query": "mutation(
+        mutation(
                 \$orderNumber: String!,
                 \$orderStatus: String!,
                 \$paymentProvider: String!
@@ -87,53 +88,33 @@ class OrderStatus extends AbstractOperation
                     paymentProvider
                 }
             }
-        }",
-        "variables": {
-            "orderNumber": "%s",
-            "orderStatus": "%s",
-            "paymentProvider": "%s",
-            "statusDate": "%s"
         }
-    }
 QUERY;
-        $formatted = sprintf(
-            $query,
-            $this->getOrderNumber($this->nostoOrder),
-            $this->getOrderStatus($this->nostoOrder),
-            $this->getPaymentProvider($this->nostoOrder),
-            $this->getStatusDate($this->nostoOrder)
-        );
-
-        return $formatted;
+        return $query;
     }
 
-    public function getOrderNumber(NostoOrder $nostoOrder)
+    /**
+     * @inheritdoc
+     */
+    public function getVariables()
     {
-        return $nostoOrder->getOrderNumber();
+        $array = [
+            'orderNumber' => $this->orderStatus->getOrderNumber(),
+            'orderStatus' => $this->orderStatus->getStatus(),
+            'paymentProvider' => $this->orderStatus->getPaymentProvider(),
+            'statusDate' => $this->orderStatus->getUpdatedAt()
+        ];
+
+        return $array;
     }
 
-    public function getOrderStatus(NostoOrder $nostoOrder)
+    /**
+     * @inheritdoc
+     */
+    public function execute()
     {
-        return $nostoOrder->getOrderStatusCode();
-    }
-
-    public function getPaymentProvider(NostoOrder $nostoOrder)
-    {
-        return $nostoOrder->getPaymentProvider();
-    }
-
-    public function getStatusDate(NostoOrder $nostoOrder)
-    {
-        return $nostoOrder->getCreatedAt();
-    }
-
-    public function getOrder(NostoOrder $nostoOrder)
-    {
-        return $this->nostoOrder;
-    }
-
-    public function setOrder(NostoOrder $nostoOrder)
-    {
-        $this->nostoOrder = $nostoOrder;
+        /** @var HttpResponse $response */
+        $response =  parent::execute();
+        return OrderResult::parseResult($response);
     }
 }
