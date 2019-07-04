@@ -37,6 +37,8 @@
 namespace Nosto\Operation\Order;
 
 use Nosto\NostoException;
+use Nosto\Request\Http\HttpResponse;
+use Nosto\Result\Graphql\Order\OrderResult;
 use Nosto\Types\LineItemInterface;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;
@@ -73,8 +75,9 @@ class OrderCreate extends AbstractGraphQLOperation
 
     public function execute()
     {
+        /** @var HttpResponse $response */
         $response =  parent::execute();
-        return true;
+        return OrderResult::parseResult($response);
     }
 
     /**

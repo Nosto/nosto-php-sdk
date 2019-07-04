@@ -96,7 +96,7 @@ class OrderConfirm extends AbstractAuthenticatedOperation
         // TODO: Implement getRequestType() method.
     }
 
-    protected function getMimoType()
+    protected function getContentType()
     {
         // TODO: Implement getMimoType() method.
     }

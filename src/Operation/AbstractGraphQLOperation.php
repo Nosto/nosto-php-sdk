@@ -36,15 +36,12 @@
 
 namespace Nosto\Operation;
 
-use Nosto\Nosto;
 use Nosto\NostoException;
-use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Exception\Builder as ExceptionBuilder;
 use Nosto\Request\Http\Exception\HttpResponseException;
 use Nosto\Request\Graphql\GraphqlRequest;
-use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Operation\GraphQLRequest as GraphQLQuery;
 use Nosto\Types\Signup\AccountInterface;
@@ -133,7 +130,7 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
     /**
      * @inheritdoc
      */
-    protected function getMimoType()
+    protected function getContentType()
     {
         return self::CONTENT_TYPE_APPLICATION_JSON;
     }

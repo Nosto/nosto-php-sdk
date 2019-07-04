@@ -88,7 +88,7 @@ class SyncRates extends AbstractAuthenticatedOperation
     /**
      * @inheritdoc
      */
-    protected function getMimoType()
+    protected function getContentType()
     {
         return self::CONTENT_TYPE_APPLICATION_JSON;
     }

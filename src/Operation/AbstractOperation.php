@@ -86,7 +86,7 @@ abstract class AbstractOperation
         }
         $request->setResponseTimeout($this->getResponseTimeout());
         $request->setConnectTimeout($this->getConnectTimeout());
-        $request->setContentType($this->getMimoType());
+        $request->setContentType($this->getContentType());
         $request->setAuthBasic('', $token->getValue());
         $request->setPath($this->getPath());
         return $request;
@@ -104,7 +104,7 @@ abstract class AbstractOperation
      *
      * @return string
      */
-    abstract protected function getMimoType();
+    abstract protected function getContentType();
 
     /**
      * @return string

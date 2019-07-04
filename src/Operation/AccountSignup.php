@@ -106,7 +106,7 @@ class AccountSignup extends AbstractRESTOperation
     /**
      * @inheritdoc
      */
-    public function getMimoType()
+    public function getContentType()
     {
         return self::CONTENT_TYPE_APPLICATION_JSON;
     }
