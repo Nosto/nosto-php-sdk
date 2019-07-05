@@ -64,8 +64,8 @@ abstract class AbstractOperation
 
     /**
      * @param Token|null $token
-     * @param null $nostoAccount
-     * @param null $domain
+     * @param string|null $nostoAccount
+     * @param string|null $domain
      * @return ApiRequest|GraphqlRequest|HttpRequest
      * @throws NostoException
      */
@@ -95,7 +95,7 @@ abstract class AbstractOperation
     /**
      * Return type of request object
      *
-     * @return HttpRequest|ApiRequest|GraphqlRequest;
+     * @return HttpRequest|ApiRequest|GraphqlRequest
      */
     abstract protected function getRequestType();
 

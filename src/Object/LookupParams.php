@@ -59,7 +59,7 @@ class LookupParams
      * @param string $identifierMethod
      * @param string $identifierString
      */
-    public function __construct(string $identifierMethod, string $identifierString)
+    public function __construct($identifierMethod, $identifierString)
     {
         $this->identifierMethod = $identifierMethod;
         $this->identifierString = $identifierString;
@@ -68,7 +68,7 @@ class LookupParams
     /**
      * @return string
      */
-    public function getIdentifierMethod(): string
+    public function getIdentifierMethod()
     {
         return $this->identifierMethod;
     }
@@ -76,7 +76,7 @@ class LookupParams
     /**
      * @return string
      */
-    public function getIdentifierString(): string
+    public function getIdentifierString()
     {
         return $this->identifierString;
     }

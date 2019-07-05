@@ -38,6 +38,8 @@ namespace Nosto\Operation\Order;
 
 use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Object\Order\GraphQL\OrderStatus as OrderStatusModel;
+use /** @noinspection PhpUnusedAliasInspection */
+    Nosto\Request\Http\HttpResponse;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\Result\Graphql\Order\OrderResult;
 
@@ -112,7 +114,7 @@ QUERY;
      */
     public function execute()
     {
-        /** @var \Nosto\Request\Http\HttpResponse $response */
+        /** @var HttpResponse $response */
         $response =  parent::execute();
         return OrderResult::parseResult($response);
     }

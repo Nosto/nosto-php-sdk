@@ -36,9 +36,11 @@
 
 namespace Nosto\Operation\Order;
 
-use Nosto\Request\Http\HttpResponse;
+use /** @noinspection PhpUnusedAliasInspection */
+    Nosto\Request\Http\HttpResponse;
 use Nosto\Result\Graphql\Order\OrderResult;
-use Nosto\Types\LineItemInterface;
+use /** @noinspection PhpUnusedAliasInspection */
+    Nosto\Types\LineItemInterface;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;
 use Nosto\Operation\AbstractGraphQLOperation;
@@ -65,7 +67,7 @@ class OrderCreate extends AbstractGraphQLOperation
         OrderInterface $order,
         AccountInterface $account,
         LookupParams $lookupParams,
-        string $activeDomain = ''
+        $activeDomain = ''
     ) {
         $this->order = $order;
         $this->lookupParams = $lookupParams;

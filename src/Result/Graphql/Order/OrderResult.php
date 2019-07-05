@@ -50,7 +50,7 @@ class OrderResult
     }
 
     /**
-     * @param array $errorClass
+     * @param array $errors
      * @throws NostoException
      */
     public static function parseErrorMessage(array $errors)

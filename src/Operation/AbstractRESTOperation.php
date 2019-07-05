@@ -36,9 +36,6 @@
 
 namespace Nosto\Operation;
 
-use Nosto\NostoException;
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Exception\Builder as ExceptionBuilder;
