@@ -72,16 +72,6 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
     }
 
     /**
-     * Removes line breaks from the string
-     *
-     * @return null|string|string[]
-     */
-    public function removeLineBreaks($string)
-    {
-        return preg_replace('/[\r\n]+/', '', $string);
-    }
-
-    /**
      * Returns the result
      *
      * @return HttpResponse

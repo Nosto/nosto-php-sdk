@@ -48,6 +48,9 @@ use \Traversable;
 class SerializationHelper extends AbstractHelper
 {
 
+    const SNAKE_CASE = 'snake_case';
+    const CAMEL_CASE = 'camel_case';
+
     public static function serialize($object)
     {
         $items = array();
@@ -74,7 +77,7 @@ class SerializationHelper extends AbstractHelper
      * @param $object
      * @return array
      */
-    private static function toArray($object)
+    private static function toArray($object, $keyCaseType = self::SNAKE_CASE)
     {
         $json = array();
         $props = self::getProperties($object);
@@ -93,7 +96,9 @@ class SerializationHelper extends AbstractHelper
             if (!method_exists($object, $getter)) {
                 continue;
             }
-            $key = self::toSnakeCase($key);
+            if ($keyCaseType === self::SNAKE_CASE) {
+                $key = self::toSnakeCase($key);
+            }
             $value = $object->$getter();
             if (self::isNull($value)) {
                 continue;
@@ -130,6 +135,15 @@ class SerializationHelper extends AbstractHelper
         }
 
         return $json;
+    }
+
+    /**
+     * @param $object
+     * @return array
+     */
+    public static function toAssocArray($object)
+    {
+        return self::toArray($object, self::CAMEL_CASE);
     }
 
     /**

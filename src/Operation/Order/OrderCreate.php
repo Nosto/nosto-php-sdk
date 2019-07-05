@@ -45,32 +45,41 @@ use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;
 use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Types\Signup\AccountInterface;
-use Nosto\Object\LookupParams;
+use Nosto\Helper\SerializationHelper;
 
 class OrderCreate extends AbstractGraphQLOperation
 {
 
+    const IDENTIFIER_BY_CID = 'BY_CID';
+    const IDENTIFIER_BY_REF = 'BY_REF';
+
     /** @var OrderInterface */
     private $order;
 
-    /** @var LookupParams */
-    private $lookupParams;
+    /** @var string */
+    private $identifierMethod;
+
+    /** @var string */
+    private $identifierString;
 
     /**
      * OrderCreate constructor.
      * @param OrderInterface $order
      * @param AccountInterface $account
-     * @param LookupParams $lookupParams
+     * @param string $identifierMethod
+     * @param string $identifierString
      * @param string $activeDomain
      */
     public function __construct(
         OrderInterface $order,
         AccountInterface $account,
-        LookupParams $lookupParams,
+        $identifierMethod = self::IDENTIFIER_BY_CID,
+        $identifierString = '',
         $activeDomain = ''
     ) {
         $this->order = $order;
-        $this->lookupParams = $lookupParams;
+        $this->identifierMethod = $identifierMethod;
+        $this->identifierString = $identifierString;
         parent::__construct($account, $activeDomain);
     }
 
@@ -129,7 +138,7 @@ class OrderCreate extends AbstractGraphQLOperation
         $itemsArray = [];
         /** @var LineItemInterface $item */
         foreach ($items as $item) {
-            $itemsArray[] = PurchasedItem::toArray($item);
+            $itemsArray[] = SerializationHelper::toAssocArray($item);
         }
         return $itemsArray;
     }
@@ -189,8 +198,8 @@ QUERY;
     public function getVariables()
     {
         $array = [
-            'by' => $this->lookupParams->getIdentifierMethod(),
-            'customerIdentifier' => $this->lookupParams->getIdentifierString(),
+            'by' => $this->identifierMethod,
+            'customerIdentifier' => $this->identifierString,
             'firstname' => $this->getCustomer()->getFirstName(),
             'lastname' => $this->getCustomer()->getLastName(),
             'email' => $this->getCustomer()->getEmail(),
