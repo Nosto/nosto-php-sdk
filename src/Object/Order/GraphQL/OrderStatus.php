@@ -65,10 +65,10 @@ class OrderStatus extends AbstractObject implements
      * @param string $updatedAt
      */
     public function __construct(
-        string $orderNumber,
-        string $status,
-        string $paymentProvider,
-        string $updatedAt
+        $orderNumber,
+        $status,
+        $paymentProvider,
+        $updatedAt
     ) {
         $this->orderNumber = $orderNumber;
         $this->status = $status;

@@ -39,7 +39,6 @@ namespace Nosto\Operation\Order;
 use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Object\Order\GraphQL\OrderStatus as OrderStatusModel;
 use Nosto\Types\Signup\AccountInterface;
-use Nosto\Request\Http\HttpResponse;
 use Nosto\Result\Graphql\Order\OrderResult;
 
 /**
@@ -113,7 +112,7 @@ QUERY;
      */
     public function execute()
     {
-        /** @var HttpResponse $response */
+        /** @var \Nosto\Request\Http\HttpResponse $response */
         $response =  parent::execute();
         return OrderResult::parseResult($response);
     }
