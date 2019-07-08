@@ -36,10 +36,8 @@
 
 namespace Nosto\Operation\Order;
 
-/** @noinspection PhpUnusedAliasInspection */
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Result\Graphql\Order\OrderResult;
-/** @noinspection PhpUnusedAliasInspection */
 use Nosto\Types\LineItemInterface;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;
@@ -47,6 +45,10 @@ use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\Helper\SerializationHelper;
 
+/**
+ * Operation class for sending orders when created
+ * @phan-file-suppress PhanUnreferencedUseNormal
+ */
 class OrderCreate extends AbstractGraphQLOperation
 {
 

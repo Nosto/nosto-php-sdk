@@ -38,13 +38,13 @@ namespace Nosto\Operation\Order;
 
 use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Object\Order\GraphQL\OrderStatus as OrderStatusModel;
-/** @noinspection PhpUnusedAliasInspection */
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\Result\Graphql\Order\OrderResult;
 
 /**
  * Operation class for sending order status updates
+ * @phan-file-suppress PhanUnreferencedUseNormal
  */
 class OrderStatus extends AbstractGraphQLOperation
 {
