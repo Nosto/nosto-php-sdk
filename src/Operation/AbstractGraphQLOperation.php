@@ -44,6 +44,7 @@ use Nosto\Request\Http\Exception\HttpResponseException;
 use Nosto\Request\Graphql\GraphqlRequest;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Operation\GraphQLRequest as GraphQLQuery;
+use Nosto\Result\Graphql\Result;
 use Nosto\Types\Signup\AccountInterface;
 
 abstract class AbstractGraphQLOperation extends AbstractOperation
@@ -74,7 +75,7 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
     /**
      * Returns the result
      *
-     * @return HttpResponse
+     * @return mixed|null
      * @throws AbstractHttpException
      * @throws HttpResponseException
      * @throws NostoException
@@ -94,7 +95,7 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
             throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         }
 
-        return $response;
+        return Result::parseResult($response);
     }
 
     /**

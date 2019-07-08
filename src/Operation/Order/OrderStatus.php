@@ -108,14 +108,4 @@ QUERY;
 
         return $array;
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function execute()
-    {
-        /** @var HttpResponse $response */
-        $response =  parent::execute();
-        return OrderResult::parseResult($response);
-    }
 }

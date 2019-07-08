@@ -85,13 +85,6 @@ class OrderCreate extends AbstractGraphQLOperation
         parent::__construct($account, $activeDomain);
     }
 
-    public function execute()
-    {
-        /** @var HttpResponse $response */
-        $response =  parent::execute();
-        return OrderResult::parseResult($response);
-    }
-
     /**
      * @return BuyerInterface
      */

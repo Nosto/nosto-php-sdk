@@ -55,18 +55,6 @@ abstract class AbstractOperation extends AbstractGraphQLOperation
     private $limit;
 
     /**
-     * @return ResultSet
-     * @throws NostoException
-     * @throws AbstractHttpException
-     * @throws HttpResponseException
-     */
-    public function execute()
-    {
-        $response =  parent::execute();
-        return ResultSetBuilder::fromHttpResponse($response);
-    }
-
-    /**
      * Returns if recos should use preview mode. You can set asString to
      * true and when the method returns true or false as a string. This is
      * needed for constructing the query.

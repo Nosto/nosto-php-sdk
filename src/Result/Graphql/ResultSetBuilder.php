@@ -47,16 +47,18 @@ use Nosto\Request\Http\HttpResponse;
 class ResultSetBuilder
 {
     /**
-     * Builds a result set from HttpResponse
-     *
-     * @param HttpResponse $httpResponse
+     * @param \stdClass $stdClass
      * @return ResultSet
      * @throws NostoException
      */
-    public static function fromHttpResponse(HttpResponse $httpResponse)
+    public static function buildProductArray(\stdClass $stdClass)
     {
-        $result = json_decode($httpResponse->getResult());
-        $primaryData = self::parsePrimaryData($result);
+        $primaryData = self::parsePrimaryData($stdClass);
+
+        if ($primaryData === null) {
+            throw new NostoException('Could not find primary data field primary from response');
+        }
+
         $resultSet = new ResultSet();
         foreach ($primaryData as $primaryDataItem) {
             if ($primaryDataItem instanceof \stdClass) {
@@ -72,8 +74,7 @@ class ResultSetBuilder
      * Finds the primary data field from stdClass
      *
      * @param \stdClass $class
-     * @return array
-     * @throws NostoException
+     * @return null
      */
     public static function parsePrimaryData(\stdClass $class)
     {
@@ -86,12 +87,6 @@ class ResultSetBuilder
                 return self::parsePrimaryData($member);
             }
         }
-
-        throw new NostoException(
-            sprintf(
-                'Could not find primary data field (%s) from response',
-                AbstractOperation::GRAPHQL_DATA_KEY
-            )
-        );
+        return null;
     }
 }
