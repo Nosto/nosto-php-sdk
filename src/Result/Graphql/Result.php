@@ -64,7 +64,7 @@ class Result
         if (array_key_exists(self::GRAPHQL_RESPONSE_ERROR, $members)) {
             foreach ($members as $varName => $member)
             {
-                if ($varName === self::GRAPHQL_RESPONSE_ERROR) {
+                if ($varName === self::GRAPHQL_RESPONSE_ERROR && count($member) > 0) {
                     self::parseErrorMessage($member);
                 }
             }
