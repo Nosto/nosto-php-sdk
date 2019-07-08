@@ -39,6 +39,7 @@ namespace Nosto\Result\Graphql\Order;
 class OrderResult
 {
     const GRAPHQL_ORDER_ID = 'id';
+    const GRAPHQL_ORDER_NR = 'number';
 
     /**
      * @param \stdClass $stdClass
@@ -48,7 +49,8 @@ class OrderResult
     {
         $members = get_object_vars($stdClass);
         foreach ($members as $varName => $member) {
-            if ($varName === self::GRAPHQL_ORDER_ID ) {
+            if ($varName === self::GRAPHQL_ORDER_ID ||
+                $varName === self::GRAPHQL_ORDER_NR) {
                 return $member;
             }
             if ($member instanceof \stdClass) {
