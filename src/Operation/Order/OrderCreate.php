@@ -36,11 +36,11 @@
 
 namespace Nosto\Operation\Order;
 
-use /** @noinspection PhpUnusedAliasInspection */
-    Nosto\Request\Http\HttpResponse;
+/** @noinspection PhpUnusedAliasInspection */
+use Nosto\Request\Http\HttpResponse;
 use Nosto\Result\Graphql\Order\OrderResult;
-use /** @noinspection PhpUnusedAliasInspection */
-    Nosto\Types\LineItemInterface;
+/** @noinspection PhpUnusedAliasInspection */
+use Nosto\Types\LineItemInterface;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;
 use Nosto\Operation\AbstractGraphQLOperation;
