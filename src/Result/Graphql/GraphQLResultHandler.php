@@ -37,87 +37,69 @@
 namespace Nosto\Result\Graphql;
 
 use Nosto\NostoException;
+use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Result\Graphql\Order\OrderResult;
 use Nosto\Result\Graphql\ResultSetBuilder;
 
-class Result
+
+abstract class GraphQLResultHandler extends ResultHandler
 {
     const GRAPHQL_RESPONSE_ERROR = 'errors';
-    const GRAPHQL_RESPONSE_SUCCESS = 'data';
-    const GRAPHQL_RESPONSE_ORDER_UPDATE = 'updateStatus';
-    const GRAPHQL_CMP_RESPONSE = 'updateSession';
-    const GRAPHQL_RESPONSE_ORDER_CREATE = 'placeOrder';
+    const GRAPHQL_RESPONSE_DATA = 'data';
 
-
-    /**
-     * @param HttpResponse $response
-     * @return mixed|null
-     * @throws NostoException
-     */
-    public static function parseResult(HttpResponse $response)
+    protected function renderResponse(HttpResponse $response)
     {
         $result = json_decode($response->getResult());
-        $members = get_object_vars($result);
 
-        //Check for errors
-        if (array_key_exists(self::GRAPHQL_RESPONSE_ERROR, $members)) {
-            foreach ($members as $varName => $member)
-            {
-                if ($varName === self::GRAPHQL_RESPONSE_ERROR && count($member) > 0) {
-                    self::parseErrorMessage($member);
-                }
-            }
-            return null;
+        if ($this->hasErrors($result)) {
+            $error = $this->renderErrorMessage($result);
+            throw new NostoException($error);
         }
 
-        //Parse results
-        foreach ($members as $varName => $member)
-        {
-            if ($varName === self::GRAPHQL_RESPONSE_SUCCESS) {
-                return self::parseSuccessResponse($member);
-            }
+        if ($this->hasData($result)) {
+            $this->renderQueryResult($result);
         }
-        return null;
-    }
 
-    /**
-     * @param array $errors
-     * @throws NostoException
-     */
-    public static function parseErrorMessage(array $errors)
-    {
-        if (count($errors) > 0) {
-            $message = $errors[0]->message;
-            throw new NostoException($message);
-        }
+        throw new NostoException('No data found in GraphQL result');
     }
 
     /**
      * @param \stdClass $stdClass
-     * @return ResultSet|null|string
-     * @throws NostoException
+     * @return bool
      */
-    public static function parseSuccessResponse(\stdClass $stdClass)
+    private function hasErrors(\stdClass $stdClass)
     {
         $members = get_object_vars($stdClass);
-        foreach ($members as $varName => $member) {
-
-            //Order related queries
-            if ($varName === self::GRAPHQL_RESPONSE_ORDER_CREATE ||
-                $varName === self::GRAPHQL_RESPONSE_ORDER_UPDATE) {
-                return OrderResult::parseSuccessMessage($member);
-            }
-
-            //CMP related queries
-            if ($varName === self::GRAPHQL_CMP_RESPONSE) {
-                return ResultSetBuilder::buildProductArray($member);
-            }
-
-            if ($member instanceof \stdClass) {
-                return self::parseSuccessResponse($member);
-            }
+        if (array_key_exists(self::GRAPHQL_RESPONSE_ERROR, $members)) {
+            return true;
         }
-        return null;
+        return false;
     }
+
+    private function hasData(\stdClass $stdClass)
+    {
+        $members = get_object_vars($stdClass);
+        if (array_key_exists(self::GRAPHQL_RESPONSE_DATA, $members)) {
+            return true;
+        }
+        return false;
+    }
+
+    private function renderErrorMessage(\stdClass $stdClass)
+    {
+        $members = get_object_vars($stdClass);
+        $errorMessage = '';
+        foreach ($members->errors as $error) {
+            $errorMessage .= $error->message.' | ';
+        }
+        return $errorMessage;
+    }
+
+    /**
+     * @param \stdClass $stdClass
+     * @throws NostoException
+     * @return mixed
+     */
+    abstract protected function renderQueryResult(\stdClass $stdClass);
 }

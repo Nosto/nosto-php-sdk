@@ -41,6 +41,7 @@ use Nosto\Request\Api\Token;
 use Nosto\NostoException;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Graphql\GraphqlRequest;
+use Nosto\Result\Graphql\ResultHandler;
 
 /**
  * Base operation class for handling all communications through the Nosto API.
@@ -73,7 +74,8 @@ abstract class AbstractOperation
         Token $token = null,
         $nostoAccount = null,
         $domain = null
-    ) {
+    )
+    {
         if (is_null($token)) {
             throw new NostoException('No API token found for account.');
         }
@@ -89,6 +91,7 @@ abstract class AbstractOperation
         $request->setContentType($this->getContentType());
         $request->setAuthBasic('', $token->getValue());
         $request->setPath($this->getPath());
+        $request->setResultHandler($this->getResultHandler());
         return $request;
     }
 
@@ -109,7 +112,12 @@ abstract class AbstractOperation
     /**
      * @return string
      */
-    abstract protected  function getPath();
+    abstract protected function getPath();
+
+    /**
+     * @return ResultHandler
+     */
+    abstract protected function getResultHandler();
 
     /**
      * Get response timeout in second

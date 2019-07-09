@@ -39,7 +39,7 @@ namespace Nosto\Test\Unit\Result;
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Request\Http\HttpResponse;
-use Nosto\Result\Graphql\Result;
+use Nosto\Result\Graphql\ResultHandler;
 
 class GraphqlCMPTest extends Test
 {
@@ -52,7 +52,7 @@ class GraphqlCMPTest extends Test
     {
         $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"primary":[{"productId":"558"},{"productId":"386"},{"productId":"414"},{"productId":"435"},{"productId":"399"},{"productId":"382"},{"productId":"867"},{"productId":"383"},{"productId":"560"},{"productId":"551"}]}}}}}';
         $response = new HttpResponse([], $responseBody);
-        $resultSet = Result::parseResult($response);
+        $resultSet = ResultHandler::parseResult($response);
 
         $this->specify('result set parsed', function () use ($resultSet) {
             $this->assertEquals($resultSet->count(), 10);
@@ -66,7 +66,7 @@ class GraphqlCMPTest extends Test
     {
         $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"primary":[{"productId":"558", "categories":["Men/Stuff", "Men/Summer"]}]}}}}}';
         $response = new HttpResponse([], $responseBody);
-        $resultSet = Result::parseResult($response);
+        $resultSet = ResultHandler::parseResult($response);
 
         $this->specify('nested array parsing failed', function () use ($resultSet) {
             $this->assertEquals($resultSet->count(), 1);
@@ -84,7 +84,7 @@ class GraphqlCMPTest extends Test
     {
         $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"primary":[{"productId":"558", "categories":["Men/Stuff", "Men/Summer"], "customObject":{"id":1, "name":"test object"}}]}}}}}';
         $response = new HttpResponse([], $responseBody);
-        $resultSet = Result::parseResult($response);
+        $resultSet = ResultHandler::parseResult($response);
 
         $this->specify('nested object failed', function () use ($resultSet) {
             $this->assertEquals($resultSet->count(), 1);
@@ -105,7 +105,7 @@ class GraphqlCMPTest extends Test
 
         $this->specify('result does not contain primary field', function () use ($response) {
             try {
-                Result::parseResult($response);
+                ResultHandler::parseResult($response);
                 $this->fail('No exception was thrown');
             } catch (\Exception $e) {
                 $this->assertEquals($e->getMessage(), 'Could not find primary data field primary from response');

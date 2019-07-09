@@ -36,8 +36,7 @@
 
 namespace Nosto\Operation\Order;
 
-use Nosto\Request\Http\HttpResponse;
-use Nosto\Result\Graphql\Order\OrderResult;
+use Nosto\Result\Graphql\Order\OrderCreateResultHandler;
 use Nosto\Types\LineItemInterface;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;
@@ -137,6 +136,15 @@ class OrderCreate extends AbstractGraphQLOperation
         }
         return $itemsArray;
     }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return OrderCreateResultHandler::getInstance();
+    }
+
 
     /**
      * @return string

@@ -39,7 +39,7 @@ namespace Nosto\Test\Unit\Result;
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Request\Http\HttpResponse;
-use Nosto\Result\Graphql\Result;
+use Nosto\Result\Graphql\ResultHandler;
 
 class GraphqlOrderTest extends Test
 {
@@ -53,7 +53,7 @@ class GraphqlOrderTest extends Test
         $resultBody = '{"data":{"updateStatus":null},"errors":[{"message":"Exception while fetching data (/updateStatus) : Unable to find order matching identifier","path":["updateStatus"],"locations":[{"line":7,"column":13}],"extensions":null,"errorType":"DataFetchingException"}]}';
         $response = new HttpResponse([], $resultBody);
         try {
-            Result::parseResult($response);
+            ResultHandler::parseResult($response);
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), "Exception while fetching data (/updateStatus) : Unable to find order matching identifier");
         }
@@ -66,7 +66,7 @@ class GraphqlOrderTest extends Test
     {
         $responseBody = '{"data":{"placeOrder":{"id":"5d1f2ebc10e62df62401221"}}}';
         $response = new HttpResponse([], $responseBody);
-        $result = Result::parseResult($response);
+        $result = ResultHandler::parseResult($response);
 
         $this->specify('Order was created successfully', function () use ($result){
             $this->assertEquals($result, '5d1f2ebc10e62df62401221');
@@ -80,7 +80,7 @@ class GraphqlOrderTest extends Test
     {
         $responseBody = '{"data":{"updateStatus":{"number":"M2_22","statuses":[{"date":"2019-07-08T11:58:12.540Z","orderStatus":"hold","paymentProvider":"klarna"},{"date":"2019-07-08T13:14:20.400Z","orderStatus":"hold","paymentProvider":"klarna"},{"date":"2019-07-08T13:26:43.479Z","orderStatus":"hold","paymentProvider":"klarna"}]}}}';
         $response = new HttpResponse([], $responseBody);
-        $result = Result::parseResult($response);
+        $result = ResultHandler::parseResult($response);
 
         $this->specify('Order status was updates successfully', function () use ($result){
             $this->assertEquals($result, 'M2_22');

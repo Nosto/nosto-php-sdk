@@ -44,7 +44,7 @@ use Nosto\Request\Http\Exception\HttpResponseException;
 use Nosto\Request\Graphql\GraphqlRequest;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Operation\GraphQLRequest as GraphQLQuery;
-use Nosto\Result\Graphql\Result;
+use Nosto\Result\Graphql\ResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 
 abstract class AbstractGraphQLOperation extends AbstractOperation
@@ -82,7 +82,11 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
      */
     public function execute()
     {
-        $request = $this->initRequest($this->account->getApiToken(Token::API_GRAPHQL));
+        $request = $this->initRequest(
+            $this->account->getApiToken(Token::API_GRAPHQL),
+            null,
+            null
+        );
         $payload = new GraphQLQuery(
             $this->getQuery(),
             $this->getVariables()
@@ -95,7 +99,7 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
             throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
         }
 
-        return Result::parseResult($response);
+        return $request->getResponseHandler()->render($response);
     }
 
     /**

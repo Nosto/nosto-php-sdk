@@ -43,6 +43,7 @@ use Nosto\NostoException;
 use Nosto\Request\Http\Adapter\Adapter;
 use Nosto\Request\Http\Adapter\Curl;
 use Nosto\Request\Http\Adapter\Socket;
+use Nosto\Result\Graphql\ResultHandler;
 
 /**
  * Helper class for doing http requests and returning unified response including header info.
@@ -114,6 +115,11 @@ class HttpRequest
      * @var Adapter the adapter to use for making the request.
      */
     private $adapter;
+
+    /**
+     * @var ResultHandler handles the response based on request type
+     */
+    private $resultHandler;
 
     /**
      * Constructor.
@@ -400,6 +406,22 @@ class HttpRequest
     public function setUrl($url)
     {
         $this->url = $url;
+    }
+
+    /**
+     * @param ResultHandler $resultHandler
+     */
+    public function setResultHandler(ResultHandler $resultHandler)
+    {
+        $this->resultHandler = $resultHandler;
+    }
+
+    /**
+     * @return ResultHandler
+     */
+    public function getResponseHandler()
+    {
+        return $this->resultHandler;
     }
 
     /**
