@@ -34,57 +34,40 @@
  *
  */
 
-namespace Nosto\Result\Graphql;
+namespace Nosto\Result\Graphql\Order;
 
 use Nosto\NostoException;
-use Nosto\Request\Http\HttpRequest;
-use Nosto\Request\Http\HttpResponse;
-use Nosto\Request\Http\Exception\HttpResponseException;
+use Nosto\Result\Graphql\GraphQLResultHandler;
 
-abstract class ResultHandler
+final class OrderStatusResultHandler extends GraphQLResultHandler
 {
+    const GRAPHQL_ORDER_NR = 'number';
+
+    public static function getInstance()
+    {
+        static $inst = null;
+        if ($inst === null) {
+            $inst = new self();
+        }
+        return $inst;
+    }
 
     /**
-     * @param HttpResponse $response
-     * @return mixed|null
-     * @throws NostoException
+     * @inheritdoc
      */
-    public function render(HttpResponse $response)
+    protected function parseQueryResult(\stdClass $stdClass)
     {
-        if ($response->getCode() !== 200) {
-            $this->handleHttpException($response);
+        $members = get_object_vars($stdClass);
+        foreach ($members as $varName => $member) {
+            if ($varName === self::GRAPHQL_ORDER_NR) {
+                return $member;
+            }
+            if ($member instanceof \stdClass) {
+                return $this->parseQueryResult($member);
+            }
         }
 
-        //ToDo Parse Result
-        return $this->renderResponse($response);
-
+        throw new NostoException('No number string was found in GraphQL result');
     }
-
-    /**
-     * @param HttpResponse $response
-     * @throws NostoException
-     * @return mixed
-     */
-    abstract protected function renderResponse(HttpResponse $response);
-
-
-    /**
-     * @param HttpResponse $response
-     * @throws HttpResponseException
-     */
-    private function handleHttpException(HttpResponse $response)
-    {
-        $message = $this->renderErrorMessage($response);
-        throw new HttpResponseException($message, $response->getCode());
-    }
-
-    /**
-     * @param HttpResponse $response
-     * @return string
-     */
-    private function renderErrorMessage(HttpResponse $response)
-    {
-        return 'Dummy text';
-    }
-
 }
+

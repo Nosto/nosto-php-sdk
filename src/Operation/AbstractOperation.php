@@ -41,7 +41,7 @@ use Nosto\Request\Api\Token;
 use Nosto\NostoException;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Graphql\GraphqlRequest;
-use Nosto\Result\Graphql\ResultHandler;
+use Nosto\Result\ResultHandler;
 
 /**
  * Base operation class for handling all communications through the Nosto API.

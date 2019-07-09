@@ -40,6 +40,7 @@ use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Result\Api\GeneralPurposeResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 
 /**
@@ -90,8 +91,17 @@ class DeleteProduct extends AbstractAuthenticatedOperation
             $this->activeDomain
         );
         $response = $request->post($this->productIds);
-        return self::checkResponse($request, $response);
+        return $request->getResponseHandler()->render($response);
     }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return GeneralPurposeResultHandler::getInstance();
+    }
+
 
     /**
      * @inheritdoc

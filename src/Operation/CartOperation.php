@@ -40,6 +40,7 @@ use Nosto\Helper\SerializationHelper;
 use Nosto\Object\Event\Cart\Update;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Result\Api\GeneralPurposeResultHandler;
 
 class CartOperation extends AbstractAuthenticatedOperation
 {
@@ -67,6 +68,14 @@ class CartOperation extends AbstractAuthenticatedOperation
         $response = $request->postRaw($updateJson);
 
         return self::checkResponse($request, $response);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return GeneralPurposeResultHandler::getInstance();
     }
 
     /**

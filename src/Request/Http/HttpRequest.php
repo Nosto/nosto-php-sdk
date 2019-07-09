@@ -43,7 +43,7 @@ use Nosto\NostoException;
 use Nosto\Request\Http\Adapter\Adapter;
 use Nosto\Request\Http\Adapter\Curl;
 use Nosto\Request\Http\Adapter\Socket;
-use Nosto\Result\Graphql\ResultHandler;
+use Nosto\Result\ResultHandler;
 
 /**
  * Helper class for doing http requests and returning unified response including header info.

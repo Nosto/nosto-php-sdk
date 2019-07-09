@@ -41,6 +41,8 @@ use Nosto\Object\ExchangeRateCollection;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Result\Api\GeneralPurposeResultHandler;
+use Nosto\Result\ResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 
 /**
@@ -74,7 +76,15 @@ class SyncRates extends AbstractAuthenticatedOperation
             $this->activeDomain
         );
         $response = $request->post($collection);
-        return self::checkResponse($request, $response);
+        return $request->getResponseHandler()->render($response);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return GeneralPurposeResultHandler::getInstance();
     }
 
     /**

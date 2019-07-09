@@ -34,28 +34,56 @@
  *
  */
 
-namespace Nosto\Result\Graphql\Order;
+namespace Nosto\Result;
 
-class OrderResult
+use Nosto\NostoException;
+use Nosto\Request\Http\HttpResponse;
+use Nosto\Request\Http\Exception\HttpResponseException;
+
+abstract class ResultHandler
 {
-    const GRAPHQL_ORDER_ID = 'id';
-    const GRAPHQL_ORDER_NR = 'number';
 
     /**
-     * @param \stdClass $stdClass
+     * @param HttpResponse $response
+     * @return mixed|null
+     * @throws NostoException
+     */
+    public function render(HttpResponse $response)
+    {
+        if ($response->getCode() !== 200) {
+            $this->handleHttpException($response);
+        }
+
+        //ToDo Parse Result
+        return $this->parseResponse($response);
+
+    }
+
+    /**
+     * @param HttpResponse $response
+     * @throws NostoException
+     * @return string|bool
+     */
+    abstract protected function parseResponse(HttpResponse $response);
+
+
+    /**
+     * @param HttpResponse $response
+     * @throws HttpResponseException
+     */
+    private function handleHttpException(HttpResponse $response)
+    {
+        $message = $this->renderErrorMessage($response);
+        throw new HttpResponseException($message, $response->getCode());
+    }
+
+    /**
+     * @param HttpResponse $response
      * @return string
      */
-    public static function parseSuccessMessage(\stdClass $stdClass)
+    private function renderErrorMessage(HttpResponse $response)
     {
-        $members = get_object_vars($stdClass);
-        foreach ($members as $varName => $member) {
-            if ($varName === self::GRAPHQL_ORDER_ID ||
-                $varName === self::GRAPHQL_ORDER_NR) {
-                return $member;
-            }
-            if ($member instanceof \stdClass) {
-                return self::parseSuccessMessage($member);
-            }
-        }
+        return 'Dummy text';
     }
+
 }

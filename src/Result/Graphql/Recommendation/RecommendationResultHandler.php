@@ -34,70 +34,27 @@
  *
  */
 
-namespace Nosto\Result\Graphql;
+namespace Nosto\Result\Graphql\Recommendation;
 
-use Nosto\NostoException;
-use Nosto\Request\Http\HttpResponse;
-use Nosto\Result\ResultHandler;
+use Nosto\Result\Graphql\GraphQLResultHandler;
+use Nosto\Result\Graphql\ResultSetBuilder;
 
-
-abstract class GraphQLResultHandler extends ResultHandler
+final class RecommendationResultHandler extends GraphQLResultHandler
 {
-    const GRAPHQL_RESPONSE_ERROR = 'errors';
-    const GRAPHQL_RESPONSE_DATA = 'data';
-
-    protected function parseResponse(HttpResponse $response)
+    public static function getInstance()
     {
-        $result = json_decode($response->getResult());
-
-        if ($this->hasErrors($result)) {
-            $error = $this->parseErrorMessage($result);
-            throw new NostoException($error);
+        static $inst = null;
+        if ($inst === null) {
+            $inst = new self();
         }
-
-        if ($this->hasData($result)) {
-            $this->parseQueryResult($result->data);
-        }
-
-        throw new NostoException('No data found in GraphQL result');
+        return $inst;
     }
 
     /**
-     * @param \stdClass $stdClass
-     * @return bool
+     * @inheritdoc
      */
-    private function hasErrors(\stdClass $stdClass)
+    protected function parseQueryResult(\stdClass $stdClass)
     {
-        $members = get_object_vars($stdClass);
-        if (array_key_exists(self::GRAPHQL_RESPONSE_ERROR, $members)) {
-            return true;
-        }
-        return false;
+        return ResultSetBuilder::buildProductArray($stdClass);
     }
-
-    private function hasData(\stdClass $stdClass)
-    {
-        $members = get_object_vars($stdClass);
-        if (array_key_exists(self::GRAPHQL_RESPONSE_DATA, $members)) {
-            return true;
-        }
-        return false;
-    }
-
-    private function parseErrorMessage(\stdClass $stdClass)
-    {
-        $members = get_object_vars($stdClass);
-        $errorMessage = '';
-        foreach ($members->errors as $error) {
-            $errorMessage .= $error->message.' | ';
-        }
-        return $errorMessage;
-    }
-
-    /**
-     * @param \stdClass $stdClass
-     * @throws NostoException
-     * @return mixed
-     */
-    abstract protected function parseQueryResult(\stdClass $stdClass);
 }

@@ -8,19 +8,18 @@
 
 namespace Nosto\Result\Api;
 
-use Nosto\Result\Graphql\ResultHandler;
+use Nosto\Result\ResultHandler;
 use Nosto\Request\Http\HttpResponse;
 
 abstract class ApiResultHandler extends ResultHandler
 {
 
-
-    protected function renderResponse(HttpResponse $response)
+    protected function parseResponse(HttpResponse $response)
     {
         $this->renderAPIResult();
     }
 
-    abstract function renderAPIResult();
+    abstract protected function renderAPIResult();
 
 
     /**

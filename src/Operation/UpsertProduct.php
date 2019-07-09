@@ -41,6 +41,7 @@ use Nosto\Object\Product\ProductCollection;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Result\Api\GeneralPurposeResultHandler;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Signup\AccountInterface;
 
@@ -103,7 +104,15 @@ class UpsertProduct extends AbstractAuthenticatedOperation
             $this->activeDomain
         );
         $response = $request->post($this->collection);
-        return self::checkResponse($request, $response);
+        return $request->getResponseHandler()->render($response);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return GeneralPurposeResultHandler::getInstance();
     }
 
     /**
@@ -129,6 +138,5 @@ class UpsertProduct extends AbstractAuthenticatedOperation
     {
         return ApiRequest::PATH_PRODUCTS_UPSERT;
     }
-
 
 }

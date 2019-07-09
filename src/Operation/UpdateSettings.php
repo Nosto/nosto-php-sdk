@@ -40,6 +40,7 @@ use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Result\Api\GeneralPurposeResultHandler;
 use Nosto\Types\SettingsInterface;
 use Nosto\Types\Signup\AccountInterface;
 
@@ -74,7 +75,15 @@ class UpdateSettings extends AbstractAuthenticatedOperation
             $this->activeDomain
         );
         $response = $request->put($settings);
-        return self::checkResponse($request, $response);
+        return $request->getResponseHandler()->render($response);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return GeneralPurposeResultHandler::getInstance();
     }
 
     /**

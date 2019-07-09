@@ -41,6 +41,8 @@ use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Request\Http\HttpRequest;
+use Nosto\Result\Api\GeneralPurposeResultHandler;
+use Nosto\Result\ResultHandler;
 use Nosto\Types\UserInterface;
 
 /**
@@ -62,7 +64,15 @@ class UninstallAccount extends AbstractAuthenticatedOperation
     {
         $request = $this->initRequest($this->account->getApiToken(Token::API_SSO));
         $response = $request->post($currentUser);
-        return self::checkResponse($request, $response);
+        return $request->getResponseHandler()->render($response);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return GeneralPurposeResultHandler::getInstance();
     }
 
     /**

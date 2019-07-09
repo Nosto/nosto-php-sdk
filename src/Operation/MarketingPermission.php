@@ -38,6 +38,7 @@ namespace Nosto\Operation;
 
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
+use Nosto\Result\Api\GeneralPurposeResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\NostoException;
 use Nosto\Request\Http\Exception\AbstractHttpException;
@@ -62,9 +63,8 @@ class MarketingPermission extends AbstractAuthenticatedOperation
      *
      * @param $email
      * @param $hasPermission
-     * @return bool
+     * @return mixed|null
      * @throws NostoException
-     * @throws AbstractHttpException
      */
     public function update($email, $hasPermission)
     {
@@ -78,8 +78,17 @@ class MarketingPermission extends AbstractAuthenticatedOperation
         $request->setReplaceParams($replaceParams);
         $response = $request->postRaw('');
 
-        return self::checkResponse($request, $response);
+        return $request->getResponseHandler()->render($response);
     }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return GeneralPurposeResultHandler::getInstance();
+    }
+
 
     /**
      * @inheritdoc
