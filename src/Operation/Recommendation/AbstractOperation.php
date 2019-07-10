@@ -37,11 +37,7 @@
 namespace Nosto\Operation\Recommendation;
 
 use Nosto\Operation\AbstractGraphQLOperation;
-use Nosto\Result\Graphql\ResultSet;
-use Nosto\Result\Graphql\ResultSetBuilder;
-use Nosto\NostoException;
-use Nosto\Request\Http\Exception\AbstractHttpException;
-use Nosto\Request\Http\Exception\HttpResponseException;
+use Nosto\Result\Graphql\Recommendation\RecommendationResultHandler;
 
 /**
  * Abstract base operation class to be used in recommendation related operations
@@ -76,6 +72,14 @@ abstract class AbstractOperation extends AbstractGraphQLOperation
     public function setPreviewMode($previewMode)
     {
         $this->previewMode = $previewMode;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getResultHandler()
+    {
+        return RecommendationResultHandler::getInstance();
     }
 
     /**

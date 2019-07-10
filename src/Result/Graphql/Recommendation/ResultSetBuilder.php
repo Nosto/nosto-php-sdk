@@ -34,12 +34,11 @@
  *
  */
 
-namespace Nosto\Result\Graphql;
+namespace Nosto\Result\Graphql\Recommendation;
 
 use Nosto\Helper\ArrayHelper;
 use Nosto\NostoException;
 use Nosto\Operation\Recommendation\AbstractOperation;
-use Nosto\Request\Http\HttpResponse;
 
 /**
  * Builder / parser class for GraphQL result and response
@@ -80,7 +79,7 @@ class ResultSetBuilder
     {
         $members = get_object_vars($class);
         foreach ($members as $varName => $member) {
-            if ($varName == AbstractOperation::GRAPHQL_DATA_KEY) {
+            if ($varName === AbstractOperation::GRAPHQL_DATA_KEY) {
                 return $member;
             }
             if ($member instanceof \stdClass) {

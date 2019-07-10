@@ -34,40 +34,12 @@
  *
  */
 
-namespace Nosto\Result\Graphql\Recommendation;
+namespace Nosto\Result\Api;
 
-use Nosto\NostoException;
-
-/**
- * Wrapper class for item returned by the GraphQL API
- */
-class ResultItem
+class AccountSignupResultHandler extends ApiResultHandler
 {
-    /**
-     * @var array
-     */
-    private $data = array();
-
-    public function __construct(array $data = array())
+    protected function renderAPIResult()
     {
-        $this->data = $data;
-    }
-
-    /**
-     * @param $name
-     * @param $arguments
-     * @return mixed|null
-     * @throws NostoException
-     */
-    public function __call($name, $arguments)
-    {
-        if (stripos($name, 'get') === 0) {
-            $dataKey = lcfirst(substr($name, 3));
-            if (!empty($this->data[$dataKey])) {
-                return $this->data[$dataKey];
-            }
-            throw new NostoException(sprintf('Field %s does not exist', $dataKey));
-        }
-        throw new NostoException(sprintf('Call to undefined method %s', $name));
+        // TODO: Implement renderAPIResult() method.
     }
 }

@@ -42,6 +42,7 @@ use Nosto\Object\Signup\Account;
 use Nosto\Operation\AbstractOperation;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\HttpRequest;
+use Nosto\Result\ResultHandler;
 use Nosto\Types\OAuthInterface;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\Exception\Builder as ExceptionBuilder;
@@ -89,6 +90,11 @@ class ExchangeTokens extends AbstractOperation
         $account = new Account($token->getMerchantName());
         $account->setTokens($tokens);
         return $account;
+    }
+
+    protected function getResultHandler()
+    {
+        // TODO: Implement getResultHandler() method.
     }
 
     /**

@@ -39,6 +39,7 @@ namespace Nosto\Operation;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\HttpRequest;
+use Nosto\Result\ResultHandler;
 use Nosto\Types\UserInterface;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\NostoException;
@@ -73,6 +74,11 @@ class InitiateSso extends AbstractAuthenticatedOperation
         }
 
         return $response->getJsonResult()->login_url;
+    }
+
+    protected function getResultHandler()
+    {
+        // TODO: Implement getResultHandler() method.
     }
 
     /**

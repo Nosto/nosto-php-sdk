@@ -40,6 +40,7 @@ use Nosto\NostoException;
 use Nosto\Object\Signup\Account;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
+use Nosto\Result\ResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\Types\Signup\SignupInterface;
 
@@ -85,6 +86,11 @@ class AccountSignup extends AbstractRESTOperation
             '_token'
         ));
         return $account;
+    }
+
+    protected function getResultHandler()
+    {
+        // TODO: Implement getResultHandler() method.
     }
 
     /**

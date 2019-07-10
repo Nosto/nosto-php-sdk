@@ -37,7 +37,6 @@
 namespace Nosto\Result\Graphql\Recommendation;
 
 use Nosto\Result\Graphql\GraphQLResultHandler;
-use Nosto\Result\Graphql\ResultSetBuilder;
 
 final class RecommendationResultHandler extends GraphQLResultHandler
 {

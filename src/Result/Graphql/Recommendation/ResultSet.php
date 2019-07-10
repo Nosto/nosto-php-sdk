@@ -34,7 +34,7 @@
  *
  */
 
-namespace Nosto\Result\Graphql;
+namespace Nosto\Result\Graphql\Recommendation;
 
 use Nosto\Object\AbstractCollection;
 
