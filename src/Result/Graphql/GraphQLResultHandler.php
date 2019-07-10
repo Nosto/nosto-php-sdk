@@ -51,12 +51,12 @@ abstract class GraphQLResultHandler extends ResultHandler
         $result = json_decode($response->getResult());
 
         if ($this->hasErrors($result)) {
-            $error = $this->parseErrorMessage($result);
+            $error = $this->parseErrorMessage($result->errors);
             throw new NostoException($error);
         }
 
         if ($this->hasData($result)) {
-            $this->parseQueryResult($result->data);
+            return $this->parseQueryResult($result->data);
         }
 
         throw new NostoException('No data found in GraphQL result');
@@ -75,6 +75,10 @@ abstract class GraphQLResultHandler extends ResultHandler
         return false;
     }
 
+    /**
+     * @param \stdClass $stdClass
+     * @return bool
+     */
     private function hasData(\stdClass $stdClass)
     {
         $members = get_object_vars($stdClass);
@@ -84,11 +88,14 @@ abstract class GraphQLResultHandler extends ResultHandler
         return false;
     }
 
-    private function parseErrorMessage(\stdClass $stdClass)
+    /**
+     * @param array $errors
+     * @return string
+     */
+    private function parseErrorMessage(array $errors)
     {
-        $members = get_object_vars($stdClass);
         $errorMessage = '';
-        foreach ($members->errors as $error) {
+        foreach ($errors as $error) {
             $errorMessage .= $error->message.' | ';
         }
         return $errorMessage;

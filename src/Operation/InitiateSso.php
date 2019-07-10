@@ -39,7 +39,7 @@ namespace Nosto\Operation;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\HttpRequest;
-use Nosto\Result\ResultHandler;
+use Nosto\Result\Api\InitiateSsoResultHandler;
 use Nosto\Types\UserInterface;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\NostoException;
@@ -69,16 +69,16 @@ class InitiateSso extends AbstractAuthenticatedOperation
         );
         $request->setReplaceParams(array('{platform}' => $platform));
         $response = $request->post($user);
-        if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
-        }
 
-        return $response->getJsonResult()->login_url;
+        return $request->getResponseHandler()->render($response);
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function getResultHandler()
     {
-        // TODO: Implement getResultHandler() method.
+        return InitiateSsoResultHandler::getInstance();
     }
 
     /**

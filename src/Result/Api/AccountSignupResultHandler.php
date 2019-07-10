@@ -36,10 +36,21 @@
 
 namespace Nosto\Result\Api;
 
-class AccountSignupResultHandler extends ApiResultHandler
+use Nosto\Request\Http\HttpResponse;
+
+final class AccountSignupResultHandler extends ApiResultHandler
 {
-    protected function renderAPIResult()
+    public static function getInstance()
     {
-        // TODO: Implement renderAPIResult() method.
+        static $inst = null;
+        if ($inst === null) {
+            $inst = new self();
+        }
+        return $inst;
+    }
+
+    protected function renderAPIResult(HttpResponse $response)
+    {
+        return $response->getJsonResult(true);
     }
 }

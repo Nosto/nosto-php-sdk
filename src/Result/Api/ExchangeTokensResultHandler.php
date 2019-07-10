@@ -34,55 +34,25 @@
  *
  */
 
-namespace Nosto\Result;
+namespace Nosto\Result\Api;
 
-use Nosto\NostoException;
+
 use Nosto\Request\Http\HttpResponse;
-use Nosto\Request\Http\Exception\HttpResponseException;
 
-abstract class ResultHandler
+final class ExchangeTokensResultHandler extends ApiResultHandler
 {
-
-    /**
-     * @param HttpResponse $response
-     * @return mixed|null
-     * @throws NostoException
-     */
-    public function render(HttpResponse $response)
+    public static function getInstance()
     {
-        if ($response->getCode() !== 200) {
-            $this->handleHttpException($response);
+        static $inst = null;
+        if ($inst === null) {
+            $inst = new self();
         }
-
-        //ToDo Parse Result
-        return $this->parseResponse($response);
+        return $inst;
     }
 
-    /**
-     * @param HttpResponse $response
-     * @throws NostoException
-     * @return string|bool
-     */
-    abstract protected function parseResponse(HttpResponse $response);
-
-
-    /**
-     * @param HttpResponse $response
-     * @throws HttpResponseException
-     */
-    private function handleHttpException(HttpResponse $response)
+    protected function renderAPIResult(HttpResponse $response)
     {
-        $message = $this->renderErrorMessage($response);
-        throw new HttpResponseException($message, $response->getCode());
-    }
-
-    /**
-     * @param HttpResponse $response
-     * @return string
-     */
-    private function renderErrorMessage(HttpResponse $response)
-    {
-        return 'Dummy text';
+        return $response->getJsonResult(true);
     }
 
 }

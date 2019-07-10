@@ -37,6 +37,7 @@
 namespace Nosto\Operation;
 
 use Nosto\Helper\SerializationHelper;
+use Nosto\NostoException;
 use Nosto\Object\Event\Cart\Update;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Http\Exception\AbstractHttpException;
@@ -52,12 +53,16 @@ class CartOperation extends AbstractAuthenticatedOperation
      * @param string $accountId merchange id
      * @return bool if the request was successful.
      * @throws AbstractHttpException
+     * @throws NostoException
      */
     public function updateCart(Update $update, $nostoCustomerId, $accountId)
     {
-        $request = new ApiRequest();
-        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
-        $request->setPath(ApiRequest::PATH_CART_UPDATE);
+        $request = $this->initRequest(
+            null,
+            null,
+            null,
+            false
+        );
         $channelName = 'cartUpdated/' . $accountId . '/' . $nostoCustomerId;
         $data = array();
         $item = array();
@@ -67,7 +72,7 @@ class CartOperation extends AbstractAuthenticatedOperation
         $updateJson = json_encode($data);
         $response = $request->postRaw($updateJson);
 
-        return self::checkResponse($request, $response);
+        return $request->getResponseHandler()->render($response);
     }
 
     /**

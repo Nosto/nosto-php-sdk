@@ -16,15 +16,17 @@ abstract class ApiResultHandler extends ResultHandler
 
     protected function parseResponse(HttpResponse $response)
     {
-        $this->renderAPIResult();
+        return $this->renderAPIResult($response);
     }
 
-    abstract protected function renderAPIResult();
+    abstract protected function renderAPIResult(HttpResponse $response);
 
 
     /**
      * Parses errors from HttpResponse
-     * @param HttpResponse $response
+     *
+     * @param HttpResponse $response hkjhk
+     *
      * @return string
      */
     public static function parseErrorsFromResponse(HttpResponse $response)

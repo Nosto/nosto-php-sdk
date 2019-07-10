@@ -67,16 +67,18 @@ abstract class AbstractOperation
      * @param Token|null $token
      * @param string|null $nostoAccount
      * @param string|null $domain
+     * @param bool $isTokenNeeded
      * @return ApiRequest|GraphqlRequest|HttpRequest
      * @throws NostoException
      */
     protected function initRequest(
         Token $token = null,
         $nostoAccount = null,
-        $domain = null
+        $domain = null,
+        $isTokenNeeded = true
     )
     {
-        if (is_null($token)) {
+        if (is_null($token) && $isTokenNeeded) {
             throw new NostoException('No API token found for account.');
         }
         $request = $this->getRequestType();

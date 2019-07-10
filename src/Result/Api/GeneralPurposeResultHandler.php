@@ -8,6 +8,8 @@
 
 namespace Nosto\Result\Api;
 
+use Nosto\Request\Http\HttpResponse;
+
 final class GeneralPurposeResultHandler extends ApiResultHandler
 {
     public static function getInstance()
@@ -19,7 +21,7 @@ final class GeneralPurposeResultHandler extends ApiResultHandler
         return $inst;
     }
 
-    protected function renderAPIResult()
+    protected function renderAPIResult(HttpResponse $response)
     {
         return true;
     }
