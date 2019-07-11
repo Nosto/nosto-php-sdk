@@ -39,7 +39,6 @@ namespace Nosto\Operation;
 use Nosto\NostoException;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
-use Nosto\Exception\Builder as ExceptionBuilder;
 use Nosto\Request\Http\Exception\HttpResponseException;
 use Nosto\Request\Graphql\GraphqlRequest;
 use Nosto\Operation\GraphQLRequest as GraphQLQuery;
