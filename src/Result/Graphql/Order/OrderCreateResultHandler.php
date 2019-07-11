@@ -63,7 +63,7 @@ final class OrderCreateResultHandler extends GraphQLResultHandler
         $members = get_object_vars($stdClass);
         foreach ($members as $varName => $member) {
             if ($varName === self::GRAPHQL_RESPONSE_ORDER_CREATE) {
-                return $member;
+                return $member->id;
             }
             if ($member instanceof \stdClass) {
                 return $this->parseQueryResult($member);
