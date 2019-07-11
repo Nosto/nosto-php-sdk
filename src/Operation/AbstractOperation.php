@@ -91,7 +91,9 @@ abstract class AbstractOperation
         $request->setResponseTimeout($this->getResponseTimeout());
         $request->setConnectTimeout($this->getConnectTimeout());
         $request->setContentType($this->getContentType());
-        $request->setAuthBasic('', $token->getValue());
+        if (!is_null($token) && $isTokenNeeded) {
+            $request->setAuthBasic('', $token->getValue());
+        }
         $request->setPath($this->getPath());
         $request->setResultHandler($this->getResultHandler());
         return $request;

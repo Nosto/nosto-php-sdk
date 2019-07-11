@@ -106,5 +106,4 @@ class CartOperation extends AbstractAuthenticatedOperation
     {
         return ApiRequest::PATH_CART_UPDATE;
     }
-
 }

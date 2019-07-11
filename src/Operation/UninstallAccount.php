@@ -42,7 +42,6 @@ use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Result\Api\GeneralPurposeResultHandler;
-use Nosto\Result\ResultHandler;
 use Nosto\Types\UserInterface;
 
 /**

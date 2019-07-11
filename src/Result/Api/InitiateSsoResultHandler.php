@@ -36,11 +36,13 @@
 
 namespace Nosto\Result\Api;
 
-
 use Nosto\Request\Http\HttpResponse;
 
 final class InitiateSsoResultHandler extends ApiResultHandler
 {
+    /**
+     * @return InitiateSsoResultHandler|null
+     */
     public static function getInstance()
     {
         static $inst = null;
@@ -50,6 +52,9 @@ final class InitiateSsoResultHandler extends ApiResultHandler
         return $inst;
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function renderAPIResult(HttpResponse $response)
     {
         return $response->getJsonResult()->login_url;

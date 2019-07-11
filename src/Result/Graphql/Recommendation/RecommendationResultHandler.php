@@ -40,6 +40,9 @@ use Nosto\Result\Graphql\GraphQLResultHandler;
 
 final class RecommendationResultHandler extends GraphQLResultHandler
 {
+    /**
+     * @return RecommendationResultHandler|null
+     */
     public static function getInstance()
     {
         static $inst = null;

@@ -72,8 +72,8 @@ abstract class AbstractHttpException extends NostoException
         HttpResponse $response = null
     ) {
         parent::__construct($message, $code, $previous);
-        $this->setRequest($request);
-        $this->setResponse($response);
+        $this->response = $response;
+        $this->request = $request;
     }
 
     /**

@@ -41,7 +41,6 @@ use Nosto\Request\Api\Token;
 use Nosto\Result\Api\GeneralPurposeResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\NostoException;
-use Nosto\Request\Http\Exception\AbstractHttpException;
 
 /**
  * Operation class for updated customer's marketing permission

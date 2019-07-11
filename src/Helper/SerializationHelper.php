@@ -73,8 +73,8 @@ class SerializationHelper extends AbstractHelper
     /**
      * Serializes the given object to JSON using a snake-case naming convention.
      * Arrays and objects can both be passed normally.
-     *
      * @param $object
+     * @param string $keyCaseType
      * @return array
      */
     private static function toArray($object, $keyCaseType = self::SNAKE_CASE)

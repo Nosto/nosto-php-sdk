@@ -125,6 +125,26 @@ class HttpResponse
     }
 
     /**
+     * Returns content type of response
+     *
+     * @return string
+     */
+    public function getContentType()
+    {
+        $contentType = '';
+        if (!empty($this->headers)) {
+            foreach ($this->headers as $header) {
+                $matches = array();
+                preg_match('|Content-Type: (\S*/\S*)+;|', $header, $matches);
+                if (isset($matches[1])) {
+                    $contentType = $matches[1];
+                }
+            }
+        }
+        return $contentType;
+    }
+
+    /**
      * Returns the `last` http response code.
      *
      * @return int the http code or 0 if not set.

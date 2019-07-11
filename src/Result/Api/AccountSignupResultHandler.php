@@ -40,6 +40,9 @@ use Nosto\Request\Http\HttpResponse;
 
 final class AccountSignupResultHandler extends ApiResultHandler
 {
+    /**
+     * @return AccountSignupResultHandler|null
+     */
     public static function getInstance()
     {
         static $inst = null;
@@ -49,6 +52,9 @@ final class AccountSignupResultHandler extends ApiResultHandler
         return $inst;
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function renderAPIResult(HttpResponse $response)
     {
         return $response->getJsonResult(true);

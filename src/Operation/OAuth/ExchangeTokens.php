@@ -36,7 +36,6 @@
 
 namespace Nosto\Operation\OAuth;
 
-use MEQP2\Tests\NamingConventions\true\false;
 use Nosto\NostoException;
 use Nosto\Object\NostoOAuthToken;
 use Nosto\Object\Signup\Account;

@@ -40,12 +40,14 @@ use Nosto\NostoException;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Result\ResultHandler;
 
-
 abstract class GraphQLResultHandler extends ResultHandler
 {
     const GRAPHQL_RESPONSE_ERROR = 'errors';
     const GRAPHQL_RESPONSE_DATA = 'data';
 
+    /**
+     * @inheritdoc
+     */
     protected function parseResponse(HttpResponse $response)
     {
         $result = json_decode($response->getResult());

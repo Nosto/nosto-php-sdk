@@ -12,6 +12,9 @@ use Nosto\Request\Http\HttpResponse;
 
 final class GeneralPurposeResultHandler extends ApiResultHandler
 {
+    /**
+     * @return GeneralPurposeResultHandler|null
+     */
     public static function getInstance()
     {
         static $inst = null;
@@ -21,6 +24,9 @@ final class GeneralPurposeResultHandler extends ApiResultHandler
         return $inst;
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function renderAPIResult(HttpResponse $response)
     {
         return true;

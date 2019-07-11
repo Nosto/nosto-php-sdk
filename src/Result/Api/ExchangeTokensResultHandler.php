@@ -41,6 +41,9 @@ use Nosto\Request\Http\HttpResponse;
 
 final class ExchangeTokensResultHandler extends ApiResultHandler
 {
+    /**
+     * @return ExchangeTokensResultHandler|null
+     */
     public static function getInstance()
     {
         static $inst = null;
@@ -50,6 +53,9 @@ final class ExchangeTokensResultHandler extends ApiResultHandler
         return $inst;
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function renderAPIResult(HttpResponse $response)
     {
         return $response->getJsonResult(true);

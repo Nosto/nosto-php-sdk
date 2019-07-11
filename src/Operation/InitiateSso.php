@@ -43,7 +43,6 @@ use Nosto\Result\Api\InitiateSsoResultHandler;
 use Nosto\Types\UserInterface;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\NostoException;
-use Nosto\Exception\Builder as ExceptionBuilder;
 
 /**
  * Operation class for fetching a single-sign-on link through the Nosto API.

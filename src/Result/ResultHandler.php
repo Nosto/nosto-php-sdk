@@ -37,15 +37,18 @@
 namespace Nosto\Result;
 
 use Nosto\NostoException;
+use Nosto\Operation\AbstractOperation;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Request\Http\Exception\HttpResponseException;
+use Nosto\Result\Graphql\Recommendation\ResultSet;
 
 abstract class ResultHandler
 {
 
     /**
      * @param HttpResponse $response
-     * @return mixed|null
+     * @return string|array|ResultSet|bool
+     * @throws HttpResponseException
      * @throws NostoException
      */
     public function render(HttpResponse $response)
@@ -54,7 +57,6 @@ abstract class ResultHandler
             $this->handleHttpException($response);
         }
 
-        //ToDo Parse Result
         return $this->parseResponse($response);
     }
 
@@ -72,7 +74,10 @@ abstract class ResultHandler
      */
     private function handleHttpException(HttpResponse $response)
     {
-        $message = $this->renderErrorMessage($response);
+        $message = 'Something went wrong';
+        if ($response->getContentType() === AbstractOperation::CONTENT_TYPE_APPLICATION_JSON) {
+            $message = $this->parseErrorMessage($response);
+        }
         throw new HttpResponseException($message, $response->getCode());
     }
 
@@ -80,9 +85,22 @@ abstract class ResultHandler
      * @param HttpResponse $response
      * @return string
      */
-    private function renderErrorMessage(HttpResponse $response)
+    private function parseErrorMessage(HttpResponse $response)
     {
-        return 'Dummy text';
+        $message = $response->getJsonResult()->message;
+
+        $errorStr = '';
+        if (isset($message->errors) && is_array($message->errors)) {
+            foreach ($message->errors as $stdClassError) {
+                if (isset($stdClassError->errors)) {
+                    $errorStr .= $stdClassError->errors;
+                }
+                if (isset($stdClassError->product_id)) {
+                    $errorStr .= sprintf('(product #%s)', $stdClassError->product_id);
+                }
+            }
+        }
+        return $message .' | '.$errorStr;
     }
 
 }

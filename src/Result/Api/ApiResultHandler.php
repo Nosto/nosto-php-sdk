@@ -19,6 +19,10 @@ abstract class ApiResultHandler extends ResultHandler
         return $this->renderAPIResult($response);
     }
 
+    /**
+     * @param HttpResponse $response
+     * @return string|array
+     */
     abstract protected function renderAPIResult(HttpResponse $response);
 
 
@@ -49,5 +53,4 @@ abstract class ApiResultHandler extends ResultHandler
 
         return $errorStr;
     }
-
 }

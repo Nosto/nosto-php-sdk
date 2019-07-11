@@ -42,9 +42,7 @@ use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Exception\Builder as ExceptionBuilder;
 use Nosto\Request\Http\Exception\HttpResponseException;
 use Nosto\Request\Graphql\GraphqlRequest;
-use Nosto\Request\Http\HttpResponse;
 use Nosto\Operation\GraphQLRequest as GraphQLQuery;
-use Nosto\Result\Graphql\ResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 
 abstract class AbstractGraphQLOperation extends AbstractOperation
@@ -137,6 +135,5 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
     {
         return GraphqlRequest::PATH_GRAPH_QL;
     }
-
 
 }
