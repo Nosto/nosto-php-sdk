@@ -93,9 +93,6 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
         $response = $request->postRaw(
             $payload
         );
-        if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
-        }
 
         return $request->getResponseHandler()->render($response);
     }
