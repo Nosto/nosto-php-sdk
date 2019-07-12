@@ -36,11 +36,6 @@
 
 namespace Nosto\Operation;
 
-use Nosto\Request\Http\HttpRequest;
-use Nosto\Request\Http\HttpResponse;
-use Nosto\Exception\Builder as ExceptionBuilder;
-use Nosto\Request\Http\Exception\AbstractHttpException;
-
 abstract class AbstractRESTOperation extends AbstractOperation
 {
 }
