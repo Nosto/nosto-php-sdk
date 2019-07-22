@@ -16,41 +16,13 @@ abstract class ApiResultHandler extends ResultHandler
 
     protected function parseResponse(HttpResponse $response)
     {
-        return $this->renderAPIResult($response);
+        return $this->parseAPIResult($response);
     }
 
     /**
      * @param HttpResponse $response
      * @return string|array
      */
-    abstract protected function renderAPIResult(HttpResponse $response);
+    abstract protected function parseAPIResult(HttpResponse $response);
 
-
-    /**
-     * Parses errors from HttpResponse
-     *
-     * @param HttpResponse $response hkjhk
-     *
-     * @return string
-     */
-    public static function parseErrorsFromResponse(HttpResponse $response)
-    {
-        $json = $response->getJsonResult();
-        $errorStr = '';
-        if (isset($json->errors)
-            && is_array($json->errors)
-            && !empty($json->errors)
-        ) {
-            foreach ($json->errors as $stdClassError) {
-                if (isset($stdClassError->errors)) {
-                    $errorStr .= $stdClassError->errors;
-                }
-                if (isset($stdClassError->product_id)) {
-                    $errorStr .= sprintf('(product #%s)', $stdClassError->product_id);
-                }
-            }
-        }
-
-        return $errorStr;
-    }
 }

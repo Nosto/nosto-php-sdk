@@ -53,6 +53,9 @@ abstract class AbstractOperation
     const CONTENT_TYPE_APPLICATION_JSON = 'application/json';
     const CONTENT_TYPE_APPLICATION_GRAPHQL = 'application/graphql';
 
+    /** @var ResultHandler */
+    private $resultHandler;
+
     /**
      * @var int timeout for waiting response from the api, in second
      */
@@ -62,6 +65,15 @@ abstract class AbstractOperation
      * @var int timeout for connecting to the api, in second
      */
     private $connectTimeout = 5;
+
+    /**
+     * AbstractOperation constructor.
+     * @param ResultHandler $resultHandler
+     */
+    public function __construct(ResultHandler $resultHandler)
+    {
+        $this->resultHandler = $resultHandler;
+    }
 
     /**
      * @param Token|null $token

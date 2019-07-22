@@ -37,19 +37,23 @@
 namespace Nosto\Result\Graphql\Recommendation;
 
 use Nosto\Result\Graphql\GraphQLResultHandler;
+use Nosto\Helper\ArrayHelper;
+use Nosto\NostoException;
+use Nosto\Operation\Recommendation\AbstractOperation;
 
 final class RecommendationResultHandler extends GraphQLResultHandler
 {
+    private static $instance = null;
+
     /**
      * @return RecommendationResultHandler|null
      */
     public static function getInstance()
     {
-        static $inst = null;
-        if ($inst === null) {
-            $inst = new self();
+        if (self::$instance === null) {
+            self::$instance = new self();
         }
-        return $inst;
+        return self::$instance;
     }
 
     /**
@@ -57,6 +61,40 @@ final class RecommendationResultHandler extends GraphQLResultHandler
      */
     protected function parseQueryResult(\stdClass $stdClass)
     {
-        return ResultSetBuilder::buildProductArray($stdClass);
+        $primaryData = self::parsePrimaryData($stdClass);
+
+        if ($primaryData === null) {
+            throw new NostoException('Could not find primary data field primary from response');
+        }
+
+        $resultSet = new ResultSet();
+        foreach ($primaryData as $primaryDataItem) {
+            if ($primaryDataItem instanceof \stdClass) {
+                $primaryDataItem = ArrayHelper::stdClassToArray($primaryDataItem);
+            }
+            $item = new ResultItem($primaryDataItem);
+            $resultSet->append($item);
+        }
+        return $resultSet;
+    }
+
+    /**
+     * Finds the primary data field from stdClass
+     *
+     * @param \stdClass $class
+     * @return null
+     */
+    public static function parsePrimaryData(\stdClass $class)
+    {
+        $members = get_object_vars($class);
+        foreach ($members as $varName => $member) {
+            if ($varName === AbstractOperation::GRAPHQL_DATA_KEY) {
+                return $member;
+            }
+            if ($member instanceof \stdClass) {
+                return self::parsePrimaryData($member);
+            }
+        }
+        return null;
     }
 }

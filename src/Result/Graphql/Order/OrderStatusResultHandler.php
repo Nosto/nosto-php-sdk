@@ -43,16 +43,17 @@ final class OrderStatusResultHandler extends GraphQLResultHandler
 {
     const GRAPHQL_ORDER_NR = 'number';
 
+    private static $instance = null;
+
     /**
      * @return OrderStatusResultHandler|null
      */
     public static function getInstance()
     {
-        static $inst = null;
-        if ($inst === null) {
-            $inst = new self();
+        if (self::$instance === null) {
+            self::$instance = new self();
         }
-        return $inst;
+        return self::$instance;
     }
 
     /**

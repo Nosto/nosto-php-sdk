@@ -43,16 +43,17 @@ final class OrderCreateResultHandler extends GraphQLResultHandler
 {
     const GRAPHQL_RESPONSE_ORDER_CREATE = 'placeOrder';
 
+    private static $instance = null;
+
     /**
      * @return OrderCreateResultHandler|null
      */
     public static function getInstance()
     {
-        static $inst = null;
-        if ($inst === null) {
-            $inst = new self();
+        if (self::$instance === null) {
+            self::$instance = new self();
         }
-        return $inst;
+        return self::$instance;
     }
 
     /**
