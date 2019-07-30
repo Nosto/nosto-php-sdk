@@ -142,7 +142,7 @@ class OrderCreate extends AbstractGraphQLOperation
      */
     protected function getResultHandler()
     {
-        return OrderCreateResultHandler::getInstance();
+        return new OrderCreateResultHandler();
     }
 
 

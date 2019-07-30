@@ -77,7 +77,7 @@ class InitiateSso extends AbstractAuthenticatedOperation
      */
     protected function getResultHandler()
     {
-        return InitiateSsoResultHandler::getInstance();
+        return new InitiateSsoResultHandler();
     }
 
     /**

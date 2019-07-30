@@ -80,7 +80,7 @@ class CartOperation extends AbstractAuthenticatedOperation
      */
     protected function getResultHandler()
     {
-        return GeneralPurposeResultHandler::getInstance();
+        return new GeneralPurposeResultHandler();
     }
 
     /**

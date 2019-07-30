@@ -65,7 +65,7 @@ class OrderStatus extends AbstractGraphQLOperation
 
     protected function getResultHandler()
     {
-        return OrderStatusResultHandler::getInstance();
+        return new OrderStatusResultHandler();
     }
 
 

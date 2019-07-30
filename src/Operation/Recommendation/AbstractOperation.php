@@ -79,7 +79,7 @@ abstract class AbstractOperation extends AbstractGraphQLOperation
      */
     protected function getResultHandler()
     {
-        return RecommendationResultHandler::getInstance();
+        return new  RecommendationResultHandler();
     }
 
     /**

@@ -93,7 +93,7 @@ class AccountSignup extends AbstractRESTOperation
      */
     protected function getResultHandler()
     {
-        return AccountSignupResultHandler::getInstance();
+        return new AccountSignupResultHandler();
     }
 
     /**
