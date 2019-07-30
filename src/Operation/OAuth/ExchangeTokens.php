@@ -92,7 +92,7 @@ class ExchangeTokens extends AbstractOperation
      */
     protected function getResultHandler()
     {
-        return ExchangeTokensResultHandler::getInstance();
+        return new ExchangeTokensResultHandler();
     }
 
     /**

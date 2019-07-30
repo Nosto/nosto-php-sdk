@@ -54,9 +54,6 @@ abstract class AbstractOperation
     const CONTENT_TYPE_APPLICATION_GRAPHQL = 'application/graphql';
     const CONTENT_TYPE_TEXT_HTML = 'text/html';
 
-    /** @var ResultHandler */
-    private $resultHandler;
-
     /**
      * @var int timeout for waiting response from the api, in second
      */

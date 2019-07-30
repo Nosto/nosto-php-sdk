@@ -37,10 +37,10 @@
 namespace Nosto\Result;
 
 use Nosto\NostoException;
-use Nosto\Operation\AbstractOperation;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Request\Http\Exception\HttpResponseException;
 use Nosto\Result\Graphql\Recommendation\ResultSet;
+use Nosto\Util\HttpResponseException as ExceptionHandler;
 
 abstract class ResultHandler
 {
@@ -54,7 +54,7 @@ abstract class ResultHandler
     public function parse(HttpResponse $response)
     {
         if ($response->getCode() !== 200) {
-            $this->handleHttpException($response);
+            ExceptionHandler::handle($response);
         }
 
         return $this->parseResponse($response);
@@ -66,41 +66,4 @@ abstract class ResultHandler
      * @return string|bool
      */
     abstract protected function parseResponse(HttpResponse $response);
-
-
-    /**
-     * @param HttpResponse $response
-     * @throws HttpResponseException
-     */
-    private function handleHttpException(HttpResponse $response)
-    {
-        $message = 'Something went wrong';
-        if ($response->getContentType() === AbstractOperation::CONTENT_TYPE_APPLICATION_JSON) {
-            $message = $this->parseErrorMessage($response);
-        }
-        throw new HttpResponseException($message, $response->getCode());
-    }
-
-    /**
-     * @param HttpResponse $response
-     * @return string
-     */
-    private function parseErrorMessage(HttpResponse $response)
-    {
-        $message = $response->getJsonResult()->message;
-
-        $errorStr = '';
-        if (isset($message->errors) && is_array($message->errors)) {
-            foreach ($message->errors as $stdClassError) {
-                if (isset($stdClassError->errors)) {
-                    $errorStr .= $stdClassError->errors;
-                }
-                if (isset($stdClassError->product_id)) {
-                    $errorStr .= sprintf('(product #%s)', $stdClassError->product_id);
-                }
-            }
-        }
-        return $message .' | '.$errorStr;
-    }
-
 }

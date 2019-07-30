@@ -395,7 +395,7 @@ class HttpRequest
      */
     public function setPath($path)
     {
-        $this->setUrl(Nosto::getBaseURL() . $path);
+        $this->setUrl(Nosto::getBaseUrl() . $path);
     }
 
     /**
