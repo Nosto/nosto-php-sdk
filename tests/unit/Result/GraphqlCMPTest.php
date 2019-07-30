@@ -56,7 +56,7 @@ class GraphqlCMPTest extends Test
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
         $request->setResultHandler(RecommendationResultHandler::getInstance());
-        $resultSet = $request->getResponseHandler()->render($response);
+        $resultSet = $request->getResponseHandler()->parse($response);
 
         $this->specify('result set parsed', function () use ($resultSet) {
             $this->assertEquals($resultSet->count(), 10);
@@ -72,7 +72,7 @@ class GraphqlCMPTest extends Test
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
         $request->setResultHandler(RecommendationResultHandler::getInstance());
-        $resultSet = $request->getResponseHandler()->render($response);
+        $resultSet = $request->getResponseHandler()->parse($response);
         $this->specify('nested array parsing failed', function () use ($resultSet) {
             $this->assertEquals($resultSet->count(), 1);
             foreach ($resultSet as $item) {
@@ -91,7 +91,7 @@ class GraphqlCMPTest extends Test
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
         $request->setResultHandler(RecommendationResultHandler::getInstance());
-        $resultSet = $request->getResponseHandler()->render($response);
+        $resultSet = $request->getResponseHandler()->parse($response);
 
         $this->specify('nested object failed', function () use ($resultSet) {
             $this->assertEquals($resultSet->count(), 1);
@@ -114,7 +114,7 @@ class GraphqlCMPTest extends Test
 
         $this->specify('result does not contain primary field', function () use ($request,$response) {
             try {
-                $request->getResponseHandler()->render($response);
+                $request->getResponseHandler()->parse($response);
                 $this->fail('No exception was thrown');
             } catch (\Exception $e) {
                 $this->assertEquals($e->getMessage(), 'Could not find primary data field primary from response');

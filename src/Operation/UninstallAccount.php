@@ -63,7 +63,7 @@ class UninstallAccount extends AbstractAuthenticatedOperation
     {
         $request = $this->initRequest($this->account->getApiToken(Token::API_SSO));
         $response = $request->post($currentUser);
-        return $request->getResponseHandler()->render($response);
+        return $request->getResponseHandler()->parse($response);
     }
 
     /**

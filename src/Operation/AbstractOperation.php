@@ -52,6 +52,7 @@ abstract class AbstractOperation
     const CONTENT_TYPE_URL_FORM_ENCODED = 'application/x-www-form-urlencoded';
     const CONTENT_TYPE_APPLICATION_JSON = 'application/json';
     const CONTENT_TYPE_APPLICATION_GRAPHQL = 'application/graphql';
+    const CONTENT_TYPE_TEXT_HTML = 'text/html';
 
     /** @var ResultHandler */
     private $resultHandler;
@@ -65,15 +66,6 @@ abstract class AbstractOperation
      * @var int timeout for connecting to the api, in second
      */
     private $connectTimeout = 5;
-
-    /**
-     * AbstractOperation constructor.
-     * @param ResultHandler $resultHandler
-     */
-    public function __construct(ResultHandler $resultHandler)
-    {
-        $this->resultHandler = $resultHandler;
-    }
 
     /**
      * @param Token|null $token

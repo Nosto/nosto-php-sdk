@@ -72,7 +72,7 @@ class CartOperation extends AbstractAuthenticatedOperation
         $updateJson = json_encode($data);
         $response = $request->postRaw($updateJson);
 
-        return $request->getResponseHandler()->render($response);
+        return $request->getResponseHandler()->parse($response);
     }
 
     /**

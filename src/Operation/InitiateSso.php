@@ -69,7 +69,7 @@ class InitiateSso extends AbstractAuthenticatedOperation
         $request->setReplaceParams(array('{platform}' => $platform));
         $response = $request->post($user);
 
-        return $request->getResponseHandler()->render($response);
+        return $request->getResponseHandler()->parse($response);
     }
 
     /**

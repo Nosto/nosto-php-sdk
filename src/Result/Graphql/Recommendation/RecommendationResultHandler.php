@@ -63,10 +63,6 @@ final class RecommendationResultHandler extends GraphQLResultHandler
     {
         $primaryData = self::parsePrimaryData($stdClass);
 
-        if ($primaryData === null) {
-            throw new NostoException('Could not find primary data field primary from response');
-        }
-
         $resultSet = new ResultSet();
         foreach ($primaryData as $primaryDataItem) {
             if ($primaryDataItem instanceof \stdClass) {
@@ -83,6 +79,7 @@ final class RecommendationResultHandler extends GraphQLResultHandler
      *
      * @param \stdClass $class
      * @return null
+     * @throws NostoException
      */
     public static function parsePrimaryData(\stdClass $class)
     {
@@ -95,6 +92,7 @@ final class RecommendationResultHandler extends GraphQLResultHandler
                 return self::parsePrimaryData($member);
             }
         }
-        return null;
+
+        throw new NostoException('Could not find primary data field primary from response');
     }
 }

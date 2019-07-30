@@ -51,7 +51,7 @@ abstract class ResultHandler
      * @throws HttpResponseException
      * @throws NostoException
      */
-    public function render(HttpResponse $response)
+    public function parse(HttpResponse $response)
     {
         if ($response->getCode() !== 200) {
             $this->handleHttpException($response);
