@@ -63,9 +63,8 @@ final class RecommendationResultHandler extends GraphQLResultHandler
 
     /**
      * Finds the primary data field from stdClass
-     *
      * @param \stdClass $class
-     * @return null
+     * @return array
      * @throws NostoException
      */
     public static function parsePrimaryData(\stdClass $class)
