@@ -109,5 +109,4 @@ class SyncRates extends AbstractAuthenticatedOperation
     {
         return ApiRequest::PATH_CURRENCY_EXCHANGE_RATE;
     }
-
 }

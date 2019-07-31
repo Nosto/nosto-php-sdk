@@ -55,7 +55,7 @@ class GraphqlOrderTest extends Test
         $resultBody = '{"data":{"updateStatus":null},"errors":[{"message":"Exception while fetching data (/updateStatus) : Unable to find order matching identifier","path":["updateStatus"],"locations":[{"line":7,"column":13}],"extensions":null,"errorType":"DataFetchingException"}]}';
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $resultBody);
         $request = new HttpRequest();
-        $request->setResultHandler(OrderCreateResultHandler::getInstance());
+        $request->setResultHandler(new OrderCreateResultHandler());
         try {
             $request->getResponseHandler()->parse($response);
         } catch (\Exception $e) {
@@ -71,7 +71,7 @@ class GraphqlOrderTest extends Test
         $responseBody = '{"data":{"placeOrder":{"id":"5d1f2ebc10e62df62401221"}}}';
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
-        $request->setResultHandler(OrderCreateResultHandler::getInstance());
+        $request->setResultHandler(new OrderCreateResultHandler());
         $result = $request->getResponseHandler()->parse($response);
 
         $this->specify('Order was created successfully', function () use ($result){
@@ -87,7 +87,7 @@ class GraphqlOrderTest extends Test
         $responseBody = '{"data":{"updateStatus":{"number":"M2_22","statuses":[{"date":"2019-07-08T11:58:12.540Z","orderStatus":"hold","paymentProvider":"klarna"},{"date":"2019-07-08T13:14:20.400Z","orderStatus":"hold","paymentProvider":"klarna"},{"date":"2019-07-08T13:26:43.479Z","orderStatus":"hold","paymentProvider":"klarna"}]}}}';
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
-        $request->setResultHandler(OrderStatusResultHandler::getInstance());
+        $request->setResultHandler(new OrderStatusResultHandler());
         $result = $request->getResponseHandler()->parse($response);
 
         $this->specify('Order status was updates successfully', function () use ($result){

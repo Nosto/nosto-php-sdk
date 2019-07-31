@@ -138,5 +138,4 @@ class UpsertProduct extends AbstractAuthenticatedOperation
     {
         return ApiRequest::PATH_PRODUCTS_UPSERT;
     }
-
 }

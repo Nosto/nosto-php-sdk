@@ -60,5 +60,4 @@ final class OrderCreateResultHandler extends GraphQLResultHandler
 
         throw new NostoException('No placeOrder object was found in GraphQL result');
     }
-
 }

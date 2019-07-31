@@ -42,7 +42,7 @@ use Nosto\Object\Signup\Account;
 use Nosto\Operation\AbstractOperation;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\HttpRequest;
-use Nosto\Result\Api\ExchangeTokensResultHandler;
+use Nosto\Result\Api\JsonResultHandler;
 use Nosto\Types\OAuthInterface;
 use Nosto\Types\Signup\AccountInterface;
 
@@ -92,7 +92,7 @@ class ExchangeTokens extends AbstractOperation
      */
     protected function getResultHandler()
     {
-        return new ExchangeTokensResultHandler();
+        return new JsonResultHandler();
     }
 
     /**

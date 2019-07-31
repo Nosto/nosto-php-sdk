@@ -97,6 +97,4 @@ class UninstallAccount extends AbstractAuthenticatedOperation
     {
         return ApiRequest::PATH_ACCOUNT_DELETED;
     }
-
-
 }

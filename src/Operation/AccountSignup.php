@@ -40,7 +40,7 @@ use Nosto\NostoException;
 use Nosto\Object\Signup\Account;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
-use Nosto\Result\Api\AccountSignupResultHandler;
+use Nosto\Result\Api\JsonResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\Types\Signup\SignupInterface;
 
@@ -93,7 +93,7 @@ class AccountSignup extends AbstractRESTOperation
      */
     protected function getResultHandler()
     {
-        return new AccountSignupResultHandler();
+        return new JsonResultHandler();
     }
 
     /**

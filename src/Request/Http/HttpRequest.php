@@ -273,7 +273,8 @@ class HttpRequest
      * Adds Nosto account to the headers
      * @param $nostoAccount
      */
-    public function setNostoAccountHeader($nostoAccount) {
+    public function setNostoAccountHeader($nostoAccount)
+    {
         $this->addHeader(self::HEADER_NOSTO_ACCOUNT, $nostoAccount);
     }
 
@@ -281,7 +282,8 @@ class HttpRequest
      * Adds active domain to the headers
      * @param $activeDomain
      */
-    public function setActiveDomainHeader($activeDomain) {
+    public function setActiveDomainHeader($activeDomain)
+    {
         $this->addHeader(self::HEADER_ACTIVE_DOMAIN, $activeDomain);
     }
 

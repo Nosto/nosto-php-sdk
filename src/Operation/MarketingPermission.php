@@ -112,5 +112,4 @@ class MarketingPermission extends AbstractAuthenticatedOperation
     {
         return ApiRequest::PATH_MARKETING_PERMISSION;
     }
-
 }

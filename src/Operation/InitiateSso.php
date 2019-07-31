@@ -103,5 +103,4 @@ class InitiateSso extends AbstractAuthenticatedOperation
     {
         return ApiRequest::PATH_SSO_AUTH;
     }
-
 }

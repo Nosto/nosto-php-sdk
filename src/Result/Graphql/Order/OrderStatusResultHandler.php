@@ -61,4 +61,3 @@ final class OrderStatusResultHandler extends GraphQLResultHandler
         throw new NostoException('No number string was found in GraphQL result');
     }
 }
-

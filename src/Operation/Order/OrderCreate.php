@@ -192,7 +192,6 @@ class OrderCreate extends AbstractGraphQLOperation
 QUERY;
 
         return $query;
-
     }
 
     /**

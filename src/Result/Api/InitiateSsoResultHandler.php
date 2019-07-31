@@ -47,5 +47,4 @@ final class InitiateSsoResultHandler extends ApiResultHandler
     {
         return $response->getJsonResult()->login_url;
     }
-
 }

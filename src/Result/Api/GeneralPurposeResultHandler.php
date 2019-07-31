@@ -38,6 +38,7 @@ namespace Nosto\Result\Api;
 
 use Nosto\Request\Http\HttpResponse;
 
+//Handle response in case of text/plain content-type
 final class GeneralPurposeResultHandler extends ApiResultHandler
 {
     /**

@@ -109,5 +109,4 @@ class UpdateSettings extends AbstractAuthenticatedOperation
     {
         return ApiRequest::PATH_SETTINGS;
     }
-
 }

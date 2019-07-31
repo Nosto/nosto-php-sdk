@@ -55,7 +55,7 @@ class GraphqlCMPTest extends Test
         $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"primary":[{"productId":"558"},{"productId":"386"},{"productId":"414"},{"productId":"435"},{"productId":"399"},{"productId":"382"},{"productId":"867"},{"productId":"383"},{"productId":"560"},{"productId":"551"}]}}}}}';
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
-        $request->setResultHandler(RecommendationResultHandler::getInstance());
+        $request->setResultHandler(new RecommendationResultHandler());
         $resultSet = $request->getResponseHandler()->parse($response);
 
         $this->specify('result set parsed', function () use ($resultSet) {
@@ -71,7 +71,7 @@ class GraphqlCMPTest extends Test
         $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"primary":[{"productId":"558", "categories":["Men/Stuff", "Men/Summer"]}]}}}}}';
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
-        $request->setResultHandler(RecommendationResultHandler::getInstance());
+        $request->setResultHandler(new RecommendationResultHandler());
         $resultSet = $request->getResponseHandler()->parse($response);
         $this->specify('nested array parsing failed', function () use ($resultSet) {
             $this->assertEquals($resultSet->count(), 1);
@@ -90,7 +90,7 @@ class GraphqlCMPTest extends Test
         $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"primary":[{"productId":"558", "categories":["Men/Stuff", "Men/Summer"], "customObject":{"id":1, "name":"test object"}}]}}}}}';
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
-        $request->setResultHandler(RecommendationResultHandler::getInstance());
+        $request->setResultHandler(new RecommendationResultHandler());
         $resultSet = $request->getResponseHandler()->parse($response);
 
         $this->specify('nested object failed', function () use ($resultSet) {
@@ -110,7 +110,7 @@ class GraphqlCMPTest extends Test
         $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"nonprimary":[{"productId":"558"},{"productId":"386"},{"productId":"414"},{"productId":"435"},{"productId":"399"},{"productId":"382"},{"productId":"867"},{"productId":"383"},{"productId":"560"},{"productId":"551"}]}}}}}';
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
-        $request->setResultHandler(RecommendationResultHandler::getInstance());
+        $request->setResultHandler(new RecommendationResultHandler());
 
         $this->specify('result does not contain primary field', function () use ($request,$response) {
             try {
