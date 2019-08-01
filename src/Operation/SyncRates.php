@@ -75,7 +75,7 @@ class SyncRates extends AbstractAuthenticatedOperation
             $this->activeDomain
         );
         $response = $request->post($collection);
-        return $request->getResponseHandler()->parse($response);
+        return $request->getResultHandler()->parse($response);
     }
 
     /**

@@ -112,7 +112,7 @@ class AuthorizationCode extends AbstractOperation
             )
         );
         $response = $request->get();
-        $result = $request->getResponseHandler()->parse($response);
+        $result = $request->getResultHandler()->parse($response);
 
         if (empty($result['access_token'])) {
             throw new NostoException('No "access_token" returned after authenticating with code');

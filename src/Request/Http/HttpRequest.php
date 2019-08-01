@@ -421,7 +421,7 @@ class HttpRequest
     /**
      * @return ResultHandler
      */
-    public function getResponseHandler()
+    public function getResultHandler()
     {
         return $this->resultHandler;
     }

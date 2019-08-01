@@ -104,7 +104,7 @@ class UpsertProduct extends AbstractAuthenticatedOperation
             $this->activeDomain
         );
         $response = $request->post($this->collection);
-        return $request->getResponseHandler()->parse($response);
+        return $request->getResultHandler()->parse($response);
     }
 
     /**

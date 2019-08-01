@@ -57,7 +57,7 @@ class GraphqlOrderTest extends Test
         $request = new HttpRequest();
         $request->setResultHandler(new OrderCreateResultHandler());
         try {
-            $request->getResponseHandler()->parse($response);
+            $request->getResultHandler()->parse($response);
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), "Exception while fetching data (/updateStatus) : Unable to find order matching identifier | ");
         }
@@ -72,7 +72,7 @@ class GraphqlOrderTest extends Test
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
         $request->setResultHandler(new OrderCreateResultHandler());
-        $result = $request->getResponseHandler()->parse($response);
+        $result = $request->getResultHandler()->parse($response);
 
         $this->specify('Order was created successfully', function () use ($result){
             $this->assertEquals($result, '5d1f2ebc10e62df62401221');
@@ -88,7 +88,7 @@ class GraphqlOrderTest extends Test
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
         $request->setResultHandler(new OrderStatusResultHandler());
-        $result = $request->getResponseHandler()->parse($response);
+        $result = $request->getResultHandler()->parse($response);
 
         $this->specify('Order status was updates successfully', function () use ($result){
             $this->assertEquals($result, 'M2_22');

@@ -93,7 +93,7 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
             $payload
         );
 
-        return $request->getResponseHandler()->parse($response);
+        return $request->getResultHandler()->parse($response);
     }
 
     /**

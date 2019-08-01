@@ -77,7 +77,7 @@ class MarketingPermission extends AbstractAuthenticatedOperation
         $request->setReplaceParams($replaceParams);
         $response = $request->postRaw('');
 
-        return $request->getResponseHandler()->parse($response);
+        return $request->getResultHandler()->parse($response);
     }
 
     /**

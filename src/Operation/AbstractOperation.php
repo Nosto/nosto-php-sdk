@@ -77,8 +77,7 @@ abstract class AbstractOperation
         $nostoAccount = null,
         $domain = null,
         $isTokenNeeded = true
-    )
-    {
+    ) {
         if (is_null($token) && $isTokenNeeded) {
             throw new NostoException('No API token found for account.');
         }

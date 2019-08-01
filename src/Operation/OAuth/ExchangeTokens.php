@@ -79,7 +79,7 @@ class ExchangeTokens extends AbstractOperation
         $request = $this->initRequest(null, null, null, false);
         $request->setQueryParams(array('access_token' => $token->getAccessToken()));
         $response = $request->get();
-        $results = $request->getResponseHandler()->parse($response);
+        $results = $request->getResultHandler()->parse($response);
 
         $tokens = Token::parseTokens($results, 'api_');
         $account = new Account($token->getMerchantName());

@@ -75,7 +75,7 @@ abstract class AbstractOperation extends AbstractGraphQLOperation
     }
 
     /**
-     * @return mixed
+     * @inheritdoc
      */
     protected function getResultHandler()
     {

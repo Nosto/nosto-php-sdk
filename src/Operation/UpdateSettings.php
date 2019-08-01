@@ -75,7 +75,7 @@ class UpdateSettings extends AbstractAuthenticatedOperation
             $this->activeDomain
         );
         $response = $request->put($settings);
-        return $request->getResponseHandler()->parse($response);
+        return $request->getResultHandler()->parse($response);
     }
 
     /**

@@ -79,10 +79,10 @@ class HttpResponseException
     }
 
     /**
-     * @param $errors
+     * @param \stdClass $errors
      * @return string
      */
-    private static function getErrorsFromStdClass($errors)
+    private static function getErrorsFromStdClass(\stdClass $errors)
     {
         $errors = get_object_vars($errors);
         $errorString = '';

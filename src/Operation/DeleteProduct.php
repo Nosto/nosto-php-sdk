@@ -91,7 +91,7 @@ class DeleteProduct extends AbstractAuthenticatedOperation
             $this->activeDomain
         );
         $response = $request->post($this->productIds);
-        return $request->getResponseHandler()->parse($response);
+        return $request->getResultHandler()->parse($response);
     }
 
     /**
