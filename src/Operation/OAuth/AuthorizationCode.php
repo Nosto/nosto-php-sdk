@@ -36,6 +36,7 @@
 
 namespace Nosto\Operation\OAuth;
 
+use Nosto\Nosto;
 use Nosto\NostoException;
 use Nosto\Object\NostoOAuthToken;
 use Nosto\Request\Http\HttpRequest;
@@ -49,7 +50,7 @@ use Nosto\Result\Api\JsonResultHandler;
  */
 class AuthorizationCode extends AbstractOperation
 {
-    const PATH_TOKEN = '/oauth/token?code={cod}&client_id={cid}&client_secret={sec}&redirect_uri={uri}&grant_type=authorization_code'; // @codingStandardsIgnoreLine
+    const PATH_TOKEN = '/token?code={cod}&client_id={cid}&client_secret={sec}&redirect_uri={uri}&grant_type=authorization_code'; // @codingStandardsIgnoreLine
 
     /**
      * @var string the client id the identify this application to the oauth2 server.
@@ -102,7 +103,7 @@ class AuthorizationCode extends AbstractOperation
         }
 
         $request = $this->initRequest(null, null, null, false);
-
+        $request->setUrl(Nosto::getOAuthBaseUrl() . self::PATH_TOKEN);
         $request->setReplaceParams(
             array(
                 '{cid}' => $this->clientId,
