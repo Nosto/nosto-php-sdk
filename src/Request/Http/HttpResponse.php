@@ -135,7 +135,7 @@ class HttpResponse
         if (!empty($this->headers)) {
             foreach ($this->headers as $header) {
                 $matches = array();
-                preg_match('|Content-Type: (\S*/\S*)+;|', $header, $matches);
+                preg_match('/content-type: (\S*\/\S*)+;/i', $header, $matches);
                 if (isset($matches[1])) {
                     $contentType = $matches[1];
                 }
