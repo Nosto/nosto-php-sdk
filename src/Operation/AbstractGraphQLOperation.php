@@ -47,6 +47,9 @@ use Nosto\Types\Signup\AccountInterface;
 abstract class AbstractGraphQLOperation extends AbstractOperation
 {
 
+    const IDENTIFIER_BY_CID = 'BY_CID';
+    const IDENTIFIER_BY_REF = 'BY_REF';
+
     /**
      * @var AccountInterface Nosto configuration
      */

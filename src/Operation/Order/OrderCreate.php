@@ -51,9 +51,6 @@ use Nosto\Helper\SerializationHelper;
 class OrderCreate extends AbstractGraphQLOperation
 {
 
-    const IDENTIFIER_BY_CID = 'BY_CID';
-    const IDENTIFIER_BY_REF = 'BY_REF';
-
     /** @var OrderInterface */
     private $order;
 
