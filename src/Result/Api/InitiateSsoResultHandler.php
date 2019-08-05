@@ -34,40 +34,17 @@
  *
  */
 
-namespace Nosto\Result\Graphql;
+namespace Nosto\Result\Api;
 
-use Nosto\NostoException;
+use Nosto\Request\Http\HttpResponse;
 
-/**
- * Wrapper class for item returned by the GraphQL API
- */
-class ResultItem
+final class InitiateSsoResultHandler extends ApiResultHandler
 {
     /**
-     * @var array
+     * @inheritdoc
      */
-    private $data = array();
-
-    public function __construct(array $data = array())
+    protected function parseAPIResult(HttpResponse $response)
     {
-        $this->data = $data;
-    }
-
-    /**
-     * @param $name
-     * @param $arguments
-     * @return mixed|null
-     * @throws NostoException
-     */
-    public function __call($name, $arguments)
-    {
-        if (stripos($name, 'get') === 0) {
-            $dataKey = lcfirst(substr($name, 3));
-            if (!empty($this->data[$dataKey])) {
-                return $this->data[$dataKey];
-            }
-            throw new NostoException(sprintf('Field %s does not exist', $dataKey));
-        }
-        throw new NostoException(sprintf('Call to undefined method %s', $name));
+        return $response->getJsonResult()->login_url;
     }
 }

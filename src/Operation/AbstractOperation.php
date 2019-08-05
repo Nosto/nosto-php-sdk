@@ -41,6 +41,7 @@ use Nosto\Request\Api\Token;
 use Nosto\NostoException;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Graphql\GraphqlRequest;
+use Nosto\Result\ResultHandler;
 
 /**
  * Base operation class for handling all communications through the Nosto API.
@@ -51,6 +52,7 @@ abstract class AbstractOperation
     const CONTENT_TYPE_URL_FORM_ENCODED = 'application/x-www-form-urlencoded';
     const CONTENT_TYPE_APPLICATION_JSON = 'application/json';
     const CONTENT_TYPE_APPLICATION_GRAPHQL = 'application/graphql';
+    const CONTENT_TYPE_TEXT_HTML = 'text/html';
 
     /**
      * @var int timeout for waiting response from the api, in second
@@ -66,15 +68,17 @@ abstract class AbstractOperation
      * @param Token|null $token
      * @param string|null $nostoAccount
      * @param string|null $domain
+     * @param bool $isTokenNeeded
      * @return ApiRequest|GraphqlRequest|HttpRequest
      * @throws NostoException
      */
     protected function initRequest(
         Token $token = null,
         $nostoAccount = null,
-        $domain = null
+        $domain = null,
+        $isTokenNeeded = true
     ) {
-        if (is_null($token)) {
+        if (is_null($token) && $isTokenNeeded) {
             throw new NostoException('No API token found for account.');
         }
         $request = $this->getRequestType();
@@ -87,8 +91,11 @@ abstract class AbstractOperation
         $request->setResponseTimeout($this->getResponseTimeout());
         $request->setConnectTimeout($this->getConnectTimeout());
         $request->setContentType($this->getContentType());
-        $request->setAuthBasic('', $token->getValue());
+        if (!is_null($token) && $isTokenNeeded) {
+            $request->setAuthBasic('', $token->getValue());
+        }
         $request->setPath($this->getPath());
+        $request->setResultHandler($this->getResultHandler());
         return $request;
     }
 
@@ -109,7 +116,12 @@ abstract class AbstractOperation
     /**
      * @return string
      */
-    abstract protected  function getPath();
+    abstract protected function getPath();
+
+    /**
+     * @return ResultHandler
+     */
+    abstract protected function getResultHandler();
 
     /**
      * Get response timeout in second

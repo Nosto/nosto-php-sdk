@@ -34,82 +34,22 @@
  *
  */
 
-namespace Nosto\Operation;
+namespace Nosto\Result\Graphql\Recommendation;
 
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Result\Api\GeneralPurposeResultHandler;
-use Nosto\Types\Signup\AccountInterface;
-use Nosto\NostoException;
+use Nosto\Object\AbstractCollection;
 
 /**
- * Operation class for updated customer's marketing permission
+ * Collection for GraphQL result
  */
-class MarketingPermission extends AbstractAuthenticatedOperation
+class ResultSet extends AbstractCollection
 {
     /**
-     * MarketingPermission constructor.
-     * @param AccountInterface $account
-     * @param string $activeDomain
-     */
-    public function __construct(AccountInterface $account, $activeDomain = '')
-    {
-        parent::__construct($account, $activeDomain);
-    }
-
-    /**
-     * Update customer marketing permission
+     * Appends a result item into the collection
      *
-     * @param $email
-     * @param $hasPermission
-     * @return mixed|null
-     * @throws NostoException
+     * @param ResultItem $item
      */
-    public function update($email, $hasPermission)
+    public function append(ResultItem $item)
     {
-        $request = $this->initRequest(
-            $this->account->getApiToken(Token::API_EMAIL),
-            $this->account->getName(),
-            $this->activeDomain
-        );
-
-        $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
-        $request->setReplaceParams($replaceParams);
-        $response = $request->postRaw('');
-
-        return $request->getResultHandler()->parse($response);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getResultHandler()
-    {
-        return new GeneralPurposeResultHandler();
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    protected function getRequestType()
-    {
-        return new ApiRequest();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getContentType()
-    {
-        return self::CONTENT_TYPE_APPLICATION_JSON;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getPath()
-    {
-        return ApiRequest::PATH_MARKETING_PERMISSION;
+        $this->var[] = $item;
     }
 }

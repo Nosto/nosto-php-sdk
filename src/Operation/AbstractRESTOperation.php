@@ -36,28 +36,6 @@
 
 namespace Nosto\Operation;
 
-use Nosto\Request\Http\HttpRequest;
-use Nosto\Request\Http\HttpResponse;
-use Nosto\Exception\Builder as ExceptionBuilder;
-use Nosto\Request\Http\Exception\AbstractHttpException;
-
 abstract class AbstractRESTOperation extends AbstractOperation
 {
-
-    /**
-     * Helper method to throw an exception when an API or HTTP endpoint responds
-     * with a non-200 status code.
-     *
-     * @param $request HttpRequest the HTTP request
-     * @param $response HttpResponse the HTTP response to check
-     * @return bool returns true when everything was okay
-     * @throws AbstractHttpException
-     */
-    protected static function checkResponse(HttpRequest $request, HttpResponse $response)
-    {
-        if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
-        }
-        return true;
-    }
 }

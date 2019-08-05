@@ -63,6 +63,7 @@ class Account extends AbstractObject implements AccountInterface, ValidatableInt
      * Create a new account object with given name.
      *
      * @param $name
+     * @throws NostoException
      */
     public function __construct($name)
     {

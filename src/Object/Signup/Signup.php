@@ -36,6 +36,7 @@
 
 namespace Nosto\Object\Signup;
 
+use Nosto\NostoException;
 use Nosto\Object\Settings;
 use Nosto\Request\Api\Token;
 use Nosto\Types\Signup\BillingInterface;
@@ -100,6 +101,7 @@ class Signup extends Settings implements SignupInterface
      * @param string $platform
      * @param string $signupApiToken
      * @param string|null $partnerCode
+     * @throws NostoException
      */
     public function __construct($platform, $signupApiToken, $partnerCode = null)
     {

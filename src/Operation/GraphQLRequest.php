@@ -36,7 +36,6 @@
 
 namespace Nosto\Operation;
 
-
 class GraphQLRequest
 {
 
@@ -48,7 +47,7 @@ class GraphQLRequest
      * @param string $query
      * @param array $variables
      */
-    public function __construct($query,array $variables)
+    public function __construct($query, array $variables)
     {
         $this->request = ['query' => $query, 'variables' => $variables];
     }

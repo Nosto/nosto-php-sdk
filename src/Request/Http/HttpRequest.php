@@ -43,6 +43,7 @@ use Nosto\NostoException;
 use Nosto\Request\Http\Adapter\Adapter;
 use Nosto\Request\Http\Adapter\Curl;
 use Nosto\Request\Http\Adapter\Socket;
+use Nosto\Result\ResultHandler;
 
 /**
  * Helper class for doing http requests and returning unified response including header info.
@@ -114,6 +115,11 @@ class HttpRequest
      * @var Adapter the adapter to use for making the request.
      */
     private $adapter;
+
+    /**
+     * @var ResultHandler handles the response based on request type
+     */
+    private $resultHandler;
 
     /**
      * Constructor.
@@ -267,7 +273,8 @@ class HttpRequest
      * Adds Nosto account to the headers
      * @param $nostoAccount
      */
-    public function setNostoAccountHeader($nostoAccount) {
+    public function setNostoAccountHeader($nostoAccount)
+    {
         $this->addHeader(self::HEADER_NOSTO_ACCOUNT, $nostoAccount);
     }
 
@@ -275,7 +282,8 @@ class HttpRequest
      * Adds active domain to the headers
      * @param $activeDomain
      */
-    public function setActiveDomainHeader($activeDomain) {
+    public function setActiveDomainHeader($activeDomain)
+    {
         $this->addHeader(self::HEADER_ACTIVE_DOMAIN, $activeDomain);
     }
 
@@ -389,7 +397,7 @@ class HttpRequest
      */
     public function setPath($path)
     {
-        $this->setUrl(Nosto::getBaseURL() . $path);
+        $this->setUrl(Nosto::getBaseUrl() . $path);
     }
 
     /**
@@ -400,6 +408,22 @@ class HttpRequest
     public function setUrl($url)
     {
         $this->url = $url;
+    }
+
+    /**
+     * @param ResultHandler $resultHandler
+     */
+    public function setResultHandler(ResultHandler $resultHandler)
+    {
+        $this->resultHandler = $resultHandler;
+    }
+
+    /**
+     * @return ResultHandler
+     */
+    public function getResultHandler()
+    {
+        return $this->resultHandler;
     }
 
     /**

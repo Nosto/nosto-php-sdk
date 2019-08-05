@@ -34,59 +34,61 @@
  *
  */
 
-namespace Nosto\Result\Graphql;
+namespace Nosto\Util;
 
-use Nosto\Helper\ArrayHelper;
-use Nosto\NostoException;
-use Nosto\Operation\Recommendation\AbstractOperation;
 use Nosto\Request\Http\HttpResponse;
+use Nosto\Operation\AbstractOperation;
+use Nosto\Request\Http\Exception\HttpResponseException as ResponseException;
 
-/**
- * Builder / parser class for GraphQL result and response
- */
-class ResultSetBuilder
+class HttpResponseException
 {
     /**
-     * @param \stdClass $stdClass
-     * @return ResultSet
-     * @throws NostoException
+     * @param HttpResponse $httpResponse
+     * @throws ResponseException
      */
-    public static function buildProductArray(\stdClass $stdClass)
+    public static function handle(HttpResponse $httpResponse)
     {
-        $primaryData = self::parsePrimaryData($stdClass);
-
-        if ($primaryData === null) {
-            throw new NostoException('Could not find primary data field primary from response');
+        if ($httpResponse->getContentType() === AbstractOperation::CONTENT_TYPE_APPLICATION_JSON) {
+            self::handleJson($httpResponse);
         }
-
-        $resultSet = new ResultSet();
-        foreach ($primaryData as $primaryDataItem) {
-            if ($primaryDataItem instanceof \stdClass) {
-                $primaryDataItem = ArrayHelper::stdClassToArray($primaryDataItem);
-            }
-            $item = new ResultItem($primaryDataItem);
-            $resultSet->append($item);
-        }
-        return $resultSet;
+        throw new ResponseException('Something went wrong', $httpResponse->getCode());
     }
 
     /**
-     * Finds the primary data field from stdClass
-     *
-     * @param \stdClass $class
-     * @return null
+     * @param HttpResponse $httpResponse
+     * @throws ResponseException
      */
-    public static function parsePrimaryData(\stdClass $class)
+    private static function handleJson(HttpResponse $httpResponse)
     {
-        $members = get_object_vars($class);
-        foreach ($members as $varName => $member) {
-            if ($varName == AbstractOperation::GRAPHQL_DATA_KEY) {
-                return $member;
-            }
-            if ($member instanceof \stdClass) {
-                return self::parsePrimaryData($member);
+
+        $message = '';
+        $result = $httpResponse->getJsonResult();
+
+        if (isset($result->message)) {
+            $message .= $result->message;
+        }
+
+        if (isset($result->errors) && is_array($result->errors)) {
+            foreach ($result->errors as $error) {
+                if ($error instanceof \stdClass) {
+                    $message .= self::getErrorsFromStdClass($error);
+                }
             }
         }
-        return null;
+        throw new ResponseException($message);
+    }
+
+    /**
+     * @param \stdClass $errors
+     * @return string
+     */
+    private static function getErrorsFromStdClass(\stdClass $errors)
+    {
+        $errors = get_object_vars($errors);
+        $errorString = '';
+        foreach ($errors as $key => $error) {
+            $errorString .= ' | '. $key .': '.$error;
+        }
+        return $errorString;
     }
 }

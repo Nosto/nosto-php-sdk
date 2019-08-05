@@ -38,9 +38,8 @@ namespace Nosto\Operation\Order;
 
 use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Object\Order\GraphQL\OrderStatus as OrderStatusModel;
-use Nosto\Request\Http\HttpResponse;
+use Nosto\Result\Graphql\Order\OrderStatusResultHandler;
 use Nosto\Types\Signup\AccountInterface;
-use Nosto\Result\Graphql\Order\OrderResult;
 
 /**
  * Operation class for sending order status updates
@@ -63,6 +62,12 @@ class OrderStatus extends AbstractGraphQLOperation
         parent::__construct($account);
         $this->orderStatus = $orderStatus;
     }
+
+    protected function getResultHandler()
+    {
+        return new OrderStatusResultHandler();
+    }
+
 
     /**
      * @inheritdoc

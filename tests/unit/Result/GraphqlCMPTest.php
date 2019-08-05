@@ -39,7 +39,9 @@ namespace Nosto\Test\Unit\Result;
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Request\Http\HttpResponse;
-use Nosto\Result\Graphql\Result;
+use Nosto\Request\Http\HttpRequest;
+use Nosto\Result\Graphql\Recommendation\RecommendationResultHandler;
+use Nosto\Result\ResultHandler;
 
 class GraphqlCMPTest extends Test
 {
@@ -51,8 +53,10 @@ class GraphqlCMPTest extends Test
     public function testBuildingValidResultSet()
     {
         $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"primary":[{"productId":"558"},{"productId":"386"},{"productId":"414"},{"productId":"435"},{"productId":"399"},{"productId":"382"},{"productId":"867"},{"productId":"383"},{"productId":"560"},{"productId":"551"}]}}}}}';
-        $response = new HttpResponse([], $responseBody);
-        $resultSet = Result::parseResult($response);
+        $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
+        $request = new HttpRequest();
+        $request->setResultHandler(new RecommendationResultHandler());
+        $resultSet = $request->getResultHandler()->parse($response);
 
         $this->specify('result set parsed', function () use ($resultSet) {
             $this->assertEquals($resultSet->count(), 10);
@@ -65,9 +69,10 @@ class GraphqlCMPTest extends Test
     public function testBuildingValidResultSetWithNestedArray()
     {
         $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"primary":[{"productId":"558", "categories":["Men/Stuff", "Men/Summer"]}]}}}}}';
-        $response = new HttpResponse([], $responseBody);
-        $resultSet = Result::parseResult($response);
-
+        $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
+        $request = new HttpRequest();
+        $request->setResultHandler(new RecommendationResultHandler());
+        $resultSet = $request->getResultHandler()->parse($response);
         $this->specify('nested array parsing failed', function () use ($resultSet) {
             $this->assertEquals($resultSet->count(), 1);
             foreach ($resultSet as $item) {
@@ -83,8 +88,10 @@ class GraphqlCMPTest extends Test
     public function testBuildingValidResultSetWithNestedObject()
     {
         $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"primary":[{"productId":"558", "categories":["Men/Stuff", "Men/Summer"], "customObject":{"id":1, "name":"test object"}}]}}}}}';
-        $response = new HttpResponse([], $responseBody);
-        $resultSet = Result::parseResult($response);
+        $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
+        $request = new HttpRequest();
+        $request->setResultHandler(new RecommendationResultHandler());
+        $resultSet = $request->getResultHandler()->parse($response);
 
         $this->specify('nested object failed', function () use ($resultSet) {
             $this->assertEquals($resultSet->count(), 1);
@@ -101,11 +108,13 @@ class GraphqlCMPTest extends Test
     public function testBuildingMissingPrimary()
     {
         $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"nonprimary":[{"productId":"558"},{"productId":"386"},{"productId":"414"},{"productId":"435"},{"productId":"399"},{"productId":"382"},{"productId":"867"},{"productId":"383"},{"productId":"560"},{"productId":"551"}]}}}}}';
-        $response = new HttpResponse([], $responseBody);
+        $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
+        $request = new HttpRequest();
+        $request->setResultHandler(new RecommendationResultHandler());
 
-        $this->specify('result does not contain primary field', function () use ($response) {
+        $this->specify('result does not contain primary field', function () use ($request,$response) {
             try {
-                Result::parseResult($response);
+                $request->getResultHandler()->parse($response);
                 $this->fail('No exception was thrown');
             } catch (\Exception $e) {
                 $this->assertEquals($e->getMessage(), 'Could not find primary data field primary from response');

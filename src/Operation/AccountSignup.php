@@ -40,6 +40,7 @@ use Nosto\NostoException;
 use Nosto\Object\Signup\Account;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
+use Nosto\Result\Api\JsonResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\Types\Signup\SignupInterface;
 
@@ -76,15 +77,23 @@ class AccountSignup extends AbstractRESTOperation
         $request = $this->initRequest($this->account->getSignUpApiToken());
         $request->setReplaceParams(array('{lang}' => $this->account->getLanguageCode()));
         $response = $request->post($this->account);
-        self::checkResponse($request, $response);
+        $results = $request->getResultHandler()->parse($response);
 
         $account = new Account($this->account->getPlatform() . '-' . $this->account->getName());
         $account->setTokens(Token::parseTokens(
-            $response->getJsonResult(true),
+            $results,
             '',
             '_token'
         ));
         return $account;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return new JsonResultHandler();
     }
 
     /**

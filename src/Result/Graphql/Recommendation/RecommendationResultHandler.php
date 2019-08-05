@@ -34,22 +34,51 @@
  *
  */
 
-namespace Nosto\Result\Graphql;
+namespace Nosto\Result\Graphql\Recommendation;
 
-use Nosto\Object\AbstractCollection;
+use Nosto\Result\Graphql\GraphQLResultHandler;
+use Nosto\Helper\ArrayHelper;
+use Nosto\NostoException;
+use Nosto\Operation\Recommendation\AbstractOperation;
 
-/**
- * Collection for GraphQL result
- */
-class ResultSet extends AbstractCollection
+final class RecommendationResultHandler extends GraphQLResultHandler
 {
     /**
-     * Appends a result item into the collection
-     *
-     * @param ResultItem $item
+     * @inheritdoc
      */
-    public function append(ResultItem $item)
+    protected function parseQueryResult(\stdClass $stdClass)
     {
-        $this->var[] = $item;
+        $primaryData = self::parsePrimaryData($stdClass);
+
+        $resultSet = new ResultSet();
+        foreach ($primaryData as $primaryDataItem) {
+            if ($primaryDataItem instanceof \stdClass) {
+                $primaryDataItem = ArrayHelper::stdClassToArray($primaryDataItem);
+            }
+            $item = new ResultItem($primaryDataItem);
+            $resultSet->append($item);
+        }
+        return $resultSet;
+    }
+
+    /**
+     * Finds the primary data field from stdClass
+     * @param \stdClass $class
+     * @return array
+     * @throws NostoException
+     */
+    public static function parsePrimaryData(\stdClass $class)
+    {
+        $members = get_object_vars($class);
+        foreach ($members as $varName => $member) {
+            if ($varName === AbstractOperation::GRAPHQL_DATA_KEY) {
+                return $member;
+            }
+            if ($member instanceof \stdClass) {
+                return self::parsePrimaryData($member);
+            }
+        }
+
+        throw new NostoException('Could not find primary data field primary from response');
     }
 }

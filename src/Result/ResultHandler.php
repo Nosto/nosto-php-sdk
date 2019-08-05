@@ -34,82 +34,36 @@
  *
  */
 
-namespace Nosto\Operation;
+namespace Nosto\Result;
 
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Result\Api\GeneralPurposeResultHandler;
-use Nosto\Types\Signup\AccountInterface;
 use Nosto\NostoException;
+use Nosto\Request\Http\HttpResponse;
+use Nosto\Request\Http\Exception\HttpResponseException;
+use Nosto\Result\Graphql\Recommendation\ResultSet;
+use Nosto\Util\HttpResponseException as ExceptionHandler;
 
-/**
- * Operation class for updated customer's marketing permission
- */
-class MarketingPermission extends AbstractAuthenticatedOperation
+abstract class ResultHandler
 {
-    /**
-     * MarketingPermission constructor.
-     * @param AccountInterface $account
-     * @param string $activeDomain
-     */
-    public function __construct(AccountInterface $account, $activeDomain = '')
-    {
-        parent::__construct($account, $activeDomain);
-    }
 
     /**
-     * Update customer marketing permission
-     *
-     * @param $email
-     * @param $hasPermission
-     * @return mixed|null
+     * @param HttpResponse $response
+     * @return string|array|ResultSet|bool
+     * @throws HttpResponseException
      * @throws NostoException
      */
-    public function update($email, $hasPermission)
+    public function parse(HttpResponse $response)
     {
-        $request = $this->initRequest(
-            $this->account->getApiToken(Token::API_EMAIL),
-            $this->account->getName(),
-            $this->activeDomain
-        );
+        if ($response->getCode() !== 200) {
+            ExceptionHandler::handle($response);
+        }
 
-        $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
-        $request->setReplaceParams($replaceParams);
-        $response = $request->postRaw('');
-
-        return $request->getResultHandler()->parse($response);
+        return $this->parseResponse($response);
     }
 
     /**
-     * @inheritdoc
+     * @param HttpResponse $response
+     * @throws NostoException
+     * @return string|bool
      */
-    protected function getResultHandler()
-    {
-        return new GeneralPurposeResultHandler();
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    protected function getRequestType()
-    {
-        return new ApiRequest();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getContentType()
-    {
-        return self::CONTENT_TYPE_APPLICATION_JSON;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getPath()
-    {
-        return ApiRequest::PATH_MARKETING_PERMISSION;
-    }
+    abstract protected function parseResponse(HttpResponse $response);
 }

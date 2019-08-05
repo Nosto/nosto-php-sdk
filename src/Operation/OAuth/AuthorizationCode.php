@@ -41,13 +41,14 @@ use Nosto\NostoException;
 use Nosto\Object\NostoOAuthToken;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Types\OAuthInterface;
-use Nosto\Exception\Builder as ExceptionBuilder;
+use Nosto\Operation\AbstractOperation;
+use Nosto\Result\Api\JsonResultHandler;
 
 /**
  * Helper class for doing OAuth2 authorization with Nosto.
  * The client implements the 'Authorization Code' grant type.
  */
-class AuthorizationCode
+class AuthorizationCode extends AbstractOperation
 {
     const PATH_TOKEN = '/token?code={cod}&client_id={cid}&client_secret={sec}&redirect_uri={uri}&grant_type=authorization_code'; // @codingStandardsIgnoreLine
 
@@ -101,7 +102,7 @@ class AuthorizationCode
             throw new NostoException('Invalid authentication token');
         }
 
-        $request = new HttpRequest();
+        $request = $this->initRequest(null, null, null, false);
         $request->setUrl(Nosto::getOAuthBaseUrl() . self::PATH_TOKEN);
         $request->setReplaceParams(
             array(
@@ -112,11 +113,8 @@ class AuthorizationCode
             )
         );
         $response = $request->get();
-        $result = $response->getJsonResult(true);
+        $result = $request->getResultHandler()->parse($response);
 
-        if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
-        }
         if (empty($result['access_token'])) {
             throw new NostoException('No "access_token" returned after authenticating with code');
         }
@@ -126,4 +124,37 @@ class AuthorizationCode
 
         return NostoOAuthToken::create($result);
     }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new HttpRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getContentType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return self::PATH_TOKEN;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return new JsonResultHandler();
+    }
+
 }

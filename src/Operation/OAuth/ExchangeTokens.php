@@ -42,9 +42,9 @@ use Nosto\Object\Signup\Account;
 use Nosto\Operation\AbstractOperation;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\HttpRequest;
+use Nosto\Result\Api\JsonResultHandler;
 use Nosto\Types\OAuthInterface;
 use Nosto\Types\Signup\AccountInterface;
-use Nosto\Exception\Builder as ExceptionBuilder;
 
 /**
  * Handles exchanging the authorization token for the API tokes from Nosto
@@ -76,19 +76,23 @@ class ExchangeTokens extends AbstractOperation
      */
     public function exchange(NostoOAuthToken $token)
     {
-        $request = new HttpRequest();
-        $request->setContentType(self::CONTENT_TYPE_URL_FORM_ENCODED);
-        $request->setPath(HttpRequest::PATH_OAUTH_SYNC);
+        $request = $this->initRequest(null, null, null, false);
         $request->setQueryParams(array('access_token' => $token->getAccessToken()));
         $response = $request->get();
-        if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
-        }
+        $results = $request->getResultHandler()->parse($response);
 
-        $tokens = Token::parseTokens($response->getJsonResult(true), 'api_');
+        $tokens = Token::parseTokens($results, 'api_');
         $account = new Account($token->getMerchantName());
         $account->setTokens($tokens);
         return $account;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return new JsonResultHandler();
     }
 
     /**

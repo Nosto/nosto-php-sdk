@@ -39,12 +39,9 @@ namespace Nosto\Operation;
 use Nosto\NostoException;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
-use Nosto\Exception\Builder as ExceptionBuilder;
 use Nosto\Request\Http\Exception\HttpResponseException;
 use Nosto\Request\Graphql\GraphqlRequest;
-use Nosto\Request\Http\HttpResponse;
 use Nosto\Operation\GraphQLRequest as GraphQLQuery;
-use Nosto\Result\Graphql\Result;
 use Nosto\Types\Signup\AccountInterface;
 
 abstract class AbstractGraphQLOperation extends AbstractOperation
@@ -82,7 +79,11 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
      */
     public function execute()
     {
-        $request = $this->initRequest($this->account->getApiToken(Token::API_GRAPHQL));
+        $request = $this->initRequest(
+            $this->account->getApiToken(Token::API_GRAPHQL),
+            null,
+            null
+        );
         $payload = new GraphQLQuery(
             $this->getQuery(),
             $this->getVariables()
@@ -91,11 +92,8 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
         $response = $request->postRaw(
             $payload
         );
-        if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
-        }
 
-        return Result::parseResult($response);
+        return $request->getResultHandler()->parse($response);
     }
 
     /**
@@ -133,6 +131,5 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
     {
         return GraphqlRequest::PATH_GRAPH_QL;
     }
-
 
 }

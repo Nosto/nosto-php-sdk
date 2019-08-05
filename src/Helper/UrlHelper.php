@@ -38,7 +38,6 @@ namespace Nosto\Helper;
 
 use Nosto\NostoException;
 
-
 class UrlHelper extends AbstractHelper
 {
 

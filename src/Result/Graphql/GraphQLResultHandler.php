@@ -38,86 +38,75 @@ namespace Nosto\Result\Graphql;
 
 use Nosto\NostoException;
 use Nosto\Request\Http\HttpResponse;
-use Nosto\Result\Graphql\Order\OrderResult;
-use Nosto\Result\Graphql\ResultSetBuilder;
+use Nosto\Result\ResultHandler;
 
-class Result
+abstract class GraphQLResultHandler extends ResultHandler
 {
     const GRAPHQL_RESPONSE_ERROR = 'errors';
-    const GRAPHQL_RESPONSE_SUCCESS = 'data';
-    const GRAPHQL_RESPONSE_ORDER_UPDATE = 'updateStatus';
-    const GRAPHQL_CMP_RESPONSE = 'updateSession';
-    const GRAPHQL_RESPONSE_ORDER_CREATE = 'placeOrder';
-
+    const GRAPHQL_RESPONSE_DATA = 'data';
 
     /**
-     * @param HttpResponse $response
-     * @return mixed|null
-     * @throws NostoException
+     * @inheritdoc
      */
-    public static function parseResult(HttpResponse $response)
+    protected function parseResponse(HttpResponse $response)
     {
         $result = json_decode($response->getResult());
-        $members = get_object_vars($result);
 
-        //Check for errors
-        if (array_key_exists(self::GRAPHQL_RESPONSE_ERROR, $members)) {
-            foreach ($members as $varName => $member)
-            {
-                if ($varName === self::GRAPHQL_RESPONSE_ERROR && count($member) > 0) {
-                    self::parseErrorMessage($member);
-                }
-            }
-            return null;
+        if ($this->hasErrors($result)) {
+            $error = $this->parseErrorMessage($result->errors);
+            throw new NostoException($error);
         }
 
-        //Parse results
-        foreach ($members as $varName => $member)
-        {
-            if ($varName === self::GRAPHQL_RESPONSE_SUCCESS) {
-                return self::parseSuccessResponse($member);
-            }
+        if ($this->hasData($result)) {
+            return $this->parseQueryResult($result->data);
         }
-        return null;
-    }
 
-    /**
-     * @param array $errors
-     * @throws NostoException
-     */
-    public static function parseErrorMessage(array $errors)
-    {
-        if (count($errors) > 0) {
-            $message = $errors[0]->message;
-            throw new NostoException($message);
-        }
+        throw new NostoException('No data found in GraphQL result');
     }
 
     /**
      * @param \stdClass $stdClass
-     * @return ResultSet|null|string
-     * @throws NostoException
+     * @return bool
      */
-    public static function parseSuccessResponse(\stdClass $stdClass)
+    private function hasErrors(\stdClass $stdClass)
     {
         $members = get_object_vars($stdClass);
-        foreach ($members as $varName => $member) {
-
-            //Order related queries
-            if ($varName === self::GRAPHQL_RESPONSE_ORDER_CREATE ||
-                $varName === self::GRAPHQL_RESPONSE_ORDER_UPDATE) {
-                return OrderResult::parseSuccessMessage($member);
-            }
-
-            //CMP related queries
-            if ($varName === self::GRAPHQL_CMP_RESPONSE) {
-                return ResultSetBuilder::buildProductArray($member);
-            }
-
-            if ($member instanceof \stdClass) {
-                return self::parseSuccessResponse($member);
-            }
+        if (array_key_exists(self::GRAPHQL_RESPONSE_ERROR, $members)) {
+            return true;
         }
-        return null;
+        return false;
     }
+
+    /**
+     * @param \stdClass $stdClass
+     * @return bool
+     */
+    private function hasData(\stdClass $stdClass)
+    {
+        $members = get_object_vars($stdClass);
+        if (array_key_exists(self::GRAPHQL_RESPONSE_DATA, $members)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param array $errors
+     * @return string
+     */
+    private function parseErrorMessage(array $errors)
+    {
+        $errorMessage = '';
+        foreach ($errors as $error) {
+            $errorMessage .= $error->message.' | ';
+        }
+        return $errorMessage;
+    }
+
+    /**
+     * @param \stdClass $stdClass
+     * @throws NostoException
+     * @return mixed
+     */
+    abstract protected function parseQueryResult(\stdClass $stdClass);
 }

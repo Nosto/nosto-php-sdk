@@ -44,7 +44,6 @@ class MockSettings extends Settings
 
     public function __construct()
     {
-        parent::__construct();
         $this->setTitle('My Shop');
         $this->setFrontPageUrl('http://localhost');
         $this->setCurrencyCode('USD');
