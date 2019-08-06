@@ -41,7 +41,7 @@ use Codeception\TestCase\Test;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Result\Graphql\Recommendation\RecommendationResultHandler;
-use Nosto\Result\ResultHandler;
+use Nosto\Result\Graphql\Recommendation\CategoryMerchandisingResult;
 
 class GraphqlCMPTest extends Test
 {
@@ -52,60 +52,39 @@ class GraphqlCMPTest extends Test
      */
     public function testBuildingValidResultSet()
     {
-        $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"primary":[{"productId":"558"},{"productId":"386"},{"productId":"414"},{"productId":"435"},{"productId":"399"},{"productId":"382"},{"productId":"867"},{"productId":"383"},{"productId":"560"},{"productId":"551"}]}}}}}';
+        $responseBody = '{ "data": { "updateSession": { "id": "5d481e38c10ea0f265eb2f5c", "recos": { "category": { "primary": [ { "productId": "276", "priceText": "€42.00", "name": "Beaumont Summit Kit", "imageUrl": "https://nailgun.dev.nos.to/quick/magento-e4fde459/10/276/09896ff88fcd5bdfc3b2104fb2e3b20982e232d3d102d3087eea57004b6de40ba/A", "url": "http://magento2.dev.nos.to/beaumont-summit-kit.html" }, { "productId": "292", "priceText": "€51.00", "name": "Hyperion Elements Jacket", "imageUrl": "https://nailgun.dev.nos.to/quick/magento-e4fde459/10/292/84065088529bf50501c637a95ad2062d0e0bb4f3061df11b4b2448c26cd32cb9a/A", "url": "http://magento2.dev.nos.to/hyperion-elements-jacket.html" } ], "batchToken": "n2MyOTL7AAAAAAAAAAD/", "totalPrimaryCount": 10, "resultId": "graphql" } } } } }';
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
         $request->setResultHandler(new RecommendationResultHandler());
+        /** @var CategoryMerchandisingResult $resultSet */
         $resultSet = $request->getResultHandler()->parse($response);
 
         $this->specify('result set parsed', function () use ($resultSet) {
-            $this->assertEquals($resultSet->count(), 10);
+            $this->assertEquals($resultSet->getResultSet()->count(), 2);
         });
     }
 
     /**
-     * Tests that valid result set with nested arrays can be built
+     * Tests that a valid result set can be built
      */
-    public function testBuildingValidResultSetWithNestedArray()
+    public function testBuildingValidResultId()
     {
-        $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"primary":[{"productId":"558", "categories":["Men/Stuff", "Men/Summer"]}]}}}}}';
+        $responseBody = '{ "data": { "updateSession": { "id": "5d481e38c10ea0f265eb2f5c", "recos": { "category": { "primary": [ { "productId": "276", "priceText": "€42.00", "name": "Beaumont Summit Kit", "imageUrl": "https://nailgun.dev.nos.to/quick/magento-e4fde459/10/276/09896ff88fcd5bdfc3b2104fb2e3b20982e232d3d102d3087eea57004b6de40ba/A", "url": "http://magento2.dev.nos.to/beaumont-summit-kit.html" }, { "productId": "292", "priceText": "€51.00", "name": "Hyperion Elements Jacket", "imageUrl": "https://nailgun.dev.nos.to/quick/magento-e4fde459/10/292/84065088529bf50501c637a95ad2062d0e0bb4f3061df11b4b2448c26cd32cb9a/A", "url": "http://magento2.dev.nos.to/hyperion-elements-jacket.html" } ], "batchToken": "n2MyOTL7AAAAAAAAAAD/", "totalPrimaryCount": 10, "resultId": "graphql" } } } } }';
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
         $request->setResultHandler(new RecommendationResultHandler());
-        $resultSet = $request->getResultHandler()->parse($response);
-        $this->specify('nested array parsing failed', function () use ($resultSet) {
-            $this->assertEquals($resultSet->count(), 1);
-            foreach ($resultSet as $item) {
-                $categories = $item->getCategories();
-                $this->assertInternalType('array', $categories);
-            }
-        });
-    }
-
-    /**
-     * Tests that valid result set with nested objects can be built
-     */
-    public function testBuildingValidResultSetWithNestedObject()
-    {
-        $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"primary":[{"productId":"558", "categories":["Men/Stuff", "Men/Summer"], "customObject":{"id":1, "name":"test object"}}]}}}}}';
-        $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
-        $request = new HttpRequest();
-        $request->setResultHandler(new RecommendationResultHandler());
+        /** @var CategoryMerchandisingResult $resultSet */
         $resultSet = $request->getResultHandler()->parse($response);
 
-        $this->specify('nested object failed', function () use ($resultSet) {
-            $this->assertEquals($resultSet->count(), 1);
-            foreach ($resultSet as $item) {
-                $object = $item->getCustomObject();
-                $this->assertInternalType('array', $object);
-            }
+        $this->specify('result set parsed', function () use ($resultSet) {
+            $this->assertEquals($resultSet->getTrackingCode(), 'graphql');
         });
     }
 
     /**
      * Tests exception is thrown for invalid payload
      */
-    public function testBuildingMissingPrimary()
+    public function testBuildingMissingCategory()
     {
         $responseBody = '{"data":{"updateSession":{"recos":{"category_ids":{"nonprimary":[{"productId":"558"},{"productId":"386"},{"productId":"414"},{"productId":"435"},{"productId":"399"},{"productId":"382"},{"productId":"867"},{"productId":"383"},{"productId":"560"},{"productId":"551"}]}}}}}';
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
@@ -117,7 +96,27 @@ class GraphqlCMPTest extends Test
                 $request->getResultHandler()->parse($response);
                 $this->fail('No exception was thrown');
             } catch (\Exception $e) {
-                $this->assertEquals($e->getMessage(), 'Could not find primary data field primary from response');
+                $this->assertEquals($e->getMessage(), 'Could not find field for category data from response');
+            }
+        });
+    }
+
+    /**
+     * Tests exception is thrown for invalid payload
+     */
+    public function testBuildingMissingPrimary()
+    {
+        $responseBody = '{ "data": { "updateSession": { "id": "5d481e38c10ea0f265eb2f5c", "recos": { "category": { "batchToken": "n2MyOTL7AAAAAAAAAAD/", "totalPrimaryCount": 10, "resultId": "graphql" } } } } }';
+        $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
+        $request = new HttpRequest();
+        $request->setResultHandler(new RecommendationResultHandler());
+
+        $this->specify('result does not contain primary field', function () use ($request,$response) {
+            try {
+                $request->getResultHandler()->parse($response);
+                $this->fail('No exception was thrown');
+            } catch (\Exception $e) {
+                $this->assertEquals($e->getMessage(), 'Could not find field for primary data from response');
             }
         });
     }
