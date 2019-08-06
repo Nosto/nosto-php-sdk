@@ -43,12 +43,30 @@ use Nosto\Operation\Recommendation\AbstractCategoryMerchandising;
 
 class RecommendationResultHandler extends GraphQLResultHandler
 {
+    const GRAPHQL_DATA_PRIMARY = 'primary';
+    const GRAPHQL_DATA_CATEGORY = 'category';
+    const GRAPHQL_DATA_RESULT_ID = 'resultId';
+
     /**
      * @inheritdoc
      */
     protected function parseQueryResult(\stdClass $stdClass)
     {
-        $primaryData = self::parsePrimaryData($stdClass);
+        $categoryData = self::parseData($stdClass, self::GRAPHQL_DATA_CATEGORY);
+
+        $resultSet = self::buildResultSet($categoryData);
+        $trackingCode = self::parseData($categoryData, self::GRAPHQL_DATA_RESULT_ID);
+        return new CategoryMerchandisingResult($resultSet, $trackingCode);
+    }
+
+    /**
+     * @param \stdClass $stdClass
+     * @return ResultSet
+     * @throws NostoException
+     */
+    private static function buildResultSet(\stdClass $stdClass)
+    {
+        $primaryData = self::parseData($stdClass, self::GRAPHQL_DATA_PRIMARY);
 
         $resultSet = new ResultSet();
         foreach ($primaryData as $primaryDataItem) {
@@ -62,23 +80,22 @@ class RecommendationResultHandler extends GraphQLResultHandler
     }
 
     /**
-     * Finds the primary data field from stdClass
-     * @param \stdClass $class
-     * @return array
+     * @param \stdClass $stdClass
+     * @param string $dataType
+     * @return \stdClass|array
      * @throws NostoException
      */
-    public static function parsePrimaryData(\stdClass $class)
+    private static function parseData(\stdClass $stdClass, $dataType)
     {
-        $members = get_object_vars($class);
+        $members = get_object_vars($stdClass);
         foreach ($members as $varName => $member) {
-            if ($varName === AbstractCategoryMerchandising::GRAPHQL_DATA_KEY) {
+            if ($varName === $dataType) {
                 return $member;
             }
             if ($member instanceof \stdClass) {
-                return self::parsePrimaryData($member);
+                return self::parseData($member, $dataType);
             }
         }
-
-        throw new NostoException('Could not find primary data field primary from response');
+        throw new NostoException('Could not find field for ' . $dataType . ' data from response');
     }
 }

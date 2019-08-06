@@ -45,7 +45,6 @@ use Nosto\Types\Signup\AccountInterface;
  */
 abstract class AbstractCategoryMerchandising extends AbstractGraphQLOperation
 {
-    const GRAPHQL_DATA_KEY = 'primary';
     const LIMIT = 10;
 
     /** @var bool $previewMode */
