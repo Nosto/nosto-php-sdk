@@ -39,7 +39,6 @@ namespace Nosto\Result\Graphql\Recommendation;
 use Nosto\Result\Graphql\GraphQLResultHandler;
 use Nosto\Helper\ArrayHelper;
 use Nosto\NostoException;
-use Nosto\Operation\Recommendation\AbstractCategoryMerchandising;
 
 class RecommendationResultHandler extends GraphQLResultHandler
 {
@@ -52,10 +51,12 @@ class RecommendationResultHandler extends GraphQLResultHandler
      */
     protected function parseQueryResult(\stdClass $stdClass)
     {
+        /** @var \stdClass $categoryData */
         $categoryData = self::parseData($stdClass, self::GRAPHQL_DATA_CATEGORY);
 
-        $resultSet = self::buildResultSet($categoryData);
+        /** @var string $trackingCode */
         $trackingCode = self::parseData($categoryData, self::GRAPHQL_DATA_RESULT_ID);
+        $resultSet = self::buildResultSet($categoryData);
         return new CategoryMerchandisingResult($resultSet, $trackingCode);
     }
 
@@ -82,7 +83,7 @@ class RecommendationResultHandler extends GraphQLResultHandler
     /**
      * @param \stdClass $stdClass
      * @param string $dataType
-     * @return \stdClass|array
+     * @return string|\stdClass|array
      * @throws NostoException
      */
     private static function parseData(\stdClass $stdClass, $dataType)
