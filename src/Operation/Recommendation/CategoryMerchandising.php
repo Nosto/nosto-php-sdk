@@ -36,29 +36,69 @@
 
 namespace Nosto\Operation\Recommendation;
 
-use Nosto\Types\Signup\AccountInterface;
-
-/**
- * Abstract operation class for getting history related recommendations
- */
-abstract class AbstractHistory extends AbstractOperation
+class CategoryMerchandising extends AbstractCategoryMerchandising
 {
-    const DEFAULT_LIMIT = 10;
+    /**
+     * @inheritdoc
+     */
+    public function getQuery()
+    {
+        $query =
+            <<<QUERY
+        mutation(
+            \$customerId: String!,
+            \$category: String!,
+            \$limit: Int!,
+            \$preview: Boolean!,
+            \$by: LookupParams!
+        ) {
+          updateSession (
+            id: \$customerId,
+              by: \$by,
+              params: {
+              event: {
+                type: VIEWED_CATEGORY
+                target: \$category
+              }
+            }) {
+            id
+            recos (preview: \$preview, image: VERSION_10_MAX_SQUARE) {
+              category (params: {
+                minProducts: 1
+                maxProducts: \$limit
+              }) {
+                primary {
+                  productId
+                  priceText
+                  name
+                  imageUrl
+                  url
+                }
+                batchToken
+                totalPrimaryCount
+                resultId
+              }
+            }
+          }
+        }
+QUERY;
+
+        return $query;
+    }
 
     /**
-     * Category constructor
-     *
-     * @param AccountInterface $account
-     * @param string $customerId
-     * @param int $limit
+     * @inheritdoc
      */
-    public function __construct(
-        AccountInterface $account,
-        $customerId,
-        $limit = self::DEFAULT_LIMIT
-    ) {
-        parent::__construct($account);
-        $this->setCustomerId($customerId);
-        $this->setLimit($limit);
+    public function getVariables()
+    {
+        $variables = [
+            'customerId' => $this->customerId,
+            'category' => $this->category,
+            'limit' => $this->limit,
+            'preview' => $this->limit,
+            'by' => $this->customerBy
+        ];
+
+        return $variables;
     }
 }

@@ -39,7 +39,7 @@ namespace Nosto\Result\Graphql\Recommendation;
 use Nosto\Result\Graphql\GraphQLResultHandler;
 use Nosto\Helper\ArrayHelper;
 use Nosto\NostoException;
-use Nosto\Operation\Recommendation\AbstractOperation;
+use Nosto\Operation\Recommendation\AbstractCategoryMerchandising;
 
 final class RecommendationResultHandler extends GraphQLResultHandler
 {
@@ -71,7 +71,7 @@ final class RecommendationResultHandler extends GraphQLResultHandler
     {
         $members = get_object_vars($class);
         foreach ($members as $varName => $member) {
-            if ($varName === AbstractOperation::GRAPHQL_DATA_KEY) {
+            if ($varName === AbstractCategoryMerchandising::GRAPHQL_DATA_KEY) {
                 return $member;
             }
             if ($member instanceof \stdClass) {

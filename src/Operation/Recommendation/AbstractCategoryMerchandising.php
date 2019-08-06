@@ -36,75 +36,82 @@
 
 namespace Nosto\Operation\Recommendation;
 
+use Nosto\Operation\AbstractGraphQLOperation;
+use Nosto\Result\Graphql\Recommendation\RecommendationResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 
 /**
- * Abstract operation class for getting top list related recommendations
+ * Abstract base operation class to be used in recommendation related operations
  */
-abstract class AbstractTopList extends AbstractOperation
+abstract class AbstractCategoryMerchandising extends AbstractGraphQLOperation
 {
-    const DEFAULT_LIMIT = 10;
-    const DEFAULT_HOURS = 168;
-    const DEFAULT_SORT = 'VIEWS';
-    const SORT_VIEWS = 'VIEWS';
-    const SORT_BUYS = 'BUYS';
+    const GRAPHQL_DATA_KEY = 'primary';
+    const LIMIT = 10;
 
-    private $sort;
-    private $hours;
+    /** @var bool $previewMode */
+    protected $previewMode;
+
+    /** @var string $customerId */
+    protected $customerId;
+
+    /** @var string $customerBy */
+    protected $customerBy;
+
+    /** @var int $limit */
+    protected $limit;
+
+    /** @var string $category */
+    protected $category;
 
     /**
-     * Category constructor
-     *
+     * AbstractOperation constructor.
      * @param AccountInterface $account
-     * @param string $customerId
+     * @param $customerId
+     * @param $category
+     * @param string $activeDomain
+     * @param string $customerBy
      * @param int $limit
-     * @param int $hours
-     * @param string $sort
+     * @param bool $previewMode
      */
     public function __construct(
         AccountInterface $account,
         $customerId,
-        $limit = self::DEFAULT_LIMIT,
-        $hours = self::DEFAULT_HOURS,
-        $sort = self::DEFAULT_SORT
+        $category,
+        $activeDomain,
+        $customerBy,
+        $limit,
+        $previewMode
     ) {
-        parent::__construct($account);
-        $this->setCustomerId($customerId);
-        $this->setLimit($limit);
-        $this->setLimit($limit);
-        $this->setHours($hours);
-        $this->setSort($sort);
+        $this->limit = $limit;
+        $this->customerBy = $customerBy;
+        $this->customerId = $customerId;
+        $this->previewMode = $previewMode;
+        $this->category = $category;
+        parent::__construct($account, $activeDomain);
+    }
+
+
+    /**
+     * Returns if recos should use preview mode. You can set asString to
+     * true and when the method returns true or false as a string. This is
+     * needed for constructing the query.
+     *
+     * @param bool $asString
+     * @return bool|string
+     */
+    public function isPreviewMode($asString = false)
+    {
+        if ($asString) {
+            return $this->previewMode ? 'true' : 'false';
+        }
+        return $this->previewMode;
     }
 
     /**
-     * @return mixed
+     * @inheritdoc
      */
-    public function getSort()
+    protected function getResultHandler()
     {
-        return $this->sort;
-    }
-
-    /**
-     * @param mixed $sort
-     */
-    public function setSort($sort)
-    {
-        $this->sort = $sort;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getHours()
-    {
-        return $this->hours;
-    }
-
-    /**
-     * @param mixed $hours
-     */
-    public function setHours($hours)
-    {
-        $this->hours = $hours;
+        return new RecommendationResultHandler();
     }
 }
