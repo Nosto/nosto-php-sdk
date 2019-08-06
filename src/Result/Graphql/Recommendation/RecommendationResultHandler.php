@@ -41,7 +41,7 @@ use Nosto\Helper\ArrayHelper;
 use Nosto\NostoException;
 use Nosto\Operation\Recommendation\AbstractCategoryMerchandising;
 
-final class RecommendationResultHandler extends GraphQLResultHandler
+class RecommendationResultHandler extends GraphQLResultHandler
 {
     /**
      * @inheritdoc

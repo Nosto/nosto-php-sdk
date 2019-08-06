@@ -39,7 +39,7 @@ namespace Nosto\Result\Graphql\Order;
 use Nosto\NostoException;
 use Nosto\Result\Graphql\GraphQLResultHandler;
 
-final class OrderStatusResultHandler extends GraphQLResultHandler
+class OrderStatusResultHandler extends GraphQLResultHandler
 {
     const GRAPHQL_ORDER_NR = 'number';
 
