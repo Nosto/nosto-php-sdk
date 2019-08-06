@@ -40,6 +40,8 @@ use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Request\Http\HttpRequest;
+use Nosto\Result\Api\GeneralPurposeResultHandler;
 use Nosto\Types\UserInterface;
 
 /**
@@ -59,9 +61,40 @@ class UninstallAccount extends AbstractAuthenticatedOperation
      */
     public function delete(UserInterface $currentUser)
     {
-        $request = $this->initHttpRequest($this->account->getApiToken(Token::API_SSO));
-        $request->setPath(ApiRequest::PATH_ACCOUNT_DELETED);
+        $request = $this->initRequest($this->account->getApiToken(Token::API_SSO));
         $response = $request->post($currentUser);
-        return $this->checkResponse($request, $response);
+        return $request->getResultHandler()->parse($response);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return new GeneralPurposeResultHandler();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new HttpRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getContentType()
+    {
+        return self::CONTENT_TYPE_URL_FORM_ENCODED;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return ApiRequest::PATH_ACCOUNT_DELETED;
     }
 }

@@ -37,9 +37,11 @@
 namespace Nosto\Operation;
 
 use Nosto\Helper\SerializationHelper;
+use Nosto\NostoException;
 use Nosto\Object\Event\Cart\Update;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Result\Api\GeneralPurposeResultHandler;
 
 class CartOperation extends AbstractAuthenticatedOperation
 {
@@ -51,12 +53,16 @@ class CartOperation extends AbstractAuthenticatedOperation
      * @param string $accountId merchange id
      * @return bool if the request was successful.
      * @throws AbstractHttpException
+     * @throws NostoException
      */
     public function updateCart(Update $update, $nostoCustomerId, $accountId)
     {
-        $request = new ApiRequest();
-        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
-        $request->setPath(ApiRequest::PATH_CART_UPDATE);
+        $request = $this->initRequest(
+            null,
+            null,
+            null,
+            false
+        );
         $channelName = 'cartUpdated/' . $accountId . '/' . $nostoCustomerId;
         $data = array();
         $item = array();
@@ -66,6 +72,38 @@ class CartOperation extends AbstractAuthenticatedOperation
         $updateJson = json_encode($data);
         $response = $request->postRaw($updateJson);
 
-        return $this->checkResponse($request, $response);
+        return $request->getResultHandler()->parse($response);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return new GeneralPurposeResultHandler();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new ApiRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getContentType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return ApiRequest::PATH_CART_UPDATE;
     }
 }

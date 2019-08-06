@@ -36,91 +36,19 @@
 
 namespace Nosto\Operation\Recommendation;
 
-use Nosto\Nosto;
-use Nosto\NostoException;
-use Nosto\Operation\AbstractAuthenticatedOperation;
-use Nosto\Request\Graphql\GraphqlRequest;
-use Nosto\Request\Http\Exception\AbstractHttpException;
-use Nosto\Request\Api\Token;
-use Nosto\Request\Http\Exception\HttpResponseException;
-use Nosto\Result\Graphql\ResultSet;
-use Nosto\Result\Graphql\ResultSetBuilder;
-use Nosto\Exception\Builder as ExceptionBuilder;
+use Nosto\Operation\AbstractGraphQLOperation;
+use Nosto\Result\Graphql\Recommendation\RecommendationResultHandler;
 
 /**
  * Abstract base operation class to be used in recommendation related operations
  */
-abstract class AbstractOperation extends AbstractAuthenticatedOperation
+abstract class AbstractOperation extends AbstractGraphQLOperation
 {
     const GRAPHQL_DATA_KEY = 'primary';
 
     private $previewMode = false;
     private $customerId;
     private $limit;
-
-    /**
-     * Builds the recommendation API request
-     *
-     * @return string
-     */
-    abstract public function getQuery();
-
-    /**
-     * Create and returns a new Graphql request object initialized with a content-type
-     * of 'application/json' and the specified authentication token
-     *
-     * @return GraphqlRequest the newly created request object.
-     * @throws NostoException if the account does not have the correct token set.
-     * @throws NostoException
-     */
-    protected function initGraphqlRequest()
-    {
-        $token = $this->account->getApiToken(Token::API_GRAPHQL);
-        if (is_null($token)) {
-            throw new NostoException('No API / Graphql token found for account.');
-        }
-
-        $request = new GraphqlRequest();
-        $request->setResponseTimeout($this->getResponseTimeout());
-        $request->setConnectTimeout($this->getConnectTimeout());
-        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
-        $request->setAuthBasic('', $token->getValue());
-        $request->setUrl(Nosto::getGraphqlBaseUrl() . GraphqlRequest::PATH_GRAPH_QL);
-
-        return $request;
-    }
-
-
-    /**
-     * Removes line breaks from the string
-     *
-     * @return null|string|string[]
-     */
-    public function buildPayload()
-    {
-        return preg_replace('/[\r\n]+/', '', $this->getQuery());
-    }
-
-    /**
-     * Returns the result
-     *
-     * @return ResultSet
-     * @throws AbstractHttpException
-     * @throws NostoException
-     * @throws HttpResponseException
-     */
-    public function execute()
-    {
-        $request = $this->initGraphqlRequest();
-        $response = $request->postRaw(
-            $this->buildPayload()
-        );
-        if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
-        }
-
-        return ResultSetBuilder::fromHttpResponse($response);
-    }
 
     /**
      * Returns if recos should use preview mode. You can set asString to
@@ -144,6 +72,14 @@ abstract class AbstractOperation extends AbstractAuthenticatedOperation
     public function setPreviewMode($previewMode)
     {
         $this->previewMode = $previewMode;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return new  RecommendationResultHandler();
     }
 
     /**

@@ -34,82 +34,78 @@
  *
  */
 
-namespace Nosto\Operation;
+namespace Nosto\Object\Order\GraphQL;
 
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Result\Api\GeneralPurposeResultHandler;
-use Nosto\Types\Signup\AccountInterface;
-use Nosto\NostoException;
+use Nosto\AbstractObject;
+use Nosto\Mixins\HtmlEncoderTrait;
+use Nosto\Types\HtmlEncodableInterface;
 
-/**
- * Operation class for updated customer's marketing permission
- */
-class MarketingPermission extends AbstractAuthenticatedOperation
+class OrderStatus extends AbstractObject implements
+    HtmlEncodableInterface
 {
+    use HtmlEncoderTrait;
+
+    /** @var string */
+    private $orderNumber;
+
+    /** @var string */
+    private $status;
+
+    /** @var string */
+    private $paymentProvider;
+
+    /** @var string */
+    private $updatedAt;
+
     /**
-     * MarketingPermission constructor.
-     * @param AccountInterface $account
-     * @param string $activeDomain
+     * OrderStatus constructor.
+     * @param string $orderNumber
+     * @param string $status
+     * @param string $paymentProvider
+     * @param string $updatedAt
      */
-    public function __construct(AccountInterface $account, $activeDomain = '')
-    {
-        parent::__construct($account, $activeDomain);
+    public function __construct(
+        $orderNumber,
+        $status,
+        $paymentProvider,
+        $updatedAt
+    ) {
+        $this->orderNumber = $orderNumber;
+        $this->status = $status;
+        $this->paymentProvider = $paymentProvider;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
-     * Update customer marketing permission
-     *
-     * @param $email
-     * @param $hasPermission
-     * @return mixed|null
-     * @throws NostoException
+     * @return string
      */
-    public function update($email, $hasPermission)
+    public function getOrderNumber()
     {
-        $request = $this->initRequest(
-            $this->account->getApiToken(Token::API_EMAIL),
-            $this->account->getName(),
-            $this->activeDomain
-        );
-
-        $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
-        $request->setReplaceParams($replaceParams);
-        $response = $request->postRaw('');
-
-        return $request->getResultHandler()->parse($response);
+        return $this->orderNumber;
     }
 
     /**
-     * @inheritdoc
+     * @return string
      */
-    protected function getResultHandler()
+    public function getStatus()
     {
-        return new GeneralPurposeResultHandler();
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    protected function getRequestType()
-    {
-        return new ApiRequest();
+        return $this->status;
     }
 
     /**
-     * @inheritdoc
+     * @return string
      */
-    protected function getContentType()
+    public function getPaymentProvider()
     {
-        return self::CONTENT_TYPE_APPLICATION_JSON;
+        return $this->paymentProvider;
     }
 
     /**
-     * @inheritdoc
+     * @return string
      */
-    protected function getPath()
+    public function getUpdatedAt()
     {
-        return ApiRequest::PATH_MARKETING_PERMISSION;
+        $date = new \DateTime($this->updatedAt);
+        return $date->format('Y-m-d\TH:i:s');
     }
 }

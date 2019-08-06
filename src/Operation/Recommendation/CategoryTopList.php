@@ -50,8 +50,7 @@ class CategoryTopList extends AbstractTopList
     {
         $query
             = <<<QUERY
-        {
-            "query": "mutation(
+            mutation(
                     \$customerId: String!,
                     \$category: String!,
                     \$limit: Int!,
@@ -82,28 +81,31 @@ class CategoryTopList extends AbstractTopList
                         }
                     }
                 }
-            }",
-            "variables": {
-                "customerId": "%s",
-                "category": "%s", 
-                "limit": "%d",
-                "preview": %s,
-                "hours": "%d"
             }
-        }
 QUERY;
         $formatted = sprintf(
             $query,
             $this->getSort(),
-            self::GRAPHQL_DATA_KEY,
-            $this->getCustomerId(),
-            $this->category,
-            $this->getLimit(),
-            $this->isPreviewMode(true),
-            $this->getHours()
+            self::GRAPHQL_DATA_KEY
         );
 
         return $formatted;
+    }
+
+    /**
+     * @return array
+     */
+    public function getVariables()
+    {
+        $array = [
+            'customerId' => $this->getCustomerId(),
+            'category' => $this->category,
+            'limit' => $this->getLimit(),
+            'preview' => $this->isPreviewMode(true),
+            'hours' => $this->getHours()
+        ];
+
+        return $array;
     }
 
     /**

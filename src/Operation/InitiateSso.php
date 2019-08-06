@@ -38,10 +38,11 @@ namespace Nosto\Operation;
 
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
+use Nosto\Request\Http\HttpRequest;
+use Nosto\Result\Api\InitiateSsoResultHandler;
 use Nosto\Types\UserInterface;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\NostoException;
-use Nosto\Exception\Builder as ExceptionBuilder;
 
 /**
  * Operation class for fetching a single-sign-on link through the Nosto API.
@@ -61,18 +62,45 @@ class InitiateSso extends AbstractAuthenticatedOperation
      */
     public function get(UserInterface $user, $platform)
     {
-        $request = $this->initHttpRequest(
+        $request = $this->initRequest(
             $this->account->getApiToken(Token::API_SSO),
             $this->account->getName()
         );
-        $request->setPath(ApiRequest::PATH_SSO_AUTH);
-        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
         $request->setReplaceParams(array('{platform}' => $platform));
         $response = $request->post($user);
-        if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
-        }
 
-        return $response->getJsonResult()->login_url;
+        return $request->getResultHandler()->parse($response);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return new InitiateSsoResultHandler();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new HttpRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getContentType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return ApiRequest::PATH_SSO_AUTH;
     }
 }

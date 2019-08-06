@@ -83,14 +83,6 @@ class Settings extends AbstractObject implements SettingsInterface
     private $useExchangeRates = false;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        // Dummy
-    }
-
-    /**
      * The 2-letter ISO code (ISO 639-1) for the language used by the shop for
      * which the account is created for.
      *

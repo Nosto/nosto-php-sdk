@@ -34,90 +34,23 @@
  *
  */
 
-namespace Nosto\Request\Http\Exception;
+namespace Nosto\Result\Api;
 
-use Exception;
-use Nosto\NostoException;
-use Nosto\Request\Http\HttpRequest;
+use Nosto\Result\ResultHandler;
 use Nosto\Request\Http\HttpResponse;
 
-/**
- * Nosto exception class for HTTP errors within the SDK.
- */
-abstract class AbstractHttpException extends NostoException
+abstract class ApiResultHandler extends ResultHandler
 {
-    /**
-     * @var HttpResponse
-     */
-    private $response;
 
-    /**
-     * @var HttpRequest
-     */
-    private $request;
-
-    /**
-     * HttpException constructor.
-     * @param string $message
-     * @param int|null $code
-     * @param Exception|null $previous
-     * @param HttpRequest|null $request
-     * @param HttpResponse|null $response
-     */
-    public function __construct(
-        $message = "",
-        $code = null,
-        Exception $previous = null,
-        HttpRequest $request = null,
-        HttpResponse $response = null
-    ) {
-        parent::__construct($message, $code, $previous);
-        $this->response = $response;
-        $this->request = $request;
-    }
-
-    /**
-     * @return HttpRequest
-     */
-    public function getRequest()
+    protected function parseResponse(HttpResponse $response)
     {
-        return $this->request;
-    }
-
-    /**
-     * @param HttpRequest $request
-     */
-    public function setRequest(HttpRequest $request)
-    {
-        $this->request = $request;
-    }
-
-    /**
-     * @return HttpResponse
-     */
-    public function getResponse()
-    {
-        return $this->response;
+        return $this->parseAPIResult($response);
     }
 
     /**
      * @param HttpResponse $response
+     * @return string|array
      */
-    public function setResponse(HttpResponse $response)
-    {
-        $this->response = $response;
-    }
+    abstract protected function parseAPIResult(HttpResponse $response);
 
-    /**
-     * Get x request id from the response
-     * @return null|string
-     */
-    public function getXRequestId()
-    {
-        if ($this->response != null) {
-            return $this->response->getXRequestId();
-        }
-
-        return null;
-    }
 }

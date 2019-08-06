@@ -36,58 +36,103 @@
 
 namespace Nosto\Operation;
 
-use Nosto\Request\Api\ApiRequest;
+use Nosto\NostoException;
+use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
-use Nosto\Types\Order\OrderInterface;
+use Nosto\Request\Http\Exception\HttpResponseException;
+use Nosto\Request\Graphql\GraphqlRequest;
+use Nosto\Operation\GraphQLRequest as GraphQLQuery;
 use Nosto\Types\Signup\AccountInterface;
 
-/**
- * Handles sending the OrderConfirm confirmations to Nosto via the API.
- *
- * OrderConfirm confirmations can be sent two different ways:
- * - matched orders; where we know the Nosto customer ID of the user who placed the OrderConfirm
- * - un-matched orders: where we do not know the Nosto customer ID of the user who placed the OrderConfirm
- *
- * The second option is a fallback and should be avoided as much as possible.
- */
-class OrderConfirm extends AbstractAuthenticatedOperation
+abstract class AbstractGraphQLOperation extends AbstractOperation
 {
+
+    const IDENTIFIER_BY_CID = 'BY_CID';
+    const IDENTIFIER_BY_REF = 'BY_REF';
+
     /**
-     * OrderConfirm constructor.
-     * @param AccountInterface $account
+     * @var AccountInterface Nosto configuration
+     */
+    protected $account;
+
+    /**
+     * @var string active domain
+     */
+    protected $activeDomain;
+
+    /**
+     * Constructor
+     *
+     * @param AccountInterface $account the account object.
      * @param string $activeDomain
      */
     public function __construct(AccountInterface $account, $activeDomain = '')
     {
-        parent::__construct($account, $activeDomain);
+        $this->account = $account;
+        $this->activeDomain = $activeDomain;
     }
 
     /**
-     * Sends the OrderConfirm confirmation to Nosto.
+     * Returns the result
      *
-     * @param OrderInterface $order the placed OrderConfirm model.
-     * @param string|null $customerId the Nosto customer ID of the user who placed the OrderConfirm.
-     * @return true on success.
+     * @return mixed|null
      * @throws AbstractHttpException
+     * @throws HttpResponseException
+     * @throws NostoException
      */
-    public function send(OrderInterface $order, $customerId = null)
+    public function execute()
     {
-        $request = new ApiRequest();
-        if (!empty($customerId)) {
-            $request->setPath(ApiRequest::PATH_ORDER_TAGGING);
-            $replaceParams = array('{m}' => $this->account->getName(), '{cid}' => $customerId);
-        } else {
-            $request->setPath(ApiRequest::PATH_UNMATCHED_ORDER_TAGGING);
-            $replaceParams = array('{m}' => $this->account->getName());
-        }
-        if (is_string($this->activeDomain)) {
-            $request->setActiveDomainHeader($this->activeDomain);
-        }
-        if (is_string($this->account->getName())) {
-            $request->setNostoAccountHeader($this->account->getName());
-        }
-        $request->setReplaceParams($replaceParams);
-        $response = $request->post($order);
-        return self::checkResponse($request, $response);
+        $request = $this->initRequest(
+            $this->account->getApiToken(Token::API_GRAPHQL),
+            null,
+            null
+        );
+        $payload = new GraphQLQuery(
+            $this->getQuery(),
+            $this->getVariables()
+        );
+        $payload = $payload->getRequest();
+        $response = $request->postRaw(
+            $payload
+        );
+
+        return $request->getResultHandler()->parse($response);
     }
+
+    /**
+     * Builds the recommendation API request
+     *
+     * @return string
+     */
+    abstract public function getQuery();
+
+    /**
+     * @return mixed
+     */
+    abstract public function getVariables();
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new GraphqlRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getContentType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return GraphqlRequest::PATH_GRAPH_QL;
+    }
+
 }

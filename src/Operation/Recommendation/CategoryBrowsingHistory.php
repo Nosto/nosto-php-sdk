@@ -50,8 +50,7 @@ class CategoryBrowsingHistory extends AbstractHistory
     {
         $query
             = <<<QUERY
-        {
-            "query": "mutation(
+            mutation(
                     \$customerId: String!,
                     \$limit: Int!,
                     \$preview: Boolean!
@@ -79,25 +78,29 @@ class CategoryBrowsingHistory extends AbstractHistory
                         }
                     }
                 }
-            }",
-            "variables": {
-                "customerId": "%s",
-                "category": "%s", 
-                "limit": "%d",
-                "preview": %s
             }
-        }
 QUERY;
         $formatted = sprintf(
             $query,
-            self::GRAPHQL_DATA_KEY,
-            $this->getCustomerId(),
-            $this->category,
-            $this->getLimit(),
-            $this->isPreviewMode(true)
+            self::GRAPHQL_DATA_KEY
         );
 
         return $formatted;
+    }
+
+    /**
+     * @return array
+     */
+    public function getVariables()
+    {
+        $array = [
+            'customerId' => $this->getCustomerId(),
+            'category' => $this->category,
+            'limit' => $this->getLimit(),
+            'preview' => $this->isPreviewMode(true)
+        ];
+
+        return $array;
     }
 
     /**

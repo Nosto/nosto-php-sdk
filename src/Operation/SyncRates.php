@@ -41,6 +41,7 @@ use Nosto\Object\ExchangeRateCollection;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Result\Api\GeneralPurposeResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 
 /**
@@ -68,13 +69,44 @@ class SyncRates extends AbstractAuthenticatedOperation
      */
     public function update(ExchangeRateCollection $collection)
     {
-        $request = $this->initApiRequest(
+        $request = $this->initRequest(
             $this->account->getApiToken(Token::API_EXCHANGE_RATES),
             $this->account->getName(),
             $this->activeDomain
         );
-        $request->setPath(ApiRequest::PATH_CURRENCY_EXCHANGE_RATE);
         $response = $request->post($collection);
-        return self::checkResponse($request, $response);
+        return $request->getResultHandler()->parse($response);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return new GeneralPurposeResultHandler();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new ApiRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getContentType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return ApiRequest::PATH_CURRENCY_EXCHANGE_RATE;
     }
 }

@@ -34,82 +34,83 @@
  *
  */
 
-namespace Nosto\Operation;
+namespace Nosto\Operation\Order;
 
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Result\Api\GeneralPurposeResultHandler;
+use Nosto\Operation\AbstractGraphQLOperation;
+use Nosto\Object\Order\GraphQL\OrderStatus as OrderStatusModel;
+use Nosto\Result\Graphql\Order\OrderStatusResultHandler;
 use Nosto\Types\Signup\AccountInterface;
-use Nosto\NostoException;
 
 /**
- * Operation class for updated customer's marketing permission
+ * Operation class for sending order status updates
+ * @phan-file-suppress PhanUnreferencedUseNormal
  */
-class MarketingPermission extends AbstractAuthenticatedOperation
+class OrderStatus extends AbstractGraphQLOperation
 {
+    /* @var OrderStatusModel $order */
+    private $orderStatus;
+
     /**
-     * MarketingPermission constructor.
+     * OrderStatus constructor.
      * @param AccountInterface $account
-     * @param string $activeDomain
+     * @param OrderStatusModel $orderStatus
      */
-    public function __construct(AccountInterface $account, $activeDomain = '')
-    {
-        parent::__construct($account, $activeDomain);
+    public function __construct(
+        AccountInterface $account,
+        OrderStatusModel $orderStatus
+    ) {
+        parent::__construct($account);
+        $this->orderStatus = $orderStatus;
     }
 
-    /**
-     * Update customer marketing permission
-     *
-     * @param $email
-     * @param $hasPermission
-     * @return mixed|null
-     * @throws NostoException
-     */
-    public function update($email, $hasPermission)
-    {
-        $request = $this->initRequest(
-            $this->account->getApiToken(Token::API_EMAIL),
-            $this->account->getName(),
-            $this->activeDomain
-        );
-
-        $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
-        $request->setReplaceParams($replaceParams);
-        $response = $request->postRaw('');
-
-        return $request->getResultHandler()->parse($response);
-    }
-
-    /**
-     * @inheritdoc
-     */
     protected function getResultHandler()
     {
-        return new GeneralPurposeResultHandler();
+        return new OrderStatusResultHandler();
     }
 
 
     /**
      * @inheritdoc
      */
-    protected function getRequestType()
+    public function getQuery()
     {
-        return new ApiRequest();
+        $query
+            = <<<QUERY
+        mutation(
+                \$orderNumber: String!,
+                \$orderStatus: String!,
+                \$paymentProvider: String!
+                \$statusDate: LocalDateTime!
+        ) { 
+            updateStatus(number: \$orderNumber, params: {
+                orderStatus: \$orderStatus
+                paymentProvider: \$paymentProvider
+                statusDate: \$statusDate
+            }) {
+                number
+                statuses {
+                    date
+                    orderStatus
+                    paymentProvider
+                }
+            }
+        }
+QUERY;
+        return $query;
     }
 
     /**
      * @inheritdoc
      */
-    protected function getContentType()
+    public function getVariables()
     {
-        return self::CONTENT_TYPE_APPLICATION_JSON;
-    }
+        $array = [
+            'orderNumber' => $this->orderStatus->getOrderNumber(),
+            'orderStatus' => $this->orderStatus->getStatus(),
+            'paymentProvider' => $this->orderStatus->getPaymentProvider(),
+            'statusDate' => $this->orderStatus->getUpdatedAt()
+        ];
 
-    /**
-     * @inheritdoc
-     */
-    protected function getPath()
-    {
-        return ApiRequest::PATH_MARKETING_PERMISSION;
+        return $array;
     }
 }

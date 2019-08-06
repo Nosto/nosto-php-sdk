@@ -34,46 +34,40 @@
  *
  */
 
-namespace Nosto\Test\Unit\Operation;
+namespace Nosto\Result\Graphql\Recommendation;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
-use Nosto\Object\Signup\Account;
-use Nosto\Operation\OrderConfirm;
-use Nosto\Test\Support\MockOrder;
+use Nosto\NostoException;
 
-class OrderConfirmationTest extends Test
+/**
+ * Wrapper class for item returned by the GraphQL API
+ */
+class ResultItem
 {
-    use Specify;
-
     /**
-     * Tests the matched OrderConfirm confirmation API call.
+     * @var array
      */
-    public function testMatchedOrderConfirmation()
-    {
-        $order = new MockOrder();
-        $account = new Account('platform-00000000');
-        $service = new OrderConfirm($account);
-        $result = $service->send($order, '00000000d7288a9aa95c9e24');
+    private $data = array();
 
-        $this->specify('successful matched OrderConfirm confirmation', function () use ($result) {
-            $this->assertTrue($result);
-        });
+    public function __construct(array $data = array())
+    {
+        $this->data = $data;
     }
 
     /**
-     * Tests the un-matched OrderConfirm confirmation API call.
+     * @param $name
+     * @param $arguments
+     * @return mixed|null
+     * @throws NostoException
      */
-    public function testUnMatchedOrderConfirmation()
+    public function __call($name, $arguments)
     {
-        $order = new MockOrder();
-        $account = new Account('platform-00000000');
-        $service = new OrderConfirm($account);
-        $result = $service->send($order, null);
-
-        $this->specify('successful un-matched OrderConfirm confirmation',
-            function () use ($result) {
-                $this->assertTrue($result);
-            });
+        if (stripos($name, 'get') === 0) {
+            $dataKey = lcfirst(substr($name, 3));
+            if (!empty($this->data[$dataKey])) {
+                return $this->data[$dataKey];
+            }
+            throw new NostoException(sprintf('Field %s does not exist', $dataKey));
+        }
+        throw new NostoException(sprintf('Call to undefined method %s', $name));
     }
 }

@@ -36,33 +36,6 @@
 
 namespace Nosto\Operation;
 
-use Nosto\Types\Signup\AccountInterface;
-
-/**
- * Base operation class for handling Nosto API communications that require
- * authentication or Nosto account.
- */
-abstract class AbstractAuthenticatedOperation extends AbstractRESTOperation
+abstract class AbstractRESTOperation extends AbstractOperation
 {
-    /**
-     * @var AccountInterface Nosto configuration
-     */
-    protected $account;
-
-    /**
-     * @var string active domain
-     */
-    protected $activeDomain;
-
-    /**
-     * Constructor
-     *
-     * @param AccountInterface $account the account object.
-     * @param string $activeDomain
-     */
-    public function __construct(AccountInterface $account, $activeDomain = '')
-    {
-        $this->account = $account;
-        $this->activeDomain = $activeDomain;
-    }
 }

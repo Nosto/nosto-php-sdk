@@ -34,82 +34,30 @@
  *
  */
 
-namespace Nosto\Operation;
+namespace Nosto\Result\Graphql\Order;
 
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Result\Api\GeneralPurposeResultHandler;
-use Nosto\Types\Signup\AccountInterface;
 use Nosto\NostoException;
+use Nosto\Result\Graphql\GraphQLResultHandler;
 
-/**
- * Operation class for updated customer's marketing permission
- */
-class MarketingPermission extends AbstractAuthenticatedOperation
+final class OrderCreateResultHandler extends GraphQLResultHandler
 {
-    /**
-     * MarketingPermission constructor.
-     * @param AccountInterface $account
-     * @param string $activeDomain
-     */
-    public function __construct(AccountInterface $account, $activeDomain = '')
-    {
-        parent::__construct($account, $activeDomain);
-    }
-
-    /**
-     * Update customer marketing permission
-     *
-     * @param $email
-     * @param $hasPermission
-     * @return mixed|null
-     * @throws NostoException
-     */
-    public function update($email, $hasPermission)
-    {
-        $request = $this->initRequest(
-            $this->account->getApiToken(Token::API_EMAIL),
-            $this->account->getName(),
-            $this->activeDomain
-        );
-
-        $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
-        $request->setReplaceParams($replaceParams);
-        $response = $request->postRaw('');
-
-        return $request->getResultHandler()->parse($response);
-    }
+    const GRAPHQL_RESPONSE_ORDER_CREATE = 'placeOrder';
 
     /**
      * @inheritdoc
      */
-    protected function getResultHandler()
+    protected function parseQueryResult(\stdClass $stdClass)
     {
-        return new GeneralPurposeResultHandler();
-    }
+        $members = get_object_vars($stdClass);
+        foreach ($members as $varName => $member) {
+            if ($varName === self::GRAPHQL_RESPONSE_ORDER_CREATE) {
+                return $member->id;
+            }
+            if ($member instanceof \stdClass) {
+                return $this->parseQueryResult($member);
+            }
+        }
 
-
-    /**
-     * @inheritdoc
-     */
-    protected function getRequestType()
-    {
-        return new ApiRequest();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getContentType()
-    {
-        return self::CONTENT_TYPE_APPLICATION_JSON;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getPath()
-    {
-        return ApiRequest::PATH_MARKETING_PERMISSION;
+        throw new NostoException('No placeOrder object was found in GraphQL result');
     }
 }

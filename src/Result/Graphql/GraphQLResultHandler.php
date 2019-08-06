@@ -34,82 +34,79 @@
  *
  */
 
-namespace Nosto\Operation;
+namespace Nosto\Result\Graphql;
 
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Result\Api\GeneralPurposeResultHandler;
-use Nosto\Types\Signup\AccountInterface;
 use Nosto\NostoException;
+use Nosto\Request\Http\HttpResponse;
+use Nosto\Result\ResultHandler;
 
-/**
- * Operation class for updated customer's marketing permission
- */
-class MarketingPermission extends AbstractAuthenticatedOperation
+abstract class GraphQLResultHandler extends ResultHandler
 {
+    const GRAPHQL_RESPONSE_ERROR = 'errors';
+    const GRAPHQL_RESPONSE_DATA = 'data';
+
     /**
-     * MarketingPermission constructor.
-     * @param AccountInterface $account
-     * @param string $activeDomain
+     * @inheritdoc
      */
-    public function __construct(AccountInterface $account, $activeDomain = '')
+    protected function parseResponse(HttpResponse $response)
     {
-        parent::__construct($account, $activeDomain);
+        $result = json_decode($response->getResult());
+
+        if ($this->hasErrors($result)) {
+            $error = $this->parseErrorMessage($result->errors);
+            throw new NostoException($error);
+        }
+
+        if ($this->hasData($result)) {
+            return $this->parseQueryResult($result->data);
+        }
+
+        throw new NostoException('No data found in GraphQL result');
     }
 
     /**
-     * Update customer marketing permission
-     *
-     * @param $email
-     * @param $hasPermission
-     * @return mixed|null
+     * @param \stdClass $stdClass
+     * @return bool
+     */
+    private function hasErrors(\stdClass $stdClass)
+    {
+        $members = get_object_vars($stdClass);
+        if (array_key_exists(self::GRAPHQL_RESPONSE_ERROR, $members)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param \stdClass $stdClass
+     * @return bool
+     */
+    private function hasData(\stdClass $stdClass)
+    {
+        $members = get_object_vars($stdClass);
+        if (array_key_exists(self::GRAPHQL_RESPONSE_DATA, $members)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param array $errors
+     * @return string
+     */
+    private function parseErrorMessage(array $errors)
+    {
+        $errorMessage = '';
+        foreach ($errors as $error) {
+            $errorMessage .= $error->message.' | ';
+        }
+        return $errorMessage;
+    }
+
+    /**
+     * @param \stdClass $stdClass
      * @throws NostoException
+     * @return mixed
      */
-    public function update($email, $hasPermission)
-    {
-        $request = $this->initRequest(
-            $this->account->getApiToken(Token::API_EMAIL),
-            $this->account->getName(),
-            $this->activeDomain
-        );
-
-        $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
-        $request->setReplaceParams($replaceParams);
-        $response = $request->postRaw('');
-
-        return $request->getResultHandler()->parse($response);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getResultHandler()
-    {
-        return new GeneralPurposeResultHandler();
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    protected function getRequestType()
-    {
-        return new ApiRequest();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getContentType()
-    {
-        return self::CONTENT_TYPE_APPLICATION_JSON;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getPath()
-    {
-        return ApiRequest::PATH_MARKETING_PERMISSION;
-    }
+    abstract protected function parseQueryResult(\stdClass $stdClass);
 }
