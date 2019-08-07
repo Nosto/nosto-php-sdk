@@ -46,9 +46,9 @@ use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\Product\VariationInterface;
-use Nosto\Types\SanitizableInterface;
 use Nosto\Types\ValidatableInterface;
 use Nosto\Helper\DateHelper;
+use Nosto\Util\Sanitize;
 
 /**
  * Model for product information. This is used when compiling the info about a
@@ -64,10 +64,8 @@ class Product extends AbstractObject implements
     ProductInterface,
     ValidatableInterface,
     MarkupableInterface,
-    SanitizableInterface,
     HtmlEncodableInterface
 {
-
     use HtmlEncoderTrait;
 
     /**
@@ -1003,7 +1001,7 @@ class Product extends AbstractObject implements
         $sanitized = clone $this;
         $sanitized->setInventoryLevel(null);
         $sanitized->setSupplierCost(null);
-
+        Sanitize::sanitizeRecursively($sanitized);
         return $sanitized;
     }
 

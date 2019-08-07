@@ -34,47 +34,34 @@
  *
  */
 
-namespace Nosto\Object\Product;
+namespace Nosto\Util;
 
-use Nosto\Object\AbstractCollection;
-use Nosto\Types\MarkupableInterface;
-use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\SanitizableInterface;
 
 /**
- * Collection class to store a collection of SKUs
+ * Util class for sanitizing
+ *
+ * @package Nosto\Util
  */
-class SkuCollection extends AbstractCollection implements
-    MarkupableInterface,
-    SanitizableInterface
+class Sanitize
 {
     /**
-     * Appends item to the collection of skus
+     * Sanitizes object members that implement SanitizableInterface
      *
-     * @param SkuInterface $sku the product to append
+     * @param SanitizableInterface $object
+     * @throws \Nosto\NostoException
+     * @throws \ReflectionException
      */
-    public function append(SkuInterface $sku)
+    public static function sanitizeRecursively(SanitizableInterface &$object)
     {
-        $this->var[] = $sku;
-    }
-
-    public function getMarkupKey()
-    {
-        return 'skus';
-    }
-
-    /**
-     * Sanitizes SKUs in the collection
-     * @return SkuCollection
-     */
-    public function sanitize()
-    {
-        $sanitized = new self();
-        /* @var $item SkuInterface */
-        foreach ($this as $item) {
-            $sanitized->append($item->sanitize());
+        $properties = Reflection::parseGettersAndSetters($object);
+        foreach ($properties as $property) {
+            $getter = $property[Reflection::GETTER_KEY];
+            $value = $object->$getter();
+            if ($value instanceof SanitizableInterface) {
+                $setter = $property[Reflection::SETTER_KEY];
+                $object->$setter($object->$getter()->sanitize());
+            }
         }
-
-        return $sanitized;
     }
 }
