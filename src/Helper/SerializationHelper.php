@@ -37,8 +37,6 @@
 namespace Nosto\Helper;
 
 use Nosto\Util\Reflection;
-use \ReflectionClass;
-use \ReflectionException;
 use \Traversable;
 
 /**
