@@ -39,7 +39,7 @@ namespace Nosto\Result\Graphql\Order;
 use Nosto\NostoException;
 use Nosto\Result\Graphql\GraphQLResultHandler;
 
-final class OrderCreateResultHandler extends GraphQLResultHandler
+class OrderCreateResultHandler extends GraphQLResultHandler
 {
     const GRAPHQL_RESPONSE_ORDER_CREATE = 'placeOrder';
 

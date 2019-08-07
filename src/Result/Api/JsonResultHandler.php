@@ -38,7 +38,7 @@ namespace Nosto\Result\Api;
 
 use Nosto\Request\Http\HttpResponse;
 
-final class JsonResultHandler extends ApiResultHandler
+class JsonResultHandler extends ApiResultHandler
 {
     /**
      * @inheritdoc
