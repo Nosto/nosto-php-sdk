@@ -43,7 +43,7 @@ use Nosto\Types\Signup\AccountInterface;
 /**
  * Abstract base operation class to be used in recommendation related operations
  */
-abstract class AbstractCategoryMerchandising extends AbstractGraphQLOperation
+abstract class AbstractRecommendation extends AbstractGraphQLOperation
 {
     const LIMIT = 10;
 
@@ -59,14 +59,10 @@ abstract class AbstractCategoryMerchandising extends AbstractGraphQLOperation
     /** @var int $limit */
     protected $limit;
 
-    /** @var string $category */
-    protected $category;
-
     /**
-     * AbstractOperation constructor.
+     * AbstractRecommendation constructor.
      * @param AccountInterface $account
      * @param $customerId
-     * @param $category
      * @param string $activeDomain
      * @param string $customerBy
      * @param int $limit
@@ -75,17 +71,15 @@ abstract class AbstractCategoryMerchandising extends AbstractGraphQLOperation
     public function __construct(
         AccountInterface $account,
         $customerId,
-        $category,
-        $activeDomain,
-        $customerBy,
-        $limit,
-        $previewMode
+        $activeDomain = '',
+        $customerBy = self::IDENTIFIER_BY_CID,
+        $previewMode = false,
+        $limit = self::LIMIT
     ) {
         $this->limit = $limit;
         $this->customerBy = $customerBy;
         $this->customerId = $customerId;
         $this->previewMode = $previewMode;
-        $this->category = $category;
         parent::__construct($account, $activeDomain);
     }
 

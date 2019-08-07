@@ -36,8 +36,26 @@
 
 namespace Nosto\Operation\Recommendation;
 
-class CategoryMerchandising extends AbstractCategoryMerchandising
+use Nosto\Types\Signup\AccountInterface;
+
+class CategoryMerchandising extends AbstractRecommendation
 {
+    /** @var string $category */
+    private $category;
+
+    public function __construct(
+        AccountInterface $account,
+        $customerId,
+        $category,
+        $activeDomain = '',
+        $customerBy = self::IDENTIFIER_BY_CID,
+        $previewMode = false,
+        $limit = self::LIMIT
+    ) {
+        $this->category = $category;
+        parent::__construct($account, $customerId, $activeDomain, $customerBy, $previewMode, $limit);
+    }
+
     /**
      * @inheritdoc
      */
