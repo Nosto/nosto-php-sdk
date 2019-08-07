@@ -36,29 +36,75 @@
 
 namespace Nosto\Operation\Recommendation;
 
+use Nosto\Operation\AbstractGraphQLOperation;
+use Nosto\Result\Graphql\Recommendation\RecommendationResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 
 /**
- * Abstract operation class for getting history related recommendations
+ * Abstract base operation class to be used in recommendation related operations
  */
-abstract class AbstractHistory extends AbstractOperation
+abstract class AbstractRecommendation extends AbstractGraphQLOperation
 {
-    const DEFAULT_LIMIT = 10;
+    const LIMIT = 10;
+
+    /** @var bool $previewMode */
+    protected $previewMode;
+
+    /** @var string $customerId */
+    protected $customerId;
+
+    /** @var string $customerBy */
+    protected $customerBy;
+
+    /** @var int $limit */
+    protected $limit;
 
     /**
-     * Category constructor
-     *
+     * AbstractRecommendation constructor.
      * @param AccountInterface $account
-     * @param string $customerId
+     * @param $customerId
+     * @param string $activeDomain
+     * @param string $customerBy
+     * @param bool $previewMode
      * @param int $limit
      */
     public function __construct(
         AccountInterface $account,
         $customerId,
-        $limit = self::DEFAULT_LIMIT
+        $activeDomain = '',
+        $customerBy = self::IDENTIFIER_BY_CID,
+        $previewMode = false,
+        $limit = self::LIMIT
     ) {
-        parent::__construct($account);
-        $this->setCustomerId($customerId);
-        $this->setLimit($limit);
+        $this->limit = $limit;
+        $this->customerBy = $customerBy;
+        $this->customerId = $customerId;
+        $this->previewMode = $previewMode;
+        parent::__construct($account, $activeDomain);
+    }
+
+
+    /**
+     * Returns if recos should use preview mode. You can set asString to
+     * true and when the method returns true or false as a string. This is
+     * needed for constructing the query.
+     *
+     * @param bool $asString
+     * @return bool|string
+     */
+    public function isPreviewMode($asString = false)
+    {
+        if ($asString) {
+            return $this->previewMode ? 'true' : 'false';
+        }
+        return $this->previewMode;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return new RecommendationResultHandler();
     }
 }

@@ -38,73 +38,95 @@ namespace Nosto\Operation\Recommendation;
 
 use Nosto\Types\Signup\AccountInterface;
 
-/**
- * Abstract operation class for getting top list related recommendations
- */
-abstract class AbstractTopList extends AbstractOperation
+class CategoryMerchandising extends AbstractRecommendation
 {
-    const DEFAULT_LIMIT = 10;
-    const DEFAULT_HOURS = 168;
-    const DEFAULT_SORT = 'VIEWS';
-    const SORT_VIEWS = 'VIEWS';
-    const SORT_BUYS = 'BUYS';
-
-    private $sort;
-    private $hours;
+    /** @var string $category */
+    private $category;
 
     /**
-     * Category constructor
-     *
+     * CategoryMerchandising constructor.
      * @param AccountInterface $account
-     * @param string $customerId
+     * @param $customerId
+     * @param $category
+     * @param string $activeDomain
+     * @param string $customerBy
+     * @param bool $previewMode
      * @param int $limit
-     * @param int $hours
-     * @param string $sort
      */
     public function __construct(
         AccountInterface $account,
         $customerId,
-        $limit = self::DEFAULT_LIMIT,
-        $hours = self::DEFAULT_HOURS,
-        $sort = self::DEFAULT_SORT
+        $category,
+        $activeDomain = '',
+        $customerBy = self::IDENTIFIER_BY_CID,
+        $previewMode = false,
+        $limit = self::LIMIT
     ) {
-        parent::__construct($account);
-        $this->setCustomerId($customerId);
-        $this->setLimit($limit);
-        $this->setLimit($limit);
-        $this->setHours($hours);
-        $this->setSort($sort);
+        $this->category = $category;
+        parent::__construct($account, $customerId, $activeDomain, $customerBy, $previewMode, $limit);
     }
 
     /**
-     * @return mixed
+     * @inheritdoc
      */
-    public function getSort()
+    public function getQuery()
     {
-        return $this->sort;
+        $query =
+            <<<QUERY
+        mutation(
+            \$customerId: String!,
+            \$category: String!,
+            \$limit: Int!,
+            \$preview: Boolean!,
+            \$by: LookupParams!
+        ) {
+          updateSession (
+            id: \$customerId,
+              by: \$by,
+              params: {
+              event: {
+                type: VIEWED_CATEGORY
+                target: \$category
+              }
+            }) {
+            id
+            recos (preview: \$preview, image: VERSION_10_MAX_SQUARE) {
+              category (params: {
+                minProducts: 1
+                maxProducts: \$limit
+              }) {
+                primary {
+                  productId
+                  priceText
+                  name
+                  imageUrl
+                  url
+                }
+                batchToken
+                totalPrimaryCount
+                resultId
+              }
+            }
+          }
+        }
+QUERY;
+
+        return $query;
     }
 
     /**
-     * @param mixed $sort
+     * @inheritdoc
      */
-    public function setSort($sort)
+    public function getVariables()
     {
-        $this->sort = $sort;
-    }
+        $variables = [
+            'customerId' => $this->customerId,
+            'category' => $this->category,
+            'limit' => $this->limit,
+            'preview' => $this->limit,
+            'by' => $this->customerBy
+        ];
 
-    /**
-     * @return mixed
-     */
-    public function getHours()
-    {
-        return $this->hours;
-    }
-
-    /**
-     * @param mixed $hours
-     */
-    public function setHours($hours)
-    {
-        $this->hours = $hours;
+        return $variables;
     }
 }
