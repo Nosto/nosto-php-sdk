@@ -65,8 +65,8 @@ abstract class AbstractRecommendation extends AbstractGraphQLOperation
      * @param $customerId
      * @param string $activeDomain
      * @param string $customerBy
-     * @param int $limit
      * @param bool $previewMode
+     * @param int $limit
      */
     public function __construct(
         AccountInterface $account,

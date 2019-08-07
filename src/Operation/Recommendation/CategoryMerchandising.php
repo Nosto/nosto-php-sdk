@@ -43,6 +43,16 @@ class CategoryMerchandising extends AbstractRecommendation
     /** @var string $category */
     private $category;
 
+    /**
+     * CategoryMerchandising constructor.
+     * @param AccountInterface $account
+     * @param $customerId
+     * @param $category
+     * @param string $activeDomain
+     * @param string $customerBy
+     * @param bool $previewMode
+     * @param int $limit
+     */
     public function __construct(
         AccountInterface $account,
         $customerId,
