@@ -994,7 +994,11 @@ class Product extends AbstractObject implements
     }
 
     /**
-     * @inheritdoc
+     * Sanitizes the object recursively
+     *
+     * @return Product
+     * @throws NostoException
+     * @throws \ReflectionException
      */
     public function sanitize()
     {
