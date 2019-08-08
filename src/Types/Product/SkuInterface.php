@@ -36,10 +36,12 @@
 
 namespace Nosto\Types\Product;
 
+use Nosto\Types\SanitizableInterface;
+
 /**
  * Interface for the product variation.
  */
-interface SkuInterface
+interface SkuInterface extends SanitizableInterface
 {
     /**
      * Returns the id of the variation

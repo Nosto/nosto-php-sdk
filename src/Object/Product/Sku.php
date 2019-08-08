@@ -42,7 +42,6 @@ use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\SkuInterface;
 use Nosto\Types\Product\ProductInterface;
-use Nosto\Types\SanitizableInterface;
 
 /**
  * Model for sku information
@@ -50,8 +49,7 @@ use Nosto\Types\SanitizableInterface;
 class Sku extends AbstractObject implements
     SkuInterface,
     MarkupableInterface,
-    HtmlEncodableInterface,
-    SanitizableInterface
+    HtmlEncodableInterface
 {
     use HtmlEncoderTrait;
 

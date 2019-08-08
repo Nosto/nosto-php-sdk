@@ -37,8 +37,8 @@
 namespace Nosto\Mixins;
 
 use Nosto\Helper\HtmlMarkupSerializationHelper;
-use Nosto\Helper\SerializationHelper;
 use Nosto\NostoException;
+use Nosto\Util\Reflection;
 
 /**
  * Iframe mixin class for account administration iframe.
@@ -63,7 +63,7 @@ trait HtmlEncoderTrait
     {
         if ($this->isAutoEncodeAll() === true) {
             $allClassVariables = array();
-            $vars = SerializationHelper::getProperties($this);
+            $vars = Reflection::getObjectProperties($this);
             foreach ($vars as $classVar => $val) {
                 if (HtmlMarkupSerializationHelper::encodableClassVariable($this, $classVar)) {
                     $allClassVariables[] = $classVar;
