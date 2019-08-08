@@ -52,7 +52,7 @@ class Sanitize
      * @throws \Nosto\NostoException
      * @throws \ReflectionException
      */
-    public static function sanitizeRecursively(SanitizableInterface &$object)
+    public static function sanitizeRecursively(SanitizableInterface $object)
     {
         $properties = Reflection::parseGettersAndSetters($object);
         foreach ($properties as $property) {
