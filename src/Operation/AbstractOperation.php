@@ -36,13 +36,12 @@
 
 namespace Nosto\Operation;
 
-use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
-use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\NostoException;
 use Nosto\Request\Http\HttpRequest;
-use Nosto\Request\Http\HttpResponse;
-use Nosto\Exception\Builder as ExceptionBuilder;
+use Nosto\Request\Graphql\GraphqlRequest;
+use Nosto\Result\ResultHandler;
 
 /**
  * Base operation class for handling all communications through the Nosto API.
@@ -52,6 +51,8 @@ abstract class AbstractOperation
 {
     const CONTENT_TYPE_URL_FORM_ENCODED = 'application/x-www-form-urlencoded';
     const CONTENT_TYPE_APPLICATION_JSON = 'application/json';
+    const CONTENT_TYPE_APPLICATION_GRAPHQL = 'application/graphql';
+    const CONTENT_TYPE_TEXT_HTML = 'text/html';
 
     /**
      * @var int timeout for waiting response from the api, in second
@@ -64,74 +65,23 @@ abstract class AbstractOperation
     private $connectTimeout = 5;
 
     /**
-     * Helper method to throw an exception when an API or HTTP endpoint responds
-     * with a non-200 status code.
-     *
-     * @param $request HttpRequest the HTTP request
-     * @param $response HttpResponse the HTTP response to check
-     * @return bool returns true when everything was okay
-     * @throws AbstractHttpException
-     */
-    protected static function checkResponse(HttpRequest $request, HttpResponse $response)
-    {
-        if ($response->getCode() !== 200) {
-            throw ExceptionBuilder::fromHttpRequestAndResponse($request, $response);
-        }
-        return true;
-    }
-
-    /**
-     * Create and returns a new API request object initialized with a content-type
-     * of 'application/json' and the specified authentication token
-     *
-     * @param Token|null $token the token to use for the endpoint
+     * @param Token|null $token
      * @param string|null $nostoAccount
      * @param string|null $domain
-     * @return ApiRequest the newly created request object.
-     * @throws NostoException if the account does not have the correct token set.
+     * @param bool $isTokenNeeded
+     * @return ApiRequest|GraphqlRequest|HttpRequest
+     * @throws NostoException
      */
-    protected function initApiRequest(
+    protected function initRequest(
         Token $token = null,
         $nostoAccount = null,
-        $domain = null
+        $domain = null,
+        $isTokenNeeded = true
     ) {
-        if (is_null($token)) {
+        if (is_null($token) && $isTokenNeeded) {
             throw new NostoException('No API token found for account.');
         }
-        $request = new ApiRequest();
-        if (is_string($domain)) {
-            $request->setActiveDomainHeader($domain);
-        }
-        if (is_string($nostoAccount)) {
-            $request->setNostoAccountHeader($nostoAccount);
-        }
-
-        $request->setResponseTimeout($this->getResponseTimeout());
-        $request->setConnectTimeout($this->getConnectTimeout());
-        $request->setContentType(self::CONTENT_TYPE_APPLICATION_JSON);
-        $request->setAuthBasic('', $token->getValue());
-        return $request;
-    }
-
-    /**
-     * Create and returns a new API request object initialized with a content-type
-     * of 'application/x-www-form-urlencoded' and the specified authentication token
-     *
-     * @param Token|null $token the token to use for the endpoint
-     * @param string|null $nostoAccount
-     * @param string|null $domain
-     * @return HttpRequest the newly created request object.
-     * @throws NostoException if the account does not have the correct token set.
-     */
-    protected function initHttpRequest(
-        Token $token = null,
-        $nostoAccount = null,
-        $domain = null
-    ) {
-        if (is_null($token)) {
-            throw new NostoException('No API token found for account.');
-        }
-        $request = new HttpRequest();
+        $request = $this->getRequestType();
         if (is_string($domain)) {
             $request->setActiveDomainHeader($domain);
         }
@@ -140,10 +90,38 @@ abstract class AbstractOperation
         }
         $request->setResponseTimeout($this->getResponseTimeout());
         $request->setConnectTimeout($this->getConnectTimeout());
-        $request->setContentType(self::CONTENT_TYPE_URL_FORM_ENCODED);
-        $request->setAuthBasic('', $token->getValue());
+        $request->setContentType($this->getContentType());
+        if (!is_null($token) && $isTokenNeeded) {
+            $request->setAuthBasic('', $token->getValue());
+        }
+        $request->setPath($this->getPath());
+        $request->setResultHandler($this->getResultHandler());
         return $request;
     }
+
+    /**
+     * Return type of request object
+     *
+     * @return HttpRequest|ApiRequest|GraphqlRequest
+     */
+    abstract protected function getRequestType();
+
+    /**
+     * Return content type
+     *
+     * @return string
+     */
+    abstract protected function getContentType();
+
+    /**
+     * @return string
+     */
+    abstract protected function getPath();
+
+    /**
+     * @return ResultHandler
+     */
+    abstract protected function getResultHandler();
 
     /**
      * Get response timeout in second

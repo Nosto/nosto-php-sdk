@@ -34,46 +34,34 @@
  *
  */
 
-namespace Nosto\Test\Unit\Operation;
+namespace Nosto\Util;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
-use Nosto\Object\Signup\Account;
-use Nosto\Operation\OrderConfirm;
-use Nosto\Test\Support\MockOrder;
+use Nosto\Types\SanitizableInterface;
 
-class OrderConfirmationTest extends Test
+/**
+ * Util class for sanitizing
+ *
+ * @package Nosto\Util
+ */
+class Sanitize
 {
-    use Specify;
-
     /**
-     * Tests the matched OrderConfirm confirmation API call.
+     * Sanitizes object members that implement SanitizableInterface
+     *
+     * @param SanitizableInterface $object
+     * @throws \Nosto\NostoException
+     * @throws \ReflectionException
      */
-    public function testMatchedOrderConfirmation()
+    public static function sanitizeRecursively(SanitizableInterface $object)
     {
-        $order = new MockOrder();
-        $account = new Account('platform-00000000');
-        $service = new OrderConfirm($account);
-        $result = $service->send($order, '00000000d7288a9aa95c9e24');
-
-        $this->specify('successful matched OrderConfirm confirmation', function () use ($result) {
-            $this->assertTrue($result);
-        });
-    }
-
-    /**
-     * Tests the un-matched OrderConfirm confirmation API call.
-     */
-    public function testUnMatchedOrderConfirmation()
-    {
-        $order = new MockOrder();
-        $account = new Account('platform-00000000');
-        $service = new OrderConfirm($account);
-        $result = $service->send($order, null);
-
-        $this->specify('successful un-matched OrderConfirm confirmation',
-            function () use ($result) {
-                $this->assertTrue($result);
-            });
+        $properties = Reflection::parseGettersAndSetters($object);
+        foreach ($properties as $property) {
+            $getter = $property[Reflection::GETTER_KEY];
+            $value = $object->$getter();
+            if ($value instanceof SanitizableInterface) {
+                $setter = $property[Reflection::SETTER_KEY];
+                $object->$setter($object->$getter()->sanitize());
+            }
+        }
     }
 }

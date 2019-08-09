@@ -34,60 +34,77 @@
  *
  */
 
-namespace Nosto\Operation;
+namespace Nosto\Operation\Recommendation;
 
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Http\Exception\AbstractHttpException;
-use Nosto\Types\Order\OrderInterface;
+use Nosto\Operation\AbstractGraphQLOperation;
+use Nosto\Result\Graphql\Recommendation\RecommendationResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 
 /**
- * Handles sending the OrderConfirm confirmations to Nosto via the API.
- *
- * OrderConfirm confirmations can be sent two different ways:
- * - matched orders; where we know the Nosto customer ID of the user who placed the OrderConfirm
- * - un-matched orders: where we do not know the Nosto customer ID of the user who placed the OrderConfirm
- *
- * The second option is a fallback and should be avoided as much as possible.
+ * Abstract base operation class to be used in recommendation related operations
  */
-class OrderConfirm extends AbstractAuthenticatedOperation
+abstract class AbstractRecommendation extends AbstractGraphQLOperation
 {
+    const LIMIT = 10;
+
+    /** @var bool $previewMode */
+    protected $previewMode;
+
+    /** @var string $customerId */
+    protected $customerId;
+
+    /** @var string $customerBy */
+    protected $customerBy;
+
+    /** @var int $limit */
+    protected $limit;
+
     /**
-     * OrderConfirm constructor.
+     * AbstractRecommendation constructor.
      * @param AccountInterface $account
+     * @param $customerId
      * @param string $activeDomain
+     * @param string $customerBy
+     * @param bool $previewMode
+     * @param int $limit
      */
-    public function __construct(AccountInterface $account, $activeDomain = '')
-    {
+    public function __construct(
+        AccountInterface $account,
+        $customerId,
+        $activeDomain = '',
+        $customerBy = self::IDENTIFIER_BY_CID,
+        $previewMode = false,
+        $limit = self::LIMIT
+    ) {
+        $this->limit = $limit;
+        $this->customerBy = $customerBy;
+        $this->customerId = $customerId;
+        $this->previewMode = $previewMode;
         parent::__construct($account, $activeDomain);
     }
 
+
     /**
-     * Sends the OrderConfirm confirmation to Nosto.
+     * Returns if recos should use preview mode. You can set asString to
+     * true and when the method returns true or false as a string. This is
+     * needed for constructing the query.
      *
-     * @param OrderInterface $order the placed OrderConfirm model.
-     * @param string|null $customerId the Nosto customer ID of the user who placed the OrderConfirm.
-     * @return true on success.
-     * @throws AbstractHttpException
+     * @param bool $asString
+     * @return bool|string
      */
-    public function send(OrderInterface $order, $customerId = null)
+    public function isPreviewMode($asString = false)
     {
-        $request = new ApiRequest();
-        if (!empty($customerId)) {
-            $request->setPath(ApiRequest::PATH_ORDER_TAGGING);
-            $replaceParams = array('{m}' => $this->account->getName(), '{cid}' => $customerId);
-        } else {
-            $request->setPath(ApiRequest::PATH_UNMATCHED_ORDER_TAGGING);
-            $replaceParams = array('{m}' => $this->account->getName());
+        if ($asString) {
+            return $this->previewMode ? 'true' : 'false';
         }
-        if (is_string($this->activeDomain)) {
-            $request->setActiveDomainHeader($this->activeDomain);
-        }
-        if (is_string($this->account->getName())) {
-            $request->setNostoAccountHeader($this->account->getName());
-        }
-        $request->setReplaceParams($replaceParams);
-        $response = $request->post($order);
-        return self::checkResponse($request, $response);
+        return $this->previewMode;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return new RecommendationResultHandler();
     }
 }

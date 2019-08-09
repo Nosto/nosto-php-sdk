@@ -39,11 +39,14 @@ namespace Nosto\Object\Product;
 use Nosto\Object\AbstractCollection;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\SkuInterface;
+use Nosto\Types\SanitizableInterface;
 
 /**
  * Collection class to store a collection of SKUs
  */
-class SkuCollection extends AbstractCollection implements MarkupableInterface
+class SkuCollection extends AbstractCollection implements
+    MarkupableInterface,
+    SanitizableInterface
 {
     /**
      * Appends item to the collection of skus
@@ -58,5 +61,20 @@ class SkuCollection extends AbstractCollection implements MarkupableInterface
     public function getMarkupKey()
     {
         return 'skus';
+    }
+
+    /**
+     * Sanitizes SKUs in the collection
+     * @return SkuCollection
+     */
+    public function sanitize()
+    {
+        $sanitized = new self();
+        /* @var $item SkuInterface */
+        foreach ($this as $item) {
+            $sanitized->append($item->sanitize());
+        }
+
+        return $sanitized;
     }
 }

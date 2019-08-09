@@ -34,14 +34,40 @@
  *
  */
 
-namespace Nosto\Operation\Recommendation;
+namespace Nosto\Operation\Order;
+
+use Nosto\Operation\AbstractGraphQLOperation;
+use Nosto\Object\Order\GraphQL\OrderStatus as OrderStatusModel;
+use Nosto\Result\Graphql\Order\OrderStatusResultHandler;
+use Nosto\Types\Signup\AccountInterface;
 
 /**
- * Operation class for getting product ids in a category
+ * Operation class for sending order status updates
+ * @phan-file-suppress PhanUnreferencedUseNormal
  */
-class CategoryBrowsingHistory extends AbstractHistory
+class OrderStatus extends AbstractGraphQLOperation
 {
-    private $category;
+    /* @var OrderStatusModel $order */
+    private $orderStatus;
+
+    /**
+     * OrderStatus constructor.
+     * @param AccountInterface $account
+     * @param OrderStatusModel $orderStatus
+     */
+    public function __construct(
+        AccountInterface $account,
+        OrderStatusModel $orderStatus
+    ) {
+        parent::__construct($account);
+        $this->orderStatus = $orderStatus;
+    }
+
+    protected function getResultHandler()
+    {
+        return new OrderStatusResultHandler();
+    }
+
 
     /**
      * @inheritdoc
@@ -50,69 +76,41 @@ class CategoryBrowsingHistory extends AbstractHistory
     {
         $query
             = <<<QUERY
-        {
-            "query": "mutation(
-                    \$customerId: String!,
-                    \$limit: Int!,
-                    \$preview: Boolean!
-                    \$category: String!
-            ) { 
-                updateSession(by: BY_CID, id: \$customerId, params: {
-                    event: { 
-                        type: VIEWED_CATEGORY
-                        target: \$category
-                    }     
-                }) {
-                    recos (preview: \$preview, image: VERSION_8_400_400) {
-                        category_ids: history(
-                            params: {
-                                minProducts: 1,
-                                maxProducts: \$limit,
-                                include: {
-                                    categories: [\$category]
-                                }
-                            }
-                        ) {
-                            %s {
-                                productId
-                            }     
-                        }
-                    }
+        mutation(
+                \$orderNumber: String!,
+                \$orderStatus: String!,
+                \$paymentProvider: String!
+                \$statusDate: LocalDateTime!
+        ) { 
+            updateStatus(number: \$orderNumber, params: {
+                orderStatus: \$orderStatus
+                paymentProvider: \$paymentProvider
+                statusDate: \$statusDate
+            }) {
+                number
+                statuses {
+                    date
+                    orderStatus
+                    paymentProvider
                 }
-            }",
-            "variables": {
-                "customerId": "%s",
-                "category": "%s", 
-                "limit": "%d",
-                "preview": %s
             }
         }
 QUERY;
-        $formatted = sprintf(
-            $query,
-            self::GRAPHQL_DATA_KEY,
-            $this->getCustomerId(),
-            $this->category,
-            $this->getLimit(),
-            $this->isPreviewMode(true)
-        );
-
-        return $formatted;
+        return $query;
     }
 
     /**
-     * @return mixed
+     * @inheritdoc
      */
-    public function getCategory()
+    public function getVariables()
     {
-        return $this->category;
-    }
+        $array = [
+            'orderNumber' => $this->orderStatus->getOrderNumber(),
+            'orderStatus' => $this->orderStatus->getStatus(),
+            'paymentProvider' => $this->orderStatus->getPaymentProvider(),
+            'statusDate' => $this->orderStatus->getUpdatedAt()
+        ];
 
-    /**
-     * @param mixed $category
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
+        return $array;
     }
 }

@@ -43,6 +43,7 @@ use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\MarkupableCollectionInterface;
 use Nosto\Types\SanitizableInterface;
+use Nosto\Util\Reflection;
 use Traversable;
 
 /**
@@ -136,7 +137,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
                 // Do not convert associative array keys to snake case. It is used for the custom fields
                 $markup .= self::arrayToHtml($object, $key, $spaces, $indent, $traversable, false);
             } elseif (is_object($object)) {
-                $traversable = SerializationHelper::getProperties($object);
+                $traversable = Reflection::getObjectProperties($object);
                 $markup .= self::arrayToHtml($object, $key, $spaces, $indent, $traversable, true);
             }
             //end block

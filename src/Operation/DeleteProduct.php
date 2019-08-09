@@ -40,6 +40,7 @@ use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Result\Api\GeneralPurposeResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 
 /**
@@ -84,13 +85,46 @@ class DeleteProduct extends AbstractAuthenticatedOperation
      */
     public function delete()
     {
-        $request = $this->initApiRequest(
+        $request = $this->initRequest(
             $this->account->getApiToken(Token::API_PRODUCTS),
             $this->account->getName(),
             $this->activeDomain
         );
-        $request->setPath(ApiRequest::PATH_PRODUCTS_DISCONTINUE);
         $response = $request->post($this->productIds);
-        return self::checkResponse($request, $response);
+        return $request->getResultHandler()->parse($response);
     }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return new GeneralPurposeResultHandler();
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new ApiRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getContentType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return ApiRequest::PATH_PRODUCTS_DISCONTINUE;
+    }
+
 }

@@ -34,22 +34,30 @@
  *
  */
 
-namespace Nosto\Result\Graphql;
+namespace Nosto\Result\Graphql\Order;
 
-use Nosto\Object\AbstractCollection;
+use Nosto\NostoException;
+use Nosto\Result\Graphql\GraphQLResultHandler;
 
-/**
- * Collection for GraphQL result
- */
-class ResultSet extends AbstractCollection
+class OrderCreateResultHandler extends GraphQLResultHandler
 {
+    const GRAPHQL_RESPONSE_ORDER_CREATE = 'placeOrder';
+
     /**
-     * Appends a result item into the collection
-     *
-     * @param ResultItem $item
+     * @inheritdoc
      */
-    public function append(ResultItem $item)
+    protected function parseQueryResult(\stdClass $stdClass)
     {
-        $this->var[] = $item;
+        $members = get_object_vars($stdClass);
+        foreach ($members as $varName => $member) {
+            if ($varName === self::GRAPHQL_RESPONSE_ORDER_CREATE) {
+                return $member->id;
+            }
+            if ($member instanceof \stdClass) {
+                return $this->parseQueryResult($member);
+            }
+        }
+
+        throw new NostoException('No placeOrder object was found in GraphQL result');
     }
 }

@@ -36,65 +36,87 @@
 
 namespace Nosto\Operation;
 
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Result\Api\GeneralPurposeResultHandler;
-use Nosto\Types\Signup\AccountInterface;
 use Nosto\NostoException;
+use Nosto\Request\Api\Token;
+use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Request\Http\Exception\HttpResponseException;
+use Nosto\Request\Graphql\GraphqlRequest;
+use Nosto\Operation\GraphQLRequest as GraphQLQuery;
+use Nosto\Types\Signup\AccountInterface;
 
-/**
- * Operation class for updated customer's marketing permission
- */
-class MarketingPermission extends AbstractAuthenticatedOperation
+abstract class AbstractGraphQLOperation extends AbstractOperation
 {
+
+    const IDENTIFIER_BY_CID = 'BY_CID';
+    const IDENTIFIER_BY_REF = 'BY_REF';
+
     /**
-     * MarketingPermission constructor.
-     * @param AccountInterface $account
+     * @var AccountInterface Nosto configuration
+     */
+    protected $account;
+
+    /**
+     * @var string active domain
+     */
+    protected $activeDomain;
+
+    /**
+     * Constructor
+     *
+     * @param AccountInterface $account the account object.
      * @param string $activeDomain
      */
     public function __construct(AccountInterface $account, $activeDomain = '')
     {
-        parent::__construct($account, $activeDomain);
+        $this->account = $account;
+        $this->activeDomain = $activeDomain;
     }
 
     /**
-     * Update customer marketing permission
+     * Returns the result
      *
-     * @param $email
-     * @param $hasPermission
      * @return mixed|null
+     * @throws AbstractHttpException
+     * @throws HttpResponseException
      * @throws NostoException
      */
-    public function update($email, $hasPermission)
+    public function execute()
     {
         $request = $this->initRequest(
-            $this->account->getApiToken(Token::API_EMAIL),
-            $this->account->getName(),
-            $this->activeDomain
+            $this->account->getApiToken(Token::API_GRAPHQL),
+            null,
+            null
         );
-
-        $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
-        $request->setReplaceParams($replaceParams);
-        $response = $request->postRaw('');
+        $payload = new GraphQLQuery(
+            $this->getQuery(),
+            $this->getVariables()
+        );
+        $payload = $payload->getRequest();
+        $response = $request->postRaw(
+            $payload
+        );
 
         return $request->getResultHandler()->parse($response);
     }
 
     /**
-     * @inheritdoc
+     * Builds the recommendation API request
+     *
+     * @return string
      */
-    protected function getResultHandler()
-    {
-        return new GeneralPurposeResultHandler();
-    }
+    abstract public function getQuery();
 
+    /**
+     * @return mixed
+     */
+    abstract public function getVariables();
 
     /**
      * @inheritdoc
      */
     protected function getRequestType()
     {
-        return new ApiRequest();
+        return new GraphqlRequest();
     }
 
     /**
@@ -110,6 +132,7 @@ class MarketingPermission extends AbstractAuthenticatedOperation
      */
     protected function getPath()
     {
-        return ApiRequest::PATH_MARKETING_PERMISSION;
+        return GraphqlRequest::PATH_GRAPH_QL;
     }
+
 }

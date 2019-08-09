@@ -34,31 +34,30 @@
  *
  */
 
-namespace Nosto\Operation\Recommendation;
+namespace Nosto\Result\Graphql\Order;
 
-use Nosto\Types\Signup\AccountInterface;
+use Nosto\NostoException;
+use Nosto\Result\Graphql\GraphQLResultHandler;
 
-/**
- * Abstract operation class for getting history related recommendations
- */
-abstract class AbstractHistory extends AbstractOperation
+class OrderStatusResultHandler extends GraphQLResultHandler
 {
-    const DEFAULT_LIMIT = 10;
+    const GRAPHQL_ORDER_NR = 'number';
 
     /**
-     * Category constructor
-     *
-     * @param AccountInterface $account
-     * @param string $customerId
-     * @param int $limit
+     * @inheritdoc
      */
-    public function __construct(
-        AccountInterface $account,
-        $customerId,
-        $limit = self::DEFAULT_LIMIT
-    ) {
-        parent::__construct($account);
-        $this->setCustomerId($customerId);
-        $this->setLimit($limit);
+    protected function parseQueryResult(\stdClass $stdClass)
+    {
+        $members = get_object_vars($stdClass);
+        foreach ($members as $varName => $member) {
+            if ($varName === self::GRAPHQL_ORDER_NR) {
+                return $member;
+            }
+            if ($member instanceof \stdClass) {
+                return $this->parseQueryResult($member);
+            }
+        }
+
+        throw new NostoException('No number string was found in GraphQL result');
     }
 }

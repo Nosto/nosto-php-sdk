@@ -37,37 +37,76 @@
 namespace Nosto\Result\Graphql;
 
 use Nosto\NostoException;
+use Nosto\Request\Http\HttpResponse;
+use Nosto\Result\ResultHandler;
 
-/**
- * Wrapper class for item returned by the GraphQL API
- */
-class ResultItem
+abstract class GraphQLResultHandler extends ResultHandler
 {
-    /**
-     * @var array
-     */
-    private $data = array();
-
-    public function __construct(array $data = array())
-    {
-        $this->data = $data;
-    }
+    const GRAPHQL_RESPONSE_ERROR = 'errors';
+    const GRAPHQL_RESPONSE_DATA = 'data';
 
     /**
-     * @param $name
-     * @param $arguments
-     * @return mixed|null
-     * @throws NostoException
+     * @inheritdoc
      */
-    public function __call($name, $arguments)
+    protected function parseResponse(HttpResponse $response)
     {
-        if (stripos($name, 'get') === 0) {
-            $dataKey = lcfirst(substr($name, 3));
-            if (!empty($this->data[$dataKey])) {
-                return $this->data[$dataKey];
-            }
-            throw new NostoException(sprintf('Field %s does not exist', $dataKey));
+        $result = json_decode($response->getResult());
+
+        if ($this->hasErrors($result)) {
+            $error = $this->parseErrorMessage($result->errors);
+            throw new NostoException($error);
         }
-        throw new NostoException(sprintf('Call to undefined method %s', $name));
+
+        if ($this->hasData($result)) {
+            return $this->parseQueryResult($result->data);
+        }
+
+        throw new NostoException('No data found in GraphQL result');
     }
+
+    /**
+     * @param \stdClass $stdClass
+     * @return bool
+     */
+    private function hasErrors(\stdClass $stdClass)
+    {
+        $members = get_object_vars($stdClass);
+        if (array_key_exists(self::GRAPHQL_RESPONSE_ERROR, $members)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param \stdClass $stdClass
+     * @return bool
+     */
+    private function hasData(\stdClass $stdClass)
+    {
+        $members = get_object_vars($stdClass);
+        if (array_key_exists(self::GRAPHQL_RESPONSE_DATA, $members)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param array $errors
+     * @return string
+     */
+    private function parseErrorMessage(array $errors)
+    {
+        $errorMessage = '';
+        foreach ($errors as $error) {
+            $errorMessage .= $error->message.' | ';
+        }
+        return $errorMessage;
+    }
+
+    /**
+     * @param \stdClass $stdClass
+     * @throws NostoException
+     * @return mixed
+     */
+    abstract protected function parseQueryResult(\stdClass $stdClass);
 }

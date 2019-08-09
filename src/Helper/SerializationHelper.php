@@ -36,8 +36,7 @@
 
 namespace Nosto\Helper;
 
-use \ReflectionClass;
-use \ReflectionException;
+use Nosto\Util\Reflection;
 use \Traversable;
 
 /**
@@ -47,6 +46,9 @@ use \Traversable;
  */
 class SerializationHelper extends AbstractHelper
 {
+
+    const SNAKE_CASE = 'snake_case';
+    const CAMEL_CASE = 'camel_case';
 
     public static function serialize($object)
     {
@@ -70,14 +72,14 @@ class SerializationHelper extends AbstractHelper
     /**
      * Serializes the given object to JSON using a snake-case naming convention.
      * Arrays and objects can both be passed normally.
-     *
      * @param $object
+     * @param string $keyCaseType
      * @return array
      */
-    private static function toArray($object)
+    private static function toArray($object, $keyCaseType = self::SNAKE_CASE)
     {
         $json = array();
-        $props = self::getProperties($object);
+        $props = Reflection::getObjectProperties($object);
         foreach ($props as $key => $value) {
             $check_references = explode("_", $key);
             $getter = "";
@@ -93,7 +95,9 @@ class SerializationHelper extends AbstractHelper
             if (!method_exists($object, $getter)) {
                 continue;
             }
-            $key = self::toSnakeCase($key);
+            if ($keyCaseType === self::SNAKE_CASE) {
+                $key = self::toSnakeCase($key);
+            }
             $value = $object->$getter();
             if (self::isNull($value)) {
                 continue;
@@ -133,43 +137,12 @@ class SerializationHelper extends AbstractHelper
     }
 
     /**
-     * Recursively lists all the properties of the given class by traversing up the class hierarchy
-     *
-     * @param $obj object the object whose properties to list
-     * @return array the array of the keys and properties of the object
+     * @param $object
+     * @return array
      */
-    public static function getProperties($obj)
+    public static function toAssocArray($object)
     {
-        $properties = array();
-        try {
-            $rc = new ReflectionClass($obj);
-            do {
-                $rp = array();
-
-                // Note that we will not include any properties in traits
-                $traits = $rc->getTraits();
-                $skipProperties = array();
-                if (!empty($traits)) {
-                    foreach ($traits as $trait) {
-                        foreach ($trait->getProperties() as $traitProperty) {
-                            $skipProperties[] = $traitProperty->getName();
-                        }
-                    }
-                }
-                /* @var $p \ReflectionProperty */
-                foreach ($rc->getProperties() as $p) {
-                    if (in_array($p->getName(), $skipProperties, true)) {
-                        continue;
-                    }
-                    $p->setAccessible(true);
-                    $rp[$p->getName()] = $p->getValue($obj);
-                }
-                $properties = array_merge($rp, $properties);
-            } while ($rc = $rc->getParentClass());
-        } catch (ReflectionException $e) {
-            //
-        }
-        return $properties;
+        return self::toArray($object, self::CAMEL_CASE);
     }
 
     /**

@@ -34,82 +34,40 @@
  *
  */
 
-namespace Nosto\Operation;
+namespace Nosto\Result\Graphql\Recommendation;
 
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Result\Api\GeneralPurposeResultHandler;
-use Nosto\Types\Signup\AccountInterface;
-use Nosto\NostoException;
-
-/**
- * Operation class for updated customer's marketing permission
- */
-class MarketingPermission extends AbstractAuthenticatedOperation
+class CategoryMerchandisingResult
 {
+    /** @var ResultSet $resultSet */
+    private $resultSet;
+
+    /** @var string $trackingCode */
+    private $trackingCode;
+
     /**
-     * MarketingPermission constructor.
-     * @param AccountInterface $account
-     * @param string $activeDomain
+     * CategoryMerchandisingResult constructor.
+     * @param ResultSet $resultSet
+     * @param string $trackingCode
      */
-    public function __construct(AccountInterface $account, $activeDomain = '')
+    public function __construct(ResultSet $resultSet, $trackingCode)
     {
-        parent::__construct($account, $activeDomain);
+        $this->resultSet = $resultSet;
+        $this->trackingCode = $trackingCode;
     }
 
     /**
-     * Update customer marketing permission
-     *
-     * @param $email
-     * @param $hasPermission
-     * @return mixed|null
-     * @throws NostoException
+     * @return ResultSet
      */
-    public function update($email, $hasPermission)
+    public function getResultSet()
     {
-        $request = $this->initRequest(
-            $this->account->getApiToken(Token::API_EMAIL),
-            $this->account->getName(),
-            $this->activeDomain
-        );
-
-        $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
-        $request->setReplaceParams($replaceParams);
-        $response = $request->postRaw('');
-
-        return $request->getResultHandler()->parse($response);
+        return $this->resultSet;
     }
 
     /**
-     * @inheritdoc
+     * @return string
      */
-    protected function getResultHandler()
+    public function getTrackingCode()
     {
-        return new GeneralPurposeResultHandler();
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    protected function getRequestType()
-    {
-        return new ApiRequest();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getContentType()
-    {
-        return self::CONTENT_TYPE_APPLICATION_JSON;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getPath()
-    {
-        return ApiRequest::PATH_MARKETING_PERMISSION;
+        return $this->trackingCode;
     }
 }

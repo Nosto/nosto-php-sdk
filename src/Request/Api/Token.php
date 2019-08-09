@@ -111,6 +111,7 @@ class Token extends AbstractObject implements ValidatableInterface
      * @param string $prefix optional prefix for the token name in the list.
      * @param string $postfix optional postfix for the token name in the list.
      * @return Token[] a list of token instances.
+     * @throws NostoException
      */
     public static function parseTokens(array $tokens, $prefix = '', $postfix = '')
     {

@@ -40,13 +40,14 @@ use Nosto\NostoException;
 use Nosto\Object\Signup\Account;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
+use Nosto\Result\Api\JsonResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\Types\Signup\SignupInterface;
 
 /**
  * Operation class for handling the creation accounts through the Nosto API.
  */
-class AccountSignup extends AbstractOperation
+class AccountSignup extends AbstractRESTOperation
 {
     /**
      * @var SignupInterface Nosto account meta
@@ -73,18 +74,49 @@ class AccountSignup extends AbstractOperation
      */
     public function create()
     {
-        $request = $this->initApiRequest($this->account->getSignUpApiToken());
-        $request->setPath(ApiRequest::PATH_SIGN_UP);
+        $request = $this->initRequest($this->account->getSignUpApiToken());
         $request->setReplaceParams(array('{lang}' => $this->account->getLanguageCode()));
         $response = $request->post($this->account);
-        $this->checkResponse($request, $response);
+        $results = $request->getResultHandler()->parse($response);
 
         $account = new Account($this->account->getPlatform() . '-' . $this->account->getName());
         $account->setTokens(Token::parseTokens(
-            $response->getJsonResult(true),
+            $results,
             '',
             '_token'
         ));
         return $account;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getResultHandler()
+    {
+        return new JsonResultHandler();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return ApiRequest::PATH_SIGN_UP;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getRequestType()
+    {
+        return new ApiRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getContentType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
     }
 }

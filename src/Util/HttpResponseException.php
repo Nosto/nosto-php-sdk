@@ -34,77 +34,61 @@
  *
  */
 
-namespace Nosto\Operation\Recommendation;
+namespace Nosto\Util;
 
-use Nosto\Types\Signup\AccountInterface;
+use Nosto\Request\Http\HttpResponse;
+use Nosto\Operation\AbstractOperation;
+use Nosto\Request\Http\Exception\HttpResponseException as ResponseException;
 
-/**
- * Abstract operation class for getting top list related recommendations
- */
-abstract class AbstractTopList extends AbstractOperation
+class HttpResponseException
 {
-    const DEFAULT_LIMIT = 10;
-    const DEFAULT_HOURS = 168;
-    const DEFAULT_SORT = 'VIEWS';
-    const SORT_VIEWS = 'VIEWS';
-    const SORT_BUYS = 'BUYS';
-
-    private $sort;
-    private $hours;
-
     /**
-     * Category constructor
-     *
-     * @param AccountInterface $account
-     * @param string $customerId
-     * @param int $limit
-     * @param int $hours
-     * @param string $sort
+     * @param HttpResponse $httpResponse
+     * @throws ResponseException
      */
-    public function __construct(
-        AccountInterface $account,
-        $customerId,
-        $limit = self::DEFAULT_LIMIT,
-        $hours = self::DEFAULT_HOURS,
-        $sort = self::DEFAULT_SORT
-    ) {
-        parent::__construct($account);
-        $this->setCustomerId($customerId);
-        $this->setLimit($limit);
-        $this->setLimit($limit);
-        $this->setHours($hours);
-        $this->setSort($sort);
+    public static function handle(HttpResponse $httpResponse)
+    {
+        if ($httpResponse->getContentType() === AbstractOperation::CONTENT_TYPE_APPLICATION_JSON) {
+            self::handleJson($httpResponse);
+        }
+        throw new ResponseException('Something went wrong', $httpResponse->getCode());
     }
 
     /**
-     * @return mixed
+     * @param HttpResponse $httpResponse
+     * @throws ResponseException
      */
-    public function getSort()
+    private static function handleJson(HttpResponse $httpResponse)
     {
-        return $this->sort;
+
+        $message = '';
+        $result = $httpResponse->getJsonResult();
+
+        if (isset($result->message)) {
+            $message .= $result->message;
+        }
+
+        if (isset($result->errors) && is_array($result->errors)) {
+            foreach ($result->errors as $error) {
+                if ($error instanceof \stdClass) {
+                    $message .= self::getErrorsFromStdClass($error);
+                }
+            }
+        }
+        throw new ResponseException($message);
     }
 
     /**
-     * @param mixed $sort
+     * @param \stdClass $errors
+     * @return string
      */
-    public function setSort($sort)
+    private static function getErrorsFromStdClass(\stdClass $errors)
     {
-        $this->sort = $sort;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getHours()
-    {
-        return $this->hours;
-    }
-
-    /**
-     * @param mixed $hours
-     */
-    public function setHours($hours)
-    {
-        $this->hours = $hours;
+        $errors = get_object_vars($errors);
+        $errorString = '';
+        foreach ($errors as $key => $error) {
+            $errorString .= ' | '. $key .': '.$error;
+        }
+        return $errorString;
     }
 }

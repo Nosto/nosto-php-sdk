@@ -34,64 +34,40 @@
  *
  */
 
-namespace Nosto\Result\Graphql;
+namespace Nosto\Result\Graphql\Recommendation;
 
-use Nosto\Helper\ArrayHelper;
 use Nosto\NostoException;
-use Nosto\Operation\Recommendation\AbstractOperation;
-use Nosto\Request\Http\HttpResponse;
 
 /**
- * Builder / parser class for GraphQL result and response
+ * Wrapper class for item returned by the GraphQL API
  */
-class ResultSetBuilder
+class ResultItem
 {
     /**
-     * Builds a result set from HttpResponse
-     *
-     * @param HttpResponse $httpResponse
-     * @return ResultSet
-     * @throws NostoException
+     * @var array
      */
-    public static function fromHttpResponse(HttpResponse $httpResponse)
+    private $data = array();
+
+    public function __construct(array $data = array())
     {
-        $result = json_decode($httpResponse->getResult());
-        $primaryData = self::parsePrimaryData($result);
-        $resultSet = new ResultSet();
-        foreach ($primaryData as $primaryDataItem) {
-            if ($primaryDataItem instanceof \stdClass) {
-                $primaryDataItem = ArrayHelper::stdClassToArray($primaryDataItem);
-            }
-            $item = new ResultItem($primaryDataItem);
-            $resultSet->append($item);
-        }
-        return $resultSet;
+        $this->data = $data;
     }
 
     /**
-     * Finds the primary data field from stdClass
-     *
-     * @param \stdClass $class
-     * @return array
+     * @param $name
+     * @param $arguments
+     * @return mixed|null
      * @throws NostoException
      */
-    public static function parsePrimaryData(\stdClass $class)
+    public function __call($name, $arguments)
     {
-        $members = get_object_vars($class);
-        foreach ($members as $varName => $member) {
-            if ($varName == AbstractOperation::GRAPHQL_DATA_KEY) {
-                return $member;
+        if (stripos($name, 'get') === 0) {
+            $dataKey = lcfirst(substr($name, 3));
+            if (!empty($this->data[$dataKey])) {
+                return $this->data[$dataKey];
             }
-            if ($member instanceof \stdClass) {
-                return self::parsePrimaryData($member);
-            }
+            throw new NostoException(sprintf('Field %s does not exist', $dataKey));
         }
-
-        throw new NostoException(
-            sprintf(
-                'Could not find primary data field (%s) from response',
-                AbstractOperation::GRAPHQL_DATA_KEY
-            )
-        );
+        throw new NostoException(sprintf('Call to undefined method %s', $name));
     }
 }

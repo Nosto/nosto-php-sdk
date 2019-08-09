@@ -34,90 +34,21 @@
  *
  */
 
-namespace Nosto\Request\Http\Exception;
+namespace Nosto\Util;
 
-use Exception;
-use Nosto\NostoException;
-use Nosto\Request\Http\HttpRequest;
-use Nosto\Request\Http\HttpResponse;
 
-/**
- * Nosto exception class for HTTP errors within the SDK.
- */
-abstract class AbstractHttpException extends NostoException
+class Time
 {
     /**
-     * @var HttpResponse
+     * @param string $createdAt
+     * @param string $updatedAt
+     * @return bool
      */
-    private $response;
-
-    /**
-     * @var HttpRequest
-     */
-    private $request;
-
-    /**
-     * HttpException constructor.
-     * @param string $message
-     * @param int|null $code
-     * @param Exception|null $previous
-     * @param HttpRequest|null $request
-     * @param HttpResponse|null $response
-     */
-    public function __construct(
-        $message = "",
-        $code = null,
-        Exception $previous = null,
-        HttpRequest $request = null,
-        HttpResponse $response = null
-    ) {
-        parent::__construct($message, $code, $previous);
-        $this->response = $response;
-        $this->request = $request;
-    }
-
-    /**
-     * @return HttpRequest
-     */
-    public function getRequest()
+    public static function isUpdatedEqualToCreated($createdAt, $updatedAt)
     {
-        return $this->request;
-    }
+        $createdAtDtm = new \DateTime($createdAt);
+        $updatedAtDtm = new \DateTime($updatedAt);
 
-    /**
-     * @param HttpRequest $request
-     */
-    public function setRequest(HttpRequest $request)
-    {
-        $this->request = $request;
-    }
-
-    /**
-     * @return HttpResponse
-     */
-    public function getResponse()
-    {
-        return $this->response;
-    }
-
-    /**
-     * @param HttpResponse $response
-     */
-    public function setResponse(HttpResponse $response)
-    {
-        $this->response = $response;
-    }
-
-    /**
-     * Get x request id from the response
-     * @return null|string
-     */
-    public function getXRequestId()
-    {
-        if ($this->response != null) {
-            return $this->response->getXRequestId();
-        }
-
-        return null;
+        return $createdAtDtm == $updatedAtDtm;
     }
 }

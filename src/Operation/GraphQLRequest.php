@@ -36,80 +36,29 @@
 
 namespace Nosto\Operation;
 
-use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Result\Api\GeneralPurposeResultHandler;
-use Nosto\Types\Signup\AccountInterface;
-use Nosto\NostoException;
-
-/**
- * Operation class for updated customer's marketing permission
- */
-class MarketingPermission extends AbstractAuthenticatedOperation
+class GraphQLRequest
 {
+
+    /** @var array */
+    private $request;
+
     /**
-     * MarketingPermission constructor.
-     * @param AccountInterface $account
-     * @param string $activeDomain
+     * GraphQLRequest constructor.
+     * @param string $query
+     * @param array $variables
      */
-    public function __construct(AccountInterface $account, $activeDomain = '')
+    public function __construct($query, array $variables)
     {
-        parent::__construct($account, $activeDomain);
+        $this->request = ['query' => $query, 'variables' => $variables];
     }
 
     /**
-     * Update customer marketing permission
+     * Returns the query together with the variables
      *
-     * @param $email
-     * @param $hasPermission
-     * @return mixed|null
-     * @throws NostoException
+     * @return false|string
      */
-    public function update($email, $hasPermission)
+    public function getRequest()
     {
-        $request = $this->initRequest(
-            $this->account->getApiToken(Token::API_EMAIL),
-            $this->account->getName(),
-            $this->activeDomain
-        );
-
-        $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
-        $request->setReplaceParams($replaceParams);
-        $response = $request->postRaw('');
-
-        return $request->getResultHandler()->parse($response);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getResultHandler()
-    {
-        return new GeneralPurposeResultHandler();
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    protected function getRequestType()
-    {
-        return new ApiRequest();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getContentType()
-    {
-        return self::CONTENT_TYPE_APPLICATION_JSON;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getPath()
-    {
-        return ApiRequest::PATH_MARKETING_PERMISSION;
+        return json_encode($this->request);
     }
 }
