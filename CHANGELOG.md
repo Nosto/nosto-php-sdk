@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+##  4.0.0
+* Handle order operation through GraphQL and remove APIs
+* Implement recursive sanitizing
+* Refactor recommendation operation classes
+* Refactor result handling
+
 ## 3.15.0
 * Add inventory level data to SKUs
 
