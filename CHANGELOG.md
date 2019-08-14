@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+##  4.0.1
+* Fix category merchandising GraphQL query setting wrong preview value 
+
 ##  4.0.0
 * Handle order confirmations through GraphQL instead of legacy REST API
 * Introduce operation for sending order status updates separately

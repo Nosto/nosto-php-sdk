@@ -123,7 +123,7 @@ QUERY;
             'customerId' => $this->customerId,
             'category' => $this->category,
             'limit' => $this->limit,
-            'preview' => $this->limit,
+            'preview' => $this->previewMode,
             'by' => $this->customerBy
         ];
 
