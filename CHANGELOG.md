@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+##  4.0.2
+* Remove redundant fields from category recommendation GraphQL query - only leave the productId
+
 ##  4.0.1
 * Fix category merchandising GraphQL query setting wrong preview value 
 
