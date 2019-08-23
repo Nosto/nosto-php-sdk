@@ -91,12 +91,16 @@ class CategoryMerchandising extends AbstractRecommendation
             }) {
             id
             recos (preview: \$preview, image: VERSION_10_MAX_SQUARE) {
-              category (params: {
+              category (
+                category: \$category
                 minProducts: 1
                 maxProducts: \$limit
-              }) {
+              ) {
                 primary {
                   productId
+                  priceText
+                  name
+                  imageUrl
                 }
                 batchToken
                 totalPrimaryCount
