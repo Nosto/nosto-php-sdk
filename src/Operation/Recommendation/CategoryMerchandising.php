@@ -98,9 +98,6 @@ class CategoryMerchandising extends AbstractRecommendation
               ) {
                 primary {
                   productId
-                  priceText
-                  name
-                  imageUrl
                 }
                 batchToken
                 totalPrimaryCount
