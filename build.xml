@@ -61,19 +61,11 @@
 
     <target name="phpcbf">
         <exec executable="./vendor/bin/phpcbf" passthru="true">
-            <arg value="--colors"/>
-            <arg value="--report-width=auto"/>
-            <arg value="--standard=ruleset.xml"/>
-            <arg value="."/>
         </exec>
     </target>
 
     <target name="phpcs" depends="phpcbf">
         <exec executable="./vendor/bin/phpcs" passthru="true">
-            <arg value="--colors"/>
-            <arg value="--report-width=auto"/>
-            <arg value="--standard=ruleset.xml"/>
-            <arg value="."/>
         </exec>
     </target>
 
