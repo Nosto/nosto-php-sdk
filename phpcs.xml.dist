@@ -35,18 +35,53 @@
   ~
   -->
 
-<!--suppress XmlUnboundNsPrefix -->
-<ruleset name="NostoPHPSDK">
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    name="NostoPHPSDK"
+    xsi:noNamespaceSchemaLocation="./vendor/squizlabs/php_codesniffer/phpcs.xsd">
+
     <description>Nosto PHP SDK coding standards</description>
+
+    <!--
+    #############################################################################
+    COMMAND LINE ARGUMENTS
+    https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset
+    #############################################################################
+    -->
+
+    <file>.</file>
+
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/tests/*</exclude-pattern>
+    <exclude-pattern>*/phpseclib/*</exclude-pattern>
+
+    <!-- Only check PHP files. -->
+    <arg name="extensions" value="php"/>
+
+    <!-- Strip the filepaths down to the relevant bit. -->
+    <arg name="basepath" value="./"/>
+
+    <!-- Check up to 8 files simultaneously. -->
+    <arg name="parallel" value="8"/>
+
+    <!-- Show coloured output. -->
+    <arg name="colors"/>
+
+    <!-- Determine the report width automatically. -->
+    <arg name="report-width" value="auto"/>
+
+    <!--
+    #############################################################################
+    RULES
+    #############################################################################
+    -->
+
     <rule ref="PSR1"/>
     <rule ref="PSR2">
         <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
         <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
     </rule>
+
     <rule ref="PHPCompatibility"/>
     <config name="testVersion" value="5.4-"/>
-    <exclude-pattern>*/vendor/*</exclude-pattern>
-    <exclude-pattern>*/tests/*</exclude-pattern>
-    <exclude-pattern>*/phpseclib/*</exclude-pattern>
-    <exclude-pattern>*.js</exclude-pattern>
+
 </ruleset>
