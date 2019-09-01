@@ -50,7 +50,8 @@ use Nosto\Result\Api\JsonResultHandler;
  */
 class AuthorizationCode extends AbstractOperation
 {
-    const PATH_TOKEN = '/token?code={cod}&client_id={cid}&client_secret={sec}&redirect_uri={uri}&grant_type=authorization_code'; // @codingStandardsIgnoreLine
+    // phpcs:ignore Generic.Files.LineLength.TooLong
+    const PATH_TOKEN = '/token?code={cod}&client_id={cid}&client_secret={sec}&redirect_uri={uri}&grant_type=authorization_code';
 
     /**
      * @var string the client id the identify this application to the oauth2 server.
