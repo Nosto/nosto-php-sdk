@@ -106,19 +106,19 @@ trait IframeTrait
      *
      * @return IframeInterface the iframe params with which to load the iframe
      */
-    public abstract function getIframe();
+    abstract public function getIframe();
 
     /**
      * Returns the current for which to load the IFrame
      *
      * @return UserInterface the current user for which to load the iframe
      */
-    public abstract function getUser();
+    abstract public function getUser();
 
     /**
      * Returns the account for which to load the IFrame
      *
      * @return AccountInterface the account for which to load the iframe
      */
-    public abstract function getAccount();
+    abstract public function getAccount();
 }

@@ -129,5 +129,4 @@ class DeleteProduct extends AbstractAuthenticatedOperation
     {
         return ApiRequest::PATH_PRODUCTS_DISCONTINUE;
     }
-
 }

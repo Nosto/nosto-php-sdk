@@ -118,5 +118,4 @@ class ExchangeTokens extends AbstractOperation
     {
         return HttpRequest::PATH_OAUTH_SYNC;
     }
-
 }

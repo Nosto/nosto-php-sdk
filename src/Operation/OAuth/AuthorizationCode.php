@@ -156,5 +156,4 @@ class AuthorizationCode extends AbstractOperation
     {
         return new JsonResultHandler();
     }
-
 }

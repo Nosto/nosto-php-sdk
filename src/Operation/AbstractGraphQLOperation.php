@@ -134,5 +134,4 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
     {
         return GraphqlRequest::PATH_GRAPH_QL;
     }
-
 }
