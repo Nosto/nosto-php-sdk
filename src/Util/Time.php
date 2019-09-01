@@ -36,7 +36,6 @@
 
 namespace Nosto\Util;
 
-
 class Time
 {
     /**
