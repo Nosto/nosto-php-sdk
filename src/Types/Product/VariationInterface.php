@@ -36,7 +36,7 @@
 
 namespace Nosto\Types\Product;
 
-interface VariationInterface
+interface VariationInterface extends \JsonSerializable
 {
     /**
      * Returns the variations's unique identifier.

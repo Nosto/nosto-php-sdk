@@ -42,7 +42,7 @@ use Nosto\Types\SanitizableInterface;
  * Interface for the meta data of a product.
  * This is used when making product re-crawl API requests and product history exports to Nosto.
  */
-interface ProductInterface extends SanitizableInterface
+interface ProductInterface extends SanitizableInterface, \JsonSerializable
 {
     const IN_STOCK = 'InStock';
     const OUT_OF_STOCK = 'OutOfStock';

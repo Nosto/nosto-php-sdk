@@ -36,6 +36,7 @@
 
 namespace Nosto\Object\Product;
 
+use Nosto\Mixins\CollectionJsonSerializerTrait;
 use Nosto\Object\AbstractCollection;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\VariationInterface;
@@ -43,8 +44,9 @@ use Nosto\Types\Product\VariationInterface;
 /**
  * Collection class to store a collection of variations
  */
-class VariationCollection extends AbstractCollection implements MarkupableInterface
+class VariationCollection extends AbstractCollection implements MarkupableInterface, \JsonSerializable
 {
+    use CollectionJsonSerializerTrait;
     /**
      * Appends item to the collection of variations
      *

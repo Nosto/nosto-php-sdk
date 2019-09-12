@@ -34,75 +34,42 @@
  *
  */
 
-namespace Nosto\Types\Product;
+namespace Nosto\Mixins;
 
-use Nosto\Types\SanitizableInterface;
+use Nosto\Types\Product\SkuInterface;
 
 /**
- * Interface for the product variation.
+ * Iframe mixin class for account administration iframe.
  */
-interface SkuInterface extends SanitizableInterface, \JsonSerializable
+trait CollectionJsonSerializerTrait
 {
     /**
-     * Returns the id of the variation
-     *
-     * @return string|int
-     */
-    public function getId();
-
-    /**
-     * Returns the name of the variation
-     *
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * Returns the price
-     *
-     * @return float
-     */
-    public function getPrice();
-
-    /**
-     * Returns the list price
-     *
-     * @return float
-     */
-    public function getListPrice();
-
-    /**
-     * Returns the url
-     *
-     * @return string
-     */
-    public function getUrl();
-
-    /**
-     * Returns the image url
-     *
-     * @return string
-     */
-    public function getImageUrl();
-
-    /**
-     * Returns the gtin
-     *
-     * @return string
-     */
-    public function getGtin();
-
-    /**
-     * Returns the availability
-     *
-     * @return string
-     */
-    public function getAvailability();
-
-    /**
-     * Returns the custom attributes
+     * Returns normalized array for the collection. The collection items must implement
+     * \jsonSerializable interface or the items must have scalar values.
      *
      * @return array
      */
-    public function getCustomFields();
+    public function jsonSerialize()
+    {
+        $data = [];
+        /* @var SkuInterface $item */
+        do {
+            $current = $this->current();
+            if ($current instanceof \JsonSerializable) {
+                $data[] = $current->jsonSerialize();
+            } elseif (is_scalar($current)) {
+                $data[] = $current;
+            }
+            $this->next();
+        } while ($this->current() !== false);
+
+        return $data;
+    }
+
+    abstract function next();
+
+    /**
+     * @return null|mixed|\JsonSerializable
+     */
+    abstract function current();
 }

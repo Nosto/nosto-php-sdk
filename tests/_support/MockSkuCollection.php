@@ -34,75 +34,50 @@
  *
  */
 
-namespace Nosto\Types\Product;
+namespace Nosto\Test\Support;
 
-use Nosto\Types\SanitizableInterface;
+use \Nosto\Object\Product\Sku;
+use Nosto\Object\Product\SkuCollection;
 
-/**
- * Interface for the product variation.
- */
-interface SkuInterface extends SanitizableInterface, \JsonSerializable
+class MockSkuCollection extends SkuCollection
 {
-    /**
-     * Returns the id of the variation
-     *
-     * @return string|int
-     */
-    public function getId();
-
-    /**
-     * Returns the name of the variation
-     *
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * Returns the price
-     *
-     * @return float
-     */
-    public function getPrice();
-
-    /**
-     * Returns the list price
-     *
-     * @return float
-     */
-    public function getListPrice();
-
-    /**
-     * Returns the url
-     *
-     * @return string
-     */
-    public function getUrl();
-
-    /**
-     * Returns the image url
-     *
-     * @return string
-     */
-    public function getImageUrl();
-
-    /**
-     * Returns the gtin
-     *
-     * @return string
-     */
-    public function getGtin();
-
-    /**
-     * Returns the availability
-     *
-     * @return string
-     */
-    public function getAvailability();
-
-    /**
-     * Returns the custom attributes
-     *
-     * @return array
-     */
-    public function getCustomFields();
+    public function __construct()
+    {
+        $sku1 = new Sku();
+        $sku1->setAvailable(true);
+        $sku1->setAvailability('InStock');
+        $sku1->setGtin("gtin1");
+        $sku1->setId(1);
+        $sku1->setPrice(79.99);
+        $sku1->setListPrice(100.99);
+        $sku1->setUrl('http://my.shop.com/products/test_product_1.html');
+        $sku1->setName('Test Product I');
+        $sku1->setImageUrl('http://my.shop.com/images/test_product_1.jpg');
+        $sku1->setInventoryLevel(20);
+        $this->append($sku1);
+        $sku2 = new Sku();
+        $sku2->setAvailable(true);
+        $sku2->setAvailability('OutOfStock');
+        $sku2->setGtin("gtin2");
+        $sku2->setId(2);
+        $sku2->setPrice(59.99);
+        $sku2->setListPrice(200.99);
+        $sku2->setUrl('http://my.shop.com/products/test_product_2.html');
+        $sku2->setName('Test Product');
+        $sku2->setImageUrl('http://my.shop.com/images/test_product_2.jpg');
+        $sku2->setInventoryLevel(15);
+        $this->append($sku2);
+        $sku3 = new Sku();
+        $sku3->setAvailable(true);
+        $sku3->setAvailability('InStock');
+        $sku3->setGtin("gtin4");
+        $sku3->setId(3);
+        $sku3->setPrice(22.99);
+        $sku3->setListPrice(33.99);
+        $sku3->setUrl('http://my.shop.com/products/test_product_3.html');
+        $sku3->setName('Test Product');
+        $sku3->setImageUrl('http://my.shop.com/images/test_product_3.jpg');
+        $sku3->setInventoryLevel(5);
+        $this->append($sku3);
+    }
 }

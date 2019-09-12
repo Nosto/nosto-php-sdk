@@ -34,75 +34,35 @@
  *
  */
 
-namespace Nosto\Types\Product;
+namespace Nosto\Test\Support;
 
-use Nosto\Types\SanitizableInterface;
+use Nosto\Object\Product\Variation;
+use Nosto\Object\Product\VariationCollection;
 
-/**
- * Interface for the product variation.
- */
-interface SkuInterface extends SanitizableInterface, \JsonSerializable
+class MockVariationCollection extends VariationCollection
 {
-    /**
-     * Returns the id of the variation
-     *
-     * @return string|int
-     */
-    public function getId();
-
-    /**
-     * Returns the name of the variation
-     *
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * Returns the price
-     *
-     * @return float
-     */
-    public function getPrice();
-
-    /**
-     * Returns the list price
-     *
-     * @return float
-     */
-    public function getListPrice();
-
-    /**
-     * Returns the url
-     *
-     * @return string
-     */
-    public function getUrl();
-
-    /**
-     * Returns the image url
-     *
-     * @return string
-     */
-    public function getImageUrl();
-
-    /**
-     * Returns the gtin
-     *
-     * @return string
-     */
-    public function getGtin();
-
-    /**
-     * Returns the availability
-     *
-     * @return string
-     */
-    public function getAvailability();
-
-    /**
-     * Returns the custom attributes
-     *
-     * @return array
-     */
-    public function getCustomFields();
+    public function __construct()
+    {
+        $variation1 = new Variation();
+        $variation1->setVariationId('USD_1');
+        $variation1->setPrice(99.99);
+        $variation1->setListPrice(110.99);
+        $variation1->setPriceCurrencyCode('USD');
+        $variation1->setAvailability('InStock');
+        $this->append($variation1);
+        $variation2 = new Variation();
+        $variation2->setVariationId('EUR_2');
+        $variation2->setPrice(69.99);
+        $variation2->setListPrice(99.99);
+        $variation2->setPriceCurrencyCode('EUR');
+        $variation2->setAvailability('InStock');
+        $this->append($variation2);
+        $variation3 = new Variation();
+        $variation3->setVariationId('SEK_3');
+        $variation3->setPrice(990.99);
+        $variation3->setListPrice(1100.99);
+        $variation3->setPriceCurrencyCode('SEK');
+        $variation3->setAvailability('OutOfStock');
+        $this->append($variation3);
+    }
 }

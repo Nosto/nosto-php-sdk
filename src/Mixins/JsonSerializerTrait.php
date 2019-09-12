@@ -34,75 +34,31 @@
  *
  */
 
-namespace Nosto\Types\Product;
+namespace Nosto\Mixins;
 
-use Nosto\Types\SanitizableInterface;
+use Nosto\Util\Reflection;
 
 /**
- * Interface for the product variation.
+ * Iframe mixin class for account administration iframe.
  */
-interface SkuInterface extends SanitizableInterface, \JsonSerializable
+trait JsonSerializerTrait
 {
     /**
-     * Returns the id of the variation
-     *
-     * @return string|int
-     */
-    public function getId();
-
-    /**
-     * Returns the name of the variation
-     *
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * Returns the price
-     *
-     * @return float
-     */
-    public function getPrice();
-
-    /**
-     * Returns the list price
-     *
-     * @return float
-     */
-    public function getListPrice();
-
-    /**
-     * Returns the url
-     *
-     * @return string
-     */
-    public function getUrl();
-
-    /**
-     * Returns the image url
-     *
-     * @return string
-     */
-    public function getImageUrl();
-
-    /**
-     * Returns the gtin
-     *
-     * @return string
-     */
-    public function getGtin();
-
-    /**
-     * Returns the availability
-     *
-     * @return string
-     */
-    public function getAvailability();
-
-    /**
-     * Returns the custom attributes
+     * Returns normalized array for the object
      *
      * @return array
      */
-    public function getCustomFields();
+    public function jsonSerialize()
+    {
+        $properties = Reflection::getObjectProperties($this);
+        $normalized = [];
+        foreach ($properties as $property => $value) {
+            if ($value instanceof \JsonSerializable) {
+                $normalized[$property] = $value->jsonSerialize();
+            } else {
+                $normalized[$property] = $value;
+            }
+        }
+        return $normalized;
+    }
 }

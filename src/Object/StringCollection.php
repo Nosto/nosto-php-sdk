@@ -36,14 +36,20 @@
 
 namespace Nosto\Object;
 
+use Nosto\Mixins\CollectionJsonSerializerTrait;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\MarkupableCollectionInterface;
 
 /**
- * Collection class to store a collection of products
+ * Collection class to store a collection of strings
  */
-class StringCollection extends AbstractCollection implements MarkupableCollectionInterface, MarkupableInterface
+class StringCollection extends AbstractCollection implements
+    MarkupableCollectionInterface,
+    MarkupableInterface,
+    \JsonSerializable
 {
+    use CollectionJsonSerializerTrait;
+
     /** @var string|null */
     private $markupKey;
     /** @var string|null */

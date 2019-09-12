@@ -38,6 +38,7 @@ namespace Nosto\Object\Product;
 
 use Nosto\AbstractObject;
 use Nosto\Mixins\HtmlEncoderTrait;
+use Nosto\Mixins\JsonSerializerTrait;
 use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\ProductInterface;
@@ -52,6 +53,7 @@ class Variation extends AbstractObject implements
     HtmlEncodableInterface
 {
     use HtmlEncoderTrait;
+    use JsonSerializerTrait;
 
     /**
      * The id of the variation

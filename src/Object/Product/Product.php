@@ -39,6 +39,7 @@ namespace Nosto\Object\Product;
 use Nosto\AbstractObject;
 use Nosto\Helper\ValidationHelper;
 use Nosto\Mixins\HtmlEncoderTrait;
+use Nosto\Mixins\JsonSerializerTrait;
 use Nosto\NostoException;
 use Nosto\Object\StringCollection;
 use Nosto\Types\HtmlEncodableInterface;
@@ -67,6 +68,7 @@ class Product extends AbstractObject implements
     HtmlEncodableInterface
 {
     use HtmlEncoderTrait;
+    use JsonSerializerTrait;
 
     /**
      * Product tag options

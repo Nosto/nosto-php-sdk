@@ -36,6 +36,7 @@
 
 namespace Nosto\Object\Product;
 
+use Nosto\Mixins\CollectionJsonSerializerTrait;
 use Nosto\Object\AbstractCollection;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\SkuInterface;
@@ -46,8 +47,11 @@ use Nosto\Types\SanitizableInterface;
  */
 class SkuCollection extends AbstractCollection implements
     MarkupableInterface,
-    SanitizableInterface
+    SanitizableInterface,
+    \JsonSerializable
 {
+    use CollectionJsonSerializerTrait;
+
     /**
      * Appends item to the collection of skus
      *
@@ -78,3 +82,4 @@ class SkuCollection extends AbstractCollection implements
         return $sanitized;
     }
 }
+

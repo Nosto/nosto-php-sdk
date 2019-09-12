@@ -34,75 +34,21 @@
  *
  */
 
-namespace Nosto\Types\Product;
+namespace Nosto\Util\Serializer;
 
-use Nosto\Types\SanitizableInterface;
+use Nosto\Util\Reflection;
 
-/**
- * Interface for the product variation.
- */
-interface SkuInterface extends SanitizableInterface, \JsonSerializable
+class Json
 {
-    /**
-     * Returns the id of the variation
-     *
-     * @return string|int
-     */
-    public function getId();
+    public static function serialize(\JsonSerializable $serializable)
+    {
+        $normalized = $serializable->jsonSerialize();
+        return json_encode($normalized);
+    }
 
-    /**
-     * Returns the name of the variation
-     *
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * Returns the price
-     *
-     * @return float
-     */
-    public function getPrice();
-
-    /**
-     * Returns the list price
-     *
-     * @return float
-     */
-    public function getListPrice();
-
-    /**
-     * Returns the url
-     *
-     * @return string
-     */
-    public function getUrl();
-
-    /**
-     * Returns the image url
-     *
-     * @return string
-     */
-    public function getImageUrl();
-
-    /**
-     * Returns the gtin
-     *
-     * @return string
-     */
-    public function getGtin();
-
-    /**
-     * Returns the availability
-     *
-     * @return string
-     */
-    public function getAvailability();
-
-    /**
-     * Returns the custom attributes
-     *
-     * @return array
-     */
-    public function getCustomFields();
+    public static function deserialize(array $data, $className)
+    {
+        $properties = Reflection::getObjectProperties($className);
+        // ToDo
+    }
 }
