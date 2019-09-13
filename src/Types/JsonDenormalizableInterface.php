@@ -34,44 +34,13 @@
  *
  */
 
-namespace Nosto\Object\Product;
+namespace Nosto\Types;
 
-use Nosto\Mixins\CollectionJsonSerializerTrait;
-use Nosto\Object\AbstractCollection;
-use Nosto\Types\JsonDenormalizableInterface;
-use Nosto\Types\MarkupableInterface;
-use Nosto\Types\Product\VariationInterface;
-
-/**
- * Collection class to store a collection of variations
- */
-class VariationCollection extends AbstractCollection implements
-    MarkupableInterface,
-    JsonDenormalizableInterface
+interface JsonDenormalizableInterface extends \JsonSerializable
 {
-    use CollectionJsonSerializerTrait;
     /**
-     * Appends item to the collection of variations
-     *
-     * @param VariationInterface $variation the product to append
+     * @param array $data
+     * @return mixed return an populated object
      */
-    public function append(VariationInterface $variation)
-    {
-        $this->var[$variation->getVariationId()] = $variation;
-    }
-
-    public function getMarkupKey()
-    {
-        return 'variations';
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function deserializeType()
-    {
-        return Variation::class;
-    }
-
-
+    public function jsonDenormalize(array $data);
 }

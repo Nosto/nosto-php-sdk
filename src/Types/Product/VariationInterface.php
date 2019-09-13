@@ -36,7 +36,9 @@
 
 namespace Nosto\Types\Product;
 
-interface VariationInterface extends \JsonSerializable
+use Nosto\Types\JsonDenormalizableInterface;
+
+interface VariationInterface extends JsonDenormalizableInterface
 {
     /**
      * Returns the variations's unique identifier.

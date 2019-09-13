@@ -37,6 +37,7 @@
 namespace Nosto\Object;
 
 use Nosto\Mixins\CollectionJsonSerializerTrait;
+use Nosto\Types\JsonDenormalizableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\MarkupableCollectionInterface;
 
@@ -46,7 +47,7 @@ use Nosto\Types\MarkupableCollectionInterface;
 class StringCollection extends AbstractCollection implements
     MarkupableCollectionInterface,
     MarkupableInterface,
-    \JsonSerializable
+    JsonDenormalizableInterface
 {
     use CollectionJsonSerializerTrait;
 
@@ -116,5 +117,13 @@ class StringCollection extends AbstractCollection implements
         } else {
             $this->var = $data;
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function deserializeType()
+    {
+        return null;
     }
 }

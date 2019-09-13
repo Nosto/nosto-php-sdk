@@ -37,6 +37,7 @@
 namespace Nosto\Mixins;
 
 use Nosto\Util\Reflection;
+use Nosto\Util\Serializer\Json;
 
 /**
  * Iframe mixin class for account administration iframe.
@@ -60,5 +61,13 @@ trait JsonSerializerTrait
             }
         }
         return $normalized;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonDenormalize(array $data)
+    {
+        return Json::denormalize($data, self::class);
     }
 }

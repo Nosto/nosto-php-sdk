@@ -36,12 +36,13 @@
 
 namespace Nosto\Types\Product;
 
+use Nosto\Types\JsonDenormalizableInterface;
 use Nosto\Types\SanitizableInterface;
 
 /**
  * Interface for the product variation.
  */
-interface SkuInterface extends SanitizableInterface, \JsonSerializable
+interface SkuInterface extends SanitizableInterface, JsonDenormalizableInterface
 {
     /**
      * Returns the id of the variation

@@ -37,6 +37,7 @@
 namespace Nosto\Util\Serializer;
 
 use Nosto\NostoException;
+use Nosto\Types\JsonDenormalizableInterface;
 use Nosto\Util\Reflection;
 
 class Json
@@ -102,15 +103,18 @@ class Json
                 }
                 /* @var \ReflectionParameter $param */
                 $param = $parameters[0];
-                $type = $param->getType();
-                if ($type === null) {
+                if (Reflection::isScalarParameter($param)) {
                     $object->$setter($value);
                 } else {
-                    // Handle collection & other non-scalar types - datetimes might will become a problem as well
+                    $parameterReflectionClass = new \ReflectionClass($param->getType()->getName());
+                    if ($parameterReflectionClass->implementsInterface('Nosto\Types\JsonDenormalizableInterface')) {
+                        /* @var $parameterObject JsonDenormalizableInterface */
+                        $parameterObject = $parameterReflectionClass->newInstance();
+                        $object->$setter($parameterObject->jsonDenormalize($value));
+                    }
                 }
             }
         }
-
     }
 
     public static function decode($json)

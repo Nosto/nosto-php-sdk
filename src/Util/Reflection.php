@@ -89,6 +89,22 @@ class Reflection
         return $properties;
     }
 
+    public static function isScalarParameter(\ReflectionParameter $parameter)
+    {
+        if ($parameter->getType() === null) {
+            return true;
+        }
+        $scalarTypes = array(
+            'boolean',
+            'integer',
+            'int',
+            'float',
+            'string',
+            'array'
+        );
+        return in_array($parameter->getType()->getName(), $scalarTypes, true);
+    }
+
     /**
      * Returns setters and getters for class variables. Note that this only returns
      * setters and getters for properties where both, setter and getter are defined

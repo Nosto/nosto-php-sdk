@@ -36,7 +36,8 @@
 
 namespace Nosto\Mixins;
 
-use Nosto\Types\Product\SkuInterface;
+use Nosto\NostoException;
+use Nosto\Types\JsonDenormalizableInterface;
 
 /**
  * Iframe mixin class for account administration iframe.
@@ -44,10 +45,7 @@ use Nosto\Types\Product\SkuInterface;
 trait CollectionJsonSerializerTrait
 {
     /**
-     * Returns normalized array for the collection. The collection items must implement
-     * \jsonSerializable interface or the items must have scalar values.
-     *
-     * @return array
+     * @inheritDoc
      */
     public function jsonSerialize()
     {
@@ -66,10 +64,45 @@ trait CollectionJsonSerializerTrait
         return $data;
     }
 
-    abstract function next();
+    /**
+     * @inheritDoc
+     */
+    public function jsonDenormalize(array $data)
+    {
+        /* @var SkuInterface $item */
+        $collection = new self();
+        foreach ($data as $itemData) {
+            // Scalar types
+            if ($this->deserializeType() === null) {
+                $collectionItem = $itemData;
+            } else {
+                $class = new \ReflectionClass($this->deserializeType());
+                if ($class->implementsInterface('Nosto\Types\JsonDenormalizableInterface') === false) {
+                    throw new NostoException(
+                        sprintf(
+                            'Cannot deserialize %s as it does\'nt implement JsonDeserializableInterface',
+                            $class->getName()
+                        )
+                    );
+                }
+                /* @var JsonDenormalizableInterface $object */
+                $object = $class->newInstance();
+                $collectionItem = $object->jsonDenormalize($itemData);
+            }
+            $collection->append($collectionItem);
+        }
+        return $collection;
+    }
 
     /**
-     * @return null|mixed|\JsonSerializable
+     * Type where the items will be deserialized
+     *
+     * @return string|null null should be returned if the collection items are scalar types
      */
-    abstract function current();
+    abstract public function deserializeType();
+
+    /**
+     * Method appending items to collection
+     */
+    abstract public function append($item);
 }

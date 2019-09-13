@@ -40,6 +40,7 @@ use Nosto\AbstractObject;
 use Nosto\Mixins\HtmlEncoderTrait;
 use Nosto\Mixins\JsonSerializerTrait;
 use Nosto\Types\HtmlEncodableInterface;
+use Nosto\Types\JsonDenormalizableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Product\VariationInterface;
