@@ -89,7 +89,6 @@ class Reflection
         return $properties;
     }
 
-
     /**
      * Returns setters and getters for class variables. Note that this only returns
      * setters and getters for properties where both, setter and getter are defined

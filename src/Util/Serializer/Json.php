@@ -36,6 +36,7 @@
 
 namespace Nosto\Util\Serializer;
 
+use Nosto\NostoException;
 use Nosto\Util\Reflection;
 
 class Json
@@ -46,9 +47,79 @@ class Json
         return json_encode($normalized);
     }
 
-    public static function deserialize(array $data, $className)
+    public static function deserialize($data, $class)
     {
-        $properties = Reflection::getObjectProperties($className);
-        // ToDo
+        $data = self::decode($data);
+        return self::denormalize($data, $class);
+    }
+
+    public static function denormalize(array $data, $class)
+    {
+        $reflectionClass = new \ReflectionClass($class);
+        if ($reflectionClass->implementsInterface('\jsonSerializable') === false) {
+            throw new NostoException(sprintf('Class %s is not deserializable (does not implement jsonSerialazble interface)', $reflectionClass));
+        }
+        /** @var \jsonSerializable $object */
+        $object = $reflectionClass->newInstance();
+        $keys = $object->jsonSerialize();
+        $difference = array_diff_key($data, $keys);
+        if (!empty($difference)) {
+            throw new NostoException(
+                sprintf(
+                    'Cannot denormalize data to %s - invalid array keys (%s) in data',
+                    $reflectionClass,
+                    implode($difference)
+                )
+            );
+        }
+        $properties = Reflection::getObjectProperties($object);
+        $serializableFields = array_keys($keys);
+        foreach ($serializableFields as $attribute) {
+            // We only handle the ones that can be serialized
+            if (array_key_exists($attribute, $properties)) {
+                self::setObjectProperty($reflectionClass, $object, $attribute, $data[$attribute]);
+            }
+        }
+
+        return $object;
+    }
+
+    private static function setObjectProperty($reflectionClass, $object, $property, $value)
+    {
+        $setter = sprintf('set%s', $property);
+        if ($reflectionClass->hasMethod($setter)) {
+            $reflectionMethod = $reflectionClass->getMethod($setter);
+            if ($reflectionMethod->isPublic()) {
+                $parameters = $reflectionMethod->getParameters();
+                if (!isset($parameters[0])) {
+                    throw new NostoException(
+                        sprintf(
+                            'Not a valid setter %s in %s',
+                            $setter,
+                            $reflectionClass->getName()
+                        )
+                    );
+                }
+                /* @var \ReflectionParameter $param */
+                $param = $parameters[0];
+                $type = $param->getType();
+                if ($type === null) {
+                    $object->$setter($value);
+                } else {
+                    // Handle collection & other non-scalar types - datetimes might will become a problem as well
+                }
+            }
+        }
+
+    }
+
+    public static function decode($json)
+    {
+        $data = json_decode($json, true);
+        if ($data === null) {
+            throw new NostoException('Could not serialize json. Error was ' . json_last_error_msg());
+        }
+
+        return $data;
     }
 }
