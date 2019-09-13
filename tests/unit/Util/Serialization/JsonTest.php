@@ -68,8 +68,34 @@ class JsonTest extends Test
         $variations = new MockVariationCollection();
         $product->setVariations($variations);
 
+        $expected = '{"url":"http:\/\/my.shop.com\/products\/test_product.html","productId":1,"name":"Test Product","imageUrl":"http:\/\/my.shop.com\/images\/test_product_image.jpg","price":99.99,"listPrice":110.99,"priceCurrencyCode":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variationId":"USD","supplierCost":22.33,"inventoryLevel":50,"reviewCount":99,"ratingValue":2.5,"alternateImageUrls":["http:\/\/shop.com\/product_alt.jpg","http:\/\/shop.com\/product_alt_1.jpg"],"condition":"Used","gender":null,"ageGroup":null,"gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"googleCategory":"All","unitPricingMeasure":null,"unitPricingBaseMeasure":null,"unitPricingUnit":null,"skus":[{"id":1,"name":"Test Product I","price":79.99,"listPrice":100.99,"url":"http:\/\/my.shop.com\/products\/test_product_1.html","imageUrl":"http:\/\/my.shop.com\/images\/test_product_1.jpg","gtin":"gtin1","availability":"InStock","customFields":[],"inventoryLevel":20},{"id":2,"name":"Test Product","price":59.99,"listPrice":200.99,"url":"http:\/\/my.shop.com\/products\/test_product_2.html","imageUrl":"http:\/\/my.shop.com\/images\/test_product_2.jpg","gtin":"gtin2","availability":"OutOfStock","customFields":[],"inventoryLevel":15},{"id":3,"name":"Test Product","price":22.99,"listPrice":33.99,"url":"http:\/\/my.shop.com\/products\/test_product_3.html","imageUrl":"http:\/\/my.shop.com\/images\/test_product_3.jpg","gtin":"gtin4","availability":"InStock","customFields":[],"inventoryLevel":5}],"variations":[{"variationId":"USD_1","price":99.99,"listPrice":110.99,"priceCurrencyCode":"USD","availability":"InStock"},{"variationId":"EUR_2","price":69.99,"listPrice":99.99,"priceCurrencyCode":"EUR","availability":"InStock"},{"variationId":"SEK_3","price":990.99,"listPrice":1100.99,"priceCurrencyCode":"SEK","availability":"OutOfStock"}],"thumbUrl":null,"customFields":[],"datePublished":"2013-03-05"}';
         $serialized = JsonSerializer::serialize($product);
-        $this->assertEquals('{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product_image.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg","http:\/\/shop.com\/product_alt_1.jpg"],"condition":"Used","gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","skus":[],"variations":[],"date_published":"2013-03-05"}', $serialized);
+        $this->assertEquals($expected, $serialized);
     }
 
+    /**
+     * Tests that valid data can be deserialized to a product object
+     */
+    public function testProductDeserialization()
+    {
+        $product = new MockProduct();
+        $mainImage = 'http://my.shop.com/images/test_product_image.jpg';
+        $altImages = [
+            $mainImage,
+            'http://shop.com/product_alt.jpg',
+            'http://shop.com/product_alt.jpg',
+            'http://shop.com/product_alt_1.jpg',
+        ];
+
+        $product->setAlternateImageUrls($altImages);
+        $product->setImageUrl($mainImage);
+        $skus = new MockSkuCollection();
+        $product->setSkus($skus);
+        $variations = new MockVariationCollection();
+        $product->setVariations($variations);
+
+        $expected = '{"url":"http:\/\/my.shop.com\/products\/test_product.html","productId":1,"name":"Test Product","imageUrl":"http:\/\/my.shop.com\/images\/test_product_image.jpg","price":99.99,"listPrice":110.99,"priceCurrencyCode":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variationId":"USD","supplierCost":22.33,"inventoryLevel":50,"reviewCount":99,"ratingValue":2.5,"alternateImageUrls":["http:\/\/shop.com\/product_alt.jpg","http:\/\/shop.com\/product_alt_1.jpg"],"condition":"Used","gender":null,"ageGroup":null,"gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"googleCategory":"All","unitPricingMeasure":null,"unitPricingBaseMeasure":null,"unitPricingUnit":null,"skus":[{"id":1,"name":"Test Product I","price":79.99,"listPrice":100.99,"url":"http:\/\/my.shop.com\/products\/test_product_1.html","imageUrl":"http:\/\/my.shop.com\/images\/test_product_1.jpg","gtin":"gtin1","availability":"InStock","customFields":[],"inventoryLevel":20},{"id":2,"name":"Test Product","price":59.99,"listPrice":200.99,"url":"http:\/\/my.shop.com\/products\/test_product_2.html","imageUrl":"http:\/\/my.shop.com\/images\/test_product_2.jpg","gtin":"gtin2","availability":"OutOfStock","customFields":[],"inventoryLevel":15},{"id":3,"name":"Test Product","price":22.99,"listPrice":33.99,"url":"http:\/\/my.shop.com\/products\/test_product_3.html","imageUrl":"http:\/\/my.shop.com\/images\/test_product_3.jpg","gtin":"gtin4","availability":"InStock","customFields":[],"inventoryLevel":5}],"variations":[{"variationId":"USD_1","price":99.99,"listPrice":110.99,"priceCurrencyCode":"USD","availability":"InStock"},{"variationId":"EUR_2","price":69.99,"listPrice":99.99,"priceCurrencyCode":"EUR","availability":"InStock"},{"variationId":"SEK_3","price":990.99,"listPrice":1100.99,"priceCurrencyCode":"SEK","availability":"OutOfStock"}],"thumbUrl":null,"customFields":[],"datePublished":"2013-03-05"}';
+        $serialized = JsonSerializer::serialize($product);
+        $this->assertEquals($expected, $serialized);
+    }
 }
