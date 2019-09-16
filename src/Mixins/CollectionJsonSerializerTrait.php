@@ -37,7 +37,6 @@
 namespace Nosto\Mixins;
 
 use Nosto\NostoException;
-use Nosto\Types\JsonDenormalizableInterface;
 
 /**
  * Iframe mixin class for account administration iframe.
@@ -103,6 +102,17 @@ trait CollectionJsonSerializerTrait
 
     /**
      * Method appending items to collection
+     * @param $item
      */
     abstract public function append($item);
+
+    /**
+     * Method for getting the current item from cursor
+     */
+    abstract public function current();
+
+    /**
+     * Method for moving cursor to a next element
+     */
+    abstract public function next();
 }

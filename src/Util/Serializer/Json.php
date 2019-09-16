@@ -42,23 +42,41 @@ use Nosto\Util\Reflection;
 
 class Json
 {
+    /**
+     * @param \JsonSerializable $serializable
+     * @return false|string
+     */
     public static function serialize(\JsonSerializable $serializable)
     {
         $normalized = $serializable->jsonSerialize();
         return json_encode($normalized);
     }
 
+    /**
+     * @param $data
+     * @param $class
+     * @return \jsonSerializable
+     * @throws NostoException
+     * @throws \ReflectionException
+     */
     public static function deserialize($data, $class)
     {
         $data = self::decode($data);
         return self::denormalize($data, $class);
     }
 
+    /**
+     * @param array $data
+     * @param $class
+     * @return \jsonSerializable
+     * @throws NostoException
+     * @throws \ReflectionException
+     */
     public static function denormalize(array $data, $class)
     {
         $reflectionClass = new \ReflectionClass($class);
-        if ($reflectionClass->implementsInterface('\jsonSerializable') === false) {
-            throw new NostoException(sprintf('Class %s is not deserializable (does not implement jsonSerialazble interface)', $reflectionClass));
+        if ($reflectionClass->implementsInterface('Nosto\Types\JsonDenormalizableInterface') === false) {
+            throw new NostoException(sprintf('Class %s is not deserializable (does not implement JsonDenormalizableInterface interface)', $reflectionClass));
         }
         /** @var \jsonSerializable $object */
         $object = $reflectionClass->newInstance();
@@ -85,7 +103,17 @@ class Json
         return $object;
     }
 
-    private static function setObjectProperty($reflectionClass, $object, $property, $value)
+    /**
+     * Sets an property for an object based on reflection class
+     *
+     * @param \ReflectionClass $reflectionClass
+     * @param $object
+     * @param $property
+     * @param $value
+     * @throws NostoException
+     * @throws \ReflectionException
+     */
+    private static function setObjectProperty(\ReflectionClass $reflectionClass, $object, $property, $value)
     {
         $setter = sprintf('set%s', $property);
         if ($reflectionClass->hasMethod($setter)) {
@@ -117,6 +145,11 @@ class Json
         }
     }
 
+    /**
+     * @param string $json
+     * @return mixed
+     * @throws NostoException
+     */
     public static function decode($json)
     {
         $data = json_decode($json, true);
