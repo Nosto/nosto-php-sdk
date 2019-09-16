@@ -50,6 +50,7 @@ class VariationCollection extends AbstractCollection implements
     JsonDenormalizableInterface
 {
     use CollectionJsonSerializerTrait;
+    
     /**
      * Appends item to the collection of variations
      *
@@ -70,8 +71,6 @@ class VariationCollection extends AbstractCollection implements
      */
     public function deserializeType()
     {
-        return Variation::class;
+        return get_class(new Variation());
     }
-
-
 }

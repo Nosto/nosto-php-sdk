@@ -68,6 +68,6 @@ trait JsonSerializerTrait
      */
     public function jsonDenormalize(array $data)
     {
-        return Json::denormalize($data, self::class);
+        return Json::denormalize($data, get_class($this));
     }
 }

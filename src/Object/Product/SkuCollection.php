@@ -87,7 +87,7 @@ class SkuCollection extends AbstractCollection implements
      */
     public function deserializeType()
     {
-        return Sku::class;
+        return get_class(new Sku());
     }
 }
 

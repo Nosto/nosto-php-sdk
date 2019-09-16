@@ -69,7 +69,7 @@ trait CollectionJsonSerializerTrait
     public function jsonDenormalize(array $data)
     {
         /* @var SkuInterface $item */
-        $collection = new self();
+        $collection = new static();
         foreach ($data as $itemData) {
             // Scalar types
             if ($this->deserializeType() === null) {

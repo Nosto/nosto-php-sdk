@@ -95,20 +95,7 @@ class Reflection
      */
     public static function isScalarParameter(\ReflectionParameter $parameter)
     {
-        /* @var \ReflectionNamedType $parameterType */
-        $parameterType = $parameter->getType();
-        if ($parameterType === null) {
-            return true;
-        }
-        $scalarTypes = array(
-            'boolean',
-            'integer',
-            'int',
-            'float',
-            'string',
-            'array'
-        );
-        return in_array($parameterType->getName(), $scalarTypes, true);
+        return $parameter->getClass() instanceof \ReflectionClass === false;
     }
 
     /**
