@@ -135,9 +135,8 @@ class Json
                     $object->$setter($value);
                 } elseif($param->getClass() instanceof \ReflectionClass) {
                     $parameterReflectionClass = new \ReflectionClass($param->getClass()->getName());
-                    if ($parameterReflectionClass->implementsInterface('Nosto\Types\JsonDenormalizableInterface')) {
-                        /* @var JsonDenormalizableInterface $parameterObject */
-                        $parameterObject = $parameterReflectionClass->newInstance();
+                    $parameterObject = $parameterReflectionClass->newInstance();
+                    if ($parameterObject instanceof JsonDenormalizableInterface) {
                         $object->$setter($parameterObject->jsonDenormalize($value));
                     }
                 }
