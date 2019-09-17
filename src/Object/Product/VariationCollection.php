@@ -50,7 +50,7 @@ class VariationCollection extends AbstractCollection implements
     JsonDenormalizableInterface
 {
     use CollectionJsonSerializerTrait;
-    
+
     /**
      * Appends item to the collection of variations
      *

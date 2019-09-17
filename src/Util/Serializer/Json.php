@@ -133,10 +133,10 @@ class Json
                 $param = $parameters[0];
                 if (Reflection::isScalarParameter($param)) {
                     $object->$setter($value);
-                } else {
-                    $parameterReflectionClass = new \ReflectionClass($param->getType()->getName());
+                } elseif($param->getClass() instanceof \ReflectionClass) {
+                    $parameterReflectionClass = new \ReflectionClass($param->getClass()->getName());
                     if ($parameterReflectionClass->implementsInterface('Nosto\Types\JsonDenormalizableInterface')) {
-                        /* @var $parameterObject JsonDenormalizableInterface */
+                        /* @var JsonDenormalizableInterface $parameterObject */
                         $parameterObject = $parameterReflectionClass->newInstance();
                         $object->$setter($parameterObject->jsonDenormalize($value));
                     }

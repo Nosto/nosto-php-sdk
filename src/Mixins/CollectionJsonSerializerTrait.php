@@ -68,8 +68,7 @@ trait CollectionJsonSerializerTrait
      */
     public function jsonDenormalize(array $data)
     {
-        /* @var SkuInterface $item */
-        $collection = new static();
+        $collection = (new \ReflectionClass(get_class($this)))->newInstance();
         foreach ($data as $itemData) {
             // Scalar types
             if ($this->deserializeType() === null) {
@@ -79,7 +78,7 @@ trait CollectionJsonSerializerTrait
                 if ($class->implementsInterface('Nosto\Types\JsonDenormalizableInterface') === false) {
                     throw new NostoException(
                         sprintf(
-                            'Cannot deserialize %s as it does\'nt implement JsonDeserializableInterface',
+                            'Cannot denormalize %s as it does\'nt implement JsonDenormalizableInterface',
                             $class->getName()
                         )
                     );
