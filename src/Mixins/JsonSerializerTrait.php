@@ -40,7 +40,8 @@ use Nosto\Util\Reflection;
 use Nosto\Util\Serializer\Json;
 
 /**
- * Iframe mixin class for account administration iframe.
+ * Serializer mixin class that implements methods for an object defined
+ * in JsonDenormalizableInterface
  */
 trait JsonSerializerTrait
 {

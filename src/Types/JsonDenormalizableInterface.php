@@ -40,7 +40,7 @@ interface JsonDenormalizableInterface extends \JsonSerializable
 {
     /**
      * @param array $data
-     * @return mixed return an populated object
+     * @return mixed return a populated object
      */
     public function jsonDenormalize(array $data);
 }

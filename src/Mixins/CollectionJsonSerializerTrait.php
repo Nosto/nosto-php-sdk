@@ -37,9 +37,12 @@
 namespace Nosto\Mixins;
 
 use Nosto\NostoException;
+use Nosto\Types\JsonDenormalizableInterface;
+
 
 /**
- * Iframe mixin class for account administration iframe.
+ * Collecton serializer mixin class that implements methods for a collection defined
+ * in JsonDenormalizableInterface
  */
 trait CollectionJsonSerializerTrait
 {
@@ -49,7 +52,6 @@ trait CollectionJsonSerializerTrait
     public function jsonSerialize()
     {
         $data = [];
-        /* @var SkuInterface $item */
         do {
             $current = $this->current();
             if ($current instanceof \JsonSerializable) {
@@ -75,16 +77,16 @@ trait CollectionJsonSerializerTrait
                 $collectionItem = $itemData;
             } else {
                 $class = new \ReflectionClass($this->deserializeType());
-                if ($class->implementsInterface('Nosto\Types\JsonDenormalizableInterface') === false) {
+                $object = $class->newInstance();
+                if ($object instanceof JsonDenormalizableInterface === false) {
                     throw new NostoException(
                         sprintf(
-                            'Cannot denormalize %s as it does\'nt implement JsonDenormalizableInterface',
+                            'Cannot denormalize %s as it doesn\'t implement JsonDenormalizableInterface',
                             $class->getName()
                         )
                     );
                 }
                 /* @var JsonDenormalizableInterface $object */
-                $object = $class->newInstance();
                 $collectionItem = $object->jsonDenormalize($itemData);
             }
             $collection->append($collectionItem);

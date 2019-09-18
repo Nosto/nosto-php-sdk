@@ -76,7 +76,12 @@ class Json
     {
         $reflectionClass = new \ReflectionClass($class);
         if ($reflectionClass->implementsInterface('Nosto\Types\JsonDenormalizableInterface') === false) {
-            throw new NostoException(sprintf('Class %s is not deserializable (does not implement JsonDenormalizableInterface interface)', $reflectionClass));
+            throw new NostoException(
+                sprintf(
+                    'Class %s is not deserializable (does not implement JsonDenormalizableInterface interface)',
+                    $reflectionClass
+                )
+            );
         }
         /** @var \jsonSerializable $object */
         $object = $reflectionClass->newInstance();
