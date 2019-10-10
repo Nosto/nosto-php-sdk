@@ -43,11 +43,15 @@ class CategoryMerchandising extends AbstractRecommendation
     /** @var string $category */
     private $category;
 
+    /** @var Filters */
+    private $filters;
+
     /**
      * CategoryMerchandising constructor.
      * @param AccountInterface $account
      * @param $customerId
      * @param $category
+     * @param Filters $filters
      * @param string $activeDomain
      * @param string $customerBy
      * @param bool $previewMode
@@ -57,12 +61,14 @@ class CategoryMerchandising extends AbstractRecommendation
         AccountInterface $account,
         $customerId,
         $category,
+        Filters $filters,
         $activeDomain = '',
         $customerBy = self::IDENTIFIER_BY_CID,
         $previewMode = false,
         $limit = self::LIMIT
     ) {
         $this->category = $category;
+        $this->filters = $filters;
         parent::__construct($account, $customerId, $activeDomain, $customerBy, $previewMode, $limit);
     }
 
@@ -78,7 +84,8 @@ class CategoryMerchandising extends AbstractRecommendation
             \$category: String!,
             \$limit: Int!,
             \$preview: Boolean!,
-            \$by: LookupParams!
+            \$by: LookupParams!,
+            \$filters: InputIncludeParams
         ) {
           updateSession (
             id: \$customerId,
@@ -94,7 +101,8 @@ class CategoryMerchandising extends AbstractRecommendation
               category (
                 category: \$category
                 minProducts: 1
-                maxProducts: \$limit
+                maxProducts: \$limit,
+                include: \$filters
               ) {
                 primary {
                   productId
@@ -124,7 +132,8 @@ QUERY;
             'category' => $this->category,
             'limit' => $this->limit,
             'preview' => $this->previewMode,
-            'by' => $this->customerBy
+            'by' => $this->customerBy,
+            'filters' => $this->filters->process()
         ];
 
         return $variables;
