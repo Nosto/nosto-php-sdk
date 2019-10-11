@@ -39,9 +39,9 @@ namespace Nosto\Operation\Recommendation;
 
 class Filters
 {
-    private $brands;
+    private $brands = [];
     private $categories;
-    private $customFields;
+    private $customFields = [];
     private $discounted;
     private $fresh;
     private $price;
@@ -55,11 +55,11 @@ class Filters
     private $tag3;
 
     /**
-     * @param mixed $brands
+     * @param string $brands
      */
     public function setBrands($brands)
     {
-        $this->brands = $brands;
+        $this->brands[] = $brands;
     }
 
     /**
@@ -71,11 +71,15 @@ class Filters
     }
 
     /**
-     * @param mixed $customFields
+     * @param string $attribute
+     * @param array $customFields
      */
-    public function setCustomFields($customFields)
+    public function setCustomFields($attribute, $customFields)
     {
-        $this->customFields = $customFields;
+        $this->customFields[] = [
+            'attribute' => $attribute,
+            'values' => $customFields
+        ];
     }
 
     /**
@@ -95,11 +99,12 @@ class Filters
     }
 
     /**
-     * @param mixed $price
+     * @param int $min
+     * @param int $max
      */
-    public function setPrice($price)
+    public function setPrice($min, $max)
     {
-        $this->price = $price;
+        $this->price = ['min' => $min, 'max' => $max];
     }
 
     /**
