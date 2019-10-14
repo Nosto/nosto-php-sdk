@@ -36,8 +36,9 @@
 
 namespace Nosto\Operation\Recommendation;
 
+use Traversable;
 
-class Filters
+class Filters implements Traversable
 {
     /** @var string[]  */
     private $brands = [];
@@ -48,10 +49,10 @@ class Filters
     /** @var array  */
     private $customFields = [];
 
-    /** @var bool */
+    /** @var boolean */
     private $discounted;
 
-    /** @var bool */
+    /** @var boolean */
     private $fresh;
 
     /** @var array */
@@ -92,9 +93,9 @@ class Filters
 
     /**
      * @param string $attribute
-     * @param array $customFields
+     * @param array $values
      */
-    public function setCustomFields($attribute, $values)
+    public function setCustomFields($attribute, array $values)
     {
         foreach ($this->customFields as $customField) {
             if ($customField['attribute'] === $attribute) {
@@ -109,17 +110,17 @@ class Filters
     }
 
     /**
-     * @param bool $discounted
+     * @param boolean $discounted
      */
-    public function setDiscounted(bool $discounted)
+    public function setDiscounted($discounted)
     {
         $this->discounted = $discounted;
     }
 
     /**
-     * @param bool $fresh
+     * @param boolean $fresh
      */
-    public function setFresh(bool $fresh)
+    public function setFresh($fresh)
     {
         $this->fresh = $fresh;
     }
