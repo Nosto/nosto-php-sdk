@@ -36,9 +36,7 @@
 
 namespace Nosto\Operation\Recommendation;
 
-use Traversable;
-
-class Filters implements Traversable
+class Filters
 {
     /** @var string[]  */
     private $brands = [];
@@ -200,7 +198,7 @@ class Filters implements Traversable
 
     /**
      * @return array
-     *
+     * @suppress PhanTypeSuspiciousNonTraversableForeach
      */
     public function process()
     {
