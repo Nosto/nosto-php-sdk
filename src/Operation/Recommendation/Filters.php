@@ -39,61 +39,87 @@ namespace Nosto\Operation\Recommendation;
 
 class Filters
 {
+    /** @var string[]  */
     private $brands = [];
-    private $categories;
+
+    /** @var string[]  */
+    private $categories = [];
+
+    /** @var array  */
     private $customFields = [];
+
+    /** @var bool */
     private $discounted;
+
+    /** @var bool */
     private $fresh;
+
+    /** @var array */
     private $price;
+
+    /** @var string[] */
     private $productIds;
+
+    /** @var float */
     private $rating;
+
+    /** @var int */
     private $reviews;
+
+    /** @var string */
     private $search;
+
     private $stock;
     private $tag1;
     private $tag2;
     private $tag3;
 
     /**
-     * @param string $brands
+     * @param string[] $brands
      */
-    public function setBrands($brands)
+    public function setBrands(array $brands)
     {
-        $this->brands[] = $brands;
+        $this->brands = array_merge($this->brands, $brands);
     }
 
     /**
-     * @param mixed $categories
+     * @param string[] $categories
      */
-    public function setCategories($categories)
+    public function setCategories(array $categories)
     {
-        $this->categories = $categories;
+        $this->categories = array_merge($this->categories, $categories);
     }
 
     /**
      * @param string $attribute
      * @param array $customFields
      */
-    public function setCustomFields($attribute, $customFields)
+    public function setCustomFields($attribute, $values)
     {
+        foreach ($this->customFields as $customField) {
+            if ($customField['attribute'] === $attribute) {
+                $customField['values'] = array_merge($customField['values'], $values);
+            }
+        }
+
         $this->customFields[] = [
             'attribute' => $attribute,
-            'values' => $customFields
+            'values' => $values
         ];
     }
 
     /**
-     * @param mixed $discounted
+     * @param bool $discounted
      */
-    public function setDiscounted($discounted)
+    public function setDiscounted(bool $discounted)
     {
         $this->discounted = $discounted;
     }
 
     /**
-     * @param mixed $fresh
+     * @param bool $fresh
      */
-    public function setFresh($fresh)
+    public function setFresh(bool $fresh)
     {
         $this->fresh = $fresh;
     }
@@ -108,15 +134,15 @@ class Filters
     }
 
     /**
-     * @param mixed $productIds
+     * @param string[] $productIds
      */
-    public function setProductIds($productIds)
+    public function setProductIds(array $productIds)
     {
-        $this->productIds = $productIds;
+        $this->productIds = array_merge($this->productIds, $productIds);
     }
 
     /**
-     * @param mixed $rating
+     * @param float $rating
      */
     public function setRating($rating)
     {
@@ -124,7 +150,7 @@ class Filters
     }
 
     /**
-     * @param mixed $reviews
+     * @param int $reviews
      */
     public function setReviews($reviews)
     {
@@ -132,7 +158,7 @@ class Filters
     }
 
     /**
-     * @param mixed $search
+     * @param string $search
      */
     public function setSearch($search)
     {
@@ -171,6 +197,10 @@ class Filters
         $this->tag3 = $tag3;
     }
 
+    /**
+     * @return array
+     *
+     */
     public function process()
     {
 
