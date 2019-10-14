@@ -43,15 +43,19 @@ class CategoryMerchandising extends AbstractRecommendation
     /** @var string $category */
     private $category;
 
-    /** @var Filters */
-    private $filters;
+    /** @var IncludeFilters */
+    private $includeFilters;
+
+    /** @var ExcludeFilters */
+    private $excludeFilters;
 
     /**
      * CategoryMerchandising constructor.
      * @param AccountInterface $account
      * @param $customerId
      * @param $category
-     * @param Filters $filters
+     * @param IncludeFilters|null $includeFilters
+     * @param ExcludeFilters|null $excludeFilters
      * @param string $activeDomain
      * @param string $customerBy
      * @param bool $previewMode
@@ -61,14 +65,16 @@ class CategoryMerchandising extends AbstractRecommendation
         AccountInterface $account,
         $customerId,
         $category,
-        Filters $filters,
+        IncludeFilters $includeFilters = null,
+        ExcludeFilters $excludeFilters = null,
         $activeDomain = '',
         $customerBy = self::IDENTIFIER_BY_CID,
         $previewMode = false,
         $limit = self::LIMIT
     ) {
         $this->category = $category;
-        $this->filters = $filters;
+        $this->includeFilters = $includeFilters;
+        $this->excludeFilters = $excludeFilters;
         parent::__construct($account, $customerId, $activeDomain, $customerBy, $previewMode, $limit);
     }
 
@@ -85,7 +91,8 @@ class CategoryMerchandising extends AbstractRecommendation
             \$limit: Int!,
             \$preview: Boolean!,
             \$by: LookupParams!,
-            \$filters: InputIncludeParams
+            \$includeFilters: InputIncludeParams,
+            \$excludeFilters: InputFilterParams
         ) {
           updateSession (
             id: \$customerId,
@@ -102,7 +109,8 @@ class CategoryMerchandising extends AbstractRecommendation
                 category: \$category
                 minProducts: 1
                 maxProducts: \$limit,
-                include: \$filters
+                include: \$includeFilters,
+                exclude: \$excludeFilters
               ) {
                 primary {
                   productId
@@ -133,9 +141,32 @@ QUERY;
             'limit' => $this->limit,
             'preview' => $this->previewMode,
             'by' => $this->customerBy,
-            'filters' => $this->filters->process()
+            'includeFilters' => $this->getIncludeFilters(),
+            'excludeFilters' => $this->getExcludeFilters()
         ];
 
         return $variables;
+    }
+
+    /**
+     * @return array
+     */
+    private function getIncludeFilters()
+    {
+        if ($this->includeFilters !== null) {
+            return $this->includeFilters->toArray();
+        }
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    private function getExcludeFilters()
+    {
+        if ($this->excludeFilters !== null) {
+            return $this->excludeFilters->toArray();
+        }
+        return [];
     }
 }

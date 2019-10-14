@@ -36,7 +36,7 @@
 
 namespace Nosto\Operation\Recommendation;
 
-class Filters
+abstract class AbstractFilters
 {
     /** @var string[]  */
     private $brands = [];
@@ -50,27 +50,19 @@ class Filters
     /** @var boolean */
     private $discounted;
 
-    /** @var boolean */
-    private $fresh;
-
-    /** @var array */
-    private $price;
-
     /** @var string[] */
     private $productIds;
-
-    /** @var float */
-    private $rating;
-
-    /** @var int */
-    private $reviews;
 
     /** @var string */
     private $search;
 
-    private $stock;
+    /** @var string[] */
     private $tag1;
+
+    /** @var string[] */
     private $tag2;
+
+    /** @var string[] */
     private $tag3;
 
     /**
@@ -116,44 +108,11 @@ class Filters
     }
 
     /**
-     * @param boolean $fresh
-     */
-    public function setFresh($fresh)
-    {
-        $this->fresh = $fresh;
-    }
-
-    /**
-     * @param int $min
-     * @param int $max
-     */
-    public function setPrice($min, $max)
-    {
-        $this->price = ['min' => $min, 'max' => $max];
-    }
-
-    /**
      * @param string[] $productIds
      */
     public function setProductIds(array $productIds)
     {
         $this->productIds = array_merge($this->productIds, $productIds);
-    }
-
-    /**
-     * @param float $rating
-     */
-    public function setRating($rating)
-    {
-        $this->rating = $rating;
-    }
-
-    /**
-     * @param int $reviews
-     */
-    public function setReviews($reviews)
-    {
-        $this->reviews = $reviews;
     }
 
     /**
@@ -165,46 +124,36 @@ class Filters
     }
 
     /**
-     * @param mixed $stock
+     * @param string[] $tag1
      */
-    public function setStock($stock)
-    {
-        $this->stock = $stock;
-    }
-
-    /**
-     * @param mixed $tag1
-     */
-    public function setTag1($tag1)
+    public function setTag1(array $tag1)
     {
         $this->tag1 = $tag1;
     }
 
     /**
-     * @param mixed $tag2
+     * @param string[] $tag2
      */
-    public function setTag2($tag2)
+    public function setTag2(array $tag2)
     {
         $this->tag2 = $tag2;
     }
 
     /**
-     * @param mixed $tag3
+     * @param string[] $tag3
      */
-    public function setTag3($tag3)
+    public function setTag3(array $tag3)
     {
         $this->tag3 = $tag3;
     }
 
     /**
-     * @return array
+     * @inheritdoc
      * @suppress PhanTypeSuspiciousNonTraversableForeach
      */
-    public function process()
+    public function toArray(): array
     {
-
         $array = [];
-
         foreach ($this as $key => $value) {
             if ($value !== null) {
                 $array = array_merge($array, [$key => $value]);
