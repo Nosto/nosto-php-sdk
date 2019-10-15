@@ -54,8 +54,8 @@ class CategoryMerchandising extends AbstractRecommendation
      * @param AccountInterface $account
      * @param $customerId
      * @param $category
-     * @param IncludeFilters|null $includeFilters
-     * @param ExcludeFilters|null $excludeFilters
+     * @param IncludeFilters $includeFilters
+     * @param ExcludeFilters $excludeFilters
      * @param string $activeDomain
      * @param string $customerBy
      * @param bool $previewMode
@@ -65,8 +65,8 @@ class CategoryMerchandising extends AbstractRecommendation
         AccountInterface $account,
         $customerId,
         $category,
-        IncludeFilters $includeFilters = null,
-        ExcludeFilters $excludeFilters = null,
+        IncludeFilters $includeFilters,
+        ExcludeFilters $excludeFilters,
         $activeDomain = '',
         $customerBy = self::IDENTIFIER_BY_CID,
         $previewMode = false,
@@ -141,32 +141,10 @@ QUERY;
             'limit' => $this->limit,
             'preview' => $this->previewMode,
             'by' => $this->customerBy,
-            'includeFilters' => $this->getIncludeFilters(),
-            'excludeFilters' => $this->getExcludeFilters()
+            'includeFilters' => $this->includeFilters->toArray(),
+            'excludeFilters' => $this->excludeFilters->toArray()
         ];
 
         return $variables;
-    }
-
-    /**
-     * @return array
-     */
-    private function getIncludeFilters()
-    {
-        if ($this->includeFilters !== null) {
-            return $this->includeFilters->toArray();
-        }
-        return [];
-    }
-
-    /**
-     * @return array
-     */
-    private function getExcludeFilters()
-    {
-        if ($this->excludeFilters !== null) {
-            return $this->excludeFilters->toArray();
-        }
-        return [];
     }
 }
