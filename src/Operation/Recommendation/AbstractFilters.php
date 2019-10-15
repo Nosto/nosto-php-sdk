@@ -148,7 +148,7 @@ abstract class AbstractFilters
     }
 
     /**
-     * @inheritdoc
+     * @return array
      * @suppress PhanTypeSuspiciousNonTraversableForeach
      */
     public function toArray(): array
