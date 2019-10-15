@@ -43,11 +43,19 @@ class CategoryMerchandising extends AbstractRecommendation
     /** @var string $category */
     private $category;
 
+    /** @var IncludeFilters */
+    private $includeFilters;
+
+    /** @var ExcludeFilters */
+    private $excludeFilters;
+
     /**
      * CategoryMerchandising constructor.
      * @param AccountInterface $account
      * @param $customerId
      * @param $category
+     * @param IncludeFilters $includeFilters
+     * @param ExcludeFilters $excludeFilters
      * @param string $activeDomain
      * @param string $customerBy
      * @param bool $previewMode
@@ -57,12 +65,16 @@ class CategoryMerchandising extends AbstractRecommendation
         AccountInterface $account,
         $customerId,
         $category,
+        IncludeFilters $includeFilters,
+        ExcludeFilters $excludeFilters,
         $activeDomain = '',
         $customerBy = self::IDENTIFIER_BY_CID,
         $previewMode = false,
         $limit = self::LIMIT
     ) {
         $this->category = $category;
+        $this->includeFilters = $includeFilters;
+        $this->excludeFilters = $excludeFilters;
         parent::__construct($account, $customerId, $activeDomain, $customerBy, $previewMode, $limit);
     }
 
@@ -78,7 +90,9 @@ class CategoryMerchandising extends AbstractRecommendation
             \$category: String!,
             \$limit: Int!,
             \$preview: Boolean!,
-            \$by: LookupParams!
+            \$by: LookupParams!,
+            \$includeFilters: InputIncludeParams,
+            \$excludeFilters: InputFilterParams
         ) {
           updateSession (
             id: \$customerId,
@@ -94,7 +108,9 @@ class CategoryMerchandising extends AbstractRecommendation
               category (
                 category: \$category
                 minProducts: 1
-                maxProducts: \$limit
+                maxProducts: \$limit,
+                include: \$includeFilters,
+                exclude: \$excludeFilters
               ) {
                 primary {
                   productId
@@ -124,7 +140,9 @@ QUERY;
             'category' => $this->category,
             'limit' => $this->limit,
             'preview' => $this->previewMode,
-            'by' => $this->customerBy
+            'by' => $this->customerBy,
+            'includeFilters' => $this->includeFilters->toArray(),
+            'excludeFilters' => $this->excludeFilters->toArray()
         ];
 
         return $variables;
