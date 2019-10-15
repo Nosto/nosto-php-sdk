@@ -151,7 +151,7 @@ abstract class AbstractFilters
      * @return array
      * @suppress PhanTypeSuspiciousNonTraversableForeach
      */
-    public function toArray(): array
+    public function toArray()
     {
         $array = [];
         foreach ($this as $key => $value) {
