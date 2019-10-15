@@ -39,19 +39,19 @@ namespace Nosto\Operation\Recommendation;
 class IncludeFilters extends AbstractFilters
 {
     /** @var boolean */
-    private $fresh;
+    public $fresh;
 
     /** @var array */
-    private $price;
+    public $price;
 
     /** @var float */
-    private $rating;
+    public $rating;
 
     /** @var int */
-    private $reviews;
+    public $reviews;
 
     /** @var array */
-    private $stock;
+    public $stock;
 
     /**
      * @param boolean $fresh

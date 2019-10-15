@@ -39,31 +39,31 @@ namespace Nosto\Operation\Recommendation;
 abstract class AbstractFilters
 {
     /** @var string[]  */
-    private $brands = [];
+    public $brands = [];
 
     /** @var string[]  */
-    private $categories = [];
+    public $categories = [];
 
     /** @var array  */
-    private $customFields = [];
+    public $customFields = [];
 
     /** @var boolean */
-    private $discounted;
+    public $discounted;
 
     /** @var string[] */
-    private $productIds;
+    public $productIds;
 
     /** @var string */
-    private $search;
+    public $search;
 
     /** @var string[] */
-    private $tag1;
+    public $tag1;
 
     /** @var string[] */
-    private $tag2;
+    public $tag2;
 
     /** @var string[] */
-    private $tag3;
+    public $tag3;
 
     /**
      * @param string[] $brands
