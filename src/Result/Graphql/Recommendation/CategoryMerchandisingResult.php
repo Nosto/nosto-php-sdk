@@ -44,21 +44,30 @@ class CategoryMerchandisingResult
     /** @var string $trackingCode */
     private $trackingCode;
 
+    /** @var int $totalPrimaryCount */
+    private $totalPrimaryCount;
+
     /**
      * CategoryMerchandisingResult constructor.
      * @param ResultSet $resultSet
-     * @param string $trackingCode
+     * @param $trackingCode
+     * @param int $totalPrimaryCount
+     * @param $batchToken
      */
-    public function __construct(ResultSet $resultSet, $trackingCode)
-    {
+    public function __construct(
+        ResultSet $resultSet,
+        $trackingCode,
+        int $totalPrimaryCount
+    ) {
         $this->resultSet = $resultSet;
         $this->trackingCode = $trackingCode;
+        $this->totalPrimaryCount = $totalPrimaryCount;
     }
-
+    
     /**
      * @return ResultSet
      */
-    public function getResultSet()
+    public function getResultSet(): ResultSet
     {
         return $this->resultSet;
     }
@@ -66,8 +75,16 @@ class CategoryMerchandisingResult
     /**
      * @return string
      */
-    public function getTrackingCode()
+    public function getTrackingCode(): string
     {
         return $this->trackingCode;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalPrimaryCount(): int
+    {
+        return $this->totalPrimaryCount;
     }
 }

@@ -49,11 +49,15 @@ class CategoryMerchandising extends AbstractRecommendation
     /** @var ExcludeFilters */
     private $excludeFilters;
 
+    /** @var int */
+    private $skipPages;
+
     /**
      * CategoryMerchandising constructor.
      * @param AccountInterface $account
      * @param $customerId
      * @param $category
+     * @param $skipPages
      * @param IncludeFilters $includeFilters
      * @param ExcludeFilters $excludeFilters
      * @param string $activeDomain
@@ -65,6 +69,7 @@ class CategoryMerchandising extends AbstractRecommendation
         AccountInterface $account,
         $customerId,
         $category,
+        $skipPages,
         IncludeFilters $includeFilters,
         ExcludeFilters $excludeFilters,
         $activeDomain = '',
@@ -73,6 +78,7 @@ class CategoryMerchandising extends AbstractRecommendation
         $limit = self::LIMIT
     ) {
         $this->category = $category;
+        $this->skipPages = $skipPages;
         $this->includeFilters = $includeFilters;
         $this->excludeFilters = $excludeFilters;
         parent::__construct($account, $customerId, $activeDomain, $customerBy, $previewMode, $limit);
@@ -91,6 +97,7 @@ class CategoryMerchandising extends AbstractRecommendation
             \$limit: Int!,
             \$preview: Boolean!,
             \$by: LookupParams!,
+            \$skipPages: Int,
             \$includeFilters: InputIncludeParams,
             \$excludeFilters: InputFilterParams
         ) {
@@ -109,6 +116,7 @@ class CategoryMerchandising extends AbstractRecommendation
                 category: \$category
                 minProducts: 1
                 maxProducts: \$limit,
+                skipPages: \$skipPages,
                 include: \$includeFilters,
                 exclude: \$excludeFilters
               ) {
@@ -141,6 +149,7 @@ QUERY;
             'limit' => $this->limit,
             'preview' => $this->previewMode,
             'by' => $this->customerBy,
+            'skipPages' => $this->skipPages,
             'includeFilters' => $this->includeFilters->toArray(),
             'excludeFilters' => $this->excludeFilters->toArray()
         ];
