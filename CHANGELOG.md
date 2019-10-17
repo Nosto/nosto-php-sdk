@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+##  4.0.4
+* Sort attributes when serializing objects to avoid mismatches caused by attribute order when comparing serialized objects
+
 ##  4.0.3
 * Update CMP GraphQL query to use category name as recommendation parameter
 
