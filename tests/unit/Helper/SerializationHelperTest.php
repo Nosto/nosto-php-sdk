@@ -64,7 +64,7 @@ class SerializationHelperTest extends Test
         $object->setImageUrl($mainImage);
 
         $serialized = SerializationHelper::serialize($object);
-        $this->assertEquals('{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product_image.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg","http:\/\/shop.com\/product_alt_1.jpg"],"condition":"Used","gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","skus":[],"variations":[],"date_published":"2013-03-05"}', $serialized);
+        $this->assertEquals('{"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg","http:\/\/shop.com\/product_alt_1.jpg"],"availability":"InStock","brand":"Super Brand","categories":["\/Mens","\/Mens\/Shoes"],"condition":"Used","date_published":"2013-03-05","description":"This is a full description","google_category":"All","gtin":"gtin","image_url":"http:\/\/my.shop.com\/images\/test_product_image.jpg","inventory_level":50,"list_price":110.99,"name":"Test Product","price":99.99,"price_currency_code":"USD","product_id":1,"rating_value":2.5,"review_count":99,"skus":[],"supplier_cost":22.33,"tag1":["first"],"tag2":["second"],"tag3":["third"],"url":"http:\/\/my.shop.com\/products\/test_product.html","variation_id":"USD","variations":[]}', $serialized);
     }
 
     /**
@@ -73,7 +73,8 @@ class SerializationHelperTest extends Test
     public function testObject()
     {
         $object = new MockProduct();
-        $this->assertEquals('{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"condition":"Used","gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","skus":[],"variations":[],"date_published":"2013-03-05"}', SerializationHelper::serialize($object));
+        $serialized = SerializationHelper::serialize($object);
+        $this->assertEquals('{"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"availability":"InStock","brand":"Super Brand","categories":["\/Mens","\/Mens\/Shoes"],"condition":"Used","date_published":"2013-03-05","description":"This is a full description","google_category":"All","gtin":"gtin","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","inventory_level":50,"list_price":110.99,"name":"Test Product","price":99.99,"price_currency_code":"USD","product_id":1,"rating_value":2.5,"review_count":99,"skus":[],"supplier_cost":22.33,"tag1":["first"],"tag2":["second"],"tag3":["third"],"url":"http:\/\/my.shop.com\/products\/test_product.html","variation_id":"USD","variations":[]}', $serialized);
     }
 
     /**
@@ -85,7 +86,7 @@ class SerializationHelperTest extends Test
         $object->addCustomField('customFieldOne', '<div class="customClassOne">Custom field one</div>');
         $object->addCustomField('customFieldTwo', "<div class='customClassTwo'>Custom field two</div>");
         $serializedObject = SerializationHelper::serialize($object);
-        $this->assertEquals('{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"condition":"Used","gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","skus":[],"variations":[],"custom_fields":{"customFieldOne":"<div class=\"customClassOne\">Custom field one<\/div>","customFieldTwo":"<div class=\'customClassTwo\'>Custom field two<\/div>"},"date_published":"2013-03-05"}', $serializedObject);
+        $this->assertEquals('{"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"availability":"InStock","brand":"Super Brand","categories":["\/Mens","\/Mens\/Shoes"],"condition":"Used","custom_fields":{"customFieldOne":"<div class=\"customClassOne\">Custom field one<\/div>","customFieldTwo":"<div class=\'customClassTwo\'>Custom field two<\/div>"},"date_published":"2013-03-05","description":"This is a full description","google_category":"All","gtin":"gtin","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","inventory_level":50,"list_price":110.99,"name":"Test Product","price":99.99,"price_currency_code":"USD","product_id":1,"rating_value":2.5,"review_count":99,"skus":[],"supplier_cost":22.33,"tag1":["first"],"tag2":["second"],"tag3":["third"],"url":"http:\/\/my.shop.com\/products\/test_product.html","variation_id":"USD","variations":[]}', $serializedObject);
     }
 
     /**
@@ -95,7 +96,8 @@ class SerializationHelperTest extends Test
     {
         $collection = new \Nosto\Object\Product\ProductCollection();
         $collection->append(new MockProduct());
-        $this->assertEquals('[{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"condition":"Used","gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","skus":[],"variations":[],"date_published":"2013-03-05"}]', SerializationHelper::serialize($collection));
+        $serialized = SerializationHelper::serialize($collection);
+        $this->assertEquals('[{"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"availability":"InStock","brand":"Super Brand","categories":["\/Mens","\/Mens\/Shoes"],"condition":"Used","date_published":"2013-03-05","description":"This is a full description","google_category":"All","gtin":"gtin","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","inventory_level":50,"list_price":110.99,"name":"Test Product","price":99.99,"price_currency_code":"USD","product_id":1,"rating_value":2.5,"review_count":99,"skus":[],"supplier_cost":22.33,"tag1":["first"],"tag2":["second"],"tag3":["third"],"url":"http:\/\/my.shop.com\/products\/test_product.html","variation_id":"USD","variations":[]}]', $serialized);
     }
 
     /**
@@ -104,7 +106,8 @@ class SerializationHelperTest extends Test
     public function testObjectArray()
     {
         $array = [new MockProduct()];
-        $this->assertEquals('[{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"condition":"Used","gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","skus":[],"variations":[],"date_published":"2013-03-05"}]', SerializationHelper::serialize($array));
+        $serialized = SerializationHelper::serialize($array);
+        $this->assertEquals('[{"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"availability":"InStock","brand":"Super Brand","categories":["\/Mens","\/Mens\/Shoes"],"condition":"Used","date_published":"2013-03-05","description":"This is a full description","google_category":"All","gtin":"gtin","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","inventory_level":50,"list_price":110.99,"name":"Test Product","price":99.99,"price_currency_code":"USD","product_id":1,"rating_value":2.5,"review_count":99,"skus":[],"supplier_cost":22.33,"tag1":["first"],"tag2":["second"],"tag3":["third"],"url":"http:\/\/my.shop.com\/products\/test_product.html","variation_id":"USD","variations":[]}]', $serialized);
     }
 
     /**
@@ -123,7 +126,8 @@ class SerializationHelperTest extends Test
     {
         $object = new MockProduct();
         $object->addCustomField('shouldNotBeSnakeCase', 'value');
-        $this->assertEquals('{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"condition":"Used","gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","skus":[],"variations":[],"custom_fields":{"shouldNotBeSnakeCase":"value"},"date_published":"2013-03-05"}', SerializationHelper::serialize($object));
+        $serialized = SerializationHelper::serialize($object);
+        $this->assertEquals('{"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"availability":"InStock","brand":"Super Brand","categories":["\/Mens","\/Mens\/Shoes"],"condition":"Used","custom_fields":{"shouldNotBeSnakeCase":"value"},"date_published":"2013-03-05","description":"This is a full description","google_category":"All","gtin":"gtin","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","inventory_level":50,"list_price":110.99,"name":"Test Product","price":99.99,"price_currency_code":"USD","product_id":1,"rating_value":2.5,"review_count":99,"skus":[],"supplier_cost":22.33,"tag1":["first"],"tag2":["second"],"tag3":["third"],"url":"http:\/\/my.shop.com\/products\/test_product.html","variation_id":"USD","variations":[]}', $serialized);
     }
 
     /**
@@ -133,7 +137,8 @@ class SerializationHelperTest extends Test
     {
         $object = new MockProduct();
         $object->addCustomField('spesialCäåös', 'value');
-        $this->assertEquals('{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"condition":"Used","gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","skus":[],"variations":[],"custom_fields":{"spesialC\u00e4\u00e5\u00f6s":"value"},"date_published":"2013-03-05"}', SerializationHelper::serialize($object));
+        $serialized = SerializationHelper::serialize($object);
+        $this->assertEquals('{"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"availability":"InStock","brand":"Super Brand","categories":["\/Mens","\/Mens\/Shoes"],"condition":"Used","custom_fields":{"spesialC\u00e4\u00e5\u00f6s":"value"},"date_published":"2013-03-05","description":"This is a full description","google_category":"All","gtin":"gtin","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","inventory_level":50,"list_price":110.99,"name":"Test Product","price":99.99,"price_currency_code":"USD","product_id":1,"rating_value":2.5,"review_count":99,"skus":[],"supplier_cost":22.33,"tag1":["first"],"tag2":["second"],"tag3":["third"],"url":"http:\/\/my.shop.com\/products\/test_product.html","variation_id":"USD","variations":[]}', $serialized);
     }
 
     /**
@@ -143,7 +148,8 @@ class SerializationHelperTest extends Test
     {
         $object = new MockProduct();
         $object->addCustomField('key.with.\special?char s*', 'åäöø');
-        $this->assertEquals('{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"condition":"Used","gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","skus":[],"variations":[],"custom_fields":{"key.with.\\\special?char s*":"\u00e5\u00e4\u00f6\u00f8"},"date_published":"2013-03-05"}', SerializationHelper::serialize($object));
+        $serialized = SerializationHelper::serialize($object);
+        $this->assertEquals('{"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"availability":"InStock","brand":"Super Brand","categories":["\/Mens","\/Mens\/Shoes"],"condition":"Used","custom_fields":{"key.with.\\\special?char s*":"\u00e5\u00e4\u00f6\u00f8"},"date_published":"2013-03-05","description":"This is a full description","google_category":"All","gtin":"gtin","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","inventory_level":50,"list_price":110.99,"name":"Test Product","price":99.99,"price_currency_code":"USD","product_id":1,"rating_value":2.5,"review_count":99,"skus":[],"supplier_cost":22.33,"tag1":["first"],"tag2":["second"],"tag3":["third"],"url":"http:\/\/my.shop.com\/products\/test_product.html","variation_id":"USD","variations":[]}', $serialized);
     }
 
     /**
@@ -152,7 +158,8 @@ class SerializationHelperTest extends Test
     public function testObjectWithSkus()
     {
         $object = new MockProductWithSku();
-        $this->assertEquals('{"url":"http:\/\/my.shop.com\/products\/test_product.html","product_id":1,"name":"Test Product","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","price":99.99,"list_price":110.99,"price_currency_code":"USD","availability":"InStock","categories":["\/Mens","\/Mens\/Shoes"],"description":"This is a full description","brand":"Super Brand","variation_id":"USD","supplier_cost":22.33,"inventory_level":50,"review_count":99,"rating_value":2.5,"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"condition":"Used","gtin":"gtin","tag1":["first"],"tag2":["second"],"tag3":["third"],"google_category":"All","skus":[{"id":100,"name":"Test Product","price":99.99,"list_price":110.99,"url":"http:\/\/my.shop.com\/products\/test_product.html","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","gtin":"gtin","availability":"InStock","inventory_level":20},{"id":100,"name":"Test Product","price":99.99,"list_price":110.99,"url":"http:\/\/my.shop.com\/products\/test_product.html","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","gtin":"gtin","availability":"InStock","custom_fields":{"noSnakeCase":"value"},"inventory_level":20},{"id":100,"name":"Test Product","price":99.99,"list_price":110.99,"url":"http:\/\/my.shop.com\/products\/test_product.html","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","gtin":"gtin","availability":"InStock","custom_fields":{"\u00e5\u00e4\u00f6":"\u00e5\u00e4\u00f6"},"inventory_level":20}],"variations":[],"date_published":"2013-03-05"}', SerializationHelper::serialize($object));
+        $serialized = SerializationHelper::serialize($object);
+        $this->assertEquals('{"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"availability":"InStock","brand":"Super Brand","categories":["\/Mens","\/Mens\/Shoes"],"condition":"Used","date_published":"2013-03-05","description":"This is a full description","google_category":"All","gtin":"gtin","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","inventory_level":50,"list_price":110.99,"name":"Test Product","price":99.99,"price_currency_code":"USD","product_id":1,"rating_value":2.5,"review_count":99,"skus":[{"availability":"InStock","gtin":"gtin","id":100,"image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","inventory_level":20,"list_price":110.99,"name":"Test Product","price":99.99,"url":"http:\/\/my.shop.com\/products\/test_product.html"},{"availability":"InStock","custom_fields":{"noSnakeCase":"value"},"gtin":"gtin","id":100,"image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","inventory_level":20,"list_price":110.99,"name":"Test Product","price":99.99,"url":"http:\/\/my.shop.com\/products\/test_product.html"},{"availability":"InStock","custom_fields":{"\u00e5\u00e4\u00f6":"\u00e5\u00e4\u00f6"},"gtin":"gtin","id":100,"image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","inventory_level":20,"list_price":110.99,"name":"Test Product","price":99.99,"url":"http:\/\/my.shop.com\/products\/test_product.html"}],"supplier_cost":22.33,"tag1":["first"],"tag2":["second"],"tag3":["third"],"url":"http:\/\/my.shop.com\/products\/test_product.html","variation_id":"USD","variations":[]}', $serialized);
     }
 
     /**
@@ -162,6 +169,29 @@ class SerializationHelperTest extends Test
     {
         $object = new MockSku();
         $object = $object->sanitize();
-        $this->assertEquals('{"id":100,"name":"Test Product","price":99.99,"list_price":110.99,"url":"http:\/\/my.shop.com\/products\/test_product.html","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","gtin":"gtin","availability":"InStock"}', SerializationHelper::serialize($object));
+        $serialized = SerializationHelper::serialize($object);
+        $this->assertEquals('{"availability":"InStock","gtin":"gtin","id":100,"image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","list_price":110.99,"name":"Test Product","price":99.99,"url":"http:\/\/my.shop.com\/products\/test_product.html"}', $serialized);
+    }
+
+    /**
+     * Tests that an object SKUs are serialized to HTML correctly
+     */
+    public function testAttributeOrderHasNoEffect()
+    {
+        $object1 = new MockProduct();
+        $object1->addCustomField('0_custom_0', '0 value 0');
+        $object1->addCustomField('1_custom_1', '1 value 1');
+        $object1->addCustomField('custom_1', 'value 1');
+        $object1->addCustomField('custom_2', 'value 2');
+        $object2 = new MockProduct();
+        $object2->addCustomField('custom_2', 'value 2');
+        $object2->addCustomField('custom_1', 'value 1');
+        $object2->addCustomField('1_custom_1', '1 value 1');
+        $object2->addCustomField('0_custom_0', '0 value 0');
+
+        $serialized1 = SerializationHelper::serialize($object1);
+        $serialized2 = SerializationHelper::serialize($object2);
+
+        $this->assertEquals($serialized1, $serialized2);
     }
 }
