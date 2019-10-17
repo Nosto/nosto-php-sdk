@@ -61,10 +61,12 @@ class SerializationHelper extends AbstractHelper
                     $items[] = $item;
                 }
             }
-            return json_encode($items);
+            $data = $items;
         } else {
-            return json_encode(self::toArray($object));
+            $data = self::toArray($object);
         }
+        ArrayHelper::ksortRecursively($data);
+        return json_encode($data);
     }
 
     // @codeCoverageIgnoreStart

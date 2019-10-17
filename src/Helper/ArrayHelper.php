@@ -79,4 +79,19 @@ class ArrayHelper extends AbstractHelper
     {
         return json_decode(json_encode($object), true);
     }
+
+    /**
+     * Sorts an array by keys recursively
+     *
+     * @param array $arr
+     */
+    public static function ksortRecursively(array &$arr)
+    {
+        ksort($arr);
+        foreach ($arr as $key => &$nested) {
+            if (is_array($nested)) {
+                self::ksortRecursively($nested);
+            }
+        }
+    }
 }
