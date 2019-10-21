@@ -45,6 +45,7 @@ class RecommendationResultHandler extends GraphQLResultHandler
     const GRAPHQL_DATA_PRIMARY = 'primary';
     const GRAPHQL_DATA_CATEGORY = 'category';
     const GRAPHQL_DATA_RESULT_ID = 'resultId';
+    const GRAPHQL_DATA_PRIMARY_COUNT = 'totalPrimaryCount';
 
     /**
      * @inheritdoc
@@ -53,11 +54,17 @@ class RecommendationResultHandler extends GraphQLResultHandler
     {
         /** @var \stdClass $categoryData */
         $categoryData = self::parseData($stdClass, self::GRAPHQL_DATA_CATEGORY);
-
         /** @var string $trackingCode */
         $trackingCode = self::parseData($categoryData, self::GRAPHQL_DATA_RESULT_ID);
+        /** @var int $totalPrimaryCount */
+        $totalPrimaryCount = self::parseData($categoryData, self::GRAPHQL_DATA_PRIMARY_COUNT);
+        /** @var ResultSet $resultSet */
         $resultSet = self::buildResultSet($categoryData);
-        return new CategoryMerchandisingResult($resultSet, $trackingCode);
+        return new CategoryMerchandisingResult(
+            $resultSet,
+            $trackingCode,
+            $totalPrimaryCount
+        );
     }
 
     /**
@@ -83,7 +90,7 @@ class RecommendationResultHandler extends GraphQLResultHandler
     /**
      * @param \stdClass $stdClass
      * @param string $dataType
-     * @return string|\stdClass|array
+     * @return string|int|\stdClass|array
      * @throws NostoException
      */
     private static function parseData(\stdClass $stdClass, $dataType)
