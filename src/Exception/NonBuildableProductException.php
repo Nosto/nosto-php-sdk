@@ -39,7 +39,7 @@ namespace Nosto\Exception;
 use RuntimeException;
 
 /**
- * Exception for product that should be filtered out
+ * Exception for product that cannot be build
  */
 class NonBuildableProductException extends RuntimeException
 {
