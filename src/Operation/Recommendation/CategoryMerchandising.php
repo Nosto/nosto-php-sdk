@@ -91,7 +91,7 @@ class CategoryMerchandising extends AbstractRecommendation
     {
         $query =
             <<<QUERY
-        mutation(
+        query(
             \$customerId: String!,
             \$category: String!,
             \$limit: Int!,
@@ -101,15 +101,10 @@ class CategoryMerchandising extends AbstractRecommendation
             \$includeFilters: InputIncludeParams,
             \$excludeFilters: InputFilterParams
         ) {
-          updateSession (
+          session (
             id: \$customerId,
-              by: \$by,
-              params: {
-              event: {
-                type: VIEWED_CATEGORY
-                target: \$category
-              }
-            }) {
+            by: \$by,
+          ) {
             id
             recos (preview: \$preview, image: VERSION_10_MAX_SQUARE) {
               category (
