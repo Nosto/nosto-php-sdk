@@ -34,56 +34,64 @@
  *
  */
 
-namespace Nosto\Result\Graphql\Recommendation;
+namespace Nosto\Operation\Recommendation;
 
-class CategoryMerchandisingResult
+class IncludeFilters extends AbstractFilters
 {
-    /** @var ResultSet $resultSet */
-    private $resultSet;
+    /** @var boolean */
+    public $fresh;
 
-    /** @var string $trackingCode */
-    private $trackingCode;
+    /** @var array */
+    public $price;
 
-    /** @var int $totalPrimaryCount */
-    private $totalPrimaryCount;
+    /** @var float */
+    public $rating;
+
+    /** @var int */
+    public $reviews;
+
+    /** @var array */
+    public $stock;
 
     /**
-     * CategoryMerchandisingResult constructor.
-     * @param ResultSet $resultSet
-     * @param string $trackingCode
-     * @param int $totalPrimaryCount
+     * @param boolean $fresh
      */
-    public function __construct(
-        ResultSet $resultSet,
-        $trackingCode,
-        $totalPrimaryCount
-    ) {
-        $this->resultSet = $resultSet;
-        $this->trackingCode = $trackingCode;
-        $this->totalPrimaryCount = $totalPrimaryCount;
-    }
-    
-    /**
-     * @return ResultSet
-     */
-    public function getResultSet()
+    public function setFresh($fresh)
     {
-        return $this->resultSet;
+        $this->fresh = $fresh;
     }
 
     /**
-     * @return string
+     * @param int $min
+     * @param int $max
      */
-    public function getTrackingCode()
+    public function setPrice($min, $max)
     {
-        return $this->trackingCode;
+        $this->price = ['min' => $min, 'max' => $max];
     }
 
     /**
-     * @return int
+     * @param float $rating
      */
-    public function getTotalPrimaryCount()
+    public function setRating($rating)
     {
-        return $this->totalPrimaryCount;
+        $this->rating = $rating;
+    }
+
+    /**
+     * @param int $reviews
+     */
+    public function setReviews($reviews)
+    {
+        $this->reviews = $reviews;
+    }
+
+    /**
+     * @param int $min
+     * @param int $max
+     */
+    public function setStock($min, $max)
+    {
+        $this->stock = ['min' => $min, 'max' => $max];
     }
 }

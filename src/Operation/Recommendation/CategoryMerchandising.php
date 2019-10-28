@@ -43,11 +43,23 @@ class CategoryMerchandising extends AbstractRecommendation
     /** @var string $category */
     private $category;
 
+    /** @var IncludeFilters */
+    private $includeFilters;
+
+    /** @var ExcludeFilters */
+    private $excludeFilters;
+
+    /** @var int */
+    private $skipPages;
+
     /**
      * CategoryMerchandising constructor.
      * @param AccountInterface $account
      * @param $customerId
      * @param $category
+     * @param $skipPages
+     * @param IncludeFilters $includeFilters
+     * @param ExcludeFilters $excludeFilters
      * @param string $activeDomain
      * @param string $customerBy
      * @param bool $previewMode
@@ -57,12 +69,18 @@ class CategoryMerchandising extends AbstractRecommendation
         AccountInterface $account,
         $customerId,
         $category,
+        $skipPages,
+        IncludeFilters $includeFilters,
+        ExcludeFilters $excludeFilters,
         $activeDomain = '',
         $customerBy = self::IDENTIFIER_BY_CID,
         $previewMode = false,
         $limit = self::LIMIT
     ) {
         $this->category = $category;
+        $this->skipPages = $skipPages;
+        $this->includeFilters = $includeFilters;
+        $this->excludeFilters = $excludeFilters;
         parent::__construct($account, $customerId, $activeDomain, $customerBy, $previewMode, $limit);
     }
 
@@ -73,28 +91,29 @@ class CategoryMerchandising extends AbstractRecommendation
     {
         $query =
             <<<QUERY
-        mutation(
+        query(
             \$customerId: String!,
             \$category: String!,
             \$limit: Int!,
             \$preview: Boolean!,
-            \$by: LookupParams!
+            \$by: LookupParams!,
+            \$skipPages: Int,
+            \$includeFilters: InputIncludeParams,
+            \$excludeFilters: InputFilterParams
         ) {
-          updateSession (
+          session (
             id: \$customerId,
-              by: \$by,
-              params: {
-              event: {
-                type: VIEWED_CATEGORY
-                target: \$category
-              }
-            }) {
+            by: \$by,
+          ) {
             id
             recos (preview: \$preview, image: VERSION_10_MAX_SQUARE) {
               category (
                 category: \$category
                 minProducts: 1
-                maxProducts: \$limit
+                maxProducts: \$limit,
+                skipPages: \$skipPages,
+                include: \$includeFilters,
+                exclude: \$excludeFilters
               ) {
                 primary {
                   productId
@@ -124,7 +143,10 @@ QUERY;
             'category' => $this->category,
             'limit' => $this->limit,
             'preview' => $this->previewMode,
-            'by' => $this->customerBy
+            'by' => $this->customerBy,
+            'skipPages' => $this->skipPages,
+            'includeFilters' => $this->includeFilters->toArray(),
+            'excludeFilters' => $this->excludeFilters->toArray()
         ];
 
         return $variables;
