@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 4.0.6
+* Support faceting and pagination in Category Merchandising query
+
 ##  4.0.5
 * Introduce new exception types for product building failures
 
