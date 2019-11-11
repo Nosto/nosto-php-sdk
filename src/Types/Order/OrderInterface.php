@@ -70,7 +70,7 @@ interface OrderInterface
     /**
      * The buyer info of the user who placed the OrderConfirm.
      *
-     * @return BuyerInterface the meta data model.
+     * @return BuyerInterface|null the meta data model.
      */
     public function getCustomer();
 
