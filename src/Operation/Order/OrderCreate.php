@@ -82,7 +82,7 @@ class OrderCreate extends AbstractGraphQLOperation
     }
 
     /**
-     * @return BuyerInterface
+     * @return BuyerInterface|null
      */
     public function getCustomer()
     {
@@ -153,10 +153,10 @@ class OrderCreate extends AbstractGraphQLOperation
             mutation(
                 \$by: LookupParams!,
                 \$customerIdentifier: String!
-                \$firstname:String!,
-                \$lastname: String!,
-                \$email: String!,
-                \$marketingPermission: Boolean!,
+                \$firstname:String,
+                \$lastname: String,
+                \$email: String,
+                \$marketingPermission: Boolean,
                 \$orderNumber: String!,
                 \$orderStatus: String!,
                 \$paymentProvider: String!,
@@ -199,17 +199,21 @@ QUERY;
         $array = [
             'by' => $this->identifierMethod,
             'customerIdentifier' => $this->identifierString,
-            'firstname' => $this->getCustomer()->getFirstName(),
-            'lastname' => $this->getCustomer()->getLastName(),
-            'email' => $this->getCustomer()->getEmail(),
-            'marketingPermission' => $this->getCustomer()->getMarketingPermission(),
             'orderNumber' => $this->getOrderNumber(),
             'orderStatus' => $this->getStatusCode(),
             'paymentProvider' => $this->getPaymentProvider(),
             'ref' => $this->getOrderReference(),
             'purchasedItems' => $this->getPurchasedItems(),
         ];
-
+        $buyer = $this->getCustomer();
+        if ($buyer !== null) {
+            $array = array_merge($array, [
+                'firstname' => $buyer->getFirstName(),
+                'lastname' => $buyer->getLastName(),
+                'email' => $buyer->getEmail(),
+                'marketingPermission' => $buyer->getMarketingPermission()
+            ]);
+        }
         return $array;
     }
 }
