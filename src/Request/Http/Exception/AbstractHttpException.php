@@ -47,12 +47,12 @@ use Nosto\Request\Http\HttpResponse;
 abstract class AbstractHttpException extends NostoException
 {
     /**
-     * @var HttpResponse
+     * @var HttpResponse|null
      */
     private $response;
 
     /**
-     * @var HttpRequest
+     * @var HttpRequest|null
      */
     private $request;
 
