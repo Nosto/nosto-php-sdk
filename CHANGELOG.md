@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 4.0.9
+* Remove no placeOrder object was found in GraphQL result exception in OrderCreateResultHandler
+
 ## 4.0.8
 * Update composer dependencies
 
