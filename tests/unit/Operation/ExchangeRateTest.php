@@ -38,8 +38,8 @@ namespace Nosto\Test\Unit\Operation;
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
-use Nosto\Object\ExchangeRateCollection;
-use Nosto\Object\Signup\Account;
+use Nosto\Model\ExchangeRateCollection;
+use Nosto\Model\Signup\Account;
 use Nosto\Operation\SyncRates;
 use Nosto\Request\Api\Token;
 use Nosto\Test\Support\MockExchangeRate;

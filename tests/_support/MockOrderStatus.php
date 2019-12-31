@@ -36,7 +36,7 @@
 
 namespace Nosto\Test\Support;
 
-use Nosto\Object\Order\OrderStatus;
+use Nosto\Model\Order\OrderStatus;
 
 class MockOrderStatus extends OrderStatus
 {

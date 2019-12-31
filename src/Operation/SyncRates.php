@@ -37,7 +37,7 @@
 namespace Nosto\Operation;
 
 use Nosto\NostoException;
-use Nosto\Object\ExchangeRateCollection;
+use Nosto\Model\ExchangeRateCollection;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;

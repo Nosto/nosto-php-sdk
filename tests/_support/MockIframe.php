@@ -36,7 +36,7 @@
 
 namespace Nosto\Test\Support;
 
-use Nosto\Object\Iframe;
+use Nosto\Model\Iframe;
 
 class MockIframe extends Iframe
 {

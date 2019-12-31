@@ -36,8 +36,8 @@
 
 namespace Nosto\Test\Support;
 
-use Nosto\Object\Format;
-use Nosto\Object\Settings;
+use Nosto\Model\Format;
+use Nosto\Model\Settings;
 
 class MockSettings extends Settings
 {

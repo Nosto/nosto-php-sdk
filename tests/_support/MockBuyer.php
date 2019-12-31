@@ -36,7 +36,7 @@
 
 namespace Nosto\Test\Support;
 
-use Nosto\Object\Order\Buyer;
+use Nosto\Model\Order\Buyer;
 
 class MockBuyer extends Buyer
 {

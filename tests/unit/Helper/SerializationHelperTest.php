@@ -94,7 +94,7 @@ class SerializationHelperTest extends Test
      */
     public function testObjectCollection()
     {
-        $collection = new \Nosto\Object\Product\ProductCollection();
+        $collection = new \Nosto\Model\Product\ProductCollection();
         $collection->append(new MockProduct());
         $serialized = SerializationHelper::serialize($collection);
         $this->assertEquals('[{"alternate_image_urls":["http:\/\/shop.com\/product_alt.jpg"],"availability":"InStock","brand":"Super Brand","categories":["\/Mens","\/Mens\/Shoes"],"condition":"Used","date_published":"2013-03-05","description":"This is a full description","google_category":"All","gtin":"gtin","image_url":"http:\/\/my.shop.com\/images\/test_product.jpg","inventory_level":50,"list_price":110.99,"name":"Test Product","price":99.99,"price_currency_code":"USD","product_id":1,"rating_value":2.5,"review_count":99,"skus":[],"supplier_cost":22.33,"tag1":["first"],"tag2":["second"],"tag3":["third"],"url":"http:\/\/my.shop.com\/products\/test_product.html","variation_id":"USD","variations":[]}]', $serialized);
