@@ -20,7 +20,6 @@ pipeline {
     stage('Code Sniffer') {
       steps {
         catchError {
-          sh "./vendor/bin/phpcbf . || true"
           sh "./vendor/bin/phpcs --report=checkstyle --report-file=chkphpcs.xml || true"
         }
         archiveArtifacts 'chkphpcs.xml'
