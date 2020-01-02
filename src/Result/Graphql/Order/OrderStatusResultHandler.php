@@ -57,7 +57,7 @@ class OrderStatusResultHandler extends GraphQLResultHandler
                 return $this->parseQueryResult($member);
             }
         }
-
-        throw new NostoException('No number string was found in GraphQL result');
+        // No number string was found in GraphQL result
+        return '';
     }
 }

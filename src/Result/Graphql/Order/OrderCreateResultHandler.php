@@ -36,6 +36,7 @@
 
 namespace Nosto\Result\Graphql\Order;
 
+use Nosto\NostoException;
 use Nosto\Result\Graphql\GraphQLResultHandler;
 
 class OrderCreateResultHandler extends GraphQLResultHandler
@@ -56,5 +57,7 @@ class OrderCreateResultHandler extends GraphQLResultHandler
                 return $this->parseQueryResult($member);
             }
         }
+        // No placeOrder object was found in GraphQL result
+        return '';
     }
 }
