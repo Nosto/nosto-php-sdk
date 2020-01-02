@@ -36,7 +36,6 @@
 
 namespace Nosto\Result\Graphql\Order;
 
-use Nosto\NostoException;
 use Nosto\Result\Graphql\GraphQLResultHandler;
 
 class OrderStatusResultHandler extends GraphQLResultHandler
