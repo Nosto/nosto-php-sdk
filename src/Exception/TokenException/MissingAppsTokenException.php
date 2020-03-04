@@ -34,36 +34,17 @@
  *
  */
 
-namespace Nosto\Result;
+namespace Nosto\Exception\TokenException;
 
-use Nosto\NostoException;
-use Nosto\Request\Http\HttpResponse;
-use Nosto\Request\Http\Exception\HttpResponseException;
-use Nosto\Result\Graphql\Recommendation\CategoryMerchandisingResult;
-use Nosto\Util\HttpResponseException as ExceptionHandler;
+use \Exception;
 
-abstract class ResultHandler
-{
+class MissingAppsTokenException extends Exception {
 
     /**
-     * @param HttpResponse $response
-     * @return string|array|CategoryMerchandisingResult|bool
-     * @throws HttpResponseException
-     * @throws NostoException
+     * MissingAppsTokenException constructor.
      */
-    public function parse(HttpResponse $response)
+    public function __construct()
     {
-        if ($response->getCode() !== 200) {
-            ExceptionHandler::handle($response);
-        }
-
-        return $this->parseResponse($response);
+        parent::__construct("Missing Nosto API_APPS token");
     }
-
-    /**
-     * @param HttpResponse $response
-     * @throws NostoException
-     * @return string|bool
-     */
-    abstract protected function parseResponse(HttpResponse $response);
 }
