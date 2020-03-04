@@ -48,7 +48,9 @@ class RecommendationResultHandler extends GraphQLResultHandler
     const GRAPHQL_DATA_PRIMARY_COUNT = 'totalPrimaryCount';
 
     /**
-     * @inheritdoc
+     * @param \stdClass $stdClass
+     * @throws NostoException
+     * @return CategoryMerchandisingResult
      */
     protected function parseQueryResult(\stdClass $stdClass)
     {
