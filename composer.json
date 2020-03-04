@@ -9,6 +9,7 @@
     "sebastian/phpcpd": "^3.0",
     "phing/phing": "2.*",
     "codeception/c3": "^2.0",
+    "symfony/console": "3.*",
     "wimg/php-compatibility": "^8.0",
     "phan/phan": "^1.2",
     "codeception/base": "3.1.1"
