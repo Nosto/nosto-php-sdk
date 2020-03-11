@@ -34,29 +34,17 @@
  *
  */
 
-namespace Nosto\Result\Graphql\Order;
+namespace Nosto\Exception\TokenException;
 
-use Nosto\Result\Graphql\GraphQLResultHandler;
+use \Exception;
 
-class OrderCreateResultHandler extends GraphQLResultHandler
-{
-    const GRAPHQL_RESPONSE_ORDER_CREATE = 'placeOrder';
+class MissingAppsTokenException extends Exception {
 
     /**
-     * @inheritdoc
+     * MissingAppsTokenException constructor.
      */
-    protected function parseQueryResult(\stdClass $stdClass)
+    public function __construct()
     {
-        $members = get_object_vars($stdClass);
-        foreach ($members as $varName => $member) {
-            if ($varName === self::GRAPHQL_RESPONSE_ORDER_CREATE) {
-                return $member->id;
-            }
-            if ($member instanceof \stdClass) {
-                return $this->parseQueryResult($member);
-            }
-        }
-        // No placeOrder object was found in GraphQL result
-        return '';
+        parent::__construct("Missing Nosto API_APPS token");
     }
 }

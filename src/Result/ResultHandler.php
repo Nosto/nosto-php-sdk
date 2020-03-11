@@ -39,7 +39,7 @@ namespace Nosto\Result;
 use Nosto\NostoException;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Request\Http\Exception\HttpResponseException;
-use Nosto\Result\Graphql\Recommendation\ResultSet;
+use Nosto\Result\Graphql\Recommendation\CategoryMerchandisingResult;
 use Nosto\Util\HttpResponseException as ExceptionHandler;
 
 abstract class ResultHandler
@@ -47,7 +47,7 @@ abstract class ResultHandler
 
     /**
      * @param HttpResponse $response
-     * @return string|array|ResultSet|bool
+     * @return string|array|CategoryMerchandisingResult|bool
      * @throws HttpResponseException
      * @throws NostoException
      */
