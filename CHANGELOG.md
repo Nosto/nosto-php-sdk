@@ -2,15 +2,6 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
-## 4.0.11
-* Add exception class for missing APPS token
-
-## 4.0.10
-* Update composer lock causing problems with installations using PHP < 7.2
-
-## 4.0.9
-* Return empty string instead of throwing exception in OrderStatus Handlers
-
 ## 4.0.8
 * Update composer dependencies
 
