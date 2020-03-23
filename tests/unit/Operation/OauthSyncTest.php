@@ -40,6 +40,7 @@ use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Operation\OAuth\ExchangeTokens;
 use Nosto\Test\Support\MockOAuth;
+use Nosto\Model\NostoOAuthToken;
 
 class OauthSyncTest extends Test
 {
@@ -53,7 +54,7 @@ class OauthSyncTest extends Test
     public function testSyncingExistingAccount()
     {
         $meta = new MockOAuth();
-        $token = \Nosto\Model\NostoOAuthToken::create(['merchant_name' => 'platform-00000000']);
+        $token = NostoOAuthToken::create(['merchant_name' => 'platform-00000000']);
 
         $service = new ExchangeTokens($meta);
         $account = $service->exchange($token);

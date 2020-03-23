@@ -49,6 +49,7 @@ use Nosto\Types\Product\VariationInterface;
 use Nosto\Types\ValidatableInterface;
 use Nosto\Helper\DateHelper;
 use Nosto\Util\Sanitize;
+use Nosto\Model\Product\VariationCollection;
 
 /**
  * Model for product information. This is used when compiling the info about a
@@ -228,7 +229,7 @@ class Product extends AbstractObject implements
     /**
      * SKUs
      *
-     * @var \Nosto\Model\Product\VariationCollection of variations
+     * @var VariationCollection of variations
      */
     private $variations;
 
