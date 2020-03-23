@@ -36,7 +36,7 @@
 
 namespace Nosto\Test\Support;
 
-use \Nosto\Object\Product\Sku;
+use \Nosto\Model\Product\Sku;
 
 class MockSku extends Sku
 {

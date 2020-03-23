@@ -37,6 +37,7 @@
 namespace Nosto\Types\Product;
 
 use Nosto\Types\SanitizableInterface;
+use Nosto\Model\Product\SkuCollection;
 
 /**
  * Interface for the meta data of a product.
@@ -260,7 +261,7 @@ interface ProductInterface extends SanitizableInterface
     /**
      * Returns the product variations
      *
-     * @return \Nosto\Object\Product\SkuCollection
+     * @return SkuCollection
      */
     public function getSkus();
 

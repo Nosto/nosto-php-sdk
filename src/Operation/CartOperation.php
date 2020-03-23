@@ -38,7 +38,7 @@ namespace Nosto\Operation;
 
 use Nosto\Helper\SerializationHelper;
 use Nosto\NostoException;
-use Nosto\Object\Event\Cart\Update;
+use Nosto\Model\Event\Cart\Update;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Result\Api\GeneralPurposeResultHandler;

@@ -36,7 +36,7 @@
 
 namespace Nosto\Test\Support;
 
-use Nosto\Object\User;
+use Nosto\Model\User;
 
 class MockUser extends User
 {

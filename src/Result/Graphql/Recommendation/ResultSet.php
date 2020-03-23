@@ -36,7 +36,7 @@
 
 namespace Nosto\Result\Graphql\Recommendation;
 
-use Nosto\Object\AbstractCollection;
+use Nosto\Model\AbstractCollection;
 
 /**
  * Collection for GraphQL result

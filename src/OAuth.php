@@ -36,12 +36,12 @@
 
 namespace Nosto;
 
-use Nosto\Object\Signup\Account;
+use Nosto\Model\Signup\Account;
 use Nosto\Types\OAuthInterface;
 use Nosto\Types\Signup\AccountInterface;
 
 /**
- * Oauth DTO (Data Transfer Object).
+ * Oauth DTO (Data Transfer Model).
  */
 class OAuth implements OAuthInterface
 {
