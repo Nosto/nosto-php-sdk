@@ -11,7 +11,9 @@
     "codeception/c3": "^2.0",
     "symfony/console": "3.*",
     "wimg/php-compatibility": "^8.0",
-    "codeception/base": "3.1.1"
+    "codeception/base": "3.1.1",
+    "phan/phan": "2.6",
+    "staabm/annotate-pull-request-from-checkstyle": "^1.1"
   },
   "repositories": [
     {
@@ -37,8 +39,7 @@
     "phpseclib/phpseclib": "2.0.*",
     "vlucas/phpdotenv": ">=2.4.0 <=3.0",
     "ext-json": "*",
-    "ext-curl": "*",
-    "phan/phan": "0.9.0"
+    "ext-curl": "*"
   },
   "scripts": {
     "post-install-cmd": "if [ -f ./vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility; fi",
