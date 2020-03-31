@@ -10,7 +10,7 @@
     "phing/phing": "2.*",
     "codeception/c3": "^2.0",
     "symfony/console": "3.*",
-    "wimg/php-compatibility": "^8.0",
+    "wimg/php-compatibility": "^9.0",
     "codeception/base": "3.1.1",
     "phan/phan": "2.6",
     "staabm/annotate-pull-request-from-checkstyle": "^1.1"
