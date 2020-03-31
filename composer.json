@@ -13,8 +13,7 @@
     "wimg/php-compatibility": "^8.0",
     "codeception/base": "3.1.1",
     "phan/phan": "2.6",
-    "staabm/annotate-pull-request-from-checkstyle": "^1.1",
-    "mridang/pmd-annotations": "^0.0.2"
+    "staabm/annotate-pull-request-from-checkstyle": "^1.1"
   },
   "repositories": [
     {
