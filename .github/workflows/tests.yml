@@ -46,6 +46,6 @@ jobs:
         name: codeception-output-files
         path: tests/_output/
 
-    - name: Report annotations
-      id: report-annotations
-      run: ./vendor/bin/cs2pr chkphpcs.xml
+#    - name: Report annotations
+#      id: report-annotations
+#      run: ./vendor/bin/cs2pr chkphpcs.xml
