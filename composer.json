@@ -10,9 +10,11 @@
     "phing/phing": "2.*",
     "codeception/c3": "^2.0",
     "symfony/console": "3.*",
-    "wimg/php-compatibility": "^8.0",
-    "phan/phan": "^1.2",
-    "codeception/base": "3.1.1"
+    "wimg/php-compatibility": "^9.0",
+    "codeception/base": "3.1.1",
+    "phan/phan": "2.6",
+    "staabm/annotate-pull-request-from-checkstyle": "^1.1",
+    "mridang/pmd-annotations": "^0.0.2"
   },
   "repositories": [
     {
@@ -38,9 +40,10 @@
     "phpseclib/phpseclib": "2.0.*",
     "vlucas/phpdotenv": ">=2.4.0 <=3.0",
     "ext-json": "*",
-    "ext-curl": "*"
+    "ext-curl": "*",
+    "mridang/pmd-annotations": "^0.0.2"
   },
-  "scripts-dev": {
+  "scripts": {
     "post-install-cmd": "if [ -f ./vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility; fi",
     "post-update-cmd" : "if [ -f ./vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility; fi"
   }
