@@ -46,4 +46,5 @@ return [
         'vendor/',
         'src/libs/'
     ],
+    "color_issue_messages_if_supported" => true
 ];
