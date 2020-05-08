@@ -45,7 +45,6 @@ class SortOrder extends MarkupableString
     const CMP_VALUE = 'cmp';
 
     /**
-     * PageType constructor.
      * @param $value
      */
     public function __construct($value)
