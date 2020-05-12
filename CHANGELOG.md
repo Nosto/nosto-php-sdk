@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 4.1.0
+* Introduce object for sort order tagging
+* Add skipVCEvent to CMP graphql query
+
 ## 4.0.11
 * Add exception class for missing APPS token
 
