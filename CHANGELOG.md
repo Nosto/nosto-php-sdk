@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## not released
+* Introduce object for sort order tagging
+
 ## 4.0.11
 * Add exception class for missing APPS token
 

@@ -37,14 +37,14 @@
 namespace Nosto\Object;
 
 /**
- * PageType object for tagging
+ * SortOrder object for tagging
  */
-class PageType extends MarkupableString
+class SortOrder extends MarkupableString
 {
-    const MARKUP_KEY = 'nosto_page_type';
+    const MARKUP_KEY = 'nosto_sort_order';
+    const CMP_VALUE = 'cmp';
 
     /**
-     * PageType constructor.
      * @param $value
      */
     public function __construct($value)
