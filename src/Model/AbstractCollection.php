@@ -48,7 +48,7 @@ use Nosto\Helper\SerializationHelper;
 abstract class AbstractCollection implements Iterator, Countable
 {
 
-    protected $var = array();
+    protected $var = [];
 
     /**
      * @see Iterator::rewind()
@@ -115,6 +115,6 @@ abstract class AbstractCollection implements Iterator, Countable
      */
     public function clear()
     {
-        $this->var = array();
+        $this->var = [];
     }
 }

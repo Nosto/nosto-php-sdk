@@ -73,7 +73,7 @@ class MarketingPermission extends AbstractAuthenticatedOperation
             $this->activeDomain
         );
 
-        $replaceParams = array('{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false');
+        $replaceParams = ['{email}' => $email, '{state}' => $hasPermission ? 'true' : 'false'];
         $request->setReplaceParams($replaceParams);
         $response = $request->postRaw('');
 

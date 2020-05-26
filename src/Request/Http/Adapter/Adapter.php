@@ -58,7 +58,7 @@ abstract class Adapter
     /**
      * @var array the request headers.
      */
-    protected $headers = array();
+    protected $headers = [];
 
     /**
      * @var mixed the request content.
@@ -88,7 +88,7 @@ abstract class Adapter
      * @param array $options the request options.
      * @return HttpResponse the response object.
      */
-    abstract public function get($url, array $options = array());
+    abstract public function get($url, array $options = []);
 
     /**
      * Does a POST request and returns the http response object.
@@ -97,7 +97,7 @@ abstract class Adapter
      * @param array $options the request options.
      * @return HttpResponse the response object.
      */
-    abstract public function post($url, array $options = array());
+    abstract public function post($url, array $options = []);
 
     /**
      * Does a PUT request and returns the http response object.
@@ -106,7 +106,7 @@ abstract class Adapter
      * @param array $options the request options.
      * @return HttpResponse the response object.
      */
-    abstract public function put($url, array $options = array());
+    abstract public function put($url, array $options = []);
 
     /**
      * Does a DELETE request and returns the http response object.
@@ -115,14 +115,14 @@ abstract class Adapter
      * @param array $options the request options.
      * @return HttpResponse the response object.
      */
-    abstract public function delete($url, array $options = array());
+    abstract public function delete($url, array $options = []);
 
     /**
      * Initializes the request options.
      *
      * @param array $options the options.
      */
-    protected function init(array $options = array())
+    protected function init(array $options = [])
     {
         foreach ($options as $key => $value) {
             if (property_exists($this, $key)) {

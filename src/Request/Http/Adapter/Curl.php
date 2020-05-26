@@ -64,17 +64,17 @@ class Curl extends Adapter
     /**
      * @inheritdoc
      */
-    public function get($url, array $options = array())
+    public function get($url, array $options = [])
     {
         $this->init($options);
         return $this->send(
-            array(
+            [
                 CURLOPT_URL => $url,
                 CURLOPT_HEADER => 1,
                 CURLOPT_FRESH_CONNECT => 1,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_FORBID_REUSE => 1,
-            )
+            ]
         );
     }
 
@@ -99,7 +99,7 @@ class Curl extends Adapter
             $curlOptions[CURLOPT_CONNECTTIMEOUT] = $this->getConnectTimeout();
         }
         if (empty($curlOptions[CURLOPT_HTTPHEADER]) || !is_array($curlOptions[CURLOPT_HTTPHEADER])) {
-            $curlOptions[CURLOPT_HTTPHEADER] = array();
+            $curlOptions[CURLOPT_HTTPHEADER] = [];
         }
         $curlOptions[CURLOPT_HTTPHEADER][] = 'Expect:';
         $ch = curl_init();
@@ -117,11 +117,11 @@ class Curl extends Adapter
     /**
      * @inheritdoc
      */
-    public function post($url, array $options = array())
+    public function post($url, array $options = [])
     {
         $this->init($options);
         return $this->send(
-            array(
+            [
                 CURLOPT_URL => $url,
                 CURLOPT_POSTFIELDS => $this->getContent(),
                 CURLOPT_POST => 1,
@@ -129,18 +129,18 @@ class Curl extends Adapter
                 CURLOPT_FRESH_CONNECT => 1,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_FORBID_REUSE => 1,
-            )
+            ]
         );
     }
 
     /**
      * @inheritdoc
      */
-    public function put($url, array $options = array())
+    public function put($url, array $options = [])
     {
         $this->init($options);
         return $this->send(
-            array(
+            [
                 CURLOPT_URL => $url,
                 CURLOPT_POSTFIELDS => $this->getContent(),
                 CURLOPT_CUSTOMREQUEST => HttpRequest::METHOD_PUT,
@@ -148,25 +148,25 @@ class Curl extends Adapter
                 CURLOPT_FRESH_CONNECT => 1,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_FORBID_REUSE => 1,
-            )
+            ]
         );
     }
 
     /**
      * @inheritdoc
      */
-    public function delete($url, array $options = array())
+    public function delete($url, array $options = [])
     {
         $this->init($options);
         return $this->send(
-            array(
+            [
                 CURLOPT_URL => $url,
                 CURLOPT_CUSTOMREQUEST => HttpRequest::METHOD_DELETE,
                 CURLOPT_HEADER => 1,
                 CURLOPT_FRESH_CONNECT => 1,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_FORBID_REUSE => 1,
-            )
+            ]
         );
     }
 }

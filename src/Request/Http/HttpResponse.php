@@ -134,7 +134,7 @@ class HttpResponse
         $contentType = '';
         if (!empty($this->headers)) {
             foreach ($this->headers as $header) {
-                $matches = array();
+                $matches = [];
                 preg_match('/content-type: (\S*\/\S*)+;/i', $header, $matches);
                 if (isset($matches[1])) {
                     $contentType = $matches[1];
@@ -155,7 +155,7 @@ class HttpResponse
             $code = 0;
             if (!empty($this->headers)) {
                 foreach ($this->headers as $header) {
-                    $matches = array();
+                    $matches = [];
                     preg_match('|HTTP/\d(\.\d)?\s+(\d+)(\s+.*)?|', $header, $matches);
                     if (isset($matches[2])) {
                         $code = (int)$matches[2];
@@ -198,11 +198,11 @@ class HttpResponse
     public function __toString()
     {
         return serialize(
-            array(
+            [
                 'headers' => $this->headers,
                 'body' => $this->result,
                 'error' => $this->message,
-            )
+            ]
         );
     }
 }

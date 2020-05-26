@@ -60,10 +60,10 @@ trait OauthTrait
 
                 if (self::save($account)) {
                     self::redirect(
-                        array(
+                        [
                             Nosto::URL_PARAM_MESSAGE_TYPE => Nosto::TYPE_SUCCESS,
                             Nosto::URL_PARAM_MESSAGE_CODE => Nosto::CODE_ACCOUNT_CONNECT
-                        )
+                        ]
                     );
                     return;
                 } else {
@@ -72,11 +72,11 @@ trait OauthTrait
             } catch (NostoException $e) {
                 self::logError($e);
                 self::redirect(
-                    array(
+                    [
                         Nosto::URL_PARAM_MESSAGE_TYPE => Nosto::TYPE_ERROR,
                         Nosto::URL_PARAM_MESSAGE_CODE => Nosto::CODE_ACCOUNT_CONNECT,
                         Nosto::URL_PARAM_MESSAGE_TEXT => $e->getMessage()
-                    )
+                    ]
                 );
                 return;
             }
@@ -90,11 +90,11 @@ trait OauthTrait
             }
             self::logError(new Exception($logMsg));
             self::redirect(
-                array(
+                [
                     Nosto::URL_PARAM_MESSAGE_TYPE => Nosto::TYPE_ERROR,
                     Nosto::URL_PARAM_MESSAGE_CODE => Nosto::CODE_ACCOUNT_CONNECT,
                     Nosto::URL_PARAM_MESSAGE_TEXT => $desc
-                )
+                ]
             );
         } else {
             self::notFound();

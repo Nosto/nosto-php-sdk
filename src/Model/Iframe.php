@@ -108,7 +108,7 @@ class Iframe extends AbstractObject implements IframeInterface
     /**
      * @var array the associative array with installed modules
      */
-    private $modules = array();
+    private $modules = [];
 
     public function __construct()
     {

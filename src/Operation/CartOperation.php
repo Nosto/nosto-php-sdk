@@ -64,11 +64,11 @@ class CartOperation extends AbstractAuthenticatedOperation
             false
         );
         $channelName = 'cartUpdated/' . $accountId . '/' . $nostoCustomerId;
-        $data = array();
-        $item = array();
+        $data = [];
+        $item = [];
         $item['channel'] = $channelName;
-        $item['formats'] = array('json-object' => json_decode(SerializationHelper::serialize($update)));
-        $data['items'] = array($item);
+        $item['formats'] = ['json-object' => json_decode(SerializationHelper::serialize($update))];
+        $data['items'] = [$item];
         $updateJson = json_encode($data);
         $response = $request->postRaw($updateJson);
 

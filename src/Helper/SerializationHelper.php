@@ -52,7 +52,7 @@ class SerializationHelper extends AbstractHelper
 
     public static function serialize($object)
     {
-        $items = array();
+        $items = [];
         if ($object instanceof Traversable || is_array($object)) {
             foreach ($object as $item) {
                 if (is_object($item)) {
@@ -80,7 +80,7 @@ class SerializationHelper extends AbstractHelper
      */
     private static function toArray($object, $keyCaseType = self::SNAKE_CASE)
     {
-        $json = array();
+        $json = [];
         $props = Reflection::getObjectProperties($object);
         foreach ($props as $key => $value) {
             $check_references = explode("_", $key);
@@ -111,7 +111,7 @@ class SerializationHelper extends AbstractHelper
                 $json[$key] = self::toArray($value);
             } else {
                 if (is_array($value)) {
-                    $json[$key] = array();
+                    $json[$key] = [];
                     if (ArrayHelper::isAssoc($value)) {
                         foreach ($value as $k => $anObject) {
                             if (is_object($anObject)) {

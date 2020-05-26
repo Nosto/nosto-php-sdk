@@ -48,7 +48,7 @@ trait HtmlEncoderTrait
     /**
      * @var array
      */
-    private $varsToEncode = array();
+    private $varsToEncode = [];
 
     /**
      * @var bool
@@ -62,7 +62,7 @@ trait HtmlEncoderTrait
     public function varsToEncode()
     {
         if ($this->isAutoEncodeAll() === true) {
-            $allClassVariables = array();
+            $allClassVariables = [];
             $vars = Reflection::getObjectProperties($this);
             foreach ($vars as $classVar => $val) {
                 if (HtmlMarkupSerializationHelper::encodableClassVariable($this, $classVar)) {

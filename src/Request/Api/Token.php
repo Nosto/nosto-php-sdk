@@ -57,14 +57,14 @@ class Token extends AbstractObject implements ValidatableInterface
     /**
      * @var array list of valid api tokens to request from Nosto.
      */
-    public static $tokenNames = array(
+    public static $tokenNames = [
         self::API_SSO,
         self::API_PRODUCTS,
         self::API_EXCHANGE_RATES,
         self::API_SETTINGS,
         self::API_EMAIL,
         self::API_GRAPHQL
-    );
+    ];
     /**
      * @var string the token name, must be one of the defined tokens from self::$tokenNames.
      */
@@ -115,7 +115,7 @@ class Token extends AbstractObject implements ValidatableInterface
      */
     public static function parseTokens(array $tokens, $prefix = '', $postfix = '')
     {
-        $parsedTokens = array();
+        $parsedTokens = [];
         foreach (self::$tokenNames as $name) {
             $key = $prefix . $name . $postfix;
             if (isset($tokens[$key])) {
@@ -142,10 +142,10 @@ class Token extends AbstractObject implements ValidatableInterface
      */
     public static function getMandatoryApiTokenNames()
     {
-        return array(
+        return [
             self::API_SSO,
             self::API_PRODUCTS
-        );
+        ];
     }
 
     /**
@@ -153,10 +153,10 @@ class Token extends AbstractObject implements ValidatableInterface
      */
     public function validationRules()
     {
-        return array(
-            array(array('name', 'value'), 'required'),
-            array(array('name'), 'in', array_merge(self::$tokenNames, array(self::API_CREATE)))
-        );
+        return [
+            [['name', 'value'], 'required'],
+            [['name'], 'in', array_merge(self::$tokenNames, [self::API_CREATE])]
+        ];
     }
 
     /**

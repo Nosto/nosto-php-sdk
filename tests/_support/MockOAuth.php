@@ -46,7 +46,7 @@ class MockOAuth extends OAuth
         $this->setClientId('client-id');
         $this->setClientSecret('client-secret');
         $this->setRedirectUrl('http://my.shop.com/nosto/oauth');
-        $this->setScopes(array('sso', 'products'));
+        $this->setScopes(['sso', 'products']);
         $this->setLanguageIsoCode('en');
     }
 }

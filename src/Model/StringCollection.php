@@ -106,7 +106,7 @@ class StringCollection extends AbstractCollection implements MarkupableCollectio
     public function setData($data)
     {
         if ($data === null) {
-            $this->var = array();
+            $this->var = [];
         } else {
             $this->var = $data;
         }

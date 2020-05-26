@@ -73,19 +73,19 @@ class Socket extends Adapter
     /**
      * @inheritdoc
      */
-    public function get($url, array $options = array())
+    public function get($url, array $options = [])
     {
         $this->init($options);
         return $this->send(
             $url,
-            array(
-                self::HTTP => array(
+            [
+                self::HTTP => [
                     self::METHOD => HttpRequest::METHOD_GET,
                     self::HEADER => implode(self::CRLF, $this->getHeaders()),
                     // Fetch the content even on failure status codes.
                     self::IGNORE => true,
-                ),
-            )
+                ],
+            ]
         );
     }
 
@@ -109,7 +109,7 @@ class Socket extends Adapter
         // populated into $headers, which is only available in the local scope where file_get_contents()
         // is executed (http://php.net/manual/en/reserved.variables.httpresponseheader.php).
         /** @noinspection PhpVariableNamingConventionInspection */
-        $http_response_header = array();
+        $http_response_header = [];
         $result = @file_get_contents($url, false, $context);
         return new HttpResponse($http_response_header, $result);
     }
@@ -117,59 +117,59 @@ class Socket extends Adapter
     /**
      * @inheritdoc
      */
-    public function post($url, array $options = array())
+    public function post($url, array $options = [])
     {
         $this->init($options);
         return $this->send(
             $url,
-            array(
-                self::HTTP => array(
+            [
+                self::HTTP => [
                     self::METHOD => HttpRequest::METHOD_POST,
                     self::HEADER => implode(self::CRLF, $this->getHeaders()),
                     self::CONTENT => $this->getContent(),
                     // Fetch the content even on failure status codes.
                     self::IGNORE => true,
-                ),
-            )
+                ],
+            ]
         );
     }
 
     /**
      * @inheritdoc
      */
-    public function put($url, array $options = array())
+    public function put($url, array $options = [])
     {
         $this->init($options);
         return $this->send(
             $url,
-            array(
-                self::HTTP => array(
+            [
+                self::HTTP => [
                     self::METHOD => HttpRequest::METHOD_PUT,
                     self::HEADER => implode(self::CRLF, $this->getHeaders()),
                     self::CONTENT => $this->getContent(),
                     // Fetch the content even on failure status codes.
                     self::IGNORE => true,
-                ),
-            )
+                ],
+            ]
         );
     }
 
     /**
      * @inheritdoc
      */
-    public function delete($url, array $options = array())
+    public function delete($url, array $options = [])
     {
         $this->init($options);
         return $this->send(
             $url,
-            array(
-                self::HTTP => array(
+            [
+                self::HTTP => [
                     self::METHOD => HttpRequest::METHOD_DELETE,
                     self::HEADER => implode(self::CRLF, $this->getHeaders()),
                     // Fetch the content even on failure status codes.
                     self::IGNORE => true,
-                ),
-            )
+                ],
+            ]
         );
     }
 }

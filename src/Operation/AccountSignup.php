@@ -75,7 +75,7 @@ class AccountSignup extends AbstractRESTOperation
     public function create()
     {
         $request = $this->initRequest($this->account->getSignUpApiToken());
-        $request->setReplaceParams(array('{lang}' => $this->account->getLanguageCode()));
+        $request->setReplaceParams(['{lang}' => $this->account->getLanguageCode()]);
         $response = $request->post($this->account);
         $results = $request->getResultHandler()->parse($response);
 

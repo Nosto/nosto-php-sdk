@@ -76,7 +76,7 @@ class AuthorizationCode extends AbstractOperation
     /**
      * @var array list of scopes to request access for during "PATH_AUTH" request.
      */
-    private $scopes = array();
+    private $scopes = [];
 
     /**
      * @param OAuthInterface $metaData
@@ -106,12 +106,12 @@ class AuthorizationCode extends AbstractOperation
         $request = $this->initRequest(null, null, null, false);
         $request->setUrl(Nosto::getOAuthBaseUrl() . self::PATH_TOKEN);
         $request->setReplaceParams(
-            array(
+            [
                 '{cid}' => $this->clientId,
                 '{sec}' => $this->clientSecret,
                 '{uri}' => $this->redirectUrl,
                 '{cod}' => $code
-            )
+            ]
         );
         $response = $request->get();
         $result = $request->getResultHandler()->parse($response);

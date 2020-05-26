@@ -58,7 +58,7 @@ class Cart extends AbstractObject implements MarkupableInterface
     /**
      * @var LineItemInterface[] the array of items in the shopping cart
      */
-    private $items = array();
+    private $items = [];
 
     /**
      * Returns the items in the shopping cart
@@ -77,7 +77,7 @@ class Cart extends AbstractObject implements MarkupableInterface
      */
     public function setItems(array $items)
     {
-        $this->items = array();
+        $this->items = [];
         foreach ($items as $item) {
             $this->addItem($item);
         }
