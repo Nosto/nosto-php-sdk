@@ -41,7 +41,7 @@ use Nosto\Types\OAuthInterface;
 use Nosto\Types\Signup\AccountInterface;
 
 /**
- * Oauth DTO (Data Transfer Model).
+ * Oauth DTO (Data Transfer Object).
  */
 class OAuth implements OAuthInterface
 {
