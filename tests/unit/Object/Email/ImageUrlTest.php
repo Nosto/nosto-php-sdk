@@ -34,7 +34,7 @@
  *
  */
 
-namespace Nosto\Test\Unit\Object\Email;
+namespace Nosto\Test\Unit\Model\Email;
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
