@@ -34,7 +34,7 @@
  *
  */
 
-namespace Nosto\Object;
+namespace Nosto\Model;
 
 /**
  * SortOrder object for tagging
