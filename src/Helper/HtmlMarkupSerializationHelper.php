@@ -37,8 +37,8 @@
 namespace Nosto\Helper;
 
 use Nosto\NostoException;
-use Nosto\Object\MarkupableString;
-use Nosto\Object\StringCollection;
+use Nosto\Model\MarkupableString;
+use Nosto\Model\StringCollection;
 use Nosto\Types\HtmlEncodableInterface;
 use Nosto\Types\MarkupableInterface;
 use Nosto\Types\MarkupableCollectionInterface;

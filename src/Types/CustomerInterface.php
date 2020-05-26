@@ -36,7 +36,7 @@
 
 namespace Nosto\Types;
 
-use Nosto\Object\Subscription;
+use Nosto\Model\Subscription;
 
 interface CustomerInterface extends UserInterface
 {

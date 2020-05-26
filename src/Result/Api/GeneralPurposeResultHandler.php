@@ -47,5 +47,4 @@ class GeneralPurposeResultHandler extends ApiResultHandler
     {
         return true;
     }
-
 }

@@ -36,7 +36,7 @@
 
 namespace Nosto\Test\Support;
 
-use Nosto\Object\Product\Variation;
+use Nosto\Model\Product\Variation;
 
 class MockVariation extends Variation
 {

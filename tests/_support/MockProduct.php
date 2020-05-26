@@ -36,7 +36,7 @@
 
 namespace Nosto\Test\Support;
 
-use Nosto\Object\Product\Product;
+use Nosto\Model\Product\Product;
 
 class MockProduct extends Product
 {

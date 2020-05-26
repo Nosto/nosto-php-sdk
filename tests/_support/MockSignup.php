@@ -36,8 +36,8 @@
 
 namespace Nosto\Test\Support;
 
-use Nosto\Object\Format;
-use Nosto\Object\Signup\Signup;
+use Nosto\Model\Format;
+use Nosto\Model\Signup\Signup;
 
 class MockSignup extends Signup
 {

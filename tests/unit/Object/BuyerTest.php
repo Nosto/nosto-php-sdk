@@ -34,7 +34,7 @@
  *
  */
 
-namespace Nosto\Test\Unit\Object;
+namespace Nosto\Test\Unit\Model;
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;

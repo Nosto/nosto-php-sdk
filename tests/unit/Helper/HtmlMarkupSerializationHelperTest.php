@@ -38,9 +38,9 @@ namespace Nosto\Test\Unit\Helper;
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
-use Nosto\Object\Cart\Cart;
-use Nosto\Object\PageType;
-use Nosto\Object\SearchTerm;
+use Nosto\Model\Cart\Cart;
+use Nosto\Model\PageType;
+use Nosto\Model\SearchTerm;
 use Nosto\Test\Support\MockBuyer;
 use Nosto\Test\Support\MockLineItem;
 use Nosto\Test\Support\MockOrder;

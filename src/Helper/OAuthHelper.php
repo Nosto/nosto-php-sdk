@@ -46,7 +46,7 @@ use Nosto\Types\OAuthInterface;
 class OAuthHelper extends AbstractHelper
 {
 
-    const PATH_AUTH = '?client_id={cid}&redirect_uri={uri}&response_type=code&scope={sco}&lang={iso}'; // @codingStandardsIgnoreLine
+    const PATH_AUTH = '?client_id={cid}&redirect_uri={uri}&response_type=code&scope={sco}&lang={iso}';
 
     /**
      * Returns the authorize url to the oauth2 server.

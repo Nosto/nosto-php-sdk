@@ -38,7 +38,7 @@ namespace Nosto\Test\Unit;
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
-use Nosto\Object\Signup\Account;
+use Nosto\Model\Signup\Account;
 use Nosto\Request\Api\Token;
 
 class AccountTest extends Test

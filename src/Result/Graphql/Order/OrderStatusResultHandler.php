@@ -36,6 +36,7 @@
 
 namespace Nosto\Result\Graphql\Order;
 
+use Nosto\NostoException;
 use Nosto\Result\Graphql\GraphQLResultHandler;
 
 class OrderStatusResultHandler extends GraphQLResultHandler
@@ -56,7 +57,7 @@ class OrderStatusResultHandler extends GraphQLResultHandler
                 return $this->parseQueryResult($member);
             }
         }
-        // No number string was found in GraphQL result
-        return '';
+
+        throw new NostoException('No number string was found in GraphQL result');
     }
 }
