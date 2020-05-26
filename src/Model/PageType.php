@@ -41,12 +41,14 @@ namespace Nosto\Model;
  */
 class PageType extends MarkupableString
 {
+    const MARKUP_KEY = 'nosto_page_type';
+
     /**
      * PageType constructor.
      * @param $value
      */
     public function __construct($value)
     {
-        parent::__construct($value, 'nosto_page_type');
+        parent::__construct($value, self::MARKUP_KEY);
     }
 }

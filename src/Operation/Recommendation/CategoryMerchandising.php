@@ -113,7 +113,8 @@ class CategoryMerchandising extends AbstractRecommendation
                 maxProducts: \$limit,
                 skipPages: \$skipPages,
                 include: \$includeFilters,
-                exclude: \$excludeFilters
+                exclude: \$excludeFilters,
+                skipVCEvent: true
               ) {
                 primary {
                   productId

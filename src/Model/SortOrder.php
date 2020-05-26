@@ -34,17 +34,21 @@
  *
  */
 
-return [
-    'analyze_signature_compatibility' => false,
-    'backward_compatibility_checks' => false,
-    'exclude_file_regex' => '@^vendor/.*/(tests|test|Tests|Test)/@',
-    'directory_list' => [
-        'src',
-        'vendor'
-    ],
-    "exclude_analysis_directory_list" => [
-        'vendor/',
-        'src/libs/'
-    ],
-    "color_issue_messages_if_supported" => true
-];
+namespace Nosto\Object;
+
+/**
+ * SortOrder object for tagging
+ */
+class SortOrder extends MarkupableString
+{
+    const MARKUP_KEY = 'nosto_sort_order';
+    const CMP_VALUE = 'cmp';
+
+    /**
+     * @param $value
+     */
+    public function __construct($value)
+    {
+        parent::__construct($value, self::MARKUP_KEY);
+    }
+}
