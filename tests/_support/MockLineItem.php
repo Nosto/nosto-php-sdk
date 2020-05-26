@@ -36,7 +36,7 @@
 
 namespace Nosto\Test\Support;
 
-use Nosto\Object\Cart\LineItem;
+use Nosto\Model\Cart\LineItem;
 
 class MockLineItem extends LineItem
 {

@@ -52,5 +52,4 @@ abstract class ApiResultHandler extends ResultHandler
      * @return string|array
      */
     abstract protected function parseAPIResult(HttpResponse $response);
-
 }

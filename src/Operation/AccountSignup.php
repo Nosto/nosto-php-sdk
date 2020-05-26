@@ -37,7 +37,7 @@
 namespace Nosto\Operation;
 
 use Nosto\NostoException;
-use Nosto\Object\Signup\Account;
+use Nosto\Model\Signup\Account;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Result\Api\JsonResultHandler;

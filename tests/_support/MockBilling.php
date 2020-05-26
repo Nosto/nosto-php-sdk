@@ -36,7 +36,7 @@
 
 namespace Nosto\Test\Support;
 
-use Nosto\Object\Signup\Billing;
+use Nosto\Model\Signup\Billing;
 
 class MockBilling extends Billing
 {

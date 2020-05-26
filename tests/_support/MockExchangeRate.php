@@ -36,7 +36,7 @@
 
 namespace Nosto\Test\Support;
 
-use Nosto\Object\ExchangeRate;
+use Nosto\Model\ExchangeRate;
 
 class MockExchangeRate extends ExchangeRate
 {

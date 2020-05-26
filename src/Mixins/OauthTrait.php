@@ -46,7 +46,7 @@ use Nosto\Types\Signup\AccountInterface;
 trait OauthTrait
 {
 
-    public final function connect()
+    final public function connect()
     {
         if (($code = self::getParam('code')) !== null) {
             try {
@@ -101,15 +101,15 @@ trait OauthTrait
         }
     }
 
-    public abstract function getParam($name);
+    abstract public function getParam($name);
 
-    public abstract function getMeta();
+    abstract public function getMeta();
 
-    public abstract function save(AccountInterface $account);
+    abstract public function save(AccountInterface $account);
 
-    public abstract function redirect(array $params);
+    abstract public function redirect(array $params);
 
-    public abstract function logError(Exception $e);
+    abstract public function logError(Exception $e);
 
-    public abstract function notFound();
+    abstract public function notFound();
 }

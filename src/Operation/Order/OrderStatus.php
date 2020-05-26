@@ -37,7 +37,7 @@
 namespace Nosto\Operation\Order;
 
 use Nosto\Operation\AbstractGraphQLOperation;
-use Nosto\Object\Order\GraphQL\OrderStatus as OrderStatusModel;
+use Nosto\Model\Order\GraphQL\OrderStatus as OrderStatusModel;
 use Nosto\Result\Graphql\Order\OrderStatusResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 
