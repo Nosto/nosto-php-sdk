@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## not release
+* BC break introduced: `Nosto\Object` renamed to `Nosto\Model`
+
 ## 4.1.0
 * Introduce object for sort order tagging
 * Add skipVCEvent to CMP graphql query
