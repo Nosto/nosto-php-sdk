@@ -38,6 +38,7 @@ namespace Nosto\Test\Unit\Result;
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
+use Exception;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Result\Graphql\Order\OrderCreateResultHandler;
@@ -58,13 +59,14 @@ class GraphqlOrderTest extends Test
         $request->setResultHandler(new OrderCreateResultHandler());
         try {
             $request->getResultHandler()->parse($response);
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), "Exception while fetching data (/updateStatus) : Unable to find order matching identifier | ");
+        } catch (Exception $e) {
+            $this->assertEquals("Exception while fetching data (/updateStatus) : Unable to find order matching identifier | ", $e->getMessage());
         }
     }
 
     /**
      * Tests that order id can be parsed from response body
+	 * @throws Exception
      */
     public function testSuccessfullyCreateNewOrder()
     {
@@ -75,12 +77,13 @@ class GraphqlOrderTest extends Test
         $result = $request->getResultHandler()->parse($response);
 
         $this->specify('Order was created successfully', function () use ($result){
-            $this->assertEquals($result, '5d1f2ebc10e62df62401221');
+            $this->assertEquals('5d1f2ebc10e62df62401221', $result);
         });
     }
 
     /**
      * Tests that order number can be parsed from response body
+	 * @throws Exception
      */
     public function testSuccessfullyUpdateExistingOrder()
     {
@@ -91,7 +94,7 @@ class GraphqlOrderTest extends Test
         $result = $request->getResultHandler()->parse($response);
 
         $this->specify('Order status was updates successfully', function () use ($result){
-            $this->assertEquals($result, 'M2_22');
+            $this->assertEquals('M2_22', $result);
         });
     }
 }

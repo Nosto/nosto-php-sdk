@@ -37,6 +37,8 @@
 
 namespace Nosto\Model;
 
+use DateTime;
+use DateTimeInterface;
 use Nosto\AbstractObject;
 use Nosto\Types\PersonInterface;
 
@@ -269,11 +271,11 @@ abstract class AbstractPerson extends AbstractObject implements PersonInterface
     }
 
     /**
-     * @param \DateTime|\DateTimeInterface|string $dateOfBirth
+     * @param DateTime|DateTimeInterface|string $dateOfBirth
      */
     public function setDateOfBirth($dateOfBirth)
     {
-        if ($dateOfBirth instanceof \DateTime
+        if ($dateOfBirth instanceof DateTime
             || (is_object($dateOfBirth) && method_exists($dateOfBirth, 'format'))) {
             $this->dateOfBirth = $dateOfBirth->format('Y-m-d');
         } else {

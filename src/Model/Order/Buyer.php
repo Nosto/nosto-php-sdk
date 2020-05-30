@@ -55,9 +55,6 @@ class Buyer extends AbstractPerson implements
 {
     use HtmlEncoderTrait;
 
-    /**
-     * @inheritdoc
-     */
     public function getMarkupKey()
     {
         return 'buyer';

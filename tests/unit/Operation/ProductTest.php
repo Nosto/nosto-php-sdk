@@ -39,9 +39,10 @@ namespace Nosto\Test\Unit\Operation;
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Model\Signup\Account;
+use Nosto\NostoException;
 use Nosto\Operation\UpsertProduct;
 use Nosto\Request\Api\Token;
-use Nosto\Types\Product\ProductInterface;
+use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Test\Support\MockProduct;
 use Nosto\Test\Support\MockVariation;
 use Nosto\Test\Support\MockSku;
@@ -50,9 +51,11 @@ class ProductTest extends Test
 {
     use Specify;
 
-    /**
-     * Tests that product upsert API requests cannot be made without an API token.
-     */
+	/**
+	 * Tests that product upsert API requests cannot be made without an API token.
+	 * @throws NostoException
+	 * @throws AbstractHttpException
+	 */
     public function testSendingProductUpsertWithoutApiToken()
     {
         $account = new Account('platform-00000000');
@@ -64,9 +67,11 @@ class ProductTest extends Test
         $op->upsert();
     }
 
-    /**
-     * Tests that product upsert API requests can be made.
-     */
+	/**
+	 * Tests that product upsert API requests can be made.
+	 * @throws NostoException
+	 * @throws AbstractHttpException
+	 */
     public function testSendingProductUpsert()
     {
         $account = new Account('platform-00000000');
@@ -83,9 +88,11 @@ class ProductTest extends Test
         });
     }
 
-    /**
-     * Tests that product upsert API requests can be made.
-     */
+	/**
+	 * Tests that product upsert API requests can be made.
+	 * @throws NostoException
+	 * @throws AbstractHttpException
+	 */
     public function testSendingProductSku()
     {
         $account = new Account('platform-00000000');
@@ -110,9 +117,11 @@ class ProductTest extends Test
         });
     }
 
-    /**
-     * Tests that product upsert API requests can be made.
-     */
+	/**
+	 * Tests that product upsert API requests can be made.
+	 * @throws NostoException
+	 * @throws AbstractHttpException
+	 */
     public function testUpsertWithDomain()
     {
         $account = new Account('platform-00000000');
@@ -130,9 +139,11 @@ class ProductTest extends Test
         });
     }
 
-    /**
-     * Tests that product upsert API requests can be made.
-     */
+	/**
+	 * Tests that product upsert API requests can be made.
+	 * @throws NostoException
+	 * @throws AbstractHttpException
+	 */
     public function testSendingProductVariations()
     {
         $account = new Account('platform-00000000');

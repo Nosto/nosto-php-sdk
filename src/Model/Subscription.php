@@ -36,6 +36,9 @@
 
 namespace Nosto\Model;
 
+use DateTime;
+use DateTimeInterface;
+
 class Subscription
 {
     /**
@@ -73,11 +76,11 @@ class Subscription
     }
 
     /**
-     * @param \DateTimeInterface|\DateTime|string $startDate
+     * @param DateTimeInterface|DateTime|string $startDate
      */
     public function setStartDate($startDate)
     {
-        if ($startDate instanceof \DateTime
+        if ($startDate instanceof DateTime
             || (is_object($startDate) && method_exists($startDate, 'format'))) {
             $this->startDate = $startDate->format('Y-m-d');
         } else {

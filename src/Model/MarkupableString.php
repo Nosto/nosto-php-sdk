@@ -82,10 +82,7 @@ class MarkupableString extends AbstractObject implements
         $this->value = $value;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getMarkupKey()
+	public function getMarkupKey()
     {
         return $this->markupKey;
     }

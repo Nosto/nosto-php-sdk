@@ -36,6 +36,7 @@
 
 namespace Nosto\Operation;
 
+use Exception;
 use Nosto\NostoException;
 use Nosto\Model\Product\ProductCollection;
 use Nosto\Request\Api\ApiRequest;
@@ -94,7 +95,7 @@ class UpsertProduct extends AbstractAuthenticatedOperation
      * @return bool if the request was successful.
      * @throws AbstractHttpException
      * @throws NostoException on failure.
-     * @throws \Exception
+     * @throws Exception
      */
     public function upsert()
     {

@@ -39,6 +39,7 @@ namespace Nosto\Result\Graphql\Recommendation;
 use Nosto\Result\Graphql\GraphQLResultHandler;
 use Nosto\Helper\ArrayHelper;
 use Nosto\NostoException;
+use stdClass;
 
 class RecommendationResultHandler extends GraphQLResultHandler
 {
@@ -50,16 +51,15 @@ class RecommendationResultHandler extends GraphQLResultHandler
     /**
      * @inheritdoc
      */
-    protected function parseQueryResult(\stdClass $stdClass)
+    protected function parseQueryResult(stdClass $stdClass)
     {
-        /** @var \stdClass $categoryData */
+        /** @var stdClass $categoryData */
         $categoryData = self::parseData($stdClass, self::GRAPHQL_DATA_CATEGORY);
         /** @var string $trackingCode */
         $trackingCode = self::parseData($categoryData, self::GRAPHQL_DATA_RESULT_ID);
         /** @var int $totalPrimaryCount */
         $totalPrimaryCount = self::parseData($categoryData, self::GRAPHQL_DATA_PRIMARY_COUNT);
-        /** @var ResultSet $resultSet */
-        $resultSet = self::buildResultSet($categoryData);
+		$resultSet = self::buildResultSet($categoryData);
         return new CategoryMerchandisingResult(
             $resultSet,
             $trackingCode,
@@ -68,17 +68,17 @@ class RecommendationResultHandler extends GraphQLResultHandler
     }
 
     /**
-     * @param \stdClass $stdClass
+     * @param stdClass $stdClass
      * @return ResultSet
      * @throws NostoException
      */
-    private static function buildResultSet(\stdClass $stdClass)
+    private static function buildResultSet(stdClass $stdClass)
     {
         $primaryData = self::parseData($stdClass, self::GRAPHQL_DATA_PRIMARY);
 
         $resultSet = new ResultSet();
         foreach ($primaryData as $primaryDataItem) {
-            if ($primaryDataItem instanceof \stdClass) {
+            if ($primaryDataItem instanceof stdClass) {
                 $primaryDataItem = ArrayHelper::stdClassToArray($primaryDataItem);
             }
             $item = new ResultItem($primaryDataItem);
@@ -88,19 +88,19 @@ class RecommendationResultHandler extends GraphQLResultHandler
     }
 
     /**
-     * @param \stdClass $stdClass
+     * @param stdClass $stdClass
      * @param string $dataType
-     * @return string|int|\stdClass|array
+     * @return string|int|stdClass|array
      * @throws NostoException
      */
-    private static function parseData(\stdClass $stdClass, $dataType)
+    private static function parseData(stdClass $stdClass, $dataType)
     {
         $members = get_object_vars($stdClass);
         foreach ($members as $varName => $member) {
             if ($varName === $dataType) {
                 return $member;
             }
-            if ($member instanceof \stdClass) {
+            if ($member instanceof stdClass) {
                 return self::parseData($member, $dataType);
             }
         }

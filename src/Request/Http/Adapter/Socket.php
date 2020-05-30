@@ -57,7 +57,7 @@ class Socket extends Adapter
     /**
      * @var string the user-agent to use if specified
      */
-    private $userAgent = null;
+    private $userAgent;
 
     /**
      * Constructor.

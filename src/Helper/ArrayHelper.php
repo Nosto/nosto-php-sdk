@@ -36,6 +36,8 @@
 
 namespace Nosto\Helper;
 
+use stdClass;
+
 class ArrayHelper extends AbstractHelper
 {
     /**
@@ -72,10 +74,10 @@ class ArrayHelper extends AbstractHelper
     /**
      * Converts stdClass to a map
      *
-     * @param \stdClass $object
+     * @param stdClass $object
      * @return mixed
      */
-    public static function stdClassToArray(\stdClass $object)
+    public static function stdClassToArray(stdClass $object)
     {
         return json_decode(json_encode($object), true);
     }

@@ -59,7 +59,8 @@ class ValidationHelper extends AbstractHelper
      * Creates a new validator for the object to validate.
      *
      * @param ValidatableInterface $object the object to validate.
-     */
+	 * @noinspection PhpMissingParentConstructorInspection
+	 */
     public function __construct(ValidatableInterface $object)
     {
         $this->object = $object;

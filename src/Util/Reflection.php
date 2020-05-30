@@ -37,6 +37,9 @@
 namespace Nosto\Util;
 
 use Nosto\NostoException;
+use ReflectionClass;
+use ReflectionException;
+use ReflectionMethod;
 
 /**
  * Util class for figuring out reflection and properties
@@ -58,7 +61,7 @@ class Reflection
     {
         $properties = [];
         try {
-            $rc = new \ReflectionClass($obj);
+            $rc = new ReflectionClass($obj);
             do {
                 $rp = [];
 
@@ -72,8 +75,7 @@ class Reflection
                         }
                     }
                 }
-                /* @var $p \ReflectionProperty */
-                foreach ($rc->getProperties() as $p) {
+				foreach ($rc->getProperties() as $p) {
                     if (in_array($p->getName(), $skipProperties, true)) {
                         continue;
                     }
@@ -83,7 +85,7 @@ class Reflection
                 /** @noinspection SlowArrayOperationsInLoopInspection */
                 $properties = array_merge($rp, $properties);
             } while ($rc = $rc->getParentClass());
-        } catch (\ReflectionException $e) {
+        } catch (ReflectionException $e) {
             //
         }
         return $properties;
@@ -97,7 +99,7 @@ class Reflection
      * @param $object
      * @return array Format is ['getter' => 'getMethod', setter' => 'setMethod']
      * @throws NostoException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public static function parseGettersAndSetters($object)
     {
@@ -111,14 +113,14 @@ class Reflection
             $getterName = null;
             $getter = sprintf('get%s', $property->getName());
             if ($class->hasMethod($getter)) {
-                $reflectionMethod = new \ReflectionMethod(get_class($object), $getter);
+                $reflectionMethod = new ReflectionMethod(get_class($object), $getter);
                 if ($reflectionMethod->isPublic()) {
                     $getterName = $reflectionMethod->getName();
                 }
             }
             $setter = sprintf('set%s', $property->getName());
             if ($class->hasMethod($setter)) {
-                $reflectionMethod = new \ReflectionMethod(get_class($object), $setter);
+                $reflectionMethod = new ReflectionMethod(get_class($object), $setter);
                 if ($reflectionMethod->isPublic()) {
                     $setterName = $reflectionMethod->getName();
                 }

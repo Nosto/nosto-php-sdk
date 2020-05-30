@@ -35,7 +35,8 @@
 
 // Define the "Nosto" namespace if not already defined.
 if (typeof Nosto === "undefined") {
-    var Nosto = {};
+	// noinspection JSUnusedLocalSymbols
+	const Nosto = {};
 }
 
 /**
@@ -44,25 +45,25 @@ if (typeof Nosto === "undefined") {
  * @param {Object} options
  */
 Nosto.iframe = function (options) {
-    var TYPE_NEW_ACCOUNT = "newAccount",
-        TYPE_CONNECT_ACCOUNT = "connectAccount",
-        TYPE_REMOVE_ACCOUNT = "removeAccount";
+	const TYPE_NEW_ACCOUNT = "newAccount",
+		TYPE_CONNECT_ACCOUNT = "connectAccount",
+		TYPE_REMOVE_ACCOUNT = "removeAccount";
 
-    /**
-     * @type {Object}
-     */
-    var settings = {
-        origin: "",
-        iframeId: "nosto_iframe",
-        urls: {
-            createAccount: "",
-            connectAccount: "",
-            deleteAccount: ""
-        },
-        xhrParams: {}
-    };
+	/**
+	 * @type {Object}
+	 */
+	const settings = {
+		origin: "",
+		iframeId: "nosto_iframe",
+		urls: {
+			createAccount: "",
+			connectAccount: "",
+			deleteAccount: ""
+		},
+		xhrParams: {}
+	};
 
-    /**
+	/**
      * Window.postMessage() event handler for catching messages from nosto.
      *
      * Supported messages must come from nosto.com and be formatted according
@@ -74,8 +75,8 @@ Nosto.iframe = function (options) {
      */
     function receiveMessage(event) {
         // Check the origin to prevent cross-site scripting.
-        var originRegexp = new RegExp(settings.origin);
-        if (!originRegexp.test(event.origin)) {
+			const originRegexp = new RegExp(settings.origin);
+			if (!originRegexp.test(event.origin)) {
             return;
         }
         // If the message does not start with "[Nosto]", then it is not for us.
@@ -83,20 +84,20 @@ Nosto.iframe = function (options) {
             return;
         }
 
-        var json = ("" + event.data).substr(7);
-        /**
-         * @param {{params}} data
-         */
-        var data = JSON.parse(json);
-        if (typeof data === "object" && data.type) {
+			const json = ("" + event.data).substr(7);
+			/**
+			 * @param {{params}} data
+			 */
+			const data = JSON.parse(json);
+			if (typeof data === "object" && data.type) {
             switch (data.type) {
                 case TYPE_NEW_ACCOUNT:
                     xhr(settings.urls.createAccount, {
                         data: {email: data.params.email},
                         success: function (e) {
-                            /** @type {{success: Boolean}, {redirect_url: String}} response */
-                            var response = JSON.parse(e.target.response);
-                            if (response.redirect_url) {
+													/** @type {{success: Boolean}, {redirect_url: String}} response */
+													const response = JSON.parse(e.target.response);
+													if (response.redirect_url) {
                                 //noinspection JSUndefinedPropertyAssignment
                                 getIframeElement().src = response.redirect_url;
                             } else {
@@ -109,9 +110,9 @@ Nosto.iframe = function (options) {
                 case TYPE_CONNECT_ACCOUNT:
                     xhr(settings.urls.connectAccount, {
                         success: function (e) {
-                            /** @type {{success: Boolean}, {redirect_url: String}} response */
-                            var response = JSON.parse(e.target.response);
-                            if (response.redirect_url) {
+													/** @type {{success: Boolean}, {redirect_url: String}} response */
+													const response = JSON.parse(e.target.response);
+													if (response.redirect_url) {
                                 if (response.success && response.success === true) {
                                     window.location.href = response.redirect_url;
                                 } else {
@@ -128,9 +129,9 @@ Nosto.iframe = function (options) {
                 case TYPE_REMOVE_ACCOUNT:
                     xhr(settings.urls.deleteAccount, {
                         success: function (e) {
-                            /** @type {{success: Boolean}, {redirect_url: String}} response */
-                            var response = JSON.parse(e.target.response);
-                            if (response.redirect_url) {
+													/** @type {{success: Boolean}, {redirect_url: String}} response */
+													const response = JSON.parse(e.target.response);
+													if (response.redirect_url) {
                                 //noinspection JSUndefinedPropertyAssignment
                                 getIframeElement().src = response.redirect_url;
                             } else {
@@ -162,17 +163,17 @@ Nosto.iframe = function (options) {
      * @param {Object} params optional params.
      */
     function xhr(url, params) {
-        var options = extendObject({
-            method: "POST",
-            async: true,
-            data: {}
-        }, params);
+			const options = extendObject({
+				method: "POST",
+				async: true,
+				data: {}
+			}, params);
 
-        extendObject(options.data, settings.xhrParams);
-        var payload = buildParams(options.data);
+			extendObject(options.data, settings.xhrParams);
+			const payload = buildParams(options.data);
 
-        var oReq = new XMLHttpRequest();
-        if (typeof options.success === "function") {
+			const oReq = new XMLHttpRequest();
+			if (typeof options.success === "function") {
             oReq.addEventListener("load", options.success, false);
         }
         if (typeof options.error === "function") {
@@ -192,7 +193,7 @@ Nosto.iframe = function (options) {
      * @returns {Object}
      */
     function extendObject(obj1, obj2) {
-        for (var key in obj2) {
+        for (let key in obj2) {
             if (obj2.hasOwnProperty(key)) {
                 obj1[key] = obj2[key];
             }
@@ -207,8 +208,8 @@ Nosto.iframe = function (options) {
      * @returns {string} the built query string.
      */
     function buildParams(params) {
-        var queryString = "";
-        for (var key in params) {
+			let queryString = "";
+			for (let key in params) {
             if (params.hasOwnProperty(key)) {
                 if (queryString !== "") {
                     queryString += "&";

@@ -36,17 +36,21 @@
 
 namespace Nosto\Util;
 
+use DateTime;
+use Exception;
+
 class Time
 {
-    /**
-     * @param string $createdAt
-     * @param string $updatedAt
-     * @return bool
-     */
+	/**
+	 * @param string $createdAt
+	 * @param string $updatedAt
+	 * @return bool
+	 * @throws Exception
+	 */
     public static function isUpdatedEqualToCreated($createdAt, $updatedAt)
     {
-        $createdAtDtm = new \DateTime($createdAt);
-        $updatedAtDtm = new \DateTime($updatedAt);
+        $createdAtDtm = new DateTime($createdAt);
+        $updatedAtDtm = new DateTime($updatedAt);
 
         return $createdAtDtm == $updatedAtDtm;
     }

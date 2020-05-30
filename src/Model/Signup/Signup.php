@@ -280,10 +280,7 @@ class Signup extends Settings implements SignupInterface
         $this->details = $details;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getApiTokens()
+	public function getApiTokens()
     {
         return $this->apiTokens;
     }

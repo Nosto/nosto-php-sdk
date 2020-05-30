@@ -39,6 +39,7 @@ namespace Nosto\Util;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Operation\AbstractOperation;
 use Nosto\Request\Http\Exception\HttpResponseException as ResponseException;
+use stdClass;
 
 class HttpResponseException
 {
@@ -74,7 +75,7 @@ class HttpResponseException
 
         if (isset($result->errors) && is_array($result->errors)) {
             foreach ($result->errors as $error) {
-                if ($error instanceof \stdClass) {
+                if ($error instanceof stdClass) {
                     $message .= self::getErrorsFromStdClass($error);
                 }
             }
@@ -83,10 +84,10 @@ class HttpResponseException
     }
 
     /**
-     * @param \stdClass $errors
+     * @param stdClass $errors
      * @return string
      */
-    private static function getErrorsFromStdClass(\stdClass $errors)
+    private static function getErrorsFromStdClass(stdClass $errors)
     {
         $errors = get_object_vars($errors);
         $errorString = '';

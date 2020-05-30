@@ -89,8 +89,7 @@ class CategoryMerchandising extends AbstractRecommendation
      */
     public function getQuery()
     {
-        $query =
-            <<<QUERY
+		return <<<QUERY
         query(
             \$customerId: String!,
             \$category: String!,
@@ -130,8 +129,6 @@ class CategoryMerchandising extends AbstractRecommendation
           }
         }
 QUERY;
-
-        return $query;
     }
 
     /**
@@ -139,17 +136,15 @@ QUERY;
      */
     public function getVariables()
     {
-        $variables = [
-            'customerId' => $this->customerId,
-            'category' => $this->category,
-            'limit' => $this->limit,
-            'preview' => $this->previewMode,
-            'by' => $this->customerBy,
-            'skipPages' => $this->skipPages,
-            'includeFilters' => $this->includeFilters->toArray(),
-            'excludeFilters' => $this->excludeFilters->toArray()
-        ];
-
-        return $variables;
+		return [
+			'customerId' => $this->customerId,
+			'category' => $this->category,
+			'limit' => $this->limit,
+			'preview' => $this->previewMode,
+			'by' => $this->customerBy,
+			'skipPages' => $this->skipPages,
+			'includeFilters' => $this->includeFilters->toArray(),
+			'excludeFilters' => $this->excludeFilters->toArray()
+		];
     }
 }

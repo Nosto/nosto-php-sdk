@@ -231,7 +231,7 @@ class HtmlMarkupSerializationHelperTest extends Test
      */
     private static function stripLineBreaks($string)
     {
-        return preg_replace("/\r|\n/", "", $string);
+        return preg_replace("/[\r\n]/", "", $string);
     }
 
     /**

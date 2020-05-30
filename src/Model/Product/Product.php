@@ -36,6 +36,7 @@
 
 namespace Nosto\Model\Product;
 
+use Exception;
 use Nosto\AbstractObject;
 use Nosto\Helper\ValidationHelper;
 use Nosto\Mixins\HtmlEncoderTrait;
@@ -49,7 +50,7 @@ use Nosto\Types\Product\VariationInterface;
 use Nosto\Types\ValidatableInterface;
 use Nosto\Helper\DateHelper;
 use Nosto\Util\Sanitize;
-use Nosto\Model\Product\VariationCollection;
+use ReflectionException;
 
 /**
  * Model for product information. This is used when compiling the info about a
@@ -641,7 +642,7 @@ class Product extends AbstractObject implements
     {
         try {
             $this->datePublished = DateHelper::format($datePublished);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new NostoException($e->getMessage());
         }
     }
@@ -954,18 +955,12 @@ class Product extends AbstractObject implements
         $this->variations->append($variation);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getMarkupKey()
+	public function getMarkupKey()
     {
         return 'nosto_product';
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getCustomFields()
+	public function getCustomFields()
     {
         return $this->customFields;
     }
@@ -999,7 +994,7 @@ class Product extends AbstractObject implements
      *
      * @return Product
      * @throws NostoException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function sanitize()
     {

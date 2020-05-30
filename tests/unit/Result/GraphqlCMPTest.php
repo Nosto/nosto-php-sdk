@@ -38,6 +38,7 @@ namespace Nosto\Test\Unit\Result;
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
+use Exception;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Result\Graphql\Recommendation\RecommendationResultHandler;
@@ -49,6 +50,7 @@ class GraphqlCMPTest extends Test
 
     /**
      * Tests that a valid result set can be built
+	 * @throws Exception
      */
     public function testBuildingValidResultSet()
     {
@@ -60,12 +62,13 @@ class GraphqlCMPTest extends Test
         $resultSet = $request->getResultHandler()->parse($response);
 
         $this->specify('result set parsed', function () use ($resultSet) {
-            $this->assertEquals($resultSet->getResultSet()->count(), 2);
+            $this->assertEquals(2, $resultSet->getResultSet()->count());
         });
     }
 
     /**
      * Tests that a valid result set can be built
+	 * @throws Exception
      */
     public function testBuildingValidResultId()
     {
@@ -77,7 +80,7 @@ class GraphqlCMPTest extends Test
         $resultSet = $request->getResultHandler()->parse($response);
 
         $this->specify('result set parsed', function () use ($resultSet) {
-            $this->assertEquals($resultSet->getTrackingCode(), 'graphql');
+            $this->assertEquals('graphql', $resultSet->getTrackingCode());
         });
     }
 
@@ -95,8 +98,8 @@ class GraphqlCMPTest extends Test
             try {
                 $request->getResultHandler()->parse($response);
                 $this->fail('No exception was thrown');
-            } catch (\Exception $e) {
-                $this->assertEquals($e->getMessage(), 'Could not find field for category data from response');
+            } catch (Exception $e) {
+                $this->assertEquals('Could not find field for category data from response', $e->getMessage());
             }
         });
     }
@@ -115,8 +118,8 @@ class GraphqlCMPTest extends Test
             try {
                 $request->getResultHandler()->parse($response);
                 $this->fail('No exception was thrown');
-            } catch (\Exception $e) {
-                $this->assertEquals($e->getMessage(), 'Could not find field for primary data from response');
+            } catch (Exception $e) {
+                $this->assertEquals('Could not find field for primary data from response', $e->getMessage());
             }
         });
     }

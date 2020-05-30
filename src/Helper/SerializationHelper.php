@@ -36,6 +36,7 @@
 
 namespace Nosto\Helper;
 
+use Iterator;
 use Nosto\Util\Reflection;
 use \Traversable;
 
@@ -70,8 +71,8 @@ class SerializationHelper extends AbstractHelper
     }
 
     // @codeCoverageIgnoreStart
-    /** @noinspection PhpUndefinedClassInspection */
-    /**
+
+	/**
      * Serializes the given object to JSON using a snake-case naming convention.
      * Arrays and objects can both be passed normally.
      * @param $object
@@ -104,7 +105,7 @@ class SerializationHelper extends AbstractHelper
             if (self::isNull($value)) {
                 continue;
             }
-            if ($value instanceof \Iterator) {
+            if ($value instanceof Iterator) {
                 $value = iterator_to_array($value);
             }
             if (is_object($value)) {

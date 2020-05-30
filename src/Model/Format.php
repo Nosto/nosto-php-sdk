@@ -41,7 +41,7 @@ namespace Nosto\Model;
  */
 final class Format
 {
-    private $currencyBeforeAmount = false;
+    private $currencyBeforeAmount;
 
     /**
      * @var string the grouping symbol/char.

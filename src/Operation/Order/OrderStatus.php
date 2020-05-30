@@ -36,6 +36,7 @@
 
 namespace Nosto\Operation\Order;
 
+use Exception;
 use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Model\Order\GraphQL\OrderStatus as OrderStatusModel;
 use Nosto\Result\Graphql\Order\OrderStatusResultHandler;
@@ -74,14 +75,13 @@ class OrderStatus extends AbstractGraphQLOperation
      */
     public function getQuery()
     {
-        $query
-            = <<<QUERY
+		return <<<QUERY
         mutation(
                 \$orderNumber: String!,
                 \$orderStatus: String!,
                 \$paymentProvider: String!
                 \$statusDate: LocalDateTime!
-        ) { 
+        ) {
             updateStatus(number: \$orderNumber, params: {
                 orderStatus: \$orderStatus
                 paymentProvider: \$paymentProvider
@@ -96,21 +96,19 @@ class OrderStatus extends AbstractGraphQLOperation
             }
         }
 QUERY;
-        return $query;
     }
 
-    /**
-     * @inheritdoc
-     */
+	/**
+	 * @inheritdoc
+	 * @throws Exception
+	 */
     public function getVariables()
     {
-        $array = [
-            'orderNumber' => $this->orderStatus->getOrderNumber(),
-            'orderStatus' => $this->orderStatus->getStatus(),
-            'paymentProvider' => $this->orderStatus->getPaymentProvider(),
-            'statusDate' => $this->orderStatus->getUpdatedAt()
-        ];
-
-        return $array;
+		return [
+			'orderNumber' => $this->orderStatus->getOrderNumber(),
+			'orderStatus' => $this->orderStatus->getStatus(),
+			'paymentProvider' => $this->orderStatus->getPaymentProvider(),
+			'statusDate' => $this->orderStatus->getUpdatedAt()
+		];
     }
 }
