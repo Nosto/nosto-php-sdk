@@ -13,7 +13,6 @@
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="$PROJECT_DIR$/lib" />
-      <path value="$PROJECT_DIR$/vendor" />
       <path value="$PROJECT_DIR$/tests/_support" />
       <path value="$PROJECT_DIR$/vendor/phpspec/prophecy" />
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
