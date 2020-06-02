@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="262aaea1-24c2-4b3a-b9d6-100e604f8153" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +27,9 @@
     <setting file="file://$PROJECT_DIR$/tests/unit/UnitTester.php" root0="FORCE_HIGHLIGHTING" root1="SKIP_INSPECTION" />
   </component>
   <component name="NamedScopeManager">
-    <scope name="Inspection" pattern="file[PHP-SDK]:src//*||file[PHP-SDK]:tests//*||file[PHP-SDK]:js//*" />
+    <order>
+      <scope name="Inspection" />
+    </order>
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -135,7 +137,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pCI" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="project.scopes" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -148,7 +150,8 @@
       <option name="presentableId" value="Default" />
       <updated>1590855273657</updated>
       <workItem from="1590855277181" duration="2713000" />
-      <workItem from="1590923085624" duration="2413000" />
+      <workItem from="1590923085624" duration="3054000" />
+      <workItem from="1591091376898" duration="11000" />
     </task>
     <servers />
   </component>
@@ -198,10 +201,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="349" y="156" width="753" height="587" key="NewModule_or_Project.wizard/0.0.1440.900@0.0.1440.900" timestamp="1590846633519" />
-    <state x="229" y="110" key="SettingsEditor" timestamp="1590867849283">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="229" y="89" key="SettingsEditor" timestamp="1591091387271">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="229" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1590838543453" />
+    <state x="229" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1591091387271" />
     <state x="229" y="110" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1590867849283" />
     <state x="420" y="218" width="600" height="486" key="find.popup" timestamp="1590936436833">
       <screen x="0" y="23" width="1440" height="877" />

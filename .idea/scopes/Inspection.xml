@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Inspection" pattern="file[PHP-SDK]:src//*||file[PHP-SDK]:tests//*||file[PHP-SDK]:js//*" />
+</component>
