@@ -47,7 +47,7 @@ class ExchangeRateCollection extends AbstractObject
     /**
      * @var array the array if exchange rates keyed by the rate code
      */
-    private $rates = array();
+    private $rates = [];
 
     /**
      * Adds an exchange rate to the array of rates

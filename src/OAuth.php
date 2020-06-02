@@ -48,7 +48,7 @@ class OAuth implements OAuthInterface
     /**
      * @var array The scopes for the OAuth2 request.
      */
-    private $scopes = array();
+    private $scopes = [];
 
     /**
      * @var string the url where the oauth2 server should redirect after

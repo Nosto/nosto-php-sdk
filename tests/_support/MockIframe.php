@@ -50,7 +50,7 @@ class MockIframe extends Iframe
         $this->setPreviewUrlCart('http://shop.com/cart?nostodebug=true');
         $this->setPreviewUrlFront('http://shop.com?nostodebug=true');
         $this->setShopName('Shop Name');
-        $this->setModules(array('yotpo', 'klarna'));
+        $this->setModules(['yotpo', 'klarna']);
         $this->setFirstName('James');
         $this->setLastName('Kirk');
         $this->setEmail('james.kirk@example.com');

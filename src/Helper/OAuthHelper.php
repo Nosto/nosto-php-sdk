@@ -60,12 +60,12 @@ class OAuthHelper extends AbstractHelper
 
         return HttpRequest::buildUri(
             $oauthBaseUrl . self::PATH_AUTH,
-            array(
+            [
                 '{cid}' => $params->getClientId(),
                 '{uri}' => $params->getRedirectUrl(),
                 '{sco}' => implode(' ', $params->getScopes()),
                 '{iso}' => strtolower($params->getLanguageIsoCode()),
-            )
+            ]
         );
     }
 }

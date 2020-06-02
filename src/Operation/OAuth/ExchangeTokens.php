@@ -77,7 +77,7 @@ class ExchangeTokens extends AbstractOperation
     public function exchange(NostoOAuthToken $token)
     {
         $request = $this->initRequest(null, null, null, false);
-        $request->setQueryParams(array('access_token' => $token->getAccessToken()));
+        $request->setQueryParams(['access_token' => $token->getAccessToken()]);
         $response = $request->get();
         $results = $request->getResultHandler()->parse($response);
 

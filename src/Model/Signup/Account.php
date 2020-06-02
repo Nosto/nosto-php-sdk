@@ -56,7 +56,7 @@ class Account extends AbstractObject implements AccountInterface, ValidatableInt
     /**
      * @var Token[] the Nosto API tokens associated with this account.
      */
-    private $tokens = array();
+    private $tokens = [];
 
     /**
      * Constructor.
@@ -120,9 +120,9 @@ class Account extends AbstractObject implements AccountInterface, ValidatableInt
      */
     public function validationRules()
     {
-        return array(
-            array(array('name'), 'required')
-        );
+        return [
+            [['name'], 'required']
+        ];
     }
 
     /**
@@ -193,7 +193,7 @@ class Account extends AbstractObject implements AccountInterface, ValidatableInt
     public function getMissingTokens()
     {
         $allTokens = Token::getApiTokenNames();
-        $missingTokens = array();
+        $missingTokens = [];
         foreach ($allTokens as $token) {
             if (!$this->getApiToken($token)) {
                 $missingTokens[] = $token;

@@ -46,9 +46,9 @@ class ResultItem
     /**
      * @var array
      */
-    private $data = array();
+    private $data = [];
 
-    public function __construct(array $data = array())
+    public function __construct(array $data = [])
     {
         $this->data = $data;
     }

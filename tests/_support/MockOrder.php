@@ -46,7 +46,7 @@ class MockOrder extends Order
         $this->setCreatedAt(\DateTime::createFromFormat('Y-m-d H:i:s', '2014-12-12 10:15:15'));
         $this->setPaymentProvider('test-gateway [1.0.0]');
         $this->setCustomer(new MockBuyer());
-        $this->setPurchasedItems(array(new MockLineItem(), new MockPseudoItem()));
+        $this->setPurchasedItems([new MockLineItem(), new MockPseudoItem()]);
         $this->setOrderStatus(new MockOrderStatus());
         $this->setExternalOrderRef('ext ref');
         $this->setOrderNumber("123");

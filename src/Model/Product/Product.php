@@ -242,7 +242,7 @@ class Product extends AbstractObject implements
      * An array of custom attributes
      * @var array
      */
-    private $customFields = array();
+    private $customFields = [];
 
     /**
      * Product publication date in shop
@@ -266,9 +266,9 @@ class Product extends AbstractObject implements
      */
     public function validationRules()
     {
-        return array(
-            array(array('productId'), 'required')
-        );
+        return [
+            [['productId'], 'required']
+        ];
     }
 
     /**
@@ -989,7 +989,7 @@ class Product extends AbstractObject implements
     public function addCustomField($attribute, $value)
     {
         if ($this->customFields === null) {
-            $this->customFields = array();
+            $this->customFields = [];
         }
         $this->customFields[$attribute] = $value;
     }

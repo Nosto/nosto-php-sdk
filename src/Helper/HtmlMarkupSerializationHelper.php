@@ -217,7 +217,7 @@ class HtmlMarkupSerializationHelper extends AbstractHelper
             }
             return $encodedCollection;
         } elseif (is_array($val)) {
-            $encodedArray = array();
+            $encodedArray = [];
             foreach ($val as $key => $item) {
                 $encodedArray[$key] = self::encodeHtmlEntities($item);
             }

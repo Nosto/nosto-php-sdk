@@ -66,7 +66,7 @@ final class IframeHelper extends AbstractHelper
         IframeInterface $iframe,
         AccountInterface $account = null,
         UserInterface $user = null,
-        array $params = array()
+        array $params = []
     ) {
         $defaultParameters = self::getDefaultParams($iframe);
         if ($account instanceof AccountInterface) {
@@ -93,17 +93,17 @@ final class IframeHelper extends AbstractHelper
                 // reason is invalid, which is the case when switching between environments.
                 $url = HttpRequest::buildUri(
                     Nosto::getBaseUrl() . self::IFRAME_URI_UNINSTALL . '?' . $queryParams,
-                    array(
+                    [
                         '{platform}' => $iframe->getPlatform(),
-                    )
+                    ]
                 );
             }
         } else {
             $url = HttpRequest::buildUri(
                 Nosto::getBaseUrl() . self::IFRAME_URI_INSTALL . '?' . $queryParams,
-                array(
+                [
                     '{platform}' => $iframe->getPlatform(),
-                )
+                ]
             );
         }
 
@@ -116,7 +116,7 @@ final class IframeHelper extends AbstractHelper
      */
     public static function getDefaultParams(IframeInterface $iframe)
     {
-        return array(
+        return [
             'lang' => strtolower($iframe->getLanguageIsoCode()),
             'ps_version' => $iframe->getVersionPlatform(),
             'nt_version' => $iframe->getVersionModule(),
@@ -132,6 +132,6 @@ final class IframeHelper extends AbstractHelper
             'lname' => $iframe->getLastName(),
             'email' => $iframe->getEmail(),
             'modules' => $iframe->getModules()
-        );
+        ];
     }
 }

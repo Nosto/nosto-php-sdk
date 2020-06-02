@@ -49,1082 +49,1082 @@ final class CurrencyHelper extends AbstractHelper
     /**
      * @var array currency data keyed on the currencies ISO 4217 codes.
      */
-    private static $data = array(
-        'AED' => array(
+    private static $data = [
+        'AED' => [
             'name' => 'UAE Dirham',
             'numericCode' => 784,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'AFN' => array(
+        ],
+        'AFN' => [
             'name' => 'Afghani',
             'numericCode' => 971,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'ALL' => array(
+        ],
+        'ALL' => [
             'name' => 'Lek',
             'numericCode' => 8,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'AMD' => array(
+        ],
+        'AMD' => [
             'name' => 'Armenian Dram',
             'numericCode' => 51,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'ANG' => array(
+        ],
+        'ANG' => [
             'name' => 'Netherlands Antillean Guilder',
             'numericCode' => 532,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'AOA' => array(
+        ],
+        'AOA' => [
             'name' => 'Kwanza',
             'numericCode' => 973,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'ARS' => array(
+        ],
+        'ARS' => [
             'name' => 'Argentine Peso',
             'numericCode' => 32,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'AUD' => array(
+        ],
+        'AUD' => [
             'name' => 'Australian Dollar',
             'numericCode' => 36,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'AWG' => array(
+        ],
+        'AWG' => [
             'name' => 'Aruban Florin',
             'numericCode' => 533,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'AZN' => array(
+        ],
+        'AZN' => [
             'name' => 'Azerbaijanian Manat',
             'numericCode' => 944,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'BAM' => array(
+        ],
+        'BAM' => [
             'name' => 'Convertible Mark',
             'numericCode' => 977,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'BBD' => array(
+        ],
+        'BBD' => [
             'name' => 'Barbados Dollar',
             'numericCode' => 52,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'BDT' => array(
+        ],
+        'BDT' => [
             'name' => 'Taka',
             'numericCode' => 50,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'BGN' => array(
+        ],
+        'BGN' => [
             'name' => 'Bulgarian Lev',
             'numericCode' => 975,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'BHD' => array(
+        ],
+        'BHD' => [
             'name' => 'Bahraini Dinar',
             'numericCode' => 48,
             'fractionDecimals' => 3,
             'fractionUnit' => 1000,
-        ),
-        'BIF' => array(
+        ],
+        'BIF' => [
             'name' => 'Burundi Franc',
             'numericCode' => 108,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'BMD' => array(
+        ],
+        'BMD' => [
             'name' => 'Bermudian Dollar',
             'numericCode' => 60,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'BND' => array(
+        ],
+        'BND' => [
             'name' => 'Brunei Dollar',
             'numericCode' => 96,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'BOB' => array(
+        ],
+        'BOB' => [
             'name' => 'Boliviano',
             'numericCode' => 68,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'BOV' => array(
+        ],
+        'BOV' => [
             'name' => 'Mvdol',
             'numericCode' => 984,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'BRL' => array(
+        ],
+        'BRL' => [
             'name' => 'Brazilian Real',
             'numericCode' => 986,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'BSD' => array(
+        ],
+        'BSD' => [
             'name' => 'Bahamian Dollar',
             'numericCode' => 44,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'BTN' => array(
+        ],
+        'BTN' => [
             'name' => 'Ngultrum',
             'numericCode' => 64,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'BTC' => array(
+        ],
+        'BTC' => [
             'name' => 'Bitcoin',
             'numericCode' => 00,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'BWP' => array(
+        ],
+        'BWP' => [
             'name' => 'Pula',
             'numericCode' => 72,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'BYR' => array(
+        ],
+        'BYR' => [
             'name' => 'Belarussian Ruble',
             'numericCode' => 974,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'BZD' => array(
+        ],
+        'BZD' => [
             'name' => 'Belize Dollar',
             'numericCode' => 84,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'CAD' => array(
+        ],
+        'CAD' => [
             'name' => 'Canadian Dollar',
             'numericCode' => 124,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'CDF' => array(
+        ],
+        'CDF' => [
             'name' => 'Congolese Franc',
             'numericCode' => 976,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'CHE' => array(
+        ],
+        'CHE' => [
             'name' => 'WIR Euro',
             'numericCode' => 947,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'CHF' => array(
+        ],
+        'CHF' => [
             'name' => 'Swiss Franc',
             'numericCode' => 756,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'CHW' => array(
+        ],
+        'CHW' => [
             'name' => 'WIR Franc',
             'numericCode' => 948,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'CLF' => array(
+        ],
+        'CLF' => [
             'name' => 'Unidades de fomento',
             'numericCode' => 990,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'CLP' => array(
+        ],
+        'CLP' => [
             'name' => 'Chilean Peso',
             'numericCode' => 152,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'CNY' => array(
+        ],
+        'CNY' => [
             'name' => 'Yuan Renminbi',
             'numericCode' => 156,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'COP' => array(
+        ],
+        'COP' => [
             'name' => 'Colombian Peso',
             'numericCode' => 170,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'COU' => array(
+        ],
+        'COU' => [
             'name' => 'Unidad de Valor Real',
             'numericCode' => 970,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'CRC' => array(
+        ],
+        'CRC' => [
             'name' => 'Costa Rican Colon',
             'numericCode' => 188,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'CUC' => array(
+        ],
+        'CUC' => [
             'name' => 'Peso Convertible',
             'numericCode' => 931,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'CUP' => array(
+        ],
+        'CUP' => [
             'name' => 'Cuban Peso',
             'numericCode' => 192,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'CVE' => array(
+        ],
+        'CVE' => [
             'name' => 'Cape Verde Escudo',
             'numericCode' => 132,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'CZK' => array(
+        ],
+        'CZK' => [
             'name' => 'Czech Koruna',
             'numericCode' => 203,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'DJF' => array(
+        ],
+        'DJF' => [
             'name' => 'Djibouti Franc',
             'numericCode' => 262,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'DKK' => array(
+        ],
+        'DKK' => [
             'name' => 'Danish Krone',
             'numericCode' => 208,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'DOP' => array(
+        ],
+        'DOP' => [
             'name' => 'Dominican Peso',
             'numericCode' => 214,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'DZD' => array(
+        ],
+        'DZD' => [
             'name' => 'Algerian Dinar',
             'numericCode' => 12,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'EGP' => array(
+        ],
+        'EGP' => [
             'name' => 'Egyptian Pound',
             'numericCode' => 818,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'ERN' => array(
+        ],
+        'ERN' => [
             'name' => 'Nakfa',
             'numericCode' => 232,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'ETB' => array(
+        ],
+        'ETB' => [
             'name' => 'Ethiopian Birr',
             'numericCode' => 230,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'EUR' => array(
+        ],
+        'EUR' => [
             'name' => 'Euro',
             'numericCode' => 978,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'FJD' => array(
+        ],
+        'FJD' => [
             'name' => 'Fiji Dollar',
             'numericCode' => 242,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'FKP' => array(
+        ],
+        'FKP' => [
             'name' => 'Falkland Islands Pound',
             'numericCode' => 238,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'GBP' => array(
+        ],
+        'GBP' => [
             'name' => 'Pound Sterling',
             'numericCode' => 826,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'GEL' => array(
+        ],
+        'GEL' => [
             'name' => 'Lari',
             'numericCode' => 981,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'GHS' => array(
+        ],
+        'GHS' => [
             'name' => 'Ghana Cedi',
             'numericCode' => 936,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'GIP' => array(
+        ],
+        'GIP' => [
             'name' => 'Gibraltar Pound',
             'numericCode' => 292,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'GMD' => array(
+        ],
+        'GMD' => [
             'name' => 'Dalasi',
             'numericCode' => 270,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'GNF' => array(
+        ],
+        'GNF' => [
             'name' => 'Guinea Franc',
             'numericCode' => 324,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'GTQ' => array(
+        ],
+        'GTQ' => [
             'name' => 'Quetzal',
             'numericCode' => 320,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'GYD' => array(
+        ],
+        'GYD' => [
             'name' => 'Guyana Dollar',
             'numericCode' => 328,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'HKD' => array(
+        ],
+        'HKD' => [
             'name' => 'Hong Kong Dollar',
             'numericCode' => 344,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'HNL' => array(
+        ],
+        'HNL' => [
             'name' => 'Lempira',
             'numericCode' => 340,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'HRK' => array(
+        ],
+        'HRK' => [
             'name' => 'Croatian Kuna',
             'numericCode' => 191,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'HTG' => array(
+        ],
+        'HTG' => [
             'name' => 'Gourde',
             'numericCode' => 332,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'HUF' => array(
+        ],
+        'HUF' => [
             'name' => 'Forint',
             'numericCode' => 348,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'IDR' => array(
+        ],
+        'IDR' => [
             'name' => 'Rupiah',
             'numericCode' => 360,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'ILS' => array(
+        ],
+        'ILS' => [
             'name' => 'New Israeli Sheqel',
             'numericCode' => 376,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'INR' => array(
+        ],
+        'INR' => [
             'name' => 'Indian Rupee',
             'numericCode' => 356,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'IQD' => array(
+        ],
+        'IQD' => [
             'name' => 'Iraqi Dinar',
             'numericCode' => 368,
             'fractionDecimals' => 3,
             'fractionUnit' => 1000,
-        ),
-        'IRR' => array(
+        ],
+        'IRR' => [
             'name' => 'Iranian Rial',
             'numericCode' => 364,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'ISK' => array(
+        ],
+        'ISK' => [
             'name' => 'Iceland Krona',
             'numericCode' => 352,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'JMD' => array(
+        ],
+        'JMD' => [
             'name' => 'Jamaican Dollar',
             'numericCode' => 388,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'JOD' => array(
+        ],
+        'JOD' => [
             'name' => 'Jordanian Dinar',
             'numericCode' => 400,
             'fractionDecimals' => 3,
             'fractionUnit' => 100,
-        ),
-        'JPY' => array(
+        ],
+        'JPY' => [
             'name' => 'Yen',
             'numericCode' => 392,
             'fractionDecimals' => 0,
             'fractionUnit' => 1,
-        ),
-        'KES' => array(
+        ],
+        'KES' => [
             'name' => 'Kenyan Shilling',
             'numericCode' => 404,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'KGS' => array(
+        ],
+        'KGS' => [
             'name' => 'Som',
             'numericCode' => 417,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'KHR' => array(
+        ],
+        'KHR' => [
             'name' => 'Riel',
             'numericCode' => 116,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'KMF' => array(
+        ],
+        'KMF' => [
             'name' => 'Comoro Franc',
             'numericCode' => 174,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'KPW' => array(
+        ],
+        'KPW' => [
             'name' => 'North Korean Won',
             'numericCode' => 408,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'KRW' => array(
+        ],
+        'KRW' => [
             'name' => 'Won',
             'numericCode' => 410,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'KWD' => array(
+        ],
+        'KWD' => [
             'name' => 'Kuwaiti Dinar',
             'numericCode' => 414,
             'fractionDecimals' => 3,
             'fractionUnit' => 1000,
-        ),
-        'KYD' => array(
+        ],
+        'KYD' => [
             'name' => 'Cayman Islands Dollar',
             'numericCode' => 136,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'KZT' => array(
+        ],
+        'KZT' => [
             'name' => 'Tenge',
             'numericCode' => 398,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'LAK' => array(
+        ],
+        'LAK' => [
             'name' => 'Kip',
             'numericCode' => 418,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'LBP' => array(
+        ],
+        'LBP' => [
             'name' => 'Lebanese Pound',
             'numericCode' => 422,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'LKR' => array(
+        ],
+        'LKR' => [
             'name' => 'Sri Lanka Rupee',
             'numericCode' => 144,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'LRD' => array(
+        ],
+        'LRD' => [
             'name' => 'Liberian Dollar',
             'numericCode' => 430,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'LSL' => array(
+        ],
+        'LSL' => [
             'name' => 'Loti',
             'numericCode' => 426,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'LYD' => array(
+        ],
+        'LYD' => [
             'name' => 'Libyan Dinar',
             'numericCode' => 434,
             'fractionDecimals' => 3,
             'fractionUnit' => 1000,
-        ),
-        'MAD' => array(
+        ],
+        'MAD' => [
             'name' => 'Moroccan Dirham',
             'numericCode' => 504,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'MDL' => array(
+        ],
+        'MDL' => [
             'name' => 'Moldovan Leu',
             'numericCode' => 498,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'MGA' => array(
+        ],
+        'MGA' => [
             'name' => 'Malagasy Ariary',
             'numericCode' => 969,
             'fractionDecimals' => 2,
             'fractionUnit' => 5,
-        ),
-        'MKD' => array(
+        ],
+        'MKD' => [
             'name' => 'Denar',
             'numericCode' => 807,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'MMK' => array(
+        ],
+        'MMK' => [
             'name' => 'Kyat',
             'numericCode' => 104,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'MNT' => array(
+        ],
+        'MNT' => [
             'name' => 'Tugrik',
             'numericCode' => 496,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'MOP' => array(
+        ],
+        'MOP' => [
             'name' => 'Pataca',
             'numericCode' => 446,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'MRO' => array(
+        ],
+        'MRO' => [
             'name' => 'Ouguiya',
             'numericCode' => 478,
             'fractionDecimals' => 2,
             'fractionUnit' => 5,
-        ),
-        'MUR' => array(
+        ],
+        'MUR' => [
             'name' => 'Mauritius Rupee',
             'numericCode' => 480,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'MVR' => array(
+        ],
+        'MVR' => [
             'name' => 'Rufiyaa',
             'numericCode' => 462,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'MWK' => array(
+        ],
+        'MWK' => [
             'name' => 'Kwacha',
             'numericCode' => 454,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'MXN' => array(
+        ],
+        'MXN' => [
             'name' => 'Mexican Peso',
             'numericCode' => 484,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'MXV' => array(
+        ],
+        'MXV' => [
             'name' => 'Mexican Unidad de Inversion (UDI)',
             'numericCode' => 979,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'MYR' => array(
+        ],
+        'MYR' => [
             'name' => 'Malaysian Ringgit',
             'numericCode' => 458,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'MZN' => array(
+        ],
+        'MZN' => [
             'name' => 'Mozambique Metical',
             'numericCode' => 943,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'NAD' => array(
+        ],
+        'NAD' => [
             'name' => 'Namibia Dollar',
             'numericCode' => 516,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'NGN' => array(
+        ],
+        'NGN' => [
             'name' => 'Naira',
             'numericCode' => 566,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'NIO' => array(
+        ],
+        'NIO' => [
             'name' => 'Cordoba Oro',
             'numericCode' => 558,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'NOK' => array(
+        ],
+        'NOK' => [
             'name' => 'Norwegian Krone',
             'numericCode' => 578,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'NPR' => array(
+        ],
+        'NPR' => [
             'name' => 'Nepalese Rupee',
             'numericCode' => 524,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'NZD' => array(
+        ],
+        'NZD' => [
             'name' => 'New Zealand Dollar',
             'numericCode' => 554,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'OMR' => array(
+        ],
+        'OMR' => [
             'name' => 'Rial Omani',
             'numericCode' => 512,
             'fractionDecimals' => 3,
             'fractionUnit' => 1000,
-        ),
-        'PAB' => array(
+        ],
+        'PAB' => [
             'name' => 'Balboa',
             'numericCode' => 590,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'PEN' => array(
+        ],
+        'PEN' => [
             'name' => 'Nuevo Sol',
             'numericCode' => 604,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'PGK' => array(
+        ],
+        'PGK' => [
             'name' => 'Kina',
             'numericCode' => 598,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'PHP' => array(
+        ],
+        'PHP' => [
             'name' => 'Philippine Peso',
             'numericCode' => 608,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'PKR' => array(
+        ],
+        'PKR' => [
             'name' => 'Pakistan Rupee',
             'numericCode' => 586,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'PLN' => array(
+        ],
+        'PLN' => [
             'name' => 'Zloty',
             'numericCode' => 985,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'PYG' => array(
+        ],
+        'PYG' => [
             'name' => 'Guarani',
             'numericCode' => 600,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'QAR' => array(
+        ],
+        'QAR' => [
             'name' => 'Qatari Rial',
             'numericCode' => 634,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'RON' => array(
+        ],
+        'RON' => [
             'name' => 'New Romanian Leu',
             'numericCode' => 946,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'RSD' => array(
+        ],
+        'RSD' => [
             'name' => 'Serbian Dinar',
             'numericCode' => 941,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'RUB' => array(
+        ],
+        'RUB' => [
             'name' => 'Russian Ruble',
             'numericCode' => 643,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'RWF' => array(
+        ],
+        'RWF' => [
             'name' => 'Rwanda Franc',
             'numericCode' => 646,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'SAR' => array(
+        ],
+        'SAR' => [
             'name' => 'Saudi Riyal',
             'numericCode' => 682,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'SBD' => array(
+        ],
+        'SBD' => [
             'name' => 'Solomon Islands Dollar',
             'numericCode' => 90,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'SCR' => array(
+        ],
+        'SCR' => [
             'name' => 'Seychelles Rupee',
             'numericCode' => 690,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'SDG' => array(
+        ],
+        'SDG' => [
             'name' => 'Sudanese Pound',
             'numericCode' => 938,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'SEK' => array(
+        ],
+        'SEK' => [
             'name' => 'Swedish Krona',
             'numericCode' => 752,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'SGD' => array(
+        ],
+        'SGD' => [
             'name' => 'Singapore Dollar',
             'numericCode' => 702,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'SHP' => array(
+        ],
+        'SHP' => [
             'name' => 'Saint Helena Pound',
             'numericCode' => 654,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'SLL' => array(
+        ],
+        'SLL' => [
             'name' => 'Leone',
             'numericCode' => 694,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'SOS' => array(
+        ],
+        'SOS' => [
             'name' => 'Somali Shilling',
             'numericCode' => 706,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'SRD' => array(
+        ],
+        'SRD' => [
             'name' => 'Surinam Dollar',
             'numericCode' => 968,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'SSP' => array(
+        ],
+        'SSP' => [
             'name' => 'South Sudanese Pound',
             'numericCode' => 728,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'STD' => array(
+        ],
+        'STD' => [
             'name' => 'Dobra',
             'numericCode' => 678,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'SYP' => array(
+        ],
+        'SYP' => [
             'name' => 'Syrian Pound',
             'numericCode' => 760,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'SZL' => array(
+        ],
+        'SZL' => [
             'name' => 'Lilangeni',
             'numericCode' => 748,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'THB' => array(
+        ],
+        'THB' => [
             'name' => 'Baht',
             'numericCode' => 764,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'TJS' => array(
+        ],
+        'TJS' => [
             'name' => 'Somoni',
             'numericCode' => 972,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'TMT' => array(
+        ],
+        'TMT' => [
             'name' => 'Turkmenistan New Manat',
             'numericCode' => 934,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'TND' => array(
+        ],
+        'TND' => [
             'name' => 'Tunisian Dinar',
             'numericCode' => 788,
             'fractionDecimals' => 3,
             'fractionUnit' => 1000,
-        ),
-        'TOP' => array(
+        ],
+        'TOP' => [
             'name' => 'Pa’anga',
             'numericCode' => 776,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'TRY' => array(
+        ],
+        'TRY' => [
             'name' => 'Turkish Lira',
             'numericCode' => 949,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'TTD' => array(
+        ],
+        'TTD' => [
             'name' => 'Trinidad and Tobago Dollar',
             'numericCode' => 780,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'TWD' => array(
+        ],
+        'TWD' => [
             'name' => 'New Taiwan Dollar',
             'numericCode' => 901,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'TZS' => array(
+        ],
+        'TZS' => [
             'name' => 'Tanzanian Shilling',
             'numericCode' => 834,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'UAH' => array(
+        ],
+        'UAH' => [
             'name' => 'Hryvnia',
             'numericCode' => 980,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'UGX' => array(
+        ],
+        'UGX' => [
             'name' => 'Uganda Shilling',
             'numericCode' => 800,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'USD' => array(
+        ],
+        'USD' => [
             'name' => 'US Dollar',
             'numericCode' => 840,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'USN' => array(
+        ],
+        'USN' => [
             'name' => 'US Dollar (Next day)',
             'numericCode' => 997,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'USS' => array(
+        ],
+        'USS' => [
             'name' => 'US Dollar (Same day)',
             'numericCode' => 998,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'UYI' => array(
+        ],
+        'UYI' => [
             'name' => 'Uruguay Peso en Unidades Indexadas (URUIURUI)',
             'numericCode' => 940,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'UYU' => array(
+        ],
+        'UYU' => [
             'name' => 'Peso Uruguayo',
             'numericCode' => 858,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'UZS' => array(
+        ],
+        'UZS' => [
             'name' => 'Uzbekistan Sum',
             'numericCode' => 860,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'VEF' => array(
+        ],
+        'VEF' => [
             'name' => 'Bolivar',
             'numericCode' => 937,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'VND' => array(
+        ],
+        'VND' => [
             'name' => 'Dong',
             'numericCode' => 704,
             'fractionDecimals' => 0,
             'fractionUnit' => 10,
-        ),
-        'VUV' => array(
+        ],
+        'VUV' => [
             'name' => 'Vatu',
             'numericCode' => 548,
             'fractionDecimals' => 0,
             'fractionUnit' => 1,
-        ),
-        'WST' => array(
+        ],
+        'WST' => [
             'name' => 'Tala',
             'numericCode' => 882,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'XAF' => array(
+        ],
+        'XAF' => [
             'name' => 'CFA Franc BEAC',
             'numericCode' => 950,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XAG' => array(
+        ],
+        'XAG' => [
             'name' => 'Silver',
             'numericCode' => 961,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XAU' => array(
+        ],
+        'XAU' => [
             'name' => 'Gold',
             'numericCode' => 959,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XBA' => array(
+        ],
+        'XBA' => [
             'name' => 'Bond Markets Unit European Composite Unit (EURCO)',
             'numericCode' => 955,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XBB' => array(
+        ],
+        'XBB' => [
             'name' => 'Bond Markets Unit European Monetary Unit (E.M.U.-6)',
             'numericCode' => 956,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XBC' => array(
+        ],
+        'XBC' => [
             'name' => 'Bond Markets Unit European Unit of Account 9 (E.U.A.-9)',
             'numericCode' => 957,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XBD' => array(
+        ],
+        'XBD' => [
             'name' => 'Bond Markets Unit European Unit of Account 17 (E.U.A.-17)',
             'numericCode' => 958,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XCD' => array(
+        ],
+        'XCD' => [
             'name' => 'East Caribbean Dollar',
             'numericCode' => 951,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'XDR' => array(
+        ],
+        'XDR' => [
             'name' => 'SDR (Special Drawing Right)',
             'numericCode' => 960,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XFU' => array(
+        ],
+        'XFU' => [
             'name' => 'UIC-Franc',
             'numericCode' => 958,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XOF' => array(
+        ],
+        'XOF' => [
             'name' => 'CFA Franc BCEAO',
             'numericCode' => 952,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XPD' => array(
+        ],
+        'XPD' => [
             'name' => 'Palladium',
             'numericCode' => 964,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XPF' => array(
+        ],
+        'XPF' => [
             'name' => 'CFP Franc',
             'numericCode' => 953,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XPT' => array(
+        ],
+        'XPT' => [
             'name' => 'Platinum',
             'numericCode' => 962,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XSU' => array(
+        ],
+        'XSU' => [
             'name' => 'Sucre',
             'numericCode' => 994,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XTS' => array(
+        ],
+        'XTS' => [
             'name' => 'Codes specifically reserved for testing purposes',
             'numericCode' => 963,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XUA' => array(
+        ],
+        'XUA' => [
             'name' => 'ADB Unit of Account',
             'numericCode' => 965,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'XXX' => array(
+        ],
+        'XXX' => [
             'name' => 'The codes assigned for transactions where no currency is involved',
             'numericCode' => 999,
             'fractionDecimals' => 0,
             'fractionUnit' => 100,
-        ),
-        'YER' => array(
+        ],
+        'YER' => [
             'name' => 'Yemeni Rial',
             'numericCode' => 886,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'ZAR' => array(
+        ],
+        'ZAR' => [
             'name' => 'Rand',
             'numericCode' => 710,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        ),
-        'ZMW' => array(
+        ],
+        'ZMW' => [
             'name' => 'Zambian Kwacha',
             'numericCode' => 967,
             'fractionDecimals' => 2,
             'fractionUnit' => 100,
-        )
-    );
+        ]
+    ];
 
     /**
      * Private Constructor to disallow instantiation.

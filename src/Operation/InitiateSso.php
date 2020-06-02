@@ -66,7 +66,7 @@ class InitiateSso extends AbstractAuthenticatedOperation
             $this->account->getApiToken(Token::API_SSO),
             $this->account->getName()
         );
-        $request->setReplaceParams(array('{platform}' => $platform));
+        $request->setReplaceParams(['{platform}' => $platform]);
         $response = $request->post($user);
 
         return $request->getResultHandler()->parse($response);

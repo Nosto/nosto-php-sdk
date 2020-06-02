@@ -87,7 +87,7 @@ class Order extends AbstractObject implements
     /**
      * @var LineItemInterface[] the list of items in the OrderConfirm
      */
-    private $purchasedItems = array();
+    private $purchasedItems = [];
 
     /**
      * @var string the latest OrderConfirm status of the OrderConfirm
@@ -119,7 +119,7 @@ class Order extends AbstractObject implements
      */
     public function validationRules()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -308,13 +308,13 @@ class Order extends AbstractObject implements
      */
     public function getOrderStatuses()
     {
-        $formatted = array();
+        $formatted = [];
         if ($this->orderStatuses instanceof Traversable
             || is_array($this->orderStatuses)
         ) {
             foreach ($this->orderStatuses as $orderStatus) {
                 if (!isset($formatted[$orderStatus->getCode()])) {
-                    $formatted[$orderStatus->getCode()] = array();
+                    $formatted[$orderStatus->getCode()] = [];
                 }
                 $formatted[$orderStatus->getCode()][] = $orderStatus->getDate();
             }

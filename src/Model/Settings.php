@@ -70,7 +70,7 @@ class Settings extends AbstractObject implements SettingsInterface
     /**
      * @var array list of currency codes and the currency formats objects supported by the store .
      */
-    private $currencies = array();
+    private $currencies = [];
 
     /**
      * @var string default variation id
