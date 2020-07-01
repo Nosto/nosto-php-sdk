@@ -40,7 +40,7 @@ jobs:
         composer install --prefer-dist --no-progress --no-suggest
         composer dump-autoload --optimize
         rm -rf vendor/bin
-        rm README.md
+        rm README.md c3.php
     ############################################################################
 
     - name: Run PHPStorm
