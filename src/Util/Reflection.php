@@ -106,7 +106,7 @@ class Reflection
         if (!is_object($object)) {
             throw new NostoException('Cannot parse methods for non-object');
         }
-        $class = new \ReflectionClass($object);
+        $class = new ReflectionClass($object);
         $methods = [];
         foreach ($class->getProperties() as $property) {
             $setterName = null;
