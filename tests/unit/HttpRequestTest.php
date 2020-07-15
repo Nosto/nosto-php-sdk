@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2019, Nosto Solutions Ltd
+ * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2019 Nosto Solutions Ltd
+ * @copyright 2020 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -57,10 +57,10 @@ class HttpRequestTest extends Test
     public function testHttpRequestQueryParams()
     {
         $request = new HttpRequest();
-        $request->setQueryParams(array(
+        $request->setQueryParams([
             'param1' => 'first',
             'param2' => 'second',
-        ));
+        ]);
         $params = $request->getQueryParams();
         $this->assertArrayHasKey('param1', $params);
         $this->assertContains('first', $params);
@@ -77,7 +77,7 @@ class HttpRequestTest extends Test
         $request->setAuthBasic('test', 'test');
         $headers = $request->getHeaders();
         $this->assertContains(
-            'Authorization: Basic ' . base64_encode(implode(':', array('test', 'test')))
+            'Authorization: Basic ' . base64_encode(implode(':', ['test', 'test']))
             , $headers
         );
     }
@@ -141,10 +141,10 @@ class HttpRequestTest extends Test
                 'http://localhost:%d?param1={p1}&param2={p2}',
                 self::CURL_TEST_PORT
             ),
-            array(
+            [
                 '{p1}' => 'first',
                 '{p2}' => 'second'
-            )
+            ]
         );
         $this->assertEquals(
             sprintf(
@@ -231,7 +231,7 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestResponseResult()
     {
-        $response = new HttpResponse(array(), json_encode(array('test' => true)));
+        $response = new HttpResponse([], json_encode(['test' => true]));
         $this->assertEquals('{"test":true}', $response->getResult());
         $result = $response->getJsonResult(true);
         $this->assertArrayHasKey('test', $result);
@@ -243,7 +243,7 @@ class HttpRequestTest extends Test
      */
     public function testHttpRequestResponseErrorMessage()
     {
-        $response = new HttpResponse(array(), '', 'error');
+        $response = new HttpResponse([], '', 'error');
         $this->assertEquals('error', $response->getMessage());
     }
 

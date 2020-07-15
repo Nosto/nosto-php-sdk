@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2019, Nosto Solutions Ltd
+ * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2019 Nosto Solutions Ltd
+ * @copyright 2020 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -66,7 +66,7 @@ final class IframeHelper extends AbstractHelper
         IframeInterface $iframe,
         AccountInterface $account = null,
         UserInterface $user = null,
-        array $params = array()
+        array $params = []
     ) {
         $defaultParameters = self::getDefaultParams($iframe);
         if ($account instanceof AccountInterface) {
@@ -93,17 +93,17 @@ final class IframeHelper extends AbstractHelper
                 // reason is invalid, which is the case when switching between environments.
                 $url = HttpRequest::buildUri(
                     Nosto::getBaseUrl() . self::IFRAME_URI_UNINSTALL . '?' . $queryParams,
-                    array(
+                    [
                         '{platform}' => $iframe->getPlatform(),
-                    )
+                    ]
                 );
             }
         } else {
             $url = HttpRequest::buildUri(
                 Nosto::getBaseUrl() . self::IFRAME_URI_INSTALL . '?' . $queryParams,
-                array(
+                [
                     '{platform}' => $iframe->getPlatform(),
-                )
+                ]
             );
         }
 
@@ -116,7 +116,7 @@ final class IframeHelper extends AbstractHelper
      */
     public static function getDefaultParams(IframeInterface $iframe)
     {
-        return array(
+        return [
             'lang' => strtolower($iframe->getLanguageIsoCode()),
             'ps_version' => $iframe->getVersionPlatform(),
             'nt_version' => $iframe->getVersionModule(),
@@ -132,6 +132,6 @@ final class IframeHelper extends AbstractHelper
             'lname' => $iframe->getLastName(),
             'email' => $iframe->getEmail(),
             'modules' => $iframe->getModules()
-        );
+        ];
     }
 }

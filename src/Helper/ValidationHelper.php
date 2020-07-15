@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2019, Nosto Solutions Ltd
+ * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2019 Nosto Solutions Ltd
+ * @copyright 2020 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -52,7 +52,7 @@ class ValidationHelper extends AbstractHelper
     /**
      * @var array map of validation errors per attribute
      */
-    private $errors = array();
+    private $errors = [];
 
     /**
      * Constructor.
@@ -84,8 +84,8 @@ class ValidationHelper extends AbstractHelper
                         $validator
                     ));
                 }
-                $params = array_merge(array($properties), array_slice($rule, 2));
-                $isValid = call_user_func_array(array($this, $validator), $params);
+                $params = array_merge([$properties], array_slice($rule, 2));
+                $isValid = call_user_func_array([$this, $validator], $params);
                 if (!$isValid) {
                     $valid = false;
                 }
@@ -144,7 +144,7 @@ class ValidationHelper extends AbstractHelper
     protected function addError($attribute, $message)
     {
         if (!isset($this->errors[$attribute])) {
-            $this->errors[$attribute] = array();
+            $this->errors[$attribute] = [];
         }
         $this->errors[$attribute][] = $message;
     }

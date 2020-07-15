@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2019, Nosto Solutions Ltd
+ * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2019 Nosto Solutions Ltd
+ * @copyright 2020 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -60,10 +60,10 @@ trait OauthTrait
 
                 if (self::save($account)) {
                     self::redirect(
-                        array(
+                        [
                             Nosto::URL_PARAM_MESSAGE_TYPE => Nosto::TYPE_SUCCESS,
                             Nosto::URL_PARAM_MESSAGE_CODE => Nosto::CODE_ACCOUNT_CONNECT
-                        )
+                        ]
                     );
                     return;
                 } else {
@@ -72,11 +72,11 @@ trait OauthTrait
             } catch (NostoException $e) {
                 self::logError($e);
                 self::redirect(
-                    array(
+                    [
                         Nosto::URL_PARAM_MESSAGE_TYPE => Nosto::TYPE_ERROR,
                         Nosto::URL_PARAM_MESSAGE_CODE => Nosto::CODE_ACCOUNT_CONNECT,
                         Nosto::URL_PARAM_MESSAGE_TEXT => $e->getMessage()
-                    )
+                    ]
                 );
                 return;
             }
@@ -90,11 +90,11 @@ trait OauthTrait
             }
             self::logError(new Exception($logMsg));
             self::redirect(
-                array(
+                [
                     Nosto::URL_PARAM_MESSAGE_TYPE => Nosto::TYPE_ERROR,
                     Nosto::URL_PARAM_MESSAGE_CODE => Nosto::CODE_ACCOUNT_CONNECT,
                     Nosto::URL_PARAM_MESSAGE_TEXT => $desc
-                )
+                ]
             );
         } else {
             self::notFound();

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2019, Nosto Solutions Ltd
+ * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2019 Nosto Solutions Ltd
+ * @copyright 2020 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -134,7 +134,7 @@ class HttpResponse
         $contentType = '';
         if (!empty($this->headers)) {
             foreach ($this->headers as $header) {
-                $matches = array();
+                $matches = [];
                 preg_match('/content-type: (\S*\/\S*)+;/i', $header, $matches);
                 if (isset($matches[1])) {
                     $contentType = $matches[1];
@@ -155,7 +155,7 @@ class HttpResponse
             $code = 0;
             if (!empty($this->headers)) {
                 foreach ($this->headers as $header) {
-                    $matches = array();
+                    $matches = [];
                     preg_match('|HTTP/\d(\.\d)?\s+(\d+)(\s+.*)?|', $header, $matches);
                     if (isset($matches[2])) {
                         $code = (int)$matches[2];
@@ -198,11 +198,11 @@ class HttpResponse
     public function __toString()
     {
         return serialize(
-            array(
+            [
                 'headers' => $this->headers,
                 'body' => $this->result,
                 'error' => $this->message,
-            )
+            ]
         );
     }
 }
