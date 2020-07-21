@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2019, Nosto Solutions Ltd
+ * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2019 Nosto Solutions Ltd
+ * @copyright 2020 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -87,7 +87,7 @@ class Order extends AbstractObject implements
     /**
      * @var LineItemInterface[] the list of items in the OrderConfirm
      */
-    private $purchasedItems = array();
+    private $purchasedItems = [];
 
     /**
      * @var string the latest OrderConfirm status of the OrderConfirm
@@ -119,7 +119,7 @@ class Order extends AbstractObject implements
      */
     public function validationRules()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -308,13 +308,13 @@ class Order extends AbstractObject implements
      */
     public function getOrderStatuses()
     {
-        $formatted = array();
+        $formatted = [];
         if ($this->orderStatuses instanceof Traversable
             || is_array($this->orderStatuses)
         ) {
             foreach ($this->orderStatuses as $orderStatus) {
                 if (!isset($formatted[$orderStatus->getCode()])) {
-                    $formatted[$orderStatus->getCode()] = array();
+                    $formatted[$orderStatus->getCode()] = [];
                 }
                 $formatted[$orderStatus->getCode()][] = $orderStatus->getDate();
             }

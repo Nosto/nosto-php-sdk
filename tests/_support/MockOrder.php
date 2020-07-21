@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2019, Nosto Solutions Ltd
+ * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2019 Nosto Solutions Ltd
+ * @copyright 2020 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -46,7 +46,7 @@ class MockOrder extends Order
         $this->setCreatedAt(\DateTime::createFromFormat('Y-m-d H:i:s', '2014-12-12 10:15:15'));
         $this->setPaymentProvider('test-gateway [1.0.0]');
         $this->setCustomer(new MockBuyer());
-        $this->setPurchasedItems(array(new MockLineItem(), new MockPseudoItem()));
+        $this->setPurchasedItems([new MockLineItem(), new MockPseudoItem()]);
         $this->setOrderStatus(new MockOrderStatus());
         $this->setExternalOrderRef('ext ref');
         $this->setOrderNumber("123");

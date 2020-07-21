@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2019, Nosto Solutions Ltd
+ * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2019 Nosto Solutions Ltd
+ * @copyright 2020 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -56,7 +56,7 @@ class Account extends AbstractObject implements AccountInterface, ValidatableInt
     /**
      * @var Token[] the Nosto API tokens associated with this account.
      */
-    private $tokens = array();
+    private $tokens = [];
 
     /**
      * Constructor.
@@ -120,9 +120,9 @@ class Account extends AbstractObject implements AccountInterface, ValidatableInt
      */
     public function validationRules()
     {
-        return array(
-            array(array('name'), 'required')
-        );
+        return [
+            [['name'], 'required']
+        ];
     }
 
     /**
@@ -193,7 +193,7 @@ class Account extends AbstractObject implements AccountInterface, ValidatableInt
     public function getMissingTokens()
     {
         $allTokens = Token::getApiTokenNames();
-        $missingTokens = array();
+        $missingTokens = [];
         foreach ($allTokens as $token) {
             if (!$this->getApiToken($token)) {
                 $missingTokens[] = $token;

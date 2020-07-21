@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2019, Nosto Solutions Ltd
+ * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2019 Nosto Solutions Ltd
+ * @copyright 2020 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -52,7 +52,7 @@ class SerializationHelper extends AbstractHelper
 
     public static function serialize($object)
     {
-        $items = array();
+        $items = [];
         if ($object instanceof Traversable || is_array($object)) {
             foreach ($object as $item) {
                 if (is_object($item)) {
@@ -80,7 +80,7 @@ class SerializationHelper extends AbstractHelper
      */
     private static function toArray($object, $keyCaseType = self::SNAKE_CASE)
     {
-        $json = array();
+        $json = [];
         $props = Reflection::getObjectProperties($object);
         foreach ($props as $key => $value) {
             $check_references = explode("_", $key);
@@ -111,7 +111,7 @@ class SerializationHelper extends AbstractHelper
                 $json[$key] = self::toArray($value);
             } else {
                 if (is_array($value)) {
-                    $json[$key] = array();
+                    $json[$key] = [];
                     if (ArrayHelper::isAssoc($value)) {
                         foreach ($value as $k => $anObject) {
                             if (is_object($anObject)) {

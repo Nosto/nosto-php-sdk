@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2019, Nosto Solutions Ltd
+ * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2019 Nosto Solutions Ltd
+ * @copyright 2020 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -56,15 +56,15 @@ class Reflection
      */
     public static function getObjectProperties($obj)
     {
-        $properties = array();
+        $properties = [];
         try {
             $rc = new \ReflectionClass($obj);
             do {
-                $rp = array();
+                $rp = [];
 
                 // Note that we will not include any properties in traits
                 $traits = $rc->getTraits();
-                $skipProperties = array();
+                $skipProperties = [];
                 if (!empty($traits)) {
                     foreach ($traits as $trait) {
                         foreach ($trait->getProperties() as $traitProperty) {
@@ -105,7 +105,7 @@ class Reflection
             throw new NostoException('Cannot parse methods for non-object');
         }
         $class = new \ReflectionClass($object);
-        $methods = array();
+        $methods = [];
         foreach ($class->getProperties() as $property) {
             $setterName = null;
             $getterName = null;
@@ -124,7 +124,7 @@ class Reflection
                 }
             }
             if ($setterName && $getterName) {
-                $methods[] = array(self::GETTER_KEY => $getterName, self::SETTER_KEY => $setterName);
+                $methods[] = [self::GETTER_KEY => $getterName, self::SETTER_KEY => $setterName];
             }
         }
         return $methods;

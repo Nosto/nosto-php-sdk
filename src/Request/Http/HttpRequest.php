@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2019, Nosto Solutions Ltd
+ * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2019 Nosto Solutions Ltd
+ * @copyright 2020 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -94,7 +94,7 @@ class HttpRequest
     /**
      * @var array list of headers to include in the requests.
      */
-    private $headers = array();
+    private $headers = [];
 
     /**
      * @var string the request content (populated in post() and put() methods).
@@ -104,12 +104,12 @@ class HttpRequest
     /**
      * @var array list of optional query params that are added to the request url.
      */
-    private $queryParams = array();
+    private $queryParams = [];
 
     /**
      * @var array list of optional replace params that can be injected into the url if it contains placeholders.
      */
-    private $replaceParams = array();
+    private $replaceParams = [];
 
     /**
      * @var Adapter the adapter to use for making the request.
@@ -193,7 +193,7 @@ class HttpRequest
     public static function parseQueryString($queryString)
     {
         if (empty($queryString)) {
-            return array();
+            return [];
         }
         parse_str($queryString, $parsedQueryString);
         return $parsedQueryString;
@@ -347,7 +347,7 @@ class HttpRequest
      */
     public function setAuthBasic($username, $password)
     {
-        $this->setAuth(self::AUTH_BASIC, array($username, $password));
+        $this->setAuth(self::AUTH_BASIC, [$username, $password]);
     }
 
     /**
@@ -444,10 +444,10 @@ class HttpRequest
 
         return $this->adapter->post(
             $url,
-            array(
+            [
                 self::HEADERS => $this->headers,
                 self::CONTENT => $this->content,
-            )
+            ]
         );
     }
 
@@ -471,7 +471,7 @@ class HttpRequest
      */
     public static function buildUri($uri, array $replaceParams)
     {
-        $encoded = array();
+        $encoded = [];
         foreach ($replaceParams as $index => $param) {
             $encoded[$index] = urlencode($param);
         }
@@ -496,10 +496,10 @@ class HttpRequest
 
         return $this->adapter->put(
             $url,
-            array(
+            [
                 self::HEADERS => $this->headers,
                 self::CONTENT => $this->content,
-            )
+            ]
         );
     }
 
@@ -522,9 +522,9 @@ class HttpRequest
 
         return $this->adapter->get(
             $url,
-            array(
+            [
                 self::HEADERS => $this->headers,
-            )
+            ]
         );
     }
 
@@ -544,9 +544,9 @@ class HttpRequest
 
         return $this->adapter->delete(
             $url,
-            array(
+            [
                 self::HEADERS => $this->headers,
-            )
+            ]
         );
     }
 
@@ -599,11 +599,11 @@ class HttpRequest
             $url = self::buildUri($url, $this->replaceParams);
         }
         return serialize(
-            array(
+            [
                 self::URL => $url,
                 self::HEADERS => $this->headers,
                 self::BODY => $this->content,
-            )
+            ]
         );
     }
 }

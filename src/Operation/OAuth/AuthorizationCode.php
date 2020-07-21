@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2019, Nosto Solutions Ltd
+ * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2019 Nosto Solutions Ltd
+ * @copyright 2020 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -76,7 +76,7 @@ class AuthorizationCode extends AbstractOperation
     /**
      * @var array list of scopes to request access for during "PATH_AUTH" request.
      */
-    private $scopes = array();
+    private $scopes = [];
 
     /**
      * @param OAuthInterface $metaData
@@ -106,12 +106,12 @@ class AuthorizationCode extends AbstractOperation
         $request = $this->initRequest(null, null, null, false);
         $request->setUrl(Nosto::getOAuthBaseUrl() . self::PATH_TOKEN);
         $request->setReplaceParams(
-            array(
+            [
                 '{cid}' => $this->clientId,
                 '{sec}' => $this->clientSecret,
                 '{uri}' => $this->redirectUrl,
                 '{cod}' => $code
-            )
+            ]
         );
         $response = $request->get();
         $result = $request->getResultHandler()->parse($response);

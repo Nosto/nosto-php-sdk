@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2019, Nosto Solutions Ltd
+ * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2019 Nosto Solutions Ltd
+ * @copyright 2020 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -242,7 +242,7 @@ class Product extends AbstractObject implements
      * An array of custom attributes
      * @var array
      */
-    private $customFields = array();
+    private $customFields = [];
 
     /**
      * Product publication date in shop
@@ -266,9 +266,9 @@ class Product extends AbstractObject implements
      */
     public function validationRules()
     {
-        return array(
-            array(array('productId'), 'required')
-        );
+        return [
+            [['productId'], 'required']
+        ];
     }
 
     /**
@@ -989,7 +989,7 @@ class Product extends AbstractObject implements
     public function addCustomField($attribute, $value)
     {
         if ($this->customFields === null) {
-            $this->customFields = array();
+            $this->customFields = [];
         }
         $this->customFields[$attribute] = $value;
     }
