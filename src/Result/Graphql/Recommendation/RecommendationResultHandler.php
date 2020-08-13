@@ -55,7 +55,11 @@ class RecommendationResultHandler extends GraphQLResultHandler
         /** @var \stdClass $categoryData */
         $categoryData = self::parseData($stdClass, self::GRAPHQL_DATA_CATEGORY);
         /** @var string $trackingCode */
-        $trackingCode = self::parseData($categoryData, self::GRAPHQL_DATA_RESULT_ID);
+        try {
+            $trackingCode = self::parseData($categoryData, self::GRAPHQL_DATA_RESULT_ID);
+        } catch (NostoException $e) { // Tracking code is not present when feature (like CMP) is not active
+            $trackingCode = '';
+        }
         /** @var int $totalPrimaryCount */
         $totalPrimaryCount = self::parseData($categoryData, self::GRAPHQL_DATA_PRIMARY_COUNT);
         /** @var ResultSet $resultSet */
