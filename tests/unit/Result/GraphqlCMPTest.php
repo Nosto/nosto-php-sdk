@@ -123,4 +123,22 @@ class GraphqlCMPTest extends Test
             }
         });
     }
+
+    /**
+     * Tests that no exception is thrown when result id is missing
+     */
+    public function testBuildingResponseForMissing()
+    {
+        $responseBody = '{ "data": { "session": { "id": "5d481e38c10ea0f265eb2f5c", "recos": { "category": { "primary": [], "totalPrimaryCount": 0 } } } } }';
+        $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
+        $request = new HttpRequest();
+        $request->setResultHandler(new RecommendationResultHandler());
+
+        /** @var CategoryMerchandisingResult $resultSet */
+        $resultSet = $request->getResultHandler()->parse($response);
+
+        $this->specify('result does not contain resultId', function () use ($resultSet) {
+            $this->assertEquals($resultSet->getResultSet()->count(), 0);
+        });
+    }
 }
