@@ -126,8 +126,8 @@ class OrderCreate extends AbstractGraphQLOperation
         $items = $this->order->getPurchasedItems();
 
         $itemsArray = [];
-		foreach ($items as $item) {
-		    $itemsArray[] = SerializationHelper::toAssocArray($item);
+        foreach ($items as $item) {
+            $itemsArray[] = SerializationHelper::toAssocArray($item);
         }
         return $itemsArray;
     }

@@ -52,11 +52,13 @@ class HttpResponseException
         if ($httpResponse->getContentType() === AbstractOperation::CONTENT_TYPE_APPLICATION_JSON) {
             self::handleJson($httpResponse);
         }
-        throw new ResponseException(sprintf(
-            'Something went wrong:  %s',
+        throw new ResponseException(
+            sprintf(
+                'Something went wrong:  %s',
                 $httpResponse->getMessage()
             ),
-            $httpResponse->getCode());
+            $httpResponse->getCode()
+        );
     }
 
     /**
@@ -92,7 +94,7 @@ class HttpResponseException
         $errors = get_object_vars($errors);
         $errorString = '';
         foreach ($errors as $key => $error) {
-            $errorString .= ' | '. $key .': '.$error;
+            $errorString .= ' | ' . $key . ': ' . $error;
         }
         return $errorString;
     }

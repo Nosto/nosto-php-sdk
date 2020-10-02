@@ -99,15 +99,15 @@ abstract class GraphQLResultHandler extends ResultHandler
     {
         $errorMessage = '';
         foreach ($errors as $error) {
-            $errorMessage .= $error->message.' | ';
+            $errorMessage .= $error->message . ' | ';
         }
         return $errorMessage;
     }
 
     /**
      * @param stdClass $stdClass
-     * @throws NostoException
      * @return mixed
+     * @throws NostoException
      */
     abstract protected function parseQueryResult(stdClass $stdClass);
 }

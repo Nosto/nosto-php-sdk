@@ -98,17 +98,17 @@ class OrderStatus extends AbstractGraphQLOperation
 QUERY;
     }
 
-	/**
-	 * @inheritdoc
-	 * @throws Exception
-	 */
+    /**
+     * @inheritdoc
+     * @throws Exception
+     */
     public function getVariables()
     {
         return [
-			'orderNumber' => $this->orderStatus->getOrderNumber(),
-			'orderStatus' => $this->orderStatus->getStatus(),
-			'paymentProvider' => $this->orderStatus->getPaymentProvider(),
-			'statusDate' => $this->orderStatus->getUpdatedAt()
-		];
+            'orderNumber' => $this->orderStatus->getOrderNumber(),
+            'orderStatus' => $this->orderStatus->getStatus(),
+            'paymentProvider' => $this->orderStatus->getPaymentProvider(),
+            'statusDate' => $this->orderStatus->getUpdatedAt()
+        ];
     }
 }

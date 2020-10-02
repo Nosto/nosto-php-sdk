@@ -41,12 +41,12 @@ use Exception;
 
 class Time
 {
-	/**
-	 * @param string $createdAt
-	 * @param string $updatedAt
-	 * @return bool
-	 * @throws Exception
-	 */
+    /**
+     * @param string $createdAt
+     * @param string $updatedAt
+     * @return bool
+     * @throws Exception
+     */
     public static function isUpdatedEqualToCreated($createdAt, $updatedAt)
     {
         $createdAtDtm = new DateTime($createdAt);

@@ -103,7 +103,7 @@ class OAuth implements OAuthInterface
         return $this->clientSecret;
     }
 
-	public function setClientSecret($clientSecret)
+    public function setClientSecret($clientSecret)
     {
         $this->clientSecret = $clientSecret;
     }
@@ -116,7 +116,7 @@ class OAuth implements OAuthInterface
         return $this->scopes;
     }
 
-	public function setScopes(array $scopes)
+    public function setScopes(array $scopes)
     {
         $this->scopes = $scopes;
     }
@@ -129,7 +129,7 @@ class OAuth implements OAuthInterface
         return $this->redirectUrl;
     }
 
-	public function setRedirectUrl($redirectUrl)
+    public function setRedirectUrl($redirectUrl)
     {
         $this->redirectUrl = $redirectUrl;
     }
@@ -142,17 +142,17 @@ class OAuth implements OAuthInterface
         return $this->language;
     }
 
-	public function setLanguageIsoCode($language)
+    public function setLanguageIsoCode($language)
     {
         $this->language = $language;
     }
 
-	public function getAccount()
+    public function getAccount()
     {
         return $this->account;
     }
 
-	public function setAccount(AccountInterface $account)
+    public function setAccount(AccountInterface $account)
     {
         $this->account = $account;
     }

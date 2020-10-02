@@ -103,9 +103,9 @@ interface NotificationInterface
      * The notification type
      *
      * For return values
+     * @return string
      * @see self::TYPE_*
      *
-     * @return string
      */
     public function getNotificationType();
 
@@ -113,9 +113,9 @@ interface NotificationInterface
      * The notification severity
      *
      * For return values
+     * @return int
      * @see self::SEVERITY_*
      *
-     * @return int
      */
     public function getNotificationSeverity();
 }

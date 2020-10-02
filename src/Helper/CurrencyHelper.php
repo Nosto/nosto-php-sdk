@@ -1128,8 +1128,8 @@ final class CurrencyHelper extends AbstractHelper
 
     /**
      * Private Constructor to disallow instantiation.
-	 * @noinspection PhpMissingParentConstructorInspection
-	 */
+     * @noinspection PhpMissingParentConstructorInspection
+     */
     private function __construct()
     {
     }

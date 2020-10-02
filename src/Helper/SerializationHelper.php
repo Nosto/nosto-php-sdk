@@ -72,7 +72,7 @@ class SerializationHelper extends AbstractHelper
 
     // @codeCoverageIgnoreStart
 
-	/**
+    /**
      * Serializes the given object to JSON using a snake-case naming convention.
      * Arrays and objects can both be passed normally.
      * @param $object

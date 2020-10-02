@@ -102,6 +102,7 @@ trait IframeTrait
 
         return $url;
     }
+
     /**
      * Returns the iframe params with which to load the IFrame
      *

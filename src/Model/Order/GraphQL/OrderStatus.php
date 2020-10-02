@@ -102,10 +102,10 @@ class OrderStatus extends AbstractObject implements
         return $this->paymentProvider;
     }
 
-	/**
-	 * @return string
-	 * @throws Exception
-	 */
+    /**
+     * @return string
+     * @throws Exception
+     */
     public function getUpdatedAt()
     {
         $date = new DateTime($this->updatedAt);

@@ -960,7 +960,7 @@ class Product extends AbstractObject implements
         return 'nosto_product';
     }
 
-	public function getCustomFields()
+    public function getCustomFields()
     {
         return $this->customFields;
     }
