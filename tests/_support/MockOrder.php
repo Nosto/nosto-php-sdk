@@ -36,6 +36,7 @@
 
 namespace Nosto\Test\Support;
 
+use DateTime;
 use Nosto\Model\Order\Order;
 
 class MockOrder extends Order
@@ -43,7 +44,7 @@ class MockOrder extends Order
     public function __construct()
     {
         parent::__construct();
-        $this->setCreatedAt(\DateTime::createFromFormat('Y-m-d H:i:s', '2014-12-12 10:15:15'));
+        $this->setCreatedAt(DateTime::createFromFormat('Y-m-d H:i:s', '2014-12-12 10:15:15'));
         $this->setPaymentProvider('test-gateway [1.0.0]');
         $this->setCustomer(new MockBuyer());
         $this->setPurchasedItems([new MockLineItem(), new MockPseudoItem()]);

@@ -38,6 +38,7 @@ namespace Nosto\Result\Graphql\Order;
 
 use Nosto\NostoException;
 use Nosto\Result\Graphql\GraphQLResultHandler;
+use stdClass;
 
 class OrderCreateResultHandler extends GraphQLResultHandler
 {
@@ -46,14 +47,14 @@ class OrderCreateResultHandler extends GraphQLResultHandler
     /**
      * @inheritdoc
      */
-    protected function parseQueryResult(\stdClass $stdClass)
+    protected function parseQueryResult(stdClass $stdClass)
     {
         $members = get_object_vars($stdClass);
         foreach ($members as $varName => $member) {
             if ($varName === self::GRAPHQL_RESPONSE_ORDER_CREATE) {
                 return $member->id;
             }
-            if ($member instanceof \stdClass) {
+            if ($member instanceof stdClass) {
                 return $this->parseQueryResult($member);
             }
         }

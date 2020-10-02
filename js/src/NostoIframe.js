@@ -35,7 +35,8 @@
 
 // Define the "Nosto" namespace if not already defined.
 if (typeof Nosto === "undefined") {
-    var Nosto = {};
+    // noinspection JSUnusedLocalSymbols
+    const Nosto = {};
 }
 
 /**
@@ -44,14 +45,14 @@ if (typeof Nosto === "undefined") {
  * @param {Object} options
  */
 Nosto.iframe = function (options) {
-    var TYPE_NEW_ACCOUNT = "newAccount",
+    const TYPE_NEW_ACCOUNT = "newAccount",
         TYPE_CONNECT_ACCOUNT = "connectAccount",
         TYPE_REMOVE_ACCOUNT = "removeAccount";
 
     /**
      * @type {Object}
      */
-    var settings = {
+    const settings = {
         origin: "",
         iframeId: "nosto_iframe",
         urls: {
@@ -74,7 +75,7 @@ Nosto.iframe = function (options) {
      */
     function receiveMessage(event) {
         // Check the origin to prevent cross-site scripting.
-        var originRegexp = new RegExp(settings.origin);
+        const originRegexp = new RegExp(settings.origin);
         if (!originRegexp.test(event.origin)) {
             return;
         }
@@ -83,11 +84,11 @@ Nosto.iframe = function (options) {
             return;
         }
 
-        var json = ("" + event.data).substr(7);
+        const json = ("" + event.data).substr(7);
         /**
          * @param {{params}} data
          */
-        var data = JSON.parse(json);
+        const data = JSON.parse(json);
         if (typeof data === "object" && data.type) {
             switch (data.type) {
                 case TYPE_NEW_ACCOUNT:
@@ -95,7 +96,7 @@ Nosto.iframe = function (options) {
                         data: {email: data.params.email},
                         success: function (e) {
                             /** @type {{success: Boolean}, {redirect_url: String}} response */
-                            var response = JSON.parse(e.target.response);
+                            const response = JSON.parse(e.target.response);
                             if (response.redirect_url) {
                                 //noinspection JSUndefinedPropertyAssignment
                                 getIframeElement().src = response.redirect_url;
@@ -110,7 +111,7 @@ Nosto.iframe = function (options) {
                     xhr(settings.urls.connectAccount, {
                         success: function (e) {
                             /** @type {{success: Boolean}, {redirect_url: String}} response */
-                            var response = JSON.parse(e.target.response);
+                            const response = JSON.parse(e.target.response);
                             if (response.redirect_url) {
                                 if (response.success && response.success === true) {
                                     window.location.href = response.redirect_url;
@@ -129,7 +130,7 @@ Nosto.iframe = function (options) {
                     xhr(settings.urls.deleteAccount, {
                         success: function (e) {
                             /** @type {{success: Boolean}, {redirect_url: String}} response */
-                            var response = JSON.parse(e.target.response);
+                            const response = JSON.parse(e.target.response);
                             if (response.redirect_url) {
                                 //noinspection JSUndefinedPropertyAssignment
                                 getIframeElement().src = response.redirect_url;
@@ -162,16 +163,16 @@ Nosto.iframe = function (options) {
      * @param {Object} params optional params.
      */
     function xhr(url, params) {
-        var options = extendObject({
+        const options = extendObject({
             method: "POST",
             async: true,
             data: {}
         }, params);
 
         extendObject(options.data, settings.xhrParams);
-        var payload = buildParams(options.data);
+        const payload = buildParams(options.data);
 
-        var oReq = new XMLHttpRequest();
+        const oReq = new XMLHttpRequest();
         if (typeof options.success === "function") {
             oReq.addEventListener("load", options.success, false);
         }
@@ -192,7 +193,7 @@ Nosto.iframe = function (options) {
      * @returns {Object}
      */
     function extendObject(obj1, obj2) {
-        for (var key in obj2) {
+        for (let key in obj2) {
             if (obj2.hasOwnProperty(key)) {
                 obj1[key] = obj2[key];
             }
@@ -207,8 +208,8 @@ Nosto.iframe = function (options) {
      * @returns {string} the built query string.
      */
     function buildParams(params) {
-        var queryString = "";
-        for (var key in params) {
+        let queryString = "";
+        for (let key in params) {
             if (params.hasOwnProperty(key)) {
                 if (queryString !== "") {
                     queryString += "&";

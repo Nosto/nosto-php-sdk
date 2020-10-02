@@ -36,6 +36,7 @@
 
 namespace Nosto\Test\Support;
 
+use Exception;
 use Nosto\Model\Product\Product;
 
 class MockProduct extends Product
@@ -68,6 +69,7 @@ class MockProduct extends Product
         $this->setCondition("Used");
         $this->setGtin("gtin");
         $this->setGoogleCategory("All");
+        /** @noinspection PhpUnhandledExceptionInspection */
         $this->setDatePublished('2013-03-05T08:25:10+02:00');
     }
 
@@ -77,6 +79,7 @@ class MockProduct extends Product
         if (method_exists($this, $getter)) {
             return $this->{$getter}();
         }
+        /** @noinspection PhpUnhandledExceptionInspection */
         throw new Exception(sprintf('Property `%s.%s` is not defined.', get_class($this), $name));
     }
 }

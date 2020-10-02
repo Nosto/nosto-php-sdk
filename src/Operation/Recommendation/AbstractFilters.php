@@ -38,13 +38,13 @@ namespace Nosto\Operation\Recommendation;
 
 abstract class AbstractFilters
 {
-    /** @var string[]  */
+    /** @var string[] */
     public $brands = [];
 
-    /** @var string[]  */
+    /** @var string[] */
     public $categories = [];
 
-    /** @var array  */
+    /** @var array */
     public $customFields = [];
 
     /** @var boolean */

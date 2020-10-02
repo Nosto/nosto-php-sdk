@@ -36,6 +36,7 @@
 
 namespace Nosto\Test\Support;
 
+use Exception;
 use \Nosto\Model\Product\Sku;
 
 class MockSku extends Sku
@@ -54,6 +55,7 @@ class MockSku extends Sku
         $this->setInventoryLevel(20);
     }
 
+    /** @noinspection PhpUnhandledExceptionInspection */
     public function __get($name)
     {
         $getter = 'get' . $name;

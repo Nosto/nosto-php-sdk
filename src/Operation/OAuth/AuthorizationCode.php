@@ -56,12 +56,12 @@ class AuthorizationCode extends AbstractOperation
     /**
      * @var string the client id the identify this application to the oauth2 server.
      */
-    private $clientId = 'nosto';
+    private $clientId;
 
     /**
      * @var string the client secret the identify this application to the oauth2 server.
      */
-    private $clientSecret = 'nosto';
+    private $clientSecret;
 
     /**
      * @var string the redirect url that will be used by the oauth2 server when authenticating the client.
@@ -76,7 +76,7 @@ class AuthorizationCode extends AbstractOperation
     /**
      * @var array list of scopes to request access for during "PATH_AUTH" request.
      */
-    private $scopes = [];
+    private $scopes;
 
     /**
      * @param OAuthInterface $metaData

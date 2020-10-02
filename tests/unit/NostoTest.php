@@ -37,7 +37,7 @@
 namespace Nosto\Test\Unit;
 
 use Codeception\TestCase\Test;
-use Nosto\Nosto;
+use Exception;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Request\Api\Exception\ApiResponseException;
@@ -47,6 +47,7 @@ class NostoTest extends Test
 {
     /**
      * Tests that errors are parsed correctly from http response
+     * @throws Exception
      */
     public function testExceptionErrors()
     {

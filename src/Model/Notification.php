@@ -170,8 +170,8 @@ class Notification extends AbstractObject implements NotificationInterface
     /**
      * Setter for notification type
      *
-     * @see NotificationInterface::TYPE_*
      * @param string $notificationType
+     * @see NotificationInterface::TYPE_*
      */
     public function setNotificationType($notificationType)
     {
@@ -189,8 +189,8 @@ class Notification extends AbstractObject implements NotificationInterface
     /**
      * Setter for notification severity
      *
-     * @see NotificationInterface::SEVERITY_*
      * @param mixed $notificationSeverity
+     * @see NotificationInterface::SEVERITY_*
      */
     public function setNotificationSeverity($notificationSeverity)
     {

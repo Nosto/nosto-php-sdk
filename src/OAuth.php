@@ -90,9 +90,6 @@ class OAuth implements OAuthInterface
         return $this->clientId;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function setClientId($clientId)
     {
         $this->clientId = $clientId;
@@ -106,9 +103,6 @@ class OAuth implements OAuthInterface
         return $this->clientSecret;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function setClientSecret($clientSecret)
     {
         $this->clientSecret = $clientSecret;
@@ -122,9 +116,6 @@ class OAuth implements OAuthInterface
         return $this->scopes;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function setScopes(array $scopes)
     {
         $this->scopes = $scopes;
@@ -138,9 +129,6 @@ class OAuth implements OAuthInterface
         return $this->redirectUrl;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function setRedirectUrl($redirectUrl)
     {
         $this->redirectUrl = $redirectUrl;
@@ -154,25 +142,16 @@ class OAuth implements OAuthInterface
         return $this->language;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function setLanguageIsoCode($language)
     {
         $this->language = $language;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getAccount()
     {
         return $this->account;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function setAccount(AccountInterface $account)
     {
         $this->account = $account;

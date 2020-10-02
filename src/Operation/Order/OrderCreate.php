@@ -37,7 +37,6 @@
 namespace Nosto\Operation\Order;
 
 use Nosto\Result\Graphql\Order\OrderCreateResultHandler;
-use Nosto\Types\LineItemInterface;
 use Nosto\Types\Order\BuyerInterface;
 use Nosto\Types\Order\OrderInterface;
 use Nosto\Operation\AbstractGraphQLOperation;
@@ -127,7 +126,6 @@ class OrderCreate extends AbstractGraphQLOperation
         $items = $this->order->getPurchasedItems();
 
         $itemsArray = [];
-        /** @var LineItemInterface $item */
         foreach ($items as $item) {
             $itemsArray[] = SerializationHelper::toAssocArray($item);
         }
@@ -148,8 +146,7 @@ class OrderCreate extends AbstractGraphQLOperation
      */
     public function getQuery()
     {
-        $query =
-            <<<QUERY
+        return <<<QUERY
             mutation(
                 \$by: LookupParams!,
                 \$customerIdentifier: String!
@@ -180,15 +177,13 @@ class OrderCreate extends AbstractGraphQLOperation
                             ref: \$ref
                             purchasedItems: \$purchasedItems
                         }
-                    } 
+                    }
                  )
                  {
                     id
                  }
             }
 QUERY;
-
-        return $query;
     }
 
     /**

@@ -89,49 +89,46 @@ class CategoryMerchandising extends AbstractRecommendation
      */
     public function getQuery()
     {
-        $query =
-            <<<QUERY
-        query(
-            \$customerId: String!,
-            \$category: String!,
-            \$limit: Int!,
-            \$preview: Boolean!,
-            \$by: LookupParams!,
-            \$skipPages: Int,
-            \$includeFilters: InputIncludeParams,
-            \$excludeFilters: InputFilterParams
-        ) {
-          session (
-            id: \$customerId,
-            by: \$by,
-          ) {
-            id
-            recos (preview: \$preview, image: VERSION_10_MAX_SQUARE) {
-              category (
-                category: \$category
-                minProducts: 1
-                maxProducts: \$limit,
-                skipPages: \$skipPages,
-                include: \$includeFilters,
-                exclude: \$excludeFilters,
-                skipVCEvent: true
+        return <<<QUERY
+            query(
+                \$customerId: String!,
+                \$category: String!,
+                \$limit: Int!,
+                \$preview: Boolean!,
+                \$by: LookupParams!,
+                \$skipPages: Int,
+                \$includeFilters: InputIncludeParams,
+                \$excludeFilters: InputFilterParams
+            ) {
+              session (
+                id: \$customerId,
+                by: \$by,
               ) {
-                primary {
-                  productId
-                  priceText
-                  name
-                  imageUrl
+                id
+                recos (preview: \$preview, image: VERSION_10_MAX_SQUARE) {
+                  category (
+                    category: \$category
+                    minProducts: 1
+                    maxProducts: \$limit,
+                    skipPages: \$skipPages,
+                    include: \$includeFilters,
+                    exclude: \$excludeFilters,
+                    skipVCEvent: true
+                  ) {
+                    primary {
+                      productId
+                      priceText
+                      name
+                      imageUrl
+                    }
+                    batchToken
+                    totalPrimaryCount
+                    resultId
+                  }
                 }
-                batchToken
-                totalPrimaryCount
-                resultId
               }
             }
-          }
-        }
 QUERY;
-
-        return $query;
     }
 
     /**
@@ -139,7 +136,7 @@ QUERY;
      */
     public function getVariables()
     {
-        $variables = [
+        return [
             'customerId' => $this->customerId,
             'category' => $this->category,
             'limit' => $this->limit,
@@ -149,7 +146,5 @@ QUERY;
             'includeFilters' => $this->includeFilters->toArray(),
             'excludeFilters' => $this->excludeFilters->toArray()
         ];
-
-        return $variables;
     }
 }

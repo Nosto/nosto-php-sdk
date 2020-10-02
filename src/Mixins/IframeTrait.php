@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection Annotator */
+
 /**
  * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
@@ -101,6 +102,7 @@ trait IframeTrait
 
         return $url;
     }
+
     /**
      * Returns the iframe params with which to load the IFrame
      *

@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection DuplicatedCode */
+
 /**
  * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
@@ -41,7 +42,6 @@ use Codeception\TestCase\Test;
 use Nosto\Mixins\IframeTrait;
 use Nosto\Nosto;
 use Nosto\Request\Api\Token;
-use Nosto\Request\Http\HttpRequest;
 use Nosto\Test\Support\MockIframe;
 use Nosto\Test\Support\MockUser;
 use Nosto\Test\Support\MockAccount;
@@ -50,12 +50,14 @@ class IframeAuthTest extends Test
 {
     use Specify;
     use IframeTrait;
+
     private $user;
     private $account;
     private $iframe;
 
     /**
      * Test that when no account at all is given, the Iframe mixin returns the uninstallation URL
+     * @noinspection DuplicatedCode
      */
     public function testIframeUrlWithoutAccount()
     {
@@ -72,21 +74,21 @@ class IframeAuthTest extends Test
 
             $this->assertEquals($url['scheme'], parse_url($baseUrl)['scheme']);
             $this->assertEquals($url['host'], parse_url($baseUrl)['host']);
-            $this->assertEquals($url['path'], '/hub/platform/install');
-            $this->assertEquals($params['lang'], 'en');
-            $this->assertEquals($params['ps_version'], '1.0.0');
-            $this->assertEquals($params['nt_version'], '0.1.0');
-            $this->assertEquals($params['product_pu'], 'http://shop.com/products?nostodebug=true');
-            $this->assertEquals($params['category_pu'], 'http://shop.com/category?nostodebug=true');
-            $this->assertEquals($params['search_pu'], 'http://shop.com/search?nostodebug=true');
-            $this->assertEquals($params['cart_pu'], 'http://shop.com/cart?nostodebug=true');
-            $this->assertEquals($params['front_pu'], 'http://shop.com?nostodebug=true');
-            $this->assertEquals($params['shop_lang'], 'en');
-            $this->assertEquals($params['shop_name'], 'Shop Name');
-            $this->assertEquals($params['unique_id'], '123');
-            $this->assertEquals($params['fname'], 'James');
-            $this->assertEquals($params['lname'], 'Kirk');
-            $this->assertEquals($params['email'], 'james.kirk@example.com');
+            $this->assertEquals('/hub/platform/install', $url['path']);
+            $this->assertEquals('en', $params['lang']);
+            $this->assertEquals('1.0.0', $params['ps_version']);
+            $this->assertEquals('0.1.0', $params['nt_version']);
+            $this->assertEquals('http://shop.com/products?nostodebug=true', $params['product_pu']);
+            $this->assertEquals('http://shop.com/category?nostodebug=true', $params['category_pu']);
+            $this->assertEquals('http://shop.com/search?nostodebug=true', $params['search_pu']);
+            $this->assertEquals('http://shop.com/cart?nostodebug=true', $params['cart_pu']);
+            $this->assertEquals('http://shop.com?nostodebug=true', $params['front_pu']);
+            $this->assertEquals('en', $params['shop_lang']);
+            $this->assertEquals('Shop Name', $params['shop_name']);
+            $this->assertEquals('123', $params['unique_id']);
+            $this->assertEquals('James', $params['fname']);
+            $this->assertEquals('Kirk', $params['lname']);
+            $this->assertEquals('james.kirk@example.com', $params['email']);
         });
     }
 
@@ -98,7 +100,7 @@ class IframeAuthTest extends Test
     {
         $this->iframe = new MockIframe();
         $this->user = new MockUser();
-        $this->account = new MockAccount('platform-00000000');
+        $this->account = new MockAccount();
         $token = new Token('sso', 'token');
         $this->account->addApiToken($token);
 
@@ -111,20 +113,20 @@ class IframeAuthTest extends Test
             $this->assertEquals($url['scheme'], parse_url($baseUrl)['scheme']);
             $this->assertNotEquals($url['host'], parse_url($baseUrl)['host']);
             $this->assertContains('/hub/magento/platform-00000000/', $url['path']);
-            $this->assertEquals($params['lang'], 'en');
-            $this->assertEquals($params['ps_version'], '1.0.0');
-            $this->assertEquals($params['nt_version'], '0.1.0');
-            $this->assertEquals($params['product_pu'], 'http://shop.com/products?nostodebug=true');
-            $this->assertEquals($params['category_pu'], 'http://shop.com/category?nostodebug=true');
-            $this->assertEquals($params['search_pu'], 'http://shop.com/search?nostodebug=true');
-            $this->assertEquals($params['cart_pu'], 'http://shop.com/cart?nostodebug=true');
-            $this->assertEquals($params['front_pu'], 'http://shop.com?nostodebug=true');
-            $this->assertEquals($params['shop_lang'], 'en');
-            $this->assertEquals($params['shop_name'], 'Shop Name');
-            $this->assertEquals($params['unique_id'], '123');
-            $this->assertEquals($params['fname'], 'James');
-            $this->assertEquals($params['lname'], 'Kirk');
-            $this->assertEquals($params['email'], 'james.kirk@example.com');
+            $this->assertEquals('en', $params['lang']);
+            $this->assertEquals('1.0.0', $params['ps_version']);
+            $this->assertEquals('0.1.0', $params['nt_version']);
+            $this->assertEquals('http://shop.com/products?nostodebug=true', $params['product_pu']);
+            $this->assertEquals('http://shop.com/category?nostodebug=true', $params['category_pu']);
+            $this->assertEquals('http://shop.com/search?nostodebug=true', $params['search_pu']);
+            $this->assertEquals('http://shop.com/cart?nostodebug=true', $params['cart_pu']);
+            $this->assertEquals('http://shop.com?nostodebug=true', $params['front_pu']);
+            $this->assertEquals('en', $params['shop_lang']);
+            $this->assertEquals('Shop Name', $params['shop_name']);
+            $this->assertEquals('123', $params['unique_id']);
+            $this->assertEquals('James', $params['fname']);
+            $this->assertEquals('Kirk', $params['lname']);
+            $this->assertEquals('james.kirk@example.com', $params['email']);
         });
     }
 
@@ -136,7 +138,7 @@ class IframeAuthTest extends Test
     {
         $this->iframe = new MockIframe();
         $this->user = new MockUser();
-        $this->account = new MockAccount('platform-00000000');
+        $this->account = new MockAccount();
 
         $baseUrl = Nosto::getBaseUrl();
         $url = self::buildURL();
@@ -146,24 +148,24 @@ class IframeAuthTest extends Test
 
             $this->assertEquals($url['scheme'], parse_url($baseUrl)['scheme']);
             //$this->assertEquals($url['host'], parse_url($baseUrl)['host']);
-            $this->assertEquals($url['path'], '/hub/platform/uninstall');
-            $this->assertEquals($params['lang'], 'en');
-            $this->assertEquals($params['ps_version'], '1.0.0');
-            $this->assertEquals($params['nt_version'], '0.1.0');
-            $this->assertEquals($params['product_pu'], 'http://shop.com/products?nostodebug=true');
-            $this->assertEquals($params['category_pu'], 'http://shop.com/category?nostodebug=true');
-            $this->assertEquals($params['search_pu'], 'http://shop.com/search?nostodebug=true');
-            $this->assertEquals($params['cart_pu'], 'http://shop.com/cart?nostodebug=true');
-            $this->assertEquals($params['front_pu'], 'http://shop.com?nostodebug=true');
-            $this->assertEquals($params['shop_lang'], 'en');
-            $this->assertEquals($params['shop_name'], 'Shop Name');
-            $this->assertEquals($params['unique_id'], '123');
-            $this->assertEquals($params['fname'], 'James');
-            $this->assertEquals($params['lname'], 'Kirk');
-            $this->assertEquals($params['email'], 'james.kirk@example.com');
-            $this->assertEquals($params['message_text'], 'No API token found for account.');
-            $this->assertEquals($params['message_type'], 'error');
-            $this->assertEquals($params['message_code'], 'account_delete');
+            $this->assertEquals('/hub/platform/uninstall', $url['path']);
+            $this->assertEquals('en', $params['lang']);
+            $this->assertEquals('1.0.0', $params['ps_version']);
+            $this->assertEquals('0.1.0', $params['nt_version']);
+            $this->assertEquals('http://shop.com/products?nostodebug=true', $params['product_pu']);
+            $this->assertEquals('http://shop.com/category?nostodebug=true', $params['category_pu']);
+            $this->assertEquals('http://shop.com/search?nostodebug=true', $params['search_pu']);
+            $this->assertEquals('http://shop.com/cart?nostodebug=true', $params['cart_pu']);
+            $this->assertEquals('http://shop.com?nostodebug=true', $params['front_pu']);
+            $this->assertEquals('en', $params['shop_lang']);
+            $this->assertEquals('Shop Name', $params['shop_name']);
+            $this->assertEquals('123', $params['unique_id']);
+            $this->assertEquals('James', $params['fname']);
+            $this->assertEquals('Kirk', $params['lname']);
+            $this->assertEquals('james.kirk@example.com', $params['email']);
+            $this->assertEquals('No API token found for account.', $params['message_text']);
+            $this->assertEquals('error', $params['message_type']);
+            $this->assertEquals('account_delete', $params['message_code']);
         });
     }
 

@@ -40,8 +40,10 @@ use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Model\ExchangeRateCollection;
 use Nosto\Model\Signup\Account;
+use Nosto\NostoException;
 use Nosto\Operation\SyncRates;
 use Nosto\Request\Api\Token;
+use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Test\Support\MockExchangeRate;
 
 class ExchangeRateTest extends Test
@@ -50,6 +52,8 @@ class ExchangeRateTest extends Test
 
     /**
      * Tests that exchange rates can be synced to Nosto.
+     * @throws NostoException
+     * @throws AbstractHttpException
      */
     public function testSyncingExchangeRates()
     {

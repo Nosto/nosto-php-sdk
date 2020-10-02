@@ -37,6 +37,8 @@
 namespace Nosto\Test\Unit;
 
 use Codeception\TestCase\Test;
+use Exception;
+use Nosto\NostoException;
 use Nosto\Request\Http\Adapter\Curl;
 use Nosto\Request\Http\Adapter\Socket;
 use Nosto\Request\Http\HttpRequest;
@@ -70,6 +72,7 @@ class HttpRequestTest extends Test
 
     /**
      * Tests setting the basic auth type.
+     * @throws NostoException
      */
     public function testHttpRequestAuthBasic()
     {
@@ -112,6 +115,7 @@ class HttpRequestTest extends Test
 
     /**
      * Tests setting the bearer auth type.
+     * @throws Exception
      */
     public function testHttpRequestAuthBearer()
     {

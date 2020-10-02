@@ -60,7 +60,7 @@ class Memory
     {
         $mem = memory_get_usage(true);
         if ($mb === true) {
-            $mem = round($mem/self::MB_DIVIDER, 2);
+            $mem = round($mem / self::MB_DIVIDER, 2);
         }
 
         return $mem;
@@ -76,7 +76,7 @@ class Memory
     {
         $mem = memory_get_usage(false);
         if ($mb === true) {
-            $mem = round($mem/self::MB_DIVIDER, 2);
+            $mem = round($mem / self::MB_DIVIDER, 2);
         }
 
         return $mem;

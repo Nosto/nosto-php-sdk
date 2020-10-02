@@ -39,9 +39,10 @@ namespace Nosto\Test\Unit\Operation;
 use Codeception\Specify;
 use Codeception\TestCase\Test;
 use Nosto\Model\Signup\Account;
+use Nosto\NostoException;
 use Nosto\Operation\UpsertProduct;
 use Nosto\Request\Api\Token;
-use Nosto\Types\Product\ProductInterface;
+use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Test\Support\MockProduct;
 use Nosto\Test\Support\MockVariation;
 use Nosto\Test\Support\MockSku;
@@ -52,6 +53,8 @@ class ProductTest extends Test
 
     /**
      * Tests that product upsert API requests cannot be made without an API token.
+     * @throws NostoException
+     * @throws AbstractHttpException
      */
     public function testSendingProductUpsertWithoutApiToken()
     {
@@ -66,6 +69,8 @@ class ProductTest extends Test
 
     /**
      * Tests that product upsert API requests can be made.
+     * @throws NostoException
+     * @throws AbstractHttpException
      */
     public function testSendingProductUpsert()
     {
@@ -85,6 +90,8 @@ class ProductTest extends Test
 
     /**
      * Tests that product upsert API requests can be made.
+     * @throws NostoException
+     * @throws AbstractHttpException
      */
     public function testSendingProductSku()
     {
@@ -112,6 +119,8 @@ class ProductTest extends Test
 
     /**
      * Tests that product upsert API requests can be made.
+     * @throws NostoException
+     * @throws AbstractHttpException
      */
     public function testUpsertWithDomain()
     {
@@ -132,6 +141,8 @@ class ProductTest extends Test
 
     /**
      * Tests that product upsert API requests can be made.
+     * @throws NostoException
+     * @throws AbstractHttpException
      */
     public function testSendingProductVariations()
     {

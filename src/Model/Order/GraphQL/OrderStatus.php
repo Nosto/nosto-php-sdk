@@ -36,6 +36,8 @@
 
 namespace Nosto\Model\Order\GraphQL;
 
+use DateTime;
+use Exception;
 use Nosto\AbstractObject;
 use Nosto\Mixins\HtmlEncoderTrait;
 use Nosto\Types\HtmlEncodableInterface;
@@ -102,10 +104,11 @@ class OrderStatus extends AbstractObject implements
 
     /**
      * @return string
+     * @throws Exception
      */
     public function getUpdatedAt()
     {
-        $date = new \DateTime($this->updatedAt);
+        $date = new DateTime($this->updatedAt);
         return $date->format('Y-m-d\TH:i:s');
     }
 }

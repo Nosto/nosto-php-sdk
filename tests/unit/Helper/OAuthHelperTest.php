@@ -56,12 +56,12 @@ class OAuthHelperTest extends Test
             $url = parse_url($url);
             parse_str($url['query'], $params); // Please note that this function url decodes the values
 
-            $this->assertEquals($url['path'], '/oauth');
-            $this->assertEquals($params['client_id'], 'client-id');
-            $this->assertEquals($params['redirect_uri'], 'http://my.shop.com/nosto/oauth');
-            $this->assertEquals($params['response_type'], 'code');
-            $this->assertEquals($params['scope'], 'sso products');
-            $this->assertEquals($params['lang'], 'en');
+            $this->assertEquals('/oauth', $url['path']);
+            $this->assertEquals('client-id', $params['client_id']);
+            $this->assertEquals('http://my.shop.com/nosto/oauth', $params['redirect_uri']);
+            $this->assertEquals('code', $params['response_type']);
+            $this->assertEquals('sso products', $params['scope']);
+            $this->assertEquals('en', $params['lang']);
         });
     }
 }

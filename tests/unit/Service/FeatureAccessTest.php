@@ -38,6 +38,7 @@ namespace Nosto\Test\Unit\Service;
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
+use Nosto\NostoException;
 use Nosto\Request\Api\Token;
 use Nosto\Service\FeatureAccess;
 use Nosto\Test\Support\MockAccount;
@@ -54,6 +55,7 @@ class FeatureAccessTest extends Test
      * @dataProvider dataForGraphql
      * @param $token
      * @param $bool
+     * @throws NostoException
      */
     public function testGraphqlAccess($token, $bool)
     {

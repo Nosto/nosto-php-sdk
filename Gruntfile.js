@@ -33,6 +33,7 @@
  *
  */
 
+//noinspection JSUnresolvedVariable
 module.exports = function (grunt) {
     // Project configuration.
     //noinspection JSUnresolvedFunction
@@ -47,7 +48,8 @@ module.exports = function (grunt) {
     });
 
     // Load the plugin that provides the "uglify" task.
-    grunt.loadNpmTasks('grunt-contrib-uglify');
+    // noinspection JSUnresolvedFunction
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 
     // Default task(s).
     //noinspection JSUnresolvedFunction

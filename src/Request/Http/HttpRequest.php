@@ -68,7 +68,7 @@ class HttpRequest
     const METHOD_DELETE = 'DELETE';
     const HEADER_AUTHORIZATION = 'Authorization';
     const HEADER_CONTENT_TYPE = 'Content-type';
-    const HEADER_NOSTO_ACCOUNT= 'X-Nosto-account';
+    const HEADER_NOSTO_ACCOUNT = 'X-Nosto-account';
     const HEADER_ACTIVE_DOMAIN = 'X-Nosto-active-domain';
 
     /**

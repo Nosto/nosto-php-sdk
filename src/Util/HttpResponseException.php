@@ -39,6 +39,7 @@ namespace Nosto\Util;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Operation\AbstractOperation;
 use Nosto\Request\Http\Exception\HttpResponseException as ResponseException;
+use stdClass;
 
 class HttpResponseException
 {
@@ -51,11 +52,13 @@ class HttpResponseException
         if ($httpResponse->getContentType() === AbstractOperation::CONTENT_TYPE_APPLICATION_JSON) {
             self::handleJson($httpResponse);
         }
-        throw new ResponseException(sprintf(
-            'Something went wrong:  %s',
+        throw new ResponseException(
+            sprintf(
+                'Something went wrong:  %s',
                 $httpResponse->getMessage()
             ),
-            $httpResponse->getCode());
+            $httpResponse->getCode()
+        );
     }
 
     /**
@@ -74,7 +77,7 @@ class HttpResponseException
 
         if (isset($result->errors) && is_array($result->errors)) {
             foreach ($result->errors as $error) {
-                if ($error instanceof \stdClass) {
+                if ($error instanceof stdClass) {
                     $message .= self::getErrorsFromStdClass($error);
                 }
             }
@@ -83,15 +86,15 @@ class HttpResponseException
     }
 
     /**
-     * @param \stdClass $errors
+     * @param stdClass $errors
      * @return string
      */
-    private static function getErrorsFromStdClass(\stdClass $errors)
+    private static function getErrorsFromStdClass(stdClass $errors)
     {
         $errors = get_object_vars($errors);
         $errorString = '';
         foreach ($errors as $key => $error) {
-            $errorString .= ' | '. $key .': '.$error;
+            $errorString .= ' | ' . $key . ': ' . $error;
         }
         return $errorString;
     }

@@ -62,8 +62,8 @@ abstract class ResultHandler
 
     /**
      * @param HttpResponse $response
-     * @throws NostoException
      * @return string|bool
+     * @throws NostoException
      */
     abstract protected function parseResponse(HttpResponse $response);
 }

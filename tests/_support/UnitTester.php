@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection PhpUndefinedClassInspection */
+
 /**
  * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
@@ -34,6 +35,9 @@
  *
  */
 
+use Codeception\Actor;
+use Codeception\Lib\Friend;
+
 /** @noinspection PhpUndefinedClassInspection */
 
 
@@ -48,11 +52,11 @@
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
-class UnitTester extends \Codeception\Actor
+class UnitTester extends Actor
 {
     use /** @noinspection PhpUndefinedNamespaceInspection */
         _generated\UnitTesterActions;
