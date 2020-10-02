@@ -345,7 +345,7 @@ class Order extends AbstractObject implements
         $this->hcid = $hcid;
     }
 
-	public function getMarkupKey()
+    public function getMarkupKey()
     {
         return 'nosto_purchase_order';
     }

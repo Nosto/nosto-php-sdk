@@ -50,11 +50,11 @@ class ExchangeRateTest extends Test
 {
     use Specify;
 
-	/**
-	 * Tests that exchange rates can be synced to Nosto.
-	 * @throws NostoException
-	 * @throws AbstractHttpException
-	 */
+    /**
+     * Tests that exchange rates can be synced to Nosto.
+     * @throws NostoException
+     * @throws AbstractHttpException
+     */
     public function testSyncingExchangeRates()
     {
         $account = new Account('platform-00000000');

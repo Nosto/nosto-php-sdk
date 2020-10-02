@@ -127,7 +127,7 @@ class OrderCreate extends AbstractGraphQLOperation
 
         $itemsArray = [];
 		foreach ($items as $item) {
-            $itemsArray[] = SerializationHelper::toAssocArray($item);
+		    $itemsArray[] = SerializationHelper::toAssocArray($item);
         }
         return $itemsArray;
     }
@@ -146,7 +146,7 @@ class OrderCreate extends AbstractGraphQLOperation
      */
     public function getQuery()
     {
-		return <<<QUERY
+        return <<<QUERY
             mutation(
                 \$by: LookupParams!,
                 \$customerIdentifier: String!

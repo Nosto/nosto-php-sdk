@@ -63,7 +63,7 @@ class RecommendationResultHandler extends GraphQLResultHandler
         }
         /** @var int $totalPrimaryCount */
         $totalPrimaryCount = self::parseData($categoryData, self::GRAPHQL_DATA_PRIMARY_COUNT);
-		$resultSet = self::buildResultSet($categoryData);
+        $resultSet = self::buildResultSet($categoryData);
         return new CategoryMerchandisingResult(
             $resultSet,
             $trackingCode,

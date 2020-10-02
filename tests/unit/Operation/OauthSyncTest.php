@@ -48,12 +48,12 @@ class OauthSyncTest extends Test
 {
     use Specify;
 
-	/**
-	 * Tests that existing accounts can be synced from Nosto.
-	 * Accounts are synced using OAuth2 Authorization Code method.
-	 * We are only testing that we can start and act on the steps in the OAuth request cycle.
-	 * @throws NostoException
-	 */
+    /**
+     * Tests that existing accounts can be synced from Nosto.
+     * Accounts are synced using OAuth2 Authorization Code method.
+     * We are only testing that we can start and act on the steps in the OAuth request cycle.
+     * @throws NostoException
+     */
     public function testSyncingExistingAccount()
     {
         $meta = new MockOAuth();

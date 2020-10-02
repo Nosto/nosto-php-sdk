@@ -39,8 +39,8 @@ try {
     $reflectDotEnv = new ReflectionMethod('Dotenv\Dotenv', '__construct');
     $params = $reflectDotEnv->getParameters();
     if ($params[0]->getName() === 'path' && $params[1]->getName() === 'file') {
-		/** @noinspection PhpParamsInspection */
-		$dotenv = new Dotenv\Dotenv(dirname(__FILE__));
+        /** @noinspection PhpParamsInspection */
+        $dotenv = new Dotenv\Dotenv(dirname(__FILE__));
     } else {
         $dotenv = Dotenv\Dotenv::create(dirname(__FILE__));
     }

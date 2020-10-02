@@ -51,11 +51,11 @@ class ProductTest extends Test
 {
     use Specify;
 
-	/**
-	 * Tests that product upsert API requests cannot be made without an API token.
-	 * @throws NostoException
-	 * @throws AbstractHttpException
-	 */
+    /**
+     * Tests that product upsert API requests cannot be made without an API token.
+     * @throws NostoException
+     * @throws AbstractHttpException
+     */
     public function testSendingProductUpsertWithoutApiToken()
     {
         $account = new Account('platform-00000000');
@@ -67,11 +67,11 @@ class ProductTest extends Test
         $op->upsert();
     }
 
-	/**
-	 * Tests that product upsert API requests can be made.
-	 * @throws NostoException
-	 * @throws AbstractHttpException
-	 */
+    /**
+     * Tests that product upsert API requests can be made.
+     * @throws NostoException
+     * @throws AbstractHttpException
+     */
     public function testSendingProductUpsert()
     {
         $account = new Account('platform-00000000');
@@ -88,11 +88,11 @@ class ProductTest extends Test
         });
     }
 
-	/**
-	 * Tests that product upsert API requests can be made.
-	 * @throws NostoException
-	 * @throws AbstractHttpException
-	 */
+    /**
+     * Tests that product upsert API requests can be made.
+     * @throws NostoException
+     * @throws AbstractHttpException
+     */
     public function testSendingProductSku()
     {
         $account = new Account('platform-00000000');
@@ -117,11 +117,11 @@ class ProductTest extends Test
         });
     }
 
-	/**
-	 * Tests that product upsert API requests can be made.
-	 * @throws NostoException
-	 * @throws AbstractHttpException
-	 */
+    /**
+     * Tests that product upsert API requests can be made.
+     * @throws NostoException
+     * @throws AbstractHttpException
+     */
     public function testUpsertWithDomain()
     {
         $account = new Account('platform-00000000');
@@ -139,11 +139,11 @@ class ProductTest extends Test
         });
     }
 
-	/**
-	 * Tests that product upsert API requests can be made.
-	 * @throws NostoException
-	 * @throws AbstractHttpException
-	 */
+    /**
+     * Tests that product upsert API requests can be made.
+     * @throws NostoException
+     * @throws AbstractHttpException
+     */
     public function testSendingProductVariations()
     {
         $account = new Account('platform-00000000');

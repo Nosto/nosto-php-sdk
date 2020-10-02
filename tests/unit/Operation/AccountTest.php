@@ -47,10 +47,10 @@ class AccountTest extends Test
 {
     use Specify;
 
-	/**
-	 * Tests that new accounts can be created successfully.
-	 * @throws NostoException
-	 */
+    /**
+     * Tests that new accounts can be created successfully.
+     * @throws NostoException
+     */
     public function testCreatingNewAccount()
     {
         $meta = new MockSignup();

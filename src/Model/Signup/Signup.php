@@ -280,7 +280,7 @@ class Signup extends Settings implements SignupInterface
         $this->details = $details;
     }
 
-	public function getApiTokens()
+    public function getApiTokens()
     {
         return $this->apiTokens;
     }

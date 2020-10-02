@@ -66,7 +66,7 @@ class GraphqlOrderTest extends Test
 
     /**
      * Tests that order id can be parsed from response body
-	 * @throws Exception
+     * @throws Exception
      */
     public function testSuccessfullyCreateNewOrder()
     {
@@ -76,14 +76,14 @@ class GraphqlOrderTest extends Test
         $request->setResultHandler(new OrderCreateResultHandler());
         $result = $request->getResultHandler()->parse($response);
 
-        $this->specify('Order was created successfully', function () use ($result){
+        $this->specify('Order was created successfully', function () use ($result) {
             $this->assertEquals('5d1f2ebc10e62df62401221', $result);
         });
     }
 
     /**
      * Tests that order number can be parsed from response body
-	 * @throws Exception
+     * @throws Exception
      */
     public function testSuccessfullyUpdateExistingOrder()
     {
@@ -93,7 +93,7 @@ class GraphqlOrderTest extends Test
         $request->setResultHandler(new OrderStatusResultHandler());
         $result = $request->getResultHandler()->parse($response);
 
-        $this->specify('Order status was updates successfully', function () use ($result){
+        $this->specify('Order status was updates successfully', function () use ($result) {
             $this->assertEquals('M2_22', $result);
         });
     }

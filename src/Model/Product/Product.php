@@ -955,7 +955,7 @@ class Product extends AbstractObject implements
         $this->variations->append($variation);
     }
 
-	public function getMarkupKey()
+    public function getMarkupKey()
     {
         return 'nosto_product';
     }

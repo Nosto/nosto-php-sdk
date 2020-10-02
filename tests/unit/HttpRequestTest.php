@@ -70,10 +70,10 @@ class HttpRequestTest extends Test
         $this->assertContains('second', $params);
     }
 
-	/**
-	 * Tests setting the basic auth type.
-	 * @throws NostoException
-	 */
+    /**
+     * Tests setting the basic auth type.
+     * @throws NostoException
+     */
     public function testHttpRequestAuthBasic()
     {
         $request = new HttpRequest();
@@ -113,10 +113,10 @@ class HttpRequestTest extends Test
         );
     }
 
-	/**
-	 * Tests setting the bearer auth type.
-	 * @throws Exception
-	 */
+    /**
+     * Tests setting the bearer auth type.
+     * @throws Exception
+     */
     public function testHttpRequestAuthBearer()
     {
         $request = new HttpRequest();

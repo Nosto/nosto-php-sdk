@@ -50,7 +50,7 @@ class SettingsTest extends Test
 
     /**
      * Tests that the account settings are correctly updated to Nosto
-	 * @throws Exception
+     * @throws Exception
      */
     public function testUpdatingSettings()
     {

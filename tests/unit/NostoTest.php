@@ -47,7 +47,7 @@ class NostoTest extends Test
 {
     /**
      * Tests that errors are parsed correctly from http response
-	 * @throws Exception
+     * @throws Exception
      */
     public function testExceptionErrors()
     {

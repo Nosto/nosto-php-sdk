@@ -73,7 +73,7 @@ class HtmlMarkupSerializationHelperTest extends Test
     {
         $object = new MockCategory();
         $markup = $object->toHtml();
-        $this->assertEquals('<div class="notranslate" style="display:none">  <span class="nosto_category" style="display:none">    <span class="category_string">/Women/New Arrivals</span>    <span class="id">10</span>    <span class="parent_id">4</span>    <span class="name">New Arrivals</span>    <span class="url">http://magento1.dev.nos.to/women/women-new-arrivals.html</span>    <span class="image_url">http://magento1.dev.nos.to/media/catalog/category/plp-w-newarrivals_1.jpg</span>    <span class="visible_in_menu">1</span>    <span class="level">3</span>  </span></div>',self::stripLineBreaks($markup));
+        $this->assertEquals('<div class="notranslate" style="display:none">  <span class="nosto_category" style="display:none">    <span class="category_string">/Women/New Arrivals</span>    <span class="id">10</span>    <span class="parent_id">4</span>    <span class="name">New Arrivals</span>    <span class="url">http://magento1.dev.nos.to/women/women-new-arrivals.html</span>    <span class="image_url">http://magento1.dev.nos.to/media/catalog/category/plp-w-newarrivals_1.jpg</span>    <span class="visible_in_menu">1</span>    <span class="level">3</span>  </span></div>', self::stripLineBreaks($markup));
     }
 
     /**
@@ -199,7 +199,7 @@ class HtmlMarkupSerializationHelperTest extends Test
     public function testObjectWithSpecialCharacters()
     {
         $object = new MockProduct();
-        $object->addCustomField('key.with.\special?char s*','åäöø');
+        $object->addCustomField('key.with.\special?char s*', 'åäöø');
         $markup = $object->toHtml();
         $this->assertEquals('<div class="notranslate" style="display:none">  <span class="nosto_product" style="display:none">    <span class="url">http://my.shop.com/products/test_product.html</span>    <span class="product_id">1</span>    <span class="name">Test Product</span>    <span class="image_url">http://my.shop.com/images/test_product.jpg</span>    <span class="price">99.99</span>    <span class="list_price">110.99</span>    <span class="price_currency_code">USD</span>    <span class="availability">InStock</span>    <span class="categories">      <span class="category">/Mens</span>      <span class="category">/Mens/Shoes</span>    </span>    <span class="description">This is a full description</span>    <span class="brand">Super Brand</span>    <span class="variation_id">USD</span>    <span class="review_count">99</span>    <span class="rating_value">2.5</span>    <span class="alternate_image_urls">      <span class="alternate_image_url">http://shop.com/product_alt.jpg</span>    </span>    <span class="condition">Used</span>    <span class="gtin">gtin</span>    <span class="tags1">      <span class="tag">first</span>    </span>    <span class="tags2">      <span class="tag">second</span>    </span>    <span class="tags3">      <span class="tag">third</span>    </span>    <span class="google_category">All</span>    <span class="skus">    </span>    <span class="variations">    </span>    <span class="custom_fields">      <span class="key.with.\special?char s*">åäöø</span>    </span>    <span class="date_published">2013-03-05</span>  </span></div>', self::stripLineBreaks($markup));
     }
@@ -271,7 +271,7 @@ class HtmlMarkupSerializationHelperTest extends Test
     {
         $object = new PageType('<p>Page type with html</p>');
         $markup = $object->toHtml();
-        $this->assertEquals('<div class="notranslate" style="display:none">  <span class="nosto_page_type" style="display:none">&lt;p&gt;Page type with html&lt;/p&gt;</span></div>',self::stripLineBreaks($markup));
+        $this->assertEquals('<div class="notranslate" style="display:none">  <span class="nosto_page_type" style="display:none">&lt;p&gt;Page type with html&lt;/p&gt;</span></div>', self::stripLineBreaks($markup));
     }
 
     /**
@@ -281,7 +281,7 @@ class HtmlMarkupSerializationHelperTest extends Test
     {
         $object = new SearchTerm('<p>Search term with html</p>');
         $markup = $object->toHtml();
-        $this->assertEquals('<div class="notranslate" style="display:none">  <span class="nosto_search_term" style="display:none">&lt;p&gt;Search term with html&lt;/p&gt;</span></div>',self::stripLineBreaks($markup));
+        $this->assertEquals('<div class="notranslate" style="display:none">  <span class="nosto_search_term" style="display:none">&lt;p&gt;Search term with html&lt;/p&gt;</span></div>', self::stripLineBreaks($markup));
     }
 
     /**

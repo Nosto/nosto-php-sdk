@@ -75,7 +75,7 @@ class Reflection
                         }
                     }
                 }
-				foreach ($rc->getProperties() as $p) {
+                foreach ($rc->getProperties() as $p) {
                     if (in_array($p->getName(), $skipProperties, true)) {
                         continue;
                     }

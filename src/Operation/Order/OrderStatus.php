@@ -75,26 +75,26 @@ class OrderStatus extends AbstractGraphQLOperation
      */
     public function getQuery()
     {
-		return <<<QUERY
-        mutation(
-                \$orderNumber: String!,
-                \$orderStatus: String!,
-                \$paymentProvider: String!
-                \$statusDate: LocalDateTime!
-        ) {
-            updateStatus(number: \$orderNumber, params: {
-                orderStatus: \$orderStatus
-                paymentProvider: \$paymentProvider
-                statusDate: \$statusDate
-            }) {
-                number
-                statuses {
-                    date
-                    orderStatus
-                    paymentProvider
+        return <<<QUERY
+            mutation(
+                    \$orderNumber: String!,
+                    \$orderStatus: String!,
+                    \$paymentProvider: String!
+                    \$statusDate: LocalDateTime!
+            ) {
+                updateStatus(number: \$orderNumber, params: {
+                    orderStatus: \$orderStatus
+                    paymentProvider: \$paymentProvider
+                    statusDate: \$statusDate
+                }) {
+                    number
+                    statuses {
+                        date
+                        orderStatus
+                        paymentProvider
+                    }
                 }
             }
-        }
 QUERY;
     }
 
@@ -104,7 +104,7 @@ QUERY;
 	 */
     public function getVariables()
     {
-		return [
+        return [
 			'orderNumber' => $this->orderStatus->getOrderNumber(),
 			'orderStatus' => $this->orderStatus->getStatus(),
 			'paymentProvider' => $this->orderStatus->getPaymentProvider(),

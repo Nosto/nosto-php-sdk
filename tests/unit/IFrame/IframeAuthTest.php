@@ -50,14 +50,15 @@ class IframeAuthTest extends Test
 {
     use Specify;
     use IframeTrait;
+
     private $user;
     private $account;
     private $iframe;
 
     /**
      * Test that when no account at all is given, the Iframe mixin returns the uninstallation URL
-	 * @noinspection DuplicatedCode
-	 */
+     * @noinspection DuplicatedCode
+     */
     public function testIframeUrlWithoutAccount()
     {
         $this->iframe = new MockIframe();

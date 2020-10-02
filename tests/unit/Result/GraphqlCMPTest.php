@@ -50,7 +50,7 @@ class GraphqlCMPTest extends Test
 
     /**
      * Tests that a valid result set can be built
-	 * @throws Exception
+     * @throws Exception
      */
     public function testBuildingValidResultSet()
     {
@@ -68,7 +68,7 @@ class GraphqlCMPTest extends Test
 
     /**
      * Tests that a valid result set can be built
-	 * @throws Exception
+     * @throws Exception
      */
     public function testBuildingValidResultId()
     {
@@ -94,7 +94,7 @@ class GraphqlCMPTest extends Test
         $request = new HttpRequest();
         $request->setResultHandler(new RecommendationResultHandler());
 
-        $this->specify('result does not contain primary field', function () use ($request,$response) {
+        $this->specify('result does not contain primary field', function () use ($request, $response) {
             try {
                 $request->getResultHandler()->parse($response);
                 $this->fail('No exception was thrown');
@@ -114,7 +114,7 @@ class GraphqlCMPTest extends Test
         $request = new HttpRequest();
         $request->setResultHandler(new RecommendationResultHandler());
 
-        $this->specify('result does not contain primary field', function () use ($request,$response) {
+        $this->specify('result does not contain primary field', function () use ($request, $response) {
             try {
                 $request->getResultHandler()->parse($response);
                 $this->fail('No exception was thrown');

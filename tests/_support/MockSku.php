@@ -55,8 +55,8 @@ class MockSku extends Sku
         $this->setInventoryLevel(20);
     }
 
-	/** @noinspection PhpUnhandledExceptionInspection */
-	public function __get($name)
+    /** @noinspection PhpUnhandledExceptionInspection */
+    public function __get($name)
     {
         $getter = 'get' . $name;
         if (method_exists($this, $getter)) {
