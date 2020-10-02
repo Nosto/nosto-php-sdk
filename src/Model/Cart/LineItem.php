@@ -98,7 +98,7 @@ class LineItem extends AbstractObject implements
      * Loads a special item, e.g. shipping cost.
      *
      * @param string $name the name of the item.
-     * @param float|int|double $price the unit price of the item.
+     * @param float|int $price the unit price of the item.
      * @param string $currency the 3-letter ISO code (ISO 4217) for the item currency.
      */
     public function loadSpecialItemData($name, $price, $currency)

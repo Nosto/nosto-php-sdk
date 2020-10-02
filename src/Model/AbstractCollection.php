@@ -96,8 +96,7 @@ abstract class AbstractCollection implements Iterator, Countable
     public function valid()
     {
         $key = key($this->var);
-        $var = ($key !== null && $key !== false);
-        return $var;
+        return ($key !== null && $key !== false);
     }
 
     /**

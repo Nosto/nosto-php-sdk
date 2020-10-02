@@ -46,8 +46,8 @@ class ArrayHelperTest extends Test
      */
     public function testOnlyScalarValues()
     {
-        $scalarArray = [ 1, 2, 3, 4, 'five' ];
-        $nonScalarArray = [ [2,3,4], ['test', 'string'], 2 ];
+        $scalarArray = [1, 2, 3, 4, 'five'];
+        $nonScalarArray = [[2, 3, 4], ['test', 'string'], 2];
 
         $this->assertTrue(ArrayHelper::onlyScalarValues($scalarArray));
         $this->assertFalse(ArrayHelper::onlyScalarValues($nonScalarArray));

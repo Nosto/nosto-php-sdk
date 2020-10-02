@@ -39,6 +39,7 @@ namespace Nosto\Result\Graphql;
 use Nosto\NostoException;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Result\ResultHandler;
+use stdClass;
 
 abstract class GraphQLResultHandler extends ResultHandler
 {
@@ -65,10 +66,10 @@ abstract class GraphQLResultHandler extends ResultHandler
     }
 
     /**
-     * @param \stdClass $stdClass
+     * @param stdClass $stdClass
      * @return bool
      */
-    private function hasErrors(\stdClass $stdClass)
+    private function hasErrors(stdClass $stdClass)
     {
         $members = get_object_vars($stdClass);
         if (array_key_exists(self::GRAPHQL_RESPONSE_ERROR, $members)) {
@@ -78,10 +79,10 @@ abstract class GraphQLResultHandler extends ResultHandler
     }
 
     /**
-     * @param \stdClass $stdClass
+     * @param stdClass $stdClass
      * @return bool
      */
-    private function hasData(\stdClass $stdClass)
+    private function hasData(stdClass $stdClass)
     {
         $members = get_object_vars($stdClass);
         if (array_key_exists(self::GRAPHQL_RESPONSE_DATA, $members)) {
@@ -98,15 +99,15 @@ abstract class GraphQLResultHandler extends ResultHandler
     {
         $errorMessage = '';
         foreach ($errors as $error) {
-            $errorMessage .= $error->message.' | ';
+            $errorMessage .= $error->message . ' | ';
         }
         return $errorMessage;
     }
 
     /**
-     * @param \stdClass $stdClass
-     * @throws NostoException
+     * @param stdClass $stdClass
      * @return mixed
+     * @throws NostoException
      */
-    abstract protected function parseQueryResult(\stdClass $stdClass);
+    abstract protected function parseQueryResult(stdClass $stdClass);
 }

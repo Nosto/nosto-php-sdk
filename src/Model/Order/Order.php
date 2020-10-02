@@ -36,6 +36,8 @@
 
 namespace Nosto\Model\Order;
 
+use DateTime;
+use DateTimeInterface;
 use Nosto\AbstractObject;
 use Nosto\Mixins\HtmlEncoderTrait;
 use Nosto\Types\HtmlEncodableInterface;
@@ -189,12 +191,12 @@ class Order extends AbstractObject implements
     /**
      * Sets the date when the OrderConfirm was placed in the format Y-m-d
      *
-     * @param \DateTimeInterface|\DateTime|string $createdAt the created date.
+     * @param DateTimeInterface|DateTime|string $createdAt the created date.
      *
      */
     public function setCreatedAt($createdAt)
     {
-        if ($createdAt instanceof \DateTime
+        if ($createdAt instanceof DateTime
             || (is_object($createdAt) && method_exists($createdAt, 'format'))) {
             $this->createdAt = $createdAt->format('Y-m-d H:i:s');
         } else {
@@ -343,9 +345,6 @@ class Order extends AbstractObject implements
         $this->hcid = $hcid;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getMarkupKey()
     {
         return 'nosto_purchase_order';

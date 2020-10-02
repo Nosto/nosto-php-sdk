@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection DuplicatedCode */
+
 /**
  * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
@@ -38,6 +39,7 @@ namespace Nosto\Test\Unit\Operation;
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
+use Nosto\NostoException;
 use Nosto\Operation\OAuth\ExchangeTokens;
 use Nosto\Test\Support\MockOAuth;
 use Nosto\Model\NostoOAuthToken;
@@ -50,6 +52,7 @@ class OauthSyncTest extends Test
      * Tests that existing accounts can be synced from Nosto.
      * Accounts are synced using OAuth2 Authorization Code method.
      * We are only testing that we can start and act on the steps in the OAuth request cycle.
+     * @throws NostoException
      */
     public function testSyncingExistingAccount()
     {

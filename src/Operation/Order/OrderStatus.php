@@ -36,6 +36,7 @@
 
 namespace Nosto\Operation\Order;
 
+use Exception;
 use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Model\Order\GraphQL\OrderStatus as OrderStatusModel;
 use Nosto\Result\Graphql\Order\OrderStatusResultHandler;
@@ -74,43 +75,40 @@ class OrderStatus extends AbstractGraphQLOperation
      */
     public function getQuery()
     {
-        $query
-            = <<<QUERY
-        mutation(
-                \$orderNumber: String!,
-                \$orderStatus: String!,
-                \$paymentProvider: String!
-                \$statusDate: LocalDateTime!
-        ) { 
-            updateStatus(number: \$orderNumber, params: {
-                orderStatus: \$orderStatus
-                paymentProvider: \$paymentProvider
-                statusDate: \$statusDate
-            }) {
-                number
-                statuses {
-                    date
-                    orderStatus
-                    paymentProvider
+        return <<<QUERY
+            mutation(
+                    \$orderNumber: String!,
+                    \$orderStatus: String!,
+                    \$paymentProvider: String!
+                    \$statusDate: LocalDateTime!
+            ) {
+                updateStatus(number: \$orderNumber, params: {
+                    orderStatus: \$orderStatus
+                    paymentProvider: \$paymentProvider
+                    statusDate: \$statusDate
+                }) {
+                    number
+                    statuses {
+                        date
+                        orderStatus
+                        paymentProvider
+                    }
                 }
             }
-        }
 QUERY;
-        return $query;
     }
 
     /**
      * @inheritdoc
+     * @throws Exception
      */
     public function getVariables()
     {
-        $array = [
+        return [
             'orderNumber' => $this->orderStatus->getOrderNumber(),
             'orderStatus' => $this->orderStatus->getStatus(),
             'paymentProvider' => $this->orderStatus->getPaymentProvider(),
             'statusDate' => $this->orderStatus->getUpdatedAt()
         ];
-
-        return $array;
     }
 }

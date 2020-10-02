@@ -36,7 +36,9 @@
 
 namespace Nosto\Util;
 
+use Nosto\NostoException;
 use Nosto\Types\SanitizableInterface;
+use ReflectionException;
 
 /**
  * Util class for sanitizing
@@ -49,8 +51,8 @@ class Sanitize
      * Sanitizes object members that implement SanitizableInterface
      *
      * @param SanitizableInterface $object
-     * @throws \Nosto\NostoException
-     * @throws \ReflectionException
+     * @throws NostoException
+     * @throws ReflectionException
      */
     public static function sanitizeRecursively(SanitizableInterface $object)
     {

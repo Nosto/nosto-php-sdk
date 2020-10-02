@@ -38,6 +38,7 @@ namespace Nosto\Test\Unit\Operation;
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
+use Exception;
 use Nosto\Operation\UpdateSettings;
 use Nosto\Request\Api\Token;
 use Nosto\Test\Support\MockSettings;
@@ -49,10 +50,11 @@ class SettingsTest extends Test
 
     /**
      * Tests that the account settings are correctly updated to Nosto
+     * @throws Exception
      */
     public function testUpdatingSettings()
     {
-        $account = new MockAccount('platform-00000000');
+        $account = new MockAccount();
         $token = new Token('settings', 'token');
         $account->addApiToken($token);
 

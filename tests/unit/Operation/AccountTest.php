@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection DuplicatedCode */
+
 /**
  * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
@@ -38,7 +39,7 @@ namespace Nosto\Test\Unit\Operation;
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
-use Nosto\Model\Signup\Account;
+use Nosto\NostoException;
 use Nosto\Operation\AccountSignup;
 use Nosto\Test\Support\MockSignup;
 
@@ -48,10 +49,10 @@ class AccountTest extends Test
 
     /**
      * Tests that new accounts can be created successfully.
+     * @throws NostoException
      */
     public function testCreatingNewAccount()
     {
-        /** @var Account $meta */
         $meta = new MockSignup();
         $service = new AccountSignup($meta);
         $account = $service->create();
