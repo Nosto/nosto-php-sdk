@@ -44,6 +44,7 @@
   },
   "scripts": {
     "post-install-cmd": "if [ -f ./vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility; fi",
-    "post-update-cmd" : "if [ -f ./vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility; fi"
+    "post-update-cmd" : "if [ -f ./vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility; fi",
+    "ci:inspect": "./inspect.sh"
   }
 }
