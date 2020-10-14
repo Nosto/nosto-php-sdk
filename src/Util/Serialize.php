@@ -54,11 +54,11 @@ class Serialize
 
     /**
      * @param string $object
-     * @param string $class
+     * @param mixed $options
      * @return mixed
      */
-    public static function fromString($object, $class)
+    public static function fromString($object, $options)
     {
-        return unserialize($object, $class);
+        return unserialize($object, $options);
     }
 }
