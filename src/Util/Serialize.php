@@ -53,7 +53,7 @@ class Serialize
     }
 
     /**
-     * @param object $object
+     * @param string $object
      * @param string $class
      * @return mixed
      */
