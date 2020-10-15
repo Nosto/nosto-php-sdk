@@ -37,11 +37,11 @@
 namespace Nosto\Util;
 
 /**
- * Util class for serialising and deserialising objects
+ * Util class for serialising and deserialising objects in base64
  *
  * @package Nosto\Util
  */
-class Serialize
+class Base64Serialize
 {
     /**
      * @param object $object
@@ -49,7 +49,7 @@ class Serialize
      */
     public static function toString($object)
     {
-        return serialize($object);
+        return base64_encode(Serialize::toString($object));
     }
 
     /**
@@ -59,6 +59,6 @@ class Serialize
      */
     public static function fromString($objectData, $options)
     {
-        return unserialize($objectData, $options);
+        return Serialize::fromString(base64_decode($objectData), $options);
     }
 }
