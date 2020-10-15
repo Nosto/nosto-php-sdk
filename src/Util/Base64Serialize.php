@@ -53,13 +53,12 @@ class Base64Serialize
     }
 
     /**
-     * @param string $object
+     * @param string $objectData
      * @param mixed $options
      * @return mixed
      */
-    public static function fromString($object, $options)
+    public static function fromString($objectData, $options)
     {
-        return Serialize::fromString(base64_decode($object), $options);
+        return Serialize::fromString(base64_decode($objectData), $options);
     }
-
 }
