@@ -132,7 +132,7 @@ class BatchedCategoryMerchandising
         }
         $responses = [];
         for ($x=0; $x < $batchCount; $x++) {
-            $categoryMerchandising = new CategoryMerchandising(
+            $catMerchandising = new CategoryMerchandising(
                 $this->account,
                 $this->customerId,
                 $this->category,
@@ -145,7 +145,7 @@ class BatchedCategoryMerchandising
                 $limit
             );
             /** @var CategoryMerchandisingResult $response */
-            $response = $categoryMerchandising->execute();
+            $response = $catMerchandising->execute();
             $responses[] = $response;
             if ($response->getResultSet()->count() === 0) {
                 break;

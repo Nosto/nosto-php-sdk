@@ -50,12 +50,17 @@ class Recommendation
     {
         $combinedResultSet = new ResultSet();
         $count = 0;
+        $firstResult = reset($results);
+        $trackingCode = 'not-defined';
+        if ($firstResult !== null) {
+            $trackingCode = $firstResult->getTrackingCode();
+        }
         foreach ($results as $result) {
             foreach ($result->getResultSet() as $item) {
                 $combinedResultSet->append($item);
                 ++$count;
             }
         }
-        return new CategoryMerchandisingResult($combinedResultSet, $result->getTrackingCode(), $count);
+        return new CategoryMerchandisingResult($combinedResultSet, $trackingCode, $count);
     }
 }
