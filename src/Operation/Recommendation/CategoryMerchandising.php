@@ -52,6 +52,9 @@ class CategoryMerchandising extends AbstractRecommendation
     /** @var int */
     private $skipPages;
 
+    /** @var string */
+    private $batchToken;
+
     /**
      * CategoryMerchandising constructor.
      * @param AccountInterface $account
@@ -75,12 +78,14 @@ class CategoryMerchandising extends AbstractRecommendation
         $activeDomain = '',
         $customerBy = self::IDENTIFIER_BY_CID,
         $previewMode = false,
-        $limit = self::LIMIT
+        $limit = self::LIMIT,
+        $batchToken = ''
     ) {
         $this->category = $category;
         $this->skipPages = $skipPages;
         $this->includeFilters = $includeFilters;
         $this->excludeFilters = $excludeFilters;
+        $this->batchToken = $batchToken;
         parent::__construct($account, $customerId, $activeDomain, $customerBy, $previewMode, $limit);
     }
 
@@ -98,7 +103,8 @@ class CategoryMerchandising extends AbstractRecommendation
                 \$by: LookupParams!,
                 \$skipPages: Int,
                 \$includeFilters: InputIncludeParams,
-                \$excludeFilters: InputFilterParams
+                \$excludeFilters: InputFilterParams,
+                \$batchToken: String
             ) {
               session (
                 id: \$customerId,
@@ -113,7 +119,8 @@ class CategoryMerchandising extends AbstractRecommendation
                     skipPages: \$skipPages,
                     include: \$includeFilters,
                     exclude: \$excludeFilters,
-                    skipVCEvent: true
+                    skipVCEvent: true,
+                    batchToken: \$batchToken
                   ) {
                     primary {
                       productId
@@ -146,5 +153,13 @@ QUERY;
             'includeFilters' => $this->includeFilters->toArray(),
             'excludeFilters' => $this->excludeFilters->toArray()
         ];
+    }
+
+    /**
+     * @param string $batchToken
+     */
+    public function setBatchToken($batchToken)
+    {
+        $this->batchToken = $batchToken;
     }
 }
