@@ -67,6 +67,7 @@ class CategoryMerchandising extends AbstractRecommendation
      * @param string $customerBy
      * @param bool $previewMode
      * @param int $limit
+     * @param string $batchToken
      */
     public function __construct(
         AccountInterface $account,
