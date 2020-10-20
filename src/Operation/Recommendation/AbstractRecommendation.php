@@ -45,7 +45,7 @@ use Nosto\Types\Signup\AccountInterface;
  */
 abstract class AbstractRecommendation extends AbstractGraphQLOperation
 {
-    const LIMIT = 10;
+    const DEFAULT_LIMIT = 10;
 
     /** @var bool $previewMode */
     protected $previewMode;
@@ -74,7 +74,7 @@ abstract class AbstractRecommendation extends AbstractGraphQLOperation
         $activeDomain = '',
         $customerBy = self::IDENTIFIER_BY_CID,
         $previewMode = false,
-        $limit = self::LIMIT
+        $limit = self::DEFAULT_LIMIT
     ) {
         $this->limit = $limit;
         $this->customerBy = $customerBy;

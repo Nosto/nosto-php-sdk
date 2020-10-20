@@ -36,10 +36,17 @@
 
 namespace Nosto\Operation\Recommendation;
 
+use Nosto\NostoException;
+use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Request\Http\Exception\HttpResponseException;
+use Nosto\Result\Graphql\Recommendation\CategoryMerchandisingResult;
 use Nosto\Types\Signup\AccountInterface;
+use Nosto\Util\Recommendation;
 
-class CategoryMerchandising extends AbstractRecommendation
+class BatchedCategoryMerchandising
 {
+    const HARD_LIMIT = 250;
+
     /** @var string $category */
     private $category;
 
@@ -51,6 +58,24 @@ class CategoryMerchandising extends AbstractRecommendation
 
     /** @var int */
     private $skipPages;
+
+    /** @var AccountInterface */
+    private $account;
+
+    /** @var string */
+    private $customerId;
+
+    /** @var string */
+    private $activeDomain;
+
+    /** @var string */
+    private $customerBy;
+
+    /** @var bool */
+    private $previewMode;
+
+    /** @var int */
+    private $limit;
 
     /**
      * CategoryMerchandising constructor.
@@ -73,78 +98,68 @@ class CategoryMerchandising extends AbstractRecommendation
         IncludeFilters $includeFilters,
         ExcludeFilters $excludeFilters,
         $activeDomain = '',
-        $customerBy = self::IDENTIFIER_BY_CID,
+        $customerBy = CategoryMerchandising::IDENTIFIER_BY_CID,
         $previewMode = false,
-        $limit = self::DEFAULT_LIMIT
+        $limit = CategoryMerchandising::DEFAULT_LIMIT
     ) {
         $this->category = $category;
         $this->skipPages = $skipPages;
         $this->includeFilters = $includeFilters;
         $this->excludeFilters = $excludeFilters;
-        parent::__construct($account, $customerId, $activeDomain, $customerBy, $previewMode, $limit);
+        $this->account = $account;
+        $this->customerId = $customerId;
+        $this->activeDomain = $activeDomain;
+        $this->customerBy = $customerBy;
+        $this->previewMode = $previewMode;
+        $this->limit = $limit;
     }
 
     /**
-     * @inheritdoc
+     * Splits category merchandising calls based on hard limit (250) and given limit
+     *
+     * @return CategoryMerchandisingResult
+     * @throws AbstractHttpException
+     * @throws HttpResponseException
+     * @throws NostoException
      */
-    public function getQuery()
+    public function execute()
     {
-        return <<<QUERY
-            query(
-                \$customerId: String!,
-                \$category: String!,
-                \$limit: Int!,
-                \$preview: Boolean!,
-                \$by: LookupParams!,
-                \$skipPages: Int,
-                \$includeFilters: InputIncludeParams,
-                \$excludeFilters: InputFilterParams
-            ) {
-              session (
-                id: \$customerId,
-                by: \$by,
-              ) {
-                id
-                recos (preview: \$preview, image: VERSION_10_MAX_SQUARE) {
-                  category (
-                    category: \$category
-                    minProducts: 1
-                    maxProducts: \$limit,
-                    skipPages: \$skipPages,
-                    include: \$includeFilters,
-                    exclude: \$excludeFilters,
-                    skipVCEvent: true
-                  ) {
-                    primary {
-                      productId
-                      priceText
-                      name
-                      imageUrl
-                    }
-                    batchToken
-                    totalPrimaryCount
-                    resultId
-                  }
-                }
-              }
+        if ($this->limit === 0 || !is_numeric($this->limit)) {
+            throw new NostoException(
+                sprintf(
+                    'Invalid limit %s given for CMP batching',
+                    $this->limit
+                )
+            );
+        }
+        $batchCount = 1;
+        $limit = $this->limit;
+        if ($this->limit >= self::HARD_LIMIT) {
+            $batchCount = ceil($this->limit / self::HARD_LIMIT);
+            $limit = self::HARD_LIMIT;
+        }
+        $responses = [];
+        for ($x=0; $x < $batchCount; $x++) {
+            $catMerchandising = new CategoryMerchandising(
+                $this->account,
+                $this->customerId,
+                $this->category,
+                $x,
+                $this->includeFilters,
+                $this->excludeFilters,
+                $this->activeDomain,
+                $this->customerBy,
+                $this->previewMode,
+                $limit
+            );
+            /** @var CategoryMerchandisingResult $response */
+            $response = $catMerchandising->execute();
+            $responses[] = $response;
+            if ($response->getResultSet()->count() === 0) {
+                break;
             }
-QUERY;
-    }
+        }
 
-    /**
-     * @inheritdoc
-     */
-    public function getVariables()
-    {
-        return [
-            'customerId' => $this->customerId,
-            'category' => $this->category,
-            'limit' => $this->limit,
-            'preview' => $this->previewMode,
-            'by' => $this->customerBy,
-            'skipPages' => $this->skipPages,
-            'includeFilters' => $this->includeFilters->toArray(),
-            'excludeFilters' => $this->excludeFilters->toArray()
-        ];
+        return Recommendation::mergeCategoryMerchandisingResults($responses);
     }
 }
