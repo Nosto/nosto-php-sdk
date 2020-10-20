@@ -124,6 +124,14 @@ class BatchedCategoryMerchandising
      */
     public function execute()
     {
+        if ($this->limit === 0 || !is_numeric($this->limit)) {
+            throw new NostoException(
+                sprintf(
+                    'Invalid limit %s given for CMP batching',
+                    $this->limit
+                )
+            );
+        }
         $batchCount = 1;
         $limit = $this->limit;
         if ($this->limit >= self::HARD_LIMIT) {
