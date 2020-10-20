@@ -53,9 +53,9 @@ class CategoryMerchandisingResult
     /**
      * CategoryMerchandisingResult constructor.
      * @param ResultSet $resultSet
-     * @param $trackingCode
-     * @param $totalPrimaryCount
-     * @param $batchToken
+     * @param string $trackingCode
+     * @param int $totalPrimaryCount
+     * @param string $batchToken
      */
     public function __construct(
         ResultSet $resultSet,
