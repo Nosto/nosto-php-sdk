@@ -34,70 +34,35 @@
  *
  */
 
-namespace Nosto\Result\Graphql\Recommendation;
+namespace Nosto\Util;
 
-class CategoryMerchandisingResult
+use Nosto\Result\Graphql\Recommendation\CategoryMerchandisingResult;
+use Nosto\Result\Graphql\Recommendation\ResultSet;
+
+class Recommendation
 {
-    /** @var ResultSet $resultSet */
-    private $resultSet;
-
-    /** @var string $trackingCode */
-    private $trackingCode;
-
-    /** @var int $totalPrimaryCount */
-    private $totalPrimaryCount;
-
-    /** @var string $batchToken */
-    private $batchToken;
-
     /**
-     * CategoryMerchandisingResult constructor.
-     * @param ResultSet $resultSet
-     * @param string $trackingCode
-     * @param int $totalPrimaryCount
-     * @param string $batchToken
+     * Combines multiple recommendation result sets into a single result set
+     * @param CategoryMerchandisingResult[] $results
+     * @return CategoryMerchandisingResult
      */
-    public function __construct(
-        ResultSet $resultSet,
-        $trackingCode,
-        $totalPrimaryCount,
-        $batchToken
-    ) {
-        $this->resultSet = $resultSet;
-        $this->trackingCode = $trackingCode;
-        $this->totalPrimaryCount = $totalPrimaryCount;
-        $this->batchToken = $batchToken;
-    }
-
-    /**
-     * @return ResultSet
-     */
-    public function getResultSet()
+    public static function mergeCategoryMerchandisingResults(array $results)
     {
-        return $this->resultSet;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTrackingCode()
-    {
-        return $this->trackingCode;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTotalPrimaryCount()
-    {
-        return $this->totalPrimaryCount;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBatchToken()
-    {
-        return $this->batchToken;
+        $combinedResultSet = new ResultSet();
+        $count = 0;
+        $firstResult = reset($results);
+        $trackingCode = 'not-defined';
+        $batchToken = '';
+        if ($firstResult !== null) {
+            $trackingCode = $firstResult->getTrackingCode();
+        }
+        foreach ($results as $result) {
+            $batchToken = $result->getBatchToken(); // We store the batch token of the last result
+            foreach ($result->getResultSet() as $item) {
+                $combinedResultSet->append($item);
+                ++$count;
+            }
+        }
+        return new CategoryMerchandisingResult($combinedResultSet, $trackingCode, $count, $batchToken);
     }
 }
