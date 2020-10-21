@@ -144,7 +144,7 @@ QUERY;
      */
     public function getVariables()
     {
-        return [
+        $variables = [
             'customerId' => $this->customerId,
             'category' => $this->category,
             'limit' => $this->limit,
@@ -154,6 +154,10 @@ QUERY;
             'includeFilters' => $this->includeFilters->toArray(),
             'excludeFilters' => $this->excludeFilters->toArray()
         ];
+        if ($this->batchToken !== '') {
+            $variables['batchToken'] = $this->batchToken;
+        }
+        return $variables;
     }
 
     /**
