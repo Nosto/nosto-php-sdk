@@ -150,12 +150,13 @@ QUERY;
             'limit' => $this->limit,
             'preview' => $this->previewMode,
             'by' => $this->customerBy,
-            'skipPages' => $this->skipPages,
             'includeFilters' => $this->includeFilters->toArray(),
             'excludeFilters' => $this->excludeFilters->toArray()
         ];
         if ($this->batchToken !== '') {
             $variables['batchToken'] = $this->batchToken;
+        } else {
+            $variables['skipPages'] = $this->skipPages;
         }
         return $variables;
     }
