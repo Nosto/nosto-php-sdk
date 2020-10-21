@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 5.3.0
+* Add possibility to use batch token in graphql calls  
+* Introduce a batched CMP operation that can fetch more than 250 products from Nosto    
+
 ## 5.2.0
 * Introduce a utility class for serialising and deserialising objects
 
