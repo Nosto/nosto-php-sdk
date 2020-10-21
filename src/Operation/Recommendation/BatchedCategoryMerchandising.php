@@ -139,6 +139,8 @@ class BatchedCategoryMerchandising
             $limit = self::HARD_LIMIT;
         }
         $responses = [];
+        $batchToken = '';
+        $totalFetched = 0;
         for ($x=0; $x < $batchCount; $x++) {
             $catMerchandising = new CategoryMerchandising(
                 $this->account,
@@ -150,12 +152,16 @@ class BatchedCategoryMerchandising
                 $this->activeDomain,
                 $this->customerBy,
                 $this->previewMode,
-                $limit
+                $limit,
+                $batchToken
             );
             /** @var CategoryMerchandisingResult $response */
             $response = $catMerchandising->execute();
             $responses[] = $response;
-            if ($response->getResultSet()->count() === 0) {
+            $batchToken = $response->getBatchToken();
+            $responseCount = $response->getResultSet()->count();
+            $totalFetched += $responseCount;
+            if ($responseCount === 0 || $totalFetched === $response->getTotalPrimaryCount()) {
                 break;
             }
         }

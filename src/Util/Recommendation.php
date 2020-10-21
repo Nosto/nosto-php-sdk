@@ -52,15 +52,17 @@ class Recommendation
         $count = 0;
         $firstResult = reset($results);
         $trackingCode = 'not-defined';
+        $batchToken = '';
         if ($firstResult !== null) {
             $trackingCode = $firstResult->getTrackingCode();
         }
         foreach ($results as $result) {
+            $batchToken = $result->getBatchToken(); // We store the batch token of the last result
             foreach ($result->getResultSet() as $item) {
                 $combinedResultSet->append($item);
                 ++$count;
             }
         }
-        return new CategoryMerchandisingResult($combinedResultSet, $trackingCode, $count, '');
+        return new CategoryMerchandisingResult($combinedResultSet, $trackingCode, $count, $batchToken);
     }
 }
