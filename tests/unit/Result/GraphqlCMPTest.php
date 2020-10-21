@@ -129,7 +129,7 @@ class GraphqlCMPTest extends Test
      */
     public function testBuildingResponseForMissing()
     {
-        $responseBody = '{ "data": { "session": { "id": "5d481e38c10ea0f265eb2f5c", "recos": { "category": { "primary": [], "totalPrimaryCount": 0 } } } } }';
+        $responseBody = '{ "data": { "session": { "id": "5d481e38c10ea0f265eb2f5c", "recos": { "category": { "primary": [], "batchToken": null,     "totalPrimaryCount": 0 } } } } }';
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
         $request->setResultHandler(new RecommendationResultHandler());

@@ -47,6 +47,7 @@ class RecommendationResultHandler extends GraphQLResultHandler
     const GRAPHQL_DATA_CATEGORY = 'category';
     const GRAPHQL_DATA_RESULT_ID = 'resultId';
     const GRAPHQL_DATA_PRIMARY_COUNT = 'totalPrimaryCount';
+    const GRAPHQL_DATA_BATCH_TOKEN = 'batchToken';
 
     /**
      * @inheritdoc
@@ -63,11 +64,13 @@ class RecommendationResultHandler extends GraphQLResultHandler
         }
         /** @var int $totalPrimaryCount */
         $totalPrimaryCount = self::parseData($categoryData, self::GRAPHQL_DATA_PRIMARY_COUNT);
+        $batchToken = self::parseData($categoryData, self::GRAPHQL_DATA_BATCH_TOKEN);
         $resultSet = self::buildResultSet($categoryData);
         return new CategoryMerchandisingResult(
             $resultSet,
             $trackingCode,
-            $totalPrimaryCount
+            $totalPrimaryCount,
+            $batchToken
         );
     }
 

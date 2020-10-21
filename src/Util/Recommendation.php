@@ -61,6 +61,6 @@ class Recommendation
                 ++$count;
             }
         }
-        return new CategoryMerchandisingResult($combinedResultSet, $trackingCode, $count);
+        return new CategoryMerchandisingResult($combinedResultSet, $trackingCode, $count, '');
     }
 }

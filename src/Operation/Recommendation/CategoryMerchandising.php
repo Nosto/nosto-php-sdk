@@ -52,6 +52,9 @@ class CategoryMerchandising extends AbstractRecommendation
     /** @var int */
     private $skipPages;
 
+    /** @var string */
+    private $batchToken;
+
     /**
      * CategoryMerchandising constructor.
      * @param AccountInterface $account
@@ -64,6 +67,7 @@ class CategoryMerchandising extends AbstractRecommendation
      * @param string $customerBy
      * @param bool $previewMode
      * @param int $limit
+     * @param string $batchToken
      */
     public function __construct(
         AccountInterface $account,
@@ -75,12 +79,14 @@ class CategoryMerchandising extends AbstractRecommendation
         $activeDomain = '',
         $customerBy = self::IDENTIFIER_BY_CID,
         $previewMode = false,
-        $limit = self::DEFAULT_LIMIT
+        $limit = self::DEFAULT_LIMIT,
+        $batchToken = ''
     ) {
         $this->category = $category;
         $this->skipPages = $skipPages;
         $this->includeFilters = $includeFilters;
         $this->excludeFilters = $excludeFilters;
+        $this->batchToken = $batchToken;
         parent::__construct($account, $customerId, $activeDomain, $customerBy, $previewMode, $limit);
     }
 
@@ -98,7 +104,8 @@ class CategoryMerchandising extends AbstractRecommendation
                 \$by: LookupParams!,
                 \$skipPages: Int,
                 \$includeFilters: InputIncludeParams,
-                \$excludeFilters: InputFilterParams
+                \$excludeFilters: InputFilterParams,
+                \$batchToken: String
             ) {
               session (
                 id: \$customerId,
@@ -113,7 +120,8 @@ class CategoryMerchandising extends AbstractRecommendation
                     skipPages: \$skipPages,
                     include: \$includeFilters,
                     exclude: \$excludeFilters,
-                    skipVCEvent: true
+                    skipVCEvent: true,
+                    batchToken: \$batchToken
                   ) {
                     primary {
                       productId
@@ -136,15 +144,28 @@ QUERY;
      */
     public function getVariables()
     {
-        return [
+        $variables = [
             'customerId' => $this->customerId,
             'category' => $this->category,
             'limit' => $this->limit,
             'preview' => $this->previewMode,
             'by' => $this->customerBy,
-            'skipPages' => $this->skipPages,
             'includeFilters' => $this->includeFilters->toArray(),
             'excludeFilters' => $this->excludeFilters->toArray()
         ];
+        if ($this->batchToken !== '') {
+            $variables['batchToken'] = $this->batchToken;
+        } else {
+            $variables['skipPages'] = $this->skipPages;
+        }
+        return $variables;
+    }
+
+    /**
+     * @param string $batchToken
+     */
+    public function setBatchToken($batchToken)
+    {
+        $this->batchToken = $batchToken;
     }
 }
