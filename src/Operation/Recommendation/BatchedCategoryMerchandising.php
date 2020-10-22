@@ -78,6 +78,11 @@ class BatchedCategoryMerchandising
     private $limit;
 
     /**
+     * @var string
+     */
+    private $batchToken;
+
+    /**
      * CategoryMerchandising constructor.
      * @param AccountInterface $account
      * @param $customerId
@@ -89,6 +94,7 @@ class BatchedCategoryMerchandising
      * @param string $customerBy
      * @param bool $previewMode
      * @param int $limit
+     * @param string $batchToken
      */
     public function __construct(
         AccountInterface $account,
@@ -100,7 +106,8 @@ class BatchedCategoryMerchandising
         $activeDomain = '',
         $customerBy = CategoryMerchandising::IDENTIFIER_BY_CID,
         $previewMode = false,
-        $limit = CategoryMerchandising::DEFAULT_LIMIT
+        $limit = CategoryMerchandising::DEFAULT_LIMIT,
+        $batchToken = ''
     ) {
         $this->category = $category;
         $this->skipPages = $skipPages;
@@ -112,6 +119,7 @@ class BatchedCategoryMerchandising
         $this->customerBy = $customerBy;
         $this->previewMode = $previewMode;
         $this->limit = $limit;
+        $this->batchToken = $batchToken;
     }
 
     /**
@@ -139,7 +147,7 @@ class BatchedCategoryMerchandising
             $limit = self::HARD_LIMIT;
         }
         $responses = [];
-        $batchToken = '';
+        $batchToken = $this->batchToken;
         $totalFetched = 0;
         for ($x=0; $x < $batchCount; $x++) {
             $catMerchandising = new CategoryMerchandising(
