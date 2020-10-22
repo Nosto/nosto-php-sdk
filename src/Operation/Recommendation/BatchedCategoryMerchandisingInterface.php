@@ -49,21 +49,21 @@ interface BatchedCategoryMerchandisingInterface
      * @throws HttpResponseException
      * @throws NostoException
      */
-    public function execute(): CategoryMerchandisingResult;
+    public function execute();
 
     /**
      * @param string $token
      * @return void
      */
-    public function setBatchToken(string $token);
+    public function setBatchToken($token);
 
     /**
      * @return int
      */
-    public function getLimit(): int;
+    public function getLimit();
 
     /**
      * @return int
      */
-    public function getSkipPages(): int;
+    public function getSkipPages();
 }

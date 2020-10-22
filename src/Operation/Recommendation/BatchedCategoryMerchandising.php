@@ -125,7 +125,7 @@ class BatchedCategoryMerchandising implements BatchedCategoryMerchandisingInterf
      *
      * @inheritDoc
      */
-    public function execute(): CategoryMerchandisingResult
+    public function execute()
     {
         if ($this->limit === 0 || !is_numeric($this->limit)) {
             throw new NostoException(
@@ -175,7 +175,7 @@ class BatchedCategoryMerchandising implements BatchedCategoryMerchandisingInterf
     /**
      * @inheritDoc
      */
-    public function setBatchToken(string $token)
+    public function setBatchToken($token)
     {
         $this->batchToken = $token;
     }
@@ -183,7 +183,7 @@ class BatchedCategoryMerchandising implements BatchedCategoryMerchandisingInterf
     /**
      * @inheritDoc
      */
-    public function getLimit(): int
+    public function getLimit()
     {
         return $this->limit;
     }
@@ -191,7 +191,7 @@ class BatchedCategoryMerchandising implements BatchedCategoryMerchandisingInterf
     /**
      * @inheritDoc
      */
-    public function getSkipPages(): int
+    public function getSkipPages()
     {
         return $this->skipPages;
     }
