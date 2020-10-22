@@ -34,35 +34,36 @@
  *
  */
 
-namespace Nosto\Util;
+namespace Nosto\Operation\Recommendation;
 
+use Nosto\NostoException;
+use Nosto\Request\Http\Exception\AbstractHttpException;
+use Nosto\Request\Http\Exception\HttpResponseException;
 use Nosto\Result\Graphql\Recommendation\CategoryMerchandisingResult;
-use Nosto\Result\Graphql\Recommendation\ResultSet;
 
-class Recommendation
+interface BatchedCategoryMerchandisingInterface
 {
     /**
-     * Combines multiple recommendation result sets into a single result set
-     * @param CategoryMerchandisingResult[] $results
      * @return CategoryMerchandisingResult
+     * @throws AbstractHttpException
+     * @throws HttpResponseException
+     * @throws NostoException
      */
-    public static function mergeCategoryMerchandisingResults(array $results)
-    {
-        $combinedResultSet = new ResultSet();
-        $count = 0;
-        $firstResult = reset($results);
-        $trackingCode = 'not-defined';
-        $batchToken = '';
-        if ($firstResult !== null) {
-            $trackingCode = $firstResult->getTrackingCode();
-            $count = $firstResult->getTotalPrimaryCount();
-        }
-        foreach ($results as $result) {
-            $batchToken = $result->getBatchToken(); // We store the batch token of the last result
-            foreach ($result->getResultSet() as $item) {
-                $combinedResultSet->append($item);
-            }
-        }
-        return new CategoryMerchandisingResult($combinedResultSet, $trackingCode, $count, $batchToken);
-    }
+    public function execute(): CategoryMerchandisingResult;
+
+    /**
+     * @param string $token
+     * @return void
+     */
+    public function setBatchToken(string $token);
+
+    /**
+     * @return int
+     */
+    public function getLimit(): int;
+
+    /**
+     * @return int
+     */
+    public function getSkipPages(): int;
 }
