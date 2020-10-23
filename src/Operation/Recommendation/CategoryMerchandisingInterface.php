@@ -41,7 +41,7 @@ use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Request\Http\Exception\HttpResponseException;
 use Nosto\Result\Graphql\Recommendation\CategoryMerchandisingResult;
 
-interface BatchedCategoryMerchandisingInterface
+interface CategoryMerchandisingInterface
 {
     /**
      * @return CategoryMerchandisingResult

@@ -37,11 +37,12 @@
 namespace Nosto\Operation\Recommendation;
 
 use Nosto\NostoException;
+//@phan-suppress-next-line PhanUnreferencedUseNormal
 use Nosto\Result\Graphql\Recommendation\CategoryMerchandisingResult;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\Util\Recommendation;
 
-class BatchedCategoryMerchandising implements BatchedCategoryMerchandisingInterface
+class BatchedCategoryMerchandising implements CategoryMerchandisingInterface
 {
     const HARD_LIMIT = 250;
 
