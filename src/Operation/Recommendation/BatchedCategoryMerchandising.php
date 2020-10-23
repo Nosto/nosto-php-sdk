@@ -37,13 +37,12 @@
 namespace Nosto\Operation\Recommendation;
 
 use Nosto\NostoException;
-use Nosto\Request\Http\Exception\AbstractHttpException;
-use Nosto\Request\Http\Exception\HttpResponseException;
+//@phan-suppress-next-line PhanUnreferencedUseNormal
 use Nosto\Result\Graphql\Recommendation\CategoryMerchandisingResult;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\Util\Recommendation;
 
-class BatchedCategoryMerchandising
+class BatchedCategoryMerchandising implements CategoryMerchandisingInterface
 {
     const HARD_LIMIT = 250;
 
@@ -125,10 +124,7 @@ class BatchedCategoryMerchandising
     /**
      * Splits category merchandising calls based on hard limit (250) and given limit
      *
-     * @return CategoryMerchandisingResult
-     * @throws AbstractHttpException
-     * @throws HttpResponseException
-     * @throws NostoException
+     * @inheritDoc
      */
     public function execute()
     {
@@ -175,5 +171,29 @@ class BatchedCategoryMerchandising
         }
 
         return Recommendation::mergeCategoryMerchandisingResults($responses);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setBatchToken($token)
+    {
+        $this->batchToken = $token;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSkipPages()
+    {
+        return $this->skipPages;
     }
 }
