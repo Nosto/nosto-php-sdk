@@ -150,7 +150,7 @@ class BatchedCategoryMerchandising implements CategoryMerchandisingInterface
                 $this->account,
                 $this->customerId,
                 $this->category,
-                $x,
+                $this->skipPages + $x,
                 $this->includeFilters,
                 $this->excludeFilters,
                 $this->activeDomain,
