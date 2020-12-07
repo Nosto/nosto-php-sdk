@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## upcoming
+* Fix error message parsing for application/json type
+
 ## 5.3.3
 * Fix page number for CMP request
 
