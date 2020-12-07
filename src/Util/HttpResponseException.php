@@ -49,7 +49,7 @@ class HttpResponseException
      */
     public static function handle(HttpResponse $httpResponse)
     {
-        if ($httpResponse->getContentType() === AbstractOperation::CONTENT_TYPE_APPLICATION_JSON) {
+        if (strpos($httpResponse->getContentType(), AbstractOperation::CONTENT_TYPE_APPLICATION_JSON) !== false) {
             self::handleJson($httpResponse);
         }
         throw new ResponseException(
