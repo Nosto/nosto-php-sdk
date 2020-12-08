@@ -49,13 +49,23 @@ class HttpResponseException
      */
     public static function handle(HttpResponse $httpResponse)
     {
-        if ($httpResponse->getContentType() === AbstractOperation::CONTENT_TYPE_APPLICATION_JSON) {
+        if (strpos($httpResponse->getContentType(), AbstractOperation::CONTENT_TYPE_APPLICATION_JSON) !== false) {
             self::handleJson($httpResponse);
+        } else {
+            self::handlePlainText($httpResponse);
         }
+    }
+
+    /**
+     * @param HttpResponse $httpResponse
+     * @throws ResponseException
+     */
+    private static function handlePlainText(HttpResponse $httpResponse) {
         throw new ResponseException(
             sprintf(
-                'Something went wrong:  %s',
-                $httpResponse->getMessage()
+                'Something went wrong:  %s %s',
+                $httpResponse->getMessage(),
+                self::getXRequestId($httpResponse)
             ),
             $httpResponse->getCode()
         );
@@ -82,7 +92,21 @@ class HttpResponseException
                 }
             }
         }
+        $message .= self::getXRequestId($httpResponse);
         throw new ResponseException($message);
+    }
+
+    /**
+     * @param HttpResponse $httpResponse
+     * @return string|null
+     */
+    private static function getXRequestId(HttpResponse $httpResponse)
+    {
+        if ($httpResponse != null) {
+            return sprintf("{Nosto request id is: %s}: ", $httpResponse->getXRequestId());
+        }
+
+        return null;
     }
 
     /**
