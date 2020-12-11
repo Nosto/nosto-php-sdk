@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+## 5.3.5
+* Fix CMP throwing exception issue when batchToken value is null
+
 ## 5.3.4
 * Fix error message parsing for application/json type
 
