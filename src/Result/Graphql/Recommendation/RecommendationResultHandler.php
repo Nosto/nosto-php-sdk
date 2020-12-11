@@ -62,13 +62,9 @@ class RecommendationResultHandler extends GraphQLResultHandler
         } catch (NostoException $e) { // Tracking code is not present when feature (like CMP) is not active
             $trackingCode = '';
         }
-        try {
-            $batchToken = self::parseData($categoryData, self::GRAPHQL_DATA_BATCH_TOKEN);
-        } catch (NostoException $e) { // Batch token is not present
-            $batchToken = '';
-        }
         /** @var int $totalPrimaryCount */
         $totalPrimaryCount = self::parseData($categoryData, self::GRAPHQL_DATA_PRIMARY_COUNT);
+        $batchToken = self::parseData($categoryData, self::GRAPHQL_DATA_BATCH_TOKEN);
         $resultSet = self::buildResultSet($categoryData);
         return new CategoryMerchandisingResult(
             $resultSet,
