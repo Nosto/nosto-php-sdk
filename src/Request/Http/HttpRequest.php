@@ -427,6 +427,20 @@ class HttpRequest
     }
 
     /**
+     * Set one query parameter
+     *
+     * @param $key
+     * @param $value
+     */
+    public function setQueryParam($key, $value)
+    {
+        if ($this->url == null) {
+            return;
+        }
+        self::replaceQueryParamInUrl($key, $value, $this->url);
+    }
+
+    /**
      * Makes a POST request with the raw data
      *
      * @param string $data
