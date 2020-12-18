@@ -88,7 +88,7 @@ abstract class AbstractOperation
         }
         if (is_string($nostoAccount)) {
             $request->setNostoAccountHeader($nostoAccount);
-            $request->setQueryParam("merchant-id", $nostoAccount);
+            $request->setQueryParams(['merchant-id' => $nostoAccount]);
         }
         $request->setResponseTimeout($this->getResponseTimeout());
         $request->setConnectTimeout($this->getConnectTimeout());
