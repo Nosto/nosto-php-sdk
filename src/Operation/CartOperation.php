@@ -59,7 +59,7 @@ class CartOperation extends AbstractAuthenticatedOperation
     {
         $request = $this->initRequest(
             null,
-            null,
+            $this->account->getName(),
             null,
             false
         );
