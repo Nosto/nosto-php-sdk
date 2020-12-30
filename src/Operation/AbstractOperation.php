@@ -82,11 +82,13 @@ abstract class AbstractOperation
             throw new NostoException('No API token found for account.');
         }
         $request = $this->getRequestType();
+        $request->setPath($this->getPath());
         if (is_string($domain)) {
             $request->setActiveDomainHeader($domain);
         }
         if (is_string($nostoAccount)) {
             $request->setNostoAccountHeader($nostoAccount);
+            $request->setQueryParams(['merchant-id' => $nostoAccount]);
         }
         $request->setResponseTimeout($this->getResponseTimeout());
         $request->setConnectTimeout($this->getConnectTimeout());
@@ -94,7 +96,6 @@ abstract class AbstractOperation
         if (!is_null($token) && $isTokenNeeded) {
             $request->setAuthBasic('', $token->getValue());
         }
-        $request->setPath($this->getPath());
         $request->setResultHandler($this->getResultHandler());
         return $request;
     }
