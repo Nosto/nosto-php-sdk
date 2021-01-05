@@ -61,7 +61,10 @@ class UninstallAccount extends AbstractAuthenticatedOperation
      */
     public function delete(UserInterface $currentUser)
     {
-        $request = $this->initRequest($this->account->getApiToken(Token::API_SSO));
+        $request = $this->initRequest(
+            $this->account->getApiToken(Token::API_SSO),
+            $this->account->getName()
+        );
         $response = $request->post($currentUser);
         return $request->getResultHandler()->parse($response);
     }

@@ -84,7 +84,7 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
     {
         $request = $this->initRequest(
             $this->account->getApiToken(Token::API_GRAPHQL),
-            null,
+            $this->account->getName(),
             null
         );
         $payload = new GraphQLQuery(
