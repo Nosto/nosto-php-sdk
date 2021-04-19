@@ -12,6 +12,7 @@
     "symfony/console": "3.*",
     "wimg/php-compatibility": "^9.0",
     "codeception/codeception": "4.1.*",
+    "codeception/module-asserts": "1.3.*",
     "phan/phan": "2.6",
     "staabm/annotate-pull-request-from-checkstyle": "^1.1",
     "mridang/pmd-annotations": "^0.0.2"
