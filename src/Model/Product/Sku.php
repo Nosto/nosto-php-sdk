@@ -171,7 +171,7 @@ class Sku extends AbstractObject implements
      */
     public function setPrice($price)
     {
-        $this->price = $price;
+        $this->price = round($price, 2);
     }
 
     /**
@@ -189,7 +189,7 @@ class Sku extends AbstractObject implements
      */
     public function setListPrice($listPrice)
     {
-        $this->listPrice = $listPrice;
+        $this->listPrice = round($listPrice, 2);
     }
 
     /**
