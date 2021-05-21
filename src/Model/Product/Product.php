@@ -676,9 +676,11 @@ class Product extends AbstractObject implements
      */
     public function setSupplierCost($supplierCost)
     {
-        //null will be rounded to 0gst
+        //null will be rounded to 0
         if ($supplierCost != null) {
             $this->supplierCost = round($supplierCost, 2);
+        } else {
+            $this->supplierCost = null;
         }
     }
 
