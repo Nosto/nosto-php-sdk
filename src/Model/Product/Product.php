@@ -505,7 +505,7 @@ class Product extends AbstractObject implements
      */
     public function setPrice($price)
     {
-        $this->price = $price;
+        $this->price = round($price, 2);
     }
 
     /**
@@ -602,7 +602,7 @@ class Product extends AbstractObject implements
      */
     public function setListPrice($listPrice)
     {
-        $this->listPrice = $listPrice;
+        $this->listPrice = round($listPrice, 2);
     }
 
     /**
@@ -676,7 +676,12 @@ class Product extends AbstractObject implements
      */
     public function setSupplierCost($supplierCost)
     {
-        $this->supplierCost = $supplierCost;
+        //null will be rounded to 0
+        if ($supplierCost != null) {
+            $this->supplierCost = round($supplierCost, 2);
+        } else {
+            $this->supplierCost = null;
+        }
     }
 
     /**
