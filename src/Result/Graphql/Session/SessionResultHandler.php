@@ -34,13 +34,20 @@
  *
  */
 
+namespace Nosto\Result\Graphql\Session;
+
 use Nosto\Result\Graphql\GraphQLResultHandler;
+use stdClass;
 
 class SessionResultHandler extends GraphQLResultHandler
 {
+    const GRAPHQL_DATA_SESSION = 'newSession';
 
+    /**
+     * @inheritdoc
+     */
     protected function parseQueryResult(stdClass $stdClass)
     {
-        // TODO: Implement parseQueryResult() method.
+        return self::parseData($stdClass, self::GRAPHQL_DATA_SESSION);
     }
 }

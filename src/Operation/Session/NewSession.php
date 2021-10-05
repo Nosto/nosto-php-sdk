@@ -1,8 +1,4 @@
 <?php
-
-use Nosto\Operation\AbstractGraphQLOperation;
-use Nosto\Types\Signup\AccountInterface;
-
 /**
  * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
@@ -38,11 +34,17 @@ use Nosto\Types\Signup\AccountInterface;
  *
  */
 
+namespace Nosto\Operation\Session;
+
+use Nosto\Operation\AbstractGraphQLOperation;
+use Nosto\Types\Signup\AccountInterface;
+use Nosto\Result\Graphql\Session\SessionResultHandler;
+
 class NewSession extends AbstractGraphQLOperation
 {
 
     /** @var boolean */
-    private $onsiteTrackingDisabled;
+    private $doNotTrack;
 
     /**
      * @var AccountInterface Nosto configuration
@@ -56,19 +58,19 @@ class NewSession extends AbstractGraphQLOperation
 
     /**
      * NewSession constructor.
-     * @param bool $onsiteTrackingDisabled
+     * @param bool $doNotTrack
      */
-    public function __construct(AccountInterface $account, bool $onsiteTrackingDisabled, $activeDomain = '')
+    public function __construct(AccountInterface $account, bool $doNotTrack, $activeDomain = '')
     {
-        $this->onsiteTrackingDisabled = $onsiteTrackingDisabled;
+        $this->doNotTrack = $doNotTrack;
         parent::__construct($account, $activeDomain);
     }
 
     public function getQuery()
     {
         return <<<QUERY
-            mutation(\$onsiteTrackingDisabled: Boolean!) {
-                 newSession(customer: { onsiteTrackingDisabled: \$onsiteTrackingDisabled })
+            mutation(\$doNotTrack: Boolean!) {
+                 newSession(customer: { doNotTrack: \$doNotTrack })
             }
             QUERY;
     }
@@ -76,7 +78,7 @@ class NewSession extends AbstractGraphQLOperation
     public function getVariables()
     {
         return [
-            "onsiteTrackingDisabled" => $this->onsiteTrackingDisabled
+            "doNotTrack" => $this->doNotTrack
         ];
     }
 
