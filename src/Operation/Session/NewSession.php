@@ -64,14 +64,14 @@ class NewSession extends AbstractGraphQLOperation
     /**
      * NewSession constructor.
      * @param AccountInterface $account
-     * @param boolean $doNotTrack
      * @param string $referer
+     * @param bool $doNotTrack
      * @param string $activeDomain
      */
-    public function __construct(AccountInterface $account, $doNotTrack, $referer, $activeDomain = '')
+    public function __construct(AccountInterface $account, $referer, $doNotTrack, $activeDomain = '')
     {
-        $this->doNotTrack = $doNotTrack;
         $this->referer = $referer;
+        $this->doNotTrack = $doNotTrack;
         parent::__construct($account, $activeDomain);
     }
 
