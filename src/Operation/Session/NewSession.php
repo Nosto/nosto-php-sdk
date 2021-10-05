@@ -57,14 +57,21 @@ class NewSession extends AbstractGraphQLOperation
     protected $activeDomain;
 
     /**
+     * @var string
+     */
+    private $referer;
+
+    /**
      * NewSession constructor.
      * @param AccountInterface $account
      * @param boolean $doNotTrack
+     * @param string $referer
      * @param string $activeDomain
      */
-    public function __construct(AccountInterface $account, $doNotTrack, $activeDomain = '')
+    public function __construct(AccountInterface $account, $doNotTrack, $referer, $activeDomain = '')
     {
         $this->doNotTrack = $doNotTrack;
+        $this->referer = $referer;
         parent::__construct($account, $activeDomain);
     }
 
@@ -75,8 +82,15 @@ class NewSession extends AbstractGraphQLOperation
     {
         return
 <<<QUERY
-            mutation(\$doNotTrack: Boolean!) {
-                 newSession(customer: { doNotTrack: \$doNotTrack })
+            mutation(
+                \$doNotTrack: Boolean!,
+                \$referer: String!
+            ) {
+                 newSession(
+                    customer: {
+                        referer: \$referer,
+                        doNotTrack: \$doNotTrack
+                    })
             }
 QUERY;
     }
@@ -87,6 +101,7 @@ QUERY;
     public function getVariables()
     {
         return [
+            "referer" => $this->referer,
             "doNotTrack" => $this->doNotTrack
         ];
     }
