@@ -59,10 +59,10 @@ class NewSession extends AbstractGraphQLOperation
     /**
      * NewSession constructor.
      * @param AccountInterface $account
-     * @param bool $doNotTrack
+     * @param boolean $doNotTrack
      * @param string $activeDomain
      */
-    public function __construct(AccountInterface $account, bool $doNotTrack, $activeDomain = '')
+    public function __construct(AccountInterface $account, $doNotTrack, $activeDomain = '')
     {
         $this->doNotTrack = $doNotTrack;
         parent::__construct($account, $activeDomain);
@@ -71,19 +71,20 @@ class NewSession extends AbstractGraphQLOperation
     /**
      * @return string
      */
-    public function getQuery(): string
+    public function getQuery()
     {
-        return <<<QUERY
+        return
+<<<QUERY
             mutation(\$doNotTrack: Boolean!) {
                  newSession(customer: { doNotTrack: \$doNotTrack })
             }
-            QUERY;
+QUERY;
     }
 
     /**
      * @return array
      */
-    public function getVariables(): array
+    public function getVariables()
     {
         return [
             "doNotTrack" => $this->doNotTrack
@@ -93,7 +94,7 @@ class NewSession extends AbstractGraphQLOperation
     /**
      * @return SessionResultHandler
      */
-    protected function getResultHandler(): SessionResultHandler
+    protected function getResultHandler()
     {
         return new SessionResultHandler();
     }
