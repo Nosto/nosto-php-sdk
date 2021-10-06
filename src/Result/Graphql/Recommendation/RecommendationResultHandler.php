@@ -97,24 +97,4 @@ class RecommendationResultHandler extends GraphQLResultHandler
         }
         return $resultSet;
     }
-
-    /**
-     * @param stdClass $stdClass
-     * @param string $dataType
-     * @return string|int|stdClass|array
-     * @throws NostoException
-     */
-    private static function parseData(stdClass $stdClass, $dataType)
-    {
-        $members = get_object_vars($stdClass);
-        foreach ($members as $varName => $member) {
-            if ($varName === $dataType) {
-                return $member;
-            }
-            if ($member instanceof stdClass) {
-                return self::parseData($member, $dataType);
-            }
-        }
-        throw new NostoException('Could not find field for ' . $dataType . ' data from response');
-    }
 }
