@@ -87,8 +87,8 @@ class NewSession extends AbstractGraphQLOperation
                 \$referer: String!
             ) {
                  newSession(
+                    referer: \$referer,
                     customer: {
-                        referer: \$referer,
                         doNotTrack: \$doNotTrack
                     })
             }
