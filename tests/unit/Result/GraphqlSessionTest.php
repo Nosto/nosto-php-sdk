@@ -54,7 +54,7 @@ class GraphqlSessionTest extends Test
      */
     public function testSessionIdParsing()
     {
-        $responseBody = '{"data":{"session":{"id":"6176a09a73533e5d8bdad3fa"}}}';
+        $responseBody = '{ "data": { "newSession": "6176a09a73533e5d8bdad3fa" } }';
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
         $request = new HttpRequest();
         $request->setResultHandler(new SessionResultHandler());
@@ -63,5 +63,22 @@ class GraphqlSessionTest extends Test
         $this->specify('Session was created successfully', function () use ($result) {
             $this->assertEquals('6176a09a73533e5d8bdad3fa', $result);
         });
+    }
+
+    /**
+     * Tests when session id is empty
+     */
+    public function testSessionIdParsingWhenEmpty()
+    {
+        $dataType = SessionResultHandler::GRAPHQL_DATA_SESSION;
+        $responseBody = '{ "data": {} }';
+        $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
+        $request = new HttpRequest();
+        $request->setResultHandler(new SessionResultHandler());
+        try {
+            $request->getResultHandler()->parse($response);
+        } catch (Exception $e) {
+            $this->assertEquals('Could not find field for ' . $dataType . ' data from response', $e->getMessage());
+        }
     }
 }
