@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 5.4.1
+* Pass previous exception to NonBuildableProductException constructor
+
 ### 5.4.0
 * Introduce NewSession operation to create a Nosto customer
 
