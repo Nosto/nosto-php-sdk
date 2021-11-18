@@ -62,8 +62,8 @@ class IncludeFilters extends AbstractFilters
     }
 
     /**
-     * @param int $min
-     * @param int $max
+     * @param float $min
+     * @param float $max
      */
     public function setPrice($min, $max)
     {
