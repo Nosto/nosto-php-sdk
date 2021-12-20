@@ -109,13 +109,12 @@ class CategoryMerchandisingResult
     }
 
     /**
-     * @param CategoryMerchandisingResult $result
      * @return array
      */
-    public static function parseProductIds(CategoryMerchandisingResult $result)
+    public static function parseProductIds()
     {
         $productIds = [];
-        foreach ($result->getResultSet() as $item) {
+        foreach ($this->getResultSet() as $item) {
             if ($item->getProductId() && is_numeric($item->getProductId())) {
                 $productIds[] = $item->getProductId();
             }
