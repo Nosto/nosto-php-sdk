@@ -34,84 +34,51 @@
  *
  */
 
-namespace Nosto\Result\Graphql\Recommendation;
+namespace Nosto\Test\Unit\Result;
 
-class CategoryMerchandisingResult
+use Codeception\Specify;
+use Codeception\TestCase\Test;
+use Exception;
+use Nosto\NostoException;
+use Nosto\Request\Http\HttpResponse;
+use Nosto\Request\Http\HttpRequest;
+use Nosto\Result\Graphql\Session\SessionResultHandler;
+
+class GraphqlSessionTest extends Test
 {
-    /** @var ResultSet $resultSet */
-    private $resultSet;
-
-    /** @var string $trackingCode */
-    private $trackingCode;
-
-    /** @var int $totalPrimaryCount */
-    private $totalPrimaryCount;
-
-    /** @var string $batchToken */
-    private $batchToken;
+    use Specify;
 
     /**
-     * CategoryMerchandisingResult constructor.
-     * @param ResultSet $resultSet
-     * @param string $trackingCode
-     * @param int $totalPrimaryCount
-     * @param string $batchToken
+     * Tests that session id is parsed correctly
+     * @throws Exception
      */
-    public function __construct(
-        ResultSet $resultSet,
-        $trackingCode,
-        $totalPrimaryCount,
-        $batchToken
-    ) {
-        $this->resultSet = $resultSet;
-        $this->trackingCode = $trackingCode;
-        $this->totalPrimaryCount = $totalPrimaryCount;
-        $this->batchToken = $batchToken;
+    public function testSessionIdParsing()
+    {
+        $responseBody = '{ "data": { "newSession": "6176a09a73533e5d8bdad3fa" } }';
+        $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
+        $request = new HttpRequest();
+        $request->setResultHandler(new SessionResultHandler());
+        $result = $request->getResultHandler()->parse($response);
+
+        $this->specify('Session was created successfully', function () use ($result) {
+            $this->assertEquals('6176a09a73533e5d8bdad3fa', $result);
+        });
     }
 
     /**
-     * @return ResultSet
+     * Tests when session id is empty
      */
-    public function getResultSet()
+    public function testSessionIdParsingWhenEmpty()
     {
-        return $this->resultSet;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTrackingCode()
-    {
-        return $this->trackingCode;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTotalPrimaryCount()
-    {
-        return $this->totalPrimaryCount;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBatchToken()
-    {
-        return $this->batchToken;
-    }
-
-    /**
-     * @return array
-     */
-    public function parseProductIds()
-    {
-        $productIds = [];
-        foreach ($this->getResultSet() as $item) {
-            if ($item->getProductId() && is_numeric($item->getProductId())) {
-                $productIds[] = $item->getProductId();
-            }
+        $dataType = SessionResultHandler::GRAPHQL_DATA_SESSION;
+        $responseBody = '{ "data": {} }';
+        $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
+        $request = new HttpRequest();
+        $request->setResultHandler(new SessionResultHandler());
+        try {
+            $request->getResultHandler()->parse($response);
+        } catch (Exception $e) {
+            $this->assertEquals('Could not find field for ' . $dataType . ' data from response', $e->getMessage());
         }
-        return $productIds;
     }
 }

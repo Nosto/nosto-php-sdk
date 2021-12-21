@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 5.5.0
+* Add GraphQL session tests
+* Add functionality to parse the list of product ids inside CategoryMerchandisingResult
+
 ### 5.4.2
 * Fix `setPrice` function signature to build CM filters
 

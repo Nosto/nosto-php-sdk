@@ -141,4 +141,22 @@ class GraphqlCMPTest extends Test
             $this->assertEquals($resultSet->getResultSet()->count(), 0);
         });
     }
+
+    /**
+     * Tests if product ids are parsed
+     */
+    public function testParsingProductIds()
+    {
+        $responseBody = '{ "data": { "updateSession": { "id": "5d481e38c10ea0f265eb2f5c", "recos": { "category": { "primary": [ { "productId": "276", "priceText": "€42.00", "name": "Beaumont Summit Kit", "imageUrl": "https://nailgun.dev.nos.to/quick/magento-e4fde459/10/276/09896ff88fcd5bdfc3b2104fb2e3b20982e232d3d102d3087eea57004b6de40ba/A", "url": "http://magento2.dev.nos.to/beaumont-summit-kit.html" }, { "productId": "292", "priceText": "€51.00", "name": "Hyperion Elements Jacket", "imageUrl": "https://nailgun.dev.nos.to/quick/magento-e4fde459/10/292/84065088529bf50501c637a95ad2062d0e0bb4f3061df11b4b2448c26cd32cb9a/A", "url": "http://magento2.dev.nos.to/hyperion-elements-jacket.html" } ], "batchToken": "n2MyOTL7AAAAAAAAAAD/", "totalPrimaryCount": 10, "resultId": "graphql" } } } } }';
+        $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
+        $request = new HttpRequest();
+        $request->setResultHandler(new RecommendationResultHandler());
+
+        /** @var CategoryMerchandisingResult $resultSet */
+        $resultSet = $request->getResultHandler()->parse($response);
+
+        $this->specify('result parsed to product ids', function () use ($resultSet) {
+            $this->assertEquals($resultSet->parseProductIds(), ['276', '292']);
+        });
+    }
 }
