@@ -100,4 +100,18 @@ class CategoryMerchandisingResult
     {
         return $this->batchToken;
     }
+
+    /**
+     * @return array
+     */
+    public function parseProductIds()
+    {
+        $productIds = [];
+        foreach ($this->getResultSet() as $item) {
+            if ($item->getProductId() && is_numeric($item->getProductId())) {
+                $productIds[] = $item->getProductId();
+            }
+        }
+        return $productIds;
+    }
 }
