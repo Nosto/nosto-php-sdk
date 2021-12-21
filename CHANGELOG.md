@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
-### 5.4.3
+### 5.5.0
 * Add GraphQL session tests
 * Move product id parsing function from CMP to CategoryMerchandisingResult
 
