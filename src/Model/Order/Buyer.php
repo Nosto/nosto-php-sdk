@@ -66,18 +66,17 @@ class Buyer extends AbstractPerson implements
     public function sanitize()
     {
         $sanitized = clone $this;
-//        $sanitized->setMarketingPermission(null);
         $sanitized->setCountry(null);
-        $sanitized->setFirstName(null);
-        $sanitized->setLastName(null);
-        $sanitized->setEmail(null);
-        $sanitized->setPhone(null);
-        $sanitized->setPostCode(null);
+        $sanitized->setFirstName('');
+        $sanitized->setLastName('');
+        $sanitized->setEmail('');
+        $sanitized->setPhone('');
+        $sanitized->setPostCode('');
         $sanitized->setGender(null);
-        $sanitized->setDateOfBirth(null);
-        $sanitized->setRegion(null);
-        $sanitized->setCity(null);
-        $sanitized->setStreet(null);
+        $sanitized->setDateOfBirth('');
+        $sanitized->setRegion('');
+        $sanitized->setCity('');
+        $sanitized->setStreet('');
         return $sanitized;
     }
 
