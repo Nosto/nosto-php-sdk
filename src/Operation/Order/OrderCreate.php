@@ -150,9 +150,6 @@ class OrderCreate extends AbstractGraphQLOperation
             mutation(
                 \$by: LookupParams!,
                 \$customerIdentifier: String!
-                \$firstname:String,
-                \$lastname: String,
-                \$email: String,
                 \$marketingPermission: Boolean,
                 \$orderNumber: String!,
                 \$orderStatus: String!,
@@ -165,9 +162,6 @@ class OrderCreate extends AbstractGraphQLOperation
                     id: \$customerIdentifier,
                     params: {
                         customer: {
-                            firstName: \$firstname
-                            lastName: \$lastname
-                            email: \$email
                             marketingPermission: \$marketingPermission
                         }
                         order: {
@@ -203,9 +197,6 @@ QUERY;
         $buyer = $this->getCustomer();
         if ($buyer !== null) {
             $array = array_merge($array, [
-                'firstname' => $buyer->getFirstName(),
-                'lastname' => $buyer->getLastName(),
-                'email' => $buyer->getEmail(),
                 'marketingPermission' => $buyer->getMarketingPermission()
             ]);
         }

@@ -36,11 +36,22 @@
 
 namespace Nosto\Types\Order;
 
-use Nosto\Types\PersonInterface;
-
 /**
  * Interface for buyer information of an OrderConfirm.
  */
-interface BuyerInterface extends PersonInterface
+interface BuyerInterface
 {
+    /**
+     * The country of the user
+     *
+     * @return string|null
+     */
+    public function getCountry();
+
+    /**
+     * The opt-in status for user
+     *
+     * @return boolean
+     */
+    public function getMarketingPermission();
 }
