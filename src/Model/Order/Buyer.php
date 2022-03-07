@@ -72,7 +72,7 @@ class Buyer extends AbstractPerson implements
         $sanitized->setEmail('');
         $sanitized->setPhone('');
         $sanitized->setPostCode('');
-        $sanitized->setGender(null);
+        $sanitized->setGender('');
         $sanitized->setDateOfBirth('');
         $sanitized->setRegion('');
         $sanitized->setCity('');
