@@ -53,7 +53,7 @@ class BuyerTest extends Test
         $person = new MockBuyer();
         $person->setMarketingPermission(true);
         $this->assertEquals(
-            '<div class="notranslate" style="display:none">  <span class="buyer" style="display:none">    <span class="first_name">James</span>    <span class="last_name">Kirk</span>    <span class="email">james.kirk@example.com</span>    <span class="marketing_permission">1</span>  </span></div>',
+			'<div class="notranslate" style="display:none">  <span class="buyer" style="display:none">    <span class="first_name">James</span>    <span class="last_name">Kirk</span>    <span class="email">james.kirk@example.com</span>    <span class="marketing_permission">1</span>  </span></div>',
             UnitHelper::stripLineBreaks($person->toHtml())
         );
     }
@@ -65,7 +65,7 @@ class BuyerTest extends Test
     {
         $person = new MockBuyer();
         $this->assertEquals(
-            '<div class="notranslate" style="display:none">  <span class="buyer" style="display:none">    <span class="first_name">James</span>    <span class="last_name">Kirk</span>    <span class="email">james.kirk@example.com</span>    <span class="marketing_permission"></span>  </span></div>',
+			'<div class="notranslate" style="display:none">  <span class="buyer" style="display:none">    <span class="first_name">James</span>    <span class="last_name">Kirk</span>    <span class="email">james.kirk@example.com</span>    <span class="marketing_permission"></span>  </span></div>',
             UnitHelper::stripLineBreaks($person->toHtml())
         );
     }
