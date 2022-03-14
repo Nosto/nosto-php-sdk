@@ -160,6 +160,8 @@ class OrderCreate extends AbstractGraphQLOperation
                     by: \$by,
                     id: \$customerIdentifier,
                     params: {
+                        customer: {
+                        }
                         order: {
                             number: \$orderNumber
                             orderStatus: \$orderStatus
