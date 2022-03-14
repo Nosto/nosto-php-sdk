@@ -43,6 +43,11 @@ class MockBuyer extends Buyer
     public function __construct()
     {
         parent::__construct();
+        $this->setFirstName('James');
+        $this->setLastName('Kirk');
+        $this->setEmail('james.kirk@example.com');
         $this->setCountry('Fi');
+        $this->setPhone('+3580415448451');
+        $this->setPostCode('00200');
     }
 }
