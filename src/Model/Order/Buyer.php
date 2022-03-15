@@ -69,7 +69,7 @@ class Buyer extends AbstractPerson implements
         $sanitized->setPhone(null);
         $sanitized->setPostCode(null);
         $sanitized->setCountry(null);
-
         return $sanitized;
     }
+
 }
