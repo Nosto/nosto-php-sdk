@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
 ### 5.7.0
-* Upgrade dot/env lib to ^3.6
+* Upgrade vlucas/phpdotenv lib to ^3.6
 
 ### 5.6.0
 * Remove personally identifiable information from GraphQL order queries
