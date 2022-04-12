@@ -52,7 +52,7 @@ class ExportHelper extends AbstractExportHelper
     public function encrypt($secret, $data)
     {
         $iv = Random::string(16);
-        $cipher = new AES(Base::MODE_CBC);
+        $cipher = new AES(Base::MODE_3CBC);
         $cipher->setKey($secret);
         $cipher->setIV($iv);
         $cipherText = $cipher->encrypt(SerializationHelper::serialize($data));
