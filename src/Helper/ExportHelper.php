@@ -36,9 +36,9 @@
 
 namespace Nosto\Helper;
 
-use phpseclib\Crypt\AES;
-use phpseclib\Crypt\Base;
-use phpseclib\Crypt\Random;
+use phpseclib3\Crypt\AES;
+use phpseclib3\Crypt\Base;
+use phpseclib3\Crypt\Random;
 
 /**
  * Implementation for the export helper
