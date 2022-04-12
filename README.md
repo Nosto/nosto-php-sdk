@@ -351,7 +351,7 @@ Then install Codeception via composer:
     php composer.phar install
 ```
 
-After that you can install the api-mock server via npm:
+After that you can install the drakov server via npm:
 
 ```bash
     npm install -g drakov
