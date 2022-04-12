@@ -37,7 +37,6 @@
 namespace Nosto\Helper;
 
 use phpseclib3\Crypt\AES;
-use phpseclib3\Crypt\Base;
 use phpseclib3\Crypt\Random;
 
 /**
@@ -52,7 +51,7 @@ class ExportHelper extends AbstractExportHelper
     public function encrypt($secret, $data)
     {
         $iv = Random::string(16);
-        $cipher = new AES(Base::MODE_3CBC);
+        $cipher = new AES(AES::MODE_CBC);
         $cipher->setKey($secret);
         $cipher->setIV($iv);
         $cipherText = $cipher->encrypt(SerializationHelper::serialize($data));
