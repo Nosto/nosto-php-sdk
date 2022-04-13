@@ -1,5 +1,6 @@
 {
   "name": "nosto/php-sdk",
+  "version": 5.8.0,
   "description": "PHP SDK for developing Nosto modules for e-commerce platforms",
   "license": "BSD-3-Clause",
   "require-dev": {
