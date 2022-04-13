@@ -341,7 +341,7 @@ Then run the tests:
 ### Testing new added operation
 
 The SDK unit test uses the apiary as the stub server. The apiary pulls the api-blueprint.md from master branch and builds fake api endpoints based on it.
-A way to test new added operation before merging it to master is using api-mock server (https://www.npmjs.com/package/api-mock) running on Node.
+A way to test new added operation before merging it to master is using Drakov API Bleuprint Mock Server (https://github.com/Aconex/drakov) running on Node.
 
 First cd into the root directory.
 
@@ -351,28 +351,37 @@ Then install Codeception via composer:
     php composer.phar install
 ```
 
-And then install Node (http://nodejs.org/) and the npm package manager (https://www.npmjs.com/). the api-mock doesn't work with latest node. Use node 5.X instead.
+After that you can install the drakov server via npm:
 
 ```bash
-    nvm install 5
+    npm install -g drakov
 ```
 
-After that you can install the api-mock server via npm:
+Update the endpoints in the tests/.env file: 
 
 ```bash
-    npm install -g api-mock
+    NOSTO_API_BASE_URL=localhost:3000
+    NOSTO_OAUTH_BASE_URL=localhost:3000/oauth
+    NOSTO_WEB_HOOK_BASE_URL=http://localhost:3000
+    NOSTO_IFRAME_ORIGIN_REGEXP=(https:\/\/(.*)\.hub\.nosto\.com)|(https:\/\/my\.nosto\.com)
 ```
 
-Then start the api-mock server with the API blueprint:
+Then start the drakov mock server with the API blueprint:
 
 ```bash
-    api-mock tests/api-blueprint.md
+    drakov -f tests/api-blueprint.md
 ```
 
 Then in another window run the tests:
 
 ```bash
     vendor/bin/codecept run
+```
+
+You can pass debugMode flag to the drakov server for debugging purposes:
+
+```bash
+    drakov -f tests/api-blueprint.md --debugMode
 ```
 
 ### Running phpcs
