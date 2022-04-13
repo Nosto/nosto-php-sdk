@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "devDependencies": {
     "grunt": ">=1.3.0",
-    "grunt-contrib-uglify": "~4.0.1",
-    "drakov": "^2.0.1"
+    "grunt-contrib-uglify": "~4.0.1"
   }
 }
