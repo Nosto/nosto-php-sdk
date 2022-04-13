@@ -17,21 +17,41 @@ Account related resources
 + Request (application/json)
 
         {
-            "title": "My Shop",
-            "name": "00000000",
-            "platform": "platform name",
-            "front_page_url": "http://my.shop.com",
+            "api_tokens": [
+                "API_SSO",
+                "API_PRODUCTS",
+                "API_RATES",
+                "API_SETTINGS",
+                "API_EMAIL",
+                "API_APPS"
+            ],
+            "currencies": {
+                "EUR": {
+                    "currency_before_amount": true,
+                    "currency_token": "\u20ac",
+                    "decimal_character": ".",
+                    "decimal_places": 2
+                }
+            },
             "currency_code": "USD",
+            "default_variant_id": "XXX",
+            "front_page_url": "http:\/\/localhost",
             "language_code": "en",
+            "name": "00000000",
             "owner": {
+                "email": "james.kirk@example.com",
                 "first_name": "James",
                 "last_name": "Kirk",
-                "email": "james.kirk@example.com"
+                "marketing_permission": false
             },
-            "billing_details": {
-                "country": "us"
+            "owner_language_code": "en",
+            "platform": "magento",
+            "signup_api_token": {
+                "name": "create",
+                "value": "YBDKYwSqTCzSsU8Bwbg4im2pkHMcgTy9cCX7vevjJwON1UISJIwXOLMM0a8nZY7h"
             },
-            "api_tokens": ["sso", "products"]
+            "title": "My Shop",
+            "use_exchange_rates": false
         }
 
 + Response 200 (application/json)
@@ -86,7 +106,7 @@ Account related resources
 
     + Headers
 
-            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+            Authorization: Basic OnRva2Vu
 
     + Body
 
@@ -201,7 +221,7 @@ Customer related resources
 
     + Headers
 
-            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+            Authorization: Basic OnRva2Vu
 
 + Response 200 (application/json)
 
@@ -218,7 +238,7 @@ Product related resources
 
     + Headers
 
-            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+            Authorization: Basic OnRva2Vu
 
     + Body
 
@@ -243,24 +263,41 @@ Product related resources
 
     + Headers
 
-            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+            Authorization: Basic OnRva2Vu
 
     + Body
 
             [
                 {
-                    "url": "http://my.shop.com/products/test_product.html",
-                    "product_id": 1,
-                    "name": "Test Product",
-                    "image_url": "http://my.shop.com/images/test_product.jpg",
-                    "price": "99.99",
-                    "list_price": "110.99",
-                    "price_currency_code": "USD",
+                    "alternate_image_urls": ["http:\/\/shop.com\/product_alt.jpg"],
                     "availability": "InStock",
-                    "tag1": ["tag1", "tag2"],
-                    "categories": ["/a/b", "/a/b/c"],
-                    "description": "Lorem ipsum dolor sit amet",
-                    "brand": "Super Brand"
+                    "brand":"Super Brand",
+                    "categories": [
+                        "\/Mens",
+                        "\/Mens\/Shoes"
+                    ],
+                    "condition": "Used",
+                    "date_published": "2013-03-05",
+                    "description": "This is a full description",
+                    "google_category": "All",
+                    "gtin":"gtin",
+                    "image_url":"http:\/\/my.shop.com\/images\/test_product.jpg",
+                    "inventory_level":50,
+                    "list_price":110.99,
+                    "name":"Test Product",
+                    "price":99.99,
+                    "price_currency_code":"USD",
+                    "product_id":1,
+                    "rating_value":2.5,
+                    "review_count":99,
+                    "skus":[],
+                    "supplier_cost":22.33,
+                    "tag1":["first"],
+                    "tag2":["second"],
+                    "tag3":["third"],
+                    "url":"http:\/\/my.shop.com\/products\/test_product.html",
+                    "variation_id":"USD",
+                    "variations":[]
                 }
             ]
 
@@ -268,13 +305,141 @@ Product related resources
 
         {}
 
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OnRva2Vu
+
+    + Body
+
+        [
+            {
+                "alternate_image_urls": ["http:\/\/shop.com\/product_alt.jpg"],
+                "availability":"InStock",
+                "brand":"Super Brand",
+                "categories":[
+                    "\/Mens",
+                    "\/Mens\/Shoes"
+                ],
+                "condition":"Used",
+                "date_published":"2013-03-05",
+                "description":"This is a full description",
+                "google_category":"All",
+                "gtin":"gtin",
+                "image_url":"http:\/\/my.shop.com\/images\/test_product.jpg",
+                "inventory_level":50,
+                "list_price":110.99,
+                "name":"Test Product",
+                "price":99.99,
+                "price_currency_code":"USD",
+                "product_id":1,
+                "rating_value":2.5,
+                "review_count":99,
+                "skus":[
+                    {
+                        "availability":"InStock",
+                        "gtin":"gtin",
+                        "id":100,
+                        "image_url":"http:\/\/my.shop.com\/images\/test_product.jpg",
+                        "inventory_level":20,
+                        "list_price":110.99,
+                        "name":"xxxx",
+                        "price":99.99,
+                        "url":"http:\/\/my.shop.com\/products\/test_product.html"
+                    },
+                    {
+                        "availability":"InStock",
+                        "gtin":"gtin",
+                        "id":3,
+                        "image_url":"http:\/\/my.shop.com\/images\/test_product.jpg",
+                        "inventory_level":20,
+                        "list_price":110.99,
+                        "name":"Test Product",
+                        "price":99.99,
+                        "url":"http:\/\/my.shop.com\/products\/test_product.html"
+                    }
+                ],
+                "supplier_cost":22.33,
+                "tag1":["first"],
+                "tag2":["second"],
+                "tag3":["third"],
+                "url":"http:\/\/my.shop.com\/products\/test_product.html",
+                "variation_id":"USD",
+                "variations":[]
+            }
+        ]
+
++ Response 200 (application/json)
+
+        {}
+        
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Basic OnRva2Vu
+
+    + Body
+
+        [
+            {
+                "alternate_image_urls": ["http:\/\/shop.com\/product_alt.jpg"],
+                "availability":"InStock",
+                "brand":"Super Brand",
+                "categories": ["\/Mens","\/Mens\/Shoes"],
+                "condition":"Used",
+                "date_published":"2013-03-05",
+                "description":"This is a full description",
+                "google_category":"All",
+                "gtin":"gtin",
+                "image_url":"http:\/\/my.shop.com\/images\/test_product.jpg",
+                "inventory_level":50,
+                "list_price":110.99,
+                "name":"Test Product",
+                "price":99.99,
+                "price_currency_code":"USD",
+                "product_id":1,
+                "rating_value":2.5,
+                "review_count":99,
+                "skus":[],
+                "supplier_cost":22.33,
+                "tag1":["first"],
+                "tag2":["second"],
+                "tag3":["third"],
+                "url":"http:\/\/my.shop.com\/products\/test_product.html",
+                "variation_id":"USD",
+                "variations":{
+                    "newID":{
+                        "availability":"InStock",
+                        "list_price":110.99,
+                        "price":99.99,
+                        "price_currency_code":"USD",
+                        "variation_id":"newID"
+                    },
+                    "1": {
+                        "availability":"InStock",
+                        "list_price":110.99,
+                        "price":99.99,
+                        "price_currency_code":"USD",
+                        "variation_id":1
+                    }
+                }
+            }
+        ]
+
+
++ Response 200 (application/json)
+
+        {}
+                        
 ### Send product update request [POST]
 
 + Request (application/json)
 
     + Headers
 
-            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+            Authorization: Basic OnRva2Vu
 
     + Body
 
@@ -307,7 +472,7 @@ Product related resources
 
     + Headers
 
-            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+            Authorization: Basic OnRva2Vu
 
     + Body
 
@@ -340,7 +505,7 @@ Product related resources
 
     + Headers
 
-            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+            Authorization: Basic OnRva2Vu
 
     + Body
 
@@ -373,7 +538,7 @@ Product related resources
 
     + Headers
 
-            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+            Authorization: Basic OnRva2Vu
 
     + Body
 
@@ -393,17 +558,26 @@ Product related resources
 
     + Headers
 
-            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
-
+            Authorization: Basic OnRva2Vu
+            
     + Body
 
-            [
-                {
-                    "currency_code": "EUR",
-                    "exchange_rate":"0.1",
-                    "name":"Euros"
+        {
+            "rates": {
+                "Dollars": {
+                    "price_currency_code": "USD",
+                    "rate": 1.29
+                },
+                "Euros": {
+                    "price_currency_code": "EUR",
+                    "rate": 0.1
+                },
+                "Pounds": {
+                    "price_currency_code": "GBP",
+                    "rate": 1.3
                 }
-            ]
+            }
+        }
 
 + Response 200 (application/json)
 
@@ -417,36 +591,25 @@ Product related resources
 
     + Headers
 
-            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+            Authorization: Basic OnRva2Vu
 
     + Body
 
             {
-                "language_code":"en",
-                "currencies":[
-                    {
-                        "code":{
-                            "code":"EUR"
-                        },
-                        "symbol":{
-                            "position":"left",
-                            "symbol":"\u20ac"
-                        },
-                        "format":{
-                            "decimal_symbol":".",
-                            "group_length":3,
-                            "group_symbol":",",
-                            "precision":2
-                        },
-                        "fraction_unit":100,
-                        "default_fraction_decimals":2
+                "currencies": {
+                    "EUR": {
+                        "currency_before_amount":true,
+                        "currency_token":"\u20ac",
+                        "decimal_character":".",
+                        "decimal_places":2
                     }
-                ],
-                "title":"My Shop",
-                "front_page_url":"http:\/\/localhost",
+                },
                 "currency_code":"USD",
-                "use_currency_exchange_rates":false,
-                "default_variation_id":null
+                "default_variant_id":"XXX",
+                "front_page_url":"http:\/\/localhost",
+                "language_code":"en",
+                "title":"My Shop",
+                "use_exchange_rates":false
             }
 
 + Response 200 (application/json)
@@ -467,11 +630,16 @@ Product related resources
 
     + Headers
 
-            Authorization: Basic OjAxMDk4ZDBmYzg0ZGVkN2M0MjI2ODIwZDVkMTIwN2M2OTI0M2NiYjM2MzdkYzRiYzJhMjE2ZGFmY2YwOWQ3ODM=
+            Authorization: Basic OnRva2Vu
 
     + Body
 
-            fname=James&lname=Kirk
+        {
+            "email":"james.kirk@example.com",
+            "first_name":"James",
+            "last_name":"Kirk",
+            "marketing_permission":false
+        }
 
 + Response 200 (application/json)
 

@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 5.8.0
+* Update local mock server from api-mock to drakov, fix failing unit test
+* Upgrade phpseclib/phpseclib lib from 2.0.36 to 3.0.14
+
 ### 5.7.0
 * Upgrade vlucas/phpdotenv lib to ^3.6
 
