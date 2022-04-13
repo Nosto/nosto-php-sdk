@@ -378,7 +378,7 @@ Then in another window run the tests:
     vendor/bin/codecept run
 ```
 
-You can pass debugMode flag to the drakov server for debuggin purposes:
+You can pass debugMode flag to the drakov server for debugging purposes:
 
 ```bash
     drakov -f tests/api-blueprint.md --debugMode
