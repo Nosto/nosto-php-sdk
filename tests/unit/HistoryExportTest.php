@@ -45,8 +45,7 @@ use Nosto\Model\Product\ProductCollection;
 use Nosto\Model\Signup\Account;
 use Nosto\Request\Api\Token;
 use Nosto\Types\Signup\AccountInterface;
-use phpseclib\Crypt\AES;
-use phpseclib\Crypt\Base;
+use phpseclib3\Crypt\AES;
 use Nosto\Test\Support\MockProduct;
 use Nosto\Test\Support\MockOrder;
 
@@ -69,7 +68,7 @@ class HistoryExportTest extends Test
         $cipher_text = (new ExportHelper())->export($this->account, $collection);
 
         $this->specify('check encrypted product data', function () use ($collection, $cipher_text) {
-            $cipher = new AES(Base::MODE_CBC);
+            $cipher = new AES('cbc');
             $cipher->setKey(substr($this->account->getApiToken('sso')->getValue(), 0, 16));
             $cipher->setIV(substr($cipher_text, 0, 16));
             $plain_text = $cipher->decrypt(substr($cipher_text, 16));
@@ -88,7 +87,7 @@ class HistoryExportTest extends Test
         $cipher_text = (new ExportHelper())->export($this->account, $collection);
 
         $this->specify('check encrypted order data', function () use ($collection, $cipher_text) {
-            $cipher = new AES(Base::MODE_CBC);
+            $cipher = new AES('cbc');
             $cipher->setKey(substr($this->account->getApiToken('sso')->getValue(), 0, 16));
             $cipher->setIV(substr($cipher_text, 0, 16));
             $plain_text = $cipher->decrypt(substr($cipher_text, 16));
