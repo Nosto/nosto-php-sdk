@@ -47,6 +47,7 @@ class ExportHelper extends AbstractExportHelper
      */
     public function encrypt($secret, $data)
     {
+        //noinspectionstart PhpUndefinedNamespaceInspections, PhpUndefinedClassInspections
         //Check if phpseclib v3 is used
         //needed for comaptibility with Magento 2.4 versions
         if (class_exists("phpseclib3\Crypt\AES")) {
@@ -60,6 +61,7 @@ class ExportHelper extends AbstractExportHelper
         $cipher->setKey($secret);                                                      // @phan-suppress-current-line PhanUndeclaredClassMethod
         $cipher->setIV($iv);                                                           // @phan-suppress-current-line PhanUndeclaredClassMethod
         $cipherText = $cipher->encrypt(SerializationHelper::serialize($data));         // @phan-suppress-current-line PhanUndeclaredClassMethod
+        //noinspectionend
         // Prepend the IV to the cipher string so that nosto can parse and use it.
         // There is no security concern with sending the IV as plain text.
         $data = $iv . $cipherText;
