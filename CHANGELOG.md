@@ -2,9 +2,6 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
-### 5.8.2
-* Fix compatibility issues with Magento 2.3 (vlucas/phpdotenv and phpseclib/phpseclib)
-
 ### 5.8.1
 * Suppress missing return type for inherit class (Needed to run with PHP 8.1)
 
