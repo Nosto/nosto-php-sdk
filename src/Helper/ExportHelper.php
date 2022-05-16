@@ -1,4 +1,4 @@
-<?php /** @noinspection ALL */
+<?php /** @noinspection  PhpUndefinedNamespaceInspections, PhpUndefinedClassInspections, PhpUnnecessaryFullyQualifiedNameInspections */
 /**
  * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
