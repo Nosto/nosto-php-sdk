@@ -44,7 +44,9 @@ class ExportHelper extends AbstractExportHelper
     /**
      * @inheritdoc
      * @suppress PhanAccessMethodInternal
-     * @noinspection PhpUndefinedNamespaceInspections,PhpUndefinedClassInspections,PhpUnnecessaryFullyQualifiedNameInspections
+     * @noinspection PhpUndefinedNamespaceInspections
+     * @noinspection PhpUndefinedClassInspections
+     * @noinspection PhpUnnecessaryFullyQualifiedNameInspections
      */
     public function encrypt($secret, $data)
     {
