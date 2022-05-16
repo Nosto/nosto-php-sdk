@@ -1,4 +1,4 @@
-<?php /** @noinspection  PhpUndefinedNamespaceInspections, PhpUndefinedClassInspections, PhpUnnecessaryFullyQualifiedNameInspections */
+<?php
 /**
  * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
@@ -44,6 +44,7 @@ class ExportHelper extends AbstractExportHelper
     /**
      * @inheritdoc
      * @suppress PhanAccessMethodInternal
+     * @noinspection PhpUndefinedNamespaceInspections, PhpUndefinedClassInspections, PhpUnnecessaryFullyQualifiedNameInspections
      */
     public function encrypt($secret, $data)
     {
