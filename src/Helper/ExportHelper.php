@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 /**
  * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
@@ -44,22 +44,16 @@ class ExportHelper extends AbstractExportHelper
     /**
      * @inheritdoc
      * @suppress PhanAccessMethodInternal
-     * @noinspection PhpUndefinedNamespaceInspections
      */
     public function encrypt($secret, $data)
     {
         //Check if phpseclib v3 is used
         //needed for comaptibility with Magento 2.4 versions
-        /** @noinspection PhpUnnecessaryFullyQualifiedNameInspections */
         if (class_exists("phpseclib3\Crypt\AES")) {
-            /** @noinspection PhpUnnecessaryFullyQualifiedNameInspections */
             $iv = \phpseclib3\Crypt\Random::string(16);
-            /** @noinspection PhpUnnecessaryFullyQualifiedNameInspections */
             $cipher = new \phpseclib3\Crypt\AES('cbc');
         } else {
-            /** @noinspection PhpUndefinedNamespaceInspections,PhpUndefinedClassInspections,PhpUnnecessaryFullyQualifiedNameInspections */
             $iv = \phpseclib\Crypt\Random::string(16);                           // @phan-suppress-current-line PhanUndeclaredClassMethod
-            /** @noinspection PhpUndefinedNamespaceInspections,PhpUndefinedClassInspections,PhpUnnecessaryFullyQualifiedNameInspections */
             $cipher = new \phpseclib\Crypt\AES(\phpseclib\Crypt\Base::MODE_CBC); // @phan-suppress-current-line PhanUndeclaredClassConstant, PhanUndeclaredClassMethod
         }
 
