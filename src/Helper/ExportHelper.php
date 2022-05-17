@@ -43,7 +43,7 @@ class ExportHelper extends AbstractExportHelper
 {
     /**
      * @inheritdoc
-     * @suppress PhanAccessMethodInternal
+     * @suppress PhanAccessMethodInternal, PhanUndeclaredClassConstant, PhanUndeclaredClassMethod
      */
     public function encrypt($secret, $data)
     {
@@ -53,13 +53,13 @@ class ExportHelper extends AbstractExportHelper
             $iv = \phpseclib3\Crypt\Random::string(16);
             $cipher = new \phpseclib3\Crypt\AES('cbc');
         } else {
-            $iv = \phpseclib\Crypt\Random::string(16);                           // @phan-suppress-current-line PhanUndeclaredClassMethod
-            $cipher = new \phpseclib\Crypt\AES(\phpseclib\Crypt\Base::MODE_CBC); // @phan-suppress-current-line PhanUndeclaredClassConstant, PhanUndeclaredClassMethod
+            $iv = \phpseclib\Crypt\Random::string(16);
+            $cipher = new \phpseclib\Crypt\AES(\phpseclib\Crypt\Base::MODE_CBC);
         }
 
-        $cipher->setKey($secret);                                                      // @phan-suppress-current-line PhanUndeclaredClassMethod
-        $cipher->setIV($iv);                                                           // @phan-suppress-current-line PhanUndeclaredClassMethod
-        $cipherText = $cipher->encrypt(SerializationHelper::serialize($data));         // @phan-suppress-current-line PhanUndeclaredClassMethod
+        $cipher->setKey($secret);
+        $cipher->setIV($iv);
+        $cipherText = $cipher->encrypt(SerializationHelper::serialize($data));
         // Prepend the IV to the cipher string so that nosto can parse and use it.
         // There is no security concern with sending the IV as plain text.
         $data = $iv . $cipherText;
