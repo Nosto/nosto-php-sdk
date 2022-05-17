@@ -1,6 +1,6 @@
 {
   "name": "nosto-php-sdk",
-  "version": "5.8.0",
+  "version": "5.8.2",
   "devDependencies": {
     "grunt": ">=1.3.0",
     "grunt-contrib-uglify": "~4.0.1"
