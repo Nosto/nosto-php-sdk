@@ -59,14 +59,14 @@ abstract class AbstractHttpException extends NostoException
     /**
      * HttpException constructor.
      * @param string $message
-     * @param int|null $code
+     * @param int $code
      * @param Exception|null $previous
      * @param HttpRequest|null $request
      * @param HttpResponse|null $response
      */
     public function __construct(
         $message = "",
-        $code = null,
+        $code = 0,
         Exception $previous = null,
         HttpRequest $request = null,
         HttpResponse $response = null
