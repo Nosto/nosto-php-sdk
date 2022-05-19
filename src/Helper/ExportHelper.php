@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 /**
  * Copyright (c) 2020, Nosto Solutions Ltd
  * All rights reserved.
@@ -36,9 +36,6 @@
 
 namespace Nosto\Helper;
 
-use phpseclib3\Crypt\AES;
-use phpseclib3\Crypt\Random;
-
 /**
  * Implementation for the export helper
  */
@@ -46,12 +43,20 @@ class ExportHelper extends AbstractExportHelper
 {
     /**
      * @inheritdoc
-     * @suppress PhanAccessMethodInternal
+     * @suppress PhanAccessMethodInternal, PhanUndeclaredClassConstant, PhanUndeclaredClassMethod
      */
     public function encrypt($secret, $data)
     {
-        $iv = Random::string(16);
-        $cipher = new AES('cbc');
+        //Check if phpseclib v3 is used
+        //needed for comaptibility with Magento 2.4 versions
+        if (class_exists("phpseclib3\Crypt\AES")) {
+            $iv = \phpseclib3\Crypt\Random::string(16);
+            $cipher = new \phpseclib3\Crypt\AES('cbc');
+        } else {
+            $iv = \phpseclib\Crypt\Random::string(16);
+            $cipher = new \phpseclib\Crypt\AES(\phpseclib\Crypt\Base::MODE_CBC);
+        }
+
         $cipher->setKey($secret);
         $cipher->setIV($iv);
         $cipherText = $cipher->encrypt(SerializationHelper::serialize($data));
