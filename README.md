@@ -52,7 +52,7 @@ Then have a public endpoint ready to handle the return request.
         } catch (NostoException $e) {
             // handle failures
         }
-        // redirect to the admin page where the user can see the account configuration iframe
+        // redirect to the admin page where the user can see the account controls
         .....
     }
     } elseif (isset($_GET['error'])) {
@@ -78,55 +78,31 @@ This should be used when you delete a Nosto account for a shop. It will notify N
     }
 ```
 
-### Get authenticated iframe URL for Nosto account configuration
+### Get authenticated Nosto URL for the account controls
 
-The Nosto account can be created and managed through an iframe that should be accessible to the admin user in the shops
+The Nosto account can be created and managed through the controls that should be accessible to the admin user in the shop's
 backend.
-This iframe will load only content from nosto.com.
+The account controls will redirect to nosto.com.
 
 ```php
     .....
     /**
-     * @var NostoSignup|null $account account with at least the 'SSO' token loaded or null if no account exists yet
-     * @var NostoSignupIframeInterface $meta
-     * @var array $params (optional) extra params to add to the iframe url
+     * @param ConnectionMetadataInterface $connection the connection meta data.
+     * @param AccountInterface|null $account the configuration to return the url for.
+     * @param UserInterface|null $user
+     * @param array $params additional parameters to add to the connection url.
      */
     try
     {
-        $url = Nosto::helper('iframe')->getUrl($meta, $account, $params);
+        $url = Nosto::helper('connection')->getUrl($meta, $account, $user, $params);
     }
     catch (NostoException $e)
     {
         // handle failure
     }
-    // show the iframe to the user with given url
+    // render the link to the user with given url
     .....
 ```
-
-The iframe can communicate with your module through window.postMessage
-(https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage). In order to set this up you can include the JS
-file `src/js/NostoIframe.min.js` on the page where you show the iframe and just init the API.
-
-```js
-    Nosto.iframe({
-        iframeId: "nosto_iframe",
-        urls: {
-            createAccount: "url_to_the_create_account_endpoint_for_current_shop",
-            connectAccount: "url_to_the_connect_account_endpoint_for_current_shop",
-            deleteAccount: "url_to_the_delete_account_endpoint_for_current_shop"
-        },
-        xhrParams: {} // additional xhr params to include in the requests
-    });
-```
-
-The iframe API makes POST requests to the specified endpoints with content-type `application/x-www-form-urlencoded`.
-The response for these requests should always be JSON and include a `redirect_url` key. This url will be used to
-redirect the iframe after the action has been performed. In case of the connect account, the url will be used to
-redirect your browser to the Nosto OAuth server.
-The redirect url also needs to include error/success message keys, if you want to show messages to the user after the
-actions, e.g. when a new account has been created a success message can be shown with instructions. These messages are
-hard-coded in Nosto.
-You do NOT need to use this JS API, but instead set up your own postMessage handler in your application.
 
 ### Sending order confirmations using the Nosto API
 
