@@ -36,9 +36,9 @@
 
 namespace Nosto\Test\Support;
 
-use Nosto\Model\Iframe;
+use Nosto\Model\ConnectionMetadata;
 
-class MockIframe extends Iframe
+class MockConnectionMetadata extends ConnectionMetadata
 {
 
     public function __construct()
