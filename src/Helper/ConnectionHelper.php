@@ -40,35 +40,35 @@ use Nosto\Nosto;
 use Nosto\NostoException;
 use Nosto\Operation\InitiateSso;
 use Nosto\Request\Http\HttpRequest;
-use Nosto\Types\IframeInterface;
+use Nosto\Types\ConnectionMetadataInterface;
 use Nosto\Types\Signup\AccountInterface;
 use Nosto\Types\UserInterface;
 
 /**
- * Iframe helper class for account administration iframe.
+ * Connection helper class for account administration controls.
  */
-final class IframeHelper extends AbstractHelper
+final class ConnectionHelper extends AbstractHelper
 {
-    const IFRAME_URI_INSTALL = '/hub/{platform}/install';
-    const IFRAME_URI_UNINSTALL = '/hub/{platform}/uninstall';
+    const NOSTO_URI_INSTALL = '/hub/{platform}/install';
+    const NOSTO_URI_UNINSTALL = '/hub/{platform}/uninstall';
 
     /**
-     * Returns the url for the account administration iframe.
+     * Returns the url for the account administration view.
      * If the passed account is null, then the url will point to the start page where a new account can be created.
      *
-     * @param IframeInterface $iframe the iframe meta data.
+     * @param ConnectionMetadataInterface $connection the connection meta data.
      * @param AccountInterface|null $account the configuration to return the url for.
      * @param UserInterface|null $user
-     * @param array $params additional parameters to add to the iframe url.
-     * @return string the iframe url.
+     * @param array $params additional parameters to add to the connection url.
+     * @return string the account connection url.
      */
     public static function getUrl(
-        IframeInterface $iframe,
+        ConnectionMetadataInterface $connection,
         AccountInterface $account = null,
         UserInterface $user = null,
         array $params = []
     ) {
-        $defaultParameters = self::getDefaultParams($iframe);
+        $defaultParameters = self::getDefaultParams($connection);
         if ($account instanceof AccountInterface) {
             $missingScopes = $account->getMissingTokens();
             if (!empty($missingScopes)) {
@@ -85,24 +85,24 @@ final class IframeHelper extends AbstractHelper
         if ($account !== null && $user !== null && $account->isConnectedToNosto()) {
             try {
                 $service = new InitiateSso($account);
-                $url = $service->get($user, $iframe->getPlatform()) . '?' . $queryParams;
+                $url = $service->get($user, $connection->getPlatform()) . '?' . $queryParams;
             } catch (NostoException $e) {
                 // If the SSO fails, we show a "remove account" page to the user in OrderConfirm to
                 // allow to remove Nosto and start over.
                 // The only case when this should happen is when the api token for some
                 // reason is invalid, which is the case when switching between environments.
                 $url = HttpRequest::buildUri(
-                    Nosto::getBaseUrl() . self::IFRAME_URI_UNINSTALL . '?' . $queryParams,
+                    Nosto::getBaseUrl() . self::NOSTO_URI_UNINSTALL . '?' . $queryParams,
                     [
-                        '{platform}' => $iframe->getPlatform(),
+                        '{platform}' => $connection->getPlatform(),
                     ]
                 );
             }
         } else {
             $url = HttpRequest::buildUri(
-                Nosto::getBaseUrl() . self::IFRAME_URI_INSTALL . '?' . $queryParams,
+                Nosto::getBaseUrl() . self::NOSTO_URI_INSTALL . '?' . $queryParams,
                 [
-                    '{platform}' => $iframe->getPlatform(),
+                    '{platform}' => $connection->getPlatform(),
                 ]
             );
         }
@@ -111,27 +111,27 @@ final class IframeHelper extends AbstractHelper
     }
 
     /**
-     * @param IframeInterface $iframe
+     * @param ConnectionMetadataInterface $connection
      * @return array
      */
-    public static function getDefaultParams(IframeInterface $iframe)
+    public static function getDefaultParams(ConnectionMetadataInterface $connection)
     {
         return [
-            'lang' => strtolower($iframe->getLanguageIsoCode()),
-            'ps_version' => $iframe->getVersionPlatform(),
-            'nt_version' => $iframe->getVersionModule(),
-            'product_pu' => $iframe->getPreviewUrlProduct(),
-            'category_pu' => $iframe->getPreviewUrlCategory(),
-            'search_pu' => $iframe->getPreviewUrlSearch(),
-            'cart_pu' => $iframe->getPreviewUrlCart(),
-            'front_pu' => $iframe->getPreviewUrlFront(),
-            'shop_lang' => strtolower($iframe->getLanguageIsoCodeShop()),
-            'shop_name' => $iframe->getShopName(),
-            'unique_id' => $iframe->getUniqueId(),
-            'fname' => $iframe->getFirstName(),
-            'lname' => $iframe->getLastName(),
-            'email' => $iframe->getEmail(),
-            'modules' => $iframe->getModules()
+            'lang' => strtolower($connection->getLanguageIsoCode()),
+            'ps_version' => $connection->getVersionPlatform(),
+            'nt_version' => $connection->getVersionModule(),
+            'product_pu' => $connection->getPreviewUrlProduct(),
+            'category_pu' => $connection->getPreviewUrlCategory(),
+            'search_pu' => $connection->getPreviewUrlSearch(),
+            'cart_pu' => $connection->getPreviewUrlCart(),
+            'front_pu' => $connection->getPreviewUrlFront(),
+            'shop_lang' => strtolower($connection->getLanguageIsoCodeShop()),
+            'shop_name' => $connection->getShopName(),
+            'unique_id' => $connection->getUniqueId(),
+            'fname' => $connection->getFirstName(),
+            'lname' => $connection->getLastName(),
+            'email' => $connection->getEmail(),
+            'modules' => $connection->getModules()
         ];
     }
 }

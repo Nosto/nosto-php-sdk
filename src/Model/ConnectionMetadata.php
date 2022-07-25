@@ -37,16 +37,16 @@
 namespace Nosto\Model;
 
 use Nosto\AbstractObject;
-use Nosto\Types\IframeInterface;
+use Nosto\Types\ConnectionMetadataInterface;
 
 /**
  * Meta data class which holds information to be sent to the Nosto account
- * configuration iframe.
+ * configuration view.
  */
-class Iframe extends AbstractObject implements IframeInterface
+class ConnectionMetadata extends AbstractObject implements ConnectionMetadataInterface
 {
     /**
-     * @var string the name of the platform the iframe is used on.
+     * @var string the name of the platform the connection is used on.
      */
     private $platform;
     /**
@@ -116,7 +116,7 @@ class Iframe extends AbstractObject implements IframeInterface
     }
 
     /**
-     * The name of the platform the iframe is used on.
+     * The name of the platform the connection is used on.
      * A list of valid platform names is issued by Nosto.
      *
      * @return string the platform name.
@@ -135,7 +135,7 @@ class Iframe extends AbstractObject implements IframeInterface
     }
 
     /**
-     * The first name of the user who is loading the config iframe.
+     * The first name of the user who is loading the connection view.
      *
      * @return string the first name.
      */
@@ -153,7 +153,7 @@ class Iframe extends AbstractObject implements IframeInterface
     }
 
     /**
-     * The last name of the user who is loading the config iframe.
+     * The last name of the user who is loading the connection view.
      *
      * @return string the last name.
      */
@@ -171,7 +171,7 @@ class Iframe extends AbstractObject implements IframeInterface
     }
 
     /**
-     * The email address of the user who is loading the config iframe.
+     * The email address of the user who is loading the connection view.
      *
      * @return string the email address.
      */
@@ -190,7 +190,7 @@ class Iframe extends AbstractObject implements IframeInterface
 
     /**
      * The 2-letter ISO code (ISO 639-1) for the language of the user who is
-     * loading the config iframe.
+     * loading the connection view.
      *
      * @return string the language ISO code.
      */
@@ -288,7 +288,7 @@ class Iframe extends AbstractObject implements IframeInterface
      * An absolute URL for any product page in the shop the account is linked
      * to, with the nostodebug GET parameter enabled.
      * e.g. http://myshop.com/products/product123?nostodebug=true
-     * This is used in the config iframe to allow the user to quickly preview
+     * This is used in the config connection view to allow the user to quickly preview
      * the recommendations on the given page.
      *
      * @return string the url.
@@ -310,7 +310,7 @@ class Iframe extends AbstractObject implements IframeInterface
      * An absolute URL for any category page in the shop the account is linked
      * to, with the nostodebug GET parameter enabled.
      * e.g. http://myshop.com/products/category123?nostodebug=true
-     * This is used in the config iframe to allow the user to quickly preview
+     * This is used in the config connection view to allow the user to quickly preview
      * the recommendations on the given page.
      *
      * @return string the url.
@@ -332,7 +332,7 @@ class Iframe extends AbstractObject implements IframeInterface
      * An absolute URL for the search page in the shop the account is linked
      * to, with the nostodebug GET parameter enabled.
      * e.g. http://myshop.com/search?query=red?nostodebug=true
-     * This is used in the config iframe to allow the user to quickly preview
+     * This is used in the config connection view to allow the user to quickly preview
      * the recommendations on the given page.
      *
      * @return string the url.
@@ -354,7 +354,7 @@ class Iframe extends AbstractObject implements IframeInterface
      * An absolute URL for the shopping cart page in the shop the account is
      * linked to, with the nostodebug GET parameter enabled.
      * e.g. http://myshop.com/cart?nostodebug=true
-     * This is used in the config iframe to allow the user to quickly preview
+     * This is used in the config connection view to allow the user to quickly preview
      * the recommendations on the given page.
      *
      * @return string the url.
@@ -376,7 +376,7 @@ class Iframe extends AbstractObject implements IframeInterface
      * An absolute URL for the front page in the shop the account is linked to,
      * with the nostodebug GET parameter enabled.
      * e.g. http://shop.com?nostodebug=true
-     * This is used in the config iframe to allow the user to quickly preview
+     * This is used in the config connection view to allow the user to quickly preview
      * the recommendations on the given page.
      *
      * @return string the url.
