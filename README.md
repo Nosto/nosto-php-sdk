@@ -363,7 +363,6 @@ Update the endpoints in the tests/.env file:
     NOSTO_API_BASE_URL=localhost:3000
     NOSTO_OAUTH_BASE_URL=localhost:3000/oauth
     NOSTO_WEB_HOOK_BASE_URL=http://localhost:3000
-    NOSTO_IFRAME_ORIGIN_REGEXP=(https:\/\/(.*)\.hub\.nosto\.com)|(https:\/\/my\.nosto\.com)
 ```
 
 Then start the drakov mock server with the API blueprint:
