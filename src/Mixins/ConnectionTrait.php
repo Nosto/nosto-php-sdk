@@ -64,16 +64,10 @@ trait ConnectionTrait
         $defaultParameters = ConnectionHelper::getDefaultParams($connection);
 
         $account = self::getAccount();
-        if ($account instanceof AccountInterface) {
-            $missingScopes = $account->getMissingTokens();
-            if (!empty($missingScopes)) {
-                $defaultParameters['missing_scopes'] = implode(',', $missingScopes);
-            }
-        }
         $queryParams = http_build_query(array_merge($defaultParameters, $params));
 
         $user = self::getUser();
-        if ($account !== null && $user !== null && $account->isConnectedToNosto()) {
+        if ($account !== null && $user !== null && $account->isConnectedToNosto() && !$account->hasMissingTokens()) {
             try {
                 $service = new InitiateSso($account);
                 $url = $service->get($user, $connection->getPlatform()) . '?' . $queryParams;
