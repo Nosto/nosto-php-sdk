@@ -107,51 +107,6 @@ interface ConnectionMetadataInterface
     public function getVersionModule();
 
     /**
-     * An absolute URL for any product page in the shop the account is linked to, with the nostodebug GET parameter
-     * enabled. e.g. http://myshop.com/products/product123?nostodebug=true
-     * This is used in the config connection view to allow the user to quickly preview the recommendations on the given page.
-     *
-     * @return string the url.
-     */
-    public function getPreviewUrlProduct();
-
-    /**
-     * An absolute URL for any category page in the shop the account is linked to, with the nostodebug GET parameter
-     * enabled. e.g. http://myshop.com/products/category123?nostodebug=true
-     * This is used in the config connection view to allow the user to quickly preview the recommendations on the given page.
-     *
-     * @return string the url.
-     */
-    public function getPreviewUrlCategory();
-
-    /**
-     * An absolute URL for the search page in the shop the account is linked to, with the nostodebug GET parameter
-     * enabled. e.g. http://myshop.com/search?query=red?nostodebug=true
-     * This is used in the config connection view to allow the user to quickly preview the recommendations on the given page.
-     *
-     * @return string the url.
-     */
-    public function getPreviewUrlSearch();
-
-    /**
-     * An absolute URL for the cart page in the shop the account is linked to, with the nostodebug GET parameter
-     * enabled. e.g. http://myshop.com/cart?nostodebug=true
-     * This is used in the config connection view to allow the user to quickly preview the recommendations on the given page.
-     *
-     * @return string the url.
-     */
-    public function getPreviewUrlCart();
-
-    /**
-     * An absolute URL for the front page in the shop the account is linked to, with the nostodebug GET parameter
-     * enabled. e.g. http://shop.com?nostodebug=true
-     * This is used in the config connection view to allow the user to quickly preview the recommendations on the given page.
-     *
-     * @return string the url.
-     */
-    public function getPreviewUrlFront();
-
-    /**
      * Returns the name of the shop context where Nosto is installed or about to be installed in.
      *
      * @return string the name.

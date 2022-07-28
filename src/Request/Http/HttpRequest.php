@@ -221,27 +221,6 @@ class HttpRequest
     }
 
     /**
-     * Replaces or adds a query parameters to a url.
-     *
-     * @param array $queryParams the query params to replace.
-     * @param string $url the url.
-     * @return string the updated url.
-     */
-    public static function replaceQueryParamsInUrl(array $queryParams, $url)
-    {
-        if (empty($queryParams)) {
-            return $url;
-        }
-        $parsedUrl = self::parseUrl($url);
-        $queryString = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
-        foreach ($queryParams as $param => $value) {
-            $queryString = self::replaceQueryParam($param, $value, $queryString);
-        }
-        $parsedUrl['query'] = $queryString;
-        return self::buildUrl($parsedUrl);
-    }
-
-    /**
      * Builds the custom-user agent by using the platform's name and version with the
      * plugin version
      *
