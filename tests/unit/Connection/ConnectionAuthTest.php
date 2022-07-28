@@ -78,11 +78,6 @@ class ConnectionAuthTest extends Test
             $this->assertEquals('en', $params['lang']);
             $this->assertEquals('1.0.0', $params['ps_version']);
             $this->assertEquals('0.1.0', $params['nt_version']);
-            $this->assertEquals('http://shop.com/products?nostodebug=true', $params['product_pu']);
-            $this->assertEquals('http://shop.com/category?nostodebug=true', $params['category_pu']);
-            $this->assertEquals('http://shop.com/search?nostodebug=true', $params['search_pu']);
-            $this->assertEquals('http://shop.com/cart?nostodebug=true', $params['cart_pu']);
-            $this->assertEquals('http://shop.com?nostodebug=true', $params['front_pu']);
             $this->assertEquals('en', $params['shop_lang']);
             $this->assertEquals('Shop Name', $params['shop_name']);
             $this->assertEquals('123', $params['unique_id']);
@@ -116,11 +111,6 @@ class ConnectionAuthTest extends Test
             $this->assertEquals('en', $params['lang']);
             $this->assertEquals('1.0.0', $params['ps_version']);
             $this->assertEquals('0.1.0', $params['nt_version']);
-            $this->assertEquals('http://shop.com/products?nostodebug=true', $params['product_pu']);
-            $this->assertEquals('http://shop.com/category?nostodebug=true', $params['category_pu']);
-            $this->assertEquals('http://shop.com/search?nostodebug=true', $params['search_pu']);
-            $this->assertEquals('http://shop.com/cart?nostodebug=true', $params['cart_pu']);
-            $this->assertEquals('http://shop.com?nostodebug=true', $params['front_pu']);
             $this->assertEquals('en', $params['shop_lang']);
             $this->assertEquals('Shop Name', $params['shop_name']);
             $this->assertEquals('123', $params['unique_id']);
@@ -152,11 +142,6 @@ class ConnectionAuthTest extends Test
             $this->assertEquals('en', $params['lang']);
             $this->assertEquals('1.0.0', $params['ps_version']);
             $this->assertEquals('0.1.0', $params['nt_version']);
-            $this->assertEquals('http://shop.com/products?nostodebug=true', $params['product_pu']);
-            $this->assertEquals('http://shop.com/category?nostodebug=true', $params['category_pu']);
-            $this->assertEquals('http://shop.com/search?nostodebug=true', $params['search_pu']);
-            $this->assertEquals('http://shop.com/cart?nostodebug=true', $params['cart_pu']);
-            $this->assertEquals('http://shop.com?nostodebug=true', $params['front_pu']);
             $this->assertEquals('en', $params['shop_lang']);
             $this->assertEquals('Shop Name', $params['shop_name']);
             $this->assertEquals('123', $params['unique_id']);
