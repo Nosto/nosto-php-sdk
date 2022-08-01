@@ -36,19 +36,14 @@
 
 namespace Nosto\Test\Support;
 
-use Nosto\Model\Iframe;
+use Nosto\Model\ConnectionMetadata;
 
-class MockIframe extends Iframe
+class MockConnectionMetadata extends ConnectionMetadata
 {
 
     public function __construct()
     {
         parent::__construct();
-        $this->setPreviewUrlProduct('http://shop.com/products?nostodebug=true');
-        $this->setPreviewUrlCategory('http://shop.com/category?nostodebug=true');
-        $this->setPreviewUrlSearch('http://shop.com/search?nostodebug=true');
-        $this->setPreviewUrlCart('http://shop.com/cart?nostodebug=true');
-        $this->setPreviewUrlFront('http://shop.com?nostodebug=true');
         $this->setShopName('Shop Name');
         $this->setModules(['yotpo', 'klarna']);
         $this->setFirstName('James');

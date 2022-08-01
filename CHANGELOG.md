@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 5.9.0
+* Remove NostoIframe.js and all references to the iframe
+* Remove NPM and Gruntfile
+
 ### 5.8.2
 * Add support for both version 2 and 3 of phpseclib/phpseclib library (for compatibility with Magento versions 2.3.x and 2.4.x)
 
