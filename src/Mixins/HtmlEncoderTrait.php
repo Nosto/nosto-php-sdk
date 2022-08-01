@@ -41,7 +41,7 @@ use Nosto\NostoException;
 use Nosto\Util\Reflection;
 
 /**
- * Iframe mixin class for account administration iframe.
+ * Connection mixin class for account administration controls.
  */
 trait HtmlEncoderTrait
 {

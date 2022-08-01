@@ -35,39 +35,39 @@
  *
  */
 
-namespace Nosto\Test\Unit\IFrame;
+namespace Nosto\Test\Unit\Connection;
 
 use Codeception\Specify;
 use Codeception\TestCase\Test;
-use Nosto\Mixins\IframeTrait;
+use Nosto\Mixins\ConnectionTrait;
 use Nosto\Nosto;
 use Nosto\Request\Api\Token;
-use Nosto\Test\Support\MockIframe;
+use Nosto\Test\Support\MockConnectionMetadata;
 use Nosto\Test\Support\MockUser;
 use Nosto\Test\Support\MockAccount;
 
-class IframeAuthTest extends Test
+class ConnectionAuthTest extends Test
 {
     use Specify;
-    use IframeTrait;
+    use ConnectionTrait;
 
     private $user;
     private $account;
-    private $iframe;
+    private $connection;
 
     /**
-     * Test that when no account at all is given, the Iframe mixin returns the uninstallation URL
+     * Test that when no account at all is given, the connection mixin returns the uninstallation URL
      * @noinspection DuplicatedCode
      */
-    public function testIframeUrlWithoutAccount()
+    public function testConnectionUrlWithoutAccount()
     {
-        $this->iframe = new MockIframe();
+        $this->connection = new MockConnectionMetadata();
         $this->user = new MockUser();
         $this->account = null;
 
         $baseUrl = Nosto::getBaseUrl();
         $url = self::buildURL();
-        $this->specify('install iframe url was created', function () use ($url, $baseUrl) {
+        $this->specify('Nosto install url was created', function () use ($url, $baseUrl) {
             $url = parse_url($url);
             parse_str($url['query'], $params);
 
@@ -78,11 +78,6 @@ class IframeAuthTest extends Test
             $this->assertEquals('en', $params['lang']);
             $this->assertEquals('1.0.0', $params['ps_version']);
             $this->assertEquals('0.1.0', $params['nt_version']);
-            $this->assertEquals('http://shop.com/products?nostodebug=true', $params['product_pu']);
-            $this->assertEquals('http://shop.com/category?nostodebug=true', $params['category_pu']);
-            $this->assertEquals('http://shop.com/search?nostodebug=true', $params['search_pu']);
-            $this->assertEquals('http://shop.com/cart?nostodebug=true', $params['cart_pu']);
-            $this->assertEquals('http://shop.com?nostodebug=true', $params['front_pu']);
             $this->assertEquals('en', $params['shop_lang']);
             $this->assertEquals('Shop Name', $params['shop_name']);
             $this->assertEquals('123', $params['unique_id']);
@@ -93,12 +88,12 @@ class IframeAuthTest extends Test
     }
 
     /**
-     * Test that when an account with all the expected SSO tokens is given, the Iframe mixin
+     * Test that when an account with all the expected SSO tokens is given, the connection mixin
      * returns the correct URL
      */
-    public function testIframeWithAccount()
+    public function testConnectionWithAccount()
     {
-        $this->iframe = new MockIframe();
+        $this->connection = new MockConnectionMetadata();
         $this->user = new MockUser();
         $this->account = new MockAccount();
         $token = new Token('sso', 'token');
@@ -106,7 +101,7 @@ class IframeAuthTest extends Test
 
         $baseUrl = Nosto::getBaseUrl();
         $url = self::buildURL();
-        $this->specify('install iframe url was created', function () use ($url, $baseUrl) {
+        $this->specify('Nosto install url was created', function () use ($url, $baseUrl) {
             $url = parse_url($url);
             parse_str($url['query'], $params);
 
@@ -116,11 +111,6 @@ class IframeAuthTest extends Test
             $this->assertEquals('en', $params['lang']);
             $this->assertEquals('1.0.0', $params['ps_version']);
             $this->assertEquals('0.1.0', $params['nt_version']);
-            $this->assertEquals('http://shop.com/products?nostodebug=true', $params['product_pu']);
-            $this->assertEquals('http://shop.com/category?nostodebug=true', $params['category_pu']);
-            $this->assertEquals('http://shop.com/search?nostodebug=true', $params['search_pu']);
-            $this->assertEquals('http://shop.com/cart?nostodebug=true', $params['cart_pu']);
-            $this->assertEquals('http://shop.com?nostodebug=true', $params['front_pu']);
             $this->assertEquals('en', $params['shop_lang']);
             $this->assertEquals('Shop Name', $params['shop_name']);
             $this->assertEquals('123', $params['unique_id']);
@@ -131,18 +121,18 @@ class IframeAuthTest extends Test
     }
 
     /**
-     * Test that when an account with missing or incorrect API tokens are given, the Iframe mixin
+     * Test that when an account with missing or incorrect API tokens are given, the connection mixin
      * returns the uninstallation URL
      */
-    public function testIframeWithErrors()
+    public function testConnectionWithErrors()
     {
-        $this->iframe = new MockIframe();
+        $this->connection = new MockConnectionMetadata();
         $this->user = new MockUser();
         $this->account = new MockAccount();
 
         $baseUrl = Nosto::getBaseUrl();
         $url = self::buildURL();
-        $this->specify('install iframe url was created', function () use ($url, $baseUrl) {
+        $this->specify('Nosto install url was created', function () use ($url, $baseUrl) {
             $url = parse_url($url);
             parse_str($url['query'], $params);
 
@@ -152,11 +142,6 @@ class IframeAuthTest extends Test
             $this->assertEquals('en', $params['lang']);
             $this->assertEquals('1.0.0', $params['ps_version']);
             $this->assertEquals('0.1.0', $params['nt_version']);
-            $this->assertEquals('http://shop.com/products?nostodebug=true', $params['product_pu']);
-            $this->assertEquals('http://shop.com/category?nostodebug=true', $params['category_pu']);
-            $this->assertEquals('http://shop.com/search?nostodebug=true', $params['search_pu']);
-            $this->assertEquals('http://shop.com/cart?nostodebug=true', $params['cart_pu']);
-            $this->assertEquals('http://shop.com?nostodebug=true', $params['front_pu']);
             $this->assertEquals('en', $params['shop_lang']);
             $this->assertEquals('Shop Name', $params['shop_name']);
             $this->assertEquals('123', $params['unique_id']);
@@ -188,8 +173,8 @@ class IframeAuthTest extends Test
     /**
      * @inheritdoc
      */
-    public function getIframe()
+    public function getConnectionMetadata()
     {
-        return $this->iframe;
+        return $this->connection;
     }
 }
