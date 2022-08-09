@@ -157,6 +157,28 @@ class HttpRequest
     }
 
     /**
+     * Replaces or adds a query parameters to a url.
+     *
+     * @param array $queryParams the query params to replace.
+     * @param string $url the url.
+     * @return string the updated url.
+     */
+    public static function replaceQueryParamsInUrl(array $queryParams, $url)
+    {
+        if (empty($queryParams)) {
+            return $url;
+        }
+        $parsedUrl = self::parseUrl($url);
+        $queryString = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
+        foreach ($queryParams as $param => $value) {
+            $queryString = self::replaceQueryParam($param, $value, $queryString);
+        }
+        $parsedUrl['query'] = $queryString;
+        return self::buildUrl($parsedUrl);
+    }
+
+
+    /**
      * Parses the given url and returns the parts as an array.
      *
      * @see http://php.net/manual/en/function.parse-url.php
