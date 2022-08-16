@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 6.0.1
+* Bring the function that replaces or adds a query parameters to a url back in the HttpRequest class
+
 ### 6.0.0
 * Remove NostoIframe.js and all references to the iframe
 * Remove NPM and Gruntfile
