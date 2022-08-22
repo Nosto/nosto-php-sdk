@@ -80,7 +80,6 @@ class ConnectionAuthTest extends Test
             $this->assertEquals('0.1.0', $params['nt_version']);
             $this->assertEquals('en', $params['shop_lang']);
             $this->assertEquals('Shop Name', $params['shop_name']);
-            $this->assertEquals('123', $params['unique_id']);
             $this->assertEquals('James', $params['fname']);
             $this->assertEquals('Kirk', $params['lname']);
             $this->assertEquals('james.kirk@example.com', $params['email']);
@@ -113,7 +112,6 @@ class ConnectionAuthTest extends Test
             $this->assertEquals('0.1.0', $params['nt_version']);
             $this->assertEquals('en', $params['shop_lang']);
             $this->assertEquals('Shop Name', $params['shop_name']);
-            $this->assertEquals('123', $params['unique_id']);
             $this->assertEquals('James', $params['fname']);
             $this->assertEquals('Kirk', $params['lname']);
             $this->assertEquals('james.kirk@example.com', $params['email']);
@@ -144,7 +142,6 @@ class ConnectionAuthTest extends Test
             $this->assertEquals('0.1.0', $params['nt_version']);
             $this->assertEquals('en', $params['shop_lang']);
             $this->assertEquals('Shop Name', $params['shop_name']);
-            $this->assertEquals('123', $params['unique_id']);
             $this->assertEquals('James', $params['fname']);
             $this->assertEquals('Kirk', $params['lname']);
             $this->assertEquals('james.kirk@example.com', $params['email']);
