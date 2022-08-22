@@ -51,7 +51,6 @@ class MockConnectionMetadata extends ConnectionMetadata
         $this->setEmail('james.kirk@example.com');
         $this->setLanguageIsoCode('en');
         $this->setLanguageIsoCodeShop('en');
-        $this->setUniqueId('123');
         $this->setPlatform('platform');
         $this->setVersionPlatform('1.0.0');
         $this->setVersionModule('0.1.0');

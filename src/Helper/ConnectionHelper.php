@@ -122,7 +122,6 @@ final class ConnectionHelper extends AbstractHelper
             'nt_version' => $connection->getVersionModule(),
             'shop_lang' => strtolower($connection->getLanguageIsoCodeShop()),
             'shop_name' => $connection->getShopName(),
-            'unique_id' => $connection->getUniqueId(),
             'fname' => $connection->getFirstName(),
             'lname' => $connection->getLastName(),
             'email' => $connection->getEmail(),
