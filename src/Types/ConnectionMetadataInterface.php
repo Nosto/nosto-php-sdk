@@ -85,14 +85,6 @@ interface ConnectionMetadataInterface
     public function getLanguageIsoCodeShop();
 
     /**
-     * Unique identifier for the e-commerce installation.
-     * This identifier is used to link accounts together that are created on the same installation.
-     *
-     * @return string the identifier.
-     */
-    public function getUniqueId();
-
-    /**
      * The version number of the platform the e-commerce installation is running on.
      *
      * @return string the platform version.

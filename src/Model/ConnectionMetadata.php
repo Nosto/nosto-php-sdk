@@ -70,10 +70,6 @@ class ConnectionMetadata extends AbstractObject implements ConnectionMetadataInt
      */
     private $languageIsoCodeShop;
     /**
-     * @var string unique ID that identifies the installation.
-     */
-    private $uniqueId;
-    /**
      * @var string the name of the store Nosto is installed in or about to be installed.
      */
     private $shopName;
@@ -204,26 +200,6 @@ class ConnectionMetadata extends AbstractObject implements ConnectionMetadataInt
     public function setLanguageIsoCodeShop($languageIsoCodeShop)
     {
         $this->languageIsoCodeShop = $languageIsoCodeShop;
-    }
-
-    /**
-     * Unique identifier for the e-commerce installation.
-     * This identifier is used to link accounts together that are created on
-     * the same installation.
-     *
-     * @return string the identifier.
-     */
-    public function getUniqueId()
-    {
-        return $this->uniqueId;
-    }
-
-    /**
-     * @param string $uniqueId
-     */
-    public function setUniqueId($uniqueId)
-    {
-        $this->uniqueId = $uniqueId;
     }
 
     /**
