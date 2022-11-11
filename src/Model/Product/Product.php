@@ -123,6 +123,11 @@ class Product extends AbstractObject implements
     private $categories;
 
     /**
+     * @var array collection of product category strings.
+     */
+    private $categoryIds;
+
+    /**
      * @var string the product description.
      */
     private $description;
@@ -569,6 +574,24 @@ class Product extends AbstractObject implements
     public function setCategories($categories)
     {
         $this->categories->setData($categories);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCategoryIds()
+    {
+        return $this->categoryIds;
+    }
+
+    /**
+     * Sets the product category ids.
+     *
+     * @param array $categoryIds the category ids.
+     */
+    public function setCategoryIds(array $categoryIds)
+    {
+        $this->categoryIds = $categoryIds;
     }
 
     /**
