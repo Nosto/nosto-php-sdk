@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 6.1.0
+* Add category ids to the product model
+
 ### 6.0.2
 * Remove unique platform installation id from connection parameters
 
