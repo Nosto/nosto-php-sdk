@@ -80,8 +80,7 @@ class NewSession extends AbstractGraphQLOperation
      */
     public function getQuery()
     {
-        return
-<<<QUERY
+        return <<<QUERY
             mutation(
                 \$doNotTrack: Boolean!,
                 \$referer: String!
