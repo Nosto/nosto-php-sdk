@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2020, Nosto Solutions Ltd
+ * Copyright (c) 2023, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -34,42 +34,22 @@
  *
  */
 
-namespace Nosto\Types;
+namespace Nosto\Model;
 
-interface CategoryInterface
+use Nosto\Model\AbstractCollection;
+
+/**
+ * Collection class to store a collection of categories
+ */
+class CategoryCollection extends AbstractCollection
 {
     /**
-     * Get the id of the category
+     * Appends a product to the collection of categories
      *
-     * @return string
+     * @param string $category the category to append
      */
-    public function getId();
-
-    /**
-     * Get parent category id
-     *
-     * @return string
-     */
-    public function getParentId();
-
-    /**
-     * Get the title of the category
-     *
-     * @return string
-     */
-    public function getTitle();
-
-    /**
-     * The full path of the category
-     *
-     * @return string
-     */
-    public function getPath();
-
-    /**
-     * Get the url
-     *
-     * @return string
-     */
-    public function getUrl();
+    public function append(string $category)
+    {
+        $this->var[] = $category;
+    }
 }
