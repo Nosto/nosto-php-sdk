@@ -34,7 +34,7 @@
  *
  */
 
-namespace Nosto\Model;
+namespace Nosto\Model\Category;
 
 use Nosto\Mixins\HtmlEncoderTrait;
 use Nosto\Types\CategoryInterface;
