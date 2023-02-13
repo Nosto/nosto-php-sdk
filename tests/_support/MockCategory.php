@@ -43,12 +43,9 @@ class MockCategory extends Category
     public function __construct()
     {
         $this->setId("10");
-        $this->setUrl('http://magento1.dev.nos.to/women/women-new-arrivals.html');
-        $this->setLevel('3');
-        $this->setVisibleInMenu(true);
-        $this->setImageUrl('http://magento1.dev.nos.to/media/catalog/category/plp-w-newarrivals_1.jpg');
-        $this->setName('New Arrivals');
         $this->setParentId(4);
-        $this->setCategoryString('/Women/New Arrivals');
+        $this->setTitle('New Arrivals');
+        $this->setPath('/Women/New Arrivals');
+        $this->setUrl('http://magento1.dev.nos.to/women/women-new-arrivals.html');
     }
 }
