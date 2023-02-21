@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2020, Nosto Solutions Ltd
+ * Copyright (c) 2023, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -34,18 +34,23 @@
  *
  */
 
-namespace Nosto\Test\Support;
+namespace Nosto\Model\Category;
 
-use Nosto\Model\Category\Category;
+use Nosto\Model\AbstractCollection;
+use Nosto\Types\CategoryInterface;
 
-class MockCategory extends Category
+/**
+ * Collection class to store a collection of categories
+ */
+class CategoryCollection extends AbstractCollection
 {
-    public function __construct()
+    /**
+     * Appends a product to the collection of categories
+     *
+     * @param CategoryInterface $category the category to append
+     */
+    public function append(CategoryInterface $category)
     {
-        $this->setId("10");
-        $this->setParentId(4);
-        $this->setTitle('New Arrivals');
-        $this->setPath('/Women/New Arrivals');
-        $this->setUrl('http://magento1.dev.nos.to/women/women-new-arrivals.html');
+        $this->var[] = $category;
     }
 }
