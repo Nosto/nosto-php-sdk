@@ -39,13 +39,6 @@ namespace Nosto\Types;
 interface CategoryInterface
 {
     /**
-     * The full path of the category
-     *
-     * @return string
-     */
-    public function getCategoryString();
-
-    /**
      * Get the id of the category
      *
      * @return string
@@ -60,11 +53,18 @@ interface CategoryInterface
     public function getParentId();
 
     /**
-     * Get the name of the category
+     * Get the title of the category
      *
      * @return string
      */
-    public function getName();
+    public function getTitle();
+
+    /**
+     * The full path of the category
+     *
+     * @return string
+     */
+    public function getPath();
 
     /**
      * Get the url
@@ -72,32 +72,4 @@ interface CategoryInterface
      * @return string
      */
     public function getUrl();
-
-    /**
-     * Get the image url
-     *
-     * @return string
-     */
-    public function getImageUrl();
-
-    /**
-     * Get the image thumbnail url
-     *
-     * @return string
-     */
-    public function getThumbnailImageUrl();
-
-    /**
-     * Get the visibleInMenu var
-     *
-     * @return bool
-     */
-    public function getVisibleInMenu();
-
-    /**
-     * Get the level
-     *
-     * @return string
-     */
-    public function getLevel();
 }
