@@ -34,6 +34,7 @@ jobs:
 
     - name: Update project dependencies
       run: |
+        composer config --no-plugins allow-plugins.codeception/c3
         composer install --prefer-dist --no-progress --no-suggest
         composer dump-autoload --optimize
     ############################################################################
