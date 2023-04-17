@@ -44,6 +44,9 @@
     "ext-json": "*",
     "ext-curl": "*"
   },
+  "allow-plugins": {
+    "codeception/c3": true
+  },
   "scripts": {
     "post-install-cmd": "if [ -f ./vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility; fi",
     "post-update-cmd" : "if [ -f ./vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility; fi",
