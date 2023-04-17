@@ -141,7 +141,7 @@ interface ProductInterface extends SanitizableInterface
      *
      * @return array|null list of category strings.
      */
-    public function getCategoryIds();
+    public function getCategoryId();
 
     /**
      * Returns the product description.

@@ -125,7 +125,7 @@ class Product extends AbstractObject implements
     /**
      * @var array collection of product category strings.
      */
-    private $categoryIds;
+    private $categoryId;
 
     /**
      * @var string the product description.
@@ -579,19 +579,19 @@ class Product extends AbstractObject implements
     /**
      * @inheritdoc
      */
-    public function getCategoryIds()
+    public function getCategoryId()
     {
-        return $this->categoryIds;
+        return $this->categoryId;
     }
 
     /**
      * Sets the product category ids.
      *
-     * @param array $categoryIds the category ids.
+     * @param array $categoryId the category ids.
      */
-    public function setCategoryIds(array $categoryIds)
+    public function setCategoryIds(array $categoryId)
     {
-        $this->categoryIds = $categoryIds;
+        $this->categoryId = $categoryId;
     }
 
     /**
