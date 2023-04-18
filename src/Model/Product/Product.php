@@ -590,7 +590,7 @@ class Product extends AbstractObject implements
      *
      * @param array $categoryIds the category ids.
      */
-    public function setCategoryIds(array $categoryIds): void
+    public function setCategoryIds(array $categoryIds)
     {
         $this->categoryIds->setData($categoryIds);
     }
