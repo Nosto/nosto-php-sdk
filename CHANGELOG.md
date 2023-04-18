@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 6.2.1
+* Fix an issue that would cause category id's to be removed by the crawler 
+
 ### 6.2.0
 * Remove DeleteProduct operation
 
