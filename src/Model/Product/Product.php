@@ -123,9 +123,9 @@ class Product extends AbstractObject implements
     private $categories;
 
     /**
-     * @var array collection of product category strings.
+     * @var StringCollection collection of product category strings.
      */
-    private $categoryId;
+    private $categoryIds;
 
     /**
      * @var string the product description.
@@ -265,6 +265,7 @@ class Product extends AbstractObject implements
         $this->tag3 = new StringCollection('tags3', 'tag');
         $this->alternateImageUrls = new StringCollection('alternate_image_urls', 'alternate_image_url');
         $this->categories = new StringCollection('categories', 'category');
+        $this->categoryIds = new StringCollection('categoryIds', 'categoryId');
     }
 
     /**
@@ -579,19 +580,19 @@ class Product extends AbstractObject implements
     /**
      * @inheritdoc
      */
-    public function getCategoryId()
+    public function getCategoryIds()
     {
-        return $this->categoryId;
+        return $this->categoryIds->getData();
     }
 
     /**
      * Sets the product category ids.
      *
-     * @param array $categoryId the category ids.
+     * @param array $categoryIds the category ids.
      */
-    public function setCategoryIds(array $categoryId)
+    public function setCategoryIds(array $categoryIds): void
     {
-        $this->categoryId = $categoryId;
+        $this->categoryIds->setData($categoryIds);
     }
 
     /**
