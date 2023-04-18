@@ -265,7 +265,7 @@ class Product extends AbstractObject implements
         $this->tag3 = new StringCollection('tags3', 'tag');
         $this->alternateImageUrls = new StringCollection('alternate_image_urls', 'alternate_image_url');
         $this->categories = new StringCollection('categories', 'category');
-        $this->categoryIds = new StringCollection('categoryIds', 'categoryId');
+        $this->categoryIds = new StringCollection('category_ids', 'category_id');
     }
 
     /**
