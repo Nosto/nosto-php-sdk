@@ -34,7 +34,7 @@
  *
  */
 
-namespace Nosto\Model;
+namespace Nosto\Model\Category;
 
 use Nosto\Mixins\HtmlEncoderTrait;
 use Nosto\Types\CategoryInterface;
@@ -53,11 +53,6 @@ class Category extends AbstractObject implements
     use HtmlEncoderTrait;
 
     /**
-     * @var string categoryString
-     */
-    private $categoryString;
-
-    /**
      * @var string id
      */
     private $id;
@@ -68,9 +63,9 @@ class Category extends AbstractObject implements
     private $parentId;
 
     /**
-     * @var string name
+     * @var string title
      */
-    private $name;
+    private $title;
 
     /**
      * @var string url
@@ -78,40 +73,9 @@ class Category extends AbstractObject implements
     private $url;
 
     /**
-     * @var string imageUrl
+     * @var string path
      */
-    private $imageUrl;
-
-    /**
-     * @var string thumbnailImageUrl
-     */
-    private $thumbnailImageUrl;
-
-    /**
-     * @var bool
-     */
-    private $visibleInMenu;
-
-    /**
-     * @var string level
-     */
-    private $level;
-
-    /**
-     * @return string
-     */
-    public function getCategoryString()
-    {
-        return $this->categoryString;
-    }
-
-    /**
-     * @param string $categoryString
-     */
-    public function setCategoryString($categoryString)
-    {
-        $this->categoryString = $categoryString;
-    }
+    private $path;
 
     /**
      * @return string
@@ -148,17 +112,33 @@ class Category extends AbstractObject implements
     /**
      * @return string
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**
-     * @param string $name
+     * @param string $title
      */
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
+        $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $path
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
     }
 
     /**
@@ -175,70 +155,6 @@ class Category extends AbstractObject implements
     public function setUrl($url)
     {
         $this->url = $url;
-    }
-
-    /**
-     * @return string
-     */
-    public function getImageUrl()
-    {
-        return $this->imageUrl;
-    }
-
-    /**
-     * @param string $imageUrl
-     */
-    public function setImageUrl($imageUrl)
-    {
-        $this->imageUrl = $imageUrl;
-    }
-
-    /**
-     * @return string
-     */
-    public function getThumbnailImageUrl()
-    {
-        return $this->thumbnailImageUrl;
-    }
-
-    /**
-     * @param string $thumbnailImageUrl
-     */
-    public function setThumbnailImageUrl($thumbnailImageUrl)
-    {
-        $this->thumbnailImageUrl = $thumbnailImageUrl;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getVisibleInMenu()
-    {
-        return $this->visibleInMenu;
-    }
-
-    /**
-     * @param $visibleInMenu
-     */
-    public function setVisibleInMenu($visibleInMenu)
-    {
-        $this->visibleInMenu = $visibleInMenu ? true : false;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLevel()
-    {
-        return $this->level;
-    }
-
-    /**
-     * @param int|string $level
-     */
-    public function setLevel($level)
-    {
-        $this->level = $level;
     }
 
     /**

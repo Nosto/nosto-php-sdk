@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2020, Nosto Solutions Ltd
+ * Copyright (c) 2023, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -34,42 +34,86 @@
  *
  */
 
-namespace Nosto\Types;
+namespace Nosto\Operation\Category;
 
-interface CategoryInterface
+use Nosto\Result\Graphql\Category\CategoryUpdateResultHandler;
+use Nosto\Types\CategoryInterface;
+use Nosto\Operation\AbstractGraphQLOperation;
+use Nosto\Types\Signup\AccountInterface;
+use Nosto\Helper\SerializationHelper;
+
+/**
+ * Operation class for updating categories
+ * @phan-file-suppress PhanUnreferencedUseNormal
+ */
+class CategoryUpdate extends AbstractGraphQLOperation
 {
-    /**
-     * Get the id of the category
-     *
-     * @return string
-     */
-    public function getId();
+
+    /** @var CategoryInterface */
+    private $category;
 
     /**
-     * Get parent category id
-     *
-     * @return string
+     * OrderCreate constructor.
+     * @param CategoryInterface $category
+     * @param AccountInterface $account
+     * @param string $activeDomain
      */
-    public function getParentId();
+    public function __construct(
+        CategoryInterface $category,
+        AccountInterface $account,
+        $activeDomain = ''
+    ) {
+        $this->category = $category;
+        parent::__construct($account, $activeDomain);
+    }
 
     /**
-     * Get the title of the category
-     *
-     * @return string
+     * @inheritdoc
      */
-    public function getTitle();
+    public function getCategories()
+    {
+        return array(SerializationHelper::toAssocArray($this->category));
+    }
 
     /**
-     * The full path of the category
-     *
-     * @return string
+     * @inheritdoc
      */
-    public function getPath();
+    protected function getResultHandler()
+    {
+        return new CategoryUpdateResultHandler();
+    }
+
 
     /**
-     * Get the url
-     *
      * @return string
      */
-    public function getUrl();
+    public function getQuery()
+    {
+        return <<<QUERY
+            mutation(
+                \$categories:[InputItem]!
+            ){
+                 upsertCategories(
+                    params: {
+                        categories: {
+                            \$categories:
+                        }
+                    }
+                 )
+                 {
+                    id
+                 }
+            }
+QUERY;
+    }
+
+    /**
+     * @return array
+     */
+    public function getVariables()
+    {
+        return [
+            'categories' => $this->getCategories()
+        ];
+    }
 }

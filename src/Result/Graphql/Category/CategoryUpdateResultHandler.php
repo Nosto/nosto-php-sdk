@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2020, Nosto Solutions Ltd
+ * Copyright (c) 2023, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -34,18 +34,31 @@
  *
  */
 
-namespace Nosto\Test\Support;
+namespace Nosto\Result\Graphql\Category;
 
-use Nosto\Model\Category\Category;
+use Nosto\NostoException;
+use Nosto\Result\Graphql\GraphQLResultHandler;
+use stdClass;
 
-class MockCategory extends Category
+class CategoryUpdateResultHandler extends GraphQLResultHandler
 {
-    public function __construct()
+    const GRAPHQL_RESPONSE_CATEGORY_UPDATE = 'upsertCategories';
+
+    /**
+     * @inheritdoc
+     */
+    protected function parseQueryResult(stdClass $stdClass)
     {
-        $this->setId("10");
-        $this->setParentId(4);
-        $this->setTitle('New Arrivals');
-        $this->setPath('/Women/New Arrivals');
-        $this->setUrl('http://magento1.dev.nos.to/women/women-new-arrivals.html');
+        $members = get_object_vars($stdClass);
+        foreach ($members as $varName => $member) {
+            if ($varName === self::GRAPHQL_RESPONSE_CATEGORY_UPDATE) {
+                return $member->id;
+            }
+            if ($member instanceof stdClass) {
+                return $this->parseQueryResult($member);
+            }
+        }
+
+        throw new NostoException('No placeOrder object was found in GraphQL result');
     }
 }
