@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
-### 7.1.0 ##UNRELEASED
+### 7.1.0
 * Create CategoryUpdate Graphql Service
 
 ### 7.0.0
