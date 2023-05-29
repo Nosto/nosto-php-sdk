@@ -59,6 +59,6 @@ class CategoryUpdateResultHandler extends GraphQLResultHandler
             }
         }
 
-        throw new NostoException('No placeOrder object was found in GraphQL result');
+        throw new NostoException('No upsertCategories object was found in GraphQL result');
     }
 }
