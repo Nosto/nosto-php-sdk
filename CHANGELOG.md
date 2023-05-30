@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+
+### 7.1.1
+* Restore the DeleteProduct operation (from 6.2.2)
+
 ### 7.1.0
 * Create CategoryUpdate Graphql Service
 * Fix an issue that would cause category id's to be removed by the crawler (from 6.2.1)
@@ -9,6 +13,9 @@ This project adheres to Semantic Versioning (http://semver.org/).
 ### 7.0.0
 * Update category model to use relevant fields
 * Create category collection for batched operations
+
+### 6.2.2
+* Restore the DeleteProduct operation
 
 ### 6.2.1
 * Fix an issue that would cause category id's to be removed by the crawler
