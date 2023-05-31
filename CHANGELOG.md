@@ -5,6 +5,7 @@ This project adheres to Semantic Versioning (http://semver.org/).
 
 ### 7.1.1
 * Restore the DeleteProduct operation (from 6.2.2)
+* Bump phpseclib/phpseclib and guzzlehttp/psr7 due to security fixes
 
 ### 7.1.0
 * Create CategoryUpdate Graphql Service
