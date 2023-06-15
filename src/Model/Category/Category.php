@@ -83,6 +83,27 @@ class Category extends AbstractObject implements
     private $available;
 
     /**
+     * @var string categoryString
+     */
+    private $categoryString;
+
+    /**
+     * @return string
+     */
+    public function getCategoryString()
+    {
+        return $this->categoryString;
+    }
+
+    /**
+     * @param string $categoryString
+     */
+    public function setCategoryString(string $categoryString)
+    {
+        $this->categoryString = $categoryString;
+    }
+
+    /**
      * @return bool
      */
     public function isAvailable()

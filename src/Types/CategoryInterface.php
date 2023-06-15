@@ -78,4 +78,10 @@ interface CategoryInterface
      * @return boolean
      */
     public function isAvailable();
+
+    /**
+     * Return the category string
+     * @return string
+     */
+    public function getCategoryString();
 }
