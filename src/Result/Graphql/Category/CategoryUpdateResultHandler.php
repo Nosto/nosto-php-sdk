@@ -44,7 +44,7 @@ class CategoryUpdateResultHandler extends GraphQLResultHandler
 {
     const GRAPHQL_RESPONSE_CATEGORY_UPDATE = 'upsertCategories';
     const GRAPHQL_RESPONSE_CATEGORY_RESULT = 'categoryResult';
-    const GERAPHQL_RESPONSE_CATEGORY = 'category';
+    const GRAPHQL_RESPONSE_CATEGORY = 'category';
 
     /**
      * @inheritdoc
@@ -65,7 +65,7 @@ class CategoryUpdateResultHandler extends GraphQLResultHandler
                 }
             }
 
-            if ($varName === self::GERAPHQL_RESPONSE_CATEGORY && $member instanceof stdClass) {
+            if ($varName === self::GRAPHQL_RESPONSE_CATEGORY && $member instanceof stdClass) {
                 return $member->id;
             }
         }
