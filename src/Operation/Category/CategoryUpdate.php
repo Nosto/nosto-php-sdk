@@ -72,7 +72,15 @@ class CategoryUpdate extends AbstractGraphQLOperation
      */
     public function getCategories()
     {
-        return array(SerializationHelper::toAssocArray($this->category));
+        return [
+            [
+                'available' => $this->category->isAvailable(),
+                'id' => $this->category->getId(),
+                'name' => $this->category->getTitle(),
+                'parentId' => $this->category->getParentId(),
+                'urlPath' => $this->category->getPath(),
+            ]
+        ];
     }
 
     /**
@@ -91,17 +99,15 @@ class CategoryUpdate extends AbstractGraphQLOperation
     {
         return <<<QUERY
             mutation(
-                \$categories:[InputItem]!
+                \$categories:[InputVendorCategoryEntity]!
             ){
-                 upsertCategories(
-                    params: {
-                        categories: {
-                            \$categories:
-                        }
-                    }
-                 )
+                 upsertCategories(categories: \$categories)
                  {
-                    id
+                    categoryResult {
+                        category {
+                          id
+                        }
+                     }
                  }
             }
 QUERY;

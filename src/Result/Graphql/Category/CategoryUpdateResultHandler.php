@@ -43,6 +43,8 @@ use stdClass;
 class CategoryUpdateResultHandler extends GraphQLResultHandler
 {
     const GRAPHQL_RESPONSE_CATEGORY_UPDATE = 'upsertCategories';
+    const GRAPHQL_RESPONSE_CATEGORY_RESULT = 'categoryResult';
+    const GERAPHQL_RESPONSE_CATEGORY = 'category';
 
     /**
      * @inheritdoc
@@ -51,11 +53,20 @@ class CategoryUpdateResultHandler extends GraphQLResultHandler
     {
         $members = get_object_vars($stdClass);
         foreach ($members as $varName => $member) {
-            if ($varName === self::GRAPHQL_RESPONSE_CATEGORY_UPDATE) {
-                return $member->id;
-            }
-            if ($member instanceof stdClass) {
+            if ($varName === self::GRAPHQL_RESPONSE_CATEGORY_UPDATE && $member instanceof stdClass) {
                 return $this->parseQueryResult($member);
+            }
+
+            if ($varName === self::GRAPHQL_RESPONSE_CATEGORY_RESULT && is_array($member) && count($member) > 0) {
+                foreach ($member as $category) {
+                    if ($category instanceof stdClass) {
+                        return $this->parseQueryResult($category);
+                    }
+                }
+            }
+
+            if ($varName === self::GERAPHQL_RESPONSE_CATEGORY && $member instanceof stdClass) {
+                return $member->id;
             }
         }
 
