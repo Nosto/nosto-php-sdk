@@ -261,8 +261,6 @@ class HttpRequestTest extends Test
         $request->setPath('/404');
         $response = $request->get();
         $this->assertEquals(404, $response->getCode());
-        echo json_encode(curl_version());
-        ob_flush();
         $response = $request->post(new MockUser());
         $this->assertEquals(404, $response->getCode());
         $request->setUrl(
@@ -272,13 +270,11 @@ class HttpRequestTest extends Test
             )
         );
         $response = $request->get();
-        $this->assertEquals(
-            sprintf(
-                'Failed to connect to localhost port %d: Connection refused',
-                self::CURL_TEST_PORT
-            ),
-            $response->getMessage()
-        );
+
+        $pattern = '/Failed to connect to localhost port \d+( after \d+ ms)?: Connection refused/';
+        $string = $response->getMessage();
+
+        $this->assertRegExp($pattern, $string);
     }
 
     /**
