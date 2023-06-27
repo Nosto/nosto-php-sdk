@@ -42,10 +42,12 @@ class MockCategory extends Category
 {
     public function __construct()
     {
+        $path = '/Women/New Arrivals';
         $this->setId("10");
         $this->setParentId(4);
         $this->setTitle('New Arrivals');
-        $this->setPath('/Women/New Arrivals');
+        $this->setPath($path);
         $this->setUrl('http://magento1.dev.nos.to/women/women-new-arrivals.html');
+        $this->setCategoryString($path);
     }
 }

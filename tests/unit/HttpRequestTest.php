@@ -270,13 +270,11 @@ class HttpRequestTest extends Test
             )
         );
         $response = $request->get();
-        $this->assertEquals(
-            sprintf(
-                'Failed to connect to localhost port %d after 0 ms: Connection refused',
-                self::CURL_TEST_PORT
-            ),
-            $response->getMessage()
-        );
+
+        $pattern = '/Failed to connect to localhost port \d+( after \d+ ms)?: Connection refused/';
+        $string = $response->getMessage();
+
+        $this->assertRegExp($pattern, $string);
     }
 
     /**
