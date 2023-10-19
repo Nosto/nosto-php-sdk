@@ -102,7 +102,7 @@ abstract class AbstractSearchOperation extends AbstractOperation
     abstract public function getQuery();
 
     /**
-     * @return mixed
+     * @return array
      */
     abstract public function getVariables();
 

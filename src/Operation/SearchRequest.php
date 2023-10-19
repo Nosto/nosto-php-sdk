@@ -48,7 +48,7 @@ class SearchRequest
      * @param string $query
      * @param stdClass $variables
      */
-    public function __construct($query, stdClass $variables)
+    public function __construct($query, array $variables)
     {
         $this->request = ['query' => $query, 'variables' => $variables];
     }
