@@ -36,8 +36,6 @@
 
 namespace Nosto\Operation;
 
-use stdClass;
-
 class SearchRequest
 {
     /** @var array */
@@ -46,7 +44,7 @@ class SearchRequest
     /**
      * GraphQLRequest constructor.
      * @param string $query
-     * @param stdClass $variables
+     * @param array $variables
      */
     public function __construct($query, array $variables)
     {
