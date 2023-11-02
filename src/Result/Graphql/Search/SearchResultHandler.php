@@ -9,6 +9,6 @@ class SearchResultHandler extends GraphQLResultHandler
 {
     protected function parseQueryResult(stdClass $stdClass)
     {
-        return $stdClass;
+        return new SearchResult($stdClass->search);
     }
 }
