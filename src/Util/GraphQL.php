@@ -8,7 +8,7 @@ class GraphQL
 {
     public static function getProperty(stdClass $data, $propertyName, $default = null)
     {
-        return property_exists($data, $propertyName) ? $data->$propertyName : $default;
+        return property_exists($data, $propertyName) && $data->$propertyName ? $data->$propertyName : $default;
     }
 
     public static function getClassProperty(stdClass $data, $propertyName, $className, $default = null)
@@ -22,11 +22,11 @@ class GraphQL
     {
         return property_exists($data, $propertyName) && $data->$propertyName
             ? array_map(
-                function (stdClass $value) use ($className) {
+                function ($value) use ($className) {
                     return new $className($value);
                 },
                 $data->$propertyName
             )
-            : null;
+            : $default;
     }
 }
