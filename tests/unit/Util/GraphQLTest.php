@@ -18,6 +18,7 @@ class GraphQLTest extends Test
             ['float value' => 'someRandomKey', 1.87],
             ['array value' => 'someRandomKey', ['testValue']],
             ['null' => 'someRandomKey', null],
+            ['empty value' => 'someRandomKey', ''],
             ['non existent key' => 'sabdsajkdas', null],
         ];
     }
@@ -43,12 +44,18 @@ class GraphQLTest extends Test
 
     public function testClassPropertyIsReturned() {
         $data = new stdClass();
-        $expectedValue = 'test message';
-        $data->someRandomKey = $expectedValue;
+        $expectedValue1 = 'test message';
+        $expectedValue2 = '';
+        $data->someRandomKey = $expectedValue1;
+        $data->anotherRandomKey = $expectedValue2;
 
         $exception = GraphQL::getClassProperty($data, 'someRandomKey', Exception::class);
         $this->assertInstanceOf(Exception::class, $exception);
-        $this->assertEquals($expectedValue, $exception->getMessage());
+        $this->assertEquals($expectedValue1, $exception->getMessage());
+
+        $exception = GraphQL::getClassProperty($data, 'anotherRandomKey', Exception::class);
+        $this->assertInstanceOf(Exception::class, $exception);
+        $this->assertEquals($expectedValue2, $exception->getMessage());
     }
 
     public function testDefaultValueIsReturnedForClassProperties() {
@@ -69,6 +76,7 @@ class GraphQLTest extends Test
     public function testArrayPropertyIsReturned() {
         $data = new stdClass();
         $data->someRandomKey = ['message1', 'message2', 'message3'];
+        $data->anotherRandomKey = [];
 
         $exceptions = GraphQL::getArrayProperty($data, 'someRandomKey', Exception::class);
         $this->assertCount(3, $exceptions);
@@ -79,6 +87,8 @@ class GraphQLTest extends Test
             $this->assertInstanceOf(Exception::class, $exception);
             $this->assertEquals($expectedValue, $exception->getMessage());
         }
+
+        $this->assertEquals([], GraphQL::getArrayProperty($data, 'anotherRandomKey', Exception::class));
     }
 
     public function testDefaultValueIsReturnedForArrayProperties() {
