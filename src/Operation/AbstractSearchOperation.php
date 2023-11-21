@@ -41,7 +41,6 @@ use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Request\Http\Exception\HttpResponseException;
 use Nosto\Request\Graphql\SearchRequest;
-use Nosto\Operation\SearchRequest as SearchQuery;
 use Nosto\Types\Signup\AccountInterface;
 
 abstract class AbstractSearchOperation extends AbstractOperation
@@ -82,13 +81,9 @@ abstract class AbstractSearchOperation extends AbstractOperation
             $this->account->getApiToken(Token::API_SEARCH),
             $this->account->getName(),
         );
-        $payload = new SearchQuery(
-            $this->getQuery(),
-            $this->getVariables()
-        );
-        $payload = $payload->getRequest();
+        $payload = ['query' => $this->getQuery(), 'variables' => $this->getVariables()];
         $response = $request->postRaw(
-            $payload
+            json_encode($payload)
         );
 
         return $request->getResultHandler()->parse($response);
