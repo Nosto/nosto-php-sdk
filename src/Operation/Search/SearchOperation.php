@@ -47,6 +47,10 @@ class SearchOperation extends AbstractSearchOperation
 
     private ?string $categoryId = null;
 
+    private ?string $categoryPath = null;
+
+    private ?string $variationId = null;
+
     private int $size = 20;
 
     private int $from = 0;
@@ -56,6 +60,20 @@ class SearchOperation extends AbstractSearchOperation
     private array $filters = [];
 
     private ?array $sessionParams = null;
+
+    private bool $explain = false;
+
+    private ?string $redirect = null;
+
+    private ?float $time = null;
+
+    private array $rules = [];
+
+    private array $customRules = [];
+
+    private array $segments = [];
+
+    private ?array $keywords = null;
 
     public function setAccountId(string $accountId): void
     {
@@ -70,6 +88,16 @@ class SearchOperation extends AbstractSearchOperation
     public function setCategoryId(string $categoryId): void
     {
         $this->categoryId = $categoryId;
+    }
+
+    public function setCategoryPath(string $categoryPath): void
+    {
+        $this->categoryPath = $categoryPath;
+    }
+
+    public function setVariationId(string $variationId): void
+    {
+        $this->variationId = $variationId;
     }
 
     public function setSort(string $field, string $order): void
@@ -131,6 +159,41 @@ class SearchOperation extends AbstractSearchOperation
         $this->sessionParams = $sessionParams;
     }
 
+    public function setExplain(bool $explain): void
+    {
+        $this->explain = $explain;
+    }
+
+    public function setRedirect(string $redirect): void
+    {
+        $this->redirect = $redirect;
+    }
+
+    public function setTime(float $time): void
+    {
+        $this->time = $time;
+    }
+
+    public function setRules(array $rules): void
+    {
+        $this->rules = $rules;
+    }
+
+    public function setCustomRules(array $customRules): void
+    {
+        $this->customRules = $customRules;
+    }
+
+    public function setSegments(array $segments): void
+    {
+        $this->segments = $segments;
+    }
+
+    public function setKeywords(array $keywords): void
+    {
+        $this->keywords = $keywords;
+    }
+
     public function getQuery()
     {
         return <<<GRAPHQL
@@ -138,23 +201,41 @@ class SearchOperation extends AbstractSearchOperation
             \$accountId: String,
             \$query: String,
             \$categoryId: String,
+            \$categoryPath: String,
+            \$variationId: String,
             \$sort: [InputSearchSort!],
             \$filter: [InputSearchTopLevelFilter!],
             \$sessionParams: InputSearchQuery,
             \$size: Int,
             \$from: Int,
+            \$redirect: String,
+            \$explain: Boolean,
+            \$time: Float,
+            \$rules: [String!],
+            \$customRules: [InputSearchRule!],
+            \$segments: [String!],
+            \$keywords: InputSearchKeywords,
         ) {
             search(
                 accountId: \$accountId,
                 query: \$query,
                 products: {
                     categoryId: \$categoryId,
+                    categoryPath: \$categoryPath,
+                    variationId: \$variationId,
                     sort: \$sort,
                     filter: \$filter,
                     size: \$size,
                     from: \$from,
                 },
                 sessionParams: \$sessionParams,
+                redirect: \$redirect,
+                explain: \$explain,
+                time: \$time,
+                rules: \$rules,
+                customRules: \$customRules,
+                segments: \$segments,
+                keywords: \$keywords,
             ) {
                 redirect,
                 products {
@@ -200,11 +281,20 @@ class SearchOperation extends AbstractSearchOperation
             'accountId' => $this->accountId,
             'query' => $this->query,
             'categoryId' => $this->categoryId,
+            'categoryPath' => $this->categoryPath,
+            'variationId' => $this->variationId,
             'sort' => $this->sort,
             'size' => $this->size,
             'from' => $this->from,
             'filter' => array_values($this->filters),
             'sessionParams' => $this->sessionParams,
+            'explain' => $this->explain,
+            'redirect' => $this->redirect,
+            'time' => $this->time,
+            'rules' => $this->rules,
+            'customRules' => $this->customRules,
+            'segments' => $this->segments,
+            'keywords' => $this->keywords,
         ];
     }
 }
