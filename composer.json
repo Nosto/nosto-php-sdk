@@ -50,6 +50,9 @@
     "ci:inspect": "./inspect.sh"
   },
   "config": {
-    "process-timeout": 3600
+    "process-timeout": 3600,
+    "allow-plugins": {
+      "codeception/c3": false
+    }
   }
 }
