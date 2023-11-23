@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8f9fa3a6600126aa906ada14597e1ad",
+    "content-hash": "ac8d9d4974d88b25bc6010930b44b023",
     "packages": [
         {
             "name": "paragonie/constant_time_encoding",
@@ -813,9 +813,6 @@
                 "phpunit/phpunit": ">=6.5.13 <7.0",
                 "sebastian/comparator": ">=1.2.4 <3.0",
                 "sebastian/diff": ">=1.4 <4.0"
-            },
-            "replace": {
-                "codeception/phpunit-wrapper": "*"
             },
             "require-dev": {
                 "codeception/specify": "*",
@@ -3538,6 +3535,7 @@
                 "issues": "https://github.com/sebastianbergmann/phpcpd/issues",
                 "source": "https://github.com/sebastianbergmann/phpcpd/tree/master"
             },
+            "abandoned": true,
             "time": "2017-11-16T08:49:28+00:00"
         },
         {
@@ -4121,6 +4119,7 @@
                     "type": "tidelift"
                 }
             ],
+            "abandoned": "symfony/error-handler",
             "time": "2022-04-12T15:19:55+00:00"
         },
         {
@@ -5200,5 +5199,5 @@
         "ext-curl": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
