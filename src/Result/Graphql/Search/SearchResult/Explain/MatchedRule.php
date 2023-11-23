@@ -2,7 +2,7 @@
 
 namespace Nosto\Result\Graphql\Search\SearchResult\Explain;
 
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 class MatchedRule
@@ -18,9 +18,9 @@ class MatchedRule
 
     public function __construct(stdClass $data)
     {
-        $this->id = GraphQL::getProperty($data, 'id');
-        $this->name = GraphQL::getProperty($data, 'name');
-        $this->set = GraphQL::getProperty($data, 'set');
+        $this->id = GraphQLUtils::getProperty($data, 'id');
+        $this->name = GraphQLUtils::getProperty($data, 'name');
+        $this->set = GraphQLUtils::getProperty($data, 'set');
     }
 
     /**

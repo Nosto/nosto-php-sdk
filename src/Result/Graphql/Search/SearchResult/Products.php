@@ -4,7 +4,7 @@ namespace Nosto\Result\Graphql\Search\SearchResult;
 
 use Nosto\Result\Graphql\Search\SearchResult\Products\Facet;
 use Nosto\Result\Graphql\Search\SearchResult\Products\Hit;
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 class Products
@@ -38,14 +38,14 @@ class Products
 
     public function __construct(stdClass $data)
     {
-        $this->total = GraphQL::getProperty($data, 'total');
-        $this->size = GraphQL::getProperty($data, 'size');
-        $this->from = GraphQL::getProperty($data, 'from');
-        $this->collapse = GraphQL::getProperty($data, 'collapse');
-        $this->fuzzy = GraphQL::getProperty($data, 'fuzzy');
-        $this->categoryId = GraphQL::getProperty($data, 'categoryId');
-        $this->categoryPath = GraphQL::getProperty($data, 'categoryPath');
-        $this->hits = GraphQL::getArrayProperty($data, 'hits', Hit::class);
+        $this->total = GraphQLUtils::getProperty($data, 'total');
+        $this->size = GraphQLUtils::getProperty($data, 'size');
+        $this->from = GraphQLUtils::getProperty($data, 'from');
+        $this->collapse = GraphQLUtils::getProperty($data, 'collapse');
+        $this->fuzzy = GraphQLUtils::getProperty($data, 'fuzzy');
+        $this->categoryId = GraphQLUtils::getProperty($data, 'categoryId');
+        $this->categoryPath = GraphQLUtils::getProperty($data, 'categoryPath');
+        $this->hits = GraphQLUtils::getArrayProperty($data, 'hits', Hit::class);
         $this->facets = property_exists($data, 'facets') && $data->facets
             ? array_map(
                 function (stdClass $facet) {

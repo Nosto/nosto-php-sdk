@@ -4,7 +4,7 @@ namespace Nosto\Util;
 
 use stdClass;
 
-class GraphQL
+class GraphQLUtils
 {
     public static function getProperty(stdClass $data, $propertyName, $default = null)
     {

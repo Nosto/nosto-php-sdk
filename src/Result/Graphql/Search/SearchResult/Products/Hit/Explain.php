@@ -2,7 +2,7 @@
 
 namespace Nosto\Result\Graphql\Search\SearchResult\Products\Hit;
 
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 class Explain
@@ -21,10 +21,10 @@ class Explain
 
     public function __construct(stdClass $data)
     {
-        $this->match = GraphQL::getProperty($data, 'match');
-        $this->value = GraphQL::getProperty($data, 'value');
-        $this->description = GraphQL::getProperty($data, 'description');
-        $this->details = GraphQL::getArrayProperty($data, 'details', Explain::class, []);
+        $this->match = GraphQLUtils::getProperty($data, 'match');
+        $this->value = GraphQLUtils::getProperty($data, 'value');
+        $this->description = GraphQLUtils::getProperty($data, 'description');
+        $this->details = GraphQLUtils::getArrayProperty($data, 'details', Explain::class, []);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Nosto\Result\Graphql\Search\SearchResult\Products\Hit;
 
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 class CustomField
@@ -15,8 +15,8 @@ class CustomField
 
     public function __construct(stdClass $data)
     {
-        $this->key = GraphQL::getProperty($data, 'key');
-        $this->value = GraphQL::getProperty($data, 'value');
+        $this->key = GraphQLUtils::getProperty($data, 'key');
+        $this->value = GraphQLUtils::getProperty($data, 'value');
     }
 
     /**

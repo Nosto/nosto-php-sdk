@@ -2,7 +2,7 @@
 
 namespace Nosto\Result\Graphql\Search\SearchResult\Products\Hit;
 
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 class Sku
@@ -42,17 +42,17 @@ class Sku
 
     public function __construct(stdClass $data)
     {
-        $this->id = GraphQL::getProperty($data, 'id');
-        $this->url = GraphQL::getProperty($data, 'url');
-        $this->name = GraphQL::getProperty($data, 'name');
-        $this->imageUrl = GraphQL::getProperty($data, 'imageUrl');
-        $this->availability = GraphQL::getProperty($data, 'availability');
-        $this->price = GraphQL::getProperty($data, 'price');
-        $this->priceText = GraphQL::getProperty($data, 'priceText');
-        $this->customFields = GraphQL::getArrayProperty($data, 'customFields', CustomField::class);
-        $this->listPrice = GraphQL::getProperty($data, 'listPrice');
-        $this->inventoryLevel = GraphQL::getProperty($data, 'inventoryLevel');
-        $this->ai = GraphQL::getClassProperty($data, 'ai', Ai::class);
+        $this->id = GraphQLUtils::getProperty($data, 'id');
+        $this->url = GraphQLUtils::getProperty($data, 'url');
+        $this->name = GraphQLUtils::getProperty($data, 'name');
+        $this->imageUrl = GraphQLUtils::getProperty($data, 'imageUrl');
+        $this->availability = GraphQLUtils::getProperty($data, 'availability');
+        $this->price = GraphQLUtils::getProperty($data, 'price');
+        $this->priceText = GraphQLUtils::getProperty($data, 'priceText');
+        $this->customFields = GraphQLUtils::getArrayProperty($data, 'customFields', CustomField::class);
+        $this->listPrice = GraphQLUtils::getProperty($data, 'listPrice');
+        $this->inventoryLevel = GraphQLUtils::getProperty($data, 'inventoryLevel');
+        $this->ai = GraphQLUtils::getClassProperty($data, 'ai', Ai::class);
     }
 
     /**

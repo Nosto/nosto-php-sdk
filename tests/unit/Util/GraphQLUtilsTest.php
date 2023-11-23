@@ -4,10 +4,10 @@ namespace Nosto\Test\Unit\Util;
 
 use Codeception\TestCase\Test;
 use Exception;
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
-class GraphQLTest extends Test
+class GraphQLUtilsTest extends Test
 {
     public function propertyValueProvider()
     {
@@ -30,7 +30,7 @@ class GraphQLTest extends Test
         $data = new stdClass();
         $data->someRandomKey = $expectedValue;
 
-        $this->assertEquals($expectedValue, GraphQL::getProperty($data, $key));
+        $this->assertEquals($expectedValue, GraphQLUtils::getProperty($data, $key));
     }
 
     public function testDefaultValueIsReturnedForProperties() {
@@ -38,8 +38,8 @@ class GraphQLTest extends Test
         $expectedValue = 'theDefault';
         $data->someRandomKey = null;
 
-        $this->assertEquals($expectedValue, GraphQL::getProperty($data, 'someRandomKey', $expectedValue));
-        $this->assertEquals($expectedValue, GraphQL::getProperty($data, 'anotherRandomKey', $expectedValue));
+        $this->assertEquals($expectedValue, GraphQLUtils::getProperty($data, 'someRandomKey', $expectedValue));
+        $this->assertEquals($expectedValue, GraphQLUtils::getProperty($data, 'anotherRandomKey', $expectedValue));
     }
 
     public function testClassPropertyIsReturned() {
@@ -49,11 +49,11 @@ class GraphQLTest extends Test
         $data->someRandomKey = $expectedValue1;
         $data->anotherRandomKey = $expectedValue2;
 
-        $exception = GraphQL::getClassProperty($data, 'someRandomKey', Exception::class);
+        $exception = GraphQLUtils::getClassProperty($data, 'someRandomKey', Exception::class);
         $this->assertInstanceOf(Exception::class, $exception);
         $this->assertEquals($expectedValue1, $exception->getMessage());
 
-        $exception = GraphQL::getClassProperty($data, 'anotherRandomKey', Exception::class);
+        $exception = GraphQLUtils::getClassProperty($data, 'anotherRandomKey', Exception::class);
         $this->assertInstanceOf(Exception::class, $exception);
         $this->assertEquals($expectedValue2, $exception->getMessage());
     }
@@ -65,11 +65,11 @@ class GraphQLTest extends Test
 
         $this->assertEquals(
             $expectedValue,
-            GraphQL::getClassProperty($data, 'someRandomKey', Exception::class, $expectedValue)
+            GraphQLUtils::getClassProperty($data, 'someRandomKey', Exception::class, $expectedValue)
         );
         $this->assertEquals(
             $expectedValue,
-            GraphQL::getClassProperty($data, 'anotherRandomKey', Exception::class, $expectedValue)
+            GraphQLUtils::getClassProperty($data, 'anotherRandomKey', Exception::class, $expectedValue)
         );
     }
 
@@ -78,7 +78,7 @@ class GraphQLTest extends Test
         $data->someRandomKey = ['message1', 'message2', 'message3'];
         $data->anotherRandomKey = [];
 
-        $exceptions = GraphQL::getArrayProperty($data, 'someRandomKey', Exception::class);
+        $exceptions = GraphQLUtils::getArrayProperty($data, 'someRandomKey', Exception::class);
         $this->assertCount(3, $exceptions);
 
         foreach ($exceptions as $key => $exception) {
@@ -88,7 +88,7 @@ class GraphQLTest extends Test
             $this->assertEquals($expectedValue, $exception->getMessage());
         }
 
-        $this->assertEquals([], GraphQL::getArrayProperty($data, 'anotherRandomKey', Exception::class));
+        $this->assertEquals([], GraphQLUtils::getArrayProperty($data, 'anotherRandomKey', Exception::class));
     }
 
     public function testDefaultValueIsReturnedForArrayProperties() {
@@ -101,11 +101,11 @@ class GraphQLTest extends Test
 
         $this->assertEquals(
             $expectedValue,
-            GraphQL::getArrayProperty($data, 'someRandomKey', Exception::class, $expectedValue)
+            GraphQLUtils::getArrayProperty($data, 'someRandomKey', Exception::class, $expectedValue)
         );
         $this->assertEquals(
             $expectedValue,
-            GraphQL::getArrayProperty($data, 'anotherRandomKey', Exception::class, $expectedValue)
+            GraphQLUtils::getArrayProperty($data, 'anotherRandomKey', Exception::class, $expectedValue)
         );
     }
 }

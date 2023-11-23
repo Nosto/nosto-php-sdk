@@ -2,7 +2,7 @@
 
 namespace Nosto\Result\Graphql\Search\SearchResult\Products;
 
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 class StatsFacet extends Facet
@@ -17,8 +17,8 @@ class StatsFacet extends Facet
     {
         parent::__construct($data);
 
-        $this->min = GraphQL::getProperty($data, 'min');
-        $this->max = GraphQL::getProperty($data, 'max');
+        $this->min = GraphQLUtils::getProperty($data, 'min');
+        $this->max = GraphQLUtils::getProperty($data, 'max');
     }
 
     /**

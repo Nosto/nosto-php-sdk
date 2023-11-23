@@ -2,7 +2,7 @@
 
 namespace Nosto\Result\Graphql\Search\SearchResult\Products\Hit;
 
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 class Stats
@@ -81,30 +81,30 @@ class Stats
 
     public function __construct(stdClass $data)
     {
-        $this->price = GraphQL::getProperty($data, 'price');
-        $this->listPrice = GraphQL::getProperty($data, 'listPrice');
-        $this->discount = GraphQL::getProperty($data, 'discount');
-        $this->ratingValue = GraphQL::getProperty($data, 'ratingValue');
-        $this->reviewCount = GraphQL::getProperty($data, 'reviewCount');
-        $this->margin = GraphQL::getProperty($data, 'margin');
-        $this->marginPercentage = GraphQL::getProperty($data, 'marginPercentage');
-        $this->inventoryLevel = GraphQL::getProperty($data, 'inventoryLevel');
-        $this->age = GraphQL::getProperty($data, 'age');
-        $this->published = GraphQL::getProperty($data, 'published');
-        $this->impressions = GraphQL::getProperty($data, 'impressions');
-        $this->views = GraphQL::getProperty($data, 'views');
-        $this->clicks = GraphQL::getProperty($data, 'clicks');
-        $this->buys = GraphQL::getProperty($data, 'buys');
-        $this->orders = GraphQL::getProperty($data, 'orders');
-        $this->conversion = GraphQL::getProperty($data, 'conversion');
-        $this->cartRatio = GraphQL::getProperty($data, 'cartRatio');
-        $this->revenue = GraphQL::getProperty($data, 'revenue');
-        $this->revenuePerImpression = GraphQL::getProperty($data, 'revenuePerImpression');
-        $this->revenuePerView = GraphQL::getProperty($data, 'revenuePerView');
-        $this->profitPerImpression = GraphQL::getProperty($data, 'profitPerImpression');
-        $this->profitPerView = GraphQL::getProperty($data, 'profitPerView');
-        $this->inventoryTurnover = GraphQL::getProperty($data, 'inventoryTurnover');
-        $this->availabilityRatio = GraphQL::getProperty($data, 'availabilityRatio');
+        $this->price = GraphQLUtils::getProperty($data, 'price');
+        $this->listPrice = GraphQLUtils::getProperty($data, 'listPrice');
+        $this->discount = GraphQLUtils::getProperty($data, 'discount');
+        $this->ratingValue = GraphQLUtils::getProperty($data, 'ratingValue');
+        $this->reviewCount = GraphQLUtils::getProperty($data, 'reviewCount');
+        $this->margin = GraphQLUtils::getProperty($data, 'margin');
+        $this->marginPercentage = GraphQLUtils::getProperty($data, 'marginPercentage');
+        $this->inventoryLevel = GraphQLUtils::getProperty($data, 'inventoryLevel');
+        $this->age = GraphQLUtils::getProperty($data, 'age');
+        $this->published = GraphQLUtils::getProperty($data, 'published');
+        $this->impressions = GraphQLUtils::getProperty($data, 'impressions');
+        $this->views = GraphQLUtils::getProperty($data, 'views');
+        $this->clicks = GraphQLUtils::getProperty($data, 'clicks');
+        $this->buys = GraphQLUtils::getProperty($data, 'buys');
+        $this->orders = GraphQLUtils::getProperty($data, 'orders');
+        $this->conversion = GraphQLUtils::getProperty($data, 'conversion');
+        $this->cartRatio = GraphQLUtils::getProperty($data, 'cartRatio');
+        $this->revenue = GraphQLUtils::getProperty($data, 'revenue');
+        $this->revenuePerImpression = GraphQLUtils::getProperty($data, 'revenuePerImpression');
+        $this->revenuePerView = GraphQLUtils::getProperty($data, 'revenuePerView');
+        $this->profitPerImpression = GraphQLUtils::getProperty($data, 'profitPerImpression');
+        $this->profitPerView = GraphQLUtils::getProperty($data, 'profitPerView');
+        $this->inventoryTurnover = GraphQLUtils::getProperty($data, 'inventoryTurnover');
+        $this->availabilityRatio = GraphQLUtils::getProperty($data, 'availabilityRatio');
     }
 
     /**

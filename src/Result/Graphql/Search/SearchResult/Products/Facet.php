@@ -3,7 +3,7 @@
 namespace Nosto\Result\Graphql\Search\SearchResult\Products;
 
 use Exception;
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 abstract class Facet
@@ -26,10 +26,10 @@ abstract class Facet
 
     public function __construct(stdClass $data)
     {
-        $this->id = GraphQL::getProperty($data, 'id');
-        $this->name = GraphQL::getProperty($data, 'name');
-        $this->field = GraphQL::getProperty($data, 'field');
-        $this->type = GraphQL::getProperty($data, 'type');
+        $this->id = GraphQLUtils::getProperty($data, 'id');
+        $this->name = GraphQLUtils::getProperty($data, 'name');
+        $this->field = GraphQLUtils::getProperty($data, 'field');
+        $this->type = GraphQLUtils::getProperty($data, 'type');
     }
 
     /**

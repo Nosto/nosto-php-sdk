@@ -3,7 +3,7 @@
 namespace Nosto\Result\Graphql\Search\SearchResult\Products;
 
 use Nosto\Result\Graphql\Search\SearchResult\Products\Facet\TermsFacetValue;
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 class TermsFacet extends Facet
@@ -15,7 +15,7 @@ class TermsFacet extends Facet
     {
         parent::__construct($data);
 
-        $this->data = GraphQL::getArrayProperty($data, 'data', TermsFacetValue::class);
+        $this->data = GraphQLUtils::getArrayProperty($data, 'data', TermsFacetValue::class);
     }
 
     /**

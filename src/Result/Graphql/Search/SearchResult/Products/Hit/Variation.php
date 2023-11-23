@@ -3,7 +3,7 @@
 namespace Nosto\Result\Graphql\Search\SearchResult\Products\Hit;
 
 use Nosto\Result\Graphql\Search\SearchResult\Products\Hit\Variation\VariationValue;
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 class Variation
@@ -16,8 +16,8 @@ class Variation
 
     public function __construct(stdClass $data)
     {
-        $this->key = GraphQL::getProperty($data, 'key');
-        $this->value = GraphQL::getClassProperty($data, 'value', VariationValue::class);
+        $this->key = GraphQLUtils::getProperty($data, 'key');
+        $this->value = GraphQLUtils::getClassProperty($data, 'value', VariationValue::class);
     }
 
     /**

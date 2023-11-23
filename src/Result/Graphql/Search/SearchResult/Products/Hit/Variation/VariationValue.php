@@ -2,7 +2,7 @@
 
 namespace Nosto\Result\Graphql\Search\SearchResult\Products\Hit\Variation;
 
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 class VariationValue
@@ -21,10 +21,10 @@ class VariationValue
 
     public function __construct(stdClass $data)
     {
-        $this->availability = GraphQL::getProperty($data, 'availability');
-        $this->price = GraphQL::getProperty($data, 'price');
-        $this->listPrice = GraphQL::getProperty($data, 'listPrice');
-        $this->priceCurrencyCode = GraphQL::getProperty($data, 'priceCurrencyCode');
+        $this->availability = GraphQLUtils::getProperty($data, 'availability');
+        $this->price = GraphQLUtils::getProperty($data, 'price');
+        $this->listPrice = GraphQLUtils::getProperty($data, 'listPrice');
+        $this->priceCurrencyCode = GraphQLUtils::getProperty($data, 'priceCurrencyCode');
     }
 
     /**

@@ -4,7 +4,7 @@ namespace Nosto\Result\Graphql\Search;
 
 use Nosto\Result\Graphql\Search\SearchResult\Explain;
 use Nosto\Result\Graphql\Search\SearchResult\Products;
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 class SearchResult
@@ -23,10 +23,10 @@ class SearchResult
 
     public function __construct(stdClass $data)
     {
-        $this->redirect = GraphQL::getProperty($data, 'redirect');
-        $this->query = GraphQL::getProperty($data, 'query');
-        $this->explain = GraphQL::getClassProperty($data, 'explain', Explain::class);
-        $this->products = GraphQL::getClassProperty($data, 'products', Products::class);
+        $this->redirect = GraphQLUtils::getProperty($data, 'redirect');
+        $this->query = GraphQLUtils::getProperty($data, 'query');
+        $this->explain = GraphQLUtils::getClassProperty($data, 'explain', Explain::class);
+        $this->products = GraphQLUtils::getClassProperty($data, 'products', Products::class);
     }
 
     /**

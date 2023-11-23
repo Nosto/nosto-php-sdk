@@ -2,7 +2,7 @@
 
 namespace Nosto\Result\Graphql\Search\SearchResult\Products\Hit;
 
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 class Affinities
@@ -21,10 +21,10 @@ class Affinities
 
     public function __construct(stdClass $data)
     {
-        $this->brand = GraphQL::getProperty($data, 'brand');
-        $this->categories = GraphQL::getProperty($data, 'categories');
-        $this->color = GraphQL::getProperty($data, 'color');
-        $this->size = GraphQL::getProperty($data, 'size');
+        $this->brand = GraphQLUtils::getProperty($data, 'brand');
+        $this->categories = GraphQLUtils::getProperty($data, 'categories');
+        $this->color = GraphQLUtils::getProperty($data, 'color');
+        $this->size = GraphQLUtils::getProperty($data, 'size');
     }
 
     /**

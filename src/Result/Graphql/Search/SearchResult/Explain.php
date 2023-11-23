@@ -3,7 +3,7 @@
 namespace Nosto\Result\Graphql\Search\SearchResult;
 
 use Nosto\Result\Graphql\Search\SearchResult\Explain\MatchedRule;
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 class Explain
@@ -13,7 +13,7 @@ class Explain
 
     public function __construct(stdClass $data)
     {
-        $this->matchedRules = GraphQL::getArrayProperty($data, 'matchedRules', MatchedRule::class);
+        $this->matchedRules = GraphQLUtils::getArrayProperty($data, 'matchedRules', MatchedRule::class);
     }
 
     /**

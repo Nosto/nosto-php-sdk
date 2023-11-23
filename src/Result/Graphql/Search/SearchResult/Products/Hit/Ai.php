@@ -2,7 +2,7 @@
 
 namespace Nosto\Result\Graphql\Search\SearchResult\Products\Hit;
 
-use Nosto\Util\GraphQL;
+use Nosto\Util\GraphQLUtils;
 use stdClass;
 
 class Ai
@@ -18,9 +18,9 @@ class Ai
 
     public function __construct(stdClass $data)
     {
-        $this->primaryColor = GraphQL::getProperty($data, 'primaryColor');
-        $this->overridingColor = GraphQL::getProperty($data, 'overridingColor');
-        $this->dominantColors = GraphQL::getProperty($data, 'dominantColors');
+        $this->primaryColor = GraphQLUtils::getProperty($data, 'primaryColor');
+        $this->overridingColor = GraphQLUtils::getProperty($data, 'overridingColor');
+        $this->dominantColors = GraphQLUtils::getProperty($data, 'dominantColors');
     }
 
     /**
