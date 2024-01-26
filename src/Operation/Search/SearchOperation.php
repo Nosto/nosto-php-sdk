@@ -65,8 +65,8 @@ class SearchOperation extends AbstractSearchOperation
     /** @var ?array */
     private $sort = null;
 
-    /** @var ?array */
-    private $filters = null;
+    /** @var array */
+    private $filters = [];
 
     /** @var ?array */
     private $sessionParams = null;
