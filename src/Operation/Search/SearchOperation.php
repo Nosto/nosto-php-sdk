@@ -383,7 +383,7 @@ GRAPHQL;
             'sort' => $this->sort,
             'size' => $this->size,
             'from' => $this->from,
-            'filter' => $this->filters,
+            'filter' => array_values($this->filters),
             'sessionParams' => $this->sessionParams,
             'explain' => $this->explain,
             'redirect' => $this->redirect,
