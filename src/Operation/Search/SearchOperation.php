@@ -41,66 +41,108 @@ use Nosto\Result\Graphql\Search\SearchResultHandler;
 
 class SearchOperation extends AbstractSearchOperation
 {
-    private string $accountId;
+    /** @var string */
+    private $accountId;
 
-    private string $query = '';
+    /** @var string */
+    private $query = '';
 
-    private ?string $categoryId = null;
+    /** @var ?string */
+    private $categoryId = null;
 
-    private ?string $categoryPath = null;
+    /** @var ?string */
+    private $categoryPath = null;
 
-    private ?string $variationId = null;
+    /** @var ?string */
+    private $variationId = null;
 
-    private int $size = 20;
+    /** @var int */
+    private $size = 20;
 
-    private int $from = 0;
+    /** @var int */
+    private $from = 0;
 
-    private array $sort = [];
+    /** @var ?array */
+    private $sort = null;
 
-    private array $filters = [];
+    /** @var ?array */
+    private $filters = null;
 
-    private ?array $sessionParams = null;
+    /** @var ?array */
+    private $sessionParams = null;
 
-    private bool $explain = false;
+    /** @var bool */
+    private $explain = false;
 
-    private ?string $redirect = null;
+    /** @var ?string */
+    private $redirect = null;
 
-    private ?float $time = null;
+    /** @var ?float  */
+    private $time = null;
 
-    private array $rules = [];
+    /** @var ?array */
+    private $rules = null;
 
-    private array $customRules = [];
+    /** @var ?array */
+    private $customRules = null;
 
-    private array $segments = [];
+    /** @var ?array */
+    private $segments = null;
 
-    private ?array $keywords = null;
+    /** @var ?array */
+    private $keywords = null;
 
-    public function setAccountId(string $accountId): void
+    /**
+     * @param string $accountId
+     * @return void
+     */
+    public function setAccountId($accountId)
     {
         $this->accountId = $accountId;
     }
 
-    public function setQuery(string $query): void
+    /**
+     * @param string $query
+     * @return void
+     */
+    public function setQuery($query)
     {
         $this->query = $query;
     }
 
-    public function setCategoryId(string $categoryId): void
+    /**
+     * @param string $categoryId
+     * @return void
+     */
+    public function setCategoryId($categoryId)
     {
         $this->categoryId = $categoryId;
     }
 
-    public function setCategoryPath(string $categoryPath): void
+    /**
+     * @param string $categoryPath
+     * @return void
+     */
+    public function setCategoryPath($categoryPath)
     {
         $this->categoryPath = $categoryPath;
     }
 
-    public function setVariationId(string $variationId): void
+    /**
+     * @param string $variationId
+     * @return void
+     */
+    public function setVariationId($variationId)
     {
         $this->variationId = $variationId;
     }
 
-    public function setSort(string $field, string $order): void
+    /**
+     * @param string $field
+     * @param string $order
+     * @return void
+     */
+    public function setSort($field, $order)
     {
         $this->sort = [
             "field" => $field,
@@ -108,17 +150,30 @@ class SearchOperation extends AbstractSearchOperation
         ];
     }
 
-    public function setFrom(int $from): void
+    /**
+     * @param int $from
+     * @return void
+     */
+    public function setFrom($from)
     {
         $this->from = $from;
     }
 
-    public function setSize(int $size): void
+    /**
+     * @param int $size
+     * @return void
+     */
+    public function setSize($size)
     {
         $this->size = $size;
     }
 
-    public function addValueFilter(string $filterField, string $value): void
+    /**
+     * @param string $filterField
+     * @param string $value
+     * @return void
+     */
+    public function addValueFilter($filterField, $value)
     {
         if (array_key_exists($filterField, $this->filters)) {
             $this->filters[$filterField]['value'][] = $value;
@@ -130,7 +185,13 @@ class SearchOperation extends AbstractSearchOperation
         }
     }
 
-    public function addRangeFilter(string $filterField, ?string $min = null, ?string $max = null): void
+    /**
+     * @param string $filterField
+     * @param ?string $min
+     * @param ?string $max
+     * @return void
+     */
+    public function addRangeFilter($filterField, $min = null, $max = null)
     {
         $range = [];
 
@@ -144,7 +205,7 @@ class SearchOperation extends AbstractSearchOperation
         if (array_key_exists($filterField, $this->filters)) {
             $this->filters[$filterField]['range'] = array_merge(
                 $this->filters[$filterField]['range'],
-                $range,
+                $range
             );
         } else {
             $this->filters[$filterField] = [
@@ -154,42 +215,74 @@ class SearchOperation extends AbstractSearchOperation
         }
     }
 
-    public function setSessionParams(array $sessionParams): void
+    /**
+     * @param array $sessionParams
+     * @return void
+     */
+    public function setSessionParams($sessionParams)
     {
         $this->sessionParams = $sessionParams;
     }
 
-    public function setExplain(bool $explain): void
+    /**
+     * @param bool $explain
+     * @return void
+     */
+    public function setExplain($explain)
     {
         $this->explain = $explain;
     }
 
-    public function setRedirect(string $redirect): void
+    /**
+     * @param string $redirect
+     * @return void
+     */
+    public function setRedirect($redirect)
     {
         $this->redirect = $redirect;
     }
 
-    public function setTime(float $time): void
+    /**
+     * @param float $time
+     * @return void
+     */
+    public function setTime($time)
     {
         $this->time = $time;
     }
 
-    public function setRules(array $rules): void
+    /**
+     * @param array $rules
+     * @return void
+     */
+    public function setRules(array $rules)
     {
         $this->rules = $rules;
     }
 
-    public function setCustomRules(array $customRules): void
+    /**
+     * @param array $customRules
+     * @return void
+     */
+    public function setCustomRules(array $customRules)
     {
         $this->customRules = $customRules;
     }
 
-    public function setSegments(array $segments): void
+    /**
+     * @param array $segments
+     * @return void
+     */
+    public function setSegments(array $segments)
     {
         $this->segments = $segments;
     }
 
-    public function setKeywords(array $keywords): void
+    /**
+     * @param array $keywords
+     * @return void
+     */
+    public function setKeywords(array $keywords)
     {
         $this->keywords = $keywords;
     }
@@ -241,7 +334,8 @@ class SearchOperation extends AbstractSearchOperation
                 products {
                     total,
                     hits {
-                        productId
+                        productId,
+                        name
                     }
                     facets {
                         ... on SearchStatsFacet {
@@ -267,7 +361,7 @@ class SearchOperation extends AbstractSearchOperation
                 }
             }
         }
-        GRAPHQL;
+GRAPHQL;
     }
 
     protected function getResultHandler()
@@ -275,7 +369,10 @@ class SearchOperation extends AbstractSearchOperation
         return new SearchResultHandler();
     }
 
-    public function getVariables(): array
+    /**
+     * @return array
+     */
+    public function getVariables()
     {
         return [
             'accountId' => $this->accountId,
@@ -286,7 +383,7 @@ class SearchOperation extends AbstractSearchOperation
             'sort' => $this->sort,
             'size' => $this->size,
             'from' => $this->from,
-            'filter' => array_values($this->filters),
+            'filter' => $this->filters ? array_values($this->filters) : null,
             'sessionParams' => $this->sessionParams,
             'explain' => $this->explain,
             'redirect' => $this->redirect,
