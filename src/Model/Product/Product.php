@@ -123,9 +123,14 @@ class Product extends AbstractObject implements
     private $categories;
 
     /**
-     * @var StringCollection collection of product category strings.
+     * @var StringCollection collection of product category ids strings.
      */
     private $categoryIds;
+
+    /**
+     * @var StringCollection product parent categories ids.
+     */
+    private $parentCategoryIds;
 
     /**
      * @var string the product description.
@@ -266,6 +271,7 @@ class Product extends AbstractObject implements
         $this->alternateImageUrls = new StringCollection('alternate_image_urls', 'alternate_image_url');
         $this->categories = new StringCollection('categories', 'category');
         $this->categoryIds = new StringCollection('category_ids', 'category_id');
+        $this->parentCategoryIds = new StringCollection('parent_category_ids', 'parent_category_id');
     }
 
     /**
@@ -593,6 +599,26 @@ class Product extends AbstractObject implements
     public function setCategoryIds(array $categoryIds)
     {
         $this->categoryIds->setData($categoryIds);
+    }
+
+    /**
+     * Sets the product parent category ids.
+     *
+     * @param array $parentCategoryIds the list of parent category ids.
+     */
+    public function setParentCategoryIds(array $parentCategoryIds)
+    {
+        $this->parentCategoryIds->setData($parentCategoryIds);
+    }
+
+    /**
+     * Returns the product parent category ids
+     *
+     * @return array
+     */
+    public function getParentCategoryIds()
+    {
+        return $this->parentCategoryIds->getData();
     }
 
     /**
