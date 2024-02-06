@@ -64,7 +64,7 @@ class HttpResponseException
         throw new ResponseException(
             sprintf(
                 'Something went wrong:  %s %s',
-                $httpResponse->getMessage(),
+                $httpResponse->getMessage() ?? 'Received empty response from Nosto\'s API',
                 self::getXRequestId($httpResponse)
             ),
             $httpResponse->getCode()
