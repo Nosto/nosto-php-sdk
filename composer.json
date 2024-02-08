@@ -1,6 +1,6 @@
 {
   "name": "nosto/php-sdk",
-  "version": "7.1.1",
+  "version": "7.3.0",
   "description": "PHP SDK for developing Nosto modules for e-commerce platforms",
   "license": "BSD-3-Clause",
   "require-dev": {
@@ -50,6 +50,9 @@
     "ci:inspect": "./inspect.sh"
   },
   "config": {
-    "process-timeout": 3600
+    "process-timeout": 3600,
+    "allow-plugins": {
+      "codeception/c3": true
+    }
   }
 }

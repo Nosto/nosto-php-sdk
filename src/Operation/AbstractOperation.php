@@ -41,6 +41,7 @@ use Nosto\Request\Api\Token;
 use Nosto\NostoException;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Graphql\GraphqlRequest;
+use Nosto\Request\Graphql\SearchRequest;
 use Nosto\Result\ResultHandler;
 
 /**
@@ -69,7 +70,7 @@ abstract class AbstractOperation
      * @param string|null $nostoAccount
      * @param string|null $domain
      * @param bool $isTokenNeeded
-     * @return ApiRequest|GraphqlRequest|HttpRequest
+     * @return ApiRequest|GraphqlRequest|SearchRequest|HttpRequest
      * @throws NostoException
      */
     protected function initRequest(
@@ -103,7 +104,7 @@ abstract class AbstractOperation
     /**
      * Return type of request object
      *
-     * @return HttpRequest|ApiRequest|GraphqlRequest
+     * @return HttpRequest|ApiRequest|GraphqlRequest|SearchRequest
      */
     abstract protected function getRequestType();
 

@@ -144,6 +144,13 @@ interface ProductInterface extends SanitizableInterface
     public function getCategoryIds();
 
     /**
+     * Returns the parent categories of the product.
+     *
+     * @return array
+     */
+    public function getParentCategoryIds();
+
+    /**
      * Returns the product description.
      *
      * @return string the description.

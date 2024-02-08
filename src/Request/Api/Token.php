@@ -53,6 +53,7 @@ class Token extends AbstractObject implements ValidatableInterface
     const API_EMAIL = 'email';
     const API_CREATE = 'create'; // Special token related to the platform
     const API_GRAPHQL = 'apps'; // Special token related to the platform
+    const API_SEARCH = 'search';
 
     /**
      * @var array list of valid api tokens to request from Nosto.
@@ -63,7 +64,8 @@ class Token extends AbstractObject implements ValidatableInterface
         self::API_EXCHANGE_RATES,
         self::API_SETTINGS,
         self::API_EMAIL,
-        self::API_GRAPHQL
+        self::API_GRAPHQL,
+        self::API_SEARCH
     ];
     /**
      * @var string the token name, must be one of the defined tokens from self::$tokenNames.
