@@ -47,7 +47,7 @@ abstract class AbstractExportHelper
 {
     /**
      * Serializes the collection to JSON and uses the SSO token (as it is pre-shared
-     * secret) to encrypt the data using AES. Sixteen random characters are used as
+     * secret) to encrypt the data using AES. 32 random characters are used as
      * the IV and must be extracted out from the resultant payload before decrypting
      *
      * @param AccountInterface $account the account to export the data for
@@ -57,17 +57,16 @@ abstract class AbstractExportHelper
     public function export(AccountInterface $account, $collection)
     {
         $data = '';
-        // Use the first 16 chars of the SSO token as secret for encryption.
+        // Use the first 32 chars of the SSO token as secret for encryption.
         $token = $account->getApiToken('sso');
         if (!empty($token)) {
             $tokenValue = $token->getValue();
-            $secret = substr($tokenValue, 0, 16);
+            $secret = substr($tokenValue, 0, 32);
             if (!empty($secret)) {
                 $data = $this->encrypt($secret, $collection);
             }
         }
-
-        return $data;
+        return base64_encode($data);
     }
 
     /**
