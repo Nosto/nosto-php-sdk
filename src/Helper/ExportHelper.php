@@ -36,6 +36,9 @@
 
 namespace Nosto\Helper;
 
+use phpseclib3\Crypt\AES as AES;
+use phpseclib3\Crypt\Random as Random;
+
 /**
  * Implementation for the export helper
  */
@@ -45,26 +48,16 @@ class ExportHelper extends AbstractExportHelper
      * @inheritdoc
      * @suppress PhanAccessMethodInternal, PhanUndeclaredClassConstant, PhanUndeclaredClassMethod
      */
-    public function encrypt($secret, $data)
+    public function encrypt(string $secret, $data)
     {
-        //Check if phpseclib v3 is used
-        //needed for comaptibility with Magento 2.4 versions
-        if (class_exists("phpseclib3\Crypt\AES")) {
-            $iv = \phpseclib3\Crypt\Random::string(12);
-            $cipher = new \phpseclib3\Crypt\AES('gcm');
-            $cipher->setNonce($iv);
-        } else {
-            //TODO Repeat here for < 3.0
-            $iv = \phpseclib\Crypt\Random::string(32);
-            $cipher = new \phpseclib\Crypt\AES(\phpseclib\Crypt\Base::MODE_CBC);
-        }
-
+        $cipher = new AES('gcm');
+        $cipher->setKeyLength(256);
         $cipher->setKey($secret);
+        $iv = Random::string(12);
+        $cipher->setNonce($iv);
         $cipherText = $cipher->encrypt(SerializationHelper::serialize($data));
         // Prepend the IV to the cipher string so that nosto can parse and use it.
         // There is no security concern with sending the IV as plain text.
-        $data = $iv . $cipherText;
-
-        return $data;
+        return $iv . $cipherText . $cipher->getTag();
     }
 }

@@ -37,6 +37,7 @@
 namespace Nosto\Helper;
 
 use Nosto\Types\Signup\AccountInterface;
+use phpseclib3\Crypt\Hash;
 
 /**
  * Helper class for exporting historical product and OrderConfirm data from the shop. This
@@ -47,7 +48,7 @@ abstract class AbstractExportHelper
 {
     /**
      * Serializes the collection to JSON and uses the SSO token (as it is pre-shared
-     * secret) to encrypt the data using AES. 32 random characters are used as
+     * secret) to encrypt the data using AES. 12 random characters are used as
      * the IV and must be extracted out from the resultant payload before decrypting
      *
      * @param AccountInterface $account the account to export the data for
@@ -57,24 +58,23 @@ abstract class AbstractExportHelper
     public function export(AccountInterface $account, $collection)
     {
         $data = '';
-        // Use the first 32 chars of the SSO token as secret for encryption.
         $token = $account->getApiToken('sso');
-        if (!empty($token)) {
-            $tokenValue = $token->getValue();
-            $secret = substr($tokenValue, 0, 32);
+        if ($token !== null) {
+            $hash = new Hash('sha3-256');
+            $secret = $hash->hash(base64_decode($token->getValue()));
             if (!empty($secret)) {
                 $data = $this->encrypt($secret, $collection);
             }
         }
-        return base64_encode($data);
+        return $data;
     }
 
     /**
      * Method for encrypting the data
      *
-     * @param $secret
-     * @param $data
+     * @param string $secret
+     * @param mixed $data
      * @return string
      */
-    abstract public function encrypt($secret, $data);
+    abstract public function encrypt(string $secret, $data);
 }
