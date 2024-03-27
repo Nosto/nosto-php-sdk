@@ -39,7 +39,7 @@
   },
   "require": {
     "php": ">=5.5",
-    "phpseclib/phpseclib": "2.0.* || ~3.0.9",
+    "phpseclib/phpseclib": "3.0.*",
     "vlucas/phpdotenv": "^2.4 || ^3.6",
     "ext-json": "*",
     "ext-curl": "*"
