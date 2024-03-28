@@ -2,9 +2,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
-### 7.3.0
+### 7.4.0
 * Drop support for phpseclib v2
 * Uses gcm as encryption algorithm for exporting data
+
+### 7.3.0
+* Add support for parent category ids in the Product model
+* Logs a message if API responses are empty
+
+### 7.2.1
+* Fix an issue where passing an empty array to Category Merchandising rules parameter would cause an the rules to be ignored
 
 ### 7.2.0
 * Add support for search requests
