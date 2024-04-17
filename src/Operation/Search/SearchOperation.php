@@ -334,8 +334,12 @@ class SearchOperation extends AbstractSearchOperation
                 products {
                     total,
                     hits {
-                        productId,
-                        name
+                        productId
+                        name,
+                        customFields {
+                          key,
+                          value
+                        }
                     }
                     facets {
                         ... on SearchStatsFacet {
