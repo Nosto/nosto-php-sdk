@@ -36,61 +36,75 @@
 
 namespace Nosto\Operation;
 
+use Exception;
 use Nosto\NostoException;
+use Nosto\Model\Product\ProductCollection;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Result\Api\GeneralPurposeResultHandler;
+use Nosto\Types\Product\ProductInterface;
 use Nosto\Types\Signup\AccountInterface;
 
 /**
- * Operation class for upserting product id's and requesting a recrawl through the Nosto API.
+ * Operation class for upserting product id's with urls and requesting a recrawl through the Nosto API.
  */
 class RecrawlProduct extends AbstractAuthenticatedOperation
 {
     /**
-     * @var array
+     * @var ProductCollection collection object of products to perform the operation on.
      */
-    private $productIds;
+    private $collection;
 
     /**
-     * RecrawlProduct constructor.
-     * @param AccountInterface $account
+     * Constructor.
+     *
+     * @param AccountInterface $account the account object.
      * @param string $activeDomain
      */
     public function __construct(AccountInterface $account, $activeDomain = '')
     {
         parent::__construct($account, $activeDomain);
+        $this->collection = new ProductCollection();
     }
 
     /**
      * Adds a product tho the collection on which the operation is the performed.
      *
-     * @param array $productIds
+     * @param ProductInterface $product
      */
-    public function setProductIds(array $productIds)
+    public function addProduct(ProductInterface $product)
     {
-        $this->productIds = $productIds;
+        $this->collection->append($product);
     }
 
     /**
-     * Sends a POST request to recrawl all the products currently in the collection.
+     * Wrapper to call clear collection
+     */
+    public function clearCollection()
+    {
+        $this->collection->clear();
+    }
+
+    /**
+     * Sends a POST request to recrawl all the products currently in the collection
      *
      * @return bool if the request was successful.
-     * @throws NostoException on failure.
      * @throws AbstractHttpException
+     * @throws NostoException on failure.
+     * @throws Exception
      */
-    public function recrawl()
+    public function upsert()
     {
         $request = $this->initRequest(
             $this->account->getApiToken(Token::API_PRODUCTS),
             $this->account->getName(),
             $this->activeDomain
         );
-        if (empty($this->productIds)) {
+        if ($this->collection->count() === 0) {
             return true;
         }
-        $response = $request->post($this->productIds);
+        $response = $request->post($this->collection);
         return $request->getResultHandler()->parse($response);
     }
 
@@ -101,7 +115,6 @@ class RecrawlProduct extends AbstractAuthenticatedOperation
     {
         return new GeneralPurposeResultHandler();
     }
-
 
     /**
      * @inheritdoc
