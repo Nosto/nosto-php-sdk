@@ -94,7 +94,7 @@ class RecrawlProduct extends AbstractAuthenticatedOperation
      * @throws NostoException on failure.
      * @throws Exception
      */
-    public function upsert()
+    public function requestRecrawl()
     {
         $request = $this->initRequest(
             $this->account->getApiToken(Token::API_PRODUCTS),
@@ -104,7 +104,17 @@ class RecrawlProduct extends AbstractAuthenticatedOperation
         if ($this->collection->count() === 0) {
             return true;
         }
-        $response = $request->post($this->collection);
+        $products = [
+            "products" => []
+        ];
+
+        foreach ($this->collection as $product) {
+            $products["products"][] = [
+                "product_id" => $product->getProductId(),
+                "url" => $product->getUrl()
+            ];
+        }
+        $response = $request->postRaw(json_encode($products, JSON_THROW_ON_ERROR));
         return $request->getResultHandler()->parse($response);
     }
 
