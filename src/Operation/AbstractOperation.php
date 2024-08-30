@@ -58,12 +58,12 @@ abstract class AbstractOperation
     /**
      * @var int timeout for waiting response from the api, in second
      */
-    private $responseTimeout = 5;
+    private $responseTimeout = 10;
 
     /**
      * @var int timeout for connecting to the api, in second
      */
-    private $connectTimeout = 5;
+    private $connectTimeout = 10;
 
     /**
      * @param Token|null $token
