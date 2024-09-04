@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 7.4.1
+* Increase APIs timeout to 10 seconds
+
 ### 7.4.0
 * Drop support for phpseclib v2
 * Uses gcm as encryption algorithm for exporting data
