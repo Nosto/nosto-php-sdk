@@ -1,6 +1,6 @@
 <?php
-/**
- * Copyright (c) 2020, Nosto Solutions Ltd
+/*
+ * Copyright (c) 2017, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,44 +29,32 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2020 Nosto Solutions Ltd
+ * @copyright 2017 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
 
-namespace Nosto\Request\Api;
+namespace Nosto\Model\Search\Analytics;
 
-use Nosto\Nosto;
-use Nosto\Request\Http\HttpRequest;
+use Nosto\AbstractObject;
 
-/**
- * API request class for making API requests to Nosto.
- */
-class ApiRequest extends HttpRequest
+class CategoryImpression extends AbstractObject
 {
-    const PATH_ORDER_TAGGING = '/visits/order/confirm/{m}/{cid}';
-    const PATH_UNMATCHED_ORDER_TAGGING = '/visits/order/unmatched/{m}';
-    const PATH_SIGN_UP = '/accounts/create/{lang}';
-    const PATH_PRODUCT_RE_CRAWL = '/products/recrawl';
-    const PATH_PRODUCTS_CREATE = '/v1/products/create';
-    const PATH_PRODUCTS_UPDATE = '/v1/products/update';
-    const PATH_PRODUCTS_UPSERT = '/v1/products/upsert';
-    const PATH_ANALYTICS_SEARCH_IMPRESSIONS = '/analytics/search/impression';
-    const PATH_ANALYTICS_CATEGORY_IMPRESSIONS = '/analytics/category/impression';
-    const PATH_PRODUCTS_DISCONTINUE = '/v1/products/discontinue';
-    const PATH_MARKETING_PERMISSION = '/v1/customers/consent/{email}/{state}';
-    const PATH_CURRENCY_EXCHANGE_RATE = '/exchangerates';
-    const PATH_SETTINGS = '/settings';
-    const PATH_CART_UPDATE = '/v1/cart/update';
+    /**
+     * @var CategoryMetadata metadata of category merchandising request
+     */
+    private $metadata;
+    /**
+     * @var string[] result product ids, in order of appearence in results
+     */
+    private $productIds;
 
     /**
-     * Setter for the end point path, e.g. one of the PATH_ constants.
-     * The API base url is always prepended.
-     *
-     * @param string $path the endpoint path (use PATH_ constants).
+     * @var numeric pagination
      */
-    public function setPath($path)
-    {
-        $this->setUrl(Nosto::getApiBaseUrl() . $path);
-    }
+    private $page;
+
 }
+
+
+
