@@ -47,6 +47,16 @@ class SearchRequest extends ApiRequest
     const PATH_SEARCH = '/v1/graphql';
 
     /**
+     * @var int timeout for waiting response from the api, in second
+     */
+    private $responseTimeout = 3;
+
+    public function __construct()
+    {
+        $this->setResponseTimeout($this->responseTimeout);
+    }
+
+    /**
      * @inheritdoc
      */
     public function setPath($path)
