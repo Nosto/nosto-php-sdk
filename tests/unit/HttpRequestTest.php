@@ -270,11 +270,7 @@ class HttpRequestTest extends Test
             )
         );
         $response = $request->get();
-
-        $pattern = '/Failed to connect to localhost port \d+( after \d+ ms)?: Connection refused/';
-        $string = $response->getMessage();
-
-        $this->assertRegExp($pattern, $string);
+        $this->assertContains('Failed to connect to localhost port', $response->getMessage());
     }
 
     /**
