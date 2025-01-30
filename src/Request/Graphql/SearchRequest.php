@@ -47,13 +47,30 @@ class SearchRequest extends ApiRequest
     const PATH_SEARCH = '/v1/graphql';
 
     /**
-     * @var int timeout for waiting response from the api, in second
+     * @var int Default timeout for waiting response from the API, in seconds
      */
-    private $responseTimeout = 3;
+    private $responseTimeout;
 
-    public function __construct()
+    /**
+     * Constructor.
+     *
+     * @param int $timeout Timeout in seconds, defaults to 10.
+     */
+    public function __construct(int $timeout = 10)
     {
+        $this->responseTimeout = $timeout;
         $this->setResponseTimeout($this->responseTimeout);
+    }
+
+    /**
+     * Sets a custom timeout.
+     *
+     * @param int $timeout Timeout in seconds.
+     */
+    public function setTimeout(int $timeout): void
+    {
+        $this->responseTimeout = $timeout;
+        $this->setResponseTimeout($timeout);
     }
 
     /**
@@ -64,3 +81,6 @@ class SearchRequest extends ApiRequest
         $this->setUrl(Nosto::getSearchBaseUrl() . $path);
     }
 }
+
+
+
