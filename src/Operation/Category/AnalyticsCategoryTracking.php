@@ -36,16 +36,18 @@
 
 namespace Nosto\Operation\Category;
 
-use Nosto\SDK\NostoClient;
+use GuzzleHttp\Client;
+use Nosto\Model\Analytics\AnalyticsTrackingPayload;
+use Nosto\Model\Analytics\DataSource;
+use Nosto\SDK\Model\TrackingPayload;
 use Nosto\SDK\Api\Request\Exception\HttpRequestException;
 
-class AnalyticsCategoryTracking
+class AnalyticsCategoryTracking extends AbstractGraphQLOperation
 {
     private const ENDPOINT = '/analytics/category/track';
+    private $client;
 
-    private NostoClient $client;
-
-    public function __construct(NostoClient $client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }
@@ -53,20 +55,37 @@ class AnalyticsCategoryTracking
     /**
      * Tracks category analytics.
      *
-     * @param string $dataSource
-     * @param array $payload
-     * @return bool
+     * @param DataSource $dataSource
+     * @param TrackingPayload $payload
      * @throws HttpRequestException
      */
-    public function track(string $dataSource, array $payload): bool
+    public function track(DataSource $dataSource, AnalyticsTrackingPayload $payload): void
     {
-        $response = $this->client->post(self::ENDPOINT, [
-            'json' => [
-                'dataSource' => $dataSource,
-                'metadata' => $payload,
-            ],
-        ]);
+        try {
+            $response = $this->client->post(self::ENDPOINT, [
+                'json' => [
+                    'dataSource' => $dataSource->getType(),
+                    'metadata' => [
+                        'query' => $payload->getQuery(),
+                        'productNumber' => $payload->getProductNumber(),
+                        'resultId' => $payload->getResultId(),
+                        'isOrganic' => $payload->isOrganic(),
+                        'isAutoCorrect' => $payload->isAutoCorrect(),
+                        'isAutoComplete' => $payload->isAutoComplete(),
+                        'isKeyword' => $payload->isKeyword(),
+                        'isSorted' => $payload->isSorted(),
+                        'hasResults' => $payload->hasResults(),
+                        'isRefined' => $payload->isRefined(),
+                    ],
+                ],
+            ]);
 
-        return $response->getStatusCode() === 200;
+            if ($response->getStatusCode() !== 200) {
+                throw new HttpRequestException('Failed to send category analytics data. Status code: ' . $response->getStatusCode());
+            }
+        } catch (\Exception $e) {
+            throw new HttpRequestException('Error sending category analytics data: ' . $e->getMessage(), 0, $e);
+        }
     }
 }
+
