@@ -65,18 +65,7 @@ class AnalyticsCategoryTracking extends AbstractGraphQLOperation
             $response = $this->client->post(self::ENDPOINT, [
                 'json' => [
                     'dataSource' => $dataSource->getType(),
-                    'metadata' => [
-                        'query' => $payload->getQuery(),
-                        'productNumber' => $payload->getProductNumber(),
-                        'resultId' => $payload->getResultId(),
-                        'isOrganic' => $payload->isOrganic(),
-                        'isAutoCorrect' => $payload->isAutoCorrect(),
-                        'isAutoComplete' => $payload->isAutoComplete(),
-                        'isKeyword' => $payload->isKeyword(),
-                        'isSorted' => $payload->isSorted(),
-                        'hasResults' => $payload->hasResults(),
-                        'isRefined' => $payload->isRefined(),
-                    ],
+                    'metadata' => $payload,
                 ],
             ]);
 

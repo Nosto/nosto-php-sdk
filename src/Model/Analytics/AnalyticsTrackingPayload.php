@@ -2,10 +2,10 @@
 
 namespace Nosto\Model\Analytics;
 
-class AnalyticsTrackingPayload
+class AnalyticsTrackingPayload implements \JsonSerializable
 {
     private string $query;
-    private string $productNumber;
+    private ?string $productNumber;
     private string $resultId;
     private bool $isOrganic;
     private bool $isAutoCorrect;
@@ -17,8 +17,8 @@ class AnalyticsTrackingPayload
 
     public function __construct(
         string $query,
-        string $productNumber = null,
-        string $resultId = null,
+        ?string $productNumber = null,
+        ?string $resultId = null,
         bool $isOrganic = false,
         bool $isAutoCorrect = true,
         bool $isAutoComplete = false,
@@ -88,4 +88,21 @@ class AnalyticsTrackingPayload
     {
         return $this->isRefined;
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'query' => $this->query,
+            'productNumber' => $this->productNumber,
+            'resultId' => $this->resultId,
+            'isOrganic' => $this->isOrganic,
+            'isAutoCorrect' => $this->isAutoCorrect,
+            'isAutoComplete' => $this->isAutoComplete,
+            'isKeyword' => $this->isKeyword,
+            'isSorted' => $this->isSorted,
+            'hasResults' => $this->hasResults,
+            'isRefined' => $this->isRefined,
+        ];
+    }
 }
+
