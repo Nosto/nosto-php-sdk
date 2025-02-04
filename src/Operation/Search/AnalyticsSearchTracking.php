@@ -55,7 +55,7 @@ class AnalyticsSearchTracking
     /**
      * Tracks search analytics.
      *
-     * @param \Nosto\Model\Analytics\DataSource $dataSource
+     * @param DataSource $dataSource
      * @param AnalyticsTrackingPayload $payload
      * @throws NostoException
      */
