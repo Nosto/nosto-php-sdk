@@ -44,9 +44,8 @@ use Nosto\Model\Analytics\DataSource;
 class AnalyticsCategoryTracking
 {
     private const ENDPOINT = '/analytics/category/track';
-    private $client;
 
-    public function __construct(Client $client)
+    public function __construct(private readonly Client $client)
     {
         $this->client = $client;
     }
