@@ -39,8 +39,7 @@ namespace Nosto\Operation\Category;
 use GuzzleHttp\Client;
 use Nosto\Model\Analytics\AnalyticsTrackingPayload;
 use Nosto\Model\Analytics\DataSource;
-use Nosto\SDK\Model\TrackingPayload;
-use Nosto\SDK\Api\Request\Exception\HttpRequestException;
+use Nosto\Operation\AbstractGraphQLOperation;
 
 class AnalyticsCategoryTracking extends AbstractGraphQLOperation
 {
@@ -56,8 +55,8 @@ class AnalyticsCategoryTracking extends AbstractGraphQLOperation
      * Tracks category analytics.
      *
      * @param DataSource $dataSource
-     * @param TrackingPayload $payload
-     * @throws HttpRequestException
+     * @param AnalyticsTrackingPayload $payload
+     * @throws \HttpRequestException
      */
     public function track(DataSource $dataSource, AnalyticsTrackingPayload $payload): void
     {
