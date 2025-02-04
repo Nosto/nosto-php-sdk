@@ -26,11 +26,14 @@ class DataSource
 
     public static function fromString(string $type): self
     {
-        return match ($type) {
-            self::SEARCH => self::search(),
-            self::CATEGORY => self::category(),
-            default => throw new \InvalidArgumentException('Invalid dataSource type: ' . $type),
-        };
+        switch ($type) {
+            case self::SEARCH:
+                return self::search();
+            case self::CATEGORY:
+                return self::category();
+            default:
+                throw new \InvalidArgumentException('Invalid dataSource type: ' . $type);
+        }
     }
 
     public function getType(): string
