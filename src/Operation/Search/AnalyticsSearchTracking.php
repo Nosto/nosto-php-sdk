@@ -37,19 +37,19 @@
 namespace Nosto\Operation\Search;
 
 use Nosto\NostoException;
-use GuzzleHttp\Client;
 use Nosto\Model\Analytics\AnalyticsTrackingPayload;
 use Nosto\Model\Analytics\DataSource;
+use Nosto\Request\Http\Adapter\Curl;
 
 class AnalyticsSearchTracking
 {
     private const ENDPOINT = '/analytics/search/track';
 
-    private $client;
+    private Curl $curl;
 
-    public function __construct(Client $client)
+    public function __construct(Curl $curl)
     {
-        $this->client = $client;
+        $this->curl = $curl;
     }
 
     /**
@@ -62,7 +62,7 @@ class AnalyticsSearchTracking
     public function track(DataSource $dataSource, AnalyticsTrackingPayload $payload): void
     {
         try {
-            $response = $this->client->post(self::ENDPOINT, [
+            $response = $this->curl->post(self::ENDPOINT, [
                 'json' => [
                     'dataSource' => $dataSource->getType(),
                     'metadata' => $payload,
