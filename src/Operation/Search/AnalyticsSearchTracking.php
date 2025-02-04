@@ -36,6 +36,7 @@
 
 namespace Nosto\Operation\Search;
 
+use Nosto\NostoException;
 use GuzzleHttp\Client;
 use Nosto\Model\Analytics\AnalyticsTrackingPayload;
 use Nosto\Model\Analytics\DataSource;
@@ -56,7 +57,7 @@ class AnalyticsSearchTracking
      *
      * @param DataSource $dataSource
      * @param AnalyticsTrackingPayload $payload
-     * @throws \HttpRequestException
+     * @throws NostoException
      */
     public function track(DataSource $dataSource, AnalyticsTrackingPayload $payload): void
     {
@@ -69,10 +70,10 @@ class AnalyticsSearchTracking
             ]);
 
             if ($response->getStatusCode() !== 200) {
-                throw new HttpRequestException('Failed to send search analytics data. Status code: ' . $response->getStatusCode());
+                throw new NostoException('Failed to send search analytics data. Status code: ' . $response->getStatusCode());
             }
         } catch (\Exception $e) {
-            throw new HttpRequestException('Error sending search analytics data: ' . $e->getMessage(), 0, $e);
+            throw new NostoException('Error sending search analytics data: ' . $e->getMessage(), 0, $e);
         }
     }
 }
