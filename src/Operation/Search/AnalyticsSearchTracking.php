@@ -52,13 +52,6 @@ class AnalyticsSearchTracking
         $this->client = $client;
     }
 
-    /**
-     * Tracks search analytics.
-     *
-     * @param DataSource $dataSource
-     * @param AnalyticsTrackingPayload $payload
-     * @throws NostoException
-     */
     public function track(DataSource $dataSource, AnalyticsTrackingPayload $payload): void
     {
         try {
