@@ -45,7 +45,7 @@ class AnalyticsSearchTracking
 {
     private const ENDPOINT = '/analytics/search/track';
 
-    private readonly Client $client;
+    private $client;
 
     public function __construct(Client $client)
     {
