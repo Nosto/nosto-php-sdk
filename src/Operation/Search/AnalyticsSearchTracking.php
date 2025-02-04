@@ -39,9 +39,8 @@ namespace Nosto\Operation\Search;
 use GuzzleHttp\Client;
 use Nosto\Model\Analytics\AnalyticsTrackingPayload;
 use Nosto\Model\Analytics\DataSource;
-use Nosto\Operation\AbstractGraphQLOperation;
 
-class AnalyticsSearchTracking extends AbstractGraphQLOperation
+class AnalyticsSearchTracking
 {
     private const ENDPOINT = '/analytics/search/track';
 

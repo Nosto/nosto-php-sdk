@@ -39,9 +39,8 @@ namespace Nosto\Operation\Category;
 use GuzzleHttp\Client;
 use Nosto\Model\Analytics\AnalyticsTrackingPayload;
 use Nosto\Model\Analytics\DataSource;
-use Nosto\Operation\AbstractGraphQLOperation;
 
-class AnalyticsCategoryTracking extends AbstractGraphQLOperation
+class AnalyticsCategoryTracking
 {
     private const ENDPOINT = '/analytics/category/track';
     private $client;
