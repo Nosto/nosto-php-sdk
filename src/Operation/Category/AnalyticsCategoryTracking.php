@@ -69,8 +69,8 @@ class AnalyticsCategoryTracking
                 ],
             ]);
 
-            if ($response->getStatusCode() !== 200) {
-                throw new NostoException('Failed to send category analytics data. Status code: ' . $response->getStatusCode());
+            if ($response->getCode() !== 200) {
+                throw new NostoException('Failed to send category analytics data. Status code: ' . $response->getCode());
             }
         } catch (\Exception $e) {
             throw new NostoException('Error sending category analytics data: ' . $e->getMessage(), 0, $e);
