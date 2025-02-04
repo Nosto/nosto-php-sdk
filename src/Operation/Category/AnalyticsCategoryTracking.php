@@ -45,7 +45,7 @@ class AnalyticsCategoryTracking
 {
     private const ENDPOINT = '/analytics/category/track';
 
-    public function __construct(protected readonly Client $client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }
