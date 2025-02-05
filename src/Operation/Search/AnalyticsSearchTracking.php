@@ -39,19 +39,20 @@ namespace Nosto\Operation\Search;
 use Nosto\NostoException;
 use Nosto\Model\Analytics\AnalyticsTrackingPayload;
 use Nosto\Model\Analytics\DataSource;
-use Nosto\Request\Http\Adapter\Curl;
+use Nosto\Operation\AbstractAuthenticatedOperation;
+use Nosto\Types\Signup\AccountInterface;
+use Nosto\Request\Api\Token;
+use Nosto\Request\Api\ApiRequest;
+use Nosto\Result\Api\GeneralPurposeResultHandler;
 
-class AnalyticsSearchTracking
+class AnalyticsSearchTracking extends AbstractAuthenticatedOperation
 {
     private const ENDPOINT = '/analytics/search/track';
 
-    private Curl $curl;
-
-    public function __construct(Curl $curl)
+    public function __construct(AccountInterface $account, $activeDomain = '')
     {
-        $this->curl = $curl;
+        parent::__construct($account, $activeDomain);
     }
-
     /**
      * Tracks search analytics.
      *
@@ -62,11 +63,15 @@ class AnalyticsSearchTracking
     public function track(DataSource $dataSource, AnalyticsTrackingPayload $payload): void
     {
         try {
-            $response = $this->curl->post(self::ENDPOINT, [
-                'json' => [
-                    'dataSource' => $dataSource->getType(),
-                    'metadata' => $payload,
-                ],
+            $request = $this->initRequest(
+                $this->account->getApiToken(Token::API_PRODUCTS),
+                $this->account->getName(),
+                $this->activeDomain,
+            );
+
+            $response = $request->post((object)[
+                'dataSource' => $dataSource->getType(),
+                'metadata' => $payload,
             ]);
 
             if ($response->getCode() !== 200) {
@@ -76,5 +81,35 @@ class AnalyticsSearchTracking
             throw new NostoException('Error sending search analytics data: ' . $e->getMessage(), 0, $e);
         }
     }
+
+    protected function getResultHandler()
+    {
+        return new GeneralPurposeResultHandler();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new ApiRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getContentType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return ApiRequest::PATH_PRODUCTS_UPSERT;
+    }
+
 }
 

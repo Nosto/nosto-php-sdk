@@ -4,7 +4,7 @@ namespace Nosto\Model\Analytics;
 
 class AnalyticsTrackingPayload implements \JsonSerializable
 {
-    private string $query;
+    private ?string $query;
     private ?string $productNumber;
     private string $resultId;
     private bool $isOrganic;
@@ -16,7 +16,7 @@ class AnalyticsTrackingPayload implements \JsonSerializable
     private bool $isRefined;
 
     public function __construct(
-        string $query,
+        ?string $query = null,
         ?string $productNumber = null,
         ?string $resultId = null,
         bool $isOrganic = false,
@@ -39,7 +39,7 @@ class AnalyticsTrackingPayload implements \JsonSerializable
         $this->isRefined = $isRefined;
     }
 
-    public function getQuery(): string
+    public function getQuery(): ?string
     {
         return $this->query;
     }

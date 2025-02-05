@@ -39,19 +39,20 @@ namespace Nosto\Operation\Category;
 use Nosto\NostoException;
 use Nosto\Model\Analytics\AnalyticsTrackingPayload;
 use Nosto\Model\Analytics\DataSource;
-use Nosto\Request\Http\Adapter\Curl;
+use Nosto\Operation\AbstractAuthenticatedOperation;
+use Nosto\Types\Signup\AccountInterface;
+use Nosto\Request\Api\Token;
+use Nosto\Request\Api\ApiRequest;
+use Nosto\Result\Api\GeneralPurposeResultHandler;
 
-class AnalyticsCategoryTracking
+class AnalyticsCategoryTracking extends AbstractAuthenticatedOperation
 {
     private const ENDPOINT = '/analytics/category/track';
 
-    private Curl $curl;
-
-    public function __construct(Curl $curl)
+    public function __construct(AccountInterface $account, $activeDomain = '')
     {
-        $this->curl = $curl;
+        parent::__construct($account, $activeDomain);
     }
-
     /**
      * Tracks category analytics.
      *
@@ -62,19 +63,53 @@ class AnalyticsCategoryTracking
     public function track(DataSource $dataSource, AnalyticsTrackingPayload $payload): void
     {
         try {
-            $response = $this->curl->post(self::ENDPOINT, [
-                'json' => [
-                    'dataSource' => $dataSource->getType(),
-                    'metadata' => $payload,
-                ],
+            $request = $this->initRequest(
+                $this->account->getApiToken(Token::API_PRODUCTS),
+                $this->account->getName(),
+                $this->activeDomain,
+            );
+
+            $response = $request->post((object)[
+                'dataSource' => $dataSource->getType(),
+                'metadata' => $payload,
             ]);
 
             if ($response->getCode() !== 200) {
                 throw new NostoException('Failed to send category analytics data. Status code: ' . $response->getCode());
             }
+
         } catch (\Exception $e) {
             throw new NostoException('Error sending category analytics data: ' . $e->getMessage(), 0, $e);
         }
+    }
+
+    protected function getResultHandler()
+    {
+        return new GeneralPurposeResultHandler();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequestType()
+    {
+        return new ApiRequest();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getContentType()
+    {
+        return self::CONTENT_TYPE_APPLICATION_JSON;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getPath()
+    {
+        return ApiRequest::PATH_PRODUCTS_UPSERT;
     }
 }
 
