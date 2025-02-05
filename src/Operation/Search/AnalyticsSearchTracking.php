@@ -64,7 +64,7 @@ class AnalyticsSearchTracking extends AbstractAuthenticatedOperation
     {
         try {
             $request = $this->initRequest(
-                $this->account->getApiToken(Token::API_PRODUCTS),
+                $this->account->getApiToken(Token::API_SEARCH),
                 $this->account->getName(),
                 $this->activeDomain,
             );
