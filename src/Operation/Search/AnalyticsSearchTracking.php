@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2020, Nosto Solutions Ltd
+ * Copyright (c) 2025, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -36,49 +36,104 @@
 
 namespace Nosto\Operation\Search;
 
+use Nosto\Model\Analytics\AnalyticsSearchMetadata;
 use Nosto\NostoException;
-use Nosto\Model\Analytics\AnalyticsTrackingPayload;
-use Nosto\Model\Analytics\DataSource;
-use Nosto\Operation\AbstractAuthenticatedOperation;
-use Nosto\Types\Signup\AccountInterface;
-use Nosto\Request\Api\Token;
-use Nosto\Request\Api\ApiRequest;
+use Nosto\Operation\AbstractRESTOperation;
+use Nosto\Request\Api\SearchAnalyticsRequest;
 use Nosto\Result\Api\GeneralPurposeResultHandler;
 
-class AnalyticsSearchTracking extends AbstractAuthenticatedOperation
+class AnalyticsSearchTracking extends AbstractRESTOperation
 {
-    private const ENDPOINT = '/analytics/search/track';
+    /**
+     * @type string
+     */
+    private $merchantId;
+    /**
+     * @type string
+     */
+    private $sessionId;
+    /**
+     * @type string
+     */
+    private $path;
 
-    public function __construct(AccountInterface $account, $activeDomain = '')
+    /**
+     * @param string $merchantId
+     * @param string $sessionId
+     */
+    public function __construct($merchantId, $sessionId)
     {
-        parent::__construct($account, $activeDomain);
+        $this->merchantId = $merchantId;
+        $this->sessionId = $sessionId;
     }
+
     /**
      * Tracks search analytics.
      *
-     * @param DataSource $dataSource
-     * @param AnalyticsTrackingPayload $payload
+     * @param AnalyticsSearchMetadata $metadata
+     * @param string $productId
+     * @return void
      * @throws NostoException
      */
-    public function track(DataSource $dataSource, AnalyticsTrackingPayload $payload): void
+    public function click(AnalyticsSearchMetadata $metadata, $productId)
     {
+        $this->setPath(SearchAnalyticsRequest::PATH_SEARCH_CLICK);
         try {
+            $requestParams = ["merchant" => $this->merchantId, "customer" => $this->sessionId];
             $request = $this->initRequest(
-                $this->account->getApiToken(Token::API_SEARCH),
-                $this->account->getName(),
-                $this->activeDomain,
+                null,
+                null,
+                null,
+                false,
+                $requestParams
             );
 
-            $response = $request->post((object)[
-                'dataSource' => $dataSource->getType(),
-                'metadata' => $payload,
-            ]);
+            $response = $request->postRaw(json_encode([
+                'metadata' => $metadata,
+                'productId' => $productId
+            ]));
 
             if ($response->getCode() !== 200) {
-                throw new NostoException('Failed to send search analytics data. Status code: ' . $response->getCode());
+                throw new NostoException('Failed to send search analytics click data. Status code: ' . $response->getCode());
             }
         } catch (\Exception $e) {
-            throw new NostoException('Error sending search analytics data: ' . $e->getMessage(), 0, $e);
+            throw new NostoException('Error sending search analytics click data: ' . $e->getMessage(), 0, $e);
+        }
+    }
+
+    /**
+     * Tracks search analytics.
+     *
+     * @param AnalyticsSearchMetadata $metadata
+     * @param array $productIds
+     * @param int $page
+     * @return void
+     * @throws NostoException
+     */
+    public function impression(AnalyticsSearchMetadata $metadata, $productIds, $page)
+    {
+        $this->setPath(SearchAnalyticsRequest::PATH_SEARCH_IMPRESSION);
+        try {
+            $requestParams = ["merchant" => $this->merchantId, "customer" => $this->sessionId];
+            $request = $this->initRequest(
+                null,
+                null,
+                null,
+                false,
+                $requestParams
+            );
+
+            $response = $request->postRaw(json_encode([
+                'metadata' => $metadata,
+                'productId' => $productIds,
+                'page' => $page
+            ]));
+
+            if ($response->getCode() !== 200) {
+                throw new NostoException('Failed to send search analytics impression data. Status code: ' . $response->getCode());
+            }
+        } catch (\Exception $e) {
+            throw new NostoException('Error sending search analytics impression data: ' . $e->getMessage(), 0, $e);
         }
     }
 
@@ -92,7 +147,7 @@ class AnalyticsSearchTracking extends AbstractAuthenticatedOperation
      */
     protected function getRequestType()
     {
-        return new ApiRequest();
+        return new SearchAnalyticsRequest();
     }
 
     /**
@@ -108,7 +163,12 @@ class AnalyticsSearchTracking extends AbstractAuthenticatedOperation
      */
     protected function getPath()
     {
-        return ApiRequest::PATH_PRODUCTS_UPSERT;
+        return $this->path;
+    }
+
+    protected function setPath($path)
+    {
+        $this->path = $path;
     }
 
 }

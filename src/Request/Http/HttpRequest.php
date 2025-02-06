@@ -37,8 +37,8 @@
 namespace Nosto\Request\Http;
 
 use Exception;
-use Nosto\Nosto;
 use Nosto\Helper\SerializationHelper;
+use Nosto\Nosto;
 use Nosto\NostoException;
 use Nosto\Request\Http\Adapter\Adapter;
 use Nosto\Request\Http\Adapter\Curl;
@@ -440,6 +440,10 @@ class HttpRequest
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);
         }
+        if (!empty($this->queryParams)) {
+            $url .= '?' . http_build_query($this->queryParams);
+        }
+
         $this->adapter->setResponseTimeout($this->getResponseTimeout());
         $this->adapter->setConnectTimeout($this->getConnectTimeout());
 
