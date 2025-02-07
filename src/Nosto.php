@@ -58,6 +58,7 @@ class Nosto
 
     const DEFAULT_NOSTO_SERVER_URL = 'connect.nosto.com';
     const DEFAULT_NOSTO_EMAIL_WIDGET_BASE_URL = 'https://connect.nosto.com';
+    const DEFAULT_NOSTO_SEARCH_ANALYTICS_BASE_URL = 'https://connect.nosto.com';
     const DEFAULT_NOSTO_WEB_HOOK_BASE_URL = 'https://my.nosto.com';
     const DEFAULT_NOSTO_OAUTH_BASE_URL = 'https://my.nosto.com/oauth';
     const DEFAULT_NOSTO_API_BASE_URL = 'https://api.nosto.com';
@@ -113,6 +114,11 @@ class Nosto
     public static function getSearchBaseUrl()
     {
         return self::getEnvVariable('NOSTO_SEARCH_BASE_URL', self::DEFAULT_NOSTO_SEARCH_BASE_URL);
+    }
+
+    public static function getSearchAnalyticsBaseUrl()
+    {
+        return self::getEnvVariable('NOSTO_SEARCH_ANALYTICS_BASE_URL', self::DEFAULT_NOSTO_SEARCH_ANALYTICS_BASE_URL);
     }
 
     /**

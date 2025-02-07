@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2020 Nosto Solutions Ltd
+ * @copyright 2025 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
@@ -38,9 +38,9 @@ namespace Nosto\Operation;
 
 use Nosto\NostoException;
 use Nosto\Request\Api\Token;
+use Nosto\Request\Graphql\SearchRequest;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Request\Http\Exception\HttpResponseException;
-use Nosto\Request\Graphql\SearchRequest;
 use Nosto\Types\Signup\AccountInterface;
 
 abstract class AbstractSearchOperation extends AbstractOperation
@@ -79,7 +79,7 @@ abstract class AbstractSearchOperation extends AbstractOperation
     {
         $request = $this->initRequest(
             $this->account->getApiToken(Token::API_SEARCH),
-            $this->account->getName(),
+            $this->account->getName()
         );
         $payload = ['query' => $this->getQuery(), 'variables' => $this->getVariables()];
         $response = $request->postRaw(
@@ -106,10 +106,12 @@ abstract class AbstractSearchOperation extends AbstractOperation
      */
     protected function initRequest(
         Token $token = null,
-        $nostoAccount = null,
-        $domain = null,
-        $isTokenNeeded = true
-    ) {
+              $nostoAccount = null,
+              $domain = null,
+              $isTokenNeeded = true,
+              $queryParams = null
+    )
+    {
         $request = parent::initRequest($token, $nostoAccount, $domain, false);
 
         $request->setAuthBearer($token->getValue());
