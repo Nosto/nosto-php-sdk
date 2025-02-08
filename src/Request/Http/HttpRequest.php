@@ -70,6 +70,8 @@ class HttpRequest
     const HEADER_CONTENT_TYPE = 'Content-type';
     const HEADER_NOSTO_ACCOUNT = 'X-Nosto-account';
     const HEADER_ACTIVE_DOMAIN = 'X-Nosto-active-domain';
+    const HEADER_USER_AGENT = 'User-Agent';
+
 
     /**
      * @var string user-agent to use for all requests
@@ -286,6 +288,11 @@ class HttpRequest
     public function setActiveDomainHeader($activeDomain)
     {
         $this->addHeader(self::HEADER_ACTIVE_DOMAIN, $activeDomain);
+    }
+
+    public function addUserAgentHeader($userAgent)
+    {
+        $this->addHeader(self::HEADER_USER_AGENT, $userAgent);
     }
 
     /**
