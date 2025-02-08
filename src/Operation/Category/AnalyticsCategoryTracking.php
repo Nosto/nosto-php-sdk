@@ -56,15 +56,21 @@ class AnalyticsCategoryTracking extends AbstractRESTOperation
      * @type string
      */
     private $path;
+    /**
+     * @type string | null
+     */
+    private $userAgent;
 
     /**
      * @param string $merchantId
      * @param string $sessionId
+     * @param string $userAgent
      */
-    public function __construct($merchantId, $sessionId)
+    public function __construct($merchantId, $sessionId, $userAgent)
     {
         $this->merchantId = $merchantId;
         $this->sessionId = $sessionId;
+        $this->userAgent = $userAgent;
     }
 
     /**
@@ -87,7 +93,9 @@ class AnalyticsCategoryTracking extends AbstractRESTOperation
                 false,
                 $requestParams
             );
-
+            if ($this->userAgent) {
+                $request->addUserAgentHeader($this->userAgent);
+            }
             $response = $request->postRaw(json_encode([
                 'metadata' => $metadata,
                 'productId' => $productId
@@ -123,7 +131,9 @@ class AnalyticsCategoryTracking extends AbstractRESTOperation
                 false,
                 $requestParams
             );
-
+            if ($this->userAgent) {
+                $request->addUserAgentHeader($this->userAgent);
+            }
             $response = $request->postRaw(json_encode([
                 'metadata' => $metadata,
                 'productIds' => $productIds,
