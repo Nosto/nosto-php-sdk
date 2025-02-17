@@ -96,18 +96,17 @@ class RecrawlProduct extends AbstractAuthenticatedOperation
      */
     public function requestRecrawl()
     {
+        if ($this->collection->count() === 0) {
+            return true;
+        }
         $request = $this->initRequest(
             $this->account->getApiToken(Token::API_PRODUCTS),
             $this->account->getName(),
             $this->activeDomain
         );
-        if ($this->collection->count() === 0) {
-            return true;
-        }
         $products = [
             "products" => []
         ];
-
         foreach ($this->collection as $product) {
             $products["products"][] = [
                 "product_id" => $product->getProductId(),
