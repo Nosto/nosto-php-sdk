@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2020, Nosto Solutions Ltd
+ * Copyright (c) 2025, Nosto Solutions Ltd
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,31 +29,34 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2020 Nosto Solutions Ltd
+ * @copyright 2025 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
 
-namespace Nosto\Request\Graphql;
+namespace Nosto\Request\Api;
 
 use Nosto\Nosto;
-use Nosto\Request\Api\ApiRequest;
+use Nosto\Request\Http\HttpRequest;
 
 /**
  * API request class for making API requests to Nosto.
  */
-class SearchRequest extends ApiRequest
+class SearchAnalyticsRequest extends HttpRequest
 {
-    const PATH_SEARCH = '/v1/graphql';
+    const PATH_CATEGORY_CLICK = '/analytics/category/click';
+    const PATH_CATEGORY_IMPRESSION = '/analytics/category/impression';
+    const PATH_SEARCH_CLICK = '/analytics/search/click';
+    const PATH_SEARCH_IMPRESSION = '/analytics/search/impression';
 
     /**
-     * @inheritdoc
+     * Setter for the end point path, e.g. one of the PATH_ constants.
+     * The API base url is always prepended.
+     *
+     * @param string $path the endpoint path (use PATH_ constants).
      */
     public function setPath($path)
     {
-        $this->setUrl(Nosto::getSearchBaseUrl() . $path);
+        $this->setUrl(Nosto::getSearchAnalyticsBaseUrl() . $path);
     }
 }
-
-
-

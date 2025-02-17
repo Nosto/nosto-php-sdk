@@ -37,6 +37,7 @@
 namespace Nosto\Operation;
 
 use Nosto\Request\Api\ApiRequest;
+use Nosto\Request\Api\SearchAnalyticsRequest;
 use Nosto\Request\Api\Token;
 use Nosto\NostoException;
 use Nosto\Request\Http\HttpRequest;
@@ -58,12 +59,12 @@ abstract class AbstractOperation
     /**
      * @var int timeout for waiting response from the api, in second
      */
-    private $responseTimeout = 5;
+    private $responseTimeout = 10;
 
     /**
      * @var int timeout for connecting to the api, in second
      */
-    private $connectTimeout = 5;
+    private $connectTimeout = 10;
 
     /**
      * @param Token|null $token
@@ -77,7 +78,8 @@ abstract class AbstractOperation
         Token $token = null,
         $nostoAccount = null,
         $domain = null,
-        $isTokenNeeded = true
+        $isTokenNeeded = true,
+        $queryParams = null
     ) {
         if (is_null($token) && $isTokenNeeded) {
             throw new NostoException('No API token found for account.');
@@ -90,6 +92,9 @@ abstract class AbstractOperation
         if (is_string($nostoAccount)) {
             $request->setNostoAccountHeader($nostoAccount);
             $request->setQueryParams(['merchant-id' => $nostoAccount]);
+        }
+        if (is_array($queryParams)) {
+            $request->setQueryParams($queryParams);
         }
         $request->setResponseTimeout($this->getResponseTimeout());
         $request->setConnectTimeout($this->getConnectTimeout());
@@ -104,7 +109,7 @@ abstract class AbstractOperation
     /**
      * Return type of request object
      *
-     * @return HttpRequest|ApiRequest|GraphqlRequest|SearchRequest
+     * @return HttpRequest|ApiRequest|GraphqlRequest|SearchRequest|SearchAnalyticsRequest
      */
     abstract protected function getRequestType();
 

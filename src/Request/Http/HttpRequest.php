@@ -37,8 +37,8 @@
 namespace Nosto\Request\Http;
 
 use Exception;
-use Nosto\Nosto;
 use Nosto\Helper\SerializationHelper;
+use Nosto\Nosto;
 use Nosto\NostoException;
 use Nosto\Request\Http\Adapter\Adapter;
 use Nosto\Request\Http\Adapter\Curl;
@@ -70,6 +70,8 @@ class HttpRequest
     const HEADER_CONTENT_TYPE = 'Content-type';
     const HEADER_NOSTO_ACCOUNT = 'X-Nosto-account';
     const HEADER_ACTIVE_DOMAIN = 'X-Nosto-active-domain';
+    const HEADER_USER_AGENT = 'User-Agent';
+
 
     /**
      * @var string user-agent to use for all requests
@@ -79,12 +81,12 @@ class HttpRequest
     /**
      * @var int timeout for waiting response from the api, in second
      */
-    private $responseTimeout = 5;
+    private $responseTimeout = 10;
 
     /**
      * @var int timeout for connecting to the api, in second
      */
-    private $connectTimeout = 5;
+    private $connectTimeout = 10;
 
     /**
      * @var string the request url.
@@ -288,6 +290,11 @@ class HttpRequest
         $this->addHeader(self::HEADER_ACTIVE_DOMAIN, $activeDomain);
     }
 
+    public function addUserAgentHeader($userAgent)
+    {
+        $this->addHeader(self::HEADER_USER_AGENT, $userAgent);
+    }
+
     /**
      * Adds a new header to the request.
      *
@@ -440,6 +447,10 @@ class HttpRequest
         if (!empty($this->replaceParams)) {
             $url = self::buildUri($url, $this->replaceParams);
         }
+        if (!empty($this->queryParams)) {
+            $url .= '?' . http_build_query($this->queryParams);
+        }
+
         $this->adapter->setResponseTimeout($this->getResponseTimeout());
         $this->adapter->setConnectTimeout($this->getConnectTimeout());
 
