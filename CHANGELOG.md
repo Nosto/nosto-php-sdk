@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 7.5.3
+* Serialization Helper make toArray method public
+* Implement Recrawl operation
+
+### 7.5.2
+Search GraphQL and Analytics - Remove timeout logic
+
 ### 7.5.1
 * Increase APIs timeout to 10 seconds
 
