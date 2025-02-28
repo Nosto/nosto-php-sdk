@@ -79,7 +79,7 @@ class SerializationHelper extends AbstractHelper
      * @param string $keyCaseType
      * @return array
      */
-    private static function toArray($object, $keyCaseType = self::SNAKE_CASE)
+    public static function toArray($object, $keyCaseType = self::SNAKE_CASE)
     {
         $json = [];
         $props = Reflection::getObjectProperties($object);
