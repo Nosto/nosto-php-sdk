@@ -10,7 +10,7 @@ This project adheres to Semantic Versioning (http://semver.org/).
 * Search GraphQL and Analytics - Remove timeout logic
 
 ### 7.6.1
-* 
+* Fix composer version
 
 ### 7.6.0
 * Added analytics for Search
