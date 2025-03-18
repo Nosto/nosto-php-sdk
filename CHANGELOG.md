@@ -7,14 +7,14 @@ This project adheres to Semantic Versioning (http://semver.org/).
 * Implement Recrawl operation
 
 ### 7.6.2
-* Search GraphQL and Analytics - Remove timeout logic
+* Use default SDK timeout value for Search and Category Analytics 
 
 ### 7.6.1
 * Fix composer version
 
 ### 7.6.0
-* Added analytics for Search
-* Increase APIs timeout to 10 seconds for Search API Requests
+* Added Search and Category analytics
+* Added default timeout for Search API requests to 10 seconds
 
 ### 7.5.1
 * Increase APIs timeout to 10 seconds
