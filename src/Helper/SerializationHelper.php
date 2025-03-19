@@ -102,7 +102,10 @@ class SerializationHelper extends AbstractHelper
                 $key = self::toSnakeCase($key);
             }
             $value = $object->$getter();
-            if (self::isNull($value)) {
+            /*
+             * TODO: This change was introduced to allow products without images to be synchronized with Nosto.
+             */
+            if (self::isNull($value) && $key !== 'image_url') {
                 continue;
             }
             if ($value instanceof Iterator) {
