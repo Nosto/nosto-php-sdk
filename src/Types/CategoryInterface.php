@@ -85,9 +85,4 @@ interface CategoryInterface
      */
     public function getCategoryString();
 
-    /**
-     * Return the category storefront url
-     * @return string
-     */
-    public function getCategoryUrl();
 }

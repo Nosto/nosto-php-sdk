@@ -79,7 +79,7 @@ class CategoryUpdate extends AbstractGraphQLOperation
                 'name' => $this->category->getTitle(),
                 'parentId' => (string) $this->category->getParentId(),
                 'urlPath' => $this->category->getPath(),
-                'url' => $this->category->getCategoryUrl()
+                'url' => $this->category->getUrl()
             ]
         ];
     }
