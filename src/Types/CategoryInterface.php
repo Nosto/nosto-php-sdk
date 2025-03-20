@@ -84,4 +84,5 @@ interface CategoryInterface
      * @return string
      */
     public function getCategoryString();
+
 }
