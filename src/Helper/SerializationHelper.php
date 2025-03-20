@@ -105,7 +105,7 @@ class SerializationHelper extends AbstractHelper
             /*
              * TODO: This change was introduced to allow products without images to be synchronized with Nosto.
              */
-            if (self::isNull($value) && $key !== 'image_url') {
+            if ($key !== 'image_url' && self::isNull($value)) {
                 continue;
             }
             if ($value instanceof Iterator) {
