@@ -45,7 +45,7 @@ class SearchOperation extends AbstractSearchOperation
     private $accountId;
 
     /** @var string */
-    private $query = '';
+    private $query = null;
 
     /** @var ?string */
     private $categoryId = null;

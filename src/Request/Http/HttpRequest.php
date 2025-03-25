@@ -152,7 +152,7 @@ class HttpRequest
     public static function replaceQueryParamInUrl($param, $value, $url)
     {
         $parsedUrl = self::parseUrl($url);
-        $queryString = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
+        $queryString = isset($parsedUrl['query']) ? $parsedUrl['query'] : null;
         $queryString = self::replaceQueryParam($param, $value, $queryString);
         $parsedUrl['query'] = $queryString;
         return self::buildUrl($parsedUrl);
@@ -171,7 +171,7 @@ class HttpRequest
             return $url;
         }
         $parsedUrl = self::parseUrl($url);
-        $queryString = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
+        $queryString = isset($parsedUrl['query']) ? $parsedUrl['query'] : null;
         foreach ($queryParams as $param => $value) {
             $queryString = self::replaceQueryParam($param, $value, $queryString);
         }
@@ -239,7 +239,7 @@ class HttpRequest
         $pass = isset($parts['pass']) ? ':' . $parts['pass'] : '';
         $pass = ($user || $pass) ? "$pass@" : '';
         $path = isset($parts['path']) ? $parts['path'] : '';
-        $query = isset($parts['query']) ? '?' . $parts['query'] : '';
+        $query = isset($parts['query']) ? '?' . $parts['query'] : null;
         $fragment = isset($parts['fragment']) ? '#' . $parts['fragment'] : '';
         return $scheme . $user . $pass . $host . $port . $path . $query . $fragment;
     }
