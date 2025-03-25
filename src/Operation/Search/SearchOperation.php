@@ -45,7 +45,7 @@ class SearchOperation extends AbstractSearchOperation
     private $accountId;
 
     /** @var string */
-    private $query = null;
+    private $query = '';
 
     /** @var ?string */
     private $categoryId = null;
@@ -380,7 +380,7 @@ GRAPHQL;
     {
         return [
             'accountId' => $this->accountId,
-            'query' => $this->query,
+            'query' => ($this->query == '' && ($this->categoryPath || $this->categoryId)) ?  null : $this->query ,
             'categoryId' => $this->categoryId,
             'categoryPath' => $this->categoryPath,
             'variationId' => $this->variationId,
