@@ -380,7 +380,7 @@ GRAPHQL;
     {
         return [
             'accountId' => $this->accountId,
-            'query' => $this->query,
+            'query' => ($this->query == '' && ($this->categoryPath || $this->categoryId)) ?  null : $this->query ,
             'categoryId' => $this->categoryId,
             'categoryPath' => $this->categoryPath,
             'variationId' => $this->variationId,
