@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 7.6.5
+* Fix search query returning wrong results when query parameter is empty
+
+### 7.6.4
+* Send category url to Nosto as part of category entity
+
 ### 7.6.3
 * Serialization Helper make toArray method public
 * Implement Recrawl operation
