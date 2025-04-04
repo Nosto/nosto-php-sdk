@@ -63,9 +63,10 @@ class HttpResponseException
     private static function handlePlainText(HttpResponse $httpResponse) {
         throw new ResponseException(
             sprintf(
-                'Something went wrong:  %s %s',
+                'Something went wrong:  %s %s %s',
                 $httpResponse->getMessage() ?? 'Received empty response from Nosto\'s API',
-                self::getXRequestId($httpResponse)
+                self::getXRequestId($httpResponse),
+                $httpResponse->getResult(),
             ),
             $httpResponse->getCode()
         );
