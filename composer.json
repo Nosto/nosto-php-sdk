@@ -1,6 +1,6 @@
 {
   "name": "nosto/php-sdk",
-  "version": "7.6.5",
+  "version": "7.6.6",
   "description": "PHP SDK for developing Nosto modules for e-commerce platforms",
   "license": "BSD-3-Clause",
   "require-dev": {
@@ -46,7 +46,7 @@
   },
   "scripts": {
     "post-install-cmd": "if [ -f ./vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility; fi",
-    "post-update-cmd" : "if [ -f ./vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility; fi",
+    "post-update-cmd": "if [ -f ./vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility; fi",
     "ci:inspect": "./inspect.sh"
   },
   "config": {
