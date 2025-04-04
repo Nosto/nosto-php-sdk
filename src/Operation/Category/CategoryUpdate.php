@@ -108,6 +108,9 @@ class CategoryUpdate extends AbstractGraphQLOperation
                         category {
                           id
                         }
+                        errors {
+                            message
+                        }
                      }
                  }
             }
