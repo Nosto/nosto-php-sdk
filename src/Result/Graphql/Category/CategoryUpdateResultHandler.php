@@ -60,7 +60,7 @@ class CategoryUpdateResultHandler extends GraphQLResultHandler
             if ($varName === self::GRAPHQL_RESPONSE_CATEGORY_RESULT && is_array($member) && count($member) > 0) {
                 foreach ($member as $category) {
                     if ($category instanceof stdClass) {
-                        if (isset($category->errors) && is_array($category->errors) && count($category->errors) > 0)
+                        if (isset($category->errors) && is_array($category->errors) && count($category->errors) > 0) {
                             foreach ($category->errors as $error) {
                                 throw new NostoException($error->message);
                             }
