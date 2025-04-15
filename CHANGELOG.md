@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 7.6.7
+* Added error handling for category sync
+
 ### 7.6.6
 * Added api response to error handling
 
