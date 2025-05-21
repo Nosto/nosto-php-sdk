@@ -52,8 +52,9 @@ abstract class GraphQLResultHandler extends ResultHandler
     protected function parseResponse(HttpResponse $response)
     {
         $result = json_decode($response->getResult());
+        $totalProducts = (int)$result->data->search->products->total;
 
-        if ($this->hasErrors($result)) {
+        if ($this->hasErrors($result) && $totalProducts === 0) {
             $error = $this->parseErrorMessage($result->errors);
             throw new NostoException($error);
         }
