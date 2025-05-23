@@ -89,6 +89,24 @@ abstract class AbstractSearchOperation extends AbstractOperation
         return $request->getResultHandler()->parse($response);
     }
 
+    public function executeSw()
+    {
+        $request = $this->initRequest(
+            $this->account->getApiToken(Token::API_SEARCH),
+            $this->account->getName()
+        );
+        $payload = ['query' => $this->getQuery(), 'variables' => $this->getVariables()];
+        $response = $request->postRaw(
+            json_encode($payload)
+        );
+        $data = [
+            $response->getResult(),
+            $request->getResultHandler()->parse($response)
+        ];
+        return $data;
+    }
+
+
     /**
      * Builds the recommendation API request
      *
