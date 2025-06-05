@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 7.6.8
+* Added better error handling for graphql requests
+
 ### 7.6.7
 * Added error handling for category sync
 
