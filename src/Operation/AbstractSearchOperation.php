@@ -90,6 +90,34 @@ abstract class AbstractSearchOperation extends AbstractOperation
     }
 
     /**
+     * Returns the result, specific for Shopware.
+     *
+     * @return mixed|null
+     * @throws AbstractHttpException
+     * @throws HttpResponseException
+     * @throws NostoException
+     */
+    public function executeSw()
+    {
+
+        $request = $this->initRequest(
+            $this->account->getApiToken(Token::API_SEARCH),
+            $this->account->getName()
+        );
+
+        $payload = ['query' => $this->getQuery(), 'variables' => $this->getVariables()];
+
+        $response = $request->postRaw(
+            json_encode($payload)
+        );
+
+        return [
+            $response->getResult(),
+            $request->getResultHandler()->parse($response)
+        ];
+    }
+
+    /**
      * Builds the recommendation API request
      *
      * @return string
