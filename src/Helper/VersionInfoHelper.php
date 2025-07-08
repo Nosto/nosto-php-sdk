@@ -43,14 +43,26 @@ use Nosto\Types\Signup\AccountInterface;
 
 class VersionInfoHelper
 {
-
+    /**
+     * Sends version information to Nosto API.
+     *
+     * @param AccountInterface $account the Nosto account
+     * @param string $platform the platform name (e.g., "Shopware")
+     * @param string $platformVersion the platform version (e.g., "6.6.9")
+     * @param string $pluginVersion the plugin version (e.g., "5.1.6")
+     * @param mixed $logger optional logger instance for Shopware logging
+     * @param string $activeDomain optional active domain
+     * @return bool true if the request was successful
+     * @throws NostoException on API communication failure
+     * @throws AbstractHttpException on HTTP errors
+     */
     public static function sendVersionInfo(
         AccountInterface $account,
-                         $platform,
-                         $platformVersion,
-                         $pluginVersion,
-                         $logger = null,
-                         $activeDomain = ''
+        $platform,
+        $platformVersion,
+        $pluginVersion,
+        $logger = null,
+        $activeDomain = ''
     ) {
         try {
             $operation = new SendVersionInfo(
@@ -62,8 +74,7 @@ class VersionInfoHelper
             );
 
             $result = $operation->sendVersionInfo();
-
-            // Log success if logger is provided
+ 
             if ($logger && method_exists($logger, 'info')) {
                 $logger->info('Successfully sent version info to Nosto', [
                     'platform' => $platform,
@@ -73,8 +84,27 @@ class VersionInfoHelper
             }
 
             return $result;
+        } catch (NostoException $e) { 
+            if ($logger && method_exists($logger, 'error')) {
+                $logger->error('Nosto API error sending version info: ' . $e->getMessage(), [
+                    'platform' => $platform,
+                    'platformVersion' => $platformVersion,
+                    'pluginVersion' => $pluginVersion,
+                    'error' => $e->getMessage()
+                ]);
+            }
+            throw $e;
+        } catch (AbstractHttpException $e) { 
+            if ($logger && method_exists($logger, 'error')) {
+                $logger->error('HTTP error sending version info to Nosto: ' . $e->getMessage(), [
+                    'platform' => $platform,
+                    'platformVersion' => $platformVersion,
+                    'pluginVersion' => $pluginVersion,
+                    'error' => $e->getMessage()
+                ]);
+            }
+            throw $e;
         } catch (\Exception $e) {
-            // Log error if logger is provided
             if ($logger && method_exists($logger, 'error')) {
                 $logger->error('Failed to send version info to Nosto: ' . $e->getMessage(), [
                     'platform' => $platform,

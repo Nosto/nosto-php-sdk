@@ -51,17 +51,17 @@ class SendVersionInfo extends AbstractAuthenticatedOperation
     const MOCK_ENDPOINT_URL = 'https://mock.nosto.com/sdk/version';
 
     /**
-     * @var string
+     * @var string the platform name (e.g., "Shopware")
      */
     private $platform;
 
     /**
-     * @var string
+     * @var string the platform version (e.g., "6.6.9")
      */
     private $platformVersion;
 
     /**
-     * @var string
+     * @var string the plugin version (e.g., "5.1.6")
      */
     private $pluginVersion;
 
@@ -76,10 +76,10 @@ class SendVersionInfo extends AbstractAuthenticatedOperation
      */
     public function __construct(
         AccountInterface $account,
-                         $platform,
-                         $platformVersion,
-                         $pluginVersion,
-                         $activeDomain = ''
+        $platform,
+        $platformVersion,
+        $pluginVersion,
+        $activeDomain = ''
     ) {
         parent::__construct($account, $activeDomain);
         $this->platform = $platform;
@@ -87,20 +87,37 @@ class SendVersionInfo extends AbstractAuthenticatedOperation
         $this->pluginVersion = $pluginVersion;
     }
 
+    /**
+     * Sends version information to Nosto API.
+     * This method prepares and sends a JSON payload with platform and plugin version information.
+     *
+     * @return bool true if the request was successful
+     * @throws NostoException on API communication failure
+     * @throws AbstractHttpException on HTTP errors
+     */
     public function sendVersionInfo()
     {
-        $request = $this->initRequest(
-            $this->account->getApiToken(Token::API_PRODUCTS),
-            $this->account->getName(),
-        );
+        try {
+            $request = $this->initRequest(
+                $this->account->getApiToken(Token::API_PRODUCTS),
+                $this->account->getName(),
+                $this->activeDomain
+            );
 
-        // Set custom URL for mock endpoint (remove this line when real endpoint is available)
-        $request->setUrl(self::MOCK_ENDPOINT_URL);
+            // Set custom URL for mock endpoint (remove this line when real endpoint is available)
+            $request->setUrl(self::MOCK_ENDPOINT_URL);
 
-        $versionData = $this->buildVersionPayload();
-        $response = $request->postRaw(json_encode($versionData));
+            $versionData = $this->buildVersionPayload();
+            $response = $request->postRaw(json_encode($versionData));
 
-        return $request->getResultHandler()->parse($response);
+            return $request->getResultHandler()->parse($response);
+        } catch (NostoException $e) {
+            // Re-throw Nosto-specific exceptions
+            throw $e;
+        } catch (AbstractHttpException $e) {
+            // Re-throw HTTP-specific exceptions
+            throw $e;
+        }
     }
 
     /**
@@ -146,7 +163,7 @@ class SendVersionInfo extends AbstractAuthenticatedOperation
      */
     protected function getPath()
     {
-        // TODO: This will be overridden by the mock URL until the real endpoint is available
+        // This will be overridden by the mock URL until the real endpoint is available
         return '/sdk/version';
     }
 }
