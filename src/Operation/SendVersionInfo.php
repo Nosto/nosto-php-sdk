@@ -89,7 +89,6 @@ class SendVersionInfo extends AbstractAuthenticatedOperation
 
     /**
      * Sends version information to Nosto API.
-     * This method prepares and sends a JSON payload with platform and plugin version information.
      *
      * @return bool true if the request was successful
      * @throws NostoException on API communication failure
@@ -104,18 +103,15 @@ class SendVersionInfo extends AbstractAuthenticatedOperation
                 $this->activeDomain
             );
 
-            // Set custom URL for mock endpoint (remove this line when real endpoint is available)
             $request->setUrl(self::MOCK_ENDPOINT_URL);
 
             $versionData = $this->buildVersionPayload();
             $response = $request->postRaw(json_encode($versionData));
 
             return $request->getResultHandler()->parse($response);
-        } catch (NostoException $e) {
-            // Re-throw Nosto-specific exceptions
-            throw $e;
         } catch (AbstractHttpException $e) {
-            // Re-throw HTTP-specific exceptions
+            throw $e;
+        } catch (NostoException $e) {
             throw $e;
         }
     }
@@ -163,7 +159,6 @@ class SendVersionInfo extends AbstractAuthenticatedOperation
      */
     protected function getPath()
     {
-        // This will be overridden by the mock URL until the real endpoint is available
         return '/sdk/version';
     }
 }
