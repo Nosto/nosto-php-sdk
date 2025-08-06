@@ -130,7 +130,7 @@ class HttpRequest
      *
      * @param Adapter|null $adapter the http request adapter to use
      */
-    public function __construct(Adapter $adapter = null)
+    public function __construct(?Adapter $adapter = null)
     {
         if ($adapter !== null) {
             $this->adapter = $adapter;

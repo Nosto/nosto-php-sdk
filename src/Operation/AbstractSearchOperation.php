@@ -133,7 +133,7 @@ abstract class AbstractSearchOperation extends AbstractOperation
      * @inheritDoc
      */
     protected function initRequest(
-        Token $token = null,
+        ?Token $token = null,
               $nostoAccount = null,
               $domain = null,
               $isTokenNeeded = true,
