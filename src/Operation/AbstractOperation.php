@@ -75,7 +75,7 @@ abstract class AbstractOperation
      * @throws NostoException
      */
     protected function initRequest(
-        Token $token = null,
+        ?Token $token = null,
         $nostoAccount = null,
         $domain = null,
         $isTokenNeeded = true,
