@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 7.7.0
+* Improving php >8.0.1 support
+
 ### 7.6.9
 * Improving search grapqhl response for shopware
 
