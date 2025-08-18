@@ -64,8 +64,8 @@ final class ConnectionHelper extends AbstractHelper
      */
     public static function getUrl(
         ConnectionMetadataInterface $connection,
-        AccountInterface $account = null,
-        UserInterface $user = null,
+        ?AccountInterface $account = null,
+        ?UserInterface $user = null,
         array $params = []
     ) {
         $defaultParameters = self::getDefaultParams($connection);
