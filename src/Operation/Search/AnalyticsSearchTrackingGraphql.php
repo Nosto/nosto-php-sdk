@@ -160,14 +160,6 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
         }
     }
 
-    protected function getResultHandler()
-    {
-        return new CustomGraphQLResultHandler();
-//        return new GeneralPurposeResultHandler();
-//        return new JsonResultHandler();
-    }
-
-
     /**
      * @return string
      */
@@ -212,5 +204,17 @@ QUERY;
             'metadata' => $this->metadata,
             'timestamp' => gmdate('c'),
         ];
+    }
+
+    protected function getResultHandler()
+    {
+        return new CustomGraphQLResultHandler();
+//        return new GeneralPurposeResultHandler();
+//        return new JsonResultHandler();
+    }
+
+    protected function setPath($path)
+    {
+        $this->path = $path;
     }
 }

@@ -21,8 +21,7 @@ class CustomGraphQLResultHandler extends ApiResultHandler
             'success' => $response->getCode() === 200,
             'statusCode' => $response->getCode(),
             'data' => $jsonResult,
-            'errors' => isset($jsonResult['errors']) ? $jsonResult['errors'] : null,
-            'rawResponse' => $response->getRawResult()
+            'errors' => isset($jsonResult['errors']) ? $jsonResult['errors'] : null
         ];
     }
 }
