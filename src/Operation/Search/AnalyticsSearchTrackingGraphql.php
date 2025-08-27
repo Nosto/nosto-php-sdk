@@ -41,8 +41,8 @@ use Nosto\NostoException;
 use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Request\Api\SearchAnalyticsRequest;
 use Nosto\Result\Api\CustomGraphQLResultHandler;
-use Nosto\Result\Api\GeneralPurposeResultHandler;
-use Nosto\Result\Api\JsonResultHandler;
+//use Nosto\Result\Api\GeneralPurposeResultHandler;
+//use Nosto\Result\Api\JsonResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 
 class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
