@@ -36,12 +36,14 @@
 
 namespace Nosto\Operation\Search;
 
-use GuzzleHttp\Client;
 use Nosto\Model\Analytics\AnalyticsSearchMetadataForGraphql;
 use Nosto\NostoException;
 use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Request\Api\SearchAnalyticsRequest;
+use Nosto\Result\Api\CustomGraphQLResultHandler;
 use Nosto\Result\Api\GeneralPurposeResultHandler;
+use Nosto\Result\Api\JsonResultHandler;
+use Nosto\Types\Signup\AccountInterface;
 
 class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
 {
@@ -62,31 +64,42 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
      */
     private $userAgent;
 
+    /**
+     * @type string
+     */
     private $appToken;
 
+    /**
+     * @type int
+     */
     private $page;
 
+    /**
+     * @type array
+     */
     private $productIds;
 
+    /**
+     * @type AnalyticsSearchMetadataForGraphql
+     */
     private $metadata;
 
-    const APP_URL = 'https://api.nosto.com/v1/graphql';
-
-    private $client;
     /**
      * @param string $merchantId
      * @param string $sessionId
      * @param string $userAgent
      * @param string $appToken
+     * @param AccountInterface $account
+     * @param string $activeDomain
      */
-    public function __construct($merchantId, $sessionId, $userAgent, $appToken)
+    public function __construct($merchantId, $sessionId, $userAgent, $appToken, AccountInterface $account, $activeDomain = '')
     {
+        parent::__construct($account, $activeDomain);
+
         $this->merchantId = $merchantId;
         $this->sessionId = $sessionId;
         $this->userAgent = $userAgent;
         $this->appToken = $appToken;
-
-        $this->client = new Client();
     }
 
     /**
@@ -136,27 +149,12 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
      */
     public function impression(AnalyticsSearchMetadataForGraphql $metadata, $productIds, $page)
     {
-        $this->setPath('https://api.nosto.com/v1/graphql');
         try {
             $this->page = $page;
             $this->productIds = $productIds;
             $this->metadata = $metadata;
 
-            $response = $this->client->post(self::APP_URL, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                ],
-                'auth' => ['', $this->appToken],
-                'body' => json_encode([
-                    'query' => $this->getQuery(),
-                    'variables' => $this->getVariables(),
-                ]),
-            ]);
-
-            $statusCode = $response->getStatusCode();
-            if ($statusCode !== 200) {
-                throw new NostoException('Failed to send search analytics impression data. Status code: ' . $response->getCode());
-            }
+            $response = $this->execute();
         } catch (\Exception $e) {
             throw new NostoException('Error sending search analytics impression data: ' . $e->getMessage(), 0, $e);
         }
@@ -164,36 +162,9 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
 
     protected function getResultHandler()
     {
-        return new GeneralPurposeResultHandler();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getRequestType()
-    {
-        return new SearchAnalyticsRequest();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getContentType()
-    {
-        return self::CONTENT_TYPE_APPLICATION_JSON;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getPath()
-    {
-        return $this->path;
-    }
-
-    protected function setPath($path)
-    {
-        $this->path = $path;
+        return new CustomGraphQLResultHandler();
+//        return new GeneralPurposeResultHandler();
+//        return new JsonResultHandler();
     }
 
 
@@ -205,6 +176,7 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
         return <<<QUERY
             mutation(
               \$id: String!,
+              \$by: LookupParams!,
               \$page: Int!,
               \$productIds: [String]!,
               \$metadata: InputSearchEventMetadataInputEntity!,
@@ -212,7 +184,7 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
             ) {
               recordAnalyticsEvent(
                 id: \$id,
-                by: BY_REF,
+                by: \$by,
                 params: {
                   type: SEARCH,
                   timestamp: \$timestamp,
@@ -234,11 +206,11 @@ QUERY;
     {
         return [
             'id' => $this->sessionId,
+            'by' => self::IDENTIFIER_BY_REF,
             'page' => $this->page,
             'productIds' => $this->productIds,
             'metadata' => $this->metadata,
             'timestamp' => gmdate('c'),
         ];
     }
-
 }
