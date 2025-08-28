@@ -40,9 +40,7 @@ use Nosto\Model\Analytics\AnalyticsSearchMetadataForGraphql;
 use Nosto\NostoException;
 use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Request\Api\SearchAnalyticsRequest;
-use Nosto\Result\Api\CustomGraphQLResultHandler;
-//use Nosto\Result\Api\GeneralPurposeResultHandler;
-//use Nosto\Result\Api\JsonResultHandler;
+use Nosto\Result\Api\JsonResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 
 class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
@@ -155,6 +153,9 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
             $this->metadata = $metadata;
 
             $response = $this->execute();
+            if(!empty($response['errors'])) {
+                throw new NostoException(json_encode($response['errors']));
+            }
         } catch (\Exception $e) {
             throw new NostoException('Error sending search analytics impression data: ' . $e->getMessage(), 0, $e);
         }
@@ -208,9 +209,7 @@ QUERY;
 
     protected function getResultHandler()
     {
-        return new CustomGraphQLResultHandler();
-//        return new GeneralPurposeResultHandler();
-//        return new JsonResultHandler();
+        return new JsonResultHandler();
     }
 
     protected function setPath($path)
