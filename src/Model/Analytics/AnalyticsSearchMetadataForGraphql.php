@@ -4,7 +4,7 @@ namespace Nosto\Model\Analytics;
 
 class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
 {
-    /***
+    /**
      * @type string
      */
     private $query;

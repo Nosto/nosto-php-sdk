@@ -102,42 +102,6 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
 
     /**
      * Tracks search analytics.
-     *a
-     * @param AnalyticsSearchMetadataForGraphql $metadata
-     * @param string $productId
-     * @return void
-     * @throws NostoException
-     */
-    public function click(AnalyticsSearchMetadataForGraphql $metadata, $productId)
-    {
-        $this->setPath(SearchAnalyticsRequest::PATH_SEARCH_CLICK);
-        try {
-            $requestParams = ["merchant" => $this->merchantId, "customer" => $this->sessionId];
-            $request = $this->initRequest(
-                null,
-                null,
-                null,
-                false,
-                $requestParams
-            );
-            if ($this->userAgent) {
-                $request->addUserAgentHeader($this->userAgent);
-            }
-            $response = $request->postRaw(json_encode([
-                'metadata' => $metadata,
-                'productId' => $productId
-            ]));
-
-            if ($response->getCode() !== 200) {
-                throw new NostoException('Failed to send search analytics click data. Status code: ' . $response->getCode());
-            }
-        } catch (\Exception $e) {
-            throw new NostoException('Error sending search analytics click data: ' . $e->getMessage(), 0, $e);
-        }
-    }
-
-    /**
-     * Tracks search analytics.
      *
      * @param AnalyticsSearchMetadataForGraphql $metadata
      * @param array $productIds
