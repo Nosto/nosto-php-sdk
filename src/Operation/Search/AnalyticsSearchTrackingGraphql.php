@@ -39,7 +39,6 @@ namespace Nosto\Operation\Search;
 use Nosto\Model\Analytics\AnalyticsSearchMetadataForGraphql;
 use Nosto\NostoException;
 use Nosto\Operation\AbstractGraphQLOperation;
-use Nosto\Request\Api\SearchAnalyticsRequest;
 use Nosto\Result\Api\JsonResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 
