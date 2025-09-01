@@ -37,7 +37,6 @@
 namespace Nosto\Operation\Search;
 
 use Nosto\Operation\AbstractSearchOperation;
-use Nosto\Result\Graphql\Search\SearchResult\AbTest;
 use Nosto\Result\Graphql\Search\SearchResultHandler;
 
 class SearchOperation extends AbstractSearchOperation
@@ -78,7 +77,7 @@ class SearchOperation extends AbstractSearchOperation
     /** @var ?string */
     private $redirect = null;
 
-    /** @var ?float  */
+    /** @var ?float */
     private $time = null;
 
     /** @var ?array */
@@ -283,7 +282,7 @@ class SearchOperation extends AbstractSearchOperation
     }
 
     /**
-     * @param ?array $abTests
+     * @param array $abTests
      * @return void
      */
     public function setAbTests(array $abTests)
@@ -401,7 +400,7 @@ GRAPHQL;
     {
         return [
             'accountId' => $this->accountId,
-            'query' => ($this->query == '' && ($this->categoryPath || $this->categoryId)) ?  null : $this->query ,
+            'query' => ($this->query == '' && ($this->categoryPath || $this->categoryId)) ? null : $this->query,
             'categoryId' => $this->categoryId,
             'categoryPath' => $this->categoryPath,
             'variationId' => $this->variationId,
