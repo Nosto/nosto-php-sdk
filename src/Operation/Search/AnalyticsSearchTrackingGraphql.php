@@ -41,6 +41,8 @@ use Nosto\NostoException;
 use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Result\Api\JsonResultHandler;
 use Nosto\Types\Signup\AccountInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
 {
@@ -77,9 +79,22 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
     private $productIds;
 
     /**
+     * @type string
+     */
+    private $productId;
+
+    /**
      * @type AnalyticsSearchMetadataForGraphql
      */
     private $metadata;
+    /**
+     * @type string
+     */
+    private $query;
+    /**
+     * @type array
+     */
+    private $variables;
 
     /**
      * @param string $merchantId
@@ -103,6 +118,61 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
      * Tracks search analytics.
      *
      * @param AnalyticsSearchMetadataForGraphql $metadata
+     * @param array $productId
+     * @return void
+     * @throws NostoException
+     */
+    public function click(AnalyticsSearchMetadataForGraphql $metadata, $productId)
+    {
+        try {
+            $this->productId = $productId;
+            $this->metadata = $metadata;
+
+            $this->setQuery(<<<QUERY
+    mutation(
+      \$id: String!,
+      \$by: LookupParams!,
+      \$productId: String!,
+      \$metadata: InputSearchEventMetadataInputEntity!,
+      \$timestamp: String!
+    ) {
+      recordAnalyticsEvent(
+        id: \$id,
+        by: \$by,
+        params: {
+          type: SEARCH,
+          timestamp: \$timestamp,
+          searchClick: {
+            productId: \$productId,
+            metadata: \$metadata
+          }
+        }
+      )
+    }
+QUERY
+            );
+
+            $this->setVariables([
+                'id' => $this->sessionId,
+                'by' => self::IDENTIFIER_BY_REF,
+                'productId' => $this->productId,
+                'metadata' => $this->metadata,
+                'timestamp' => gmdate('c'),
+            ]);
+
+            $response = $this->execute();
+            if(!empty($response['errors'])) {
+                throw new NostoException(json_encode($response['errors']));
+            }
+        } catch (\Exception $e) {
+            throw new NostoException('Error sending search analytics click data: ' . $e->getMessage(), 0, $e);
+        }
+    }
+
+    /**
+     * Tracks search analytics.
+     *
+     * @param AnalyticsSearchMetadataForGraphql $metadata
      * @param array $productIds
      * @param int $page
      * @return void
@@ -115,6 +185,41 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
             $this->productIds = $productIds;
             $this->metadata = $metadata;
 
+            $this->setQuery(<<<QUERY
+    mutation(
+      \$id: String!,
+      \$by: LookupParams!,
+      \$page: Int!,
+      \$productIds: [String]!,
+      \$metadata: InputSearchEventMetadataInputEntity!,
+      \$timestamp: String!
+    ) {
+      recordAnalyticsEvent(
+        id: \$id,
+        by: \$by,
+        params: {
+          type: SEARCH,
+          timestamp: \$timestamp,
+          searchImpression: {
+            page: \$page,
+            productIds: \$productIds,
+            metadata: \$metadata
+          }
+        }
+      )
+    }
+QUERY
+            );
+
+            $this->setVariables([
+                'id' => $this->sessionId,
+                'by' => self::IDENTIFIER_BY_REF,
+                'page' => $this->page,
+                'productIds' => $this->productIds,
+                'metadata' => $this->metadata,
+                'timestamp' => gmdate('c'),
+            ]);
+
             $response = $this->execute();
             if(!empty($response['errors'])) {
                 throw new NostoException(json_encode($response['errors']));
@@ -125,49 +230,30 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
     }
 
     /**
+     * @return void
+     */
+    private function setQuery($query)
+    {
+        $this->query = $query;
+    }
+    /**
      * @return string
      */
     public function getQuery()
     {
-        return <<<QUERY
-            mutation(
-              \$id: String!,
-              \$by: LookupParams!,
-              \$page: Int!,
-              \$productIds: [String]!,
-              \$metadata: InputSearchEventMetadataInputEntity!,
-              \$timestamp: String!
-            ) {
-              recordAnalyticsEvent(
-                id: \$id,
-                by: \$by,
-                params: {
-                  type: SEARCH,
-                  timestamp: \$timestamp,
-                  searchImpression: {
-                    page: \$page,
-                    productIds: \$productIds,
-                    metadata: \$metadata
-                  }
-                }
-              )
-            }
-QUERY;
+        return $this->query;
     }
 
+    private function setVariables($variables)
+    {
+        $this->variables = $variables;
+    }
     /**
      * @return array
      */
     public function getVariables()
     {
-        return [
-            'id' => $this->sessionId,
-            'by' => self::IDENTIFIER_BY_REF,
-            'page' => $this->page,
-            'productIds' => $this->productIds,
-            'metadata' => $this->metadata,
-            'timestamp' => gmdate('c'),
-        ];
+        return $this->variables;
     }
 
     protected function getResultHandler()
