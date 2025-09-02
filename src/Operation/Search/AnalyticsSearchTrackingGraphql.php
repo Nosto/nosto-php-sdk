@@ -41,8 +41,6 @@ use Nosto\NostoException;
 use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Result\Api\JsonResultHandler;
 use Nosto\Types\Signup\AccountInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
 {
