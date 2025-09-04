@@ -105,7 +105,6 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
     public function __construct($merchantId, $sessionId, $userAgent, $appToken, AccountInterface $account, $activeDomain = '')
     {
         parent::__construct($account, $activeDomain);
-
         $this->merchantId = $merchantId;
         $this->sessionId = $sessionId;
         $this->userAgent = $userAgent;
@@ -127,32 +126,32 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
             $this->metadata = $metadata;
 
             $this->setQuery(<<<QUERY
-    mutation(
-      \$id: String!,
-      \$by: LookupParams!,
-      \$productId: String!,
-      \$metadata: InputSearchEventMetadataInputEntity!,
-      \$timestamp: String!
-    ) {
-      recordAnalyticsEvent(
-        id: \$id,
-        by: \$by,
-        params: {
-          type: SEARCH,
-          timestamp: \$timestamp,
-          searchClick: {
-            productId: \$productId,
-            metadata: \$metadata
-          }
-        }
-      ){
-        message
-        errors {
-          field
-          message
-        }
-      }
-    }
+                            mutation(
+                              \$id: String!,
+                              \$by: LookupParams!,
+                              \$productId: String!,
+                              \$metadata: InputSearchEventMetadataInputEntity!,
+                              \$timestamp: String!
+                            ) {
+                              recordAnalyticsEvent(
+                                id: \$id,
+                                by: \$by,
+                                params: {
+                                  type: SEARCH,
+                                  timestamp: \$timestamp,
+                                  searchClick: {
+                                    productId: \$productId,
+                                    metadata: \$metadata
+                                  }
+                                }
+                              ){
+                                message
+                                errors {
+                                  field
+                                  message
+                                }
+                              }
+                            }
 QUERY
             );
 
@@ -190,34 +189,34 @@ QUERY
             $this->metadata = $metadata;
 
             $this->setQuery(<<<QUERY
-    mutation(
-      \$id: String!,
-      \$by: LookupParams!,
-      \$page: Int!,
-      \$productIds: [String]!,
-      \$metadata: InputSearchEventMetadataInputEntity!,
-      \$timestamp: String!
-    ) {
-      recordAnalyticsEvent(
-        id: \$id,
-        by: \$by,
-        params: {
-          type: SEARCH,
-          timestamp: \$timestamp,
-          searchImpression: {
-            page: \$page,
-            productIds: \$productIds,
-            metadata: \$metadata
-          }
-        }
-      ){
-        message
-        errors {
-          field
-          message
-        }
-      }
-    }
+                            mutation(
+                              \$id: String!,
+                              \$by: LookupParams!,
+                              \$page: Int!,
+                              \$productIds: [String]!,
+                              \$metadata: InputSearchEventMetadataInputEntity!,
+                              \$timestamp: String!
+                            ) {
+                              recordAnalyticsEvent(
+                                id: \$id,
+                                by: \$by,
+                                params: {
+                                  type: SEARCH,
+                                  timestamp: \$timestamp,
+                                  searchImpression: {
+                                    page: \$page,
+                                    productIds: \$productIds,
+                                    metadata: \$metadata
+                                  }
+                                }
+                              ){
+                                message
+                                errors {
+                                  field
+                                  message
+                                }
+                              }
+                            }
 QUERY
             );
 
