@@ -29,20 +29,20 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Nosto Solutions Ltd <contact@nosto.com>
- * @copyright 2020 Nosto Solutions Ltd
+ * @copyright 2025 Nosto Solutions Ltd
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause
  *
  */
 
-namespace Nosto\Operation\Search;
+namespace Nosto\Operation\Category;
 
-use Nosto\Model\Analytics\AnalyticsSearchMetadataForGraphql;
+use Nosto\Model\Analytics\AnalyticsCategoryMetadata;
 use Nosto\NostoException;
 use Nosto\Operation\AbstractGraphQLOperation;
 use Nosto\Result\Api\JsonResultHandler;
 use Nosto\Types\Signup\AccountInterface;
 
-class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
+class AnalyticsCategoryTrackingGraphql extends AbstractGraphQLOperation
 {
     /**
      * @type string
@@ -82,7 +82,7 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
     private $productId;
 
     /**
-     * @type AnalyticsSearchMetadataForGraphql
+     * @type AnalyticsCategoryMetadata
      */
     private $metadata;
     /**
@@ -113,14 +113,14 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
     }
 
     /**
-     * Tracks search analytics.
+     * Tracks category analytics.
      *
-     * @param AnalyticsSearchMetadataForGraphql $metadata
+     * @param AnalyticsCategoryMetadata $metadata
      * @param string $productId
      * @return void
      * @throws NostoException
      */
-    public function click(AnalyticsSearchMetadataForGraphql $metadata, $productId)
+    public function click(AnalyticsCategoryMetadata $metadata, $productId)
     {
         try {
             $this->productId = $productId;
@@ -131,16 +131,16 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
       \$id: String!,
       \$by: LookupParams!,
       \$productId: String!,
-      \$metadata: InputSearchEventMetadataInputEntity!,
+      \$metadata: InputCategoryEventMetadataInputEntity!,
       \$timestamp: String!
     ) {
       recordAnalyticsEvent(
         id: \$id,
         by: \$by,
         params: {
-          type: SEARCH,
+          type: CATEGORY,
           timestamp: \$timestamp,
-          searchClick: {
+          categoryClick: {
             productId: \$productId,
             metadata: \$metadata
           }
@@ -169,20 +169,20 @@ QUERY
                 throw new NostoException(json_encode($response['errors']));
             }
         } catch (\Exception $e) {
-            throw new NostoException('Error sending search analytics click data: ' . $e->getMessage(), 0, $e);
+            throw new NostoException('Error sending category click analytics data: ' . $e->getMessage(), 0, $e);
         }
     }
 
     /**
-     * Tracks search analytics.
+     * Tracks category analytics.
      *
-     * @param AnalyticsSearchMetadataForGraphql $metadata
+     * @param AnalyticsCategoryMetadata $metadata
      * @param array $productIds
      * @param int $page
      * @return void
      * @throws NostoException
      */
-    public function impression(AnalyticsSearchMetadataForGraphql $metadata, $productIds, $page)
+    public function impression(AnalyticsCategoryMetadata $metadata, $productIds, $page)
     {
         try {
             $this->page = $page;
@@ -195,16 +195,16 @@ QUERY
       \$by: LookupParams!,
       \$page: Int!,
       \$productIds: [String]!,
-      \$metadata: InputSearchEventMetadataInputEntity!,
+      \$metadata: InputCategoryEventMetadataInputEntity!,
       \$timestamp: String!
     ) {
       recordAnalyticsEvent(
         id: \$id,
         by: \$by,
         params: {
-          type: SEARCH,
+          type: CATEGORY,
           timestamp: \$timestamp,
-          searchImpression: {
+          categoryImpression: {
             page: \$page,
             productIds: \$productIds,
             metadata: \$metadata
@@ -235,7 +235,7 @@ QUERY
                 throw new NostoException(json_encode($response['errors']));
             }
         } catch (\Exception $e) {
-            throw new NostoException('Error sending search analytics impression data: ' . $e->getMessage(), 0, $e);
+            throw new NostoException('Error sending category impression analytics data: ' . $e->getMessage(), 0, $e);
         }
     }
 
@@ -276,3 +276,4 @@ QUERY
         $this->path = $path;
     }
 }
+
