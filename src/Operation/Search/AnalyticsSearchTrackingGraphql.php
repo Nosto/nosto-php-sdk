@@ -36,6 +36,7 @@
 
 namespace Nosto\Operation\Search;
 
+use Nosto\Model\Analytics\AbTestAttribution;
 use Nosto\Model\Analytics\AnalyticsSearchMetadataForGraphql;
 use Nosto\NostoException;
 use Nosto\Operation\AbstractGraphQLOperation;
@@ -67,25 +68,6 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
     private $appToken;
 
     /**
-     * @type int
-     */
-    private $page;
-
-    /**
-     * @type array
-     */
-    private $productIds;
-
-    /**
-     * @type string
-     */
-    private $productId;
-
-    /**
-     * @type AnalyticsSearchMetadataForGraphql
-     */
-    private $metadata;
-    /**
      * @type string
      */
     private $query;
@@ -116,22 +98,21 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
      *
      * @param AnalyticsSearchMetadataForGraphql $metadata
      * @param string $productId
+     * @param AbTestAttribution[] $abTestAttribution
      * @return void
      * @throws NostoException
      */
-    public function click(AnalyticsSearchMetadataForGraphql $metadata, $productId)
+    public function click(AnalyticsSearchMetadataForGraphql $metadata, $productId, array $abTestAttribution)
     {
         try {
-            $this->productId = $productId;
-            $this->metadata = $metadata;
-
             $this->setQuery(<<<QUERY
                             mutation(
                               \$id: String!,
                               \$by: LookupParams!,
                               \$productId: String!,
                               \$metadata: InputSearchEventMetadataInputEntity!,
-                              \$timestamp: String!
+                              \$timestamp: String!,
+                              \$abTestAttribution: [InputKeyValuePairInput]
                             ) {
                               recordAnalyticsEvent(
                                 id: \$id,
@@ -141,7 +122,10 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
                                   timestamp: \$timestamp,
                                   searchClick: {
                                     productId: \$productId,
-                                    metadata: \$metadata
+                                    metadata: \$metadata,
+                                    properties: {
+                                      abTestAttribution: \$abTestAttribution,
+                                    }
                                   }
                                 }
                               ){
@@ -158,14 +142,15 @@ QUERY
             $this->setVariables([
                 'id' => $this->sessionId,
                 'by' => self::IDENTIFIER_BY_REF,
-                'productId' => $this->productId,
-                'metadata' => $this->metadata,
+                'productId' => $productId,
+                'metadata' => $metadata,
+                'abTestAttribution' => $abTestAttribution,
                 'timestamp' => gmdate('c'),
             ]);
 
             $response = $this->execute();
-            if(!empty($response['errors'])) {
-                throw new NostoException(json_encode($response['errors']));
+            if (!empty($response['data']['recordAnalyticsEvent']['errors'])) {
+                throw new NostoException(json_encode($response['data']['recordAnalyticsEvent']['errors']));
             }
         } catch (\Exception $e) {
             throw new NostoException('Error sending search analytics click data: ' . $e->getMessage(), 0, $e);
@@ -178,16 +163,13 @@ QUERY
      * @param AnalyticsSearchMetadataForGraphql $metadata
      * @param array $productIds
      * @param int $page
+     * @param AbTestAttribution[] $abTestAttribution
      * @return void
      * @throws NostoException
      */
-    public function impression(AnalyticsSearchMetadataForGraphql $metadata, $productIds, $page)
+    public function impression(AnalyticsSearchMetadataForGraphql $metadata, $productIds, $page, array $abTestAttribution)
     {
         try {
-            $this->page = $page;
-            $this->productIds = $productIds;
-            $this->metadata = $metadata;
-
             $this->setQuery(<<<QUERY
                             mutation(
                               \$id: String!,
@@ -195,7 +177,8 @@ QUERY
                               \$page: Int!,
                               \$productIds: [String]!,
                               \$metadata: InputSearchEventMetadataInputEntity!,
-                              \$timestamp: String!
+                              \$timestamp: String!,
+                              \$abTestAttribution: [InputKeyValuePairInput]
                             ) {
                               recordAnalyticsEvent(
                                 id: \$id,
@@ -206,7 +189,10 @@ QUERY
                                   searchImpression: {
                                     page: \$page,
                                     productIds: \$productIds,
-                                    metadata: \$metadata
+                                    metadata: \$metadata,
+                                    properties: {
+                                      abTestAttribution: \$abTestAttribution,
+                                    }
                                   }
                                 }
                               ){
@@ -223,15 +209,16 @@ QUERY
             $this->setVariables([
                 'id' => $this->sessionId,
                 'by' => self::IDENTIFIER_BY_REF,
-                'page' => $this->page,
-                'productIds' => $this->productIds,
-                'metadata' => $this->metadata,
+                'page' => $page,
+                'productIds' => $productIds,
+                'metadata' => $metadata,
+                'abTestAttribution' => $abTestAttribution,
                 'timestamp' => gmdate('c'),
             ]);
 
             $response = $this->execute();
-            if(!empty($response['errors'])) {
-                throw new NostoException(json_encode($response['errors']));
+            if (!empty($response['data']['recordAnalyticsEvent']['errors'])) {
+                throw new NostoException(json_encode($response['data']['recordAnalyticsEvent']['errors']));
             }
         } catch (\Exception $e) {
             throw new NostoException('Error sending search analytics impression data: ' . $e->getMessage(), 0, $e);
