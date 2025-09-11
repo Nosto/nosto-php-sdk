@@ -57,10 +57,6 @@ class AnalyticsSearchTrackingGraphql extends AbstractGraphQLOperation
      * @type string
      */
     private $path;
-    /**
-     * @type string | null
-     */
-    private $userAgent;
 
     /**
      * @type string
