@@ -173,7 +173,7 @@ QUERY
                               \$page: Int!,
                               \$productIds: [String]!,
                               \$metadata: InputCategoryEventMetadataInputEntity!,
-                              \$timestamp: String!
+                              \$timestamp: String!,
                               \$abTestAttribution: [InputKeyValuePairInput]
                             ) {
                               recordAnalyticsEvent(
