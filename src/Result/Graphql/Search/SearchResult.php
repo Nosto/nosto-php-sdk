@@ -2,6 +2,7 @@
 
 namespace Nosto\Result\Graphql\Search;
 
+use Nosto\Result\Graphql\Search\SearchResult\AbTest;
 use Nosto\Result\Graphql\Search\SearchResult\Explain;
 use Nosto\Result\Graphql\Search\SearchResult\Products;
 use Nosto\Util\GraphQLUtils;
@@ -21,12 +22,16 @@ class SearchResult
     /** @var ?Products */
     private $products;
 
+    /** @var ?AbTest[] */
+    private $abTests;
+
     public function __construct(stdClass $data)
     {
         $this->redirect = GraphQLUtils::getProperty($data, 'redirect');
         $this->query = GraphQLUtils::getProperty($data, 'query');
         $this->explain = GraphQLUtils::getClassProperty($data, 'explain', Explain::class);
         $this->products = GraphQLUtils::getClassProperty($data, 'products', Products::class);
+        $this->abTests = GraphQLUtils::getArrayProperty($data, 'abTests', AbTest::class);
     }
 
     /**
@@ -59,5 +64,13 @@ class SearchResult
     public function getProducts()
     {
         return $this->products;
+    }
+
+    /**
+     * @return ?AbTest[]
+     */
+    public function getAbTests()
+    {
+        return $this->abTests;
     }
 }
