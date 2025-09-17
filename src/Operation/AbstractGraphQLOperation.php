@@ -61,6 +61,11 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
     protected $activeDomain;
 
     /**
+     * @var string | null
+     */
+    public $userAgent;
+
+    /**
      * Constructor
      *
      * @param AccountInterface $account the account object.
@@ -87,6 +92,9 @@ abstract class AbstractGraphQLOperation extends AbstractOperation
             $this->account->getName(),
             null
         );
+        if ($this->userAgent) {
+            $request->addUserAgentHeader($this->userAgent);
+        }
         $payload = new GraphQLQuery(
             $this->getQuery(),
             $this->getVariables()

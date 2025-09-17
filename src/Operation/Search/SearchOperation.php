@@ -77,7 +77,7 @@ class SearchOperation extends AbstractSearchOperation
     /** @var ?string */
     private $redirect = null;
 
-    /** @var ?float  */
+    /** @var ?float */
     private $time = null;
 
     /** @var ?array */
@@ -88,6 +88,9 @@ class SearchOperation extends AbstractSearchOperation
 
     /** @var ?array */
     private $segments = null;
+
+    /** @var ?array */
+    private $abTests = null;
 
     /** @var ?array */
     private $keywords = null;
@@ -279,6 +282,15 @@ class SearchOperation extends AbstractSearchOperation
     }
 
     /**
+     * @param array $abTests
+     * @return void
+     */
+    public function setAbTests(array $abTests)
+    {
+        $this->abTests = $abTests;
+    }
+
+    /**
      * @param array $keywords
      * @return void
      */
@@ -307,6 +319,7 @@ class SearchOperation extends AbstractSearchOperation
             \$rules: [String!],
             \$customRules: [InputSearchRule!],
             \$segments: [String!],
+            \$abTests: [InputSearchABTest!],
             \$keywords: InputSearchKeywords,
         ) {
             search(
@@ -329,8 +342,15 @@ class SearchOperation extends AbstractSearchOperation
                 customRules: \$customRules,
                 segments: \$segments,
                 keywords: \$keywords,
+                abTests: \$abTests,
             ) {
                 redirect,
+                abTests {
+                  id
+                  activeVariation {
+                    id
+                  }
+                },
                 products {
                     total,
                     hits {
@@ -380,7 +400,7 @@ GRAPHQL;
     {
         return [
             'accountId' => $this->accountId,
-            'query' => ($this->query == '' && ($this->categoryPath || $this->categoryId)) ?  null : $this->query ,
+            'query' => ($this->query == '' && ($this->categoryPath || $this->categoryId)) ? null : $this->query,
             'categoryId' => $this->categoryId,
             'categoryPath' => $this->categoryPath,
             'variationId' => $this->variationId,
@@ -396,6 +416,7 @@ GRAPHQL;
             'customRules' => $this->customRules,
             'segments' => $this->segments,
             'keywords' => $this->keywords,
+            'abTests' => $this->abTests,
         ];
     }
 }
