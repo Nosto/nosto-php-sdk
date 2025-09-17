@@ -5,6 +5,12 @@ This project adheres to Semantic Versioning (http://semver.org/).
 ### 7.7.2
 * Added A/B testing functionality to the Nosto SDK, integrating A/B test support into search operations and analytics tracking
 
+### 7.7.0
+* Improving php >8.0.1 support
+
+### 7.6.9
+* Improving search grapqhl response for shopware
+
 ### 7.6.8
 * Added better error handling for graphql requests
 
