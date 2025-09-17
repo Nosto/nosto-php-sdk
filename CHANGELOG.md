@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
-### 7.7.2
+### 7.7.1
 * Added A/B testing functionality to the Nosto SDK, integrating A/B test support into search operations and analytics tracking
 
 ### 7.7.0
