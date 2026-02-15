@@ -141,6 +141,15 @@ class SearchOperation extends AbstractSearchOperation
     }
 
     /**
+     * @param string $variationId
+     * @return void
+     */
+    public function setCurrency($variationId)
+    {
+        $this->currency = $variationId;
+    }
+
+    /**
      * @param string $field
      * @param string $order
      * @return void
