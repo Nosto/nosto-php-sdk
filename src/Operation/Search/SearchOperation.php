@@ -56,6 +56,9 @@ class SearchOperation extends AbstractSearchOperation
     /** @var ?string */
     private $variationId = null;
 
+    /** @var ?string */
+    private $currency = null;
+
     /** @var int */
     private $size = 20;
 
@@ -138,6 +141,15 @@ class SearchOperation extends AbstractSearchOperation
     public function setVariationId($variationId)
     {
         $this->variationId = $variationId;
+    }
+
+    /**
+     * @param string $currency
+     * @return void
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
     }
 
     /**
@@ -301,6 +313,9 @@ class SearchOperation extends AbstractSearchOperation
 
     public function getQuery()
     {
+        $currencyVariable = $this->currency !== null ? "\$currency: String," : '';
+        $currencyArgument = $this->currency !== null ? "currency: \$currency," : '';
+
         return <<<GRAPHQL
         query(
             \$accountId: String,
@@ -308,6 +323,7 @@ class SearchOperation extends AbstractSearchOperation
             \$categoryId: String,
             \$categoryPath: String,
             \$variationId: String,
+            {$currencyVariable}
             \$sort: [InputSearchSort!],
             \$filter: [InputSearchTopLevelFilter!],
             \$sessionParams: InputSearchQuery,
@@ -329,6 +345,7 @@ class SearchOperation extends AbstractSearchOperation
                     categoryId: \$categoryId,
                     categoryPath: \$categoryPath,
                     variationId: \$variationId,
+                    {$currencyArgument}
                     sort: \$sort,
                     filter: \$filter,
                     size: \$size,
@@ -398,7 +415,7 @@ GRAPHQL;
      */
     public function getVariables()
     {
-        return [
+        $variables = [
             'accountId' => $this->accountId,
             'query' => ($this->query == '' && ($this->categoryPath || $this->categoryId)) ? null : $this->query,
             'categoryId' => $this->categoryId,
@@ -418,5 +435,11 @@ GRAPHQL;
             'keywords' => $this->keywords,
             'abTests' => $this->abTests,
         ];
+
+        if ($this->currency !== null) {
+            $variables['currency'] = $this->currency;
+        }
+
+        return $variables;
     }
 }
