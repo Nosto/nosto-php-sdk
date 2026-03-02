@@ -313,10 +313,8 @@ class SearchOperation extends AbstractSearchOperation
 
     public function getQuery()
     {
-        $currencyVariable = $this->currency !== null ? "
-            \$currency: String," : '';
-        $currencyArgument = $this->currency !== null ? "
-                    currency: \$currency," : '';
+        $currencyVariable = $this->currency !== null ? "\$currency: String," : '';
+        $currencyArgument = $this->currency !== null ? "currency: \$currency," : '';
 
         return <<<GRAPHQL
         query(
