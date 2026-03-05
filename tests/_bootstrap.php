@@ -86,7 +86,7 @@ try {
         }
     }
 } catch (Exception $e) {
-    // Could not load ENV using defaults
+    // Bootstrap failure:  Could not load required ENV using defaults; rethrow the exception.
     /** @noinspection PhpUnhandledExceptionInspection */
     throw $e;
 }

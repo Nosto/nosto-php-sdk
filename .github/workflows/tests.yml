@@ -72,13 +72,13 @@ jobs:
     - uses: actions/cache@v4
       with:
         path: ${{ steps.composer-cache-dotenv56.outputs.dir }}
-        key: ${{ runner.os }}-composer-dotenv56-${{ hashFiles('**/composer.json') }}
+        key: ${{ runner.os }}-composer-dotenv56-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-composer-dotenv56-
 
     - name: Install and force Dotenv 5.6+
       run: |
-        composer install --prefer-dist --no-progress --no-suggest
+        composer install --prefer-dist --no-progress
         composer update vlucas/phpdotenv -W --no-interaction --prefer-dist
         composer dump-autoload --optimize
     ############################################################################
