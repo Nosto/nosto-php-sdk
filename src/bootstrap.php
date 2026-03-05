@@ -35,15 +35,26 @@
  */
 
 try {
-    $reflectDotEnv = new ReflectionMethod('Dotenv\Dotenv', '__construct');
-    $params = $reflectDotEnv->getParameters();
-    if ($params[0]->getName() === 'path' && $params[1]->getName() === 'file') {
-        /** @noinspection PhpParamsInspection */
-        $dotenv = new Dotenv\Dotenv(dirname(__FILE__)); //@phan-suppress-current-line PhanTypeMismatchArgument
-    } else {
-        $dotenv = Dotenv\Dotenv::create(dirname(__FILE__)); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+    if (class_exists('Dotenv\Dotenv')) {
+        if (method_exists('Dotenv\Dotenv', 'createImmutable')) {
+            $dotenv = Dotenv\Dotenv::createImmutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+            if (method_exists($dotenv, 'safeLoad')) {
+                $dotenv->safeLoad(); // @phan-suppress-current-line PhanUndeclaredMethod
+            } else {
+                $dotenv->load();
+            }
+        } elseif (method_exists('Dotenv\Dotenv', 'create')) {
+            $dotenv = Dotenv\Dotenv::create(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+            $dotenv->load();
+        } else {
+            /** @noinspection PhpParamsInspection */
+            $dotenv = new Dotenv\Dotenv(__DIR__); // @phan-suppress-current-line PhanTypeMismatchArgument
+            $dotenv->load();
+        }
     }
-    $dotenv->load();
 } catch (Exception $e) {
-    // Could not load ENV using defaults
+    // Enable strict failure mode in tests/debug sessions.
+    if (getenv('NOSTO_DOTENV_STRICT') === '1') {
+        throw $e;
+    }
 }
