@@ -35,21 +35,60 @@
  */
 
 date_default_timezone_set('Europe/Helsinki');
+
+$autoloadFile = __DIR__ . '/../vendor/autoload.php';
+if (!file_exists($autoloadFile)) {
+    throw new RuntimeException(
+        'Composer autoload file not found. Run "composer install" before running tests.'
+    );
+}
+require_once $autoloadFile;
+
 try {
-    $reflectDotEnv = new ReflectionMethod('Dotenv\Dotenv', '__construct');
-    $params = $reflectDotEnv->getParameters();
-    if ($params[0]->getName() === 'path' && $params[1]->getName() === 'file') {
-        /** @noinspection PhpParamsInspection */
-        $dotenv = new Dotenv\Dotenv(dirname(__FILE__));
-    } else {
-        $dotenv = Dotenv\Dotenv::create(dirname(__FILE__));
+    $dotenvClass = 'Dotenv\Dotenv';
+    $envFile = __DIR__ . '/.env';
+
+    if (!class_exists($dotenvClass)) {
+        throw new RuntimeException('Dotenv\Dotenv is not available. Run composer install before tests.');
     }
-    $dotenv->overload();
+
+    if (!is_file($envFile)) {
+        throw new RuntimeException('Missing required test env file: ' . $envFile);
+    }
+
+    if (method_exists($dotenvClass, 'createMutable')) {
+        if (method_exists($dotenvClass, 'createUnsafeMutable')) {
+            $dotenv = $dotenvClass::createUnsafeMutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+        } else {
+            $dotenv = $dotenvClass::createMutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+        }
+        $dotenv->load();
+    } elseif (method_exists($dotenvClass, 'create')) {
+        $dotenv = $dotenvClass::create(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+        if (method_exists($dotenv, 'overload')) {
+            $dotenv->overload(); // @phan-suppress-current-line PhanUndeclaredMethod
+        } else {
+            $dotenv->load();
+        }
+    } else {
+        $reflectDotEnv = new ReflectionMethod($dotenvClass, '__construct');
+        $params = $reflectDotEnv->getParameters();
+
+        if (isset($params[0]) && $params[0]->getName() === 'path') {
+            $dotenv = (new ReflectionClass($dotenvClass))->newInstanceArgs([__DIR__]);
+            if (method_exists($dotenv, 'overload')) {
+                $dotenv->overload(); // @phan-suppress-current-line PhanUndeclaredMethod
+            } else {
+                $dotenv->load();
+            }
+        } else {
+            throw new RuntimeException('Unsupported Dotenv constructor signature.');
+        }
+    }
 } catch (Exception $e) {
-    // Could not load ENV using defaults
+    // Bootstrap failure:  Could not load required ENV using defaults; rethrow the exception.
     /** @noinspection PhpUnhandledExceptionInspection */
     throw $e;
 }
 
-require_once(dirname(__FILE__) . '/../vendor/autoload.php');
 Nosto\Request\Http\HttpRequest::buildUserAgent('PHPUnit', '1.0.0', '1.0.0');

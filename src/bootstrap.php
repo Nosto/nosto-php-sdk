@@ -35,15 +35,35 @@
  */
 
 try {
-    $reflectDotEnv = new ReflectionMethod('Dotenv\Dotenv', '__construct');
-    $params = $reflectDotEnv->getParameters();
-    if ($params[0]->getName() === 'path' && $params[1]->getName() === 'file') {
-        /** @noinspection PhpParamsInspection */
-        $dotenv = new Dotenv\Dotenv(dirname(__FILE__)); //@phan-suppress-current-line PhanTypeMismatchArgument
-    } else {
-        $dotenv = Dotenv\Dotenv::create(dirname(__FILE__)); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+    $dotenvClass = 'Dotenv\Dotenv';
+
+    if (class_exists($dotenvClass)) {
+        if (method_exists($dotenvClass, 'createImmutable')) {
+            if (method_exists($dotenvClass, 'createUnsafeImmutable')) {
+                $dotenv = $dotenvClass::createUnsafeImmutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+            } else {
+                $dotenv = $dotenvClass::createImmutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+            }
+            if (method_exists($dotenv, 'safeLoad')) {
+                $dotenv->safeLoad(); // @phan-suppress-current-line PhanUndeclaredMethod
+            } else {
+                $dotenv->load();
+            }
+        } elseif (method_exists($dotenvClass, 'create')) {
+            $dotenv = $dotenvClass::create(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+            $dotenv->load();
+        } else {
+            $reflectDotEnv = new ReflectionMethod($dotenvClass, '__construct');
+            $params = $reflectDotEnv->getParameters();
+
+            if (isset($params[0]) && $params[0]->getName() === 'path') {
+                $dotenv = (new ReflectionClass($dotenvClass))->newInstanceArgs([__DIR__]);
+                $dotenv->load();
+            } else {
+                throw new RuntimeException('Unsupported Dotenv constructor signature.');
+            }
+        }
     }
-    $dotenv->load();
 } catch (Exception $e) {
-    // Could not load ENV using defaults
+    // Could not load ENV using defaults.
 }
