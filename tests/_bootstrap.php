@@ -57,7 +57,11 @@ try {
     }
 
     if (method_exists($dotenvClass, 'createMutable')) {
-        $dotenv = $dotenvClass::createMutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+        if (method_exists($dotenvClass, 'createUnsafeMutable')) {
+            $dotenv = $dotenvClass::createUnsafeMutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+        } else {
+            $dotenv = $dotenvClass::createMutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+        }
         $dotenv->load();
     } elseif (method_exists($dotenvClass, 'create')) {
         $dotenv = $dotenvClass::create(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod

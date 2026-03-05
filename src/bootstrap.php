@@ -39,7 +39,11 @@ try {
 
     if (class_exists($dotenvClass)) {
         if (method_exists($dotenvClass, 'createImmutable')) {
-            $dotenv = $dotenvClass::createImmutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+            if (method_exists($dotenvClass, 'createUnsafeImmutable')) {
+                $dotenv = $dotenvClass::createUnsafeImmutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+            } else {
+                $dotenv = $dotenvClass::createImmutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+            }
             if (method_exists($dotenv, 'safeLoad')) {
                 $dotenv->safeLoad(); // @phan-suppress-current-line PhanUndeclaredMethod
             } else {

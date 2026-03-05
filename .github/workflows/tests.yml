@@ -49,3 +49,45 @@ jobs:
 #    - name: Report annotations
 #      id: report-annotations
 #      run: ./vendor/bin/cs2pr chkphpcs.xml
+
+  tests-dotenv56:
+    name: Unit Tests (Dotenv 5.6 lane)
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    ############################################################################
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+        tools: composer:v2, prestissimo
+        coverage: none
+
+    - name: Cache composer packages
+      id: composer-cache-dotenv56
+      run: |
+        composer config cache-files-dir
+        echo "::set-output name=dir::$(composer config cache-files-dir)"
+    - uses: actions/cache@v4
+      with:
+        path: ${{ steps.composer-cache-dotenv56.outputs.dir }}
+        key: ${{ runner.os }}-composer-dotenv56-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-dotenv56-
+
+    - name: Install and force Dotenv 5.6+
+      run: |
+        composer install --prefer-dist --no-progress --no-suggest
+        composer update vlucas/phpdotenv -W --no-interaction --prefer-dist
+        composer dump-autoload --optimize
+    ############################################################################
+
+    - name: Run the tests
+      run: ./vendor/bin/codecept run --xml
+
+    - name: Archive unit tests results
+      uses: actions/upload-artifact@v4
+      with:
+        name: codeception-output-files-dotenv56
+        path: tests/_output/
