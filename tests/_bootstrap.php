@@ -35,38 +35,44 @@
  */
 
 date_default_timezone_set('Europe/Helsinki');
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
 try {
     $dotenvClass = 'Dotenv\Dotenv';
+    $envFile = __DIR__ . '/.env';
 
-    if (class_exists($dotenvClass)) {
-        if (method_exists($dotenvClass, 'createMutable')) {
-            $dotenv = $dotenvClass::createMutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
-            if (method_exists($dotenv, 'safeLoad')) {
-                $dotenv->safeLoad(); // @phan-suppress-current-line PhanUndeclaredMethod
-            } else {
-                $dotenv->load();
-            }
-        } elseif (method_exists($dotenvClass, 'create')) {
-            $dotenv = $dotenvClass::create(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+    if (!class_exists($dotenvClass)) {
+        throw new RuntimeException('Dotenv\Dotenv is not available. Run composer install before tests.');
+    }
+
+    if (!is_file($envFile)) {
+        throw new RuntimeException('Missing required test env file: ' . $envFile);
+    }
+
+    if (method_exists($dotenvClass, 'createMutable')) {
+        $dotenv = $dotenvClass::createMutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+        $dotenv->load();
+    } elseif (method_exists($dotenvClass, 'create')) {
+        $dotenv = $dotenvClass::create(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+        if (method_exists($dotenv, 'overload')) {
+            $dotenv->overload(); // @phan-suppress-current-line PhanUndeclaredMethod
+        } else {
+            $dotenv->load();
+        }
+    } else {
+        $reflectDotEnv = new ReflectionMethod($dotenvClass, '__construct');
+        $params = $reflectDotEnv->getParameters();
+
+        if (isset($params[0]) && $params[0]->getName() === 'path') {
+            $dotenv = (new ReflectionClass($dotenvClass))->newInstanceArgs([__DIR__]);
             if (method_exists($dotenv, 'overload')) {
                 $dotenv->overload(); // @phan-suppress-current-line PhanUndeclaredMethod
             } else {
                 $dotenv->load();
             }
         } else {
-            $reflectDotEnv = new ReflectionMethod($dotenvClass, '__construct');
-            $params = $reflectDotEnv->getParameters();
-
-            if (isset($params[0]) && $params[0]->getName() === 'path') {
-                $dotenv = (new ReflectionClass($dotenvClass))->newInstanceArgs([__DIR__]);
-                if (method_exists($dotenv, 'overload')) {
-                    $dotenv->overload(); // @phan-suppress-current-line PhanUndeclaredMethod
-                } else {
-                    $dotenv->load();
-                }
-            } else {
-                throw new RuntimeException('Unsupported Dotenv constructor signature.');
-            }
+            throw new RuntimeException('Unsupported Dotenv constructor signature.');
         }
     }
 } catch (Exception $e) {
@@ -75,5 +81,4 @@ try {
     throw $e;
 }
 
-require_once(dirname(__FILE__) . '/../vendor/autoload.php');
 Nosto\Request\Http\HttpRequest::buildUserAgent('PHPUnit', '1.0.0', '1.0.0');
