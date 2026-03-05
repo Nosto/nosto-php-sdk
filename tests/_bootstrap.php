@@ -36,15 +36,39 @@
 
 date_default_timezone_set('Europe/Helsinki');
 try {
-    $reflectDotEnv = new ReflectionMethod('Dotenv\Dotenv', '__construct');
-    $params = $reflectDotEnv->getParameters();
-    if ($params[0]->getName() === 'path' && $params[1]->getName() === 'file') {
-        /** @noinspection PhpParamsInspection */
-        $dotenv = new Dotenv\Dotenv(dirname(__FILE__));
-    } else {
-        $dotenv = Dotenv\Dotenv::create(dirname(__FILE__));
+    $dotenvClass = 'Dotenv\Dotenv';
+
+    if (class_exists($dotenvClass)) {
+        if (method_exists($dotenvClass, 'createMutable')) {
+            $dotenv = $dotenvClass::createMutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+            if (method_exists($dotenv, 'safeLoad')) {
+                $dotenv->safeLoad(); // @phan-suppress-current-line PhanUndeclaredMethod
+            } else {
+                $dotenv->load();
+            }
+        } elseif (method_exists($dotenvClass, 'create')) {
+            $dotenv = $dotenvClass::create(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+            if (method_exists($dotenv, 'overload')) {
+                $dotenv->overload(); // @phan-suppress-current-line PhanUndeclaredMethod
+            } else {
+                $dotenv->load();
+            }
+        } else {
+            $reflectDotEnv = new ReflectionMethod($dotenvClass, '__construct');
+            $params = $reflectDotEnv->getParameters();
+
+            if (isset($params[0]) && $params[0]->getName() === 'path') {
+                $dotenv = (new ReflectionClass($dotenvClass))->newInstanceArgs([__DIR__]);
+                if (method_exists($dotenv, 'overload')) {
+                    $dotenv->overload(); // @phan-suppress-current-line PhanUndeclaredMethod
+                } else {
+                    $dotenv->load();
+                }
+            } else {
+                throw new RuntimeException('Unsupported Dotenv constructor signature.');
+            }
+        }
     }
-    $dotenv->overload();
 } catch (Exception $e) {
     // Could not load ENV using defaults
     /** @noinspection PhpUnhandledExceptionInspection */
