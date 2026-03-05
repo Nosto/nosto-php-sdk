@@ -36,7 +36,13 @@
 
 date_default_timezone_set('Europe/Helsinki');
 
-require_once __DIR__ . '/../vendor/autoload.php';
+$autoloadFile = __DIR__ . '/../vendor/autoload.php';
+if (!file_exists($autoloadFile)) {
+    throw new RuntimeException(
+        'Composer autoload file not found. Run "composer install" before running tests.'
+    );
+}
+require_once $autoloadFile;
 
 try {
     $dotenvClass = 'Dotenv\Dotenv';
