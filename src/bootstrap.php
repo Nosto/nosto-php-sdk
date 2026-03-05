@@ -35,26 +35,31 @@
  */
 
 try {
-    if (class_exists('Dotenv\Dotenv')) {
-        if (method_exists('Dotenv\Dotenv', 'createImmutable')) {
-            $dotenv = Dotenv\Dotenv::createImmutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+    $dotenvClass = 'Dotenv\Dotenv';
+
+    if (class_exists($dotenvClass)) {
+        if (method_exists($dotenvClass, 'createImmutable')) {
+            $dotenv = $dotenvClass::createImmutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
             if (method_exists($dotenv, 'safeLoad')) {
                 $dotenv->safeLoad(); // @phan-suppress-current-line PhanUndeclaredMethod
             } else {
                 $dotenv->load();
             }
-        } elseif (method_exists('Dotenv\Dotenv', 'create')) {
-            $dotenv = Dotenv\Dotenv::create(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
+        } elseif (method_exists($dotenvClass, 'create')) {
+            $dotenv = $dotenvClass::create(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
             $dotenv->load();
         } else {
-            /** @noinspection PhpParamsInspection */
-            $dotenv = new Dotenv\Dotenv(__DIR__); // @phan-suppress-current-line PhanTypeMismatchArgument
-            $dotenv->load();
+            $reflectDotEnv = new ReflectionMethod($dotenvClass, '__construct');
+            $params = $reflectDotEnv->getParameters();
+
+            if (isset($params[0]) && $params[0]->getName() === 'path') {
+                $dotenv = (new ReflectionClass($dotenvClass))->newInstanceArgs([__DIR__]);
+                $dotenv->load();
+            } else {
+                throw new RuntimeException('Unsupported Dotenv constructor signature.');
+            }
         }
     }
 } catch (Exception $e) {
-    // Enable strict failure mode in tests/debug sessions.
-    if (getenv('NOSTO_DOTENV_STRICT') === '1') {
-        throw $e;
-    }
+    // Could not load ENV using defaults.
 }
