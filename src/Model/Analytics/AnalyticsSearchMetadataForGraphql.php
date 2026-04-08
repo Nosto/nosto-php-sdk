@@ -25,9 +25,9 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
      */
     private $autoComplete;
     /**
-     * @type bool
+     * @type string
      */
-    private $keyword;
+    private $searchType;
     /**
      * @type bool
      */
@@ -47,7 +47,7 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
         $organic = false,
         $autoCorrect = true,
         $autoComplete = false,
-        $keyword = false,
+        $searchType = 'keyword',
         $sorted = true,
         $hasResults = true,
         $refined = false
@@ -58,7 +58,7 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
         $this->organic = $organic;
         $this->autoCorrect = $autoCorrect;
         $this->autoComplete = $autoComplete;
-        $this->keyword = $keyword;
+        $this->searchType = $searchType;
         $this->sorted = $sorted;
         $this->hasResults = $hasResults;
         $this->refined = $refined;
@@ -109,7 +109,15 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
      */
     public function keyword()
     {
-        return $this->keyword;
+        return $this->searchType === 'keyword';
+    }
+
+    /**
+     * @return string
+     */
+    public function searchType()
+    {
+        return $this->searchType;
     }
 
     /**
@@ -147,11 +155,11 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
             'organic' => $this->organic,
             'autoCorrect' => $this->autoCorrect,
             'autoComplete' => $this->autoComplete,
-            'keyword' => $this->keyword,
+            'keyword' => $this->keyword(),
+            'searchType' => $this->searchType,
             'sorted' => $this->sorted,
             'hasResults' => $this->hasResults,
             'refined' => $this->refined
         ];
     }
 }
-

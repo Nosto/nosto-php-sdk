@@ -362,6 +362,7 @@ class SearchOperation extends AbstractSearchOperation
                 abTests: \$abTests,
             ) {
                 redirect,
+                searchType,
                 abTests {
                   id
                   activeVariation {

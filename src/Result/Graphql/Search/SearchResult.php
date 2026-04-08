@@ -16,6 +16,9 @@ class SearchResult
     /** @var ?string */
     private $query;
 
+    /** @var ?string */
+    private $searchType;
+
     /** @var ?Explain */
     private $explain;
 
@@ -29,6 +32,7 @@ class SearchResult
     {
         $this->redirect = GraphQLUtils::getProperty($data, 'redirect');
         $this->query = GraphQLUtils::getProperty($data, 'query');
+        $this->searchType = GraphQLUtils::getProperty($data, 'searchType');
         $this->explain = GraphQLUtils::getClassProperty($data, 'explain', Explain::class);
         $this->products = GraphQLUtils::getClassProperty($data, 'products', Products::class);
         $this->abTests = GraphQLUtils::getArrayProperty($data, 'abTests', AbTest::class);
@@ -48,6 +52,14 @@ class SearchResult
     public function getQuery()
     {
         return $this->query;
+    }
+
+    /**
+     * @return ?string
+     */
+    public function getSearchType()
+    {
+        return $this->searchType;
     }
 
     /**
