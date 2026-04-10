@@ -147,11 +147,10 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
             'organic' => $this->organic,
             'autoCorrect' => $this->autoCorrect,
             'autoComplete' => $this->autoComplete,
-            'keyword' => $this->keyword,
+            'keyword' => $this->keyword(),
             'sorted' => $this->sorted,
             'hasResults' => $this->hasResults,
             'refined' => $this->refined
         ];
     }
 }
-

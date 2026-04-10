@@ -370,6 +370,7 @@ class SearchOperation extends AbstractSearchOperation
                 },
                 products {
                     total,
+                    searchType,
                     hits {
                         productId
                         name,
