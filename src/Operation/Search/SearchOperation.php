@@ -362,7 +362,6 @@ class SearchOperation extends AbstractSearchOperation
                 abTests: \$abTests,
             ) {
                 redirect,
-                searchType,
                 abTests {
                   id
                   activeVariation {
@@ -371,6 +370,7 @@ class SearchOperation extends AbstractSearchOperation
                 },
                 products {
                     total,
+                    searchType,
                     hits {
                         productId
                         name,
