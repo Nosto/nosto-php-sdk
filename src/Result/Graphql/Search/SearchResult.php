@@ -55,7 +55,7 @@ class SearchResult
      */
     public function getSearchType()
     {
-        return $this->products?->getSearchType();
+        return $this->products ? $this->products->getSearchType() : null;
     }
 
     /**
