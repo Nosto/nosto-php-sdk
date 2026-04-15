@@ -29,10 +29,6 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
      */
     private $keyword;
     /**
-     * @type string|null
-     */
-    private $searchType;
-    /**
      * @type bool
      */
     private $sorted;
@@ -44,6 +40,10 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
      * @type bool
      */
     private $refined;
+    /**
+     * @type string|null
+     */
+    private $searchType;
 
     public function __construct(
         $query = null,
@@ -64,10 +64,10 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
         $this->autoCorrect = $autoCorrect;
         $this->autoComplete = $autoComplete;
         $this->keyword = $keyword;
-        $this->searchType = $searchType;
         $this->sorted = $sorted;
         $this->hasResults = $hasResults;
         $this->refined = $refined;
+        $this->searchType = $searchType;
     }
 
     /**
@@ -115,19 +115,7 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
      */
     public function keyword()
     {
-        if ($this->searchType !== null) {
-            return $this->searchType === 'keyword';
-        }
-
         return $this->keyword;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function searchType()
-    {
-        return $this->searchType;
     }
 
     /**
@@ -155,6 +143,14 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
     }
 
     /**
+     * @return string|null
+     */
+    public function searchType()
+    {
+        return $this->searchType;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize()
@@ -165,7 +161,8 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
             'organic' => $this->organic,
             'autoCorrect' => $this->autoCorrect,
             'autoComplete' => $this->autoComplete,
-            'keyword' => $this->keyword(),
+            'keyword' => $this->keyword,
+            'searchType' => $this->searchType,
             'sorted' => $this->sorted,
             'hasResults' => $this->hasResults,
             'refined' => $this->refined
