@@ -30,7 +30,7 @@ class Products
     /** @var ?string */
     private $categoryPath;
 
-    /** @var ?string */
+    /** @var string */
     private $searchType;
 
     /** @var ?Hit[] */
@@ -48,7 +48,7 @@ class Products
         $this->fuzzy = GraphQLUtils::getProperty($data, 'fuzzy');
         $this->categoryId = GraphQLUtils::getProperty($data, 'categoryId');
         $this->categoryPath = GraphQLUtils::getProperty($data, 'categoryPath');
-        $this->searchType = GraphQLUtils::getProperty($data, 'searchType');
+        $this->searchType = GraphQLUtils::getProperty($data, 'searchType', '');
         $this->hits = GraphQLUtils::getArrayProperty($data, 'hits', Hit::class);
         $this->facets = property_exists($data, 'facets') && $data->facets
             ? array_map(
@@ -117,7 +117,7 @@ class Products
     }
 
     /**
-     * @return ?string
+     * @return string
      */
     public function getSearchType()
     {

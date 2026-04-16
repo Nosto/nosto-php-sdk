@@ -51,11 +51,11 @@ class SearchResult
     }
 
     /**
-     * @return ?string
+     * @return string
      */
     public function getSearchType()
     {
-        return $this->products ? $this->products->getSearchType() : null;
+        return $this->products ? $this->products->getSearchType() : '';
     }
 
     /**

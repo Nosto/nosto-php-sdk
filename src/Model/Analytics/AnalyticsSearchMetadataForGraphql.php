@@ -41,7 +41,7 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
      */
     private $refined;
     /**
-     * @type string|null
+     * @type string
      */
     private $searchType;
 
@@ -55,7 +55,7 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
         $sorted = true,
         $hasResults = true,
         $refined = false,
-        $searchType = null
+        $searchType = ''
     )
     {
         $this->query = $query;
@@ -67,7 +67,7 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
         $this->sorted = $sorted;
         $this->hasResults = $hasResults;
         $this->refined = $refined;
-        $this->searchType = $searchType;
+        $this->searchType = $searchType ?: '';
     }
 
     /**
@@ -143,7 +143,7 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function searchType()
     {
