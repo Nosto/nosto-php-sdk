@@ -5,6 +5,7 @@ namespace Nosto\Result\Graphql\Search\SearchResult;
 use Nosto\Result\Graphql\Search\SearchResult\Products\Facet;
 use Nosto\Result\Graphql\Search\SearchResult\Products\Hit;
 use Nosto\Util\GraphQLUtils;
+use Nosto\Util\SearchType;
 use stdClass;
 
 class Products
@@ -48,7 +49,7 @@ class Products
         $this->fuzzy = GraphQLUtils::getProperty($data, 'fuzzy');
         $this->categoryId = GraphQLUtils::getProperty($data, 'categoryId');
         $this->categoryPath = GraphQLUtils::getProperty($data, 'categoryPath');
-        $this->searchType = GraphQLUtils::getProperty($data, 'searchType', '');
+        $this->searchType = SearchType::normalize(GraphQLUtils::getProperty($data, 'searchType'));
         $this->hits = GraphQLUtils::getArrayProperty($data, 'hits', Hit::class);
         $this->facets = property_exists($data, 'facets') && $data->facets
             ? array_map(

@@ -6,6 +6,7 @@ use Nosto\Result\Graphql\Search\SearchResult\AbTest;
 use Nosto\Result\Graphql\Search\SearchResult\Explain;
 use Nosto\Result\Graphql\Search\SearchResult\Products;
 use Nosto\Util\GraphQLUtils;
+use Nosto\Util\SearchType;
 use stdClass;
 
 class SearchResult
@@ -55,7 +56,7 @@ class SearchResult
      */
     public function getSearchType()
     {
-        return $this->products ? $this->products->getSearchType() : '';
+        return $this->products ? $this->products->getSearchType() : SearchType::DEFAULT_SEARCH_TYPE;
     }
 
     /**

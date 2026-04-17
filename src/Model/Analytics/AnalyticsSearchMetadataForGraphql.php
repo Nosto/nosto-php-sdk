@@ -2,6 +2,8 @@
 
 namespace Nosto\Model\Analytics;
 
+use Nosto\Util\SearchType;
+
 class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
 {
     /**
@@ -55,7 +57,7 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
         $sorted = true,
         $hasResults = true,
         $refined = false,
-        $searchType = ''
+        $searchType = null
     )
     {
         $this->query = $query;
@@ -67,7 +69,7 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
         $this->sorted = $sorted;
         $this->hasResults = $hasResults;
         $this->refined = $refined;
-        $this->searchType = $searchType ?: '';
+        $this->searchType = SearchType::normalize($searchType);
     }
 
     /**
