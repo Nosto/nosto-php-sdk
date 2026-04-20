@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
 ### 7.7.4
-* Send to Search Analytics search type
+* Send search type to Search Analytics
 
 ### 7.7.3
 * Added PHP 8.4 compatibility for Dotenv
