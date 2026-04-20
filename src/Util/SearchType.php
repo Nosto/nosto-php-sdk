@@ -16,7 +16,12 @@ class SearchType
      */
     public static function normalize($searchType)
     {
-        if (!is_string($searchType) || trim($searchType) === '') {
+        if (!is_string($searchType)) {
+            return self::DEFAULT_SEARCH_TYPE;
+        }
+
+        $searchType = trim($searchType);
+        if ($searchType === '') {
             return self::DEFAULT_SEARCH_TYPE;
         }
 
