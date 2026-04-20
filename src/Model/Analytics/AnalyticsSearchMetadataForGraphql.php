@@ -2,6 +2,8 @@
 
 namespace Nosto\Model\Analytics;
 
+use Nosto\Util\SearchType;
+
 class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
 {
     /**
@@ -40,6 +42,10 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
      * @type bool
      */
     private $refined;
+    /**
+     * @type string
+     */
+    private $searchType;
 
     public function __construct(
         $query = null,
@@ -50,7 +56,8 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
         $keyword = false,
         $sorted = true,
         $hasResults = true,
-        $refined = false
+        $refined = false,
+        $searchType = null
     )
     {
         $this->query = $query;
@@ -62,6 +69,7 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
         $this->sorted = $sorted;
         $this->hasResults = $hasResults;
         $this->refined = $refined;
+        $this->searchType = SearchType::normalize($searchType);
     }
 
     /**
@@ -137,6 +145,14 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function searchType()
+    {
+        return $this->searchType;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize()
@@ -148,10 +164,10 @@ class AnalyticsSearchMetadataForGraphql implements \JsonSerializable
             'autoCorrect' => $this->autoCorrect,
             'autoComplete' => $this->autoComplete,
             'keyword' => $this->keyword,
+            'searchType' => $this->searchType,
             'sorted' => $this->sorted,
             'hasResults' => $this->hasResults,
             'refined' => $this->refined
         ];
     }
 }
-

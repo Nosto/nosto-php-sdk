@@ -57,6 +57,7 @@ class SearchTest extends Test
           "data": {
             "search": {
               "products": {
+                "searchType": "SEARCH",
                 "hits": [
                   {
                     "productId": "%s"
@@ -75,6 +76,7 @@ class SearchTest extends Test
 
         $this->assertInstanceOf(SearchResult::class, $result);
         $this->assertEquals($id, $result->getProducts()->getHits()[0]->getProductId());
+        $this->assertSame('SEARCH', $result->getSearchType());
     }
 
     public function testResultWithErrors()
