@@ -60,6 +60,14 @@ class SearchResult
     }
 
     /**
+     * @return string
+     */
+    public function getSearchTypeReason()
+    {
+        return $this->products ? $this->products->getSearchTypeReason() : SearchType::DEFAULT_SEARCH_TYPE;
+    }
+
+    /**
      * @return ?Explain
      */
     public function getExplain()
