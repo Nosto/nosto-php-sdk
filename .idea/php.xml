@@ -5,19 +5,6 @@
       <MessDetectorConfiguration tool_path="$PROJECT_DIR$/vendor/bin/phpmd" />
     </phpmd_settings>
   </component>
-  <component name="MessDetectorOptionsConfiguration">
-    <option name="transferred" value="true" />
-  </component>
-  <component name="PHPCSFixerOptionsConfiguration">
-    <option name="transferred" value="true" />
-  </component>
-  <component name="PHPCodeSnifferOptionsConfiguration">
-    <option name="codingStandard" value="Custom" />
-    <option name="customRuleset" value="$PROJECT_DIR$/ruleset.xml" />
-    <option name="highlightLevel" value="WARNING" />
-    <option name="showSniffs" value="true" />
-    <option name="transferred" value="true" />
-  </component>
   <component name="PhpCodeSniffer">
     <phpcs_settings>
       <PhpCSConfiguration beautifier_path="$PROJECT_DIR$/vendor/bin/phpcbf" tool_path="$PROJECT_DIR$/vendor/bin/phpcs" />
@@ -107,7 +94,7 @@
   </component>
   <component name="PhpInterpreters">
     <interpreters>
-      <interpreter id="ace88e47-1c34-4a83-9808-be88365e5011" name="PHP 7.0.10 (project level)" home="/Applications/MAMP/bin/php/php7.0.10/bin/php" auto="false" debugger_id="php.debugger.XDebug" />
+      <interpreter id="ace88e47-1c34-4a83-9808-be88365e5011" name="PHP 7.0.10 (project level)" home="/Applications/MAMP/bin/php/php7.0.10/bin/php" debugger_id="php.debugger.XDebug" />
     </interpreters>
   </component>
   <component name="PhpInterpretersPhpInfoCache">
@@ -178,16 +165,10 @@
       </interpreter>
     </phpInfoCache>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="5.5.0" />
-  <component name="PhpStanOptionsConfiguration">
-    <option name="transferred" value="true" />
-  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="7" />
   <component name="PhpUnit">
     <phpunit_settings>
       <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" />
     </phpunit_settings>
-  </component>
-  <component name="PsalmOptionsConfiguration">
-    <option name="transferred" value="true" />
   </component>
 </project>
