@@ -57,7 +57,8 @@ class SearchTest extends Test
           "data": {
             "search": {
               "products": {
-                "searchType": "SEARCH",
+                "searchType": "vector",
+                "searchTypeReason": "hybrid",
                 "hits": [
                   {
                     "productId": "%s"
@@ -76,7 +77,38 @@ class SearchTest extends Test
 
         $this->assertInstanceOf(SearchResult::class, $result);
         $this->assertEquals($id, $result->getProducts()->getHits()[0]->getProductId());
-        $this->assertSame('SEARCH', $result->getSearchType());
+        $this->assertSame('vector', $result->getSearchType());
+        $this->assertSame('hybrid', $result->getSearchTypeReason());
+    }
+
+    public function testSearchWithMissingSearchTypeReason()
+    {
+        $id = uniqid();
+        $responseBody = sprintf('{
+          "data": {
+            "search": {
+              "products": {
+                "searchType": "keyword",
+                "hits": [
+                  {
+                    "productId": "%s"
+                  }
+                ]
+              }
+            }
+          }
+        }', $id);
+
+        $response = new HttpResponse(['HTTP/1.1 200 OK'], $responseBody);
+
+        $request = new HttpRequest();
+        $request->setResultHandler(new SearchResultHandler());
+        $result = $request->getResultHandler()->parse($response);
+
+        $this->assertInstanceOf(SearchResult::class, $result);
+        $this->assertSame('keyword', $result->getSearchType());
+        // When searchTypeReason is missing, it should default to 'unknown'
+        $this->assertSame('unknown', $result->getSearchTypeReason());
     }
 
     public function testResultWithErrors()
