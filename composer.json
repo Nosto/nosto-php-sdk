@@ -15,8 +15,7 @@
     "codeception/codeception": "4.1.*",
     "codeception/module-asserts": "1.3.*",
     "phan/phan": "2.6",
-    "staabm/annotate-pull-request-from-checkstyle": "^1.1",
-    "mridang/pmd-annotations": "^0.0.2"
+    "staabm/annotate-pull-request-from-checkstyle": "^1.1"
   },
   "repositories": [
     {
@@ -45,8 +44,6 @@
     "ext-curl": "*"
   },
   "scripts": {
-    "post-install-cmd": "if [ -f ./vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility; fi",
-    "post-update-cmd": "if [ -f ./vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility; fi",
     "ci:inspect": "./inspect.sh"
   },
   "config": {

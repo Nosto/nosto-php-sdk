@@ -12,14 +12,14 @@ class GraphQLUtilsTest extends Test
     public function propertyValueProvider()
     {
         return [
-            ['boolean value' => 'someRandomKey', true],
-            ['string value' => 'someRandomKey', 'testValue'],
-            ['int value' => 'someRandomKey', 187],
-            ['float value' => 'someRandomKey', 1.87],
-            ['array value' => 'someRandomKey', ['testValue']],
-            ['null' => 'someRandomKey', null],
-            ['empty value' => 'someRandomKey', ''],
-            ['non existent key' => 'sabdsajkdas', null],
+            'boolean value' => ['someRandomKey', true],
+            'string value' => ['someRandomKey', 'testValue'],
+            'int value' => ['someRandomKey', 187],
+            'float value' => ['someRandomKey', 1.87],
+            'array value' => ['someRandomKey', ['testValue']],
+            'null' => ['someRandomKey', null],
+            'empty value' => ['someRandomKey', ''],
+            'non existent key' => ['sabdsajkdas', null],
         ];
     }
 
