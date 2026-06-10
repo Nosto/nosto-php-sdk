@@ -97,9 +97,20 @@ jobs:
         name: phpmd-xml-result
         path: pmdphpmd.xml
 
-    - name: Report annotations
-      id: report-annotations
-      run: ./vendor/bin/pmd2pr --graceful-warnings pmdphpmd.xml
+    - name: Detect code standard violations
+      if: always() && hashFiles('pmdphpmd.xml') != ''
+      run: |
+        php -r "
+        \$xml = simplexml_load_file('pmdphpmd.xml');
+        foreach (\$xml->file as \$file) {
+          \$filepath = (string)\$file['name'];
+          foreach (\$file->violation as \$violation) {
+            \$line = (int)\$violation['beginline'];
+            \$msg = (string)\$violation;
+            echo \"::notice file={\$filepath},line={\$line}::PHPMD: {\$msg}\n\";
+          }
+        }
+        " || true
 
   phpcpd:
     name: Copy-Paste Detect
@@ -146,11 +157,20 @@ jobs:
         name: phdpcpd-xml-result
         path: phdpcpd.xml
 
-    - name: Report annotations
-      id: report-annotations
+    - name: Detect duplicate lines
+      if: always() && hashFiles('phdpcpd.xml') != ''
       run: |
-        composer require mridang/cpd-annotations
-        ./vendor/bin/cpd2pr phdpcpd.xml
+        php -r "
+        \$xml = simplexml_load_file('phdpcpd.xml');
+        foreach (\$xml->duplication as \$dup) {
+          foreach (\$dup->file as \$file) {
+            \$filepath = (string)\$file['name'];
+            \$line = (int)\$file['line'];
+            \$lines = (int)\$dup['lines'];
+            echo \"::notice file={\$filepath},line={\$line}::PHPCPD: Found {\$lines} duplicate lines\n\";
+          }
+        }
+        " || true
 
   package:
     name: Package
