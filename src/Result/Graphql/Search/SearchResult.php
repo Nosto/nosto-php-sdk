@@ -7,6 +7,7 @@ use Nosto\Result\Graphql\Search\SearchResult\Explain;
 use Nosto\Result\Graphql\Search\SearchResult\Products;
 use Nosto\Util\GraphQLUtils;
 use Nosto\Util\SearchType;
+use Nosto\Util\SearchTypeReason;
 use stdClass;
 
 class SearchResult
@@ -57,6 +58,14 @@ class SearchResult
     public function getSearchType()
     {
         return $this->products ? $this->products->getSearchType() : SearchType::DEFAULT_SEARCH_TYPE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSearchTypeReason()
+    {
+        return $this->products ? $this->products->getSearchTypeReason() : SearchTypeReason::DEFAULT_SEARCH_TYPE_REASON;
     }
 
     /**
