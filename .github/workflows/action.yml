@@ -97,7 +97,7 @@ jobs:
         name: phpmd-xml-result
         path: pmdphpmd.xml
 
-    - name: Report Mess Detect annotations
+    - name: Detect code standard violations
       if: always() && hashFiles('pmdphpmd.xml') != ''
       run: |
         php -r "
@@ -157,7 +157,7 @@ jobs:
         name: phdpcpd-xml-result
         path: phdpcpd.xml
 
-    - name: Report Copy-Paste Detection annotations
+    - name: Detect duplicate lines
       if: always() && hashFiles('phdpcpd.xml') != ''
       run: |
         php -r "
