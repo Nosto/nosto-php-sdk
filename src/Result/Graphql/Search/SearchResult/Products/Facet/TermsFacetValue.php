@@ -16,11 +16,15 @@ class TermsFacetValue
     /** @var ?bool */
     private $selected;
 
+    /** @var ?Visual */
+    private $visual;
+
     public function __construct(stdClass $data)
     {
         $this->value = GraphQLUtils::getProperty($data, 'value');
         $this->count = GraphQLUtils::getProperty($data, 'count');
         $this->selected = GraphQLUtils::getProperty($data, 'selected');
+        $this->visual = GraphQLUtils::getClassProperty($data, 'visual', Visual::class);
     }
 
     /**
@@ -45,5 +49,13 @@ class TermsFacetValue
     public function getSelected()
     {
         return $this->selected;
+    }
+
+    /**
+     * @return ?Visual
+     */
+    public function getVisual()
+    {
+        return $this->visual;
     }
 }
