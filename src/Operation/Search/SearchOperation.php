@@ -397,6 +397,10 @@ class SearchOperation extends AbstractSearchOperation
                                 value,
                                 count,
                                 selected,
+                                visual {
+                                    type,
+                                    value,
+                                }
                             }
                         }
                     }
