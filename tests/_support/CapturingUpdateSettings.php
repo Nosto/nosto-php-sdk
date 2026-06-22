@@ -34,79 +34,24 @@
  *
  */
 
-namespace Nosto\Operation;
+namespace Nosto\Test\Support;
 
-use Nosto\NostoException;
+use Nosto\Operation\UpdateSettings;
 use Nosto\Request\Api\ApiRequest;
-use Nosto\Request\Api\Token;
-use Nosto\Request\Http\Exception\AbstractHttpException;
-use Nosto\Result\Api\GeneralPurposeResultHandler;
-use Nosto\Types\SettingsInterface;
 use Nosto\Types\Signup\AccountInterface;
 
-/**
- * Operation class for updating common account settings through the Nosto API.
- */
-class UpdateSettings extends AbstractAuthenticatedOperation
+class CapturingUpdateSettings extends UpdateSettings
 {
-    /**
-     * UpdateSettings constructor.
-     * @param AccountInterface $account
-     * @param string $activeDomain
-     */
-    public function __construct(AccountInterface $account, $activeDomain = '')
+    private $adapter;
+
+    public function __construct(AccountInterface $account, $activeDomain = '', SettingsCaptureAdapter $adapter = null)
     {
         parent::__construct($account, $activeDomain);
+        $this->adapter = $adapter ?: new SettingsCaptureAdapter();
     }
 
-    /**
-     * Sends a POST request to create a new account for a store in Nosto
-     *
-     * @param SettingsInterface $settings
-     * @return bool if the request was successful.
-     * @throws NostoException
-     * @throws AbstractHttpException
-     */
-    public function update(SettingsInterface $settings)
-    {
-        $request = $this->initRequest(
-            $this->account->getApiToken(Token::API_SETTINGS),
-            $this->account->getName(),
-            $this->activeDomain
-        );
-        $response = $request->put(new UpdateSettingsPayload($settings));
-        return $request->getResultHandler()->parse($response);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getResultHandler()
-    {
-        return new GeneralPurposeResultHandler();
-    }
-
-    /**
-     * @inheritdoc
-     */
     protected function getRequestType()
     {
-        return new ApiRequest();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getContentType()
-    {
-        return self::CONTENT_TYPE_APPLICATION_JSON;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getPath()
-    {
-        return ApiRequest::PATH_SETTINGS;
+        return new ApiRequest($this->adapter);
     }
 }

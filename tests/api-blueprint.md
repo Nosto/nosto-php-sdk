@@ -598,10 +598,10 @@ Product related resources
             {
                 "currencies": {
                     "EUR": {
-                        "currency_before_amount":true,
-                        "currency_token":"\u20ac",
-                        "decimal_character":".",
-                        "decimal_places":2
+                        "currencyBeforeAmount":true,
+                        "currencyToken":"\u20ac",
+                        "decimalCharacter":".",
+                        "decimalPlaces":2
                     }
                 },
                 "currency_code":"USD",
