@@ -41,8 +41,10 @@ use Codeception\TestCase\Test;
 use Exception;
 use Nosto\Operation\UpdateSettings;
 use Nosto\Request\Api\Token;
-use Nosto\Test\Support\MockSettings;
+use Nosto\Test\Support\CapturingUpdateSettings;
 use Nosto\Test\Support\MockAccount;
+use Nosto\Test\Support\MockSettings;
+use Nosto\Test\Support\SettingsCaptureAdapter;
 
 class SettingsTest extends Test
 {
@@ -65,5 +67,42 @@ class SettingsTest extends Test
         $this->specify('successful exchange rates sync', function () use ($result) {
             $this->assertTrue($result);
         });
+    }
+
+    /**
+     * Tests that the settings update payload contains the expected currency formatting keys.
+     *
+     * @throws Exception
+     */
+    public function testUpdatingSettingsPayload()
+    {
+        $account = new MockAccount();
+        $token = new Token('settings', 'token');
+        $account->addApiToken($token);
+
+        $adapter = new SettingsCaptureAdapter();
+        $settings = new MockSettings();
+        $op = new CapturingUpdateSettings($account, $adapter);
+        $op->update($settings);
+
+        $payload = json_decode($adapter->getLastContent(), true);
+
+        $this->assertSame('My Shop', $payload['title']);
+        $this->assertSame('http://localhost', $payload['front_page_url']);
+        $this->assertSame('USD', $payload['currency_code']);
+        $this->assertSame('XXX', $payload['default_variant_id']);
+        $this->assertFalse($payload['use_exchange_rates']);
+
+        $this->assertArrayHasKey('EUR', $payload['currencies']);
+        $this->assertSame(
+            [
+                'currencyBeforeAmount' => true,
+                'currencyToken' => '€',
+                'decimalCharacter' => '.',
+                'decimalPlaces' => 2,
+            ],
+            $payload['currencies']['EUR']
+        );
+        $this->assertArrayNotHasKey('groupingSeparator', $payload['currencies']['EUR']);
     }
 }
