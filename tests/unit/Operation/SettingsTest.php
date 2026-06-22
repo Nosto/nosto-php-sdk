@@ -82,7 +82,7 @@ class SettingsTest extends Test
 
         $adapter = new SettingsCaptureAdapter();
         $settings = new MockSettings();
-        $op = new CapturingUpdateSettings($account, $adapter);
+        $op = new CapturingUpdateSettings($account, '', $adapter);
         $op->update($settings);
 
         $payload = json_decode($adapter->getLastContent(), true);

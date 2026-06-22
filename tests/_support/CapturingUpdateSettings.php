@@ -38,15 +38,16 @@ namespace Nosto\Test\Support;
 
 use Nosto\Operation\UpdateSettings;
 use Nosto\Request\Api\ApiRequest;
+use Nosto\Types\Signup\AccountInterface;
 
 class CapturingUpdateSettings extends UpdateSettings
 {
     private $adapter;
 
-    public function __construct(MockAccount $account, SettingsCaptureAdapter $adapter)
+    public function __construct(AccountInterface $account, $activeDomain = '', SettingsCaptureAdapter $adapter = null)
     {
-        parent::__construct($account);
-        $this->adapter = $adapter;
+        parent::__construct($account, $activeDomain);
+        $this->adapter = $adapter ?: new SettingsCaptureAdapter();
     }
 
     protected function getRequestType()

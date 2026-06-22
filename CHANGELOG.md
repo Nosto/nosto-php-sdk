@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
+### 7.7.7
+* Fixed settings currency format payload
+
 ### 7.7.6
 * Added filter visual support
 
