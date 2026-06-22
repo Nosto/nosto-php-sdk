@@ -36,6 +36,7 @@
 
 namespace Nosto\Operation;
 
+use Nosto\Model\Format;
 use Nosto\NostoException;
 use Nosto\Request\Api\ApiRequest;
 use Nosto\Request\Api\Token;
@@ -74,7 +75,7 @@ class UpdateSettings extends AbstractAuthenticatedOperation
             $this->account->getName(),
             $this->activeDomain
         );
-        $response = $request->put($settings);
+        $response = $request->put(new UpdateSettingsPayload($settings));
         return $request->getResultHandler()->parse($response);
     }
 
@@ -108,5 +109,92 @@ class UpdateSettings extends AbstractAuthenticatedOperation
     protected function getPath()
     {
         return ApiRequest::PATH_SETTINGS;
+    }
+}
+
+class UpdateSettingsPayload
+{
+    private $title;
+    private $languageCode;
+    private $frontPageUrl;
+    private $currencyCode;
+    private $currencies;
+    private $defaultVariantId;
+    private $useExchangeRates;
+
+    /**
+     * @param SettingsInterface $settings
+     */
+    public function __construct(SettingsInterface $settings)
+    {
+        $this->title = $settings->getTitle();
+        $this->languageCode = $settings->getLanguageCode();
+        $this->frontPageUrl = $settings->getFrontPageUrl();
+        $this->currencyCode = $settings->getCurrencyCode();
+        $this->currencies = $this->buildCurrencies($settings);
+        $this->defaultVariantId = $settings->getDefaultVariantId();
+        $this->useExchangeRates = $settings->getUseExchangeRates();
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function getLanguageCode()
+    {
+        return $this->languageCode;
+    }
+
+    public function getFrontPageUrl()
+    {
+        return $this->frontPageUrl;
+    }
+
+    public function getCurrencyCode()
+    {
+        return $this->currencyCode;
+    }
+
+    public function getCurrencies()
+    {
+        return $this->currencies;
+    }
+
+    public function getDefaultVariantId()
+    {
+        return $this->defaultVariantId;
+    }
+
+    public function getUseExchangeRates()
+    {
+        return $this->useExchangeRates;
+    }
+
+    /**
+     * @param SettingsInterface $settings
+     * @return array|null
+     */
+    private function buildCurrencies(SettingsInterface $settings)
+    {
+        $currencies = $settings->getCurrencies();
+        if (empty($currencies) || !is_array($currencies)) {
+            return null;
+        }
+
+        $payload = [];
+        foreach ($currencies as $code => $format) {
+            if ($format instanceof Format) {
+                $payload[$code] = [
+                    'currencyBeforeAmount' => $format->getCurrencyBeforeAmount(),
+                    'currencyToken' => $format->getCurrencyToken(),
+                    'decimalCharacter' => $format->getDecimalCharacter(),
+                    'groupingSeparator' => $format->getGroupingSeparator(),
+                    'decimalPlaces' => $format->getDecimalPlaces(),
+                ];
+            }
+        }
+
+        return empty($payload) ? null : $payload;
     }
 }
