@@ -90,7 +90,7 @@ class GraphqlOrderTest extends Unit
         $request->setResultHandler(new OrderStatusResultHandler());
         $result = $request->getResultHandler()->parse($response);
 
-        // Order status was updates successfully
+        // Order status was updated successfully
         $this->assertEquals('M2_22', $result);
     }
 }

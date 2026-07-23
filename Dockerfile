@@ -13,5 +13,11 @@ RUN apt-get update || apt-get update && \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN pecl install ast && \
-    docker-php-ext-enable ast
+# $PHPIZE_DEPS (autoconf, gcc, make, ...) is provided by the official PHP image
+# and is required to compile the ast PECL extension. Install it just for the
+# build, then purge it to keep the image small.
+RUN apt-get update && apt-get install -y --no-install-recommends $PHPIZE_DEPS && \
+    pecl install ast && \
+    docker-php-ext-enable ast && \
+    apt-get purge -y --auto-remove $PHPIZE_DEPS && \
+    rm -rf /var/lib/apt/lists/*

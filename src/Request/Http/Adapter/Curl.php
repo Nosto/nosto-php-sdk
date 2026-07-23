@@ -105,6 +105,14 @@ class Curl extends Adapter
         $ch = curl_init();
         curl_setopt_array($ch, $curlOptions);
         $result = curl_exec($ch);
+
+        // curl_exec() returns false on a transport failure (DNS, connection,
+        // timeout). There is no response to parse in that case, so return a
+        // response carrying only the curl error message.
+        if ($result === false) {
+            return new HttpResponse([], '', curl_error($ch));
+        }
+
         $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         $headers = explode(self::CRLF, substr($result, 0, $headerSize));
         $body = substr($result, $headerSize);

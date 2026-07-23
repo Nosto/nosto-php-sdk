@@ -36,7 +36,6 @@
 
 namespace Nosto;
 
-use Nosto\Model\Signup\Account;
 use Nosto\Types\OAuthInterface;
 use Nosto\Types\Signup\AccountInterface;
 
@@ -63,7 +62,7 @@ class OAuth implements OAuthInterface
     private $language;
 
     /**
-     * @var Account|null account if OAuth is to sync details.
+     * @var AccountInterface|null account if OAuth is to sync details.
      */
     private $account;
 
