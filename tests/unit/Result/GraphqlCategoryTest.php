@@ -88,13 +88,10 @@ class GraphqlCategoryTest extends Unit
         }', $message);
         $response = new HttpResponse(['HTTP/1.1 200 OK'], $resultBody);
         $request = new HttpRequest();
-        $request->setResultHandler(new CategoryUpdateResultHandler());        
+        $request->setResultHandler(new CategoryUpdateResultHandler());
+        // Category was created with error
         $this->expectException('Nosto\NostoException');
-        try {
-            $request->getResultHandler()->parse($response);
-        } catch (Exception $e) {            
-            // Category was created with error
-            $this->assertEquals($message, $e->getMessage());
-        }
+        $this->expectExceptionMessage($message);
+        $request->getResultHandler()->parse($response);
     }
 }
