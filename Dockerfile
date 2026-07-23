@@ -1,4 +1,4 @@
-FROM php:7.1.27-cli-jessie
+FROM php:8.5-cli-bookworm
 
 ENV LANGUAGE en_US.UTF-8
 ENV LANG en_US.UTF-8
@@ -13,11 +13,5 @@ RUN apt-get update || apt-get update && \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN cd /tmp && \
-    git clone https://github.com/nikic/php-ast.git && \
-    cd php-ast && \
-    phpize && \
-    ./configure && \
-    make install && \
-    docker-php-ext-enable ast && \
-    rm -rf /tmp/php-ast
+RUN pecl install ast && \
+    docker-php-ext-enable ast

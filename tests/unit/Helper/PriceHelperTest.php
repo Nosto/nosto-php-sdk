@@ -36,13 +36,11 @@
 
 namespace Nosto\Test\Unit\Helper;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Helper\PriceHelper;
 
-class PriceHelperTest extends Test
+class PriceHelperTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests that the helper formats the price as expected

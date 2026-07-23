@@ -36,17 +36,15 @@
 
 namespace Nosto\Test\Unit\Result;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Exception;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Result\Graphql\Order\OrderCreateResultHandler;
 use Nosto\Result\Graphql\Order\OrderStatusResultHandler;
 
-class GraphqlOrderTest extends Test
+class GraphqlOrderTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests that errors are handled correctly
@@ -76,9 +74,8 @@ class GraphqlOrderTest extends Test
         $request->setResultHandler(new OrderCreateResultHandler());
         $result = $request->getResultHandler()->parse($response);
 
-        $this->specify('Order was created successfully', function () use ($result) {
-            $this->assertEquals('5d1f2ebc10e62df62401221', $result);
-        });
+        // Order was created successfully
+        $this->assertEquals('5d1f2ebc10e62df62401221', $result);
     }
 
     /**
@@ -93,8 +90,7 @@ class GraphqlOrderTest extends Test
         $request->setResultHandler(new OrderStatusResultHandler());
         $result = $request->getResultHandler()->parse($response);
 
-        $this->specify('Order status was updates successfully', function () use ($result) {
-            $this->assertEquals('M2_22', $result);
-        });
+        // Order status was updates successfully
+        $this->assertEquals('M2_22', $result);
     }
 }

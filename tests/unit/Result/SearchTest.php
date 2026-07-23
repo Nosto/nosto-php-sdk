@@ -37,18 +37,16 @@
 
 namespace Nosto\Test\Unit\Result;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Exception;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Result\Graphql\Category\CategoryUpdateResultHandler;
-use Codeception\Specify;
 use Nosto\Result\Graphql\Search\SearchResult;
 use Nosto\Result\Graphql\Search\SearchResultHandler;
 
-class SearchTest extends Test
+class SearchTest extends Unit
 {
-    use Specify;
 
     public function testSuccessfulSearch()
     {

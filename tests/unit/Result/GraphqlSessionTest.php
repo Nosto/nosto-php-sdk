@@ -36,17 +36,15 @@
 
 namespace Nosto\Test\Unit\Result;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Exception;
 use Nosto\NostoException;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Result\Graphql\Session\SessionResultHandler;
 
-class GraphqlSessionTest extends Test
+class GraphqlSessionTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests that session id is parsed correctly
@@ -60,9 +58,8 @@ class GraphqlSessionTest extends Test
         $request->setResultHandler(new SessionResultHandler());
         $result = $request->getResultHandler()->parse($response);
 
-        $this->specify('Session was created successfully', function () use ($result) {
-            $this->assertEquals('6176a09a73533e5d8bdad3fa', $result);
-        });
+        // Session was created successfully
+        $this->assertEquals('6176a09a73533e5d8bdad3fa', $result);
     }
 
     /**

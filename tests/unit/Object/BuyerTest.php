@@ -37,13 +37,11 @@
 namespace Nosto\Test\Unit\Model;
 
 use Codeception\Module\UnitHelper;
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Test\Support\MockBuyer;
 
-class BuyerTest extends Test
+class BuyerTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests that buyer is serialized correctly with marketing permission

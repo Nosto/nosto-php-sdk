@@ -2,12 +2,12 @@
 
 namespace Nosto\Test\Unit\Util;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Exception;
 use Nosto\Util\GraphQLUtils;
 use stdClass;
 
-class GraphQLUtilsTest extends Test
+class GraphQLUtilsTest extends Unit
 {
     public function propertyValueProvider()
     {

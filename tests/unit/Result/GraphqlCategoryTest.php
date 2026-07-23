@@ -37,15 +37,13 @@
 
 namespace Nosto\Test\Unit\Result;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Result\Graphql\Category\CategoryUpdateResultHandler;
-use Codeception\Specify;
 
-class GraphqlCategoryTest extends Test
+class GraphqlCategoryTest extends Unit
 {
-    use Specify;
 
 
     public function testSuccessfullyUpsertCategory()
@@ -70,9 +68,8 @@ class GraphqlCategoryTest extends Test
         $request->setResultHandler(new CategoryUpdateResultHandler());
         $result = $request->getResultHandler()->parse($response);
 
-        $this->specify('Category was created successfully', function () use ($result, $id) {
-            $this->assertEquals($id, $result);
-        });
+        // Category was created successfully
+        $this->assertEquals($id, $result);
     }
 
     public function testResultWithErrors()
@@ -96,9 +93,8 @@ class GraphqlCategoryTest extends Test
         try {
             $request->getResultHandler()->parse($response);
         } catch (Exception $e) {            
-            $this->specify('Category was created with error', function () use ($message, $e) {
-                $this->assertEquals($message, $e->getMessage());
-            });
+            // Category was created with error
+            $this->assertEquals($message, $e->getMessage());
         }
     }
 }

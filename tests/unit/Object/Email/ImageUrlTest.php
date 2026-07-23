@@ -36,13 +36,11 @@
 
 namespace Nosto\Test\Unit\Model\Email;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Model\Email\ImageUrl;
 
-class ImageUrlTest extends Test
+class ImageUrlTest extends Unit
 {
-    use Specify;
 
     public function testUrlFormatting()
     {

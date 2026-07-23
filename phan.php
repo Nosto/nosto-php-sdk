@@ -35,6 +35,8 @@
  */
 
 return [
+    'target_php_version' => '8.5',
+    'minimum_target_php_version' => '8.2',
     'analyze_signature_compatibility' => false,
     'backward_compatibility_checks' => false,
     'exclude_file_regex' => '@^vendor/.*/(tests|test|Tests|Test)/@',

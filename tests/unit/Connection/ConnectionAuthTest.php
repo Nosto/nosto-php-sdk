@@ -37,8 +37,7 @@
 
 namespace Nosto\Test\Unit\Connection;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Mixins\ConnectionTrait;
 use Nosto\Nosto;
 use Nosto\Request\Api\Token;
@@ -46,9 +45,8 @@ use Nosto\Test\Support\MockConnectionMetadata;
 use Nosto\Test\Support\MockUser;
 use Nosto\Test\Support\MockAccount;
 
-class ConnectionAuthTest extends Test
+class ConnectionAuthTest extends Unit
 {
-    use Specify;
     use ConnectionTrait;
 
     private $user;
@@ -67,23 +65,22 @@ class ConnectionAuthTest extends Test
 
         $baseUrl = Nosto::getBaseUrl();
         $url = self::buildURL();
-        $this->specify('Nosto install url was created', function () use ($url, $baseUrl) {
-            $url = parse_url($url);
-            parse_str($url['query'], $params);
+        // Nosto install url was created
+        $url = parse_url($url);
+        parse_str($url['query'], $params);
 
 
-            $this->assertEquals($url['scheme'], parse_url($baseUrl)['scheme']);
-            $this->assertEquals($url['host'], parse_url($baseUrl)['host']);
-            $this->assertEquals('/hub/platform/install', $url['path']);
-            $this->assertEquals('en', $params['lang']);
-            $this->assertEquals('1.0.0', $params['ps_version']);
-            $this->assertEquals('0.1.0', $params['nt_version']);
-            $this->assertEquals('en', $params['shop_lang']);
-            $this->assertEquals('Shop Name', $params['shop_name']);
-            $this->assertEquals('James', $params['fname']);
-            $this->assertEquals('Kirk', $params['lname']);
-            $this->assertEquals('james.kirk@example.com', $params['email']);
-        });
+        $this->assertEquals($url['scheme'], parse_url($baseUrl)['scheme']);
+        $this->assertEquals($url['host'], parse_url($baseUrl)['host']);
+        $this->assertEquals('/hub/platform/install', $url['path']);
+        $this->assertEquals('en', $params['lang']);
+        $this->assertEquals('1.0.0', $params['ps_version']);
+        $this->assertEquals('0.1.0', $params['nt_version']);
+        $this->assertEquals('en', $params['shop_lang']);
+        $this->assertEquals('Shop Name', $params['shop_name']);
+        $this->assertEquals('James', $params['fname']);
+        $this->assertEquals('Kirk', $params['lname']);
+        $this->assertEquals('james.kirk@example.com', $params['email']);
     }
 
     /**
@@ -100,22 +97,21 @@ class ConnectionAuthTest extends Test
 
         $baseUrl = Nosto::getBaseUrl();
         $url = self::buildURL();
-        $this->specify('Nosto install url was created', function () use ($url, $baseUrl) {
-            $url = parse_url($url);
-            parse_str($url['query'], $params);
+        // Nosto install url was created
+        $url = parse_url($url);
+        parse_str($url['query'], $params);
 
-            $this->assertEquals($url['scheme'], parse_url($baseUrl)['scheme']);
-            $this->assertNotEquals($url['host'], parse_url($baseUrl)['host']);
-            $this->assertContains('/hub/magento/platform-00000000/', $url['path']);
-            $this->assertEquals('en', $params['lang']);
-            $this->assertEquals('1.0.0', $params['ps_version']);
-            $this->assertEquals('0.1.0', $params['nt_version']);
-            $this->assertEquals('en', $params['shop_lang']);
-            $this->assertEquals('Shop Name', $params['shop_name']);
-            $this->assertEquals('James', $params['fname']);
-            $this->assertEquals('Kirk', $params['lname']);
-            $this->assertEquals('james.kirk@example.com', $params['email']);
-        });
+        $this->assertEquals($url['scheme'], parse_url($baseUrl)['scheme']);
+        $this->assertNotEquals($url['host'], parse_url($baseUrl)['host']);
+        $this->assertStringContainsString('/hub/magento/platform-00000000/', $url['path']);
+        $this->assertEquals('en', $params['lang']);
+        $this->assertEquals('1.0.0', $params['ps_version']);
+        $this->assertEquals('0.1.0', $params['nt_version']);
+        $this->assertEquals('en', $params['shop_lang']);
+        $this->assertEquals('Shop Name', $params['shop_name']);
+        $this->assertEquals('James', $params['fname']);
+        $this->assertEquals('Kirk', $params['lname']);
+        $this->assertEquals('james.kirk@example.com', $params['email']);
     }
 
     /**
@@ -130,25 +126,24 @@ class ConnectionAuthTest extends Test
 
         $baseUrl = Nosto::getBaseUrl();
         $url = self::buildURL();
-        $this->specify('Nosto install url was created', function () use ($url, $baseUrl) {
-            $url = parse_url($url);
-            parse_str($url['query'], $params);
+        // Nosto install url was created
+        $url = parse_url($url);
+        parse_str($url['query'], $params);
 
-            $this->assertEquals($url['scheme'], parse_url($baseUrl)['scheme']);
-            //$this->assertEquals($url['host'], parse_url($baseUrl)['host']);
-            $this->assertEquals('/hub/platform/uninstall', $url['path']);
-            $this->assertEquals('en', $params['lang']);
-            $this->assertEquals('1.0.0', $params['ps_version']);
-            $this->assertEquals('0.1.0', $params['nt_version']);
-            $this->assertEquals('en', $params['shop_lang']);
-            $this->assertEquals('Shop Name', $params['shop_name']);
-            $this->assertEquals('James', $params['fname']);
-            $this->assertEquals('Kirk', $params['lname']);
-            $this->assertEquals('james.kirk@example.com', $params['email']);
-            $this->assertEquals('No API token found for account.', $params['message_text']);
-            $this->assertEquals('error', $params['message_type']);
-            $this->assertEquals('account_delete', $params['message_code']);
-        });
+        $this->assertEquals($url['scheme'], parse_url($baseUrl)['scheme']);
+        //$this->assertEquals($url['host'], parse_url($baseUrl)['host']);
+        $this->assertEquals('/hub/platform/uninstall', $url['path']);
+        $this->assertEquals('en', $params['lang']);
+        $this->assertEquals('1.0.0', $params['ps_version']);
+        $this->assertEquals('0.1.0', $params['nt_version']);
+        $this->assertEquals('en', $params['shop_lang']);
+        $this->assertEquals('Shop Name', $params['shop_name']);
+        $this->assertEquals('James', $params['fname']);
+        $this->assertEquals('Kirk', $params['lname']);
+        $this->assertEquals('james.kirk@example.com', $params['email']);
+        $this->assertEquals('No API token found for account.', $params['message_text']);
+        $this->assertEquals('error', $params['message_type']);
+        $this->assertEquals('account_delete', $params['message_code']);
     }
 
     /**

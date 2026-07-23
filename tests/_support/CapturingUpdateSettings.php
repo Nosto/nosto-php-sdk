@@ -44,7 +44,7 @@ class CapturingUpdateSettings extends UpdateSettings
 {
     private $adapter;
 
-    public function __construct(AccountInterface $account, $activeDomain = '', SettingsCaptureAdapter $adapter = null)
+    public function __construct(AccountInterface $account, $activeDomain = '', ?SettingsCaptureAdapter $adapter = null)
     {
         parent::__construct($account, $activeDomain);
         $this->adapter = $adapter ?: new SettingsCaptureAdapter();

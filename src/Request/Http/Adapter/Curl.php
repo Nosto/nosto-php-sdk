@@ -109,7 +109,6 @@ class Curl extends Adapter
         $headers = explode(self::CRLF, substr($result, 0, $headerSize));
         $body = substr($result, $headerSize);
         $message = curl_error($ch);
-        curl_close($ch);
 
         return new HttpResponse($headers, $body, $message);
     }

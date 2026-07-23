@@ -15,8 +15,8 @@ jobs:
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '7.4'
-        tools: composer:v2, prestissimo, pecl
+        php-version: '8.2'
+        tools: composer:v2, pecl
         coverage: none
         extensions: ast, bcmath, gd, pdo_mysql, zip, soap
 
@@ -34,7 +34,7 @@ jobs:
 
     - name: Update project dependencies
       run: |
-        composer install --prefer-dist --no-progress --no-suggest
+        composer install --prefer-dist --no-progress
         composer dump-autoload --optimize
     ############################################################################
 

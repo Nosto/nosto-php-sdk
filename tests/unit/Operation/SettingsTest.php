@@ -36,8 +36,7 @@
 
 namespace Nosto\Test\Unit\Operation;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Exception;
 use Nosto\Operation\UpdateSettings;
 use Nosto\Request\Api\Token;
@@ -46,9 +45,8 @@ use Nosto\Test\Support\MockAccount;
 use Nosto\Test\Support\MockSettings;
 use Nosto\Test\Support\SettingsCaptureAdapter;
 
-class SettingsTest extends Test
+class SettingsTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests that the account settings are correctly updated to Nosto
@@ -64,9 +62,8 @@ class SettingsTest extends Test
         $op = new UpdateSettings($account);
         $result = $op->update($settings);
 
-        $this->specify('successful exchange rates sync', function () use ($result) {
-            $this->assertTrue($result);
-        });
+        // successful exchange rates sync
+        $this->assertTrue($result);
     }
 
     /**

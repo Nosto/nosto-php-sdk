@@ -36,17 +36,15 @@
 
 namespace Nosto\Test\Unit\Result;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Exception;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Result\Graphql\Recommendation\RecommendationResultHandler;
 use Nosto\Result\Graphql\Recommendation\CategoryMerchandisingResult;
 
-class GraphqlCMPTest extends Test
+class GraphqlCMPTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests that a valid result set can be built
@@ -61,9 +59,8 @@ class GraphqlCMPTest extends Test
         /** @var CategoryMerchandisingResult $resultSet */
         $resultSet = $request->getResultHandler()->parse($response);
 
-        $this->specify('result set parsed', function () use ($resultSet) {
-            $this->assertEquals(2, $resultSet->getResultSet()->count());
-        });
+        // result set parsed
+        $this->assertEquals(2, $resultSet->getResultSet()->count());
     }
 
     /**
@@ -79,9 +76,8 @@ class GraphqlCMPTest extends Test
         /** @var CategoryMerchandisingResult $resultSet */
         $resultSet = $request->getResultHandler()->parse($response);
 
-        $this->specify('result set parsed', function () use ($resultSet) {
-            $this->assertEquals('graphql', $resultSet->getTrackingCode());
-        });
+        // result set parsed
+        $this->assertEquals('graphql', $resultSet->getTrackingCode());
     }
 
     /**
@@ -94,14 +90,13 @@ class GraphqlCMPTest extends Test
         $request = new HttpRequest();
         $request->setResultHandler(new RecommendationResultHandler());
 
-        $this->specify('result does not contain primary field', function () use ($request, $response) {
-            try {
-                $request->getResultHandler()->parse($response);
-                $this->fail('No exception was thrown');
-            } catch (Exception $e) {
-                $this->assertEquals('Could not find field for category data from response', $e->getMessage());
-            }
-        });
+        // result does not contain primary field
+        try {
+            $request->getResultHandler()->parse($response);
+            $this->fail('No exception was thrown');
+        } catch (Exception $e) {
+            $this->assertEquals('Could not find field for category data from response', $e->getMessage());
+        }
     }
 
     /**
@@ -114,14 +109,13 @@ class GraphqlCMPTest extends Test
         $request = new HttpRequest();
         $request->setResultHandler(new RecommendationResultHandler());
 
-        $this->specify('result does not contain primary field', function () use ($request, $response) {
-            try {
-                $request->getResultHandler()->parse($response);
-                $this->fail('No exception was thrown');
-            } catch (Exception $e) {
-                $this->assertEquals('Could not find field for primary data from response', $e->getMessage());
-            }
-        });
+        // result does not contain primary field
+        try {
+            $request->getResultHandler()->parse($response);
+            $this->fail('No exception was thrown');
+        } catch (Exception $e) {
+            $this->assertEquals('Could not find field for primary data from response', $e->getMessage());
+        }
     }
 
     /**
@@ -137,9 +131,8 @@ class GraphqlCMPTest extends Test
         /** @var CategoryMerchandisingResult $resultSet */
         $resultSet = $request->getResultHandler()->parse($response);
 
-        $this->specify('result does not contain resultId', function () use ($resultSet) {
-            $this->assertEquals($resultSet->getResultSet()->count(), 0);
-        });
+        // result does not contain resultId
+        $this->assertEquals($resultSet->getResultSet()->count(), 0);
     }
 
     /**
@@ -155,8 +148,7 @@ class GraphqlCMPTest extends Test
         /** @var CategoryMerchandisingResult $resultSet */
         $resultSet = $request->getResultHandler()->parse($response);
 
-        $this->specify('result parsed to product ids', function () use ($resultSet) {
-            $this->assertEquals($resultSet->parseProductIds(), ['276', '292']);
-        });
+        // result parsed to product ids
+        $this->assertEquals($resultSet->parseProductIds(), ['276', '292']);
     }
 }
