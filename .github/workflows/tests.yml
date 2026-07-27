@@ -45,7 +45,7 @@ jobs:
       run: ./vendor/bin/codecept run --xml
 
     - name: Archive unit tests results
-      if: always()
+      if: failure()
       uses: actions/upload-artifact@v4
       with:
         name: codeception-output-files-php${{ matrix.php }}
