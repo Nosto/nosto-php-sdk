@@ -50,3 +50,22 @@ jobs:
       with:
         name: codeception-output-files-php${{ matrix.php }}
         path: tests/_output/
+
+  # Stable status check for branch protection. The matrix above produces
+  # per-version checks ("Unit Tests (PHP 8.2)", ...), whose names change with
+  # the matrix. This job keeps a single "Unit Tests" check that passes only
+  # when every matrix leg passed, so the required check does not need updating
+  # when the matrix changes.
+  unit-tests:
+    name: Unit Tests
+    needs: tests
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Verify all matrix legs passed
+      run: |
+        if [ "${{ needs.tests.result }}" != "success" ]; then
+          echo "One or more 'Unit Tests (PHP x)' jobs did not pass."
+          exit 1
+        fi
+        echo "All Unit Tests matrix jobs passed."
