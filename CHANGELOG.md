@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning (http://semver.org/).
 
 ### 7.7.8
-* Droped PHP 8.1 and below
+* Dropped PHP 8.1 and below
 * Added PHP 8.5 support
 
 ### 7.7.7
