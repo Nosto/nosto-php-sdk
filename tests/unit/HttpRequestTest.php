@@ -36,7 +36,7 @@
 
 namespace Nosto\Test\Unit;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Exception;
 use Nosto\NostoException;
 use Nosto\Request\Http\Adapter\Curl;
@@ -45,7 +45,7 @@ use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Test\Support\MockUser;
 
-class HttpRequestTest extends Test
+class HttpRequestTest extends Unit
 {
     /**
      * This must be a port that is not listening
@@ -270,7 +270,7 @@ class HttpRequestTest extends Test
             )
         );
         $response = $request->get();
-        $this->assertContains('Failed to connect to localhost port', $response->getMessage());
+        $this->assertStringContainsString('Failed to connect to localhost', $response->getMessage());
     }
 
     /**

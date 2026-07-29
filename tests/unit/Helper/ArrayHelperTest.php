@@ -36,10 +36,10 @@
 
 namespace Nosto\Test\Unit\Helper;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Helper\ArrayHelper;
 
-class ArrayHelperTest extends Test
+class ArrayHelperTest extends Unit
 {
     /*
      *  Test that onlyScalarValues() method return the correct bool value

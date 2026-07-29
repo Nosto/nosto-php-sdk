@@ -36,14 +36,12 @@
 
 namespace Nosto\Test\Unit;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Model\Signup\Account;
 use Nosto\Request\Api\Token;
 
-class AccountTest extends Test
+class AccountTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests the "isConnectedToNosto" method for the NostoAccount class.
@@ -52,9 +50,8 @@ class AccountTest extends Test
     {
         $account = new Account('platform-test');
 
-        $this->specify('account is not connected', function () use ($account) {
-            $this->assertFalse($account->isConnectedToNosto());
-        });
+        // account is not connected
+        $this->assertFalse($account->isConnectedToNosto());
 
         $token = new Token('sso', '123');
         $account->addApiToken($token);
@@ -62,9 +59,8 @@ class AccountTest extends Test
         $token = new Token('products', '123');
         $account->addApiToken($token);
 
-        $this->specify('account is connected', function () use ($account) {
-            $this->assertTrue($account->isConnectedToNosto());
-        });
+        // account is connected
+        $this->assertTrue($account->isConnectedToNosto());
     }
 
     /**
@@ -74,15 +70,13 @@ class AccountTest extends Test
     {
         $account = new Account('platform-test');
 
-        $this->specify('account does not have sso token', function () use ($account) {
-            $this->assertNull($account->getApiToken('sso'));
-        });
+        // account does not have sso token
+        $this->assertNull($account->getApiToken('sso'));
 
         $token = new Token('sso', '123');
         $account->addApiToken($token);
 
-        $this->specify('account has sso token', function () use ($account) {
-            $this->assertEquals('123', $account->getApiToken('sso')->getValue());
-        });
+        // account has sso token
+        $this->assertEquals('123', $account->getApiToken('sso')->getValue());
     }
 }

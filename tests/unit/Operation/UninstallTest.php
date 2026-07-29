@@ -36,16 +36,14 @@
 
 namespace Nosto\Test\Unit\Operation;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Model\Signup\Account;
 use Nosto\Operation\UninstallAccount;
 use Nosto\Request\Api\Token;
 use Nosto\Test\Support\MockUser;
 
-class UninstallTest extends Test
+class UninstallTest extends Unit
 {
-    use Specify;
 
     /**
      * Test the account deletion without the required SSO token.
@@ -54,12 +52,11 @@ class UninstallTest extends Test
     {
         $account = new Account('platform-test');
 
-        $this->specify('account is NOT deleted', function () use ($account) {
-            $this->expectException('Nosto\NostoException');
-            $service = new UninstallAccount($account);
-            $user = new MockUser();
-            $service->delete($user);
-        });
+        // account is NOT deleted
+        $this->expectException('Nosto\NostoException');
+        $service = new UninstallAccount($account);
+        $user = new MockUser();
+        $service->delete($user);
     }
 
     /**
@@ -71,10 +68,9 @@ class UninstallTest extends Test
         $token = new Token('sso', 'token');
         $account->addApiToken($token);
 
-        $this->specify('account is deleted', function () use ($account) {
-            $service = new UninstallAccount($account);
-            $user = new MockUser();
-            $service->delete($user);
-        });
+        // account is deleted
+        $service = new UninstallAccount($account);
+        $user = new MockUser();
+        $service->delete($user);
     }
 }

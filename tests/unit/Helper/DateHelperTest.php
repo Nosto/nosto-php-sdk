@@ -36,13 +36,11 @@
 
 namespace Nosto\Test\Unit\Helper;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Helper\DateHelper;
 
-class DateHelperTest extends Test
+class DateHelperTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests that the helper formats the date as expected

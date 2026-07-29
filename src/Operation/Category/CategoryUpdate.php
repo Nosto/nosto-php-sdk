@@ -74,7 +74,7 @@ class CategoryUpdate extends AbstractGraphQLOperation
     {
         return [
             [
-                'available' => (boolean) $this->category->isAvailable(),
+                'available' => (bool) $this->category->isAvailable(),
                 'id' => (string) $this->category->getId(),
                 'name' => $this->category->getTitle(),
                 'parentId' => (string) $this->category->getParentId(),

@@ -36,14 +36,12 @@
 
 namespace Nosto\Test\Unit\Helper;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Helper\OAuthHelper;
 use Nosto\Test\Support\MockOAuth;
 
-class OAuthHelperTest extends Test
+class OAuthHelperTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests that the helper build the OAuth redirect as expected
@@ -52,16 +50,15 @@ class OAuthHelperTest extends Test
     {
         $meta = new MockOAuth();
         $url = OAuthHelper::getAuthorizationUrl($meta);
-        $this->specify('oauth authorize url can be created', function () use ($url) {
-            $url = parse_url($url);
-            parse_str($url['query'], $params); // Please note that this function url decodes the values
+        // oauth authorize url can be created
+        $url = parse_url($url);
+        parse_str($url['query'], $params); // Please note that this function url decodes the values
 
-            $this->assertEquals('/oauth', $url['path']);
-            $this->assertEquals('client-id', $params['client_id']);
-            $this->assertEquals('http://my.shop.com/nosto/oauth', $params['redirect_uri']);
-            $this->assertEquals('code', $params['response_type']);
-            $this->assertEquals('sso products', $params['scope']);
-            $this->assertEquals('en', $params['lang']);
-        });
+        $this->assertEquals('/oauth', $url['path']);
+        $this->assertEquals('client-id', $params['client_id']);
+        $this->assertEquals('http://my.shop.com/nosto/oauth', $params['redirect_uri']);
+        $this->assertEquals('code', $params['response_type']);
+        $this->assertEquals('sso products', $params['scope']);
+        $this->assertEquals('en', $params['lang']);
     }
 }

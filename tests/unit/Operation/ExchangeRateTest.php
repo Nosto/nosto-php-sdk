@@ -36,8 +36,7 @@
 
 namespace Nosto\Test\Unit\Operation;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Model\ExchangeRateCollection;
 use Nosto\Model\Signup\Account;
 use Nosto\NostoException;
@@ -46,9 +45,8 @@ use Nosto\Request\Api\Token;
 use Nosto\Request\Http\Exception\AbstractHttpException;
 use Nosto\Test\Support\MockExchangeRate;
 
-class ExchangeRateTest extends Test
+class ExchangeRateTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests that exchange rates can be synced to Nosto.
@@ -68,8 +66,7 @@ class ExchangeRateTest extends Test
         $op = new SyncRates($account);
         $result = $op->update($rates);
 
-        $this->specify('successful exchange rates sync', function () use ($result) {
-            $this->assertTrue($result);
-        });
+        // successful exchange rates sync
+        $this->assertTrue($result);
     }
 }

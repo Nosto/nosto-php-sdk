@@ -36,8 +36,7 @@
 
 namespace Nosto\Test\Unit;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Helper\ExportHelper;
 use Nosto\Helper\SerializationHelper;
 use Nosto\Model\Order\OrderCollection;
@@ -50,9 +49,8 @@ use phpseclib3\Crypt\Hash;
 use Nosto\Test\Support\MockProduct;
 use Nosto\Test\Support\MockOrder;
 
-class HistoryExportTest extends Test
+class HistoryExportTest extends Unit
 {
-    use Specify;
 
     /**
      * @var AccountInterface
@@ -68,19 +66,18 @@ class HistoryExportTest extends Test
         $collection->append(new MockProduct());
         $cipher_text = (new ExportHelper())->export($this->account, $collection);
 
-        $this->specify('check encrypted product data', function () use ($collection, $cipher_text) {
-            $cipher = new AES('gcm');
-            $hash = new Hash('sha3-256');
-            $key = $hash->hash(base64_decode($this->account->getApiToken('sso')->getValue()));
-            $cipher->setKey($key);
-            $cipher->setNonce(substr($cipher_text, 0, 12));
-            $cipher->setTag(substr($cipher_text, -16));
+        // check encrypted product data
+        $cipher = new AES('gcm');
+        $hash = new Hash('sha3-256');
+        $key = $hash->hash(base64_decode($this->account->getApiToken('sso')->getValue()));
+        $cipher->setKey($key);
+        $cipher->setNonce(substr($cipher_text, 0, 12));
+        $cipher->setTag(substr($cipher_text, -16));
 
-            $data = substr($cipher_text, 12, strlen($cipher_text) - 12 - 16);
-            $plain_text = $cipher->decrypt($data);
+        $data = substr($cipher_text, 12, strlen($cipher_text) - 12 - 16);
+        $plain_text = $cipher->decrypt($data);
 
-            $this->assertEquals(SerializationHelper::serialize($collection), $plain_text);
-        });
+        $this->assertEquals(SerializationHelper::serialize($collection), $plain_text);
     }
 
     /**
@@ -92,19 +89,18 @@ class HistoryExportTest extends Test
         $collection->append(new MockOrder());
         $cipher_text = (new ExportHelper())->export($this->account, $collection);
 
-        $this->specify('check encrypted order data', function () use ($collection, $cipher_text) {
-            $cipher = new AES('gcm');
-            $hash = new Hash('sha3-256');
-            $key = $hash->hash(base64_decode($this->account->getApiToken('sso')->getValue()));
-            $cipher->setKey($key);
-            $cipher->setNonce(substr($cipher_text, 0, 12));
-            $cipher->setTag(substr($cipher_text, -16));
+        // check encrypted order data
+        $cipher = new AES('gcm');
+        $hash = new Hash('sha3-256');
+        $key = $hash->hash(base64_decode($this->account->getApiToken('sso')->getValue()));
+        $cipher->setKey($key);
+        $cipher->setNonce(substr($cipher_text, 0, 12));
+        $cipher->setTag(substr($cipher_text, -16));
 
-            $data = substr($cipher_text, 12, strlen($cipher_text) - 12 - 16);
-            $plain_text = $cipher->decrypt($data);
+        $data = substr($cipher_text, 12, strlen($cipher_text) - 12 - 16);
+        $plain_text = $cipher->decrypt($data);
 
-            $this->assertEquals(SerializationHelper::serialize($collection), $plain_text);
-        });
+        $this->assertEquals(SerializationHelper::serialize($collection), $plain_text);
     }
 
     /**

@@ -36,16 +36,14 @@
 
 namespace Nosto\Test\Unit\Model;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Types\Product\ProductInterface;
 use Nosto\Model\Product\VariationCollection;
 use Nosto\Test\Support\MockVariation;
 use Nosto\Test\Support\MockProduct;
 
-class VariationTest extends Test
+class VariationTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests that setAvailabile method

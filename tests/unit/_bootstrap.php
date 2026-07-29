@@ -34,7 +34,4 @@
  *
  */
 
-use Codeception\Specify\Config;
-
-Config::setDeepClone(false);
 

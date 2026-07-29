@@ -36,10 +36,10 @@
 
 namespace Nosto\Test\Unit;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Request\Http\HttpResponse;
 
-class HttpResponseTest extends Test
+class HttpResponseTest extends Unit
 {
     /**
      * Tests the getCode method for http/1.1 response

@@ -36,14 +36,14 @@
 
 namespace Nosto\Test\Unit;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Exception;
 use Nosto\Request\Http\HttpRequest;
 use Nosto\Request\Http\HttpResponse;
 use Nosto\Request\Api\Exception\ApiResponseException;
 use Nosto\Exception\Builder as ExceptionBuilder;
 
-class NostoTest extends Test
+class NostoTest extends Unit
 {
     /**
      * Tests that errors are parsed correctly from http response

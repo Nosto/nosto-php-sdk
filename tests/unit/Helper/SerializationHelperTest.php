@@ -36,17 +36,15 @@
 
 namespace Nosto\Test\Unit\Helper;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Helper\SerializationHelper;
 use Nosto\Test\Support\MockProduct;
 use Nosto\Test\Support\MockProductWithSku;
 use Nosto\Test\Support\MockSku;
 use Nosto\Model\Product\ProductCollection;
 
-class SerializationHelperTest extends Test
+class SerializationHelperTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests that an object is serialized correctly
