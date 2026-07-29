@@ -36,8 +36,7 @@
 
 namespace Nosto\Test\Unit\Helper;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Model\Cart\Cart;
 use Nosto\Model\PageType;
 use Nosto\Model\SearchTerm;
@@ -52,9 +51,8 @@ use Nosto\Test\Support\MockProductWithSku;
 use Nosto\Test\Support\MockSku;
 use Nosto\Test\Support\MockVariation;
 
-class HtmlMarkupSerializationHelperTest extends Test
+class HtmlMarkupSerializationHelperTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests that a product object is serialized to HTML correctly

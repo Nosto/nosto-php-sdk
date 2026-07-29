@@ -37,15 +37,13 @@
 
 namespace Nosto\Test\Unit\Operation;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\NostoException;
 use Nosto\Operation\AccountSignup;
 use Nosto\Test\Support\MockSignup;
 
-class AccountTest extends Test
+class AccountTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests that new accounts can be created successfully.
@@ -57,27 +55,23 @@ class AccountTest extends Test
         $service = new AccountSignup($meta);
         $account = $service->create();
 
-        $this->specify('account was created', function () use ($account, $meta) {
-            $this->assertInstanceOf('Nosto\Model\Signup\Account', $account);
-            $this->assertEquals($meta->getPlatform() . '-' . $meta->getName(), $account->getName());
-        });
+        // account was created
+        $this->assertInstanceOf('Nosto\Model\Signup\Account', $account);
+        $this->assertEquals($meta->getPlatform() . '-' . $meta->getName(), $account->getName());
 
-        $this->specify('account has api token sso', function () use ($account, $meta) {
-            $token = $account->getApiToken('sso');
-            $this->assertInstanceOf('Nosto\Request\Api\Token', $token);
-            $this->assertEquals('sso', $token->getName());
-            $this->assertNotEmpty($token->getValue());
-        });
+        // account has api token sso
+        $token = $account->getApiToken('sso');
+        $this->assertInstanceOf('Nosto\Request\Api\Token', $token);
+        $this->assertEquals('sso', $token->getName());
+        $this->assertNotEmpty($token->getValue());
 
-        $this->specify('account has api token products', function () use ($account, $meta) {
-            $token = $account->getApiToken('products');
-            $this->assertInstanceOf('Nosto\Request\Api\Token', $token);
-            $this->assertEquals('products', $token->getName());
-            $this->assertNotEmpty($token->getValue());
-        });
+        // account has api token products
+        $token = $account->getApiToken('products');
+        $this->assertInstanceOf('Nosto\Request\Api\Token', $token);
+        $this->assertEquals('products', $token->getName());
+        $this->assertNotEmpty($token->getValue());
 
-        $this->specify('account is connected to nosto', function () use ($account, $meta) {
-            $this->assertTrue($account->isConnectedToNosto());
-        });
+        // account is connected to nosto
+        $this->assertTrue($account->isConnectedToNosto());
     }
 }

@@ -36,16 +36,14 @@
 
 namespace Nosto\Test\Unit\Operation;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Model\Signup\Account;
 use Nosto\Operation\InitiateSso;
 use Nosto\Request\Api\Token;
 use Nosto\Test\Support\MockUser;
 
-class SSOTest extends Test
+class SSOTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests the "ssoLogin" method for the NostoAccount class.
@@ -57,10 +55,9 @@ class SSOTest extends Test
         $account->addApiToken($token);
         $user = new MockUser();
 
-        $this->specify('account sso with an api token', function () use ($account, $user) {
-            $service = new InitiateSso($account);
-            $this->assertEquals("http://platform-00000000.dev.nos.to:9010/hub/magento/platform-00000000/sso%2Bplatform-00000000@nostosolutions.com/",
-                substr($service->get($user, 'magento'), 0, 114));
-        });
+        // account sso with an api token
+        $service = new InitiateSso($account);
+        $this->assertEquals("http://platform-00000000.dev.nos.to:9010/hub/magento/platform-00000000/sso%2Bplatform-00000000@nostosolutions.com/",
+            substr($service->get($user, 'magento'), 0, 114));
     }
 }

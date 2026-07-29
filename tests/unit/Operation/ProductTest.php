@@ -36,8 +36,7 @@
 
 namespace Nosto\Test\Unit\Operation;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\Model\Signup\Account;
 use Nosto\NostoException;
 use Nosto\Operation\UpsertProduct;
@@ -47,9 +46,8 @@ use Nosto\Test\Support\MockProduct;
 use Nosto\Test\Support\MockVariation;
 use Nosto\Test\Support\MockSku;
 
-class ProductTest extends Test
+class ProductTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests that product upsert API requests cannot be made without an API token.
@@ -83,9 +81,8 @@ class ProductTest extends Test
         $op->addProduct($product);
         $result = $op->upsert();
 
-        $this->specify('successful product upsert', function () use ($result) {
-            $this->assertTrue($result);
-        });
+        // successful product upsert
+        $this->assertTrue($result);
     }
 
     /**
@@ -112,9 +109,8 @@ class ProductTest extends Test
         $op->addProduct($product);
         $result = $op->upsert();
 
-        $this->specify('successful product upsert', function () use ($result) {
-            $this->assertTrue($result);
-        });
+        // successful product upsert
+        $this->assertTrue($result);
     }
 
     /**
@@ -134,9 +130,8 @@ class ProductTest extends Test
         $op->addProduct($product);
         $result = $op->upsert();
 
-        $this->specify('successful product upsert', function () use ($result) {
-            $this->assertTrue($result);
-        });
+        // successful product upsert
+        $this->assertTrue($result);
     }
 
     /**
@@ -164,8 +159,7 @@ class ProductTest extends Test
         $op = new UpsertProduct($account);
         $op->addProduct($product);
         $result = $op->upsert();
-        $this->specify('successful product upsert', function () use ($result) {
-            $this->assertTrue($result);
-        });
+        // successful product upsert
+        $this->assertTrue($result);
     }
 }

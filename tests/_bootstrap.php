@@ -56,35 +56,8 @@ try {
         throw new RuntimeException('Missing required test env file: ' . $envFile);
     }
 
-    if (method_exists($dotenvClass, 'createMutable')) {
-        if (method_exists($dotenvClass, 'createUnsafeMutable')) {
-            $dotenv = $dotenvClass::createUnsafeMutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
-        } else {
-            $dotenv = $dotenvClass::createMutable(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
-        }
-        $dotenv->load();
-    } elseif (method_exists($dotenvClass, 'create')) {
-        $dotenv = $dotenvClass::create(__DIR__); // @phan-suppress-current-line PhanUndeclaredStaticMethod
-        if (method_exists($dotenv, 'overload')) {
-            $dotenv->overload(); // @phan-suppress-current-line PhanUndeclaredMethod
-        } else {
-            $dotenv->load();
-        }
-    } else {
-        $reflectDotEnv = new ReflectionMethod($dotenvClass, '__construct');
-        $params = $reflectDotEnv->getParameters();
-
-        if (isset($params[0]) && $params[0]->getName() === 'path') {
-            $dotenv = (new ReflectionClass($dotenvClass))->newInstanceArgs([__DIR__]);
-            if (method_exists($dotenv, 'overload')) {
-                $dotenv->overload(); // @phan-suppress-current-line PhanUndeclaredMethod
-            } else {
-                $dotenv->load();
-            }
-        } else {
-            throw new RuntimeException('Unsupported Dotenv constructor signature.');
-        }
-    }
+    // Unsafe variant so the values are exported via putenv() and readable by getenv().
+    Dotenv\Dotenv::createUnsafeMutable(__DIR__)->load();
 } catch (Exception $e) {
     // Bootstrap failure:  Could not load required ENV using defaults; rethrow the exception.
     /** @noinspection PhpUnhandledExceptionInspection */

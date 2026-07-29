@@ -36,8 +36,7 @@
 
 namespace Nosto\Test\Unit\Service;
 
-use Codeception\Specify;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Nosto\NostoException;
 use Nosto\Request\Api\Token;
 use Nosto\Service\FeatureAccess;
@@ -46,9 +45,8 @@ use Nosto\Test\Support\MockAccount;
 /**
  * Tests for feature access
  */
-class FeatureAccessTest extends Test
+class FeatureAccessTest extends Unit
 {
-    use Specify;
 
     /**
      * Tests access for graphql
@@ -64,9 +62,7 @@ class FeatureAccessTest extends Test
             $account->addApiToken(new Token(Token::API_GRAPHQL, $token));
         }
         $service = new FeatureAccess($account);
-        $this->specify(sprintf('test access with token %s', $token), function () use ($service, $bool) {
-            $this->assertEquals($service->canUseGraphql(), $bool);
-        });
+        $this->assertEquals($service->canUseGraphql(), $bool);
     }
 
     public function dataForGraphql()

@@ -79,7 +79,6 @@ class Reflection
                     if (in_array($p->getName(), $skipProperties, true)) {
                         continue;
                     }
-                    $p->setAccessible(true);
                     $rp[$p->getName()] = $p->getValue($obj);
                 }
                 /** @noinspection SlowArrayOperationsInLoopInspection */
